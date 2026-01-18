@@ -31,6 +31,7 @@ export function MobileModeToggle(props: { className?: string }) {
 }
 
 function setCookieTheme(theme: string) {
-  const secure = typeof window !== 'undefined' && window.location.protocol === 'https:';
+  const secure =
+    typeof window !== 'undefined' && window.location.protocol === 'https:';
   document.cookie = `theme=${theme}; path=/; max-age=31536000; SameSite=Lax${secure ? '; Secure' : ''}`;
 }

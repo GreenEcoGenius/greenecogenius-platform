@@ -49,7 +49,9 @@ export async function initializeI18nClient(
           cookieMinutes: 60 * 24 * 365, // 1 year
           cookieOptions: {
             sameSite: 'lax',
-            secure: typeof window !== 'undefined' && window.location.protocol === 'https:',
+            secure:
+              typeof window !== 'undefined' &&
+              window.location.protocol === 'https:',
             path: '/',
           },
         },
