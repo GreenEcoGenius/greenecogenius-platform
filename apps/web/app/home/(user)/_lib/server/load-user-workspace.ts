@@ -1,5 +1,7 @@
 import { cache } from 'react';
 
+import { redirect } from 'next/navigation';
+
 import { createAccountsApi } from '@kit/accounts/api';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { createAccountCreationPolicyEvaluator } from '@kit/team-accounts/policies';
@@ -34,6 +36,11 @@ async function workspaceLoader() {
     workspacePromise,
     requireUserInServerComponent(),
   ]);
+
+  // If the user is not found or the workspace is not found, redirect to the home page - this may happen if the JWT is invalid or expired (ex. user deleted?)
+  if (!workspace || !user) {
+    redirect('/');
+  }
 
   // Check if user can create team accounts (policy check)
   const canCreateTeamAccount = shouldLoadAccounts
