@@ -1,6 +1,6 @@
 {
   "name": "next-supabase-saas-kit-turbo",
-  "version": "2.23.10",
+  "version": "2.23.11",
   "private": true,
   "sideEffects": false,
   "engines": {
@@ -45,10 +45,10 @@
   },
   "devDependencies": {
     "@manypkg/cli": "^0.25.1",
-    "@turbo/gen": "^2.7.5",
+    "@turbo/gen": "^2.7.6",
     "cross-env": "^10.0.0",
-    "prettier": "^3.8.0",
-    "turbo": "2.7.5",
+    "prettier": "^3.8.1",
+    "turbo": "2.7.6",
     "typescript": "^5.9.3"
   }
 }

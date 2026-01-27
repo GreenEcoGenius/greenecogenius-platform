@@ -14,13 +14,13 @@
   },
   "dependencies": {
     "@next/eslint-plugin-next": "catalog:",
-    "@types/eslint": "9.6.1",
+    "@types/eslint": "catalog:",
     "eslint-config-next": "catalog:",
-    "eslint-config-turbo": "^2.7.5"
+    "eslint-config-turbo": "catalog:"
   },
   "devDependencies": {
     "@kit/prettier-config": "workspace:*",
-    "eslint": "^9.39.2"
+    "eslint": "catalog:"
   },
   "prettier": "@kit/prettier-config"
 }

@@ -37,8 +37,10 @@ export function AdminBanUserDialog(
     userId: string;
   }>,
 ) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{props.children}</AlertDialogTrigger>
 
       <AlertDialogContent>
@@ -51,13 +53,13 @@ export function AdminBanUserDialog(
           </AlertDialogDescription>
         </AlertDialogHeader>
 
-        <BanUserForm userId={props.userId} />
+        <BanUserForm userId={props.userId} onSuccess={() => setOpen(false)} />
       </AlertDialogContent>
     </AlertDialog>
   );
 }
 
-function BanUserForm(props: { userId: string }) {
+function BanUserForm(props: { userId: string; onSuccess: () => void }) {
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<boolean>(false);
 
@@ -78,6 +80,7 @@ function BanUserForm(props: { userId: string }) {
           startTransition(async () => {
             try {
               await banUserAction(data);
+              props.onSuccess();
             } catch {
               setError(true);
             }

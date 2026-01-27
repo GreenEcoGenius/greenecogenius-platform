@@ -35,7 +35,7 @@
     "eslint": "^9.39.2",
     "next": "catalog:",
     "next-themes": "0.4.6",
-    "prettier": "^3.8.0",
+    "prettier": "^3.8.1",
     "react-day-picker": "^9.13.0",
     "react-hook-form": "catalog:",
     "react-i18next": "catalog:",

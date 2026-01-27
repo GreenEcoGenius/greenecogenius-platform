@@ -13,14 +13,14 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "nodemailer": "^7.0.12"
+    "nodemailer": "catalog:"
   },
   "devDependencies": {
     "@kit/eslint-config": "workspace:*",
     "@kit/mailers-shared": "workspace:*",
     "@kit/prettier-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
-    "@types/nodemailer": "7.0.5",
+    "@types/nodemailer": "catalog:",
     "zod": "catalog:"
   },
   "typesVersions": {

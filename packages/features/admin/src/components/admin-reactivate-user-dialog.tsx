@@ -37,8 +37,10 @@ export function AdminReactivateUserDialog(
     userId: string;
   }>,
 ) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{props.children}</AlertDialogTrigger>
 
       <AlertDialogContent>
@@ -50,13 +52,13 @@ export function AdminReactivateUserDialog(
           </AlertDialogDescription>
         </AlertDialogHeader>
 
-        <ReactivateUserForm userId={props.userId} />
+        <ReactivateUserForm userId={props.userId} onSuccess={() => setOpen(false)} />
       </AlertDialogContent>
     </AlertDialog>
   );
 }
 
-function ReactivateUserForm(props: { userId: string }) {
+function ReactivateUserForm(props: { userId: string; onSuccess: () => void }) {
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<boolean>(false);
 
@@ -77,6 +79,7 @@ function ReactivateUserForm(props: { userId: string }) {
           startTransition(async () => {
             try {
               await reactivateUserAction(data);
+              props.onSuccess();
             } catch {
               setError(true);
             }

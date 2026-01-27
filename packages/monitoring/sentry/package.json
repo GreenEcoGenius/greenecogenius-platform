@@ -16,7 +16,7 @@
     "./config/server": "./src/sentry.client.server.ts"
   },
   "dependencies": {
-    "@sentry/nextjs": "^10.34.0"
+    "@sentry/nextjs": "catalog:"
   },
   "devDependencies": {
     "@kit/eslint-config": "workspace:*",
