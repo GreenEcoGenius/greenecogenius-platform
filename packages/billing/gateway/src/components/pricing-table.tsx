@@ -154,9 +154,21 @@ function PricingItem(
     };
   }>,
 ) {
+  const { t, i18n } = useTranslation();
   const highlighted = props.product.highlighted ?? false;
   const lineItem = props.primaryLineItem!;
   const isCustom = props.plan.custom ?? false;
+
+  const i18nKey = `billing:units.${lineItem.unit}`;
+
+  const unitLabel = lineItem?.unit
+    ? i18n.exists(i18nKey) ? t(i18nKey, {
+      count: 1,
+      defaultValue: lineItem.unit,
+    }) : lineItem.unit
+    : '';
+
+  const isDefaultSeatUnit = lineItem?.unit === 'member';
 
   // we exclude flat line items from the details since
   // it doesn't need further explanation
@@ -259,14 +271,26 @@ function PricingItem(
 
                 <span
                   className={cn(
-                    `animate-in slide-in-from-left-4 fade-in text-sm capitalize`,
+                    `animate-in slide-in-from-left-4 fade-in text-xs capitalize`,
                   )}
                 >
                   <If condition={lineItem?.type === 'per_seat'}>
-                    <Trans i18nKey={'billing:perTeamMember'} />
+                    <If
+                      condition={Boolean(lineItem?.unit) && !isDefaultSeatUnit}
+                      fallback={<Trans i18nKey={'billing:perTeamMember'} />}
+                    >
+                      <Trans
+                        i18nKey={'billing:perUnitShort'}
+                        values={{
+                          unit: unitLabel,
+                        }}
+                      />
+                    </If>
                   </If>
 
-                  <If condition={lineItem?.unit}>
+                  <If
+                    condition={lineItem?.type !== 'per_seat' && lineItem?.unit}
+                  >
                     <Trans
                       i18nKey={'billing:perUnit'}
                       values={{
@@ -324,6 +348,7 @@ function PricingItem(
               selectedInterval={props.plan.interval}
               currency={props.product.currency}
               lineItems={lineItemsToDisplay}
+              alwaysDisplayMonthlyPrice={props.alwaysDisplayMonthlyPrice}
             />
           </div>
         </If>
