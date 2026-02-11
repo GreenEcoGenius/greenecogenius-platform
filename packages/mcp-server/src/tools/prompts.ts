@@ -1,5 +1,5 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 
 interface PromptTemplate {
   name: string;
@@ -280,10 +280,12 @@ export function registerPromptsSystem(server: McpServer) {
       {} as Record<string, z.ZodString | z.ZodOptional<z.ZodString>>,
     );
 
-    server.prompt(
+    server.registerPrompt(
       promptTemplate.name,
-      promptTemplate.description,
-      argsSchema,
+      {
+        description: promptTemplate.description,
+        argsSchema,
+      },
       async (args: Record<string, string>) => {
         const renderedPrompt = PromptsManager.renderPrompt(
           promptTemplate.name,

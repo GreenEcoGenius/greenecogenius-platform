@@ -1,7 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 
 // Custom phase for organizing user stories
 interface CustomPhase {
@@ -34,6 +34,56 @@ interface UserStory {
   completedAt?: string;
 }
 
+interface RiskItem {
+  id: string;
+  description: string;
+  mitigation: string;
+  owner: string;
+  severity: 'low' | 'medium' | 'high';
+}
+
+interface CrossDependency {
+  id: string;
+  name: string;
+  description: string;
+  blocking: boolean;
+  owner?: string;
+}
+
+interface DecisionLogEntry {
+  id: string;
+  date: string;
+  decision: string;
+  rationale: string;
+  owner?: string;
+  status: 'proposed' | 'accepted' | 'superseded';
+}
+
+interface AgentTaskPacket {
+  id: string;
+  title: string;
+  scope: string;
+  doneCriteria: string[];
+  testPlan: string[];
+  likelyFiles: string[];
+  linkedStoryIds: string[];
+  dependencies: string[];
+}
+
+interface StoryTraceabilityMap {
+  storyId: string;
+  featureId: string;
+  acceptanceCriteriaIds: string[];
+  successMetricIds: string[];
+}
+
+interface CreateStructuredPRDOptions {
+  nonGoals?: string[];
+  outOfScope?: string[];
+  assumptions?: string[];
+  openQuestions?: string[];
+}
+
 // Structured PRD following ChatPRD format
 interface StructuredPRD {
   introduction: {
@@ -54,13 +104,28 @@ interface StructuredPRD {
     successMetrics: string[];
   };
 
+  nonGoals: string[];
+  outOfScope: string[];
+  assumptions: string[];
+  openQuestions: string[];
+  risks: RiskItem[];
+  dependencies: CrossDependency[];
+
   userStories: UserStory[];
   customPhases?: CustomPhase[];
+  storyTraceability: StoryTraceabilityMap[];
 
   technicalRequirements: {
     constraints: string[];
     integrationNeeds: string[];
     complianceRequirements: string[];
+  };
+
+  technicalContracts: {
+    apis: string[];
+    dataModels: string[];
+    permissions: string[];
+    integrationBoundaries: string[];
   };
 
   acceptanceCriteria: {
@@ -75,10 +140,30 @@ interface StructuredPRD {
     nonNegotiables: string[];
   };
 
+  rolloutPlan: {
+    featureFlags: string[];
+    migrationPlan: string[];
+    rolloutPhases: string[];
+    rollbackConditions: string[];
+  };
+
+  measurementPlan: {
+    events: string[];
+    dashboards: string[];
+    baselineMetrics: string[];
+    targetMetrics: string[];
+    guardrailMetrics: string[];
+  };
+
+  decisionLog: DecisionLogEntry[];
+  agentTaskPackets: AgentTaskPacket[];
+  changeLog: string[];
+
   metadata: {
     version: string;
     created: string;
     lastUpdated: string;
+    lastValidatedAt: string;
     approver: string;
   };
 
@@ -118,6 +203,7 @@ export class PRDManager {
     solutionDescription: string,
     keyFeatures: string[],
     successMetrics: string[],
+    options?: CreateStructuredPRDOptions,
   ): Promise<string> {
     await this.ensurePRDsDirectory();
 
@@ -140,11 +226,24 @@ export class PRDManager {
         keyFeatures,
         successMetrics,
       },
+      nonGoals: options?.nonGoals ?? [],
+      outOfScope: options?.outOfScope ?? [],
+      assumptions: options?.assumptions ?? [],
+      openQuestions: options?.openQuestions ?? [],
+      risks: [],
+      dependencies: [],
       userStories: [],
+      storyTraceability: [],
       technicalRequirements: {
         constraints: [],
         integrationNeeds: [],
         complianceRequirements: [],
+      },
+      technicalContracts: {
+        apis: [],
+        dataModels: [],
+        permissions: [],
+        integrationBoundaries: [],
       },
       acceptanceCriteria: {
         global: [],
@@ -155,10 +254,27 @@ export class PRDManager {
         resources: [],
         nonNegotiables: [],
       },
+      rolloutPlan: {
+        featureFlags: [],
+        migrationPlan: [],
+        rolloutPhases: [],
+        rollbackConditions: [],
+      },
+      measurementPlan: {
+        events: [],
+        dashboards: [],
+        baselineMetrics: [],
+        targetMetrics: [],
+        guardrailMetrics: [],
+      },
+      decisionLog: [],
+      agentTaskPackets: [],
+      changeLog: ['Initial PRD created'],
       metadata: {
-        version: '1.0',
+        version: '2.0',
         created: now,
         lastUpdated: now,
+        lastValidatedAt: now,
         approver: '',
       },
       progress: {
@@ -294,6 +410,28 @@ export class PRDManager {
       suggestions.push('Add global acceptance criteria for quality standards');
     }
 
+    if (prd.nonGoals.length === 0 || prd.outOfScope.length === 0) {
+      suggestions.push(
+        'Define both non-goals and out-of-scope items to reduce implementation drift',
+      );
+    }
+
+    if (prd.openQuestions.length > 0) {
+      suggestions.push(
+        `${prd.openQuestions.length} open questions remain unresolved`,
+      );
+    }
+
+    if (prd.measurementPlan.targetMetrics.length === 0) {
+      suggestions.push(
+        'Define target metrics in measurementPlan to validate delivery impact',
+      );
+    }
+
+    if (prd.rolloutPlan.rolloutPhases.length === 0) {
+      suggestions.push('Add rollout phases and rollback conditions');
+    }
+
     const vagueStories = prd.userStories.filter(
       (s) => s.acceptanceCriteria.length < 2,
     );
@@ -336,11 +474,24 @@ export class PRDManager {
     }
   }
 
+  static async deletePRD(filename: string): Promise<string> {
+    const filePath = join(this.PRDS_DIR, filename);
+
+    try {
+      await unlink(filePath);
+      return `PRD deleted successfully: ${filename}`;
+    } catch {
+      throw new Error(`PRD file "${filename}" not found`);
+    }
+  }
+
   static async getProjectStatus(filename: string): Promise<{
     progress: number;
     summary: string;
     nextSteps: string[];
     blockers: UserStory[];
+    openQuestions: string[];
+    highRisks: RiskItem[];
   }> {
     const prd = await this.loadPRD(filename);
 
@@ -357,13 +508,16 @@ export class PRDManager {
       ...nextPending.map((s) => `Start: ${s.title}`),
     ];
 
-    const summary = `${prd.progress.completed}/${prd.progress.total} stories completed (${prd.progress.overall}%). Total stories: ${prd.userStories.length}`;
+    const highRisks = prd.risks.filter((risk) => risk.severity === 'high');
+    const summary = `${prd.progress.completed}/${prd.progress.total} stories completed (${prd.progress.overall}%). Total stories: ${prd.userStories.length}. Open questions: ${prd.openQuestions.length}. High risks: ${highRisks.length}.`;
 
     return {
       progress: prd.progress.overall,
       summary,
       nextSteps,
       blockers,
+      openQuestions: prd.openQuestions,
+      highRisks,
     };
   }
 
@@ -526,7 +680,7 @@ export class PRDManager {
     const filePath = join(this.PRDS_DIR, filename);
     try {
       const content = await readFile(filePath, 'utf8');
-      return JSON.parse(content);
+      return this.normalizePRD(JSON.parse(content));
     } catch {
       throw new Error(`PRD file "${filename}" not found`);
     }
@@ -536,9 +690,99 @@ export class PRDManager {
     filename: string,
     prd: StructuredPRD,
   ): Promise<void> {
-    prd.metadata.lastUpdated = new Date().toISOString().split('T')[0];
+    const now = new Date().toISOString().split('T')[0];
+    prd.metadata.lastUpdated = now;
+    prd.metadata.lastValidatedAt = prd.metadata.lastValidatedAt || now;
+    if (prd.changeLog.length === 0) {
+      prd.changeLog.push(`Updated on ${now}`);
+    }
+
     const filePath = join(this.PRDS_DIR, filename);
     await writeFile(filePath, JSON.stringify(prd, null, 2), 'utf8');
+  }
+
+  private static normalizePRD(input: unknown): StructuredPRD {
+    const prd = input as Partial<StructuredPRD>;
+    const today = new Date().toISOString().split('T')[0];
+
+    return {
+      introduction: {
+        title: prd.introduction?.title ?? 'Untitled PRD',
+        overview: prd.introduction?.overview ?? '',
+        lastUpdated: prd.introduction?.lastUpdated ?? today,
+      },
+      problemStatement: {
+        problem: prd.problemStatement?.problem ?? '',
+        marketOpportunity: prd.problemStatement?.marketOpportunity ?? '',
+        targetUsers: prd.problemStatement?.targetUsers ?? [],
+      },
+      solutionOverview: {
+        description: prd.solutionOverview?.description ?? '',
+        keyFeatures: prd.solutionOverview?.keyFeatures ?? [],
+        successMetrics: prd.solutionOverview?.successMetrics ?? [],
+      },
+      nonGoals: prd.nonGoals ?? [],
+      outOfScope: prd.outOfScope ?? [],
+      assumptions: prd.assumptions ?? [],
+      openQuestions: prd.openQuestions ?? [],
+      risks: prd.risks ?? [],
+      dependencies: prd.dependencies ?? [],
+      userStories: prd.userStories ?? [],
+      customPhases: prd.customPhases ?? [],
+      storyTraceability: prd.storyTraceability ?? [],
+      technicalRequirements: {
+        constraints: prd.technicalRequirements?.constraints ?? [],
+        integrationNeeds: prd.technicalRequirements?.integrationNeeds ?? [],
+        complianceRequirements:
+          prd.technicalRequirements?.complianceRequirements ?? [],
+      },
+      technicalContracts: {
+        apis: prd.technicalContracts?.apis ?? [],
+        dataModels: prd.technicalContracts?.dataModels ?? [],
+        permissions: prd.technicalContracts?.permissions ?? [],
+        integrationBoundaries:
+          prd.technicalContracts?.integrationBoundaries ?? [],
+      },
+      acceptanceCriteria: {
+        global: prd.acceptanceCriteria?.global ?? [],
+        qualityStandards: prd.acceptanceCriteria?.qualityStandards ?? [],
+      },
+      constraints: {
+        timeline: prd.constraints?.timeline ?? '',
+        budget: prd.constraints?.budget,
+        resources: prd.constraints?.resources ?? [],
+        nonNegotiables: prd.constraints?.nonNegotiables ?? [],
+      },
+      rolloutPlan: {
+        featureFlags: prd.rolloutPlan?.featureFlags ?? [],
+        migrationPlan: prd.rolloutPlan?.migrationPlan ?? [],
+        rolloutPhases: prd.rolloutPlan?.rolloutPhases ?? [],
+        rollbackConditions: prd.rolloutPlan?.rollbackConditions ?? [],
+      },
+      measurementPlan: {
+        events: prd.measurementPlan?.events ?? [],
+        dashboards: prd.measurementPlan?.dashboards ?? [],
+        baselineMetrics: prd.measurementPlan?.baselineMetrics ?? [],
+        targetMetrics: prd.measurementPlan?.targetMetrics ?? [],
+        guardrailMetrics: prd.measurementPlan?.guardrailMetrics ?? [],
+      },
+      decisionLog: prd.decisionLog ?? [],
+      agentTaskPackets: prd.agentTaskPackets ?? [],
+      changeLog: prd.changeLog ?? [],
+      metadata: {
+        version: prd.metadata?.version ?? '2.0',
+        created: prd.metadata?.created ?? today,
+        lastUpdated: prd.metadata?.lastUpdated ?? today,
+        lastValidatedAt: prd.metadata?.lastValidatedAt ?? today,
+        approver: prd.metadata?.approver ?? '',
+      },
+      progress: {
+        overall: prd.progress?.overall ?? 0,
+        completed: prd.progress?.completed ?? 0,
+        total: prd.progress?.total ?? 0,
+        blocked: prd.progress?.blocked ?? 0,
+      },
+    };
   }
 
   private static extractTitleFromAction(action: string): string {
@@ -604,6 +848,58 @@ export class PRDManager {
       content += `- ${metric}\n`;
     });
 
+    content += `\n## Scope Guardrails\n\n`;
+    content += `### Non-Goals\n`;
+    if (prd.nonGoals.length > 0) {
+      prd.nonGoals.forEach((item) => {
+        content += `- ${item}\n`;
+      });
+    } else {
+      content += `- None specified\n`;
+    }
+
+    content += `\n### Out of Scope\n`;
+    if (prd.outOfScope.length > 0) {
+      prd.outOfScope.forEach((item) => {
+        content += `- ${item}\n`;
+      });
+    } else {
+      content += `- None specified\n`;
+    }
+
+    content += `\n### Assumptions\n`;
+    if (prd.assumptions.length > 0) {
+      prd.assumptions.forEach((item) => {
+        content += `- ${item}\n`;
+      });
+    } else {
+      content += `- None specified\n`;
+    }
+
+    content += `\n### Open Questions\n`;
+    if (prd.openQuestions.length > 0) {
+      prd.openQuestions.forEach((item) => {
+        content += `- ${item}\n`;
+      });
+    } else {
+      content += `- None\n`;
+    }
+
+    if (prd.risks.length > 0) {
+      content += `\n## Risks\n`;
+      prd.risks.forEach((risk) => {
+        content += `- [${risk.severity}] ${risk.description} | Mitigation: ${risk.mitigation} | Owner: ${risk.owner}\n`;
+      });
+    }
+
+    if (prd.dependencies.length > 0) {
+      content += `\n## Dependencies\n`;
+      prd.dependencies.forEach((dependency) => {
+        const mode = dependency.blocking ? 'blocking' : 'non-blocking';
+        content += `- ${dependency.name} (${mode}) - ${dependency.description}\n`;
+      });
+    }
+
     content += `\n## User Stories\n\n`;
 
     const priorities: UserStory['priority'][] = ['P0', 'P1', 'P2', 'P3'];
@@ -637,6 +933,20 @@ export class PRDManager {
       content += `**Blocked:** ${prd.progress.blocked} stories need attention\n`;
     }
 
+    if (prd.rolloutPlan.rolloutPhases.length > 0) {
+      content += `\n## Rollout Plan\n`;
+      prd.rolloutPlan.rolloutPhases.forEach((phase) => {
+        content += `- ${phase}\n`;
+      });
+    }
+
+    if (prd.measurementPlan.targetMetrics.length > 0) {
+      content += `\n## Measurement Plan\n`;
+      prd.measurementPlan.targetMetrics.forEach((metric) => {
+        content += `- ${metric}\n`;
+      });
+    }
+
     content += `\n---\n\n`;
     content += `*Approver: ${prd.metadata.approver || 'TBD'}*\n`;
 
@@ -661,6 +971,7 @@ export function registerPRDTools(server: McpServer) {
   createListPRDsTool(server);
   createGetPRDTool(server);
   createCreatePRDTool(server);
+  createDeletePRDTool(server);
   createAddUserStoryTool(server);
   createUpdateStoryStatusTool(server);
   createExportMarkdownTool(server);
@@ -670,9 +981,11 @@ export function registerPRDTools(server: McpServer) {
 }
 
 function createListPRDsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'list_prds',
-    'List all Product Requirements Documents',
+    {
+      description: 'List all Product Requirements Documents',
+    },
     async () => {
       const prds = await PRDManager.listPRDs();
 
@@ -702,13 +1015,15 @@ function createListPRDsTool(server: McpServer) {
 }
 
 function createGetPRDTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_prd',
-    'Get the contents of a specific PRD file',
     {
-      state: z.object({
-        filename: z.string(),
-      }),
+      description: 'Get the contents of a specific PRD file',
+      inputSchema: {
+        state: z.object({
+          filename: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const content = await PRDManager.getPRDContent(state.filename);
@@ -726,20 +1041,27 @@ function createGetPRDTool(server: McpServer) {
 }
 
 function createCreatePRDTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'create_prd',
-    'Create a new structured PRD following ChatPRD best practices',
     {
-      state: z.object({
-        title: z.string(),
-        overview: z.string(),
-        problemStatement: z.string(),
-        marketOpportunity: z.string(),
-        targetUsers: z.array(z.string()),
-        solutionDescription: z.string(),
-        keyFeatures: z.array(z.string()),
-        successMetrics: z.array(z.string()),
-      }),
+      description:
+        'Create a new structured PRD following ChatPRD best practices',
+      inputSchema: {
+        state: z.object({
+          title: z.string(),
+          overview: z.string(),
+          problemStatement: z.string(),
+          marketOpportunity: z.string(),
+          targetUsers: z.array(z.string()),
+          solutionDescription: z.string(),
+          keyFeatures: z.array(z.string()),
+          successMetrics: z.array(z.string()),
+          nonGoals: z.array(z.string()).optional(),
+          outOfScope: z.array(z.string()).optional(),
+          assumptions: z.array(z.string()).optional(),
+          openQuestions: z.array(z.string()).optional(),
+        }),
+      },
     },
     async ({ state }) => {
       const filename = await PRDManager.createStructuredPRD(
@@ -751,6 +1073,12 @@ function createCreatePRDTool(server: McpServer) {
         state.solutionDescription,
         state.keyFeatures,
         state.successMetrics,
+        {
+          nonGoals: state.nonGoals,
+          outOfScope: state.outOfScope,
+          assumptions: state.assumptions,
+          openQuestions: state.openQuestions,
+        },
       );
 
       return {
@@ -765,19 +1093,47 @@ function createCreatePRDTool(server: McpServer) {
   );
 }
 
-function createAddUserStoryTool(server: McpServer) {
-  return server.tool(
-    'add_user_story',
-    'Add a new user story to an existing PRD',
+function createDeletePRDTool(server: McpServer) {
+  return server.registerTool(
+    'delete_prd',
     {
-      state: z.object({
-        filename: z.string(),
-        userType: z.string(),
-        action: z.string(),
-        benefit: z.string(),
-        acceptanceCriteria: z.array(z.string()),
-        priority: z.enum(['P0', 'P1', 'P2', 'P3']).default('P2'),
-      }),
+      description: 'Delete an existing PRD file',
+      inputSchema: {
+        state: z.object({
+          filename: z.string(),
+        }),
+      },
+    },
+    async ({ state }) => {
+      const result = await PRDManager.deletePRD(state.filename);
+
+      return {
+        content: [
+          {
+            type: 'text',
+            text: result,
+          },
+        ],
+      };
+    },
+  );
+}
+
+function createAddUserStoryTool(server: McpServer) {
+  return server.registerTool(
+    'add_user_story',
+    {
+      description: 'Add a new user story to an existing PRD',
+      inputSchema: {
+        state: z.object({
+          filename: z.string(),
+          userType: z.string(),
+          action: z.string(),
+          benefit: z.string(),
+          acceptanceCriteria: z.array(z.string()),
+          priority: z.enum(['P0', 'P1', 'P2', 'P3']).default('P2'),
+        }),
+      },
     },
     async ({ state }) => {
       const result = await PRDManager.addUserStory(
@@ -802,23 +1158,25 @@ function createAddUserStoryTool(server: McpServer) {
 }
 
 function createUpdateStoryStatusTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'update_story_status',
-    'Update the status of a specific user story',
     {
-      state: z.object({
-        filename: z.string(),
-        storyId: z.string(),
-        status: z.enum([
-          'not_started',
-          'research',
-          'in_progress',
-          'review',
-          'completed',
-          'blocked',
-        ]),
-        notes: z.string().optional(),
-      }),
+      description: 'Update the status of a specific user story',
+      inputSchema: {
+        state: z.object({
+          filename: z.string(),
+          storyId: z.string(),
+          status: z.enum([
+            'not_started',
+            'research',
+            'in_progress',
+            'review',
+            'completed',
+            'blocked',
+          ]),
+          notes: z.string().optional(),
+        }),
+      },
     },
     async ({ state }) => {
       const result = await PRDManager.updateStoryStatus(
@@ -841,13 +1199,15 @@ function createUpdateStoryStatusTool(server: McpServer) {
 }
 
 function createExportMarkdownTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'export_prd_markdown',
-    'Export PRD as markdown for visualization and sharing',
     {
-      state: z.object({
-        filename: z.string(),
-      }),
+      description: 'Export PRD as markdown for visualization and sharing',
+      inputSchema: {
+        state: z.object({
+          filename: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const markdownFile = await PRDManager.exportAsMarkdown(state.filename);
@@ -865,13 +1225,15 @@ function createExportMarkdownTool(server: McpServer) {
 }
 
 function createGetImplementationPromptsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_implementation_prompts',
-    'Generate Claude Code implementation prompts from PRD',
     {
-      state: z.object({
-        filename: z.string(),
-      }),
+      description: 'Generate Claude Code implementation prompts from PRD',
+      inputSchema: {
+        state: z.object({
+          filename: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const prompts = await PRDManager.generateImplementationPrompts(
@@ -904,13 +1266,15 @@ function createGetImplementationPromptsTool(server: McpServer) {
 }
 
 function createGetImprovementSuggestionsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_improvement_suggestions',
-    'Get AI-powered suggestions to improve the PRD',
     {
-      state: z.object({
-        filename: z.string(),
-      }),
+      description: 'Get AI-powered suggestions to improve the PRD',
+      inputSchema: {
+        state: z.object({
+          filename: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const suggestions = await PRDManager.getImprovementSuggestions(
@@ -943,13 +1307,15 @@ function createGetImprovementSuggestionsTool(server: McpServer) {
 }
 
 function createGetProjectStatusTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_project_status',
-    'Get comprehensive status overview of the PRD project',
     {
-      state: z.object({
-        filename: z.string(),
-      }),
+      description: 'Get comprehensive status overview of the PRD project',
+      inputSchema: {
+        state: z.object({
+          filename: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const status = await PRDManager.getProjectStatus(state.filename);
@@ -969,6 +1335,22 @@ function createGetProjectStatusTool(server: McpServer) {
         result += `**Blockers:**\n`;
         status.blockers.forEach((blocker) => {
           result += `- ${blocker.title}: ${blocker.notes || 'No details provided'}\n`;
+        });
+        result += '\n';
+      }
+
+      if (status.highRisks.length > 0) {
+        result += `**High Risks:**\n`;
+        status.highRisks.forEach((risk) => {
+          result += `- ${risk.description} (Owner: ${risk.owner || 'Unassigned'})\n`;
+        });
+        result += '\n';
+      }
+
+      if (status.openQuestions.length > 0) {
+        result += `**Open Questions:**\n`;
+        status.openQuestions.slice(0, 5).forEach((question) => {
+          result += `- ${question}\n`;
         });
       }
 

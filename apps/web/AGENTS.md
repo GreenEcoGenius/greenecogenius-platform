@@ -22,6 +22,7 @@ app/
 
 For specialized implementation:
 - `/feature-builder` - End-to-end feature implementation
+- `/service-builder` - Server side services
 - `/server-action-builder` - Server actions
 - `/forms-builder` - Forms with validation
 - `/navigation-config` - Adding routes and menu items

@@ -3,7 +3,7 @@
     "makerkit": {
       "type": "stdio",
       "command": "node",
-      "args": ["packages/mcp-server/build/index.js"]
+      "args": ["packages/mcp-server/build/index.cjs"]
     }
   }
 }

@@ -10,7 +10,8 @@
   },
   "prettier": "@kit/prettier-config",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./registry": "./src/registry.ts"
   },
   "dependencies": {
     "@react-email/components": "catalog:"
@@ -20,7 +21,10 @@
     "@kit/i18n": "workspace:*",
     "@kit/prettier-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
-    "@types/node": "catalog:"
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "typesVersions": {
     "*": {

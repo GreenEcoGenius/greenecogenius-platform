@@ -11,7 +11,6 @@ import {
   LanguagesIcon,
   LayoutDashboardIcon,
   MailIcon,
-  ServerIcon,
 } from 'lucide-react';
 
 import {
@@ -55,20 +54,14 @@ const routes = [
     Icon: LanguagesIcon,
   },
   {
-    label: 'MCP Server',
-    Icon: ServerIcon,
-    children: [
-      {
-        label: 'Database',
-        path: '/mcp-server/database',
-        Icon: DatabaseIcon,
-      },
-      {
-        label: 'PRD Manager',
-        path: '/mcp-server/prds',
-        Icon: FileTextIcon,
-      },
-    ],
+    label: 'Database',
+    path: '/database',
+    Icon: DatabaseIcon,
+  },
+  {
+    label: 'PRD Manager',
+    path: '/prds',
+    Icon: FileTextIcon,
   },
 ];
 

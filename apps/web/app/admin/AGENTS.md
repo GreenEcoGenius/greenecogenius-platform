@@ -6,6 +6,7 @@
 - **ALWAYS** validate admin status before operations
 - **NEVER** bypass authentication or authorization
 - **ALWAYS** audit admin operations with logging
+- **ALWAYS** use `adminAction` to wrap admin actions @packages/features/admin/src/lib/server/utils/admin-action.ts
 
 ## Page Structure
 

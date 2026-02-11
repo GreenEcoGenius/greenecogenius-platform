@@ -33,27 +33,7 @@ import {
 import { cn } from '@kit/ui/utils';
 
 import { updateTranslationAction } from '../lib/server-actions';
-import type { TranslationData, Translations } from '../lib/translations-loader';
-
-function flattenTranslations(
-  obj: TranslationData,
-  prefix = '',
-  result: Record<string, string> = {},
-) {
-  for (const [key, value] of Object.entries(obj)) {
-    const newKey = prefix ? `${prefix}.${key}` : key;
-
-    if (typeof value === 'string') {
-      result[newKey] = value;
-    } else {
-      flattenTranslations(value, newKey, result);
-    }
-  }
-
-  return result;
-}
-
-type FlattenedTranslations = Record<string, Record<string, string>>;
+import type { Translations } from '../lib/translations-loader';
 
 export function TranslationsComparison({
   translations,
@@ -74,35 +54,24 @@ export function TranslationsComparison({
     [],
   );
 
-  const locales = Object.keys(translations);
-  const baseLocale = locales[0]!;
-  const namespaces = Object.keys(translations[baseLocale] || {});
+  const { base_locale, locales, namespaces } = translations;
 
   const [selectedLocales, setSelectedLocales] = useState<Set<string>>(
     new Set(locales),
   );
 
-  // Flatten translations for the selected namespace
-  const flattenedTranslations: FlattenedTranslations = {};
-
   const [selectedNamespace, setSelectedNamespace] = useState(
-    namespaces[0] as string,
+    namespaces[0] ?? '',
   );
-
-  for (const locale of locales) {
-    const namespaceData = translations[locale]?.[selectedNamespace];
-
-    if (namespaceData) {
-      flattenedTranslations[locale] = flattenTranslations(namespaceData);
-    } else {
-      flattenedTranslations[locale] = {};
-    }
-  }
 
   // Get all unique keys across all translations
   const allKeys = Array.from(
     new Set(
-      Object.values(flattenedTranslations).flatMap((data) => Object.keys(data)),
+      locales.flatMap((locale) =>
+        Object.keys(
+          translations.translations[locale]?.[selectedNamespace] ?? {},
+        ),
+      ),
     ),
   ).sort();
 
@@ -143,7 +112,7 @@ export function TranslationsComparison({
     return () => subscription.unsubscribe();
   }, [subject$]);
 
-  if (locales.length === 0) {
+  if (locales.length === 0 || !base_locale) {
     return <div>No translations found</div>;
   }
 
@@ -228,12 +197,16 @@ export function TranslationsComparison({
                 </TableCell>
 
                 {visibleLocales.map((locale) => {
-                  const translations = flattenedTranslations[locale] ?? {};
+                  const translationsForLocale =
+                    translations.translations[locale]?.[selectedNamespace] ??
+                    {};
 
                   const baseTranslations =
-                    flattenedTranslations[baseLocale] ?? {};
+                    translations.translations[base_locale]?.[
+                      selectedNamespace
+                    ] ?? {};
 
-                  const value = translations[key];
+                  const value = translationsForLocale[key];
                   const baseValue = baseTranslations[key];
                   const isMissing = !value;
                   const isDifferent = value !== baseValue;

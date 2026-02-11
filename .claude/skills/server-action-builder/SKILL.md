@@ -29,22 +29,24 @@ export type CreateFeatureInput = z.infer<typeof CreateFeatureSchema>;
 
 ### Step 2: Create Service Layer
 
+**North star: services are decoupled from their interface.** The service is pure logic — it receives a database client as a dependency, never imports one. This means the same service works whether called from a server action, an MCP tool, a CLI command, or a plain unit test.
+
 Create service in `_lib/server/`:
 
 ```typescript
 // _lib/server/feature.service.ts
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import type { CreateFeatureInput } from '../schemas/feature.schema';
 
-export function createFeatureService() {
-  return new FeatureService();
+export function createFeatureService(client: SupabaseClient) {
+  return new FeatureService(client);
 }
 
 class FeatureService {
-  async create(data: CreateFeatureInput) {
-    const client = getSupabaseServerClient();
+  constructor(private readonly client: SupabaseClient) {}
 
-    const { data: result, error } = await client
+  async create(data: CreateFeatureInput) {
+    const { data: result, error } = await this.client
       .from('features')
       .insert({
         name: data.name,
@@ -60,7 +62,11 @@ class FeatureService {
 }
 ```
 
-### Step 3: Create Server Action
+The service never calls `getSupabaseServerClient()` — the caller provides the client. This keeps the service testable (pass a mock client) and reusable (any interface can supply its own client).
+
+### Step 3: Create Server Action (Thin Adapter)
+
+The action is a **thin adapter** — it resolves dependencies (client, logger) and delegates to the service. No business logic lives here.
 
 Create action in `_lib/server/server-actions.ts`:
 
@@ -69,6 +75,7 @@ Create action in `_lib/server/server-actions.ts`:
 
 import { enhanceAction } from '@kit/next/actions';
 import { getLogger } from '@kit/shared/logger';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { revalidatePath } from 'next/cache';
 
 import { CreateFeatureSchema } from '../schemas/feature.schema';
@@ -81,7 +88,8 @@ export const createFeatureAction = enhanceAction(
 
     logger.info(ctx, 'Creating feature');
 
-    const service = createFeatureService();
+    const client = getSupabaseServerClient();
+    const service = createFeatureService(client);
     const result = await service.create(data);
 
     logger.info({ ...ctx, featureId: result.id }, 'Feature created');
@@ -99,11 +107,13 @@ export const createFeatureAction = enhanceAction(
 
 ## Key Patterns
 
-1. **Schema in separate file** - Reusable between client and server
-2. **Service layer** - Business logic isolated from action
-3. **Logging** - Always log before and after operations
-4. **Revalidation** - Use `revalidatePath` after mutations
-5. **Trust RLS** - Don't add manual auth checks (RLS handles it)
+1. **Services are pure, interfaces are thin adapters.** The service contains all business logic. The server action (or MCP tool, or CLI command) is glue code that resolves dependencies and calls the service. If an MCP tool and a server action do the same thing, they call the same service function.
+2. **Inject dependencies, don't import them in services.** Services receive their database client, logger, or any I/O capability as constructor arguments — never by importing framework-specific modules. This keeps them testable with stubs and reusable across interfaces.
+3. **Schema in separate file** - Reusable between client and server
+4. **Logging** - Always log before and after operations
+5. **Revalidation** - Use `revalidatePath` after mutations
+6. **Trust RLS** - Don't add manual auth checks (RLS handles it)
+7. **Testable in isolation** - Because services accept their dependencies, you can test them with a mock client and no running infrastructure
 
 ## File Structure
 

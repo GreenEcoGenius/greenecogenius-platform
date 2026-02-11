@@ -2,7 +2,7 @@ import { type McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import postgres from 'postgres';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 
 const DATABASE_URL =
   process.env.DATABASE_URL ||
@@ -1135,9 +1135,12 @@ export function registerDatabaseResources(server: McpServer) {
 }
 
 function createGetSchemaFilesTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_schema_files',
-    '🔥 DATABASE SCHEMA FILES (SOURCE OF TRUTH - ALWAYS CURRENT) - Use these over migrations!',
+    {
+      description:
+        '🔥 DATABASE SCHEMA FILES (SOURCE OF TRUTH - ALWAYS CURRENT) - Use these over migrations!',
+    },
     async () => {
       const schemaFiles = await DatabaseTool.getSchemaFiles();
 
@@ -1168,9 +1171,12 @@ function createGetSchemaFilesTool(server: McpServer) {
 }
 
 function createGetFunctionsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_database_functions',
-    'Get all database functions with descriptions and usage guidance',
+    {
+      description:
+        'Get all database functions with descriptions and usage guidance',
+    },
     async () => {
       const functions = await DatabaseTool.getFunctions();
 
@@ -1202,13 +1208,16 @@ function createGetFunctionsTool(server: McpServer) {
 }
 
 function createGetFunctionDetailsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_function_details',
-    'Get detailed information about a specific database function',
     {
-      state: z.object({
-        functionName: z.string(),
-      }),
+      description:
+        'Get detailed information about a specific database function',
+      inputSchema: {
+        state: z.object({
+          functionName: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const func = await DatabaseTool.getFunctionDetails(state.functionName);
@@ -1253,13 +1262,15 @@ Source File: ${func.sourceFile}`,
 }
 
 function createSearchFunctionsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'search_database_functions',
-    'Search database functions by name, description, or purpose',
     {
-      state: z.object({
-        query: z.string(),
-      }),
+      description: 'Search database functions by name, description, or purpose',
+      inputSchema: {
+        state: z.object({
+          query: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const functions = await DatabaseTool.searchFunctions(state.query);
@@ -1295,13 +1306,16 @@ function createSearchFunctionsTool(server: McpServer) {
 }
 
 function createGetSchemaContentTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_schema_content',
-    '📋 Get raw schema file content (CURRENT DATABASE STATE) - Source of truth for database structure',
     {
-      state: z.object({
-        fileName: z.string(),
-      }),
+      description:
+        '📋 Get raw schema file content (CURRENT DATABASE STATE) - Source of truth for database structure',
+      inputSchema: {
+        state: z.object({
+          fileName: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const content = await DatabaseTool.getSchemaContent(state.fileName);
@@ -1319,13 +1333,16 @@ function createGetSchemaContentTool(server: McpServer) {
 }
 
 function createGetSchemasByTopicTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_schemas_by_topic',
-    '🎯 Find schema files by topic (accounts, auth, billing, permissions, etc.) - Fastest way to find relevant schemas',
     {
-      state: z.object({
-        topic: z.string(),
-      }),
+      description:
+        '🎯 Find schema files by topic (accounts, auth, billing, permissions, etc.) - Fastest way to find relevant schemas',
+      inputSchema: {
+        state: z.object({
+          topic: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const schemas = await DatabaseTool.getSchemasByTopic(state.topic);
@@ -1368,13 +1385,16 @@ function createGetSchemasByTopicTool(server: McpServer) {
 }
 
 function createGetSchemaBySectionTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_schema_by_section',
-    '📂 Get specific schema by section name (Accounts, Permissions, etc.) - Direct access to schema sections',
     {
-      state: z.object({
-        section: z.string(),
-      }),
+      description:
+        '📂 Get specific schema by section name (Accounts, Permissions, etc.) - Direct access to schema sections',
+      inputSchema: {
+        state: z.object({
+          section: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const schema = await DatabaseTool.getSchemaBySection(state.section);
@@ -1414,9 +1434,12 @@ function createGetSchemaBySectionTool(server: McpServer) {
 }
 
 function createDatabaseSummaryTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_database_summary',
-    '📊 Get comprehensive database overview with tables, enums, and functions',
+    {
+      description:
+        '📊 Get comprehensive database overview with tables, enums, and functions',
+    },
     async () => {
       const tables = await DatabaseTool.getAllProjectTables();
       const enums = await DatabaseTool.getAllEnums();
@@ -1468,9 +1491,11 @@ function createDatabaseSummaryTool(server: McpServer) {
 }
 
 function createDatabaseTablesListTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_database_tables',
-    '📋 Get list of all project-defined database tables',
+    {
+      description: '📋 Get list of all project-defined database tables',
+    },
     async () => {
       const tables = await DatabaseTool.getAllProjectTables();
 
@@ -1487,14 +1512,17 @@ function createDatabaseTablesListTool(server: McpServer) {
 }
 
 function createGetTableInfoTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_table_info',
-    '🗂️ Get detailed table schema with columns, foreign keys, and indexes',
     {
-      state: z.object({
-        schema: z.string().default('public'),
-        tableName: z.string(),
-      }),
+      description:
+        '🗂️ Get detailed table schema with columns, foreign keys, and indexes',
+      inputSchema: {
+        state: z.object({
+          schema: z.string().default('public'),
+          tableName: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       try {
@@ -1526,13 +1554,15 @@ function createGetTableInfoTool(server: McpServer) {
 }
 
 function createGetEnumInfoTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_enum_info',
-    '🏷️ Get enum type definition with all possible values',
     {
-      state: z.object({
-        enumName: z.string(),
-      }),
+      description: '🏷️ Get enum type definition with all possible values',
+      inputSchema: {
+        state: z.object({
+          enumName: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       try {
@@ -1573,9 +1603,11 @@ function createGetEnumInfoTool(server: McpServer) {
 }
 
 function createGetAllEnumsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_all_enums',
-    '🏷️ Get all enum types and their values',
+    {
+      description: '🏷️ Get all enum types and their values',
+    },
     async () => {
       try {
         const enums = await DatabaseTool.getAllEnums();

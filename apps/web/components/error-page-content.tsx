@@ -69,7 +69,7 @@ export function ErrorPageContent({
           ) : (
             <Button asChild>
               <Link href={backLink}>
-                <ArrowLeft className={'h-4 w-4 mr-1'} />
+                <ArrowLeft className={'mr-1 h-4 w-4'} />
                 <Trans i18nKey={backLabel} />
               </Link>
             </Button>
@@ -77,7 +77,7 @@ export function ErrorPageContent({
 
           <Button asChild variant={'ghost'}>
             <Link href={'/contact'}>
-              <MessageCircleQuestion className={'h-4 w-4 mr-1'} />
+              <MessageCircleQuestion className={'mr-1 h-4 w-4'} />
               <Trans i18nKey={contactLabel} />
             </Link>
           </Button>

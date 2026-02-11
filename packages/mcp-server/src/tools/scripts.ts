@@ -1,7 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 
 interface ScriptInfo {
   name: string;
@@ -241,9 +241,12 @@ export function registerScriptsTools(server: McpServer) {
 }
 
 function createGetScriptsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_scripts',
-    'Get all available npm/pnpm scripts with descriptions and usage guidance',
+    {
+      description:
+        'Get all available npm/pnpm scripts with descriptions and usage guidance',
+    },
     async () => {
       const scripts = await ScriptsTool.getScripts();
 
@@ -267,13 +270,15 @@ function createGetScriptsTool(server: McpServer) {
 }
 
 function createGetScriptDetailsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_script_details',
-    'Get detailed information about a specific script',
     {
-      state: z.object({
-        scriptName: z.string(),
-      }),
+      description: 'Get detailed information about a specific script',
+      inputSchema: {
+        state: z.object({
+          scriptName: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const script = await ScriptsTool.getScriptDetails(state.scriptName);
@@ -300,9 +305,12 @@ Usage: ${script.usage}${healthcheck}`,
 }
 
 function createGetHealthcheckScriptsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_healthcheck_scripts',
-    'Get critical scripts that should be run after writing code (typecheck, lint, format, test)',
+    {
+      description:
+        'Get critical scripts that should be run after writing code (typecheck, lint, format, test)',
+    },
     async () => {
       const scripts = await ScriptsTool.getScripts();
       const healthcheckScripts = scripts.filter((script) => script.healthcheck);

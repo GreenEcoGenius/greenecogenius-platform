@@ -55,11 +55,13 @@ create policy "projects_write" on public.projects for all
 
 Use `server-action-builder` skill for detailed patterns.
 
+**Rule: Services are decoupled from interfaces.** The service is pure logic that receives dependencies (database client, etc.) as arguments — it never imports framework-specific modules. The server action is a thin adapter that resolves dependencies and calls the service. This means the same service can be called from a server action, an MCP tool, a CLI command, or a unit test with zero changes.
+
 Create in route's `_lib/server/` directory:
 
 1. **Schema** (`_lib/schemas/feature.schema.ts`)
-2. **Service** (`_lib/server/feature.service.ts`)
-3. **Actions** (`_lib/server/server-actions.ts`)
+2. **Service** (`_lib/server/feature.service.ts`) — pure logic, dependencies injected, testable in isolation
+3. **Actions** (`_lib/server/server-actions.ts`) — thin adapter, no business logic
 
 ### Phase 3: UI Components
 
@@ -148,7 +150,9 @@ apps/web/app/home/[account]/projects/
 ### Server Layer
 
 - [ ] Zod schema in `_lib/schemas/`
-- [ ] Service class in `_lib/server/`
+- [ ] Service class in `_lib/server/` with dependencies injected (not imported)
+- [ ] Service contains all business logic — testable with mock dependencies
+- [ ] Server actions are thin adapters — resolve dependencies, call service, handle revalidation
 - [ ] Server actions use `enhanceAction`
 - [ ] Actions have `auth: true` and `schema` options
 - [ ] Logging added for operations

@@ -6,10 +6,20 @@ import {
   registerDatabaseResources,
   registerDatabaseTools,
 } from './tools/database';
+import { registerKitDbTools } from './tools/db/index';
+import { registerDepsUpgradeAdvisorTool } from './tools/deps-upgrade-advisor/index';
+import { registerKitDevTools } from './tools/dev/index';
+import { registerKitEmailTemplatesTools } from './tools/emails/index';
+import { registerKitEnvTools } from './tools/env/index';
+import { registerKitEmailsTools } from './tools/mailbox/index';
 import { registerGetMigrationsTools } from './tools/migrations';
 import { registerPRDTools } from './tools/prd-manager';
+import { registerKitPrerequisitesTool } from './tools/prerequisites/index';
 import { registerPromptsSystem } from './tools/prompts';
+import { registerRunChecksTool } from './tools/run-checks/index';
 import { registerScriptsTools } from './tools/scripts';
+import { registerKitStatusTool } from './tools/status/index';
+import { registerKitTranslationsTools } from './tools/translations/index';
 
 async function main() {
   // Create server instance
@@ -21,10 +31,20 @@ async function main() {
   const transport = new StdioServerTransport();
 
   registerGetMigrationsTools(server);
+  registerKitStatusTool(server);
+  registerKitPrerequisitesTool(server);
+  registerKitEnvTools(server);
+  registerKitDevTools(server);
+  registerKitDbTools(server);
+  registerKitEmailsTools(server);
+  registerKitEmailTemplatesTools(server);
+  registerKitTranslationsTools(server);
   registerDatabaseTools(server);
   registerDatabaseResources(server);
   registerComponentsTools(server);
   registerScriptsTools(server);
+  registerRunChecksTool(server);
+  registerDepsUpgradeAdvisorTool(server);
   registerPRDTools(server);
   registerPromptsSystem(server);
 

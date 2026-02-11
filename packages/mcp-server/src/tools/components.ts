@@ -1,7 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 
 interface ComponentInfo {
   name: string;
@@ -345,9 +345,12 @@ export function registerComponentsTools(server: McpServer) {
 }
 
 function createGetComponentsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_components',
-    'Get all available UI components from the @kit/ui package with descriptions',
+    {
+      description:
+        'Get all available UI components from the @kit/ui package with descriptions',
+    },
     async () => {
       const components = await ComponentsTool.getComponents();
 
@@ -371,13 +374,15 @@ function createGetComponentsTool(server: McpServer) {
 }
 
 function createGetComponentContentTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_component_content',
-    'Get the source code content of a specific UI component',
     {
-      state: z.object({
-        componentName: z.string(),
-      }),
+      description: 'Get the source code content of a specific UI component',
+      inputSchema: {
+        state: z.object({
+          componentName: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const content = await ComponentsTool.getComponentContent(
@@ -397,13 +402,16 @@ function createGetComponentContentTool(server: McpServer) {
 }
 
 function createComponentsSearchTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'components_search',
-    'Search UI components by keyword in name, description, or category',
     {
-      state: z.object({
-        query: z.string(),
-      }),
+      description:
+        'Search UI components by keyword in name, description, or category',
+      inputSchema: {
+        state: z.object({
+          query: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const components = await ComponentsTool.searchComponents(state.query);
@@ -439,13 +447,16 @@ function createComponentsSearchTool(server: McpServer) {
 }
 
 function createGetComponentPropsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_component_props',
-    'Extract component props, interfaces, and variants from a UI component',
     {
-      state: z.object({
-        componentName: z.string(),
-      }),
+      description:
+        'Extract component props, interfaces, and variants from a UI component',
+      inputSchema: {
+        state: z.object({
+          componentName: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const propsInfo = await ComponentsTool.getComponentProps(

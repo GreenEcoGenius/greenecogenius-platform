@@ -2,7 +2,7 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { execSync } from 'node:child_process';
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 
 export class MigrationsTool {
   static GetMigrations() {
@@ -35,9 +35,12 @@ export function registerGetMigrationsTools(server: McpServer) {
 }
 
 function createDiffMigrationTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'diff_migrations',
-    'Compare differences between the declarative schemas and the applied migrations in Supabase',
+    {
+      description:
+        'Compare differences between the declarative schemas and the applied migrations in Supabase',
+    },
     async () => {
       const result = MigrationsTool.Diff();
       const text = result.toString('utf8');
@@ -55,13 +58,15 @@ function createDiffMigrationTool(server: McpServer) {
 }
 
 function createCreateMigrationTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'create_migration',
-    'Create a new Supabase Postgres migration file',
     {
-      state: z.object({
-        name: z.string(),
-      }),
+      description: 'Create a new Supabase Postgres migration file',
+      inputSchema: {
+        state: z.object({
+          name: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const result = MigrationsTool.CreateMigration(state.name);
@@ -80,13 +85,16 @@ function createCreateMigrationTool(server: McpServer) {
 }
 
 function createGetMigrationContentTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_migration_content',
-    '📜 Get migration file content (HISTORICAL) - For current state use get_schema_content instead',
     {
-      state: z.object({
-        path: z.string(),
-      }),
+      description:
+        '📜 Get migration file content (HISTORICAL) - For current state use get_schema_content instead',
+      inputSchema: {
+        state: z.object({
+          path: z.string(),
+        }),
+      },
     },
     async ({ state }) => {
       const content = await MigrationsTool.getMigrationContent(state.path);
@@ -104,9 +112,12 @@ function createGetMigrationContentTool(server: McpServer) {
 }
 
 function createGetMigrationsTool(server: McpServer) {
-  return server.tool(
+  return server.registerTool(
     'get_migrations',
-    '📜 Get migration files (HISTORICAL CHANGES) - Use schema files for current state instead',
+    {
+      description:
+        '📜 Get migration files (HISTORICAL CHANGES) - Use schema files for current state instead',
+    },
     async () => {
       const migrations = await MigrationsTool.GetMigrations();
 
