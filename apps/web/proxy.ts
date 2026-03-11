@@ -2,10 +2,8 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 import { CsrfError, createCsrfProtect } from '@edge-csrf/nextjs';
-import createNextIntlMiddleware from 'next-intl/middleware';
 
 import { isSuperAdmin } from '@kit/admin';
-import { routing } from '@kit/i18n/routing';
 import { getSafeRedirectPath } from '@kit/shared/utils';
 import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';
 import { createMiddlewareClient } from '@kit/supabase/middleware-client';
@@ -20,28 +18,22 @@ export const config = {
   matcher: ['/((?!_next/static|_next/image|images|locales|assets|api/*).*)'],
 };
 
-// create i18n middleware once at module scope
-const handleI18nRouting = createNextIntlMiddleware(routing);
-
 const getUser = (request: NextRequest, response: NextResponse) => {
   const supabase = createMiddlewareClient(request, response);
 
   return supabase.auth.getClaims();
 };
 
-export default async function proxy(request: NextRequest) {
-  // run next-intl middleware first to get the i18n-aware response
-  const response = handleI18nRouting(request);
-
-  // apply secure headers on top of the i18n response
-  const secureHeadersResponse = await createResponseWithSecureHeaders(response);
+export async function proxy(request: NextRequest) {
+  const secureHeaders = await createResponseWithSecureHeaders();
+  const response = NextResponse.next(secureHeaders);
 
   // set a unique request ID for each request
   // this helps us log and trace requests
   setRequestId(request);
 
   // apply CSRF protection for mutating requests
-  const csrfResponse = await withCsrfMiddleware(request, secureHeadersResponse);
+  const csrfResponse = await withCsrfMiddleware(request, response);
 
   // handle patterns for specific routes
   const handlePattern = await matchUrlPattern(request.url);
@@ -92,7 +84,7 @@ async function withCsrfMiddleware(
     // if there is a CSRF error, return a 403 response
     if (error instanceof CsrfError) {
       return NextResponse.json('Invalid CSRF token', {
-        status: 403,
+        status: 401,
       });
     }
 
@@ -212,11 +204,8 @@ async function getPatterns() {
  * Match URL patterns to specific handlers.
  * @param url
  */
-let cachedPatterns: Awaited<ReturnType<typeof getPatterns>> | null = null;
-
 async function matchUrlPattern(url: string) {
-  cachedPatterns ??= await getPatterns();
-  const patterns = cachedPatterns;
+  const patterns = await getPatterns();
   const input = url.split('?')[0];
 
   for (const pattern of patterns) {
@@ -241,23 +230,15 @@ function setRequestId(request: Request) {
  * @description Create a middleware with enhanced headers applied (if applied).
  * This is disabled by default. To enable set ENABLE_STRICT_CSP=true
  */
-async function createResponseWithSecureHeaders(response: NextResponse) {
+async function createResponseWithSecureHeaders() {
   const enableStrictCsp = process.env.ENABLE_STRICT_CSP ?? 'false';
 
   // we disable ENABLE_STRICT_CSP by default
   if (enableStrictCsp === 'false') {
-    return response;
+    return {};
   }
 
   const { createCspResponse } = await import('./lib/create-csp-response');
-  const cspResponse = await createCspResponse();
 
-  // set the CSP headers on the i18n response
-  if (cspResponse) {
-    for (const [key, value] of cspResponse.headers.entries()) {
-      response.headers.set(key, value);
-    }
-  }
-
-  return response;
+  return createCspResponse();
 }

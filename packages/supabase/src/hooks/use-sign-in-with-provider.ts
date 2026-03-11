@@ -12,7 +12,7 @@ export function useSignInWithProvider() {
     const response = await client.auth.signInWithOAuth(credentials);
 
     if (response.error) {
-      throw response.error;
+      throw response.error.message;
     }
 
     return response.data;

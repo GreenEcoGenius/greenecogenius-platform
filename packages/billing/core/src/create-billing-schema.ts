@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 export enum LineItemType {
   Flat = 'flat',
@@ -19,13 +19,42 @@ export const PaymentTypeSchema = z.enum(['one-time', 'recurring']);
 
 export const LineItemSchema = z
   .object({
-    id: z.string().min(1),
-    name: z.string().min(1),
-    description: z.string().optional(),
-    cost: z.number().min(0),
+    id: z
+      .string({
+        description:
+          'Unique identifier for the line item. Defined by the Provider.',
+      })
+      .min(1),
+    name: z
+      .string({
+        description: 'Name of the line item. Displayed to the user.',
+      })
+      .min(1),
+    description: z
+      .string({
+        description:
+          'Description of the line item. Displayed to the user and will replace the auto-generated description inferred' +
+          ' from the line item. This is useful if you want to provide a more detailed description to the user.',
+      })
+      .optional(),
+    cost: z
+      .number({
+        description: 'Cost of the line item. Displayed to the user.',
+      })
+      .min(0),
     type: LineItemTypeSchema,
-    unit: z.string().optional(),
-    setupFee: z.number().positive().optional(),
+    unit: z
+      .string({
+        description:
+          'Unit of the line item. Displayed to the user. Example "seat" or "GB"',
+      })
+      .optional(),
+    setupFee: z
+      .number({
+        description: `Lemon Squeezy only: If true, in addition to the cost, a setup fee will be charged.`,
+      })
+      .positive()
+      .optional(),
     tiers: z
       .array(
         z.object({
@@ -61,8 +90,16 @@ export const LineItemSchema = z
 
 export const PlanSchema = z
   .object({
-    id: z.string().min(1),
-    name: z.string().min(1),
+    id: z
+      .string({
+        description: 'Unique identifier for the plan. Defined by yourself.',
+      })
+      .min(1),
+    name: z
+      .string({
+        description: 'Name of the plan. Displayed to the user.',
+      })
+      .min(1),
     interval: BillingIntervalSchema.optional(),
     custom: z.boolean().default(false).optional(),
     label: z.string().min(1).optional(),
@@ -85,7 +122,13 @@ export const PlanSchema = z
         path: ['lineItems'],
       },
     ),
-    trialDays: z.number().positive().optional(),
+    trialDays: z
+      .number({
+        description:
+          'Number of days for the trial period. Leave empty for no trial.',
+      })
+      .positive()
+      .optional(),
     paymentType: PaymentTypeSchema,
   })
   .refine(
@@ -164,15 +207,56 @@ export const PlanSchema = z
 
 const ProductSchema = z
   .object({
-    id: z.string().min(1),
-    name: z.string().min(1),
-    description: z.string().min(1),
-    currency: z.string().min(3).max(3),
-    badge: z.string().optional(),
-    features: z.array(z.string()).nonempty(),
-    enableDiscountField: z.boolean().optional(),
-    highlighted: z.boolean().optional(),
-    hidden: z.boolean().optional(),
+    id: z
+      .string({
+        description:
+          'Unique identifier for the product. Defined by th Provider.',
+      })
+      .min(1),
+    name: z
+      .string({
+        description: 'Name of the product. Displayed to the user.',
+      })
+      .min(1),
+    description: z
+      .string({
+        description: 'Description of the product. Displayed to the user.',
+      })
+      .min(1),
+    currency: z
+      .string({
+        description: 'Currency code for the product. Displayed to the user.',
+      })
+      .min(3)
+      .max(3),
+    badge: z
+      .string({
+        description:
+          'Badge for the product. Displayed to the user. Example: "Popular"',
+      })
+      .optional(),
+    features: z
+      .array(
+        z.string({
+          description: 'Features of the product. Displayed to the user.',
+        }),
+      )
+      .nonempty(),
+    enableDiscountField: z
+      .boolean({
+        description: 'Enable discount field for the product in the checkout.',
+      })
+      .optional(),
+    highlighted: z
+      .boolean({
+        description: 'Highlight this product. Displayed to the user.',
+      })
+      .optional(),
+    hidden: z
+      .boolean({
+        description: 'Hide this product from being displayed to users.',
+      })
+      .optional(),
     plans: z.array(PlanSchema),
   })
   .refine((data) => data.plans.length > 0, {
@@ -253,14 +337,14 @@ const BillingSchema = z
     },
   );
 
-export function createBillingSchema(config: z.output<typeof BillingSchema>) {
+export function createBillingSchema(config: z.infer<typeof BillingSchema>) {
   return BillingSchema.parse(config);
 }
 
-export type BillingConfig = z.output<typeof BillingSchema>;
-export type ProductSchema = z.output<typeof ProductSchema>;
+export type BillingConfig = z.infer<typeof BillingSchema>;
+export type ProductSchema = z.infer<typeof ProductSchema>;
 
-export function getPlanIntervals(config: z.output<typeof BillingSchema>) {
+export function getPlanIntervals(config: z.infer<typeof BillingSchema>) {
   const intervals = config.products
     .flatMap((product) => product.plans.map((plan) => plan.interval))
     .filter(Boolean);
@@ -279,7 +363,7 @@ export function getPlanIntervals(config: z.output<typeof BillingSchema>) {
  * @param planId
  */
 export function getPrimaryLineItem(
-  config: z.output<typeof BillingSchema>,
+  config: z.infer<typeof BillingSchema>,
   planId: string,
 ) {
   for (const product of config.products) {
@@ -307,7 +391,7 @@ export function getPrimaryLineItem(
 }
 
 export function getProductPlanPair(
-  config: z.output<typeof BillingSchema>,
+  config: z.infer<typeof BillingSchema>,
   planId: string,
 ) {
   for (const product of config.products) {
@@ -322,7 +406,7 @@ export function getProductPlanPair(
 }
 
 export function getProductPlanPairByVariantId(
-  config: z.output<typeof BillingSchema>,
+  config: z.infer<typeof BillingSchema>,
   planId: string,
 ) {
   for (const product of config.products) {
@@ -338,7 +422,7 @@ export function getProductPlanPairByVariantId(
   throw new Error('Plan not found');
 }
 
-export type PlanTypeMap = Map<string, z.output<typeof LineItemTypeSchema>>;
+export type PlanTypeMap = Map<string, z.infer<typeof LineItemTypeSchema>>;
 
 /**
  * @name getPlanTypesMap
@@ -346,7 +430,7 @@ export type PlanTypeMap = Map<string, z.output<typeof LineItemTypeSchema>>;
  * @param config
  */
 export function getPlanTypesMap(
-  config: z.output<typeof BillingSchema>,
+  config: z.infer<typeof BillingSchema>,
 ): PlanTypeMap {
   const planTypes: PlanTypeMap = new Map();
 

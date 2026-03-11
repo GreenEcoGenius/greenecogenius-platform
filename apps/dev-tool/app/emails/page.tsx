@@ -49,16 +49,13 @@ export default async function EmailsPage() {
 
               <div className={'grid grid-cols-1 gap-4 md:grid-cols-4'}>
                 {categoryTemplates.map((template) => (
-                  <CardButton
-                    key={template.id}
-                    render={
-                      <Link href={`/emails/${template.id}`}>
-                        <CardButtonHeader>
-                          <CardButtonTitle>{template.name}</CardButtonTitle>
-                        </CardButtonHeader>
-                      </Link>
-                    }
-                  />
+                  <CardButton key={template.id} asChild>
+                    <Link href={`/emails/${template.id}`}>
+                      <CardButtonHeader>
+                        <CardButtonTitle>{template.name}</CardButtonTitle>
+                      </CardButtonHeader>
+                    </Link>
+                  </CardButton>
                 ))}
               </div>
             </div>

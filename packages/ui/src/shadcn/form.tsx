@@ -2,11 +2,12 @@
 
 import * as React from 'react';
 
-import { cn } from '#utils';
-import { useRender } from '@base-ui/react/use-render';
+import { Label as LabelPrimitive } from 'radix-ui';
+import { Slot } from 'radix-ui';
 import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
 import { Controller, FormProvider, useFormContext } from 'react-hook-form';
 
+import { cn } from '../lib/utils';
 import { Trans } from '../makerkit/trans';
 import { Label } from './label';
 
@@ -40,6 +41,7 @@ const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
   const { getFieldState, formState } = useFormContext();
+
   const fieldState = getFieldState(fieldContext.name, formState);
 
   if (!fieldContext) {
@@ -80,10 +82,9 @@ const FormItem: React.FC<React.ComponentPropsWithRef<'div'>> = ({
 };
 FormItem.displayName = 'FormItem';
 
-const FormLabel: React.FC<React.ComponentPropsWithRef<typeof Label>> = ({
-  className,
-  ...props
-}) => {
+const FormLabel: React.FC<
+  React.ComponentPropsWithRef<typeof LabelPrimitive.Root>
+> = ({ className, ...props }) => {
   const { error, formItemId } = useFormField();
 
   return (
@@ -97,29 +98,23 @@ const FormLabel: React.FC<React.ComponentPropsWithRef<typeof Label>> = ({
 FormLabel.displayName = 'FormLabel';
 
 const FormControl: React.FC<
-  React.PropsWithChildren & {
-    className?: string;
-    render?: React.ReactElement;
-  }
+  React.ComponentPropsWithoutRef<typeof Slot.Root>
 > = ({ ...props }) => {
   const { error, formItemId, formDescriptionId, formMessageId } =
     useFormField();
 
-  return useRender({
-    defaultTagName: 'div',
-    render: props.render,
-    props: {
-      ...props,
-      id: formItemId,
-      'aria-labelledby': formItemId,
-      'aria-describedby': !error
-        ? `${formDescriptionId}`
-        : `${formDescriptionId} ${formMessageId}`,
-      'aria-invalid': !!error,
-      className: cn(props.className),
-      children: props.children,
-    },
-  });
+  return (
+    <Slot.Root
+      id={formItemId}
+      aria-describedby={
+        !error
+          ? `${formDescriptionId}`
+          : `${formDescriptionId} ${formMessageId}`
+      }
+      aria-invalid={!!error}
+      {...props}
+    />
+  );
 };
 FormControl.displayName = 'FormControl';
 
@@ -139,9 +134,11 @@ const FormDescription: React.FC<React.ComponentPropsWithRef<'p'>> = ({
 };
 FormDescription.displayName = 'FormDescription';
 
-const FormMessage: React.FC<
-  React.ComponentPropsWithRef<'p'> & { params?: Record<string, unknown> }
-> = ({ className, children, params = {}, ...props }) => {
+const FormMessage: React.FC<React.ComponentPropsWithRef<'p'>> = ({
+  className,
+  children,
+  ...props
+}) => {
   const { error, formMessageId } = useFormField();
   const body = error ? String(error?.message) : children;
 
@@ -156,7 +153,7 @@ const FormMessage: React.FC<
       {...props}
     >
       {typeof body === 'string' ? (
-        <Trans i18nKey={body} defaults={body} values={params} />
+        <Trans i18nKey={body} defaults={body} />
       ) : (
         body
       )}

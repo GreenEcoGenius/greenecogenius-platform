@@ -1,8 +1,9 @@
 'use client';
 
+import { useFormStatus } from 'react-dom';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TriangleAlert } from 'lucide-react';
-import { useAction } from 'next-safe-action/hooks';
+import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { useForm, useWatch } from 'react-hook-form';
 
 import { ErrorBoundary } from '@kit/monitoring/components';
@@ -30,11 +31,11 @@ export function AccountDangerZone() {
     <div className={'flex flex-col space-y-4'}>
       <div className={'flex flex-col space-y-1'}>
         <span className={'text-sm font-medium'}>
-          <Trans i18nKey={'account.deleteAccount'} />
+          <Trans i18nKey={'account:deleteAccount'} />
         </span>
 
         <p className={'text-muted-foreground text-sm'}>
-          <Trans i18nKey={'account.deleteAccountDescription'} />
+          <Trans i18nKey={'account:deleteAccountDescription'} />
         </p>
       </div>
 
@@ -54,18 +55,16 @@ function DeleteAccountModal() {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger
-        render={
-          <Button data-test={'delete-account-button'} variant={'destructive'}>
-            <Trans i18nKey={'account.deleteAccount'} />
-          </Button>
-        }
-      />
+      <AlertDialogTrigger asChild>
+        <Button data-test={'delete-account-button'} variant={'destructive'}>
+          <Trans i18nKey={'account:deleteAccount'} />
+        </Button>
+      </AlertDialogTrigger>
 
-      <AlertDialogContent>
+      <AlertDialogContent onEscapeKeyDown={(e) => e.preventDefault()}>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            <Trans i18nKey={'account.deleteAccount'} />
+            <Trans i18nKey={'account:deleteAccount'} />
           </AlertDialogTitle>
         </AlertDialogHeader>
 
@@ -78,8 +77,6 @@ function DeleteAccountModal() {
 }
 
 function DeleteAccountForm(props: { email: string }) {
-  const { execute, isPending } = useAction(deletePersonalAccountAction);
-
   const form = useForm({
     resolver: zodResolver(DeletePersonalAccountSchema),
     defaultValues: {
@@ -97,7 +94,7 @@ function DeleteAccountForm(props: { email: string }) {
         onSuccess={(otp) => form.setValue('otp', otp, { shouldValidate: true })}
         CancelButton={
           <AlertDialogCancel>
-            <Trans i18nKey={'common.cancel'} />
+            <Trans i18nKey={'common:cancel'} />
           </AlertDialogCancel>
         }
       />
@@ -108,12 +105,11 @@ function DeleteAccountForm(props: { email: string }) {
     <Form {...form}>
       <form
         data-test={'delete-account-form'}
-        onSubmit={(e) => {
-          e.preventDefault();
-          execute({ otp });
-        }}
+        action={deletePersonalAccountAction}
         className={'flex flex-col space-y-4'}
       >
+        <input type="hidden" name="otp" value={otp} />
+
         <div className={'flex flex-col space-y-6'}>
           <div
             className={
@@ -122,11 +118,11 @@ function DeleteAccountForm(props: { email: string }) {
           >
             <div className={'flex flex-col space-y-2'}>
               <div>
-                <Trans i18nKey={'account.deleteAccountDescription'} />
+                <Trans i18nKey={'account:deleteAccountDescription'} />
               </div>
 
               <div>
-                <Trans i18nKey={'common.modalConfirmationQuestion'} />
+                <Trans i18nKey={'common:modalConfirmationQuestion'} />
               </div>
             </div>
           </div>
@@ -134,25 +130,33 @@ function DeleteAccountForm(props: { email: string }) {
 
         <AlertDialogFooter>
           <AlertDialogCancel>
-            <Trans i18nKey={'common.cancel'} />
+            <Trans i18nKey={'common:cancel'} />
           </AlertDialogCancel>
 
-          <Button
-            data-test={'confirm-delete-account-button'}
-            type={'submit'}
-            disabled={isPending || !form.formState.isValid}
-            name={'action'}
-            variant={'destructive'}
-          >
-            {isPending ? (
-              <Trans i18nKey={'account.deletingAccount'} />
-            ) : (
-              <Trans i18nKey={'account.deleteAccount'} />
-            )}
-          </Button>
+          <DeleteAccountSubmitButton disabled={!form.formState.isValid} />
         </AlertDialogFooter>
       </form>
     </Form>
+  );
+}
+
+function DeleteAccountSubmitButton(props: { disabled: boolean }) {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      data-test={'confirm-delete-account-button'}
+      type={'submit'}
+      disabled={pending || props.disabled}
+      name={'action'}
+      variant={'destructive'}
+    >
+      {pending ? (
+        <Trans i18nKey={'account:deletingAccount'} />
+      ) : (
+        <Trans i18nKey={'account:deleteAccount'} />
+      )}
+    </Button>
   );
 }
 
@@ -163,7 +167,7 @@ function DeleteAccountErrorContainer() {
 
       <div>
         <AlertDialogCancel>
-          <Trans i18nKey={'common.cancel'} />
+          <Trans i18nKey={'common:cancel'} />
         </AlertDialogCancel>
       </div>
     </div>
@@ -173,14 +177,14 @@ function DeleteAccountErrorContainer() {
 function DeleteAccountErrorAlert() {
   return (
     <Alert variant={'destructive'}>
-      <TriangleAlert className={'h-4'} />
+      <ExclamationTriangleIcon className={'h-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'account.deleteAccountErrorHeading'} />
+        <Trans i18nKey={'account:deleteAccountErrorHeading'} />
       </AlertTitle>
 
       <AlertDescription>
-        <Trans i18nKey={'common.genericError'} />
+        <Trans i18nKey={'common:genericError'} />
       </AlertDescription>
     </Alert>
   );

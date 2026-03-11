@@ -1,4 +1,4 @@
-import { TriangleAlert } from 'lucide-react';
+import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 
 import {
   WeakPasswordError,
@@ -33,25 +33,23 @@ export function AuthErrorAlert({
     return <WeakPasswordErrorAlert reasons={error.reasons} />;
   }
 
-  const DefaultError = <Trans i18nKey="auth.errors.default" />;
-
-  const errorCode =
-    error instanceof Error
-      ? 'code' in error && typeof error.code === 'string'
-        ? error.code
-        : error.message
-      : error;
+  const DefaultError = <Trans i18nKey="auth:errors.default" />;
+  const errorCode = error instanceof Error ? error.message : error;
 
   return (
     <Alert variant={'destructive'}>
-      <TriangleAlert className={'w-4'} />
+      <ExclamationTriangleIcon className={'w-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={`auth.errorAlertHeading`} />
+        <Trans i18nKey={`auth:errorAlertHeading`} />
       </AlertTitle>
 
       <AlertDescription data-test={'auth-error-message'}>
-        <Trans i18nKey={`auth.errors.${errorCode}`} defaults={DefaultError} />
+        <Trans
+          i18nKey={`auth:errors.${errorCode}`}
+          defaults={'<DefaultError />'}
+          components={{ DefaultError }}
+        />
       </AlertDescription>
     </Alert>
   );
@@ -64,21 +62,21 @@ function WeakPasswordErrorAlert({
 }) {
   return (
     <Alert variant={'destructive'}>
-      <TriangleAlert className={'w-4'} />
+      <ExclamationTriangleIcon className={'w-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'auth.errors.weakPassword.title'} />
+        <Trans i18nKey={'auth:errors.weakPassword.title'} />
       </AlertTitle>
 
       <AlertDescription data-test={'auth-error-message'}>
-        <Trans i18nKey={'auth.errors.weakPassword.description'} />
+        <Trans i18nKey={'auth:errors.weakPassword.description'} />
 
         {reasons.length > 0 && (
           <ul className="mt-2 list-inside list-disc space-y-1 text-xs">
             {reasons.map((reason) => (
               <li key={reason}>
                 <Trans
-                  i18nKey={`auth.errors.weakPassword.reasons.${reason}`}
+                  i18nKey={`auth:errors.weakPassword.reasons.${reason}`}
                   defaults={reason}
                 />
               </li>

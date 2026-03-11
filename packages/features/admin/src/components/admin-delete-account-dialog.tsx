@@ -1,7 +1,8 @@
 'use client';
 
+import { useState, useTransition } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAction } from 'next-safe-action/hooks';
 import { useForm } from 'react-hook-form';
 
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
@@ -36,7 +37,8 @@ export function AdminDeleteAccountDialog(
     accountId: string;
   }>,
 ) {
-  const { execute, isPending, hasErrored } = useAction(deleteAccountAction);
+  const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<boolean>(false);
 
   const form = useForm({
     resolver: zodResolver(DeleteAccountSchema),
@@ -48,7 +50,7 @@ export function AdminDeleteAccountDialog(
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger render={props.children as React.ReactElement} />
+      <AlertDialogTrigger asChild>{props.children}</AlertDialogTrigger>
 
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -63,11 +65,20 @@ export function AdminDeleteAccountDialog(
 
         <Form {...form}>
           <form
-            data-test={'admin-delete-account-form'}
+            data-form={'admin-delete-account-form'}
             className={'flex flex-col space-y-8'}
-            onSubmit={form.handleSubmit((data) => execute(data))}
+            onSubmit={form.handleSubmit((data) => {
+              startTransition(async () => {
+                try {
+                  await deleteAccountAction(data);
+                  setError(false);
+                } catch {
+                  setError(true);
+                }
+              });
+            })}
           >
-            <If condition={hasErrored}>
+            <If condition={error}>
               <Alert variant={'destructive'}>
                 <AlertTitle>Error</AlertTitle>
 
@@ -109,11 +120,11 @@ export function AdminDeleteAccountDialog(
               <AlertDialogCancel>Cancel</AlertDialogCancel>
 
               <Button
-                disabled={isPending}
+                disabled={pending}
                 type={'submit'}
                 variant={'destructive'}
               >
-                {isPending ? 'Deleting...' : 'Delete'}
+                {pending ? 'Deleting...' : 'Delete'}
               </Button>
             </AlertDialogFooter>
           </form>

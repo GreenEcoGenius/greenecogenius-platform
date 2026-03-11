@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 import {
   CancelSubscriptionParamsSchema,
@@ -13,13 +13,13 @@ import { UpsertSubscriptionParams } from '../types';
 
 export abstract class BillingStrategyProviderService {
   abstract createBillingPortalSession(
-    params: z.output<typeof CreateBillingPortalSessionSchema>,
+    params: z.infer<typeof CreateBillingPortalSessionSchema>,
   ): Promise<{
     url: string;
   }>;
 
   abstract retrieveCheckoutSession(
-    params: z.output<typeof RetrieveCheckoutSessionSchema>,
+    params: z.infer<typeof RetrieveCheckoutSessionSchema>,
   ): Promise<{
     checkoutToken: string | null;
     status: 'complete' | 'expired' | 'open';
@@ -31,31 +31,31 @@ export abstract class BillingStrategyProviderService {
   }>;
 
   abstract createCheckoutSession(
-    params: z.output<typeof CreateBillingCheckoutSchema>,
+    params: z.infer<typeof CreateBillingCheckoutSchema>,
   ): Promise<{
     checkoutToken: string;
   }>;
 
   abstract cancelSubscription(
-    params: z.output<typeof CancelSubscriptionParamsSchema>,
+    params: z.infer<typeof CancelSubscriptionParamsSchema>,
   ): Promise<{
     success: boolean;
   }>;
 
   abstract reportUsage(
-    params: z.output<typeof ReportBillingUsageSchema>,
+    params: z.infer<typeof ReportBillingUsageSchema>,
   ): Promise<{
     success: boolean;
   }>;
 
   abstract queryUsage(
-    params: z.output<typeof QueryBillingUsageSchema>,
+    params: z.infer<typeof QueryBillingUsageSchema>,
   ): Promise<{
     value: number;
   }>;
 
   abstract updateSubscriptionItem(
-    params: z.output<typeof UpdateSubscriptionParamsSchema>,
+    params: z.infer<typeof UpdateSubscriptionParamsSchema>,
   ): Promise<{
     success: boolean;
   }>;

@@ -1,12 +1,12 @@
 import 'server-only';
 
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { Mailer, MailerSchema } from '@kit/mailers-shared';
 
 import { getSMTPConfiguration } from './smtp-configuration';
 
-type Config = z.output<typeof MailerSchema>;
+type Config = z.infer<typeof MailerSchema>;
 
 export function createNodemailerService() {
   return new Nodemailer();

@@ -2,13 +2,7 @@ import Link from 'next/link';
 
 import { cn } from '@kit/ui/utils';
 
-/**
- * App Logo Image - modify this with your own logo
- * @param className - The class name to apply to the logo
- * @param width - The width of the logo
- * @returns
- */
-export function LogoImage({
+function LogoImage({
   className,
   width = 105,
 }: {
@@ -18,7 +12,7 @@ export function LogoImage({
   return (
     <svg
       width={width}
-      className={cn(`w-20 lg:w-[95px]`, className)}
+      className={cn(`w-[80px] lg:w-[95px]`, className)}
       viewBox="0 0 733 140"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -46,12 +40,7 @@ export function AppLogo({
   }
 
   return (
-    <Link
-      aria-label={label ?? 'Home Page'}
-      href={href ?? '/'}
-      prefetch={true}
-      className="mx-auto md:mx-0"
-    >
+    <Link aria-label={label ?? 'Home Page'} href={href ?? '/'} prefetch={true}>
       <LogoImage className={className} />
     </Link>
   );

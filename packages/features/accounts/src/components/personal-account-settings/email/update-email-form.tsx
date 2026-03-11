@@ -1,9 +1,10 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Check, Mail } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { CheckIcon } from '@radix-ui/react-icons';
+import { Mail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useUpdateUser } from '@kit/supabase/hooks/use-update-user-mutation';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
@@ -61,7 +62,7 @@ export function UpdateEmailForm({
   callbackPath: string;
   onSuccess?: () => void;
 }) {
-  const t = useTranslations('account');
+  const { t } = useTranslation('account');
   const updateUserMutation = useUpdateUser();
   const isSettingEmail = !email;
 
@@ -107,14 +108,14 @@ export function UpdateEmailForm({
       >
         <If condition={updateUserMutation.data}>
           <Alert variant={'success'}>
-            <Check className={'h-4'} />
+            <CheckIcon className={'h-4'} />
 
             <AlertTitle>
               <Trans
                 i18nKey={
                   isSettingEmail
-                    ? 'account.setEmailSuccess'
-                    : 'account.updateEmailSuccess'
+                    ? 'account:setEmailSuccess'
+                    : 'account:updateEmailSuccess'
                 }
               />
             </AlertTitle>
@@ -123,8 +124,8 @@ export function UpdateEmailForm({
               <Trans
                 i18nKey={
                   isSettingEmail
-                    ? 'account.setEmailSuccessMessage'
-                    : 'account.updateEmailSuccessMessage'
+                    ? 'account:setEmailSuccessMessage'
+                    : 'account:updateEmailSuccessMessage'
                 }
               />
             </AlertDescription>
@@ -147,7 +148,9 @@ export function UpdateEmailForm({
                         required
                         type={'email'}
                         placeholder={t(
-                          isSettingEmail ? 'emailAddress' : 'newEmail',
+                          isSettingEmail
+                            ? 'account:emailAddress'
+                            : 'account:newEmail',
                         )}
                         {...field}
                       />
@@ -159,7 +162,7 @@ export function UpdateEmailForm({
               )}
               name={'email'}
             />
-            Perform
+
             <FormField
               render={({ field }) => (
                 <FormItem>
@@ -174,7 +177,7 @@ export function UpdateEmailForm({
                         data-test={'account-email-form-repeat-email-input'}
                         required
                         type={'email'}
-                        placeholder={t('repeatEmail')}
+                        placeholder={t('account:repeatEmail')}
                       />
                     </InputGroup>
                   </FormControl>
@@ -187,12 +190,12 @@ export function UpdateEmailForm({
           </div>
 
           <div>
-            <Button type="submit" disabled={updateUserMutation.isPending}>
+            <Button disabled={updateUserMutation.isPending}>
               <Trans
                 i18nKey={
                   isSettingEmail
-                    ? 'account.setEmailAddress'
-                    : 'account.updateEmailSubmitLabel'
+                    ? 'account:setEmailAddress'
+                    : 'account:updateEmailSubmitLabel'
                 }
               />
             </Button>

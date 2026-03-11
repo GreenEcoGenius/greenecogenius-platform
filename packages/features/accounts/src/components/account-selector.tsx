@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { ChevronsUpDown, Plus, User } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { CaretSortIcon, PersonIcon } from '@radix-ui/react-icons';
+import { CheckCircle, Plus } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@kit/ui/avatar';
 import { Button } from '@kit/ui/button';
@@ -39,7 +40,7 @@ interface AccountSelectorProps {
   selectedAccount?: string;
   collapsed?: boolean;
   className?: string;
-  showPersonalAccount?: boolean;
+  collisionPadding?: number;
 
   onAccountChange: (value: string | undefined) => void;
 }
@@ -56,14 +57,16 @@ export function AccountSelector({
     enableTeamCreation: true,
   },
   collapsed = false,
-  showPersonalAccount = true,
+  collisionPadding = 20,
 }: React.PropsWithChildren<AccountSelectorProps>) {
   const [open, setOpen] = useState<boolean>(false);
   const [isCreatingAccount, setIsCreatingAccount] = useState<boolean>(false);
-  const t = useTranslations('teams');
+  const { t } = useTranslation('teams');
   const personalData = usePersonalAccountData(userId);
 
-  const value = selectedAccount ?? PERSONAL_ACCOUNT_SLUG;
+  const value = useMemo(() => {
+    return selectedAccount ?? PERSONAL_ACCOUNT_SLUG;
+  }, [selectedAccount]);
 
   const selected = accounts.find((account) => account.value === value);
   const pictureUrl = personalData.data?.picture_url;
@@ -71,136 +74,128 @@ export function AccountSelector({
   return (
     <>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger
-          render={
-            <Button
-              data-test={'account-selector-trigger'}
-              size={collapsed ? 'icon' : 'default'}
-              variant="ghost"
-              role="combobox"
-              aria-expanded={open}
-              className={cn(
-                'dark:shadow-primary/10 group mr-1 w-full min-w-0 px-2 lg:w-auto lg:max-w-[185px]',
-                {
-                  'justify-start': !collapsed,
-                  'm-auto justify-center px-2 lg:w-full': collapsed,
-                },
-                className,
-              )}
-            />
-          }
-        >
-          <If
-            condition={selected}
-            fallback={
-              <span
-                className={cn('flex max-w-full items-center', {
-                  'justify-center gap-x-0': collapsed,
-                  'gap-x-2': !collapsed,
-                })}
-              >
-                <PersonalAccountAvatar pictureUrl={pictureUrl} />
-
-                <span
-                  className={cn('truncate', {
-                    hidden: collapsed,
-                  })}
-                >
-                  <Trans i18nKey={'teams.personalAccount'} />
-                </span>
-              </span>
-            }
-          >
-            {(account) => (
-              <span
-                className={cn('flex max-w-full items-center', {
-                  'justify-center gap-x-0': collapsed,
-                  'gap-x-2': !collapsed,
-                })}
-              >
-                <Avatar className={'h-6 w-6 rounded-xs'}>
-                  <AvatarImage src={account.image ?? undefined} />
-
-                  <AvatarFallback
-                    className={'group-hover:bg-background rounded-xs'}
-                  >
-                    {account.label ? account.label[0] : ''}
-                  </AvatarFallback>
-                </Avatar>
-
-                <span
-                  className={cn('truncate', {
-                    hidden: collapsed,
-                  })}
-                >
-                  {account.label}
-                </span>
-              </span>
+        <PopoverTrigger asChild>
+          <Button
+            data-test={'account-selector-trigger'}
+            size={collapsed ? 'icon' : 'default'}
+            variant="ghost"
+            role="combobox"
+            aria-expanded={open}
+            className={cn(
+              'dark:shadow-primary/10 group mr-1 w-full min-w-0 px-2 lg:w-auto lg:max-w-fit',
+              {
+                'justify-start': !collapsed,
+                'm-auto justify-center px-2 lg:w-full': collapsed,
+              },
+              className,
             )}
-          </If>
+          >
+            <If
+              condition={selected}
+              fallback={
+                <span
+                  className={cn('flex max-w-full items-center', {
+                    'justify-center gap-x-0': collapsed,
+                    'gap-x-2': !collapsed,
+                  })}
+                >
+                  <PersonalAccountAvatar pictureUrl={pictureUrl} />
 
-          <ChevronsUpDown
-            className={cn('ml-1 h-4 w-4 shrink-0 opacity-50', {
-              hidden: collapsed,
-            })}
-          />
+                  <span
+                    className={cn('truncate', {
+                      hidden: collapsed,
+                    })}
+                  >
+                    <Trans i18nKey={'teams:personalAccount'} />
+                  </span>
+                </span>
+              }
+            >
+              {(account) => (
+                <span
+                  className={cn('flex max-w-full items-center', {
+                    'justify-center gap-x-0': collapsed,
+                    'gap-x-2': !collapsed,
+                  })}
+                >
+                  <Avatar className={'h-6 w-6 rounded-xs'}>
+                    <AvatarImage src={account.image ?? undefined} />
+
+                    <AvatarFallback
+                      className={'group-hover:bg-background rounded-xs'}
+                    >
+                      {account.label ? account.label[0] : ''}
+                    </AvatarFallback>
+                  </Avatar>
+
+                  <span
+                    className={cn('truncate', {
+                      hidden: collapsed,
+                    })}
+                  >
+                    {account.label}
+                  </span>
+                </span>
+              )}
+            </If>
+
+            <CaretSortIcon
+              className={cn('ml-1 h-4 w-4 shrink-0 opacity-50', {
+                hidden: collapsed,
+              })}
+            />
+          </Button>
         </PopoverTrigger>
 
         <PopoverContent
           data-test={'account-selector-content'}
-          className="w-full gap-0 p-0"
+          className="w-full p-0"
+          collisionPadding={collisionPadding}
         >
-          <Command value={value}>
+          <Command>
             <CommandInput placeholder={t('searchAccount')} className="h-9" />
 
             <CommandList>
-              {showPersonalAccount && (
-                <>
-                  <CommandGroup>
-                    <CommandItem
-                      tabIndex={0}
-                      value={PERSONAL_ACCOUNT_SLUG}
-                      onSelect={() => onAccountChange(undefined)}
-                      className={cn('', {
-                        'bg-muted': value === PERSONAL_ACCOUNT_SLUG,
-                        'hover:bg-muted/50 data-selected:bg-transparent':
-                          value !== PERSONAL_ACCOUNT_SLUG,
-                      })}
-                    >
-                      <PersonalAccountAvatar />
+              <CommandGroup>
+                <CommandItem
+                  className="shadow-none"
+                  onSelect={() => onAccountChange(undefined)}
+                  value={PERSONAL_ACCOUNT_SLUG}
+                >
+                  <PersonalAccountAvatar />
 
-                      <span className={'ml-2'}>
-                        <Trans i18nKey={'teams.personalAccount'} />
-                      </span>
-                    </CommandItem>
-                  </CommandGroup>
+                  <span className={'ml-2'}>
+                    <Trans i18nKey={'teams:personalAccount'} />
+                  </span>
 
-                  <CommandSeparator />
-                </>
-              )}
+                  <Icon selected={value === PERSONAL_ACCOUNT_SLUG} />
+                </CommandItem>
+              </CommandGroup>
+
+              <CommandSeparator />
 
               <If condition={accounts.length > 0}>
                 <CommandGroup
                   heading={
                     <Trans
-                      i18nKey={'teams.yourTeams'}
+                      i18nKey={'teams:yourTeams'}
                       values={{ teamsCount: accounts.length }}
                     />
                   }
                 >
                   {(accounts ?? []).map((account) => (
                     <CommandItem
-                      className={cn('', {
-                        'bg-muted': value === account.value,
-                        'hover:bg-muted/50 data-selected:bg-transparent':
-                          value !== account.value,
-                      })}
-                      tabIndex={0}
                       data-test={'account-selector-team'}
                       data-name={account.label}
                       data-slug={account.value}
+                      className={cn(
+                        'group my-1 flex justify-between shadow-none transition-colors',
+                        {
+                          ['bg-muted']: value === account.value,
+                        },
+                      )}
                       key={account.value}
-                      value={account.value ?? undefined}
+                      value={account.value ?? ''}
                       onSelect={(currentValue) => {
                         setOpen(false);
 
@@ -209,12 +204,13 @@ export function AccountSelector({
                         }
                       }}
                     >
-                      <div className={'flex w-full items-center'}>
+                      <div className={'flex items-center'}>
                         <Avatar className={'mr-2 h-6 w-6 rounded-xs'}>
                           <AvatarImage src={account.image ?? undefined} />
 
                           <AvatarFallback
                             className={cn('rounded-xs', {
+                              ['bg-background']: value === account.value,
                               ['group-hover:bg-background']:
                                 value !== account.value,
                             })}
@@ -223,10 +219,12 @@ export function AccountSelector({
                           </AvatarFallback>
                         </Avatar>
 
-                        <span className={'max-w-[165px] truncate'}>
+                        <span className={'mr-2 max-w-[165px] truncate'}>
                           {account.label}
                         </span>
                       </div>
+
+                      <Icon selected={(account.value ?? '') === value} />
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -234,27 +232,26 @@ export function AccountSelector({
             </CommandList>
           </Command>
 
+          <Separator />
+
           <If condition={features.enableTeamCreation}>
-            <div className="px-1">
-              <Separator />
+            <div className={'p-1'}>
+              <Button
+                data-test={'create-team-account-trigger'}
+                variant="ghost"
+                size={'sm'}
+                className="w-full justify-start text-sm font-normal"
+                onClick={() => {
+                  setIsCreatingAccount(true);
+                  setOpen(false);
+                }}
+              >
+                <Plus className="mr-3 h-4 w-4" />
 
-              <div className="py-1">
-                <Button
-                  data-test={'create-team-account-trigger'}
-                  variant="ghost"
-                  className="w-full justify-start text-sm font-normal"
-                  onClick={() => {
-                    setIsCreatingAccount(true);
-                    setOpen(false);
-                  }}
-                >
-                  <Plus className="mr-3 h-4 w-4" />
-
-                  <span>
-                    <Trans i18nKey={'teams.createTeam'} />
-                  </span>
-                </Button>
-              </div>
+                <span>
+                  <Trans i18nKey={'teams:createTeam'} />
+                </span>
+              </Button>
             </div>
           </If>
         </PopoverContent>
@@ -278,10 +275,18 @@ function UserAvatar(props: { pictureUrl?: string }) {
   );
 }
 
+function Icon({ selected }: { selected: boolean }) {
+  return (
+    <CheckCircle
+      className={cn('ml-auto h-4 w-4', selected ? 'opacity-100' : 'opacity-0')}
+    />
+  );
+}
+
 function PersonalAccountAvatar({ pictureUrl }: { pictureUrl?: string | null }) {
   return pictureUrl ? (
     <UserAvatar pictureUrl={pictureUrl} />
   ) : (
-    <User className="h-5 w-5" />
+    <PersonIcon className="h-5 w-5" />
   );
 }

@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight, Mail } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import type { z } from 'zod';
 
 import { Button } from '@kit/ui/button';
@@ -33,12 +33,12 @@ export function PasswordSignInForm({
   loading = false,
   redirecting = false,
 }: {
-  onSubmit: (params: z.output<typeof PasswordSignInSchema>) => unknown;
+  onSubmit: (params: z.infer<typeof PasswordSignInSchema>) => unknown;
   captchaLoading: boolean;
   loading: boolean;
   redirecting: boolean;
 }) {
-  const t = useTranslations('auth');
+  const { t } = useTranslation('auth');
 
   const form = useForm({
     resolver: zodResolver(PasswordSignInSchema),
@@ -94,14 +94,15 @@ export function PasswordSignInForm({
 
                 <div>
                   <Button
-                    nativeButton={false}
-                    render={<Link href={'/auth/password-reset'} />}
+                    asChild
                     type={'button'}
                     size={'sm'}
                     variant={'link'}
                     className={'text-xs'}
                   >
-                    <Trans i18nKey={'auth.passwordForgottenQuestion'} />
+                    <Link href={'/auth/password-reset'}>
+                      <Trans i18nKey={'auth:passwordForgottenQuestion'} />
+                    </Link>
                   </Button>
                 </div>
               </FormItem>
@@ -117,19 +118,19 @@ export function PasswordSignInForm({
         >
           <If condition={redirecting}>
             <span className={'animate-in fade-in slide-in-from-bottom-24'}>
-              <Trans i18nKey={'auth.redirecting'} />
+              <Trans i18nKey={'auth:redirecting'} />
             </span>
           </If>
 
           <If condition={loading}>
             <span className={'animate-in fade-in slide-in-from-bottom-24'}>
-              <Trans i18nKey={'auth.signingIn'} />
+              <Trans i18nKey={'auth:signingIn'} />
             </span>
           </If>
 
           <If condition={captchaLoading}>
             <span className={'animate-in fade-in slide-in-from-bottom-24'}>
-              <Trans i18nKey={'auth.verifyingCaptcha'} />
+              <Trans i18nKey={'auth:verifyingCaptcha'} />
             </span>
           </If>
 
@@ -139,7 +140,7 @@ export function PasswordSignInForm({
                 'animate-in fade-in slide-in-from-bottom-24 flex items-center'
               }
             >
-              <Trans i18nKey={'auth.signInWithEmail'} />
+              <Trans i18nKey={'auth:signInWithEmail'} />
 
               <ArrowRight
                 className={

@@ -3,7 +3,7 @@
 import { Fragment } from 'react';
 
 import Link from 'next/link';
-import { useParams, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import {
   Breadcrumb,
@@ -23,14 +23,7 @@ export function AppBreadcrumbs(props: {
   maxDepth?: number;
 }) {
   const pathName = usePathname();
-  const { locale } = useParams();
-
-  // Remove the locale from the path
-  const splitPath = pathName
-    .split('/')
-    .filter(Boolean)
-    .filter((path) => path !== locale);
-
+  const splitPath = pathName.split('/').filter(Boolean);
   const values = props.values ?? {};
   const maxDepth = props.maxDepth ?? 6;
 
@@ -55,7 +48,7 @@ export function AppBreadcrumbs(props: {
               values[path]
             ) : (
               <Trans
-                i18nKey={`common.routes.${unslugify(path)}`}
+                i18nKey={`common:routes.${unslugify(path)}`}
                 defaults={unslugify(path)}
               />
             );
@@ -67,20 +60,18 @@ export function AppBreadcrumbs(props: {
                   condition={index < visiblePaths.length - 1}
                   fallback={label}
                 >
-                  <BreadcrumbLink
-                    render={
-                      <Link
-                        href={
-                          '/' +
-                          splitPath
-                            .slice(0, splitPath.indexOf(path) + 1)
-                            .join('/')
-                        }
-                      >
-                        {label}
-                      </Link>
-                    }
-                  />
+                  <BreadcrumbLink asChild>
+                    <Link
+                      href={
+                        '/' +
+                        splitPath
+                          .slice(0, splitPath.indexOf(path) + 1)
+                          .join('/')
+                      }
+                    >
+                      {label}
+                    </Link>
+                  </BreadcrumbLink>
                 </If>
               </BreadcrumbItem>
 

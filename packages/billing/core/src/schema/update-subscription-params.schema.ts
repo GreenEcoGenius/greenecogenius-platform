@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 export const UpdateSubscriptionParamsSchema = z.object({
   subscriptionId: z.string().min(1),

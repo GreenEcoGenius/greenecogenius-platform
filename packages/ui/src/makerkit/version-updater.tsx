@@ -1,15 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import { RocketIcon } from 'lucide-react';
 
-import { env } from '@kit/shared/env';
-
 import {
   AlertDialog,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -30,42 +27,53 @@ let version: string | null = null;
  */
 const DEFAULT_REFETCH_INTERVAL = 60;
 
+/**
+ * Default interval time in seconds to check for new version
+ */
+const VERSION_UPDATER_REFETCH_INTERVAL_SECONDS =
+  process.env.NEXT_PUBLIC_VERSION_UPDATER_REFETCH_INTERVAL_SECONDS;
+
 export function VersionUpdater(props: { intervalTimeInSecond?: number }) {
   const { data } = useVersionUpdater(props);
   const [dismissed, setDismissed] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [showDialog, setShowDialog] = useState<boolean>(false);
 
-  if (data?.didChange && !dismissed && !open) {
-    setOpen(true);
-  }
+  useEffect(() => {
+    if (data?.didChange && !dismissed) {
+      // eslint-disable-next-line
+      setShowDialog(data?.didChange ?? false);
+    }
+  }, [data?.didChange, dismissed]);
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className={'flex items-center gap-x-2'}>
             <RocketIcon className={'h-4'} />
             <span>
-              <Trans i18nKey="common.newVersionAvailable" />
+              <Trans i18nKey="common:newVersionAvailable" />
             </span>
           </AlertDialogTitle>
 
           <AlertDialogDescription>
-            <Trans i18nKey="common.newVersionAvailableDescription" />
+            <Trans i18nKey="common:newVersionAvailableDescription" />
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel
+          <Button
+            variant={'outline'}
             onClick={() => {
+              setShowDialog(false);
               setDismissed(true);
             }}
           >
-            <Trans i18nKey="common.back" />
-          </AlertDialogCancel>
+            <Trans i18nKey="common:back" />
+          </Button>
 
           <Button onClick={() => window.location.reload()}>
-            <Trans i18nKey="common.newVersionSubmitButton" />
+            <Trans i18nKey="common:newVersionSubmitButton" />
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -74,11 +82,9 @@ export function VersionUpdater(props: { intervalTimeInSecond?: number }) {
 }
 
 function useVersionUpdater(props: { intervalTimeInSecond?: number } = {}) {
-  const intervalEnv = env(
-    'NEXT_PUBLIC_VERSION_UPDATER_REFETCH_INTERVAL_SECONDS',
-  );
-
-  const interval = intervalEnv ? Number(intervalEnv) : DEFAULT_REFETCH_INTERVAL;
+  const interval = VERSION_UPDATER_REFETCH_INTERVAL_SECONDS
+    ? Number(VERSION_UPDATER_REFETCH_INTERVAL_SECONDS)
+    : DEFAULT_REFETCH_INTERVAL;
 
   const refetchInterval = (props.intervalTimeInSecond ?? interval) * 1000;
 
@@ -93,7 +99,9 @@ function useVersionUpdater(props: { intervalTimeInSecond?: number } = {}) {
     refetchInterval,
     initialData: null,
     queryFn: async () => {
-      const response = await fetch('/api/version');
+      const url = new URL('/api/version', process.env.NEXT_PUBLIC_SITE_URL);
+      const response = await fetch(url.toString());
+
       const currentVersion = await response.text();
       const oldVersion = version;
 

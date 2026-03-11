@@ -24,7 +24,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from '@kit/ui/sidebar';
+} from '@kit/ui/shadcn-sidebar';
 import { isRouteActive } from '@kit/ui/utils';
 
 const routes = [
@@ -92,14 +92,14 @@ export function DevToolSidebar({
                     {route.children.map((child) => (
                       <SidebarMenuSubItem key={child.path}>
                         <SidebarMenuSubButton
-                          render={
-                            <Link href={child.path}>
-                              <child.Icon className="h-4 w-4" />
-                              <span>{child.label}</span>
-                            </Link>
-                          }
+                          asChild
                           isActive={isRouteActive(child.path, pathname, false)}
-                        />
+                        >
+                          <Link href={child.path}>
+                            <child.Icon className="h-4 w-4" />
+                            <span>{child.label}</span>
+                          </Link>
+                        </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}
                   </SidebarMenuSub>
@@ -107,13 +107,13 @@ export function DevToolSidebar({
               ) : (
                 <SidebarMenuButton
                   isActive={isRouteActive(route.path, pathname, false)}
-                  render={
-                    <Link href={route.path}>
-                      <route.Icon className="h-4 w-4" />
-                      <span>{route.label}</span>
-                    </Link>
-                  }
-                />
+                  asChild
+                >
+                  <Link href={route.path}>
+                    <route.Icon className="h-4 w-4" />
+                    <span>{route.label}</span>
+                  </Link>
+                </SidebarMenuButton>
               )}
             </SidebarMenuItem>
           ))}

@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 const MONITORING_PROVIDERS = [
   'sentry',
@@ -7,11 +7,13 @@ const MONITORING_PROVIDERS = [
 ] as const;
 
 export const MONITORING_PROVIDER = z
-  .enum(MONITORING_PROVIDERS)
+  .enum(MONITORING_PROVIDERS, {
+    errorMap: () => ({ message: 'Invalid monitoring provider' }),
+  })
   .optional()
   .transform((value) => value || undefined);
 
-export type MonitoringProvider = z.output<typeof MONITORING_PROVIDER>;
+export type MonitoringProvider = z.infer<typeof MONITORING_PROVIDER>;
 
 export function getMonitoringProvider() {
   const provider = MONITORING_PROVIDER.safeParse(

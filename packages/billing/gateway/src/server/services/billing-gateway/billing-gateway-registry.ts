@@ -1,6 +1,6 @@
 import 'server-only';
 
-import * as z from 'zod';
+import { z } from 'zod';
 
 import {
   type BillingProviderSchema,
@@ -11,7 +11,7 @@ import { createRegistry } from '@kit/shared/registry';
 // Create a registry for billing strategy providers
 export const billingStrategyRegistry = createRegistry<
   BillingStrategyProviderService,
-  z.output<typeof BillingProviderSchema>
+  z.infer<typeof BillingProviderSchema>
 >();
 
 // Register the Stripe billing strategy

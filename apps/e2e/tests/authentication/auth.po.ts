@@ -31,17 +31,8 @@ export class AuthPageObject {
   }
 
   async signOut() {
-    const trigger = this.page.locator(
-      '[data-test="workspace-dropdown-trigger"], [data-test="account-dropdown-trigger"]',
-    );
-
-    await trigger.click();
-
-    const signOutButton = this.page.locator(
-      '[data-test="workspace-sign-out"], [data-test="account-dropdown-sign-out"]',
-    );
-
-    await signOutButton.click();
+    await this.page.click('[data-test="account-dropdown-trigger"]');
+    await this.page.click('[data-test="account-dropdown-sign-out"]');
   }
 
   async signIn(params: { email: string; password: string }) {

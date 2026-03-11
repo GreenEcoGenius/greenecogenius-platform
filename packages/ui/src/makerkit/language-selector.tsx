@@ -1,10 +1,8 @@
 'use client';
 
-import { useCallback, useMemo, useState, useTransition } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
-import { useLocale } from 'next-intl';
-
-import { usePathname, useRouter } from '@kit/i18n/navigation';
+import { useTranslation } from 'react-i18next';
 
 import {
   Select,
@@ -14,61 +12,60 @@ import {
   SelectValue,
 } from '../shadcn/select';
 
-interface LanguageSelectorProps {
-  locales?: string[];
-  onChange?: (locale: string) => unknown;
-}
-
-const DEFAULT_STRATEGY = 'path';
-
 export function LanguageSelector({
-  locales = [],
   onChange,
-}: LanguageSelectorProps) {
-  const currentLocale = useLocale();
-  const handleChangeLocale = useChangeLocale();
-  const [value, setValue] = useState(currentLocale);
+}: {
+  onChange?: (locale: string) => unknown;
+}) {
+  const { i18n } = useTranslation();
+  const { language: currentLanguage, options } = i18n;
+
+  const locales = (options.supportedLngs as string[]).filter(
+    (locale) => locale.toLowerCase() !== 'cimode',
+  );
 
   const languageNames = useMemo(() => {
-    return new Intl.DisplayNames([currentLocale], {
+    return new Intl.DisplayNames([currentLanguage], {
       type: 'language',
     });
-  }, [currentLocale]);
+  }, [currentLanguage]);
+
+  const [value, setValue] = useState(i18n.language);
 
   const languageChanged = useCallback(
-    (locale: string | null) => {
-      if (!locale) return;
-
+    async (locale: string) => {
       setValue(locale);
 
       if (onChange) {
         onChange(locale);
       }
 
-      handleChangeLocale(locale);
-    },
-    [onChange, handleChangeLocale],
-  );
+      await i18n.changeLanguage(locale);
 
-  if (locales.length <= 1) {
-    return null;
-  }
+      // refresh cached translations
+      window.location.reload();
+    },
+    [i18n, onChange],
+  );
 
   return (
     <Select value={value} onValueChange={languageChanged}>
       <SelectTrigger>
-        <SelectValue className="capitalize">
-          {(value) => (value ? languageNames.of(value) : value)}
-        </SelectValue>
+        <SelectValue />
       </SelectTrigger>
 
       <SelectContent>
         {locales.map((locale) => {
-          const label = languageNames.of(locale) ?? locale;
+          const label = capitalize(languageNames.of(locale) ?? locale);
+
+          const option = {
+            value: locale,
+            label,
+          };
 
           return (
-            <SelectItem value={locale} key={locale} className="capitalize">
-              {label}
+            <SelectItem value={option.value} key={option.value}>
+              {option.label}
             </SelectItem>
           );
         })}
@@ -77,46 +74,6 @@ export function LanguageSelector({
   );
 }
 
-function useChangeLocale(strategy: `cookie` | `path` = DEFAULT_STRATEGY) {
-  const changeLocaleViaPath = useChangeLocaleViaPath();
-  const changeLocaleViaCookie = useChangeLocaleViaCookie();
-
-  return useCallback(
-    (locale: string) => {
-      switch (strategy) {
-        case 'cookie':
-          return changeLocaleViaCookie(locale);
-        case 'path':
-          return changeLocaleViaPath(locale);
-      }
-    },
-    [strategy, changeLocaleViaCookie, changeLocaleViaPath],
-  );
-}
-
-function useChangeLocaleViaCookie() {
-  const router = useRouter();
-
-  return useCallback(
-    (locale: string) => {
-      document.cookie = `lang=${locale}; Path=/; SameSite=Lax`;
-      router.refresh();
-    },
-    [router],
-  );
-}
-
-function useChangeLocaleViaPath() {
-  const pathname = usePathname();
-  const router = useRouter();
-  const [, startTransition] = useTransition();
-
-  return useCallback(
-    (locale: string) => {
-      startTransition(() => {
-        router.replace(pathname, { locale });
-      });
-    },
-    [router, pathname],
-  );
+function capitalize(lang: string) {
+  return lang.slice(0, 1).toUpperCase() + lang.slice(1);
 }

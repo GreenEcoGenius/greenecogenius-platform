@@ -1,5 +1,5 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import * as z from 'zod/v3';
+import { z } from 'zod/v3';
 
 interface PromptTemplate {
   name: string;

@@ -1,9 +1,9 @@
 import 'server-only';
 
-import * as z from 'zod';
+import { z } from 'zod';
 
 const message =
-  'Invalid Supabase Secret Key. Please add the environment variable SUPABASE_SECRET_KEY.';
+  'Invalid Supabase Secret Key. Please add the environment variable SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY.';
 
 /**
  * @name getSupabaseSecretKey
@@ -13,12 +13,14 @@ const message =
 export function getSupabaseSecretKey() {
   return z
     .string({
-      error: message,
+      required_error: message,
     })
     .min(1, {
       message: message,
     })
-    .parse(process.env.SUPABASE_SECRET_KEY);
+    .parse(
+      process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY,
+    );
 }
 
 /**

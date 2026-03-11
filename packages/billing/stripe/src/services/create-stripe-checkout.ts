@@ -1,5 +1,5 @@
 import type { Stripe } from 'stripe';
-import * as z from 'zod';
+import { z } from 'zod';
 
 import type { CreateBillingCheckoutSchema } from '@kit/billing/schema';
 
@@ -17,7 +17,7 @@ const enableTrialWithoutCreditCard =
  */
 export async function createStripeCheckout(
   stripe: Stripe,
-  params: z.output<typeof CreateBillingCheckoutSchema>,
+  params: z.infer<typeof CreateBillingCheckoutSchema>,
 ) {
   // in MakerKit, a subscription belongs to an organization,
   // rather than to a user

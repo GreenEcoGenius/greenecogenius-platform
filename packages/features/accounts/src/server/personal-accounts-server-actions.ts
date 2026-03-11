@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { authActionClient } from '@kit/next/safe-action';
+import { enhanceAction } from '@kit/next/actions';
 import { createOtpApi } from '@kit/otp';
 import { getLogger } from '@kit/shared/logger';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
@@ -23,17 +23,25 @@ export async function refreshAuthSession() {
   return {};
 }
 
-export const deletePersonalAccountAction = authActionClient
-  .schema(DeletePersonalAccountSchema)
-  .action(async ({ parsedInput: data, ctx: { user } }) => {
+export const deletePersonalAccountAction = enhanceAction(
+  async (formData: FormData, user) => {
     const logger = await getLogger();
+
+    // validate the form data
+    const { success } = DeletePersonalAccountSchema.safeParse(
+      Object.fromEntries(formData.entries()),
+    );
+
+    if (!success) {
+      throw new Error('Invalid form data');
+    }
 
     const ctx = {
       name: 'account.delete',
       userId: user.id,
     };
 
-    const otp = data.otp;
+    const otp = formData.get('otp') as string;
 
     if (!otp) {
       throw new Error('OTP is required');
@@ -93,4 +101,6 @@ export const deletePersonalAccountAction = authActionClient
 
     // redirect to the home page
     redirect('/');
-  });
+  },
+  {},
+);

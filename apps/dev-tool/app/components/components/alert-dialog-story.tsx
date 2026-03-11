@@ -120,7 +120,9 @@ export function AlertDialogStory() {
 
   const generateCode = () => {
     let code = `<AlertDialog>\n`;
-    code += `  <AlertDialogTrigger render={<Button variant="${controls.triggerVariant}">${controls.triggerText}</Button>} />\n`;
+    code += `  <AlertDialogTrigger asChild>\n`;
+    code += `    <Button variant="${controls.triggerVariant}">${controls.triggerText}</Button>\n`;
+    code += `  </AlertDialogTrigger>\n`;
     code += `  <AlertDialogContent>\n`;
     code += `    <AlertDialogHeader>\n`;
 
@@ -177,14 +179,11 @@ export function AlertDialogStory() {
   const renderPreview = () => {
     return (
       <AlertDialog>
-        <AlertDialogTrigger
-          render={
-            <Button variant={controls.triggerVariant}>
-              {controls.triggerText}
-            </Button>
-          }
-        />
-
+        <AlertDialogTrigger asChild>
+          <Button variant={controls.triggerVariant}>
+            {controls.triggerText}
+          </Button>
+        </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
             {controls.withIcon ? (
@@ -342,11 +341,11 @@ export function AlertDialogStory() {
         <CardContent className="space-y-4">
           <div className="flex flex-wrap gap-3">
             <AlertDialog>
-              <AlertDialogTrigger
-                render={<Button variant="destructive" size="sm" />}
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete Item
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive" size="sm">
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete Item
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -371,9 +370,11 @@ export function AlertDialogStory() {
             </AlertDialog>
 
             <AlertDialog>
-              <AlertDialogTrigger render={<Button variant="outline" />}>
-                <LogOut className="mr-2 h-4 w-4" />
-                Sign Out
+              <AlertDialogTrigger asChild>
+                <Button variant="outline">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sign Out
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -396,9 +397,11 @@ export function AlertDialogStory() {
             </AlertDialog>
 
             <AlertDialog>
-              <AlertDialogTrigger render={<Button variant="outline" />}>
-                <UserX className="mr-2 h-4 w-4" />
-                Remove User
+              <AlertDialogTrigger asChild>
+                <Button variant="outline">
+                  <UserX className="mr-2 h-4 w-4" />
+                  Remove User
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -435,9 +438,11 @@ export function AlertDialogStory() {
         <CardContent className="space-y-4">
           <div className="flex flex-wrap gap-3">
             <AlertDialog>
-              <AlertDialogTrigger render={<Button variant="outline" />}>
-                <Archive className="mr-2 h-4 w-4" />
-                Archive Project
+              <AlertDialogTrigger asChild>
+                <Button variant="outline">
+                  <Archive className="mr-2 h-4 w-4" />
+                  Archive Project
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -460,9 +465,11 @@ export function AlertDialogStory() {
             </AlertDialog>
 
             <AlertDialog>
-              <AlertDialogTrigger render={<Button />}>
-                <Download className="mr-2 h-4 w-4" />
-                Export Data
+              <AlertDialogTrigger asChild>
+                <Button>
+                  <Download className="mr-2 h-4 w-4" />
+                  Export Data
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -486,9 +493,11 @@ export function AlertDialogStory() {
             </AlertDialog>
 
             <AlertDialog>
-              <AlertDialogTrigger render={<Button variant="outline" />}>
-                <RefreshCw className="mr-2 h-4 w-4" />
-                Reset Settings
+              <AlertDialogTrigger asChild>
+                <Button variant="outline">
+                  <RefreshCw className="mr-2 h-4 w-4" />
+                  Reset Settings
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -526,11 +535,11 @@ export function AlertDialogStory() {
             <div className="space-y-3">
               <h4 className="text-sm font-semibold">Error/Destructive</h4>
               <AlertDialog>
-                <AlertDialogTrigger
-                  render={<Button variant="destructive" size="sm" />}
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete Forever
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="sm">
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Delete Forever
+                  </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -558,11 +567,11 @@ export function AlertDialogStory() {
             <div className="space-y-3">
               <h4 className="text-sm font-semibold">Warning</h4>
               <AlertDialog>
-                <AlertDialogTrigger
-                  render={<Button variant="outline" size="sm" />}
-                >
-                  <AlertTriangle className="mr-2 h-4 w-4" />
-                  Unsaved Changes
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <AlertTriangle className="mr-2 h-4 w-4" />
+                    Unsaved Changes
+                  </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -588,11 +597,11 @@ export function AlertDialogStory() {
             <div className="space-y-3">
               <h4 className="text-sm font-semibold">Info</h4>
               <AlertDialog>
-                <AlertDialogTrigger
-                  render={<Button variant="outline" size="sm" />}
-                >
-                  <Share className="mr-2 h-4 w-4" />
-                  Share Publicly
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Share className="mr-2 h-4 w-4" />
+                    Share Publicly
+                  </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -618,9 +627,11 @@ export function AlertDialogStory() {
             <div className="space-y-3">
               <h4 className="text-sm font-semibold">Success</h4>
               <AlertDialog>
-                <AlertDialogTrigger render={<Button size="sm" />}>
-                  <Download className="mr-2 h-4 w-4" />
-                  Complete Setup
+                <AlertDialogTrigger asChild>
+                  <Button size="sm">
+                    <Download className="mr-2 h-4 w-4" />
+                    Complete Setup
+                  </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>

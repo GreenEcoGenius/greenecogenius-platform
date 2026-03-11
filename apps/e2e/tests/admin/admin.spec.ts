@@ -34,17 +34,17 @@ test.describe('Admin', () => {
       await page.goto('/admin');
 
       // Check all stat cards are present
-      await expect(page.getByText('Users', { exact: true })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Users' })).toBeVisible();
 
       await expect(
-        page.getByText('Team Accounts', { exact: true }),
+        page.getByRole('heading', { name: 'Team Accounts' }),
       ).toBeVisible();
 
       await expect(
-        page.getByText('Paying Customers', { exact: true }),
+        page.getByRole('heading', { name: 'Paying Customers' }),
       ).toBeVisible();
 
-      await expect(page.getByText('Trials', { exact: true })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Trials' })).toBeVisible();
 
       // Verify stat values are numbers
       const stats = await page.$$('.text-3xl.font-bold');

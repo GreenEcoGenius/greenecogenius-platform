@@ -33,6 +33,7 @@ interface ButtonControls {
   loading: boolean;
   withIcon: boolean;
   fullWidth: boolean;
+  asChild: boolean;
 }
 
 const variantOptions = [
@@ -67,6 +68,7 @@ export function ButtonStory() {
     loading: false,
     withIcon: false,
     fullWidth: false,
+    asChild: false,
   });
 
   const generateCode = () => {
@@ -75,12 +77,14 @@ export function ButtonStory() {
         variant: controls.variant,
         size: controls.size,
         disabled: controls.disabled,
+        asChild: controls.asChild,
         className: controls.fullWidth ? 'w-full' : '',
       },
       {
         variant: 'default',
         size: 'default',
         disabled: false,
+        asChild: false,
         className: '',
       },
     );
@@ -188,6 +192,15 @@ export function ButtonStory() {
           id="fullWidth"
           checked={controls.fullWidth}
           onCheckedChange={(checked) => updateControl('fullWidth', checked)}
+        />
+      </div>
+
+      <div className="flex items-center justify-between">
+        <Label htmlFor="asChild">As Child</Label>
+        <Switch
+          id="asChild"
+          checked={controls.asChild}
+          onCheckedChange={(checked) => updateControl('asChild', checked)}
         />
       </div>
     </>

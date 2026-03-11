@@ -20,22 +20,19 @@ export function enhanceAction<
     auth?: boolean;
     captcha?: boolean;
     schema?: z.ZodType<
-      Config['captcha'] extends true ? Args & { captchaToken: string } : Args
+      Config['captcha'] extends true ? Args & { captchaToken: string } : Args,
+      z.ZodTypeDef
     >;
   },
 >(
   fn: (
-    params: Config['schema'] extends ZodType
-      ? z.output<Config['schema']>
-      : Args,
+    params: Config['schema'] extends ZodType ? z.infer<Config['schema']> : Args,
     user: Config['auth'] extends false ? undefined : JWTUserData,
   ) => Response | Promise<Response>,
   config: Config,
 ) {
   return async (
-    params: Config['schema'] extends ZodType
-      ? z.output<Config['schema']>
-      : Args,
+    params: Config['schema'] extends ZodType ? z.infer<Config['schema']> : Args,
   ) => {
     type UserParam = Config['auth'] extends false ? undefined : JWTUserData;
 
@@ -83,11 +80,6 @@ export function enhanceAction<
       user = auth.data as UserParam;
     }
 
-    return fn(
-      data as Config['schema'] extends ZodType
-        ? z.output<Config['schema']>
-        : Args,
-      user,
-    );
+    return fn(data, user);
   };
 }

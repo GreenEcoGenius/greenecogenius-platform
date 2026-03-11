@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { KeystaticStorage } from './keystatic-storage';
 import { keyStaticConfig } from './keystatic.config';
@@ -51,7 +51,7 @@ function getKeystaticGithubConfiguration() {
   return z
     .object({
       token: z.string({
-        error:
+        description:
           'The GitHub token to use for authentication. Please provide the value through the "KEYSTATIC_GITHUB_TOKEN" environment variable.',
       }),
       repo: z.custom<`${string}/${string}`>(),

@@ -2,7 +2,7 @@ import 'server-only';
 
 import { SupabaseClient } from '@supabase/supabase-js';
 
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { Database } from '@kit/supabase/database';
 

@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 /**
  * Password requirements
@@ -36,11 +36,13 @@ export function refineRepeatPassword(
 ) {
   if (data.password !== data.repeatPassword) {
     ctx.addIssue({
-      message: 'auth.errors.passwordsDoNotMatch',
+      message: 'auth:errors.passwordsDoNotMatch',
       path: ['repeatPassword'],
       code: 'custom',
     });
   }
+
+  return true;
 }
 
 function validatePassword(password: string, ctx: z.RefinementCtx) {
@@ -50,7 +52,7 @@ function validatePassword(password: string, ctx: z.RefinementCtx) {
 
     if (specialCharsCount < 1) {
       ctx.addIssue({
-        message: 'auth.errors.minPasswordSpecialChars',
+        message: 'auth:errors.minPasswordSpecialChars',
         code: 'custom',
       });
     }
@@ -61,7 +63,7 @@ function validatePassword(password: string, ctx: z.RefinementCtx) {
 
     if (numbersCount < 1) {
       ctx.addIssue({
-        message: 'auth.errors.minPasswordNumbers',
+        message: 'auth:errors.minPasswordNumbers',
         code: 'custom',
       });
     }
@@ -70,9 +72,11 @@ function validatePassword(password: string, ctx: z.RefinementCtx) {
   if (requirements.uppercase) {
     if (!/[A-Z]/.test(password)) {
       ctx.addIssue({
-        message: 'auth.errors.uppercasePassword',
+        message: 'auth:errors.uppercasePassword',
         code: 'custom',
       });
     }
   }
+
+  return true;
 }

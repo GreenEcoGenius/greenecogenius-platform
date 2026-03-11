@@ -1,10 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
-import { useAction } from 'next-safe-action/hooks';
 import { useForm } from 'react-hook-form';
 
 import { useSupabase } from '@kit/supabase/hooks/use-supabase';
@@ -54,13 +53,8 @@ export function AdminImpersonateUserDialog(
     refreshToken: string;
   }>();
 
-  const { execute, isPending, hasErrored } = useAction(impersonateUserAction, {
-    onSuccess: ({ data }) => {
-      if (data) {
-        setTokens(data);
-      }
-    },
-  });
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<boolean | null>(null);
 
   if (tokens) {
     return (
@@ -74,7 +68,7 @@ export function AdminImpersonateUserDialog(
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger render={props.children as React.ReactElement} />
+      <AlertDialogTrigger asChild>{props.children}</AlertDialogTrigger>
 
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -97,9 +91,19 @@ export function AdminImpersonateUserDialog(
           <form
             data-test={'admin-impersonate-user-form'}
             className={'flex flex-col space-y-8'}
-            onSubmit={form.handleSubmit((data) => execute(data))}
+            onSubmit={form.handleSubmit((data) => {
+              startTransition(async () => {
+                try {
+                  const result = await impersonateUserAction(data);
+
+                  setTokens(result);
+                } catch {
+                  setError(true);
+                }
+              });
+            })}
           >
-            <If condition={hasErrored}>
+            <If condition={error}>
               <Alert variant={'destructive'}>
                 <AlertTitle>Error</AlertTitle>
 

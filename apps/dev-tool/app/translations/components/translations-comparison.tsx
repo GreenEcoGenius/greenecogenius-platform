@@ -131,14 +131,12 @@ export function TranslationsComparison({
 
             <If condition={locales.length > 1}>
               <DropdownMenu>
-                <DropdownMenuTrigger
-                  render={
-                    <Button variant="outline" className="ml-auto">
-                      Select Languages
-                      <ChevronDownIcon className="ml-2 h-4 w-4" />
-                    </Button>
-                  }
-                />
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="ml-auto">
+                    Select Languages
+                    <ChevronDownIcon className="ml-2 h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
 
                 <DropdownMenuContent align="end" className="w-[200px]">
                   {locales.map((locale) => (

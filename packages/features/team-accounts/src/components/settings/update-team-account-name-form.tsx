@@ -1,10 +1,13 @@
 'use client';
 
+import { useTransition } from 'react';
+
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Building, Link } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useAction } from 'next-safe-action/hooks';
 import { useForm, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@kit/ui/button';
 import {
@@ -37,28 +40,14 @@ export const UpdateTeamAccountNameForm = (props: {
 
   path: string;
 }) => {
-  const t = useTranslations('teams');
+  const [pending, startTransition] = useTransition();
+  const { t } = useTranslation('teams');
 
   const form = useForm({
     resolver: zodResolver(TeamNameFormSchema),
     defaultValues: {
       name: props.account.name,
       newSlug: '',
-    },
-  });
-
-  const { execute, isPending } = useAction(updateTeamAccountName, {
-    onSuccess: ({ data }) => {
-      if (data?.success) {
-        toast.success(t('updateTeamSuccessMessage'));
-      } else if (data?.error) {
-        toast.error(t(data.error));
-      } else {
-        toast.error(t('updateTeamErrorMessage'));
-      }
-    },
-    onError: () => {
-      toast.error(t('updateTeamErrorMessage'));
     },
   });
 
@@ -72,11 +61,41 @@ export const UpdateTeamAccountNameForm = (props: {
           data-test={'update-team-account-name-form'}
           className={'flex flex-col space-y-4'}
           onSubmit={form.handleSubmit((data) => {
-            execute({
-              slug: props.account.slug,
-              name: data.name,
-              newSlug: data.newSlug || undefined,
-              path: props.path,
+            startTransition(async () => {
+              const toastId = toast.loading(t('updateTeamLoadingMessage'));
+
+              try {
+                const result = await updateTeamAccountName({
+                  slug: props.account.slug,
+                  name: data.name,
+                  newSlug: data.newSlug || undefined,
+                  path: props.path,
+                });
+
+                if (result.success) {
+                  toast.success(t('updateTeamSuccessMessage'), {
+                    id: toastId,
+                  });
+                } else if (result.error) {
+                  toast.error(t(result.error), {
+                    id: toastId,
+                  });
+                } else {
+                  toast.error(t('updateTeamErrorMessage'), {
+                    id: toastId,
+                  });
+                }
+              } catch (error) {
+                if (!isRedirectError(error)) {
+                  toast.error(t('updateTeamErrorMessage'), {
+                    id: toastId,
+                  });
+                } else {
+                  toast.success(t('updateTeamSuccessMessage'), {
+                    id: toastId,
+                  });
+                }
+              }
             });
           })}
         >
@@ -86,7 +105,7 @@ export const UpdateTeamAccountNameForm = (props: {
               return (
                 <FormItem>
                   <FormLabel>
-                    <Trans i18nKey={'teams.teamNameLabel'} />
+                    <Trans i18nKey={'teams:teamNameLabel'} />
                   </FormLabel>
 
                   <FormControl>
@@ -98,7 +117,7 @@ export const UpdateTeamAccountNameForm = (props: {
                       <InputGroupInput
                         data-test={'team-name-input'}
                         required
-                        placeholder={t('teamNameInputLabel')}
+                        placeholder={t('teams:teamNameInputLabel')}
                         {...field}
                       />
                     </InputGroup>
@@ -117,7 +136,7 @@ export const UpdateTeamAccountNameForm = (props: {
                 return (
                   <FormItem>
                     <FormLabel>
-                      <Trans i18nKey={'teams.teamSlugLabel'} />
+                      <Trans i18nKey={'teams:teamSlugLabel'} />
                     </FormLabel>
 
                     <FormControl>
@@ -136,7 +155,7 @@ export const UpdateTeamAccountNameForm = (props: {
                     </FormControl>
 
                     <FormDescription>
-                      <Trans i18nKey={'teams.teamSlugDescription'} />
+                      <Trans i18nKey={'teams:teamSlugDescription'} />
                     </FormDescription>
 
                     <FormMessage />
@@ -148,12 +167,11 @@ export const UpdateTeamAccountNameForm = (props: {
 
           <div>
             <Button
-              type="submit"
               className={'w-full md:w-auto'}
               data-test={'update-team-submit-button'}
-              disabled={isPending}
+              disabled={pending}
             >
-              <Trans i18nKey={'teams.updateTeamSubmitLabel'} />
+              <Trans i18nKey={'teams:updateTeamSubmitLabel'} />
             </Button>
           </div>
         </form>

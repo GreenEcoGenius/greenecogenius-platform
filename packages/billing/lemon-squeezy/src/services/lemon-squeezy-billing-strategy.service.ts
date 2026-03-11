@@ -9,7 +9,7 @@ import {
   listUsageRecords,
   updateSubscriptionItem,
 } from '@lemonsqueezy/lemonsqueezy.js';
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { BillingStrategyProviderService } from '@kit/billing';
 import type {
@@ -40,7 +40,7 @@ export class LemonSqueezyBillingStrategyService implements BillingStrategyProvid
    * @param params
    */
   async createCheckoutSession(
-    params: z.output<typeof CreateBillingCheckoutSchema>,
+    params: z.infer<typeof CreateBillingCheckoutSchema>,
   ) {
     const logger = await getLogger();
 
@@ -78,7 +78,7 @@ export class LemonSqueezyBillingStrategyService implements BillingStrategyProvid
    * @param params
    */
   async createBillingPortalSession(
-    params: z.output<typeof CreateBillingPortalSessionSchema>,
+    params: z.infer<typeof CreateBillingPortalSessionSchema>,
   ) {
     const logger = await getLogger();
 
@@ -117,7 +117,7 @@ export class LemonSqueezyBillingStrategyService implements BillingStrategyProvid
    * @param params
    */
   async cancelSubscription(
-    params: z.output<typeof CancelSubscriptionParamsSchema>,
+    params: z.infer<typeof CancelSubscriptionParamsSchema>,
   ) {
     const logger = await getLogger();
 
@@ -165,7 +165,7 @@ export class LemonSqueezyBillingStrategyService implements BillingStrategyProvid
    * @param params
    */
   async retrieveCheckoutSession(
-    params: z.output<typeof RetrieveCheckoutSessionSchema>,
+    params: z.infer<typeof RetrieveCheckoutSessionSchema>,
   ) {
     const logger = await getLogger();
 
@@ -209,7 +209,7 @@ export class LemonSqueezyBillingStrategyService implements BillingStrategyProvid
    * @description Reports the usage of the billing
    * @param params
    */
-  async reportUsage(params: z.output<typeof ReportBillingUsageSchema>) {
+  async reportUsage(params: z.infer<typeof ReportBillingUsageSchema>) {
     const logger = await getLogger();
 
     const ctx = {
@@ -248,7 +248,7 @@ export class LemonSqueezyBillingStrategyService implements BillingStrategyProvid
    * @param params
    */
   async queryUsage(
-    params: z.output<typeof QueryBillingUsageSchema>,
+    params: z.infer<typeof QueryBillingUsageSchema>,
   ): Promise<{ value: number }> {
     const logger = await getLogger();
 
@@ -312,7 +312,7 @@ export class LemonSqueezyBillingStrategyService implements BillingStrategyProvid
    * @param params
    */
   async updateSubscriptionItem(
-    params: z.output<typeof UpdateSubscriptionParamsSchema>,
+    params: z.infer<typeof UpdateSubscriptionParamsSchema>,
   ) {
     const logger = await getLogger();
 

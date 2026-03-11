@@ -8,16 +8,8 @@ import { useTheme } from 'next-themes';
 import { cn } from '../lib/utils';
 import { Button } from '../shadcn/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '../shadcn/card';
-import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSub,
@@ -44,13 +36,13 @@ export function ModeToggle(props: { className?: string }) {
           key={mode}
           onClick={() => {
             setTheme(mode);
-            setCookeTheme(mode);
+            setCookieTheme(mode);
           }}
         >
           <Icon theme={mode} />
 
           <span>
-            <Trans i18nKey={`common.${mode}Theme`} />
+            <Trans i18nKey={`common:${mode}Theme`} />
           </span>
         </DropdownMenuItem>
       );
@@ -59,14 +51,12 @@ export function ModeToggle(props: { className?: string }) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <Button variant="ghost" size="icon" className={props.className} />
-        }
-      >
-        <Sun className="h-[0.9rem] w-[0.9rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-        <Moon className="absolute h-[0.9rem] w-[0.9rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-        <span className="sr-only">Toggle theme</span>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className={props.className}>
+          <Sun className="h-[0.9rem] w-[0.9rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+          <Moon className="absolute h-[0.9rem] w-[0.9rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">{Items}</DropdownMenuContent>
@@ -84,18 +74,20 @@ export function SubMenuModeToggle() {
 
         return (
           <DropdownMenuItem
-            className={cn('flex cursor-pointer items-center gap-x-2', {
+            className={cn('flex cursor-pointer items-center space-x-2', {
               'bg-muted': isSelected,
             })}
             key={mode}
             onClick={() => {
               setTheme(mode);
-              setCookeTheme(mode);
+              setCookieTheme(mode);
             }}
           >
             <Icon theme={mode} />
 
-            <Trans i18nKey={`common.${mode}Theme`} />
+            <span>
+              <Trans i18nKey={`common:${mode}Theme`} />
+            </span>
           </DropdownMenuItem>
         );
       }),
@@ -103,16 +95,20 @@ export function SubMenuModeToggle() {
   );
 
   return (
-    <DropdownMenuGroup>
+    <>
       <DropdownMenuSub>
         <DropdownMenuSubTrigger
           className={
-            'hidden w-full items-center justify-between gap-x-2 lg:flex'
+            'hidden w-full items-center justify-between gap-x-3 lg:flex'
           }
         >
-          <Icon theme={resolvedTheme} />
+          <span className={'flex space-x-2'}>
+            <Icon theme={resolvedTheme} />
 
-          <Trans i18nKey={'common.theme'} />
+            <span>
+              <Trans i18nKey={'common:theme'} />
+            </span>
+          </span>
         </DropdownMenuSubTrigger>
 
         <DropdownMenuSubContent>{MenuItems}</DropdownMenuSubContent>
@@ -120,17 +116,19 @@ export function SubMenuModeToggle() {
 
       <div className={'lg:hidden'}>
         <DropdownMenuLabel>
-          <Trans i18nKey={'common.theme'} />
+          <Trans i18nKey={'common:theme'} />
         </DropdownMenuLabel>
 
         {MenuItems}
       </div>
-    </DropdownMenuGroup>
+    </>
   );
 }
 
-function setCookeTheme(theme: string) {
-  document.cookie = `theme=${theme}; path=/; max-age=31536000`;
+function setCookieTheme(theme: string) {
+  const secure =
+    typeof window !== 'undefined' && window.location.protocol === 'https:';
+  document.cookie = `theme=${theme}; path=/; max-age=31536000; SameSite=Lax${secure ? '; Secure' : ''}`;
 }
 
 function Icon({ theme }: { theme: string | undefined }) {
@@ -142,54 +140,4 @@ function Icon({ theme }: { theme: string | undefined }) {
     case 'system':
       return <Computer className="h-4" />;
   }
-}
-
-export function ThemePreferenceCard({
-  currentTheme,
-}: {
-  currentTheme: string;
-}) {
-  const { setTheme, theme = currentTheme } = useTheme();
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          <Trans i18nKey="common.theme" />
-        </CardTitle>
-
-        <CardDescription>
-          <Trans i18nKey="common.themeDescription" />
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent>
-        <div className="grid grid-cols-3 gap-3">
-          {MODES.map((mode) => {
-            const isSelected = theme === mode;
-
-            return (
-              <Button
-                key={mode}
-                variant={isSelected ? 'default' : 'outline'}
-                className={'flex items-center justify-center gap-2'}
-                onClick={() => {
-                  setTheme(mode);
-                  setCookeTheme(mode);
-                }}
-              >
-                {mode === 'light' && <Sun className="size-4" />}
-                {mode === 'dark' && <Moon className="size-4" />}
-                {mode === 'system' && <Computer className="size-4" />}
-
-                <span className="text-sm">
-                  <Trans i18nKey={`common.${mode}Theme`} />
-                </span>
-              </Button>
-            );
-          })}
-        </div>
-      </CardContent>
-    </Card>
-  );
 }

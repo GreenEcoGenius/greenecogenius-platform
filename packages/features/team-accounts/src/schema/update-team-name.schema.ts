@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 import {
   SlugSchema,
@@ -23,7 +23,7 @@ export const TeamNameFormSchema = z
       return true;
     },
     {
-      message: 'teams.slugRequiredForNonLatinName',
+      message: 'teams:slugRequiredForNonLatinName',
       path: ['newSlug'],
     },
   );

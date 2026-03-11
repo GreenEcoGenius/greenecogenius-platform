@@ -1,7 +1,7 @@
 'use client';
 
 import { Mail } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import {
   InputGroup,
@@ -10,7 +10,7 @@ import {
 } from '@kit/ui/input-group';
 
 export function EmailInput(props: React.ComponentProps<'input'>) {
-  const t = useTranslations('auth');
+  const { t } = useTranslation('auth');
 
   return (
     <InputGroup className="dark:bg-background">

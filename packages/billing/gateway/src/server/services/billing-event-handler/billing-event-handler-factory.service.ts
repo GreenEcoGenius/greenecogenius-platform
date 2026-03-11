@@ -1,6 +1,6 @@
 import 'server-only';
 
-import * as z from 'zod';
+import { z } from 'zod';
 
 import {
   type BillingProviderSchema,
@@ -20,7 +20,7 @@ export function createBillingEventHandlerFactoryService(
   // Create a registry for billing webhook handlers
   const billingWebhookHandlerRegistry = createRegistry<
     BillingWebhookHandlerService,
-    z.output<typeof BillingProviderSchema>
+    z.infer<typeof BillingProviderSchema>
   >();
 
   // Register the Stripe webhook handler

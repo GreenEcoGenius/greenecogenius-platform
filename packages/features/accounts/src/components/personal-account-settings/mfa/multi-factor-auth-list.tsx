@@ -4,9 +4,10 @@ import { useCallback, useState } from 'react';
 
 import type { Factor } from '@supabase/supabase-js';
 
+import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ShieldCheck, TriangleAlert, X } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { ShieldCheck, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { useFetchAuthFactors } from '@kit/supabase/hooks/use-fetch-mfa-factors';
 import { useSupabase } from '@kit/supabase/hooks/use-supabase';
@@ -77,7 +78,7 @@ function FactorsTableContainer(props: { userId: string }) {
         <Spinner />
 
         <div>
-          <Trans i18nKey={'account.loadingFactors'} />
+          <Trans i18nKey={'account:loadingFactors'} />
         </div>
       </div>
     );
@@ -87,14 +88,14 @@ function FactorsTableContainer(props: { userId: string }) {
     return (
       <div>
         <Alert variant={'destructive'}>
-          <TriangleAlert className={'h-4'} />
+          <ExclamationTriangleIcon className={'h-4'} />
 
           <AlertTitle>
-            <Trans i18nKey={'account.factorsListError'} />
+            <Trans i18nKey={'account:factorsListError'} />
           </AlertTitle>
 
           <AlertDescription>
-            <Trans i18nKey={'account.factorsListErrorDescription'} />
+            <Trans i18nKey={'account:factorsListErrorDescription'} />
           </AlertDescription>
         </Alert>
       </div>
@@ -113,11 +114,11 @@ function FactorsTableContainer(props: { userId: string }) {
 
           <ItemContent>
             <ItemTitle>
-              <Trans i18nKey={'account.multiFactorAuthHeading'} />
+              <Trans i18nKey={'account:multiFactorAuthHeading'} />
             </ItemTitle>
 
             <ItemDescription>
-              <Trans i18nKey={'account.multiFactorAuthDescription'} />
+              <Trans i18nKey={'account:multiFactorAuthDescription'} />
             </ItemDescription>
           </ItemContent>
         </Item>
@@ -135,7 +136,7 @@ function ConfirmUnenrollFactorModal(
     setIsModalOpen: (isOpen: boolean) => void;
   }>,
 ) {
-  const t = useTranslations();
+  const { t } = useTranslation();
   const unEnroll = useUnenrollFactor(props.userId);
 
   const onUnenrollRequested = useCallback(
@@ -148,18 +149,15 @@ function ConfirmUnenrollFactorModal(
         if (!response.success) {
           const errorCode = response.data;
 
-          throw t(
-            `auth.errors.${errorCode}` as never,
-            {
-              defaultValue: t(`account.unenrollFactorError` as never),
-            } as never,
-          );
+          throw t(`auth:errors.${errorCode}`, {
+            defaultValue: t(`account:unenrollFactorError`),
+          });
         }
       });
 
       toast.promise(promise, {
-        loading: t(`account.unenrollingFactor` as never),
-        success: t(`account.unenrollFactorSuccess` as never),
+        loading: t(`account:unenrollingFactor`),
+        success: t(`account:unenrollFactorSuccess`),
         error: (error: string) => {
           return error;
         },
@@ -173,17 +171,17 @@ function ConfirmUnenrollFactorModal(
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            <Trans i18nKey={'account.unenrollFactorModalHeading'} />
+            <Trans i18nKey={'account:unenrollFactorModalHeading'} />
           </AlertDialogTitle>
 
           <AlertDialogDescription>
-            <Trans i18nKey={'account.unenrollFactorModalDescription'} />
+            <Trans i18nKey={'account:unenrollFactorModalDescription'} />
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
           <AlertDialogCancel>
-            <Trans i18nKey={'common.cancel'} />
+            <Trans i18nKey={'common:cancel'} />
           </AlertDialogCancel>
 
           <AlertDialogAction
@@ -191,7 +189,7 @@ function ConfirmUnenrollFactorModal(
             disabled={unEnroll.isPending}
             onClick={() => onUnenrollRequested(props.factorId)}
           >
-            <Trans i18nKey={'account.unenrollFactorModalButtonLabel'} />
+            <Trans i18nKey={'account:unenrollFactorModalButtonLabel'} />
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -214,13 +212,13 @@ function FactorsTable({
         <TableHeader>
           <TableRow>
             <TableHead>
-              <Trans i18nKey={'account.factorName'} />
+              <Trans i18nKey={'account:factorName'} />
             </TableHead>
             <TableHead>
-              <Trans i18nKey={'account.factorType'} />
+              <Trans i18nKey={'account:factorType'} />
             </TableHead>
             <TableHead>
-              <Trans i18nKey={'account.factorStatus'} />
+              <Trans i18nKey={'account:factorStatus'} />
             </TableHead>
 
             <TableHead />
@@ -252,20 +250,18 @@ function FactorsTable({
               <td className={'flex justify-end'}>
                 <TooltipProvider>
                   <Tooltip>
-                    <TooltipTrigger
-                      render={
-                        <Button
-                          variant={'ghost'}
-                          size={'icon'}
-                          onClick={() => setUnenrolling(factor.id)}
-                        >
-                          <X className={'h-4'} />
-                        </Button>
-                      }
-                    />
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant={'ghost'}
+                        size={'icon'}
+                        onClick={() => setUnenrolling(factor.id)}
+                      >
+                        <X className={'h-4'} />
+                      </Button>
+                    </TooltipTrigger>
 
                     <TooltipContent>
-                      <Trans i18nKey={'account.unenrollTooltip'} />
+                      <Trans i18nKey={'account:unenrollTooltip'} />
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>

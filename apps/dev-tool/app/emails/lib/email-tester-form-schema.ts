@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 export const EmailTesterFormSchema = z.object({
   username: z.string().min(1),

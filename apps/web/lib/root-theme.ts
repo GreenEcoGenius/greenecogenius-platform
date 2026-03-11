@@ -1,12 +1,14 @@
 import { cookies } from 'next/headers';
 
-import * as z from 'zod';
+import { z } from 'zod';
 
 /**
  * @name Theme
  * @description The theme mode enum.
  */
-const Theme = z.enum(['light', 'dark', 'system']);
+const Theme = z.enum(['light', 'dark', 'system'], {
+  description: 'The theme mode',
+});
 
 /**
  * @name appDefaultThemeMode

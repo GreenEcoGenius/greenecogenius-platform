@@ -1,8 +1,8 @@
 'use server';
 
-import * as z from 'zod';
+import { z } from 'zod';
 
-import { authActionClient } from '@kit/next/safe-action';
+import { enhanceAction } from '@kit/next/actions';
 import { getLogger } from '@kit/shared/logger';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
@@ -25,9 +25,8 @@ const SendOtpEmailSchema = z.object({
 /**
  * Server action to generate an OTP and send it via email
  */
-export const sendOtpEmailAction = authActionClient
-  .schema(SendOtpEmailSchema)
-  .action(async ({ parsedInput: data, ctx: { user } }) => {
+export const sendOtpEmailAction = enhanceAction(
+  async function (data: z.infer<typeof SendOtpEmailSchema>, user) {
     const logger = await getLogger();
     const ctx = { name: 'send-otp-email', userId: user.id };
     const email = user.email;
@@ -88,4 +87,9 @@ export const sendOtpEmailAction = authActionClient
           error instanceof Error ? error.message : 'Failed to send OTP email',
       };
     }
-  });
+  },
+  {
+    schema: SendOtpEmailSchema,
+    auth: true,
+  },
+);

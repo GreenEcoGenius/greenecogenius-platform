@@ -29,11 +29,11 @@ export async function renderAccountDeleteEmail(props: Props) {
     namespace,
   });
 
-  const previewText = t(`previewText`, {
+  const previewText = t(`${namespace}:previewText`, {
     productName: props.productName,
   });
 
-  const subject = t(`subject`, {
+  const subject = t(`${namespace}:subject`, {
     productName: props.productName,
   });
 
@@ -54,27 +54,27 @@ export async function renderAccountDeleteEmail(props: Props) {
 
             <EmailContent>
               <Text className="text-[16px] leading-[24px] text-[#242424]">
-                {t(`hello`)}
+                {t(`${namespace}:hello`)}
               </Text>
 
               <Text className="text-[16px] leading-[24px] text-[#242424]">
-                {t(`paragraph1`, {
+                {t(`${namespace}:paragraph1`, {
                   productName: props.productName,
                 })}
               </Text>
 
               <Text className="text-[16px] leading-[24px] text-[#242424]">
-                {t(`paragraph2`)}
+                {t(`${namespace}:paragraph2`)}
               </Text>
 
               <Text className="text-[16px] leading-[24px] text-[#242424]">
-                {t(`paragraph3`, {
+                {t(`${namespace}:paragraph3`, {
                   productName: props.productName,
                 })}
               </Text>
 
               <Text className="text-[16px] leading-[24px] text-[#242424]">
-                {t(`paragraph4`, {
+                {t(`${namespace}:paragraph4`, {
                   productName: props.productName,
                 })}
               </Text>

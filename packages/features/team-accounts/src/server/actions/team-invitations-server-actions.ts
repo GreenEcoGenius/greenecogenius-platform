@@ -3,9 +3,9 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import * as z from 'zod';
+import { z } from 'zod';
 
-import { authActionClient } from '@kit/next/safe-action';
+import { enhanceAction } from '@kit/next/actions';
 import { getLogger } from '@kit/shared/logger';
 import { Database } from '@kit/supabase/database';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
@@ -26,15 +26,8 @@ import { createAccountPerSeatBillingService } from '../services/account-per-seat
  * @name createInvitationsAction
  * @description Creates invitations for inviting members.
  */
-export const createInvitationsAction = authActionClient
-  .schema(
-    InviteMembersSchema.and(
-      z.object({
-        accountSlug: z.string().min(1),
-      }),
-    ),
-  )
-  .action(async ({ parsedInput: params, ctx: { user } }) => {
+export const createInvitationsAction = enhanceAction(
+  async (params, user) => {
     const logger = await getLogger();
 
     logger.info(
@@ -123,15 +116,22 @@ export const createInvitationsAction = authActionClient
         success: false,
       };
     }
-  });
+  },
+  {
+    schema: InviteMembersSchema.and(
+      z.object({
+        accountSlug: z.string().min(1),
+      }),
+    ),
+  },
+);
 
 /**
  * @name deleteInvitationAction
  * @description Deletes an invitation specified by the invitation ID.
  */
-export const deleteInvitationAction = authActionClient
-  .schema(DeleteInvitationSchema)
-  .action(async ({ parsedInput: data }) => {
+export const deleteInvitationAction = enhanceAction(
+  async (data) => {
     const client = getSupabaseServerClient();
     const service = createAccountInvitationsService(client);
 
@@ -143,15 +143,18 @@ export const deleteInvitationAction = authActionClient
     return {
       success: true,
     };
-  });
+  },
+  {
+    schema: DeleteInvitationSchema,
+  },
+);
 
 /**
  * @name updateInvitationAction
  * @description Updates an invitation.
  */
-export const updateInvitationAction = authActionClient
-  .schema(UpdateInvitationSchema)
-  .action(async ({ parsedInput: invitation }) => {
+export const updateInvitationAction = enhanceAction(
+  async (invitation) => {
     const client = getSupabaseServerClient();
     const service = createAccountInvitationsService(client);
 
@@ -162,18 +165,23 @@ export const updateInvitationAction = authActionClient
     return {
       success: true,
     };
-  });
+  },
+  {
+    schema: UpdateInvitationSchema,
+  },
+);
 
 /**
  * @name acceptInvitationAction
  * @description Accepts an invitation to join a team.
  */
-export const acceptInvitationAction = authActionClient
-  .schema(AcceptInvitationSchema)
-  .action(async ({ parsedInput: data, ctx: { user } }) => {
+export const acceptInvitationAction = enhanceAction(
+  async (data: FormData, user) => {
     const client = getSupabaseServerClient();
 
-    const { inviteToken, nextPath } = data;
+    const { inviteToken, nextPath } = AcceptInvitationSchema.parse(
+      Object.fromEntries(data),
+    );
 
     // create the services
     const perSeatBillingService = createAccountPerSeatBillingService(client);
@@ -197,17 +205,19 @@ export const acceptInvitationAction = authActionClient
     // Increase the seats for the account
     await perSeatBillingService.increaseSeats(accountId);
 
-    redirect(nextPath);
-  });
+    return redirect(nextPath);
+  },
+  {},
+);
 
 /**
  * @name renewInvitationAction
  * @description Renews an invitation.
  */
-export const renewInvitationAction = authActionClient
-  .schema(RenewInvitationSchema)
-  .action(async ({ parsedInput: { invitationId } }) => {
+export const renewInvitationAction = enhanceAction(
+  async (params) => {
     const client = getSupabaseServerClient();
+    const { invitationId } = RenewInvitationSchema.parse(params);
 
     const service = createAccountInvitationsService(client);
 
@@ -219,7 +229,11 @@ export const renewInvitationAction = authActionClient
     return {
       success: true,
     };
-  });
+  },
+  {
+    schema: RenewInvitationSchema,
+  },
+);
 
 function revalidateMemberPage() {
   revalidatePath('/home/[account]/members', 'page');
@@ -233,7 +247,7 @@ function revalidateMemberPage() {
  * @param accountId - The account ID (already fetched to avoid duplicate queries).
  */
 async function evaluateInvitationsPolicies(
-  params: z.output<typeof InviteMembersSchema> & { accountSlug: string },
+  params: z.infer<typeof InviteMembersSchema> & { accountSlug: string },
   user: JWTUserData,
   accountId: string,
 ) {
@@ -268,7 +282,7 @@ async function evaluateInvitationsPolicies(
 async function checkInvitationPermissions(
   accountId: string,
   userId: string,
-  invitations: z.output<typeof InviteMembersSchema>['invitations'],
+  invitations: z.infer<typeof InviteMembersSchema>['invitations'],
 ): Promise<{
   allowed: boolean;
   reason?: string;

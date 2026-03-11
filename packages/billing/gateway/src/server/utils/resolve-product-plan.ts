@@ -1,6 +1,6 @@
 import 'server-only';
 
-import * as z from 'zod';
+import { z } from 'zod';
 
 import {
   BillingConfig,
@@ -24,7 +24,7 @@ export async function resolveProductPlan(
   currency: string,
 ): Promise<{
   product: ProductSchema;
-  plan: z.output<typeof PlanSchema>;
+  plan: z.infer<typeof PlanSchema>;
 }> {
   // we can't always guarantee that the plan will be present in the local config
   // so we need to fallback to fetching the plan details from the billing provider

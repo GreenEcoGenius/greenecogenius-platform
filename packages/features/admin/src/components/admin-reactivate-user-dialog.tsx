@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAction } from 'next-safe-action/hooks';
 import { useForm } from 'react-hook-form';
 
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
@@ -42,7 +41,7 @@ export function AdminReactivateUserDialog(
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger render={props.children as React.ReactElement} />
+      <AlertDialogTrigger asChild>{props.children}</AlertDialogTrigger>
 
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -63,9 +62,8 @@ export function AdminReactivateUserDialog(
 }
 
 function ReactivateUserForm(props: { userId: string; onSuccess: () => void }) {
-  const { execute, isPending, hasErrored } = useAction(reactivateUserAction, {
-    onSuccess: () => props.onSuccess(),
-  });
+  const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<boolean>(false);
 
   const form = useForm({
     resolver: zodResolver(ReactivateUserSchema),
@@ -80,9 +78,18 @@ function ReactivateUserForm(props: { userId: string; onSuccess: () => void }) {
       <form
         data-test={'admin-reactivate-user-form'}
         className={'flex flex-col space-y-8'}
-        onSubmit={form.handleSubmit((data) => execute(data))}
+        onSubmit={form.handleSubmit((data) => {
+          startTransition(async () => {
+            try {
+              await reactivateUserAction(data);
+              props.onSuccess();
+            } catch {
+              setError(true);
+            }
+          });
+        })}
       >
-        <If condition={hasErrored}>
+        <If condition={error}>
           <Alert variant={'destructive'}>
             <AlertTitle>Error</AlertTitle>
 
@@ -120,10 +127,10 @@ function ReactivateUserForm(props: { userId: string; onSuccess: () => void }) {
         />
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
 
-          <Button disabled={isPending} type={'submit'}>
-            {isPending ? 'Reactivating...' : 'Reactivate User'}
+          <Button disabled={pending} type={'submit'}>
+            {pending ? 'Reactivating...' : 'Reactivate User'}
           </Button>
         </AlertDialogFooter>
       </form>

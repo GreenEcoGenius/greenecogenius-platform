@@ -1,128 +1,108 @@
 const ROOT_PATH = '/';
 
-export type RouteActiveOptions = {
-  locale?: string;
-  locales?: string[];
-};
-
 /**
  * @name isRouteActive
- * @description Check if a route is active for navigation highlighting.
- *
- * Default behavior: prefix matching (highlights parent when on child routes)
- * Custom behavior: provide a regex pattern via highlightMatch
- *
- * @param path - The navigation item's path
- * @param currentPath - The current browser path
- * @param highlightMatch - Optional regex pattern for custom matching
- * @param options - Locale options for path normalization
- *
- * @example
- * // Default: /projects highlights for /projects, /projects/123, /projects/123/edit
- * isRouteActive('/projects', '/projects/123')  // true
- *
- * // Exact match only
- * isRouteActive('/dashboard', '/dashboard/stats', '^/dashboard$')  // false
- *
- * // Multiple paths
- * isRouteActive('/projects', '/settings/projects', '^/(projects|settings/projects)')  // true
+ * @description A function to check if a route is active. This is used to
+ * @param end
+ * @param path
+ * @param currentPath
  */
 export function isRouteActive(
   path: string,
   currentPath: string,
-  highlightMatch?: string,
-  options?: RouteActiveOptions,
+  end?: boolean | ((path: string) => boolean),
 ) {
-  const locale =
-    options?.locale ?? detectLocaleFromPath(currentPath, options?.locales);
-
-  const normalizedPath = normalizePath(path, { ...options, locale });
-  const normalizedCurrentPath = normalizePath(currentPath, {
-    ...options,
-    locale,
-  });
-
-  // Exact match always returns true
-  if (normalizedPath === normalizedCurrentPath) {
+  // if the path is the same as the current path, we return true
+  if (path === currentPath) {
     return true;
   }
 
-  // Custom regex match
-  if (highlightMatch) {
-    const regex = new RegExp(highlightMatch);
-    return regex.test(normalizedCurrentPath);
+  // if the end prop is a function, we call it with the current path
+  if (typeof end === 'function') {
+    return !end(currentPath);
   }
 
-  // Default: prefix matching - highlight when current path starts with nav path
-  // Special case: root path should only match exactly
-  if (normalizedPath === ROOT_PATH) {
+  // otherwise - we use the evaluateIsRouteActive function
+  const defaultEnd = end ?? true;
+  const oneLevelDeep = 1;
+  const threeLevelsDeep = 3;
+
+  // how far down should segments be matched?
+  const depth = defaultEnd ? oneLevelDeep : threeLevelsDeep;
+
+  return checkIfRouteIsActive(path, currentPath, depth);
+}
+
+/**
+ * @name checkIfRouteIsActive
+ * @description A function to check if a route is active. This is used to
+ * highlight the active link in the navigation.
+ * @param targetLink - The link to check against
+ * @param currentRoute - the current route
+ * @param depth - how far down should segments be matched?
+ */
+export function checkIfRouteIsActive(
+  targetLink: string,
+  currentRoute: string,
+  depth = 1,
+) {
+  // we remove any eventual query param from the route's URL
+  const currentRoutePath = currentRoute.split('?')[0] ?? '';
+
+  if (!isRoot(currentRoutePath) && isRoot(targetLink)) {
     return false;
   }
 
-  return (
-    normalizedCurrentPath.startsWith(normalizedPath + '/') ||
-    normalizedCurrentPath === normalizedPath
-  );
+  if (!currentRoutePath.includes(targetLink)) {
+    return false;
+  }
+
+  const isSameRoute = targetLink === currentRoutePath;
+
+  if (isSameRoute) {
+    return true;
+  }
+
+  return hasMatchingSegments(targetLink, currentRoutePath, depth);
 }
 
 function splitIntoSegments(href: string) {
   return href.split('/').filter(Boolean);
 }
 
-function normalizePath(path: string, options?: RouteActiveOptions) {
-  const [pathname = ROOT_PATH] = path.split('?');
-  const normalizedPath =
-    pathname.length > 1 && pathname.endsWith('/')
-      ? pathname.slice(0, -1)
-      : pathname || ROOT_PATH;
+function hasMatchingSegments(
+  targetLink: string,
+  currentRoute: string,
+  depth: number,
+) {
+  const segments = splitIntoSegments(targetLink);
+  const matchingSegments = numberOfMatchingSegments(currentRoute, segments);
 
-  if (!options?.locale && !options?.locales?.length) {
-    return normalizedPath || ROOT_PATH;
+  if (targetLink === currentRoute) {
+    return true;
   }
 
-  const locale =
-    options?.locale ?? detectLocaleFromPath(normalizedPath, options?.locales);
-
-  if (!locale || !hasLocalePrefix(normalizedPath, locale)) {
-    return normalizedPath || ROOT_PATH;
-  }
-
-  return stripLocalePrefix(normalizedPath, locale);
+  // how far down should segments be matched?
+  // - if depth = 1 => only highlight the links of the immediate parent
+  // - if depth = 2 => for url = /account match /account/organization/members
+  return matchingSegments > segments.length - (depth - 1);
 }
 
-function detectLocaleFromPath(
-  path: string,
-  locales: string[] | undefined,
-): string | undefined {
-  if (!locales?.length) {
-    return undefined;
+function numberOfMatchingSegments(href: string, segments: string[]) {
+  let count = 0;
+
+  for (const segment of splitIntoSegments(href)) {
+    // for as long as the segments match, keep counting + 1
+    if (segments.includes(segment)) {
+      count += 1;
+    } else {
+      return count;
+    }
   }
 
-  const [firstSegment] = splitIntoSegments(path);
-
-  if (!firstSegment) {
-    return undefined;
-  }
-
-  return locales.find(
-    (locale) => locale.toLowerCase() === firstSegment.toLowerCase(),
-  );
+  return count;
 }
 
-function hasLocalePrefix(path: string, locale: string) {
-  return path === `/${locale}` || path.startsWith(`/${locale}/`);
-}
-
-function stripLocalePrefix(path: string, locale: string) {
-  if (!hasLocalePrefix(path, locale)) {
-    return path || ROOT_PATH;
-  }
-
-  const withoutPrefix = path.slice(locale.length + 1);
-
-  if (!withoutPrefix) {
-    return ROOT_PATH;
-  }
-
-  return withoutPrefix.startsWith('/') ? withoutPrefix : `/${withoutPrefix}`;
+function isRoot(path: string) {
+  return path === ROOT_PATH;
 }

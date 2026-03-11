@@ -1,10 +1,9 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
-const RouteContextSchema = z
-  .enum(['personal', 'organization', 'all'])
-  .default('all');
-
-export type RouteContext = z.output<typeof RouteContextSchema>;
+const RouteMatchingEnd = z
+  .union([z.boolean(), z.function().args(z.string()).returns(z.boolean())])
+  .default(false)
+  .optional();
 
 const Divider = z.object({
   divider: z.literal(true),
@@ -14,21 +13,19 @@ const RouteSubChild = z.object({
   label: z.string(),
   path: z.string(),
   Icon: z.custom<React.ReactNode>().optional(),
-  highlightMatch: z.string().optional(),
+  end: RouteMatchingEnd,
   renderAction: z.custom<React.ReactNode>().optional(),
-  context: RouteContextSchema.optional(),
 });
 
 const RouteChild = z.object({
   label: z.string(),
   path: z.string(),
   Icon: z.custom<React.ReactNode>().optional(),
-  highlightMatch: z.string().optional(),
+  end: RouteMatchingEnd,
   children: z.array(RouteSubChild).default([]).optional(),
   collapsible: z.boolean().default(false).optional(),
   collapsed: z.boolean().default(false).optional(),
   renderAction: z.custom<React.ReactNode>().optional(),
-  context: RouteContextSchema.optional(),
 });
 
 const RouteGroup = z.object({
@@ -40,8 +37,12 @@ const RouteGroup = z.object({
 });
 
 export const NavigationConfigSchema = z.object({
-  sidebarCollapsed: z.stringbool().optional().default(false),
-  sidebarCollapsedStyle: z.enum(['icon', 'offcanvas', 'none']).default('icon'),
+  style: z.enum(['custom', 'sidebar', 'header']).default('sidebar'),
+  sidebarCollapsed: z
+    .enum(['false', 'true'])
+    .default('true')
+    .optional()
+    .transform((value) => value === `true`),
+  sidebarCollapsedStyle: z.enum(['offcanvas', 'icon', 'none']).default('icon'),
   routes: z.array(z.union([RouteGroup, Divider])),
-  style: z.enum(['sidebar', 'header', 'custom']).default('sidebar'),
 });

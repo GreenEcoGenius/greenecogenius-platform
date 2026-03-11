@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCircle } from 'lucide-react';
+import { CheckCircledIcon } from '@radix-ui/react-icons';
 
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import { If } from '@kit/ui/if';
@@ -71,14 +71,14 @@ export function EmailPasswordSignUpContainer({
 function SuccessAlert() {
   return (
     <Alert variant={'success'}>
-      <CheckCircle className={'w-4'} />
+      <CheckCircledIcon className={'w-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'auth.emailConfirmationAlertHeading'} />
+        <Trans i18nKey={'auth:emailConfirmationAlertHeading'} />
       </AlertTitle>
 
       <AlertDescription data-test={'email-confirmation-alert'}>
-        <Trans i18nKey={'auth.emailConfirmationAlertBody'} />
+        <Trans i18nKey={'auth:emailConfirmationAlertBody'} />
       </AlertDescription>
     </Alert>
   );

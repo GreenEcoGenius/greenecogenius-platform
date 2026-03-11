@@ -1,2 +1,1 @@
-// Export routing configuration as the main export
-export * from './routing';
+export * from './create-i18n-settings';

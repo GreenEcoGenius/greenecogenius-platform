@@ -1,10 +1,10 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Check, TriangleAlert } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { CheckIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
 
 import { useAppEvents } from '@kit/shared/events';
 import { useSignInWithOtp } from '@kit/supabase/hooks/use-sign-in-with-otp';
@@ -44,7 +44,7 @@ export function MagicLinkAuthContainer({
   };
 }) {
   const captcha = useCaptcha({ siteKey: captchaSiteKey });
-  const t = useTranslations();
+  const { t } = useTranslation();
   const signInWithOtpMutation = useSignInWithOtp();
   const appEvents = useAppEvents();
   const { recordAuthMethod } = useLastAuthMethod();
@@ -90,9 +90,9 @@ export function MagicLinkAuthContainer({
     };
 
     toast.promise(promise, {
-      loading: t('auth.sendingEmailLink'),
-      success: t(`auth.sendLinkSuccessToast`),
-      error: t(`auth.errors.linkTitle`),
+      loading: t('auth:sendingEmailLink'),
+      success: t(`auth:sendLinkSuccessToast`),
+      error: t(`auth:errors.linkTitle`),
     });
 
     captcha.reset();
@@ -116,7 +116,7 @@ export function MagicLinkAuthContainer({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  <Trans i18nKey={'common.emailAddress'} />
+                  <Trans i18nKey={'common:emailAddress'} />
                 </FormLabel>
 
                 <FormControl>
@@ -133,20 +133,17 @@ export function MagicLinkAuthContainer({
             <TermsAndConditionsFormField />
           </If>
 
-          <Button
-            type="submit"
-            disabled={signInWithOtpMutation.isPending || captchaLoading}
-          >
+          <Button disabled={signInWithOtpMutation.isPending || captchaLoading}>
             <If condition={captchaLoading}>
-              <Trans i18nKey={'auth.verifyingCaptcha'} />
+              <Trans i18nKey={'auth:verifyingCaptcha'} />
             </If>
 
             <If condition={signInWithOtpMutation.isPending && !captchaLoading}>
-              <Trans i18nKey={'auth.sendingEmailLink'} />
+              <Trans i18nKey={'auth:sendingEmailLink'} />
             </If>
 
             <If condition={!signInWithOtpMutation.isPending && !captchaLoading}>
-              <Trans i18nKey={'auth.sendEmailLink'} />
+              <Trans i18nKey={'auth:sendEmailLink'} />
             </If>
           </Button>
         </div>
@@ -158,14 +155,14 @@ export function MagicLinkAuthContainer({
 function SuccessAlert() {
   return (
     <Alert variant={'success'}>
-      <Check className={'h-4'} />
+      <CheckIcon className={'h-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'auth.sendLinkSuccess'} />
+        <Trans i18nKey={'auth:sendLinkSuccess'} />
       </AlertTitle>
 
       <AlertDescription>
-        <Trans i18nKey={'auth.sendLinkSuccessDescription'} />
+        <Trans i18nKey={'auth:sendLinkSuccessDescription'} />
       </AlertDescription>
     </Alert>
   );
@@ -174,14 +171,14 @@ function SuccessAlert() {
 function ErrorAlert() {
   return (
     <Alert variant={'destructive'}>
-      <TriangleAlert className={'h-4'} />
+      <ExclamationTriangleIcon className={'h-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'auth.errors.linkTitle'} />
+        <Trans i18nKey={'auth:errors.linkTitle'} />
       </AlertTitle>
 
       <AlertDescription>
-        <Trans i18nKey={'auth.errors.linkDescription'} />
+        <Trans i18nKey={'auth:errors.linkDescription'} />
       </AlertDescription>
     </Alert>
   );

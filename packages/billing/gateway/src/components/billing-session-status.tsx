@@ -41,7 +41,7 @@ export function BillingSessionStatus({
 
         <Heading level={3}>
           <span className={'mr-4 font-semibold'}>
-            <Trans i18nKey={'billing.checkoutSuccessTitle'} />
+            <Trans i18nKey={'billing:checkoutSuccessTitle'} />
           </span>
           🎉
         </Heading>
@@ -49,26 +49,22 @@ export function BillingSessionStatus({
         <div className={'text-muted-foreground flex flex-col space-y-4'}>
           <p>
             <Trans
-              i18nKey={'billing.checkoutSuccessDescription'}
+              i18nKey={'billing:checkoutSuccessDescription'}
               values={{ customerEmail }}
             />
           </p>
         </div>
 
         <div>
-          <Button
-            nativeButton={false}
-            data-test={'checkout-success-back-link'}
-            render={
-              <Link href={redirectPath}>
-                <span>
-                  <Trans i18nKey={'billing.checkoutSuccessBackButton'} />
-                </span>
+          <Button data-test={'checkout-success-back-link'} asChild>
+            <Link href={redirectPath}>
+              <span>
+                <Trans i18nKey={'billing:checkoutSuccessBackButton'} />
+              </span>
 
-                <ChevronRight className={'h-4'} />
-              </Link>
-            }
-          />
+              <ChevronRight className={'h-4'} />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>

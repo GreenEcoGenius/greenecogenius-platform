@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
 import { UserCheck } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import { Alert, AlertDescription } from '@kit/ui/alert';
 import { If } from '@kit/ui/if';
@@ -36,7 +36,7 @@ export function ExistingAccountHintImpl({
     useLastAuthMethod();
 
   const params = useSearchParams();
-  const t = useTranslations();
+  const { t } = useTranslation();
 
   const isInvite = params.get('invite_token');
 
@@ -53,13 +53,13 @@ export function ExistingAccountHintImpl({
 
     switch (methodType) {
       case 'password':
-        return 'auth.methodPassword';
+        return 'auth:methodPassword';
       case 'otp':
-        return 'auth.methodOtp';
+        return 'auth:methodOtp';
       case 'magic_link':
-        return 'auth.methodMagicLink';
+        return 'auth:methodMagicLink';
       default:
-        return 'auth.methodDefault';
+        return 'auth:methodDefault';
     }
   }, [methodType, isOAuth, providerName]);
 
@@ -73,10 +73,10 @@ export function ExistingAccountHintImpl({
       <Alert data-test={'existing-account-hint'} className={className}>
         <UserCheck className="h-4 w-4" />
 
-        <AlertDescription className={'text-xs'}>
+        <AlertDescription>
           <Trans
-            i18nKey="auth.existingAccountHint"
-            values={{ methodName: t(methodDescription) }}
+            i18nKey="auth:existingAccountHint"
+            values={{ method: t(methodDescription) }}
             components={{
               method: <span className="font-medium" />,
               signInLink: (

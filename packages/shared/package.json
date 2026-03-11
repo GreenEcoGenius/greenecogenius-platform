@@ -14,8 +14,7 @@
     "./utils": "./src/utils.ts",
     "./hooks": "./src/hooks/index.ts",
     "./events": "./src/events/index.tsx",
-    "./registry": "./src/registry/index.ts",
-    "./env": "./src/env/index.ts"
+    "./registry": "./src/registry/index.ts"
   },
   "devDependencies": {
     "@kit/eslint-config": "workspace:*",
@@ -25,7 +24,6 @@
     "@types/react": "catalog:"
   },
   "dependencies": {
-    "next-runtime-env": "catalog:",
     "pino": "catalog:"
   },
   "typesVersions": {

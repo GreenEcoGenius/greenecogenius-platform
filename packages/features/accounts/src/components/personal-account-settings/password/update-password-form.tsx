@@ -5,9 +5,10 @@ import { useState } from 'react';
 import type { PostgrestError } from '@supabase/supabase-js';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Check, Lock, TriangleAlert, XIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { Check, Lock, XIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useUpdateUser } from '@kit/supabase/hooks/use-update-user-mutation';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
@@ -40,7 +41,7 @@ export const UpdatePasswordForm = ({
   callbackPath: string;
   onSuccess?: () => void;
 }) => {
-  const t = useTranslations('account');
+  const { t } = useTranslation('account');
   const updateUserMutation = useUpdateUser();
   const [needsReauthentication, setNeedsReauthentication] = useState(false);
 
@@ -130,7 +131,7 @@ export const UpdatePasswordForm = ({
                           autoComplete={'new-password'}
                           required
                           type={'password'}
-                          placeholder={t('newPassword')}
+                          placeholder={t('account:newPassword')}
                           {...field}
                         />
                       </InputGroup>
@@ -159,14 +160,14 @@ export const UpdatePasswordForm = ({
                           }
                           required
                           type={'password'}
-                          placeholder={t('repeatPassword')}
+                          placeholder={t('account:repeatPassword')}
                           {...field}
                         />
                       </InputGroup>
                     </FormControl>
 
                     <FormDescription>
-                      <Trans i18nKey={'account.repeatPasswordDescription'} />
+                      <Trans i18nKey={'account:repeatPasswordDescription'} />
                     </FormDescription>
 
                     <FormMessage />
@@ -178,11 +179,10 @@ export const UpdatePasswordForm = ({
 
           <div>
             <Button
-              type="submit"
               disabled={updateUserMutation.isPending}
               data-test="identity-form-submit"
             >
-              <Trans i18nKey={'account.updatePasswordSubmitLabel'} />
+              <Trans i18nKey={'account:updatePasswordSubmitLabel'} />
             </Button>
           </div>
         </div>
@@ -192,20 +192,20 @@ export const UpdatePasswordForm = ({
 };
 
 function ErrorAlert({ error }: { error: { code: string } }) {
-  const t = useTranslations();
+  const { t } = useTranslation();
 
   return (
     <Alert variant={'destructive'}>
       <XIcon className={'h-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'account.updatePasswordError'} />
+        <Trans i18nKey={'account:updatePasswordError'} />
       </AlertTitle>
 
       <AlertDescription>
         <Trans
-          i18nKey={`auth.errors.${error.code}`}
-          defaults={t('auth.resetPasswordError')}
+          i18nKey={`auth:errors.${error.code}`}
+          defaults={t('auth:resetPasswordError')}
         />
       </AlertDescription>
     </Alert>
@@ -218,11 +218,11 @@ function SuccessAlert() {
       <Check className={'h-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'account.updatePasswordSuccess'} />
+        <Trans i18nKey={'account:updatePasswordSuccess'} />
       </AlertTitle>
 
       <AlertDescription>
-        <Trans i18nKey={'account.updatePasswordSuccessMessage'} />
+        <Trans i18nKey={'account:updatePasswordSuccessMessage'} />
       </AlertDescription>
     </Alert>
   );
@@ -231,14 +231,14 @@ function SuccessAlert() {
 function NeedsReauthenticationAlert() {
   return (
     <Alert variant={'warning'}>
-      <TriangleAlert className={'h-4'} />
+      <ExclamationTriangleIcon className={'h-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'account.needsReauthentication'} />
+        <Trans i18nKey={'account:needsReauthentication'} />
       </AlertTitle>
 
       <AlertDescription>
-        <Trans i18nKey={'account.needsReauthenticationDescription'} />
+        <Trans i18nKey={'account:needsReauthenticationDescription'} />
       </AlertDescription>
     </Alert>
   );

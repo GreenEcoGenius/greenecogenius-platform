@@ -17,7 +17,7 @@ The FeaturePolicy API provides:
 ### 1. Register Policies
 
 ```typescript
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { allow, createPolicyRegistry, definePolicy, deny } from '@kit/policies';
 

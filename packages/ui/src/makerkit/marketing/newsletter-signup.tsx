@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { cn } from '../../lib/utils';
 import { Button } from '../../shadcn/button';
@@ -16,10 +16,10 @@ import {
 import { Input } from '../../shadcn/input';
 
 const NewsletterFormSchema = z.object({
-  email: z.email(),
+  email: z.string().email('Please enter a valid email address'),
 });
 
-type NewsletterFormValues = z.output<typeof NewsletterFormSchema>;
+type NewsletterFormValues = z.infer<typeof NewsletterFormSchema>;
 
 interface NewsletterSignupProps extends React.HTMLAttributes<HTMLDivElement> {
   onSignup: (data: NewsletterFormValues) => void;
@@ -49,13 +49,13 @@ export function NewsletterSignup({
           className="flex flex-col gap-y-3"
         >
           <FormField
+            control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormControl
-                  render={<Input placeholder={placeholder} {...field} />}
-                />
-
+                <FormControl>
+                  <Input placeholder={placeholder} {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

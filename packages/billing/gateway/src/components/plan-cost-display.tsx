@@ -2,15 +2,15 @@
 
 import { useMemo } from 'react';
 
-import { useLocale } from 'next-intl';
-import * as z from 'zod';
+import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
 
 import type { LineItemSchema } from '@kit/billing';
 import { formatCurrency } from '@kit/shared/utils';
 import { Trans } from '@kit/ui/trans';
 
 type PlanCostDisplayProps = {
-  primaryLineItem: z.output<typeof LineItemSchema>;
+  primaryLineItem: z.infer<typeof LineItemSchema>;
   currencyCode: string;
   interval?: string;
   alwaysDisplayMonthlyPrice?: boolean;
@@ -30,7 +30,7 @@ export function PlanCostDisplay({
   alwaysDisplayMonthlyPrice = true,
   className,
 }: PlanCostDisplayProps) {
-  const locale = useLocale();
+  const { i18n } = useTranslation();
 
   const { shouldDisplayTier, lowestTier, tierTranslationKey, displayCost } =
     useMemo(() => {
@@ -62,8 +62,8 @@ export function PlanCostDisplay({
         isMultiTier,
         lowestTier,
         tierTranslationKey: isMultiTier
-          ? 'billing.startingAtPriceUnit'
-          : 'billing.priceUnit',
+          ? 'billing:startingAtPriceUnit'
+          : 'billing:priceUnit',
         displayCost: cost,
       };
     }, [primaryLineItem, interval, alwaysDisplayMonthlyPrice]);
@@ -72,7 +72,7 @@ export function PlanCostDisplay({
     const formattedCost = formatCurrency({
       currencyCode: currencyCode.toLowerCase(),
       value: lowestTier?.cost ?? 0,
-      locale: locale,
+      locale: i18n.language,
     });
 
     return (
@@ -91,7 +91,7 @@ export function PlanCostDisplay({
   const formattedCost = formatCurrency({
     currencyCode: currencyCode.toLowerCase(),
     value: displayCost,
-    locale: locale,
+    locale: i18n.language,
   });
 
   return <span className={className}>{formattedCost}</span>;

@@ -49,7 +49,7 @@ export function useSignUpWithEmailAndPassword() {
         throw new WeakPasswordError(errorObj.reasons ?? []);
       }
 
-      throw response.error;
+      throw response.error.message;
     }
 
     const user = response.data?.user;

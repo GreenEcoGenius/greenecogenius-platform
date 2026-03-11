@@ -1,15 +1,15 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 export const StripeServerEnvSchema = z
   .object({
     secretKey: z
       .string({
-        error: `Please provide the variable STRIPE_SECRET_KEY`,
+        required_error: `Please provide the variable STRIPE_SECRET_KEY`,
       })
       .min(1),
     webhooksSecret: z
       .string({
-        error: `Please provide the variable STRIPE_WEBHOOK_SECRET`,
+        required_error: `Please provide the variable STRIPE_WEBHOOK_SECRET`,
       })
       .min(1),
   })

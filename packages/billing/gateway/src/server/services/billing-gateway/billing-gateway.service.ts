@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 import type { BillingProviderSchema } from '@kit/billing';
 import {
@@ -14,7 +14,7 @@ import {
 import { billingStrategyRegistry } from './billing-gateway-registry';
 
 export function createBillingGatewayService(
-  provider: z.output<typeof BillingProviderSchema>,
+  provider: z.infer<typeof BillingProviderSchema>,
 ) {
   return new BillingGatewayService(provider);
 }
@@ -30,7 +30,7 @@ export function createBillingGatewayService(
  */
 class BillingGatewayService {
   constructor(
-    private readonly provider: z.output<typeof BillingProviderSchema>,
+    private readonly provider: z.infer<typeof BillingProviderSchema>,
   ) {}
 
   /**
@@ -40,7 +40,7 @@ class BillingGatewayService {
    *
    */
   async createCheckoutSession(
-    params: z.output<typeof CreateBillingCheckoutSchema>,
+    params: z.infer<typeof CreateBillingCheckoutSchema>,
   ) {
     const strategy = await this.getStrategy();
     const payload = CreateBillingCheckoutSchema.parse(params);
@@ -54,7 +54,7 @@ class BillingGatewayService {
    * @param {RetrieveCheckoutSessionSchema} params - The parameters to retrieve the checkout session.
    */
   async retrieveCheckoutSession(
-    params: z.output<typeof RetrieveCheckoutSessionSchema>,
+    params: z.infer<typeof RetrieveCheckoutSessionSchema>,
   ) {
     const strategy = await this.getStrategy();
     const payload = RetrieveCheckoutSessionSchema.parse(params);
@@ -68,7 +68,7 @@ class BillingGatewayService {
    * @param {CreateBillingPortalSessionSchema} params - The parameters to create the billing portal session.
    */
   async createBillingPortalSession(
-    params: z.output<typeof CreateBillingPortalSessionSchema>,
+    params: z.infer<typeof CreateBillingPortalSessionSchema>,
   ) {
     const strategy = await this.getStrategy();
     const payload = CreateBillingPortalSessionSchema.parse(params);
@@ -82,7 +82,7 @@ class BillingGatewayService {
    * @param {CancelSubscriptionParamsSchema} params - The parameters for cancelling the subscription.
    */
   async cancelSubscription(
-    params: z.output<typeof CancelSubscriptionParamsSchema>,
+    params: z.infer<typeof CancelSubscriptionParamsSchema>,
   ) {
     const strategy = await this.getStrategy();
     const payload = CancelSubscriptionParamsSchema.parse(params);
@@ -95,7 +95,7 @@ class BillingGatewayService {
    * @description This is used to report the usage of the billing to the provider.
    * @param params
    */
-  async reportUsage(params: z.output<typeof ReportBillingUsageSchema>) {
+  async reportUsage(params: z.infer<typeof ReportBillingUsageSchema>) {
     const strategy = await this.getStrategy();
     const payload = ReportBillingUsageSchema.parse(params);
 
@@ -107,7 +107,7 @@ class BillingGatewayService {
    * @description Queries the usage of the metered billing.
    * @param params
    */
-  async queryUsage(params: z.output<typeof QueryBillingUsageSchema>) {
+  async queryUsage(params: z.infer<typeof QueryBillingUsageSchema>) {
     const strategy = await this.getStrategy();
     const payload = QueryBillingUsageSchema.parse(params);
 
@@ -129,7 +129,7 @@ class BillingGatewayService {
    * @param params
    */
   async updateSubscriptionItem(
-    params: z.output<typeof UpdateSubscriptionParamsSchema>,
+    params: z.infer<typeof UpdateSubscriptionParamsSchema>,
   ) {
     const strategy = await this.getStrategy();
     const payload = UpdateSubscriptionParamsSchema.parse(params);

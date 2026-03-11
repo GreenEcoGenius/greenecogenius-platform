@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { authActionClient } from '@kit/next/safe-action';
+import { enhanceAction } from '@kit/next/actions';
 import { createOtpApi } from '@kit/otp';
 import { getLogger } from '@kit/shared/logger';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
@@ -17,9 +17,8 @@ import { createAccountMembersService } from '../services/account-members.service
  * @name removeMemberFromAccountAction
  * @description Removes a member from an account.
  */
-export const removeMemberFromAccountAction = authActionClient
-  .schema(RemoveMemberSchema)
-  .action(async ({ parsedInput: { accountId, userId } }) => {
+export const removeMemberFromAccountAction = enhanceAction(
+  async ({ accountId, userId }) => {
     const client = getSupabaseServerClient();
     const service = createAccountMembersService(client);
 
@@ -32,15 +31,18 @@ export const removeMemberFromAccountAction = authActionClient
     revalidatePath('/home/[account]', 'layout');
 
     return { success: true };
-  });
+  },
+  {
+    schema: RemoveMemberSchema,
+  },
+);
 
 /**
  * @name updateMemberRoleAction
  * @description Updates the role of a member in an account.
  */
-export const updateMemberRoleAction = authActionClient
-  .schema(UpdateMemberRoleSchema)
-  .action(async ({ parsedInput: data }) => {
+export const updateMemberRoleAction = enhanceAction(
+  async (data) => {
     const client = getSupabaseServerClient();
     const service = createAccountMembersService(client);
     const adminClient = getSupabaseServerAdminClient();
@@ -52,16 +54,19 @@ export const updateMemberRoleAction = authActionClient
     revalidatePath('/home/[account]', 'layout');
 
     return { success: true };
-  });
+  },
+  {
+    schema: UpdateMemberRoleSchema,
+  },
+);
 
 /**
  * @name transferOwnershipAction
  * @description Transfers the ownership of an account to another member.
  * Requires OTP verification for security.
  */
-export const transferOwnershipAction = authActionClient
-  .schema(TransferOwnershipConfirmationSchema)
-  .action(async ({ parsedInput: data, ctx: { user } }) => {
+export const transferOwnershipAction = enhanceAction(
+  async (data, user) => {
     const client = getSupabaseServerClient();
     const logger = await getLogger();
 
@@ -132,4 +137,8 @@ export const transferOwnershipAction = authActionClient
     return {
       success: true,
     };
-  });
+  },
+  {
+    schema: TransferOwnershipConfirmationSchema,
+  },
+);
