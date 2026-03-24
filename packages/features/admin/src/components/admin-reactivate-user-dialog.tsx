@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useTransition } from 'react';
-
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAction } from 'next-safe-action/hooks';
 import { useForm } from 'react-hook-form';
 
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
@@ -26,6 +25,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@kit/ui/form';
+import { useAsyncDialog } from '@kit/ui/hooks/use-async-dialog';
 import { If } from '@kit/ui/if';
 import { Input } from '@kit/ui/input';
 
@@ -37,11 +37,14 @@ export function AdminReactivateUserDialog(
     userId: string;
   }>,
 ) {
-  const [open, setOpen] = useState(false);
+  const { dialogProps, isPending, setIsPending, setOpen } = useAsyncDialog();
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>{props.children}</AlertDialogTrigger>
+    <AlertDialog
+      open={dialogProps.open}
+      onOpenChange={dialogProps.onOpenChange}
+    >
+      <AlertDialogTrigger render={props.children as React.ReactElement} />
 
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -54,16 +57,29 @@ export function AdminReactivateUserDialog(
 
         <ReactivateUserForm
           userId={props.userId}
-          onSuccess={() => setOpen(false)}
+          isPending={isPending}
+          setIsPending={setIsPending}
+          onSuccess={() => {
+            setIsPending(false);
+            setOpen(false);
+          }}
         />
       </AlertDialogContent>
     </AlertDialog>
   );
 }
 
-function ReactivateUserForm(props: { userId: string; onSuccess: () => void }) {
-  const [pending, startTransition] = useTransition();
-  const [error, setError] = useState<boolean>(false);
+function ReactivateUserForm(props: {
+  userId: string;
+  isPending: boolean;
+  setIsPending: (pending: boolean) => void;
+  onSuccess: () => void;
+}) {
+  const { execute, hasErrored } = useAction(reactivateUserAction, {
+    onExecute: () => props.setIsPending(true),
+    onSuccess: () => props.onSuccess(),
+    onSettled: () => props.setIsPending(false),
+  });
 
   const form = useForm({
     resolver: zodResolver(ReactivateUserSchema),
@@ -78,18 +94,9 @@ function ReactivateUserForm(props: { userId: string; onSuccess: () => void }) {
       <form
         data-test={'admin-reactivate-user-form'}
         className={'flex flex-col space-y-8'}
-        onSubmit={form.handleSubmit((data) => {
-          startTransition(async () => {
-            try {
-              await reactivateUserAction(data);
-              props.onSuccess();
-            } catch {
-              setError(true);
-            }
-          });
-        })}
+        onSubmit={form.handleSubmit((data) => execute(data))}
       >
-        <If condition={error}>
+        <If condition={hasErrored}>
           <Alert variant={'destructive'}>
             <AlertTitle>Error</AlertTitle>
 
@@ -127,10 +134,12 @@ function ReactivateUserForm(props: { userId: string; onSuccess: () => void }) {
         />
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={props.isPending}>
+            Cancel
+          </AlertDialogCancel>
 
-          <Button disabled={pending} type={'submit'}>
-            {pending ? 'Reactivating...' : 'Reactivate User'}
+          <Button disabled={props.isPending} type={'submit'}>
+            {props.isPending ? 'Reactivating...' : 'Reactivate User'}
           </Button>
         </AlertDialogFooter>
       </form>

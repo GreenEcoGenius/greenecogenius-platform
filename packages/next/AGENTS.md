@@ -1,58 +1,31 @@
-# Next.js Utilities
+# @kit/next — Next.js Utilities
 
-## Quick Reference
+## Non-Negotiables
 
-| Function | Import | Purpose |
-|----------|--------|---------|
-| `enhanceAction` | `@kit/next/actions` | Server actions with auth + validation |
-| `enhanceRouteHandler` | `@kit/next/routes` | API routes with auth + validation |
-
-## Guidelines
-
-- Server Actions for mutations only, not data-fetching
-- Keep actions light - move business logic to services
-- Authorization via RLS, not application code
-- Use `'use server'` at top of file
-- Always validate with Zod schema
+1. ALWAYS validate input with Zod schema via `.inputSchema()`
+2. ALWAYS use `authActionClient` for authenticated actions, `publicActionClient` for public
+3. ALWAYS use `useAction` hook from `next-safe-action/hooks` on the client side
+4. ALWAYS use `revalidatePath` after mutations
+5. NEVER use server actions for data fetching — mutations only
+6. NEVER put business logic in actions — extract to service files
+7. NEVER use `router.refresh()` or `router.push()` after server actions
+8. NEVER use `adminActionClient` outside admin features — use `authActionClient`
 
 ## Skills
 
-For detailed implementation patterns:
-- `/server-action-builder` - Complete server action workflow
+- `/server-action-builder` — Complete server action workflow
 
-## Server Action Pattern
+## Quick Reference
 
-```typescript
-'use server';
+| Function              | Import                  | Purpose                            |
+| --------------------- | ----------------------- | ---------------------------------- |
+| `authActionClient`    | `@kit/next/safe-action` | Authenticated server actions       |
+| `publicActionClient`  | `@kit/next/safe-action` | Public server actions (no auth)    |
+| `captchaActionClient` | `@kit/next/safe-action` | Server actions with CAPTCHA + auth |
+| `enhanceRouteHandler` | `@kit/next/routes`      | API routes with auth + validation  |
 
-import { enhanceAction } from '@kit/next/actions';
+## Exemplars
 
-export const myAction = enhanceAction(
-  async function (data, user) {
-    // data: validated, user: authenticated
-    return { success: true };
-  },
-  {
-    auth: true,
-    schema: MySchema,
-  },
-);
-```
-
-## Route Handler Pattern
-
-```typescript
-import { enhanceRouteHandler } from '@kit/next/routes';
-
-export const POST = enhanceRouteHandler(
-  async function ({ body, user, request }) {
-    return NextResponse.json({ success: true });
-  },
-  { auth: true, schema: MySchema },
-);
-```
-
-## Revalidation
-
-- Use `revalidatePath` after mutations
-- Never use `router.refresh()` or `router.push()` after Server Actions
+- Server action: `packages/features/accounts/src/server/personal-accounts-server-actions.ts`
+- Route handler: `apps/web/app/[locale]/home/[account]/members/policies/route.ts`
+- Client usage: `apps/web/app/[locale]/(marketing)/contact/_components/contact-form.tsx`

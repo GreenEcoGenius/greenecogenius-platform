@@ -1,4 +1,6 @@
-import { useState, useTransition } from 'react';
+'use client';
+
+import { useAction } from 'next-safe-action/hooks';
 
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import {
@@ -11,6 +13,7 @@ import {
   AlertDialogTitle,
 } from '@kit/ui/alert-dialog';
 import { Button } from '@kit/ui/button';
+import { useAsyncDialog } from '@kit/ui/hooks/use-async-dialog';
 import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
 
@@ -27,25 +30,38 @@ export function RenewInvitationDialog({
   invitationId: number;
   email: string;
 }) {
+  const { dialogProps, isPending, setIsPending, setOpen } = useAsyncDialog({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+  });
+
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+    <AlertDialog
+      open={dialogProps.open}
+      onOpenChange={dialogProps.onOpenChange}
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            <Trans i18nKey="team:renewInvitation" />
+            <Trans i18nKey="team.renewInvitation" />
           </AlertDialogTitle>
 
           <AlertDialogDescription>
             <Trans
-              i18nKey="team:renewInvitationDialogDescription"
+              i18nKey="team.renewInvitationDialogDescription"
               values={{ email }}
             />
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <RenewInvitationForm
-          setIsOpen={setIsOpen}
           invitationId={invitationId}
+          isPending={isPending}
+          setIsPending={setIsPending}
+          onSuccess={() => {
+            setIsPending(false);
+            setOpen(false);
+          }}
         />
       </AlertDialogContent>
     </AlertDialog>
@@ -54,47 +70,48 @@ export function RenewInvitationDialog({
 
 function RenewInvitationForm({
   invitationId,
-  setIsOpen,
+  isPending,
+  setIsPending,
+  onSuccess,
 }: {
   invitationId: number;
-  setIsOpen: (isOpen: boolean) => void;
+  isPending: boolean;
+  setIsPending: (pending: boolean) => void;
+  onSuccess: () => void;
 }) {
-  const [isSubmitting, startTransition] = useTransition();
-  const [error, setError] = useState<boolean>();
-
-  const inInvitationRenewed = () => {
-    startTransition(async () => {
-      try {
-        await renewInvitationAction({ invitationId });
-
-        setIsOpen(false);
-      } catch {
-        setError(true);
-      }
-    });
-  };
+  const { execute, hasErrored } = useAction(renewInvitationAction, {
+    onExecute: () => setIsPending(true),
+    onSuccess: () => onSuccess(),
+    onSettled: () => setIsPending(false),
+  });
 
   return (
-    <form action={inInvitationRenewed}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        execute({ invitationId });
+      }}
+    >
       <div className={'flex flex-col space-y-6'}>
         <p className={'text-muted-foreground text-sm'}>
-          <Trans i18nKey={'common:modalConfirmationQuestion'} />
+          <Trans i18nKey={'common.modalConfirmationQuestion'} />
         </p>
 
-        <If condition={error}>
+        <If condition={hasErrored}>
           <RenewInvitationErrorAlert />
         </If>
 
         <AlertDialogFooter>
-          <AlertDialogCancel>
-            <Trans i18nKey={'common:cancel'} />
+          <AlertDialogCancel disabled={isPending}>
+            <Trans i18nKey={'common.cancel'} />
           </AlertDialogCancel>
 
           <Button
+            type={'submit'}
             data-test={'confirm-renew-invitation'}
-            disabled={isSubmitting}
+            disabled={isPending}
           >
-            <Trans i18nKey={'teams:renewInvitation'} />
+            <Trans i18nKey={'teams.renewInvitation'} />
           </Button>
         </AlertDialogFooter>
       </div>
@@ -106,11 +123,11 @@ function RenewInvitationErrorAlert() {
   return (
     <Alert variant={'destructive'}>
       <AlertTitle>
-        <Trans i18nKey={'teams:renewInvitationErrorTitle'} />
+        <Trans i18nKey={'teams.renewInvitationErrorTitle'} />
       </AlertTitle>
 
       <AlertDescription>
-        <Trans i18nKey={'teams:renewInvitationErrorDescription'} />
+        <Trans i18nKey={'teams.renewInvitationErrorDescription'} />
       </AlertDescription>
     </Alert>
   );

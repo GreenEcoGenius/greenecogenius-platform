@@ -1,10 +1,10 @@
-import { ServiceCard } from '@/components/status-tile';
-
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Page, PageBody, PageHeader } from '@kit/ui/page';
 
 import { loadDashboardKitPrerequisites } from './lib/prerequisites-dashboard.loader';
 import { loadDashboardKitStatus } from './lib/status-dashboard.loader';
+
+import { ServiceCard } from '@/components/status-tile';
 
 export default async function DashboardPage() {
   const [status, prerequisites] = await Promise.all([
@@ -37,7 +37,6 @@ export default async function DashboardPage() {
   return (
     <Page style={'custom'}>
       <PageHeader
-        displaySidebarTrigger={false}
         title={'Dev Tool'}
         description={'Kit MCP status for this workspace'}
       />

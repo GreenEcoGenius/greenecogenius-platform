@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useTransition } from 'react';
-
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAction } from 'next-safe-action/hooks';
 import { useForm } from 'react-hook-form';
 
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
@@ -26,6 +25,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@kit/ui/form';
+import { useAsyncDialog } from '@kit/ui/hooks/use-async-dialog';
 import { If } from '@kit/ui/if';
 import { Input } from '@kit/ui/input';
 
@@ -37,11 +37,14 @@ export function AdminBanUserDialog(
     userId: string;
   }>,
 ) {
-  const [open, setOpen] = useState(false);
+  const { dialogProps, isPending, setIsPending, setOpen } = useAsyncDialog();
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>{props.children}</AlertDialogTrigger>
+    <AlertDialog
+      open={dialogProps.open}
+      onOpenChange={dialogProps.onOpenChange}
+    >
+      <AlertDialogTrigger render={props.children as React.ReactElement} />
 
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -53,15 +56,31 @@ export function AdminBanUserDialog(
           </AlertDialogDescription>
         </AlertDialogHeader>
 
-        <BanUserForm userId={props.userId} onSuccess={() => setOpen(false)} />
+        <BanUserForm
+          userId={props.userId}
+          isPending={isPending}
+          setIsPending={setIsPending}
+          onSuccess={() => {
+            setIsPending(false);
+            setOpen(false);
+          }}
+        />
       </AlertDialogContent>
     </AlertDialog>
   );
 }
 
-function BanUserForm(props: { userId: string; onSuccess: () => void }) {
-  const [pending, startTransition] = useTransition();
-  const [error, setError] = useState<boolean>(false);
+function BanUserForm(props: {
+  userId: string;
+  isPending: boolean;
+  setIsPending: (pending: boolean) => void;
+  onSuccess: () => void;
+}) {
+  const { execute, hasErrored } = useAction(banUserAction, {
+    onExecute: () => props.setIsPending(true),
+    onSuccess: () => props.onSuccess(),
+    onSettled: () => props.setIsPending(false),
+  });
 
   const form = useForm({
     resolver: zodResolver(BanUserSchema),
@@ -76,18 +95,9 @@ function BanUserForm(props: { userId: string; onSuccess: () => void }) {
       <form
         data-test={'admin-ban-user-form'}
         className={'flex flex-col space-y-8'}
-        onSubmit={form.handleSubmit((data) => {
-          startTransition(async () => {
-            try {
-              await banUserAction(data);
-              props.onSuccess();
-            } catch {
-              setError(true);
-            }
-          });
-        })}
+        onSubmit={form.handleSubmit((data) => execute(data))}
       >
-        <If condition={error}>
+        <If condition={hasErrored}>
           <Alert variant={'destructive'}>
             <AlertTitle>Error</AlertTitle>
 
@@ -125,10 +135,16 @@ function BanUserForm(props: { userId: string; onSuccess: () => void }) {
         />
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={props.isPending}>
+            Cancel
+          </AlertDialogCancel>
 
-          <Button disabled={pending} type={'submit'} variant={'destructive'}>
-            {pending ? 'Banning...' : 'Ban User'}
+          <Button
+            disabled={props.isPending}
+            type={'submit'}
+            variant={'destructive'}
+          >
+            {props.isPending ? 'Banning...' : 'Ban User'}
           </Button>
         </AlertDialogFooter>
       </form>

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { Bell, CircleAlert, Info, TriangleAlert, XIcon } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@kit/ui/button';
 import { If } from '@kit/ui/if';
@@ -19,7 +19,8 @@ export function NotificationsPopover(params: {
   accountIds: string[];
   onClick?: (notification: Notification) => void;
 }) {
-  const { i18n, t } = useTranslation();
+  const t = useTranslations();
+  const locale = useLocale();
 
   const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -53,7 +54,7 @@ export function NotificationsPopover(params: {
       (new Date().getTime() - date.getTime()) / (1000 * 60 * 60 * 24),
     );
 
-    const formatter = new Intl.RelativeTimeFormat(i18n.language, {
+    const formatter = new Intl.RelativeTimeFormat(locale, {
       numeric: 'auto',
     });
 
@@ -61,7 +62,7 @@ export function NotificationsPopover(params: {
       time = Math.floor((new Date().getTime() - date.getTime()) / (1000 * 60));
 
       if (time < 5) {
-        return t('common:justNow');
+        return t('common.justNow');
       }
 
       if (time < 60) {
@@ -110,46 +111,39 @@ export function NotificationsPopover(params: {
 
   return (
     <Popover modal open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button className={'relative h-9 w-9'} variant={'ghost'}>
-          <Bell className={'min-h-4 min-w-4'} />
+      <PopoverTrigger
+        render={<Button size="icon-lg" variant="ghost" className="relative" />}
+      >
+        <Bell className={'size-4 min-h-3 min-w-3'} />
 
-          <span
-            className={cn(
-              `fade-in animate-in zoom-in absolute top-1 right-1 mt-0 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-500 text-[0.65rem] text-white`,
-              {
-                hidden: !notifications.length,
-              },
-            )}
-          >
-            {notifications.length}
-          </span>
-        </Button>
+        <span
+          className={cn(
+            `fade-in animate-in zoom-in absolute top-1 right-1 mt-0 flex h-3 w-3 items-center justify-center rounded-full bg-red-500 text-[0.6rem] text-white`,
+            {
+              hidden: !notifications.length,
+            },
+          )}
+        >
+          {notifications.length}
+        </span>
       </PopoverTrigger>
 
       <PopoverContent
-        className={'flex w-full max-w-96 flex-col p-0 lg:min-w-64'}
+        className={'flex w-full max-w-96 flex-col gap-0 lg:min-w-64'}
         align={'start'}
-        collisionPadding={20}
         sideOffset={10}
       >
-        <div className={'flex items-center px-3 py-2 text-sm font-semibold'}>
-          {t('common:notifications')}
+        <div className={'flex items-center text-sm font-semibold'}>
+          {t('common.notifications')}
         </div>
 
         <Separator />
 
         <If condition={!notifications.length}>
-          <div className={'px-3 py-2 text-sm'}>
-            {t('common:noNotifications')}
-          </div>
+          <div className={'text-sm'}>{t('common.noNotifications')}</div>
         </If>
 
-        <div
-          className={
-            'flex max-h-[60vh] flex-col divide-y divide-gray-100 overflow-y-auto dark:divide-gray-800'
-          }
-        >
+        <div className={'flex max-h-[60vh] flex-col overflow-y-auto'}>
           {notifications.map((notification) => {
             const maxChars = 100;
 
@@ -164,11 +158,11 @@ export function NotificationsPopover(params: {
             const Icon = () => {
               switch (notification.type) {
                 case 'warning':
-                  return <TriangleAlert className={'h-4 text-yellow-500'} />;
+                  return <TriangleAlert className={'size-3 text-yellow-500'} />;
                 case 'error':
-                  return <CircleAlert className={'text-destructive h-4'} />;
+                  return <CircleAlert className={'text-destructive size-3'} />;
                 default:
-                  return <Info className={'h-4 text-blue-500'} />;
+                  return <Info className={'size-3 text-blue-500'} />;
               }
             };
 
@@ -176,7 +170,7 @@ export function NotificationsPopover(params: {
               <div
                 key={notification.id.toString()}
                 className={cn(
-                  'flex min-h-18 flex-col items-start justify-center gap-y-1 px-3 py-2',
+                  'flex min-h-14 flex-col items-start justify-center gap-y-1 px-1',
                 )}
                 onClick={() => {
                   if (params.onClick) {
@@ -185,15 +179,11 @@ export function NotificationsPopover(params: {
                 }}
               >
                 <div className={'flex w-full items-start justify-between'}>
-                  <div
-                    className={'flex items-start justify-start gap-x-3 py-2'}
-                  >
-                    <div className={'py-0.5'}>
-                      <Icon />
-                    </div>
+                  <div className={'flex items-start justify-start gap-x-1.5'}>
+                    <div className={'flex flex-col'}>
+                      <div className={'flex items-center gap-x-2 text-sm'}>
+                        <Icon />
 
-                    <div className={'flex flex-col space-y-1'}>
-                      <div className={'text-sm'}>
                         <If condition={notification.link} fallback={body}>
                           {(link) => (
                             <a href={link} className={'hover:underline'}>
@@ -209,7 +199,7 @@ export function NotificationsPopover(params: {
                     </div>
                   </div>
 
-                  <div className={'py-2'}>
+                  <div className={'ml-2'}>
                     <Button
                       className={'max-h-6 max-w-6'}
                       size={'icon'}

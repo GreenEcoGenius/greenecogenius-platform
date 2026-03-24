@@ -1,4 +1,6 @@
-import { useState, useTransition } from 'react';
+'use client';
+
+import { useAction } from 'next-safe-action/hooks';
 
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import {
@@ -11,6 +13,7 @@ import {
   AlertDialogTitle,
 } from '@kit/ui/alert-dialog';
 import { Button } from '@kit/ui/button';
+import { useAsyncDialog } from '@kit/ui/hooks/use-async-dialog';
 import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
 
@@ -25,22 +28,35 @@ export function DeleteInvitationDialog({
   setIsOpen: (isOpen: boolean) => void;
   invitationId: number;
 }) {
+  const { dialogProps, isPending, setIsPending, setOpen } = useAsyncDialog({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+  });
+
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+    <AlertDialog
+      open={dialogProps.open}
+      onOpenChange={dialogProps.onOpenChange}
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            <Trans i18nKey="team:deleteInvitation" />
+            <Trans i18nKey="teams.deleteInvitation" />
           </AlertDialogTitle>
 
           <AlertDialogDescription>
-            <Trans i18nKey="team:deleteInvitationDialogDescription" />
+            <Trans i18nKey="teams.deleteInvitationDialogDescription" />
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <DeleteInvitationForm
-          setIsOpen={setIsOpen}
           invitationId={invitationId}
+          isPending={isPending}
+          setIsPending={setIsPending}
+          onSuccess={() => {
+            setIsPending(false);
+            setOpen(false);
+          }}
         />
       </AlertDialogContent>
     </AlertDialog>
@@ -49,48 +65,45 @@ export function DeleteInvitationDialog({
 
 function DeleteInvitationForm({
   invitationId,
-  setIsOpen,
+  isPending,
+  setIsPending,
+  onSuccess,
 }: {
   invitationId: number;
-  setIsOpen: (isOpen: boolean) => void;
+  isPending: boolean;
+  setIsPending: (pending: boolean) => void;
+  onSuccess: () => void;
 }) {
-  const [isSubmitting, startTransition] = useTransition();
-  const [error, setError] = useState<boolean>();
-
-  const onInvitationRemoved = () => {
-    startTransition(async () => {
-      try {
-        await deleteInvitationAction({ invitationId });
-
-        setIsOpen(false);
-      } catch {
-        setError(true);
-      }
-    });
-  };
+  const { execute, hasErrored } = useAction(deleteInvitationAction, {
+    onExecute: () => setIsPending(true),
+    onSuccess: () => onSuccess(),
+    onSettled: () => setIsPending(false),
+  });
 
   return (
-    <form data-test={'delete-invitation-form'} action={onInvitationRemoved}>
+    <form
+      data-test={'delete-invitation-form'}
+      onSubmit={(e) => {
+        e.preventDefault();
+        execute({ invitationId });
+      }}
+    >
       <div className={'flex flex-col space-y-6'}>
         <p className={'text-muted-foreground text-sm'}>
-          <Trans i18nKey={'common:modalConfirmationQuestion'} />
+          <Trans i18nKey={'common.modalConfirmationQuestion'} />
         </p>
 
-        <If condition={error}>
+        <If condition={hasErrored}>
           <RemoveInvitationErrorAlert />
         </If>
 
         <AlertDialogFooter>
-          <AlertDialogCancel>
-            <Trans i18nKey={'common:cancel'} />
+          <AlertDialogCancel disabled={isPending}>
+            <Trans i18nKey={'common.cancel'} />
           </AlertDialogCancel>
 
-          <Button
-            type={'submit'}
-            variant={'destructive'}
-            disabled={isSubmitting}
-          >
-            <Trans i18nKey={'teams:deleteInvitation'} />
+          <Button type={'submit'} variant={'destructive'} disabled={isPending}>
+            <Trans i18nKey={'teams.deleteInvitation'} />
           </Button>
         </AlertDialogFooter>
       </div>
@@ -102,11 +115,11 @@ function RemoveInvitationErrorAlert() {
   return (
     <Alert variant={'destructive'}>
       <AlertTitle>
-        <Trans i18nKey={'teams:deleteInvitationErrorTitle'} />
+        <Trans i18nKey={'teams.deleteInvitationErrorTitle'} />
       </AlertTitle>
 
       <AlertDescription>
-        <Trans i18nKey={'teams:deleteInvitationErrorMessage'} />
+        <Trans i18nKey={'teams.deleteInvitationErrorMessage'} />
       </AlertDescription>
     </Alert>
   );

@@ -34,17 +34,17 @@ test.describe('Admin', () => {
       await page.goto('/admin');
 
       // Check all stat cards are present
-      await expect(page.getByRole('heading', { name: 'Users' })).toBeVisible();
+      await expect(page.getByText('Users', { exact: true })).toBeVisible();
 
       await expect(
-        page.getByRole('heading', { name: 'Team Accounts' }),
+        page.getByText('Team Accounts', { exact: true }),
       ).toBeVisible();
 
       await expect(
-        page.getByRole('heading', { name: 'Paying Customers' }),
+        page.getByText('Paying Customers', { exact: true }),
       ).toBeVisible();
 
-      await expect(page.getByRole('heading', { name: 'Trials' })).toBeVisible();
+      await expect(page.getByText('Trials', { exact: true })).toBeVisible();
 
       // Verify stat values are numbers
       const stats = await page.$$('.text-3xl.font-bold');
@@ -351,5 +351,5 @@ async function selectAccount(page: Page, email: string) {
 
   await link.click();
 
-  await page.waitForURL(/\/admin\/accounts\/[^\/]+/);
+  await page.waitForURL(/\/admin\/accounts\/[^/]+/);
 }

@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 
+import { getMessages } from 'next-intl/server';
+
 import { DevToolLayout } from '@/components/app-layout';
 import { RootProviders } from '@/components/root-providers';
-
 import '../styles/globals.css';
 
 export const metadata: Metadata = {
@@ -10,15 +11,17 @@ export const metadata: Metadata = {
   description: 'The dev tool for Makerkit',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const messages = await getMessages();
+
   return (
     <html lang="en">
       <body>
-        <RootProviders>
+        <RootProviders messages={messages}>
           <DevToolLayout>{children}</DevToolLayout>
         </RootProviders>
       </body>

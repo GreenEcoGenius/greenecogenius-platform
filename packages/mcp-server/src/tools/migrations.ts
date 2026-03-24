@@ -1,9 +1,10 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { readFile, readdir } from 'node:fs/promises';
-import { join } from 'node:path';
-import { z } from 'zod/v3';
+import * as z from 'zod/v3';
 
 import { crossExecFileSync } from '../lib/process-utils';
+
+import { readFile, readdir } from 'node:fs/promises';
+import { join } from 'node:path';
 
 export class MigrationsTool {
   private static _rootPath = process.cwd();

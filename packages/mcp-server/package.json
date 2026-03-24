@@ -1,12 +1,12 @@
 {
   "name": "@kit/mcp-server",
-  "private": true,
   "version": "0.1.0",
-  "type": "module",
-  "main": "./build/index.cjs",
+  "private": true,
   "bin": {
     "makerkit-mcp-server": "./build/index.cjs"
   },
+  "type": "module",
+  "main": "./build/index.cjs",
   "exports": {
     "./database": "./src/tools/database.ts",
     "./components": "./src/tools/components.ts",
@@ -28,22 +28,18 @@
   },
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "build": "tsup",
     "build:watch": "tsup --watch",
     "test:unit": "vitest run"
   },
   "devDependencies": {
     "@kit/email-templates": "workspace:*",
-    "@kit/prettier-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
-    "@modelcontextprotocol/sdk": "1.27.1",
-    "@types/node": "catalog:",
-    "postgres": "3.4.8",
+    "@modelcontextprotocol/sdk": "catalog:",
+    "postgres": "catalog:",
     "tsup": "catalog:",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.18",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
     "zod": "catalog:"
-  },
-  "prettier": "@kit/prettier-config"
+  }
 }

@@ -1,12 +1,13 @@
 {
   "name": "@kit/team-accounts",
-  "private": true,
   "version": "0.1.0",
-  "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
-    "format": "prettier --check \"**/*.{ts,tsx}\"",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+  "private": true,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
   },
   "exports": {
     "./api": "./src/server/api.ts",
@@ -16,46 +17,41 @@
     "./policies": "./src/server/policies/index.ts",
     "./services/account-invitations.service": "./src/server/services/account-invitations.service.ts"
   },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
-    "nanoid": "^5.1.6"
+    "nanoid": "catalog:"
   },
   "devDependencies": {
-    "@hookform/resolvers": "^5.2.2",
+    "@hookform/resolvers": "catalog:",
     "@kit/accounts": "workspace:*",
     "@kit/billing-gateway": "workspace:*",
     "@kit/email-templates": "workspace:*",
-    "@kit/eslint-config": "workspace:*",
     "@kit/mailers": "workspace:*",
     "@kit/monitoring": "workspace:*",
     "@kit/next": "workspace:*",
     "@kit/otp": "workspace:*",
     "@kit/policies": "workspace:*",
-    "@kit/prettier-config": "workspace:*",
     "@kit/shared": "workspace:*",
     "@kit/supabase": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@kit/ui": "workspace:*",
     "@supabase/supabase-js": "catalog:",
     "@tanstack/react-query": "catalog:",
-    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-table": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "class-variance-authority": "^0.7.1",
-    "date-fns": "^4.1.0",
+    "class-variance-authority": "catalog:",
+    "date-fns": "catalog:",
     "lucide-react": "catalog:",
     "next": "catalog:",
+    "next-intl": "catalog:",
+    "next-safe-action": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-hook-form": "catalog:",
-    "react-i18next": "catalog:",
     "zod": "catalog:"
-  },
-  "prettier": "@kit/prettier-config",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
   }
 }

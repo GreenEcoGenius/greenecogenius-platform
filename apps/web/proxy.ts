@@ -1,22 +1,24 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-import { CsrfError, createCsrfProtect } from '@edge-csrf/nextjs';
+import createNextIntlMiddleware from 'next-intl/middleware';
 
 import { isSuperAdmin } from '@kit/admin';
+import { routing } from '@kit/i18n/routing';
 import { getSafeRedirectPath } from '@kit/shared/utils';
 import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';
 import { createMiddlewareClient } from '@kit/supabase/middleware-client';
 
-import appConfig from '~/config/app.config';
 import pathsConfig from '~/config/paths.config';
 
-const CSRF_SECRET_COOKIE = 'csrfSecret';
 const NEXT_ACTION_HEADER = 'next-action';
 
 export const config = {
   matcher: ['/((?!_next/static|_next/image|images|locales|assets|api/*).*)'],
 };
+
+// create i18n middleware once at module scope
+const handleI18nRouting = createNextIntlMiddleware(routing);
 
 const getUser = (request: NextRequest, response: NextResponse) => {
   const supabase = createMiddlewareClient(request, response);
@@ -24,23 +26,26 @@ const getUser = (request: NextRequest, response: NextResponse) => {
   return supabase.auth.getClaims();
 };
 
-export async function proxy(request: NextRequest) {
-  const secureHeaders = await createResponseWithSecureHeaders();
-  const response = NextResponse.next(secureHeaders);
+export default async function proxy(request: NextRequest) {
+  // run next-intl middleware first to get the i18n-aware response
+  const response = handleI18nRouting(request);
+
+  // apply secure headers on top of the i18n response
+  const secureHeadersResponse = await createResponseWithSecureHeaders(response);
 
   // set a unique request ID for each request
   // this helps us log and trace requests
   setRequestId(request);
-
-  // apply CSRF protection for mutating requests
-  const csrfResponse = await withCsrfMiddleware(request, response);
 
   // handle patterns for specific routes
   const handlePattern = await matchUrlPattern(request.url);
 
   // if a pattern handler exists, call it
   if (handlePattern) {
-    const patternHandlerResponse = await handlePattern(request, csrfResponse);
+    const patternHandlerResponse = await handlePattern(
+      request,
+      secureHeadersResponse,
+    );
 
     // if a pattern handler returns a response, return it
     if (patternHandlerResponse) {
@@ -51,45 +56,15 @@ export async function proxy(request: NextRequest) {
   // append the action path to the request headers
   // which is useful for knowing the action path in server actions
   if (isServerAction(request)) {
-    csrfResponse.headers.set('x-action-path', request.nextUrl.pathname);
+    secureHeadersResponse.headers.set(
+      'x-action-path',
+      request.nextUrl.pathname,
+    );
   }
 
   // if no pattern handler returned a response,
   // return the session response
-  return csrfResponse;
-}
-
-async function withCsrfMiddleware(
-  request: NextRequest,
-  response: NextResponse,
-) {
-  // set up CSRF protection
-  const csrfProtect = createCsrfProtect({
-    cookie: {
-      secure: appConfig.production,
-      name: CSRF_SECRET_COOKIE,
-    },
-    // ignore CSRF errors for server actions since protection is built-in
-    ignoreMethods: isServerAction(request)
-      ? ['POST']
-      : // always ignore GET, HEAD, and OPTIONS requests
-        ['GET', 'HEAD', 'OPTIONS'],
-  });
-
-  try {
-    await csrfProtect(request, response);
-
-    return response;
-  } catch (error) {
-    // if there is a CSRF error, return a 403 response
-    if (error instanceof CsrfError) {
-      return NextResponse.json('Invalid CSRF token', {
-        status: 401,
-      });
-    }
-
-    throw error;
-  }
+  return secureHeadersResponse;
 }
 
 function isServerAction(request: NextRequest) {
@@ -230,15 +205,23 @@ function setRequestId(request: Request) {
  * @description Create a middleware with enhanced headers applied (if applied).
  * This is disabled by default. To enable set ENABLE_STRICT_CSP=true
  */
-async function createResponseWithSecureHeaders() {
+async function createResponseWithSecureHeaders(response: NextResponse) {
   const enableStrictCsp = process.env.ENABLE_STRICT_CSP ?? 'false';
 
   // we disable ENABLE_STRICT_CSP by default
   if (enableStrictCsp === 'false') {
-    return {};
+    return response;
   }
 
   const { createCspResponse } = await import('./lib/create-csp-response');
+  const cspResponse = await createCspResponse();
 
-  return createCspResponse();
+  // set the CSP headers on the i18n response
+  if (cspResponse) {
+    for (const [key, value] of cspResponse.headers.entries()) {
+      response.headers.set(key, value);
+    }
+  }
+
+  return response;
 }

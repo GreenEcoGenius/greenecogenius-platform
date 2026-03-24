@@ -1,21 +1,20 @@
 {
   "name": "web-e2e",
   "version": "1.0.0",
+  "author": "Makerkit",
   "main": "index.js",
   "scripts": {
     "report": "playwright show-report",
     "test": "playwright test --max-failures=1",
     "test:fast": "playwright test --max-failures=1 --workers=16",
     "test:setup": "playwright test tests/auth.setup.ts",
-    "test:ui": "playwright test --ui"
+    "test:ui": "ENABLE_BILLING_TESTS=true playwright test --ui"
   },
-  "author": "Makerkit",
   "devDependencies": {
-    "@playwright/test": "^1.58.2",
+    "@playwright/test": "catalog:",
     "@supabase/supabase-js": "catalog:",
-    "@types/node": "catalog:",
-    "dotenv": "17.3.1",
-    "node-html-parser": "^7.0.2",
-    "totp-generator": "^2.0.1"
+    "dotenv": "catalog:",
+    "node-html-parser": "catalog:",
+    "totp-generator": "catalog:"
   }
 }

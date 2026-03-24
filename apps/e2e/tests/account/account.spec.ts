@@ -38,10 +38,12 @@ test.describe('Account Settings', () => {
 
     await Promise.all([request, response]);
 
+    await page.locator('[data-test="workspace-dropdown-trigger"]').click();
+
     await expect(account.getProfileName()).toHaveText(name);
   });
 
-  test('user can update their email', async ({ page }) => {
+  test('user can update their email', async () => {
     const email = account.auth.createRandomEmail();
 
     await account.updateEmail(email);

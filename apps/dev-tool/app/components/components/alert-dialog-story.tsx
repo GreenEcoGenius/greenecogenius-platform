@@ -120,9 +120,7 @@ export function AlertDialogStory() {
 
   const generateCode = () => {
     let code = `<AlertDialog>\n`;
-    code += `  <AlertDialogTrigger asChild>\n`;
-    code += `    <Button variant="${controls.triggerVariant}">${controls.triggerText}</Button>\n`;
-    code += `  </AlertDialogTrigger>\n`;
+    code += `  <AlertDialogTrigger render={<Button variant="${controls.triggerVariant}">${controls.triggerText}</Button>} />\n`;
     code += `  <AlertDialogContent>\n`;
     code += `    <AlertDialogHeader>\n`;
 
@@ -179,11 +177,14 @@ export function AlertDialogStory() {
   const renderPreview = () => {
     return (
       <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant={controls.triggerVariant}>
-            {controls.triggerText}
-          </Button>
-        </AlertDialogTrigger>
+        <AlertDialogTrigger
+          render={
+            <Button variant={controls.triggerVariant}>
+              {controls.triggerText}
+            </Button>
+          }
+        />
+
         <AlertDialogContent>
           <AlertDialogHeader>
             {controls.withIcon ? (
@@ -341,11 +342,11 @@ export function AlertDialogStory() {
         <CardContent className="space-y-4">
           <div className="flex flex-wrap gap-3">
             <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="destructive" size="sm">
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete Item
-                </Button>
+              <AlertDialogTrigger
+                render={<Button variant="destructive" size="sm" />}
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Delete Item
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -370,11 +371,9 @@ export function AlertDialogStory() {
             </AlertDialog>
 
             <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="outline">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Sign Out
-                </Button>
+              <AlertDialogTrigger render={<Button variant="outline" />}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Sign Out
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -397,11 +396,9 @@ export function AlertDialogStory() {
             </AlertDialog>
 
             <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="outline">
-                  <UserX className="mr-2 h-4 w-4" />
-                  Remove User
-                </Button>
+              <AlertDialogTrigger render={<Button variant="outline" />}>
+                <UserX className="mr-2 h-4 w-4" />
+                Remove User
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -438,11 +435,9 @@ export function AlertDialogStory() {
         <CardContent className="space-y-4">
           <div className="flex flex-wrap gap-3">
             <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="outline">
-                  <Archive className="mr-2 h-4 w-4" />
-                  Archive Project
-                </Button>
+              <AlertDialogTrigger render={<Button variant="outline" />}>
+                <Archive className="mr-2 h-4 w-4" />
+                Archive Project
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -465,11 +460,9 @@ export function AlertDialogStory() {
             </AlertDialog>
 
             <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button>
-                  <Download className="mr-2 h-4 w-4" />
-                  Export Data
-                </Button>
+              <AlertDialogTrigger render={<Button />}>
+                <Download className="mr-2 h-4 w-4" />
+                Export Data
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -493,11 +486,9 @@ export function AlertDialogStory() {
             </AlertDialog>
 
             <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="outline">
-                  <RefreshCw className="mr-2 h-4 w-4" />
-                  Reset Settings
-                </Button>
+              <AlertDialogTrigger render={<Button variant="outline" />}>
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Reset Settings
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -535,11 +526,11 @@ export function AlertDialogStory() {
             <div className="space-y-3">
               <h4 className="text-sm font-semibold">Error/Destructive</h4>
               <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="destructive" size="sm">
-                    <Trash2 className="mr-2 h-4 w-4" />
-                    Delete Forever
-                  </Button>
+                <AlertDialogTrigger
+                  render={<Button variant="destructive" size="sm" />}
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete Forever
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -567,11 +558,11 @@ export function AlertDialogStory() {
             <div className="space-y-3">
               <h4 className="text-sm font-semibold">Warning</h4>
               <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <AlertTriangle className="mr-2 h-4 w-4" />
-                    Unsaved Changes
-                  </Button>
+                <AlertDialogTrigger
+                  render={<Button variant="outline" size="sm" />}
+                >
+                  <AlertTriangle className="mr-2 h-4 w-4" />
+                  Unsaved Changes
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -597,11 +588,11 @@ export function AlertDialogStory() {
             <div className="space-y-3">
               <h4 className="text-sm font-semibold">Info</h4>
               <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <Share className="mr-2 h-4 w-4" />
-                    Share Publicly
-                  </Button>
+                <AlertDialogTrigger
+                  render={<Button variant="outline" size="sm" />}
+                >
+                  <Share className="mr-2 h-4 w-4" />
+                  Share Publicly
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -627,11 +618,9 @@ export function AlertDialogStory() {
             <div className="space-y-3">
               <h4 className="text-sm font-semibold">Success</h4>
               <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button size="sm">
-                    <Download className="mr-2 h-4 w-4" />
-                    Complete Setup
-                  </Button>
+                <AlertDialogTrigger render={<Button size="sm" />}>
+                  <Download className="mr-2 h-4 w-4" />
+                  Complete Setup
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -850,10 +839,8 @@ export function AlertDialogStory() {
             <h4 className="text-sm font-semibold">Focus Management</h4>
             <p className="text-muted-foreground text-sm">
               • Focus moves to Cancel button by default
-              <br />
-              • Tab navigation between Cancel and Action
-              <br />
-              • Escape key activates Cancel action
+              <br />• Tab navigation between Cancel and Action
+              <br />• Escape key activates Cancel action
               <br />• Enter key activates Action button when focused
             </p>
           </div>
@@ -861,10 +848,8 @@ export function AlertDialogStory() {
             <h4 className="text-sm font-semibold">Content Guidelines</h4>
             <p className="text-muted-foreground text-sm">
               • Use clear, specific titles and descriptions
-              <br />
-              • Explain consequences of the action
-              <br />
-              • Use action-specific button labels
+              <br />• Explain consequences of the action
+              <br />• Use action-specific button labels
               <br />• Always provide a way to cancel
             </p>
           </div>
@@ -872,8 +857,7 @@ export function AlertDialogStory() {
             <h4 className="text-sm font-semibold">Visual Design</h4>
             <p className="text-muted-foreground text-sm">
               • Use appropriate icons and colors for severity
-              <br />
-              • Make destructive actions visually distinct
+              <br />• Make destructive actions visually distinct
               <br />• Ensure sufficient contrast for all text
             </p>
           </div>
@@ -892,8 +876,7 @@ export function AlertDialogStory() {
             <h4 className="text-sm font-semibold">Title Guidelines</h4>
             <p className="text-muted-foreground text-sm">
               • Be specific about the action (not just "Are you sure?")
-              <br />
-              • Use active voice ("Delete account" not "Account deletion")
+              <br />• Use active voice ("Delete account" not "Account deletion")
               <br />• Keep it concise but descriptive
             </p>
           </div>
@@ -901,10 +884,8 @@ export function AlertDialogStory() {
             <h4 className="text-sm font-semibold">Description Guidelines</h4>
             <p className="text-muted-foreground text-sm">
               • Explain what will happen
-              <br />
-              • Mention if the action is irreversible
-              <br />
-              • Provide context about consequences
+              <br />• Mention if the action is irreversible
+              <br />• Provide context about consequences
               <br />• Use plain, non-technical language
             </p>
           </div>
@@ -912,10 +893,8 @@ export function AlertDialogStory() {
             <h4 className="text-sm font-semibold">Button Labels</h4>
             <p className="text-muted-foreground text-sm">
               • Use specific verbs ("Delete", "Save", "Continue")
-              <br />
-              • Match the action being performed
-              <br />
-              • Avoid generic labels when possible
+              <br />• Match the action being performed
+              <br />• Avoid generic labels when possible
               <br />• Make the primary action clear
             </p>
           </div>

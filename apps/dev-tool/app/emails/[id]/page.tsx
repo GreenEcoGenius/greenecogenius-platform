@@ -1,7 +1,3 @@
-import { EmailTesterForm } from '@/app/emails/[id]/components/email-tester-form';
-import { EnvModeSelector } from '@/components/env-mode-selector';
-import { IFrame } from '@/components/iframe';
-
 import {
   createKitEmailsDeps,
   createKitEmailsService,
@@ -16,6 +12,10 @@ import {
   DialogTrigger,
 } from '@kit/ui/dialog';
 import { Page, PageBody, PageHeader } from '@kit/ui/page';
+
+import { EmailTesterForm } from '@/app/emails/[id]/components/email-tester-form';
+import { EnvModeSelector } from '@/components/env-mode-selector';
+import { IFrame } from '@/components/iframe';
 
 type EnvMode = 'development' | 'production';
 
@@ -67,10 +67,10 @@ export default async function EmailPage(props: EmailPageProps) {
           Remember that the below is an approximation of the email. Always test
           it in your inbox.{' '}
           <Dialog>
-            <DialogTrigger asChild>
-              <Button variant={'link'} className="p-0 underline">
-                Test Email
-              </Button>
+            <DialogTrigger
+              render={<Button variant={'link'} className="p-0 underline" />}
+            >
+              Test Email
             </DialogTrigger>
 
             <DialogContent>

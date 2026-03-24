@@ -1,71 +1,41 @@
-# UI Components & Styling
+# @kit/ui — UI Components & Styling
+
+## Component Library
+
+This project uses **Base UI** (not Radix UI). Key differences:
+
+- NEVER use `asChild` prop — Base UI uses `render` prop for element composition
+- ALWAYS use the `render` prop pattern when you need to render a custom element (e.g., `<Button nativeButton={false} render={<Link />} />`)
+
+## Non-Negotiables
+
+1. ALWAYS import as `@kit/ui/<name>` — no deep paths, no matter the folder structure
+2. ALWAYS use `cn()` from `@kit/ui/utils` for class merging
+3. ALWAYS use semantic Tailwind classes (`bg-background`, `text-muted-foreground`) — NEVER hardcoded colors (`bg-white`, `text-gray-500`)
+4. ALWAYS add `data-test` attributes on interactive elements
+5. ALWAYS add `FormMessage` to every form field for error display
+6. ALWAYS consider error-handling, not just happy paths.
+7. ALWAYS Ensure UI surfaces useful and human-readable errors, not internal ones.
+8. NEVER add generics to `useForm` — let Zod resolver infer types
+9. NEVER use `watch()` — use `useWatch` hook instead when using React Hook Form
+10. NEVER use Radix UI patterns (`asChild`, `@radix-ui/*` imports) — this project uses Base UI
 
 ## Skills
 
-For forms:
-- `/react-form-builder` - Forms with validation and server actions
-
-## Import Convention
-
-Always use `@kit/ui/{component}`:
-
-```tsx
-import { Button } from '@kit/ui/button';
-import { Card } from '@kit/ui/card';
-import { If } from '@kit/ui/if';
-import { Trans } from '@kit/ui/trans';
-import { toast } from '@kit/ui/sonner';
-import { cn } from '@kit/ui/utils';
-```
-
-## Styling
-
-- Tailwind CSS v4 with semantic classes
-- Prefer: `bg-background`, `text-muted-foreground`, `border-border`
-- Use `cn()` for class merging
-- Never use hardcoded colors like `bg-white`
+- `/react-form-builder` — Full form implementation workflow with react-hook-form + Zod
 
 ## Key Components
 
-| Component | Usage |
-|-----------|-------|
-| `If` | Conditional rendering |
-| `Trans` | Internationalization |
-| `toast` | Notifications |
-| `Form*` | Form fields |
-| `Button` | Actions |
-| `Card` | Content containers |
-| `Alert` | Error/info messages |
+| Component                 | Import                                                                                 |
+| ------------------------- | -------------------------------------------------------------------------------------- |
+| Button, Card, Input, etc. | `@kit/ui/<name>`                                                                       |
+| Form fields               | `FormField`, `FormItem`, `FormLabel`, `FormControl`, `FormMessage` from `@kit/ui/form` |
+| Translations              | `Trans` from `@kit/ui/trans`                                                           |
+| Toast                     | `toast` from `@kit/ui/sonner`                                                          |
+| Conditional render        | `If` from `@kit/ui/if`                                                                 |
+| Class merging             | `cn` from `@kit/ui/utils`                                                              |
 
-## Conditional Rendering
+## Zod
 
-```tsx
-import { If } from '@kit/ui/if';
-
-<If condition={isLoading} fallback={<Content />}>
-  <Spinner />
-</If>
-```
-
-## Internationalization
-
-```tsx
-import { Trans } from '@kit/ui/trans';
-
-<Trans i18nKey="namespace:key" values={{ name }} />
-```
-
-## Testing Attributes
-
-Always add `data-test` for E2E:
-
-```tsx
-<button data-test="submit-button">Submit</button>
-```
-
-## Form Guidelines
-
-- Use `react-hook-form` with `zodResolver`
-- Never add generics to `useForm`
-- Use `useWatch` instead of `watch()`
-- Always include `FormMessage` for errors
+- ALWAYS import Zod as `import * as z from 'zod'`
+- Place schemas in a separate file so they can be reused with server actions
