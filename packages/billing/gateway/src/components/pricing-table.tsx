@@ -159,7 +159,7 @@ function PricingItem(
   const lineItem = props.primaryLineItem!;
   const isCustom = props.plan.custom ?? false;
 
-  const i18nKey = `billing.units.${lineItem.unit}` as never;
+  const i18nKey = lineItem?.unit ? `billing.units.${lineItem.unit}` : '';
 
   const unitLabel = lineItem?.unit
     ? t.has(i18nKey)
