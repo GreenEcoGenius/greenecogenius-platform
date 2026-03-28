@@ -17,8 +17,6 @@ import {
 } from '@kit/ui/marketing';
 import { Trans } from '@kit/ui/trans';
 
-import pathsConfig from '~/config/paths.config';
-
 async function Home() {
   const t = await getTranslations('marketing');
   return (
