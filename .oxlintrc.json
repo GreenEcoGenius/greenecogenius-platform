@@ -54,6 +54,7 @@
     "dist",
     "pnpm-lock.yaml",
     "apps/dev-tool",
-    "tooling/scripts"
+    "tooling/scripts",
+    "templates"
   ]
 }
