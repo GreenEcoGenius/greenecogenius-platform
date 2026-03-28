@@ -3,7 +3,7 @@ export function BodyStyle() {
     <style>
       {`
         body {
-          background-color: #fafafa;
+          background-color: #F0FFF4;
           margin: auto;
           font-family: sans-serif;
           color: #242424;

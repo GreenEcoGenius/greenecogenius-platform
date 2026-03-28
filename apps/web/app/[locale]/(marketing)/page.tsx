@@ -1,12 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ArrowRightIcon, LayoutDashboard } from 'lucide-react';
+import { ArrowRightIcon, Recycle } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
-import { PricingTable } from '@kit/billing-gateway/marketing';
 import {
   CtaButton,
-  EcosystemShowcase,
   FeatureCard,
   FeatureGrid,
   FeatureShowcase,
@@ -18,17 +17,19 @@ import {
 } from '@kit/ui/marketing';
 import { Trans } from '@kit/ui/trans';
 
-import billingConfig from '~/config/billing.config';
 import pathsConfig from '~/config/paths.config';
 
-function Home() {
+async function Home() {
+  const t = await getTranslations('marketing');
   return (
     <div className={'mt-4 flex flex-col space-y-24 py-14'}>
       <div className={'mx-auto'}>
         <Hero
           pill={
-            <Pill label={'New'}>
-              <span>The SaaS Starter Kit for ambitious developers</span>
+            <Pill label={'B2B'}>
+              <span>
+                <Trans i18nKey={'marketing.heroPill'} />
+              </span>
               <PillActionButton
                 render={
                   <Link href={'/auth/sign-up'}>
@@ -40,14 +41,14 @@ function Home() {
           }
           title={
             <span className="text-secondary-foreground">
-              <span>Ship a SaaS faster than ever.</span>
+              <span>
+                <Trans i18nKey={'marketing.heroTitle'} />
+              </span>
             </span>
           }
           subtitle={
             <span>
-              Makerkit gives you a production-ready boilerplate to build your
-              SaaS faster than ever before with the next-gen SaaS Starter Kit.
-              Get started in minutes.
+              <Trans i18nKey={'marketing.heroSubtitle'} />
             </span>
           }
           cta={<MainCallToActionButton />}
@@ -60,7 +61,7 @@ function Home() {
               width={3558}
               height={2222}
               src={`/images/dashboard.webp`}
-              alt={`App Image`}
+              alt={`GreenEcoGenius Dashboard`}
             />
           }
         />
@@ -72,76 +73,62 @@ function Home() {
             heading={
               <>
                 <b className="font-medium tracking-tight dark:text-white">
-                  The ultimate SaaS Starter Kit
+                  <Trans i18nKey={'marketing.featuresHeading'} />
                 </b>
                 .{' '}
                 <span className="text-secondary-foreground/70 block font-normal tracking-tight">
-                  Unleash your creativity and build your SaaS faster than ever
-                  with Makerkit.
+                  <Trans i18nKey={'marketing.featuresSubheading'} />
                 </span>
               </>
             }
             icon={
               <FeatureShowcaseIconContainer>
-                <LayoutDashboard className="h-4 w-4" />
-                <span>All-in-one solution</span>
+                <Recycle className="h-4 w-4" />
+                <span>
+                  <Trans i18nKey={'marketing.featuresBadge'} />
+                </span>
               </FeatureShowcaseIconContainer>
             }
           >
             <FeatureGrid>
               <FeatureCard
                 className={'relative col-span-1 overflow-hidden'}
-                label={'Beautiful Dashboard'}
-                description={`Makerkit provides a beautiful dashboard to manage your SaaS business.`}
-              ></FeatureCard>
+                label={t('feature1Title')}
+                description={t('feature1Description')}
+              />
 
               <FeatureCard
                 className={'relative col-span-1 w-full overflow-hidden'}
-                label={'Authentication'}
-                description={`Makerkit provides a variety of providers to allow your users to sign in.`}
-              ></FeatureCard>
-
-              <FeatureCard
-                className={'relative col-span-1 overflow-hidden'}
-                label={'Multi Tenancy'}
-                description={`Multi tenant memberships for your SaaS business.`}
+                label={t('feature2Title')}
+                description={t('feature2Description')}
               />
 
               <FeatureCard
                 className={'relative col-span-1 overflow-hidden'}
-                label={'Billing'}
-                description={`Makerkit supports multiple payment gateways to charge your customers.`}
+                label={t('feature3Title')}
+                description={t('feature3Description')}
               />
 
               <FeatureCard
                 className={'relative col-span-1 overflow-hidden'}
-                label={'Plugins'}
-                description={`Extend your SaaS with plugins that you can install using the CLI.`}
+                label={t('feature4Title')}
+                description={t('feature4Description')}
               />
 
               <FeatureCard
                 className={'relative col-span-1 overflow-hidden'}
-                label={'Documentation'}
-                description={`Makerkit provides a comprehensive documentation to help you get started.`}
+                label={t('feature5Title')}
+                description={t('feature5Description')}
+              />
+
+              <FeatureCard
+                className={'relative col-span-1 overflow-hidden'}
+                label={t('feature6Title')}
+                description={t('feature6Description')}
               />
             </FeatureGrid>
           </FeatureShowcase>
         </div>
-      </div>
-
-      <div className={'container mx-auto'}>
-        <EcosystemShowcase
-          heading="The ultimate SaaS Starter Kit for founders."
-          description="Unleash your creativity and build your SaaS faster than ever with Makerkit. Get started in minutes and ship your SaaS in no time."
-        >
-          <Image
-            className="rounded-md"
-            src={'/images/sign-in.webp'}
-            alt="Sign in"
-            width={1000}
-            height={1000}
-          />
-        </EcosystemShowcase>
       </div>
 
       <div className={'container mx-auto'}>
@@ -151,20 +138,14 @@ function Home() {
           }
         >
           <SecondaryHero
-            pill={<Pill label="Start for free">No credit card required.</Pill>}
-            heading="Fair pricing for all types of businesses"
-            subheading="Get started on our free plan and upgrade when you are ready."
+            pill={
+              <Pill label={<Trans i18nKey={'marketing.ctaPillLabel'} />}>
+                <Trans i18nKey={'marketing.ctaPillText'} />
+              </Pill>
+            }
+            heading={<Trans i18nKey={'marketing.ctaHeading'} />}
+            subheading={<Trans i18nKey={'marketing.ctaSubheading'} />}
           />
-
-          <div className={'w-full'}>
-            <PricingTable
-              config={billingConfig}
-              paths={{
-                signUp: pathsConfig.auth.signUp,
-                return: pathsConfig.app.home,
-              }}
-            />
-          </div>
         </div>
       </div>
     </div>
@@ -180,7 +161,7 @@ function MainCallToActionButton() {
         <Link href={'/auth/sign-up'}>
           <span className={'flex items-center space-x-0.5'}>
             <span>
-              <Trans i18nKey={'common.getStarted'} />
+              <Trans i18nKey={'marketing.joinPlatform'} />
             </span>
 
             <ArrowRightIcon
@@ -195,7 +176,7 @@ function MainCallToActionButton() {
 
       <CtaButton variant={'link'} className="h-10 text-sm">
         <Link href={'/pricing'}>
-          <Trans i18nKey={'common.pricing'} />
+          <Trans i18nKey={'marketing.explore'} />
         </Link>
       </CtaButton>
     </div>

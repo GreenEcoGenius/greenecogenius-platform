@@ -1,0 +1,127 @@
+{
+  "units": {
+    "member_one": "membre",
+    "member_other": "membres"
+  },
+  "subscriptionTabSubheading": "Gérez votre abonnement et facturation",
+  "planCardTitle": "Votre Plan",
+  "planCardDescription": "Voici les détails de votre plan actuel. Vous pouvez changer de plan ou annuler votre abonnement à tout moment.",
+  "planRenewal": "Renouvellement tous les {interval} à {price}",
+  "planDetails": "Détails du plan",
+  "checkout": "Procéder au paiement",
+  "trialAlertTitle": "Votre essai se termine bientôt",
+  "trialAlertDescription": "Votre essai se termine le {date}. Passez à un plan payant pour continuer.",
+  "billingPortalCardButton": "Accéder au portail de facturation",
+  "billingPortalCardTitle": "Gérer vos détails de facturation",
+  "billingPortalCardDescription": "Accédez à votre portail de facturation pour gérer votre abonnement. Vous pouvez mettre à jour ou annuler votre plan, ou télécharger vos factures.",
+  "cancelAtPeriodEndDescription": "Votre abonnement sera annulé le {endDate}.",
+  "renewAtPeriodEndDescription": "Votre abonnement sera renouvelé le {endDate}",
+  "noPermissionsAlertHeading": "Vous n'avez pas les permissions pour modifier les paramètres de facturation",
+  "noPermissionsAlertBody": "Veuillez contacter le propriétaire du compte.",
+  "checkoutSuccessTitle": "C'est fait ! Tout est en ordre.",
+  "checkoutSuccessDescription": "Merci pour votre abonnement, votre paiement a été traité avec succès ! Un e-mail de confirmation sera envoyé à {customerEmail}.",
+  "checkoutSuccessBackButton": "Accéder à l'application",
+  "cannotManageBillingAlertTitle": "Vous ne pouvez pas gérer la facturation",
+  "cannotManageBillingAlertDescription": "Vous n'avez pas les permissions nécessaires. Contactez le propriétaire du compte.",
+  "manageTeamPlan": "Gérer le plan de votre équipe",
+  "manageTeamPlanDescription": "Choisissez un plan adapté aux besoins de votre équipe.",
+  "basePlan": "Plan de base",
+  "billingInterval": {
+    "label": "Choisissez votre fréquence de facturation",
+    "month": "Facturation mensuelle",
+    "year": "Facturation annuelle"
+  },
+  "perMonth": "mois",
+  "custom": "Plan personnalisé",
+  "lifetime": "À vie",
+  "trialPeriod": "Essai de {period} jours",
+  "perPeriod": "par {period}",
+  "redirectingToPayment": "Redirection vers le paiement. Veuillez patienter...",
+  "proceedToPayment": "Procéder au paiement",
+  "startTrial": "Commencer l'essai",
+  "perTeamMember": "Par membre d'équipe",
+  "perUnitShort": "Par {unit}",
+  "perUnit": "Par {unit} d'utilisation",
+  "teamMembers": "Membres de l'équipe",
+  "includedUpTo": "Jusqu'à {upTo} {unit} inclus dans le plan",
+  "fromPreviousTierUpTo": "pour chaque {unit} pour les {upTo} {unitPlural} suivants",
+  "andAbove": "au-delà de {previousTier} {unit}",
+  "startingAtPriceUnit": "À partir de {price}/{unit}",
+  "priceUnit": "{price}/{unit}",
+  "forEveryUnit": "pour chaque {unit}",
+  "setupFee": "plus {setupFee} de frais d'installation",
+  "perUnitIncluded": "({included} inclus)",
+  "features": "Fonctionnalités",
+  "featuresLabel": "Fonctionnalités",
+  "detailsLabel": "Détails",
+  "planPickerLabel": "Choisissez votre plan",
+  "planCardLabel": "Gérer votre plan",
+  "planPickerAlertErrorTitle": "Erreur lors du paiement",
+  "planPickerAlertErrorDescription": "Une erreur est survenue. Veuillez réessayer plus tard.",
+  "subscriptionCancelled": "Abonnement annulé",
+  "cancelSubscriptionDate": "Votre abonnement sera annulé à la fin de la période de facturation le {date}",
+  "noPlanChosen": "Veuillez choisir un plan",
+  "noIntervalPlanChosen": "Veuillez choisir une fréquence de facturation",
+  "status": {
+    "free": {
+      "badge": "Plan Gratuit",
+      "heading": "Vous êtes actuellement sur le Plan Gratuit",
+      "description": "Vous êtes sur un plan gratuit. Vous pouvez passer à un plan payant à tout moment."
+    },
+    "active": {
+      "badge": "Actif",
+      "heading": "Votre abonnement est actif",
+      "description": "Votre abonnement est actif. Gérez votre abonnement dans le portail client."
+    },
+    "trialing": {
+      "badge": "Essai",
+      "heading": "Vous êtes en période d'essai",
+      "description": "Profitez des avantages du plan jusqu'à la fin de l'essai"
+    },
+    "past_due": {
+      "badge": "En retard",
+      "heading": "Votre facture est en retard",
+      "description": "Votre facture est en retard. Veuillez mettre à jour votre moyen de paiement."
+    },
+    "canceled": {
+      "badge": "Annulé",
+      "heading": "Votre abonnement est annulé",
+      "description": "Votre abonnement est annulé. Il prendra fin à la fin de la période de facturation."
+    },
+    "unpaid": {
+      "badge": "Impayé",
+      "heading": "Votre facture est impayée",
+      "description": "Votre facture est impayée. Veuillez mettre à jour votre moyen de paiement."
+    },
+    "incomplete": {
+      "badge": "Incomplet",
+      "heading": "Nous attendons votre paiement",
+      "description": "Nous attendons la confirmation de votre paiement. Veuillez patienter."
+    },
+    "incomplete_expired": {
+      "badge": "Expiré",
+      "heading": "Votre paiement a expiré",
+      "description": "Votre paiement a expiré. Veuillez mettre à jour votre moyen de paiement."
+    },
+    "paused": {
+      "badge": "En pause",
+      "heading": "Votre abonnement est en pause",
+      "description": "Votre abonnement est en pause. Vous pouvez le reprendre à tout moment."
+    },
+    "succeeded": {
+      "badge": "Réussi",
+      "heading": "Votre paiement a été effectué",
+      "description": "Votre paiement a été effectué avec succès. Merci pour votre abonnement !"
+    },
+    "pending": {
+      "badge": "En attente",
+      "heading": "Votre paiement est en attente",
+      "description": "Votre paiement est en attente. Veuillez patienter."
+    },
+    "failed": {
+      "badge": "Échoué",
+      "heading": "Votre paiement a échoué",
+      "description": "Votre paiement a échoué. Veuillez mettre à jour votre moyen de paiement."
+    }
+  }
+}

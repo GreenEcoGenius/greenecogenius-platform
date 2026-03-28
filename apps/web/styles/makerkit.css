@@ -1,14 +1,13 @@
 /*
 * makerkit.css
 *
-* Makerkit-specific global styles
-* Use this file to add any global styles that are specific to Makerkit's components
+* GreenEcoGenius — global component styles
  */
 .site-header > .container:before,
 .site-footer > .container:before {
   background: radial-gradient(
     62.87% 100% at 50% 100%,
-    var(--color-gray-200) 0%,
+    #D1FAE5 0%,
     rgba(255, 255, 255, 0) 100%
   );
 
@@ -24,7 +23,7 @@
 .dark .site-footer > .container:before {
   background: radial-gradient(
     62.87% 100% at 50% 100%,
-    rgba(255, 255, 255, 0.1) 0%,
+    rgba(82, 183, 136, 0.15) 0%,
     rgba(255, 255, 255, 0) 100%
   );
 }

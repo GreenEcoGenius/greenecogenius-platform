@@ -1,9 +1,9 @@
 {
-  "name": "Makerkit",
-  "short_name": "makerkit",
-  "theme_color": "#fff",
-  "background_color": "#fff",
-  "display": "fullscreen",
+  "name": "GreenEcoGenius",
+  "short_name": "GreenEcoGenius",
+  "theme_color": "#2D6A4F",
+  "background_color": "#F0FFF4",
+  "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
@@ -28,6 +28,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "display": "standalone"
+  ]
 }
