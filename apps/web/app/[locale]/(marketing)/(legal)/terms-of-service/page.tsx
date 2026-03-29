@@ -59,8 +59,7 @@ async function TermsOfServicePage() {
 
         <Section title="3. Acceptation des conditions">
           <p>
-            L'inscription sur la Plateforme implique l'acceptation pleine et
-            entière des présentes CGU. Si vous n'acceptez pas ces conditions,
+            {"L'inscription sur la Plateforme implique l'acceptation pleine et entière des présentes CGU. Si vous n'acceptez pas ces conditions,"}
             vous ne devez pas utiliser la Plateforme.
           </p>
         </Section>
@@ -68,9 +67,9 @@ async function TermsOfServicePage() {
         <Section title="4. Inscription et compte utilisateur">
           <p>
             {"L'accès à la Plateforme nécessite la création d'un compte"}
-            entreprise. L'utilisateur s'engage à fournir des informations
+            {"entreprise. L'utilisateur s'engage à fournir des informations"}
             exactes et à jour lors de son inscription. Chaque compte est
-            personnel et l'utilisateur est responsable de la confidentialité de
+            {"personnel et l'utilisateur est responsable de la confidentialité de"}
             ses identifiants.
           </p>
         </Section>
@@ -79,7 +78,7 @@ async function TermsOfServicePage() {
           <p>La Plateforme propose les services suivants :</p>
           <BulletList
             items={[
-              'Le Comptoir Circulaire — marketplace B2B pour l'achat et la vente de matières recyclables entre professionnels',
+              "Le Comptoir Circulaire — marketplace B2B pour l'achat et la vente de matières recyclables entre professionnels",
               'Traçabilité Blockchain — suivi de bout en bout des matières via la blockchain Polygon',
               "IA Carbone & RSE — calcul d'empreinte carbone et génération automatique de rapports RSE",
             ]}
@@ -94,7 +93,7 @@ async function TermsOfServicePage() {
             techniques ou des pertes de données.
           </p>
           <p>
-            GreenEcoGenius OÜ agit en tant qu'intermédiaire et ne saurait être
+            {"GreenEcoGenius OÜ agit en tant qu'intermédiaire et ne saurait être"}
             tenue responsable de la qualité, la conformité ou la livraison des
             matières échangées entre utilisateurs.
           </p>
@@ -102,7 +101,7 @@ async function TermsOfServicePage() {
 
         <Section title="7. Propriété intellectuelle">
           <p>
-            L'ensemble des contenus de la Plateforme (textes, images, logos,
+            {"L'ensemble des contenus de la Plateforme (textes, images, logos,"}
             code source) sont la propriété exclusive de GreenEcoGenius OÜ et
             sont protégés par le droit de la propriété intellectuelle. Toute
             reproduction non autorisée est interdite.
@@ -111,7 +110,7 @@ async function TermsOfServicePage() {
 
         <Section title="8. Résiliation">
           <p>
-            L'utilisateur peut supprimer son compte à tout moment depuis ses
+            {"L'utilisateur peut supprimer son compte à tout moment depuis ses"}
             paramètres. GreenEcoGenius OÜ se réserve le droit de suspendre ou
             supprimer un compte en cas de violation des présentes CGU.
           </p>
@@ -128,7 +127,7 @@ async function TermsOfServicePage() {
         <Section title="10. Contact">
           <p>
             Pour toute question relative aux présentes CGU, contactez-nous à
-            l'adresse{' '}
+            {"l'adresse"}{' '}
             <a
               href="mailto:ervis@greenecogenius.fr"
               className="text-primary underline underline-offset-4 hover:text-primary/80"

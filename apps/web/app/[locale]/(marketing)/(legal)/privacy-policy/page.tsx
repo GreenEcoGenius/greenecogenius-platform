@@ -106,7 +106,7 @@ async function PrivacyPolicyPage() {
         <Section title="7. Transferts internationaux">
           <p>
             Vos données sont hébergées dans des centres de données situés dans
-            l'Union Européenne. En cas de transfert hors UE, des garanties
+            {"l'Union Européenne. En cas de transfert hors UE, des garanties"}
             appropriées sont mises en place (clauses contractuelles types de la
             Commission européenne).
           </p>
@@ -121,7 +121,7 @@ async function PrivacyPolicyPage() {
             rows={[
               ["Droit d'accès", 'Obtenir une copie de vos données personnelles'],
               ['Droit de rectification', 'Corriger des données inexactes'],
-              ['Droit à l'effacement', 'Demander la suppression de vos données'],
+              ["Droit à l'effacement", 'Demander la suppression de vos données'],
               ['Droit à la portabilité', 'Recevoir vos données dans un format structuré'],
               ["Droit d'opposition", 'Vous opposer au traitement de vos données'],
               ['Droit à la limitation', 'Limiter le traitement de vos données'],
@@ -155,7 +155,7 @@ async function PrivacyPolicyPage() {
           </p>
           <p>
             Vous pouvez également introduire une réclamation auprès de
-            l'Autorité estonienne de protection des données (Andmekaitse
+            {"l'Autorité estonienne de protection des données (Andmekaitse"}
             Inspektsioon) —{' '}
             <a href="https://www.aki.ee" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-4 hover:text-primary/80">
               www.aki.ee
