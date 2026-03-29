@@ -40,7 +40,7 @@ export default async function Home() {
       {/* ───── HERO ───── */}
       <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
         <Image
-          src="/images/hero-recycling-facility.png"
+          src="/images/hero-circular-hub.png"
           alt=""
           fill
           className="object-cover"

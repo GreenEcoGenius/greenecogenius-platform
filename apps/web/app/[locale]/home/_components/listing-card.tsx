@@ -46,9 +46,13 @@ export function ListingCard({ listing, account }: ListingCardProps) {
         ? 'marketplace.typeBuy'
         : 'marketplace.typeCollect';
 
+  const detailHref = account
+    ? `/home/${account}/marketplace/${listing.id}`
+    : `/home/marketplace/${listing.id}`;
+
   return (
     <Link
-      href={`/home/${account}/marketplace/${listing.id}`}
+      href={detailHref}
       className="group bg-card rounded-lg border p-5 transition-shadow hover:shadow-md"
     >
       <div className="flex items-start justify-between">

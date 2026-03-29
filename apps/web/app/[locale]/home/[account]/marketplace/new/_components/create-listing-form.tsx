@@ -20,6 +20,7 @@ import { Trans } from '@kit/ui/trans';
 
 interface CreateListingFormProps {
   account: string;
+  accountId?: string;
   categories: {
     id: string;
     name: string;
@@ -30,6 +31,7 @@ interface CreateListingFormProps {
 
 export function CreateListingForm({
   account,
+  accountId,
   categories,
 }: CreateListingFormProps) {
   const supabase = useSupabase();
@@ -47,16 +49,23 @@ export function CreateListingForm({
     const locationCity = formData.get('location_city') as string;
     const locationCountry = formData.get('location_country') as string;
 
-    const { data: accountData } = await supabase
-      .from('accounts')
-      .select('id')
-      .eq('slug', account)
-      .single();
+    let resolvedAccountId = accountId;
 
-    if (!accountData) return;
+    if (!resolvedAccountId && account) {
+      const { data: accountData } = await supabase
+        .from('accounts')
+        .select('id')
+        .eq('slug', account)
+        .single();
+
+      if (!accountData) return;
+      resolvedAccountId = accountData.id;
+    }
+
+    if (!resolvedAccountId) return;
 
     const { error } = await supabase.from('listings').insert({
-      account_id: accountData.id,
+      account_id: resolvedAccountId,
       title,
       description: description || null,
       category_id: categoryId,
@@ -69,9 +78,13 @@ export function CreateListingForm({
       status: 'active',
     });
 
+    const redirectPath = account
+      ? `/home/${account}/marketplace`
+      : '/home/marketplace';
+
     if (!error) {
       startTransition(() => {
-        router.push(`/home/${account}/marketplace`);
+        router.push(redirectPath);
         router.refresh();
       });
     }
