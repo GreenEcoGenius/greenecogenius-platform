@@ -42,7 +42,7 @@ export function AppLogo({
       aria-label={label ?? 'GreenEcoGenius'}
       href={href ?? '/'}
       prefetch={true}
-      className="mx-auto md:mx-0"
+      className="flex-shrink-0"
     >
       <LogoImage className={className} />
     </Link>
