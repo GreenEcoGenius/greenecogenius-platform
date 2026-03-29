@@ -152,5 +152,11 @@
   "contactSuccessDescription": "We have received your message and will get back to you as soon as possible",
   "contactErrorDescription": "An error occurred while sending your message. Please try again later",
   "footerDescription": "B2B circular economy platform. Sell, collect and trace recyclable materials with blockchain traceability and AI-powered CSR reporting.",
-  "copyright": "© {year} {product} OÜ — Circular Economy Platform. All Rights Reserved."
+  "copyright": "© {year} {product} OÜ — Circular Economy Platform. All Rights Reserved.",
+
+  "altBlockchainTablet": "Blockchain traceability on tablet",
+  "altCsrReporting": "CSR reporting team",
+  "altSortedMaterials": "Sorted recyclable materials warehouse",
+  "altGreentechEnergy": "Green technology and renewable energy",
+  "altRecyclingFacility": "Recycling facility"
 }

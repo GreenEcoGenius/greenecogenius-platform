@@ -105,7 +105,7 @@ export default async function AboutPage() {
               <div className="overflow-hidden rounded-2xl shadow-2xl">
                 <Image
                   src="/images/hero-recycling-facility.png"
-                  alt="Recycling facility"
+                  alt={t('altRecyclingFacility')}
                   width={1024}
                   height={585}
                   className="h-full w-full object-cover"
@@ -154,7 +154,7 @@ export default async function AboutPage() {
               <div className="overflow-hidden rounded-2xl shadow-2xl">
                 <Image
                   src="/images/sorted-materials.png"
-                  alt="Sorted recyclable materials"
+                  alt={t('altSortedMaterials')}
                   width={1024}
                   height={585}
                   className="h-full w-full object-cover"

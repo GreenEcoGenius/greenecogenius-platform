@@ -182,7 +182,7 @@ export default async function Home() {
               <div className="overflow-hidden rounded-2xl shadow-2xl">
                 <Image
                   src="/images/blockchain-tablet.png"
-                  alt="Blockchain Traceability"
+                  alt={t('altBlockchainTablet')}
                   width={1024}
                   height={585}
                   className="h-full w-full object-cover"
@@ -246,7 +246,7 @@ export default async function Home() {
               <div className="overflow-hidden rounded-2xl shadow-2xl">
                 <Image
                   src="/images/team-csr-reporting.png"
-                  alt="CSR Reporting Dashboard"
+                  alt={t('altCsrReporting')}
                   width={1024}
                   height={585}
                   className="h-full w-full object-cover"

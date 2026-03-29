@@ -4,6 +4,8 @@ import { useTransition } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import { useTranslations } from 'next-intl';
+
 import { useSupabase } from '@kit/supabase/hooks/use-supabase';
 import { Button } from '@kit/ui/button';
 import { Input } from '@kit/ui/input';
@@ -37,6 +39,8 @@ export function CreateListingForm({
   const supabase = useSupabase();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const t = useTranslations('marketplace');
+  const locale = useTranslations()('common.languageCode' as never) === 'fr' ? 'fr' : 'en';
 
   async function handleSubmit(formData: FormData) {
     const title = formData.get('title') as string;
@@ -122,7 +126,7 @@ export function CreateListingForm({
           id="title"
           name="title"
           required
-          placeholder="Ex: Lot de 500kg d'aluminium recyclé"
+          placeholder={t('titlePlaceholder')}
         />
       </div>
 
@@ -134,7 +138,7 @@ export function CreateListingForm({
           id="description"
           name="description"
           rows={4}
-          placeholder="Décrivez la matière, son état, ses caractéristiques..."
+          placeholder={t('descriptionPlaceholder')}
         />
       </div>
 
@@ -144,12 +148,12 @@ export function CreateListingForm({
         </Label>
         <Select name="category_id" required>
           <SelectTrigger>
-            <SelectValue placeholder="Sélectionner une catégorie" />
+            <SelectValue placeholder={t('selectCategory')} />
           </SelectTrigger>
           <SelectContent>
             {categories.map((cat) => (
               <SelectItem key={cat.id} value={cat.id}>
-                {cat.name_fr}
+                {locale === 'fr' ? cat.name_fr : cat.name}
               </SelectItem>
             ))}
           </SelectContent>
@@ -180,11 +184,11 @@ export function CreateListingForm({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="kg">kg</SelectItem>
-              <SelectItem value="tonnes">tonnes</SelectItem>
-              <SelectItem value="units">unités</SelectItem>
-              <SelectItem value="liters">litres</SelectItem>
-              <SelectItem value="m3">m³</SelectItem>
+              <SelectItem value="kg">{t('unitKg')}</SelectItem>
+              <SelectItem value="tonnes">{t('unitTonnes')}</SelectItem>
+              <SelectItem value="units">{t('unitUnits')}</SelectItem>
+              <SelectItem value="liters">{t('unitLiters')}</SelectItem>
+              <SelectItem value="m3">{t('unitM3')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -192,7 +196,7 @@ export function CreateListingForm({
 
       <div className="space-y-2">
         <Label htmlFor="price_per_unit">
-          <Trans i18nKey="marketplace.pricePerUnit" /> (EUR)
+          <Trans i18nKey="marketplace.pricePerUnitCurrency" />
         </Label>
         <Input
           id="price_per_unit"
@@ -200,7 +204,7 @@ export function CreateListingForm({
           type="number"
           step="0.01"
           min="0"
-          placeholder="Laisser vide pour 'prix à négocier'"
+          placeholder={t('pricePlaceholder')}
         />
       </div>
 
@@ -209,7 +213,11 @@ export function CreateListingForm({
           <Label htmlFor="location_city">
             <Trans i18nKey="marketplace.city" />
           </Label>
-          <Input id="location_city" name="location_city" placeholder="Paris" />
+          <Input
+            id="location_city"
+            name="location_city"
+            placeholder={t('cityPlaceholder')}
+          />
         </div>
 
         <div className="space-y-2">
@@ -221,13 +229,13 @@ export function CreateListingForm({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="FR">France</SelectItem>
-              <SelectItem value="BE">Belgique</SelectItem>
-              <SelectItem value="DE">Allemagne</SelectItem>
-              <SelectItem value="NL">Pays-Bas</SelectItem>
-              <SelectItem value="IT">Italie</SelectItem>
-              <SelectItem value="ES">Espagne</SelectItem>
-              <SelectItem value="EE">Estonie</SelectItem>
+              <SelectItem value="FR">{t('countryFR')}</SelectItem>
+              <SelectItem value="BE">{t('countryBE')}</SelectItem>
+              <SelectItem value="DE">{t('countryDE')}</SelectItem>
+              <SelectItem value="NL">{t('countryNL')}</SelectItem>
+              <SelectItem value="IT">{t('countryIT')}</SelectItem>
+              <SelectItem value="ES">{t('countryES')}</SelectItem>
+              <SelectItem value="EE">{t('countryEE')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
