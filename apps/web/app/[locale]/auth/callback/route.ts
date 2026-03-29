@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation';
+import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 import { createAuthCallbackService } from '@kit/supabase/auth';
@@ -14,5 +14,7 @@ export async function GET(request: NextRequest) {
     redirectPath: pathsConfig.app.home,
   });
 
-  return redirect(nextPath);
+  const url = new URL(nextPath, request.url);
+
+  return NextResponse.redirect(url);
 }

@@ -294,10 +294,10 @@ function StatCard({
   color: string;
 }) {
   const bgMap: Record<string, string> = {
-    primary: 'bg-[#1B9E77]/5 dark:bg-[#1B9E77]/10',
-    info: 'bg-[#457B9D]/5 dark:bg-[#457B9D]/10',
-    warning: 'bg-[#F4A261]/5 dark:bg-[#F4A261]/10',
-    secondary: 'bg-[#3BB54A]/5 dark:bg-[#3BB54A]/10',
+    primary: 'bg-card',
+    info: 'bg-card',
+    warning: 'bg-card',
+    secondary: 'bg-card',
   };
 
   return (
