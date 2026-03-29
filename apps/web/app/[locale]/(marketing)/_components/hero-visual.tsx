@@ -23,14 +23,14 @@ export function HeroVisual() {
   return (
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
       {/* Central glow */}
-      <div className="absolute h-[300px] w-[300px] rounded-full bg-emerald-400/20 blur-[100px] sm:h-[400px] sm:w-[400px]" />
+      <div className="absolute h-[220px] w-[220px] rounded-full bg-emerald-400/20 blur-[80px] sm:h-[300px] sm:w-[300px]" />
 
       {/* Outer orbit — spins forward, carries the 6 labelled nodes */}
-      <div className="animate-spin-orbit absolute h-[500px] w-[500px] sm:h-[650px] sm:w-[650px] lg:h-[800px] lg:w-[800px]">
+      <div className="animate-spin-orbit absolute h-[340px] w-[340px] sm:h-[440px] sm:w-[440px] lg:h-[560px] lg:w-[560px]">
         <div className="absolute inset-0 rounded-full border border-emerald-500/10" />
 
         {orbitNodes.map((node) => {
-          const pos = posOnCircle(node.angle, 46);
+          const pos = posOnCircle(node.angle, 44);
           return (
             <div
               key={node.label}
@@ -61,7 +61,7 @@ export function HeroVisual() {
       </div>
 
       {/* Middle orbit ring — spins in reverse with 4 small dots */}
-      <div className="animate-spin-orbit-reverse absolute h-[320px] w-[320px] sm:h-[420px] sm:w-[420px] lg:h-[520px] lg:w-[520px]">
+      <div className="animate-spin-orbit-reverse absolute h-[220px] w-[220px] sm:h-[290px] sm:w-[290px] lg:h-[370px] lg:w-[370px]">
         <div className="absolute inset-0 rounded-full border border-dashed border-teal-400/15" />
 
         {[0, 90, 180, 270].map((deg) => {
@@ -79,13 +79,13 @@ export function HeroVisual() {
       </div>
 
       {/* Inner orbit ring (static) */}
-      <div className="absolute h-[160px] w-[160px] sm:h-[220px] sm:w-[220px] lg:h-[280px] lg:w-[280px]">
+      <div className="absolute h-[120px] w-[120px] sm:h-[160px] sm:w-[160px] lg:h-[200px] lg:w-[200px]">
         <div className="absolute inset-0 rounded-full border border-emerald-300/10" />
       </div>
 
       {/* Decorative dashed arcs */}
       <svg
-        className="absolute h-[500px] w-[500px] opacity-20 sm:h-[650px] sm:w-[650px] lg:h-[800px] lg:w-[800px]"
+        className="absolute h-[340px] w-[340px] opacity-20 sm:h-[440px] sm:w-[440px] lg:h-[560px] lg:w-[560px]"
         viewBox="0 0 800 800"
         fill="none"
       >
