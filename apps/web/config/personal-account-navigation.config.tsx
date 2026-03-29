@@ -1,4 +1,10 @@
-import { CreditCard, Home, User } from 'lucide-react';
+import {
+  CreditCard,
+  Home,
+  PackageSearch,
+  Recycle,
+  User,
+} from 'lucide-react';
 import * as z from 'zod';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
@@ -17,6 +23,16 @@ const routes = [
         path: pathsConfig.app.home,
         Icon: <Home className={iconClasses} />,
         highlightMatch: `${pathsConfig.app.home}$`,
+      },
+      {
+        label: 'common.routes.marketplace',
+        path: '/home/marketplace',
+        Icon: <Recycle className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.myListings',
+        path: '/home/my-listings',
+        Icon: <PackageSearch className={iconClasses} />,
       },
     ],
   },
