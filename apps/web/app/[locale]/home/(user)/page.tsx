@@ -15,7 +15,7 @@ import { getTranslations } from 'next-intl/server';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { PageBody } from '@kit/ui/page';
 
-import { requireUser } from '~/lib/server/require-user';
+import { requireUser } from '@kit/supabase/require-user';
 
 import { HomeLayoutPageHeader } from './_components/home-page-header';
 
