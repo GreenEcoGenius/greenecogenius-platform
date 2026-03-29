@@ -5,27 +5,27 @@ import { useEffect, useRef } from 'react';
 import { BarChart3, Globe, Leaf, Recycle, Shield, Zap } from 'lucide-react';
 
 const orbitNodes = [
-  { icon: Recycle, label: 'Recycler', color: '#0d7a5c', angle: 0, speed: 1.8 },
-  { icon: Shield, label: 'Tracer', color: '#1a8a3e', angle: 60, speed: 1.4 },
+  { icon: Recycle, label: 'Recycler', color: '#3BB54A', angle: 0, speed: 1.8 },
+  { icon: Shield, label: 'Tracer', color: '#8DC63F', angle: 60, speed: 1.4 },
   {
     icon: BarChart3,
     label: 'Mesurer',
-    color: '#5a8c1a',
+    color: '#87CEEB',
     angle: 120,
     speed: 2.0,
   },
-  { icon: Leaf, label: 'Réduire', color: '#2d6b4e', angle: 180, speed: 1.6 },
+  { icon: Leaf, label: 'Réduire', color: '#1B9E77', angle: 180, speed: 1.6 },
   {
     icon: Zap,
     label: 'Optimiser',
-    color: '#1a8a3e',
+    color: '#F4A261',
     angle: 240,
     speed: 1.3,
   },
   {
     icon: Globe,
     label: 'Connecter',
-    color: '#2e6e8a',
+    color: '#87CEEB',
     angle: 300,
     speed: 1.7,
   },
@@ -96,14 +96,14 @@ export function HeroVisual() {
       className="pointer-events-none absolute inset-0 flex items-center justify-center"
     >
       {/* Central glow */}
-      <div className="absolute h-[220px] w-[220px] rounded-full bg-[#1B9E77]/10 blur-[80px] sm:h-[300px] sm:w-[300px]" />
+      <div className="absolute h-[220px] w-[220px] rounded-full bg-[#1B9E77]/15 blur-[80px] sm:h-[300px] sm:w-[300px]" />
 
       {/* Outer orbit */}
       <div
         data-orbit-ring
         className="animate-spin-orbit absolute h-[380px] w-[380px] sm:h-[500px] sm:w-[500px] lg:h-[640px] lg:w-[640px]"
       >
-        <div className="absolute inset-0 rounded-full border border-[#1B9E77]/15" />
+        <div className="absolute inset-0 rounded-full border border-white/10" />
 
         {orbitNodes.map((node, i) => {
           const pos = posOnCircle(node.angle, 44);
@@ -118,7 +118,7 @@ export function HeroVisual() {
             >
               <div className="animate-counter-orbit flex flex-col items-center gap-1.5">
                 <div
-                  className="flex h-14 w-14 items-center justify-center rounded-xl border border-[#1B9E77]/20 bg-white/70 shadow-lg backdrop-blur-md sm:h-16 sm:w-16 lg:h-18 lg:w-18"
+                  className="flex h-14 w-14 items-center justify-center rounded-xl border border-white/15 bg-white/10 shadow-lg backdrop-blur-md sm:h-16 sm:w-16 lg:h-18 lg:w-18"
                 >
                   <node.icon
                     className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8"
@@ -126,7 +126,7 @@ export function HeroVisual() {
                   />
                 </div>
                 <span
-                  className="text-[10px] font-semibold tracking-wide whitespace-nowrap sm:text-xs"
+                  className="text-[10px] font-semibold tracking-wide whitespace-nowrap drop-shadow-md sm:text-xs"
                   style={{ color: node.color }}
                 >
                   {node.label}
@@ -142,7 +142,7 @@ export function HeroVisual() {
         data-orbit-ring
         className="animate-spin-orbit-reverse absolute h-[250px] w-[250px] sm:h-[330px] sm:w-[330px] lg:h-[420px] lg:w-[420px]"
       >
-        <div className="absolute inset-0 rounded-full border border-dashed border-[#1B9E77]/15" />
+        <div className="absolute inset-0 rounded-full border border-dashed border-white/10" />
 
         {[0, 90, 180, 270].map((deg) => {
           const pos = posOnCircle(deg, 50);
@@ -152,7 +152,7 @@ export function HeroVisual() {
               className="absolute -translate-x-1/2 -translate-y-1/2"
               style={{ left: pos.left, top: pos.top }}
             >
-              <div className="h-2 w-2 rounded-full bg-[#1B9E77]/30" />
+              <div className="h-2 w-2 rounded-full bg-white/30" />
             </div>
           );
         })}
@@ -163,13 +163,13 @@ export function HeroVisual() {
         data-orbit-ring
         className="absolute h-[140px] w-[140px] sm:h-[180px] sm:w-[180px] lg:h-[230px] lg:w-[230px]"
       >
-        <div className="absolute inset-0 rounded-full border border-[#457B9D]/15" />
+        <div className="absolute inset-0 rounded-full border border-white/10" />
       </div>
 
       {/* Decorative dashed arcs */}
       <svg
         data-orbit-ring
-        className="absolute h-[380px] w-[380px] opacity-25 sm:h-[500px] sm:w-[500px] lg:h-[640px] lg:w-[640px]"
+        className="absolute h-[380px] w-[380px] opacity-20 sm:h-[500px] sm:w-[500px] lg:h-[640px] lg:w-[640px]"
         viewBox="0 0 800 800"
         fill="none"
       >
@@ -192,11 +192,11 @@ export function HeroVisual() {
         <defs>
           <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#1B9E77" />
-            <stop offset="100%" stopColor="#457B9D" />
+            <stop offset="100%" stopColor="#3BB54A" />
           </linearGradient>
           <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#457B9D" />
-            <stop offset="100%" stopColor="#1B9E77" />
+            <stop offset="0%" stopColor="#8DC63F" />
+            <stop offset="100%" stopColor="#87CEEB" />
           </linearGradient>
         </defs>
       </svg>

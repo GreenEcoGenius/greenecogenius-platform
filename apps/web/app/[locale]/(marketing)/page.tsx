@@ -44,34 +44,34 @@ export default async function Home() {
       <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
         {/* Background image */}
         <Image
-          src="/images/hero-carbon-tech.png"
+          src="/images/hero-aerial.png"
           alt=""
           fill
           className="object-cover object-center"
           priority
         />
-        {/* Light overlay for contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-[#f0f7ff]/30 to-white/60" />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/60 via-[#0a1628]/40 to-[#0a1628]/70" />
 
         {/* Orbital visualization */}
         <HeroVisual />
 
         <div className="relative z-10 mx-auto max-w-5xl px-4 py-32 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#1B9E77]/30 bg-white/60 px-5 py-2 text-sm font-medium text-[#0d5c4a] backdrop-blur-md">
+            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#8DC63F]/30 bg-white/10 px-5 py-2 text-sm font-medium text-[#8DC63F] backdrop-blur-md">
               <Leaf className="h-4 w-4" />
               {t('heroPill')}
             </span>
           </AnimateOnScroll>
 
           <AnimateOnScroll animation="fade-up" delay={100}>
-            <h1 className="mt-6 bg-gradient-to-b from-[#0a1628] to-[#1B9E77] bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl lg:text-7xl">
+            <h1 className="mt-6 bg-gradient-to-b from-white to-[#8DC63F] bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl lg:text-7xl">
               {t('heroHeadline')}
             </h1>
           </AnimateOnScroll>
 
           <AnimateOnScroll animation="fade-up" delay={200}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-[#1A1A2E]/70 sm:text-xl">
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80 sm:text-xl">
               {t('heroSubtitle')}
             </p>
           </AnimateOnScroll>
@@ -80,14 +80,14 @@ export default async function Home() {
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
                 href="/auth/sign-up"
-                className="group inline-flex items-center justify-center rounded-full bg-[#1B9E77] px-8 py-4 text-sm font-semibold text-white shadow-lg transition-all hover:bg-[#168a68] hover:shadow-xl"
+                className="group inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold text-[#1A1A2E] shadow-lg transition-all hover:shadow-xl hover:shadow-white/15"
               >
                 {t('heroCta1')}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
               <Link
                 href="#features"
-                className="group inline-flex items-center gap-2 rounded-full border border-[#1B9E77]/40 bg-white/50 px-8 py-4 text-sm font-medium text-[#0a1628] backdrop-blur-sm transition-all hover:border-[#1B9E77]/70 hover:bg-white/80"
+                className="group inline-flex items-center gap-2 rounded-full border border-[#8DC63F]/30 px-8 py-4 text-sm font-medium text-white backdrop-blur-sm transition-all hover:border-[#8DC63F]/60 hover:bg-white/5"
               >
                 {t('heroCta2')}
                 <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
