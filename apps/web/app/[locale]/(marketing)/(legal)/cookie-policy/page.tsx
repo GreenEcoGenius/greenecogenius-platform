@@ -25,7 +25,7 @@ async function CookiePolicyPage() {
           Dernière mise à jour : 29 mars 2026
         </p>
 
-        <Section title="1. Qu'est-ce qu'un cookie ?">
+        <Section title={"1. Qu'est-ce qu'un cookie ?"}>
           <p>
             Un cookie est un petit fichier texte stocké sur votre appareil
             lorsque vous visitez un site web. Les cookies permettent au site de
@@ -43,9 +43,9 @@ async function CookiePolicyPage() {
           </p>
           <CookieTable
             rows={[
-              ['sb-*-auth-token', 'Session d'authentification Supabase', '1 heure (renouvelable)'],
-              ['theme', 'Préférence de thème (clair/sombre)', '1 an'],
-              ['NEXT_LOCALE', 'Préférence de langue', '1 an'],
+              ['sb-*-auth-token', "Session d'authentification Supabase", '1 heure (renouvelable)'],
+              ['theme', 'Thème clair ou sombre', '1 an'],
+              ['NEXT_LOCALE', 'Langue', '1 an'],
             ]}
           />
 
@@ -66,7 +66,7 @@ async function CookiePolicyPage() {
         <Section title="3. Gestion de vos préférences">
           <p>
             Lors de votre première visite, un bandeau de consentement vous
-            permet d'accepter ou de refuser les cookies non essentiels. Vous
+            {"permet d'accepter ou de refuser les cookies non essentiels. Vous"}
             pouvez modifier vos préférences à tout moment.
           </p>
           <p>
@@ -95,9 +95,9 @@ async function CookiePolicyPage() {
 
         <Section title="4. Conséquences du refus des cookies">
           <p>
-            Le refus des cookies essentiels peut empêcher l'utilisation de
+            {"Le refus des cookies essentiels peut empêcher l'utilisation de"}
             certaines fonctionnalités de la Plateforme (connexion, préférences).
-            Le refus des cookies analytiques n'affecte pas l'utilisation de la
+            {"Le refus des cookies analytiques n'affecte pas l'utilisation de la"}
             Plateforme.
           </p>
         </Section>

@@ -38,22 +38,20 @@ async function TermsOfServicePage() {
               ['Capital social', '10 000,00 €'],
               ['Directeur', 'Ervis Ago'],
               ['Email', 'ervis@greenecogenius.fr'],
-              ['Code EMTAK', '70221 — Conseil en gestion d'entreprise'],
+              ['Code EMTAK', "70221 — Conseil en gestion d'entreprise"],
             ]}
           />
         </Section>
 
         <Section title="2. Objet">
           <p>
-            Les présentes Conditions Générales d'Utilisation (CGU) définissent
-            les modalités d'accès et d'utilisation de la plateforme
-            GreenEcoGenius, accessible à l'adresse
+            {"Les présentes Conditions Générales d'Utilisation (CGU) définissent les modalités d'accès et d'utilisation de la plateforme GreenEcoGenius, accessible à l'adresse"}
             greenecogenius-platform-dev-tool.vercel.app (ci-après « la
             Plateforme »).
           </p>
           <p>
-            La Plateforme est une marketplace B2B d'économie circulaire
-            permettant aux professionnels d'acheter et de vendre des matières
+            {"La Plateforme est une marketplace B2B d'économie circulaire"}
+            {"permettant aux professionnels d'acheter et de vendre des matières"}
             recyclables, de tracer ces matières via la blockchain et de générer
             des rapports RSE assistés par intelligence artificielle.
           </p>
@@ -69,7 +67,7 @@ async function TermsOfServicePage() {
 
         <Section title="4. Inscription et compte utilisateur">
           <p>
-            L'accès à la Plateforme nécessite la création d'un compte
+            {"L'accès à la Plateforme nécessite la création d'un compte"}
             entreprise. L'utilisateur s'engage à fournir des informations
             exactes et à jour lors de son inscription. Chaque compte est
             personnel et l'utilisateur est responsable de la confidentialité de
@@ -83,14 +81,14 @@ async function TermsOfServicePage() {
             items={[
               'Le Comptoir Circulaire — marketplace B2B pour l'achat et la vente de matières recyclables entre professionnels',
               'Traçabilité Blockchain — suivi de bout en bout des matières via la blockchain Polygon',
-              'IA Carbone & RSE — calcul d'empreinte carbone et génération automatique de rapports RSE',
+              "IA Carbone & RSE — calcul d'empreinte carbone et génération automatique de rapports RSE",
             ]}
           />
         </Section>
 
         <Section title="6. Responsabilité">
           <p>
-            GreenEcoGenius OÜ s'efforce d'assurer la disponibilité et le bon
+            {"GreenEcoGenius OÜ s'efforce d'assurer la disponibilité et le bon"}
             fonctionnement de la Plateforme. Toutefois, la société ne saurait
             être tenue responsable des interruptions temporaires, des erreurs
             techniques ou des pertes de données.

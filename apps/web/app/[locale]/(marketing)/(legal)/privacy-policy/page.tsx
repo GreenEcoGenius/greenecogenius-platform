@@ -45,7 +45,7 @@ async function PrivacyPolicyPage() {
           <DataTable
             rows={[
               ['Identification', 'Nom, prénom, adresse e-mail, numéro de téléphone'],
-              ['Entreprise', 'Raison sociale, numéro SIRET/TVA, adresse, secteur d'activité'],
+              ['Entreprise', "Raison sociale, numéro SIRET/TVA, adresse, secteur d'activité"],
               ['Transactions', 'Annonces publiées, transactions réalisées, matières échangées'],
               ['Techniques', 'Adresse IP, type de navigateur, pages visitées, cookies'],
               ['Environnementales', 'Empreinte carbone calculée, rapports RSE générés'],
@@ -59,9 +59,9 @@ async function PrivacyPolicyPage() {
               'Gestion de votre compte et authentification',
               'Mise en relation entre acheteurs et vendeurs de matières recyclables',
               'Traçabilité des matières via la blockchain',
-              'Calcul d'empreinte carbone et génération de rapports RSE',
+              "Calcul d'empreinte carbone et génération de rapports RSE",
               'Envoi de communications relatives à votre compte',
-              'Amélioration de nos services et statistiques d'utilisation',
+              "Amélioration de nos services et statistiques d'utilisation",
             ]}
           />
         </Section>
@@ -119,11 +119,11 @@ async function PrivacyPolicyPage() {
           </p>
           <DataTable
             rows={[
-              ['Droit d'accès', 'Obtenir une copie de vos données personnelles'],
+              ["Droit d'accès", 'Obtenir une copie de vos données personnelles'],
               ['Droit de rectification', 'Corriger des données inexactes'],
               ['Droit à l'effacement', 'Demander la suppression de vos données'],
               ['Droit à la portabilité', 'Recevoir vos données dans un format structuré'],
-              ['Droit d'opposition', 'Vous opposer au traitement de vos données'],
+              ["Droit d'opposition", 'Vous opposer au traitement de vos données'],
               ['Droit à la limitation', 'Limiter le traitement de vos données'],
             ]}
           />
@@ -140,7 +140,7 @@ async function PrivacyPolicyPage() {
           <p>
             Nous mettons en œuvre des mesures techniques et organisationnelles
             appropriées pour protéger vos données : chiffrement TLS,
-            authentification multi-facteurs, contrôle d'accès basé sur les
+            {"authentification multi-facteurs, contrôle d'accès basé sur les"}
             rôles, audits de sécurité réguliers.
           </p>
         </Section>
