@@ -32,32 +32,30 @@
   top: 0;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
+@keyframes spin-orbit {
+  from {
+    transform: rotate(0deg);
   }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes pulse-slow {
-  0%, 100% {
-    opacity: 0.4;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.1);
+  to {
+    transform: rotate(360deg);
   }
 }
 
-@utility animate-float {
-  animation: float 6s ease-in-out infinite;
+@keyframes spin-orbit-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
 }
 
-@utility animate-pulse-slow {
-  animation: pulse-slow 8s ease-in-out infinite;
+@utility animate-spin-orbit {
+  animation: spin-orbit 60s linear infinite;
+}
+
+@utility animate-spin-orbit-reverse {
+  animation: spin-orbit-reverse 45s linear infinite;
 }
 
 @keyframes marquee {
