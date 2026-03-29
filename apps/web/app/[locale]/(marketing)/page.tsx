@@ -20,6 +20,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { AnimateOnScroll } from './_components/animate-on-scroll';
 import { AnimatedCounter } from './_components/animated-counter';
+import { LogoCarousel } from './_components/logo-carousel';
 import { NewsletterForm } from './_components/newsletter-form';
 
 export async function generateMetadata() {
@@ -315,37 +316,19 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              <p className="text-primary mb-4 text-sm font-semibold tracking-wider uppercase">
                 {t('trustHeading')}
-              </h2>
-              <p className="text-muted-foreground mt-4 text-lg">
-                {t('trustSubheading')}
               </p>
-            </div>
-          </AnimateOnScroll>
-
-          <AnimateOnScroll animation="fade-up" delay={200}>
-            <div className="mx-auto mt-16 grid max-w-4xl grid-cols-2 items-center gap-x-12 gap-y-10 sm:grid-cols-3 md:grid-cols-6">
-              {[
-                'EcoMetal',
-                'VeoliaGreen',
-                'CircuLoop',
-                'ReNova',
-                'GreenTrace',
-                'BioRecycle',
-              ].map((name) => (
-                <div key={name} className="flex flex-col items-center gap-2">
-                  <div className="bg-primary/10 text-primary flex h-14 w-14 items-center justify-center rounded-full">
-                    <Leaf className="h-6 w-6" />
-                  </div>
-                  <span className="text-muted-foreground text-xs font-medium">
-                    {name}
-                  </span>
-                </div>
-              ))}
+              <h2 className="text-muted-foreground text-lg">
+                {t('trustSubheading')}
+              </h2>
             </div>
           </AnimateOnScroll>
         </div>
+
+        <AnimateOnScroll animation="fade-up" delay={200}>
+          <LogoCarousel className="mt-12" />
+        </AnimateOnScroll>
       </section>
 
       {/* ───── STUDY CASE ───── */}
@@ -369,7 +352,7 @@ export default async function Home() {
                 </blockquote>
                 <div className="mt-8 flex items-center gap-4">
                   <div className="bg-primary text-primary-foreground flex h-12 w-12 items-center justify-center rounded-full font-bold">
-                    MD
+                    HR
                   </div>
                   <div>
                     <p className="font-semibold">{t('studyCaseAuthor')}</p>
