@@ -2,11 +2,11 @@ import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { PageBody } from '@kit/ui/page';
+import { Heading } from '@kit/ui/heading';
+import { PageBody, PageHeader } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
-import { HomeLayoutPageHeader } from '../../_components/home-page-header';
-import { CreateListingForm } from './../../../[account]/marketplace/new/_components/create-listing-form';
+import { CreateListingForm } from '~/home/[account]/marketplace/new/_components/create-listing-form';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('marketplace');
@@ -23,18 +23,17 @@ async function NewListingPage() {
     .select('*')
     .order('name_fr');
 
-  const accountSlug = user.data?.id ?? '';
-
   return (
     <PageBody>
-      <HomeLayoutPageHeader
-        title={<Trans i18nKey={'marketplace.createListing'} />}
-        description=""
-      />
+      <PageHeader description="">
+        <Heading level={3}>
+          <Trans i18nKey={'marketplace.createListing'} />
+        </Heading>
+      </PageHeader>
 
       <div className="mx-auto max-w-2xl">
         <CreateListingForm
-          account={accountSlug}
+          account=""
           categories={categories ?? []}
         />
       </div>

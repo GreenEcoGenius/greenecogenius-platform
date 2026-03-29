@@ -12,7 +12,7 @@ import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { TeamAccountLayoutPageHeader } from '../_components/team-account-layout-page-header';
-import { ListingCard } from './_components/listing-card';
+import { ListingCard } from '~/home/_components/listing-card';
 
 interface MarketplacePageProps {
   params: Promise<{ account: string }>;

@@ -6,11 +6,11 @@ import { getTranslations } from 'next-intl/server';
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Button } from '@kit/ui/button';
-import { PageBody } from '@kit/ui/page';
+import { Heading } from '@kit/ui/heading';
+import { PageBody, PageHeader } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
-import { HomeLayoutPageHeader } from '../_components/home-page-header';
-import { ListingCard } from './../../[account]/marketplace/_components/listing-card';
+import { ListingCard } from '~/home/_components/listing-card';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('common');
@@ -34,10 +34,11 @@ async function MyListingsPage() {
 
   return (
     <PageBody>
-      <HomeLayoutPageHeader
-        title={<Trans i18nKey={'common.routes.myListings'} />}
-        description=""
-      />
+      <PageHeader description="">
+        <Heading level={3}>
+          <Trans i18nKey={'common.routes.myListings'} />
+        </Heading>
+      </PageHeader>
 
       <div className="flex items-center justify-end">
         <Button
