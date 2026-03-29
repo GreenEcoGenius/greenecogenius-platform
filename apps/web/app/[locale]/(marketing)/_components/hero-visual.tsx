@@ -1,14 +1,34 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+
 import { BarChart3, Globe, Leaf, Recycle, Shield, Zap } from 'lucide-react';
 
 const orbitNodes = [
-  { icon: Recycle, label: 'Recycler', color: '#1B9E77', angle: 0 },
-  { icon: Shield, label: 'Tracer', color: '#3BB54A', angle: 60 },
-  { icon: BarChart3, label: 'Mesurer', color: '#8DC63F', angle: 120 },
-  { icon: Leaf, label: 'Réduire', color: '#40916C', angle: 180 },
-  { icon: Zap, label: 'Optimiser', color: '#3BB54A', angle: 240 },
-  { icon: Globe, label: 'Connecter', color: '#8DC63F', angle: 300 },
+  { icon: Recycle, label: 'Recycler', color: '#1B9E77', angle: 0, speed: 1.8 },
+  { icon: Shield, label: 'Tracer', color: '#3BB54A', angle: 60, speed: 1.4 },
+  {
+    icon: BarChart3,
+    label: 'Mesurer',
+    color: '#8DC63F',
+    angle: 120,
+    speed: 2.0,
+  },
+  { icon: Leaf, label: 'Réduire', color: '#40916C', angle: 180, speed: 1.6 },
+  {
+    icon: Zap,
+    label: 'Optimiser',
+    color: '#3BB54A',
+    angle: 240,
+    speed: 1.3,
+  },
+  {
+    icon: Globe,
+    label: 'Connecter',
+    color: '#8DC63F',
+    angle: 300,
+    speed: 1.7,
+  },
 ];
 
 function posOnCircle(angleDeg: number, radiusPct: number) {
@@ -19,22 +39,87 @@ function posOnCircle(angleDeg: number, radiusPct: number) {
   };
 }
 
+/**
+ * Computes a direction vector from center for each node angle,
+ * so they "fly away" from center on scroll.
+ */
+function dirFromAngle(angleDeg: number) {
+  const rad = (angleDeg - 90) * (Math.PI / 180);
+  return { x: Math.cos(rad), y: Math.sin(rad) };
+}
+
 export function HeroVisual() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const progress = Math.min(scrollY / windowHeight, 1);
+
+        // Move each icon outward from center
+        orbitNodes.forEach((node, i) => {
+          const el = nodeRefs.current[i];
+          if (!el) return;
+
+          const dir = dirFromAngle(node.angle);
+          const distance = progress * node.speed * 120;
+          const opacity = 1 - progress * 1.5;
+
+          el.style.transform = `translate(-50%, -50%) translate(${dir.x * distance}px, ${dir.y * distance}px)`;
+          el.style.opacity = `${Math.max(opacity, 0)}`;
+        });
+
+        // Fade the orbit rings
+        const container = containerRef.current;
+        if (container) {
+          const rings = container.querySelectorAll('[data-orbit-ring]');
+          rings.forEach((ring) => {
+            const el = ring as HTMLElement;
+            const ringOpacity = 1 - progress * 2;
+            el.style.opacity = `${Math.max(ringOpacity, 0)}`;
+          });
+        }
+
+        ticking = false;
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+    <div
+      ref={containerRef}
+      className="pointer-events-none absolute inset-0 flex items-center justify-center"
+    >
       {/* Central glow */}
       <div className="absolute h-[220px] w-[220px] rounded-full bg-[#1B9E77]/20 blur-[80px] sm:h-[300px] sm:w-[300px]" />
 
-      {/* Outer orbit — spins forward, carries the 6 labelled nodes */}
-      <div className="animate-spin-orbit absolute h-[340px] w-[340px] sm:h-[440px] sm:w-[440px] lg:h-[560px] lg:w-[560px]">
+      {/* Outer orbit */}
+      <div
+        data-orbit-ring
+        className="animate-spin-orbit absolute h-[340px] w-[340px] sm:h-[440px] sm:w-[440px] lg:h-[560px] lg:w-[560px]"
+      >
         <div className="absolute inset-0 rounded-full border border-[#1B9E77]/10" />
 
-        {orbitNodes.map((node) => {
+        {orbitNodes.map((node, i) => {
           const pos = posOnCircle(node.angle, 44);
           return (
             <div
               key={node.label}
-              className="absolute -translate-x-1/2 -translate-y-1/2"
+              ref={(el) => {
+                nodeRefs.current[i] = el;
+              }}
+              className="absolute -translate-x-1/2 -translate-y-1/2 will-change-transform transition-none"
               style={{ left: pos.left, top: pos.top }}
             >
               {/* Counter-rotate so icons stay upright */}
@@ -60,8 +145,11 @@ export function HeroVisual() {
         })}
       </div>
 
-      {/* Middle orbit ring — spins in reverse with 4 small dots */}
-      <div className="animate-spin-orbit-reverse absolute h-[220px] w-[220px] sm:h-[290px] sm:w-[290px] lg:h-[370px] lg:w-[370px]">
+      {/* Middle orbit ring */}
+      <div
+        data-orbit-ring
+        className="animate-spin-orbit-reverse absolute h-[220px] w-[220px] sm:h-[290px] sm:w-[290px] lg:h-[370px] lg:w-[370px]"
+      >
         <div className="absolute inset-0 rounded-full border border-dashed border-[#3BB54A]/15" />
 
         {[0, 90, 180, 270].map((deg) => {
@@ -79,12 +167,16 @@ export function HeroVisual() {
       </div>
 
       {/* Inner orbit ring (static) */}
-      <div className="absolute h-[120px] w-[120px] sm:h-[160px] sm:w-[160px] lg:h-[200px] lg:w-[200px]">
+      <div
+        data-orbit-ring
+        className="absolute h-[120px] w-[120px] sm:h-[160px] sm:w-[160px] lg:h-[200px] lg:w-[200px]"
+      >
         <div className="absolute inset-0 rounded-full border border-[#8DC63F]/10" />
       </div>
 
       {/* Decorative dashed arcs */}
       <svg
+        data-orbit-ring
         className="absolute h-[340px] w-[340px] opacity-20 sm:h-[440px] sm:w-[440px] lg:h-[560px] lg:w-[560px]"
         viewBox="0 0 800 800"
         fill="none"

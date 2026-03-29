@@ -41,12 +41,22 @@ export default async function Home() {
     <div className="flex flex-col">
       {/* ───── HERO ───── */}
       <HeroScrollEffect>
-      <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-gradient-to-b from-[#0d2e24] via-[#145a42] to-[#1B9E77]">
+      <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
+        {/* Background image */}
+        <Image
+          src="/images/hero-circular-economy.png"
+          alt=""
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Tech blue-sky overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/85 via-[#0f2847]/80 to-[#1B9E77]/70" />
         {/* Luminous gradient blobs */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-[20%] left-[10%] h-[50vw] w-[50vw] rounded-full bg-[#3BB54A]/15 blur-[120px]" />
-          <div className="absolute top-[20%] -right-[10%] h-[40vw] w-[40vw] rounded-full bg-[#1B9E77]/15 blur-[100px]" />
-          <div className="absolute -bottom-[15%] left-[30%] h-[35vw] w-[35vw] rounded-full bg-[#8DC63F]/10 blur-[80px]" />
+          <div className="absolute -top-[20%] left-[10%] h-[50vw] w-[50vw] rounded-full bg-[#457B9D]/15 blur-[120px]" />
+          <div className="absolute top-[20%] -right-[10%] h-[40vw] w-[40vw] rounded-full bg-[#87CEEB]/10 blur-[100px]" />
+          <div className="absolute -bottom-[15%] left-[30%] h-[35vw] w-[35vw] rounded-full bg-[#1B9E77]/15 blur-[80px]" />
         </div>
 
         {/* Orbital visualization */}
