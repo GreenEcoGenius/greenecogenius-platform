@@ -40,16 +40,16 @@ export function HeroVisual() {
               {/* Counter-rotate so icons stay upright */}
               <div className="animate-counter-orbit flex flex-col items-center gap-1">
                 <div
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 backdrop-blur-md sm:h-12 sm:w-12"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 backdrop-blur-md sm:h-13 sm:w-13 lg:h-14 lg:w-14"
                   style={{ backgroundColor: `${node.color}15` }}
                 >
                   <node.icon
-                    className="h-5 w-5 sm:h-6 sm:w-6"
+                    className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7"
                     style={{ color: node.color }}
                   />
                 </div>
                 <span
-                  className="hidden whitespace-nowrap text-[10px] font-medium tracking-wide sm:block"
+                  className="whitespace-nowrap text-[9px] font-medium tracking-wide sm:text-[11px]"
                   style={{ color: node.color }}
                 >
                   {node.label}
