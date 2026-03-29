@@ -68,3 +68,28 @@ After implementation, always run:
 2. `pnpm lint:fix`
 3. `pnpm format:fix`
 4. Run code quality reviewer agent
+
+## Cursor Cloud specific instructions
+
+### Services overview
+
+| Service | Port | Start command |
+|---------|------|---------------|
+| Next.js web app | 3000 | `pnpm dev` (via Turborepo) |
+| Next.js dev-tool | 3010 | Started automatically with `pnpm dev` |
+| Supabase (Postgres, Auth, Storage, Studio, Mailpit) | 54321–54327 | `pnpm supabase:web:start` |
+
+### Startup sequence
+
+1. **Docker must be running** before Supabase can start. Start dockerd if not already running: `sudo dockerd &>/tmp/dockerd.log &` then `sudo chmod 666 /var/run/docker.sock`.
+2. Start Supabase: `pnpm supabase:web:start` (pulls ~10 containers on first run, ~1 min).
+3. Reset DB to apply all migrations and seeds: `pnpm supabase:web:reset`.
+4. Start dev servers: `pnpm dev` (web on :3000, dev-tool on :3010).
+
+### Gotchas
+
+- The `.env.development` sets `NEXT_PUBLIC_SITE_URL=http://localhost:3001` but `pnpm dev` starts Next.js on port **3000**. Supabase auth `site_url` in `config.toml` also references port 3001. Auth callback redirects may go to :3001. For browser testing use `http://localhost:3000`.
+- Email confirmations are enabled. New signups require email verification. In local dev, use Mailpit at `http://127.0.0.1:54324` to view emails, or confirm users directly via the Supabase DB: `docker exec -i supabase_db_next-supabase-saas-kit-turbo psql -U postgres -d postgres -c "UPDATE auth.users SET email_confirmed_at = now() WHERE email = '<email>';"`.
+- `pnpm install` warns about ignored build scripts (esbuild, sharp, etc.) — these are handled by `pnpm.onlyBuiltDependencies` in `pnpm-workspace.yaml` and do not need manual approval.
+- Linter (`pnpm lint` / `oxlint`) has a few pre-existing warnings/errors in the codebase; these are not introduced by new changes.
+- Stripe keys in `.env.development` are empty. Billing features will not work without Stripe configuration, but core app functionality (auth, dashboard, marketplace) works fine without them.
