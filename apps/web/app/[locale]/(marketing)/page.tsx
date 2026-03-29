@@ -20,6 +20,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { AnimateOnScroll } from './_components/animate-on-scroll';
 import { AnimatedCounter } from './_components/animated-counter';
+import { HeroScrollEffect } from './_components/hero-scroll-effect';
 import { HeroVisual } from './_components/hero-visual';
 import { LogoCarousel } from './_components/logo-carousel';
 import { NewsletterForm } from './_components/newsletter-form';
@@ -39,6 +40,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col">
       {/* ───── HERO ───── */}
+      <HeroScrollEffect>
       <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-gradient-to-b from-[#0d2e24] via-[#145a42] to-[#1B9E77]">
         {/* Luminous gradient blobs */}
         <div className="absolute inset-0 overflow-hidden">
@@ -92,6 +94,7 @@ export default async function Home() {
 
         <div className="from-background absolute right-0 bottom-0 left-0 h-32 bg-gradient-to-t to-transparent" />
       </section>
+      </HeroScrollEffect>
 
       {/* ───── STATS ───── */}
       <section className="relative z-10 -mt-16 pb-16">
