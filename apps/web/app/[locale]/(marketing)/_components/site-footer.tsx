@@ -22,6 +22,7 @@ export function SiteFooter() {
         {
           heading: <Trans i18nKey="marketing.about" />,
           links: [
+            { href: '/about', label: <Trans i18nKey="marketing.about" /> },
             { href: '/blog', label: <Trans i18nKey="marketing.blog" /> },
             { href: '/contact', label: <Trans i18nKey="marketing.contact" /> },
           ],

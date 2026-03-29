@@ -1,14 +1,14 @@
-import { type Metadata } from 'next'
-import Link from 'next/link'
+import { type Metadata } from 'next';
+import Link from 'next/link';
 
-import { Button } from '@/components/Button'
-import { SelectField, TextField } from '@/components/Fields'
-import { Logo } from '@/components/Logo'
-import { SlimLayout } from '@/components/SlimLayout'
+import { Button } from '@/components/Button';
+import { SelectField, TextField } from '@/components/Fields';
+import { Logo } from '@/components/Logo';
+import { SlimLayout } from '@/components/SlimLayout';
 
 export const metadata: Metadata = {
   title: 'Sign Up',
-}
+};
 
 export default function Register() {
   return (
@@ -84,5 +84,5 @@ export default function Register() {
         </div>
       </form>
     </SlimLayout>
-  )
+  );
 }

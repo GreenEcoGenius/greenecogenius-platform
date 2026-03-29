@@ -35,7 +35,7 @@ async function CookiePolicyPage() {
         </Section>
 
         <Section title="2. Cookies utilisés sur la Plateforme">
-          <h3 className="mb-3 text-sm font-semibold text-foreground">
+          <h3 className="text-foreground mb-3 text-sm font-semibold">
             Cookies essentiels (obligatoires)
           </h3>
           <p className="mb-3">
@@ -43,13 +43,17 @@ async function CookiePolicyPage() {
           </p>
           <CookieTable
             rows={[
-              ['sb-*-auth-token', "Session d'authentification Supabase", '1 heure (renouvelable)'],
+              [
+                'sb-*-auth-token',
+                "Session d'authentification Supabase",
+                '1 heure (renouvelable)',
+              ],
               ['theme', 'Thème clair ou sombre', '1 an'],
               ['NEXT_LOCALE', 'Langue', '1 an'],
             ]}
           />
 
-          <h3 className="mb-3 mt-8 text-sm font-semibold text-foreground">
+          <h3 className="text-foreground mt-8 mb-3 text-sm font-semibold">
             Cookies analytiques (optionnels)
           </h3>
           <p className="mb-3">
@@ -76,8 +80,14 @@ async function CookiePolicyPage() {
           <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
             {[
               ['Chrome', 'https://support.google.com/chrome/answer/95647'],
-              ['Firefox', 'https://support.mozilla.org/fr/kb/cookies-informations-sites-enregistrent'],
-              ['Safari', 'https://support.apple.com/fr-fr/guide/safari/sfri11471/mac'],
+              [
+                'Firefox',
+                'https://support.mozilla.org/fr/kb/cookies-informations-sites-enregistrent',
+              ],
+              [
+                'Safari',
+                'https://support.apple.com/fr-fr/guide/safari/sfri11471/mac',
+              ],
               ['Edge', 'https://support.microsoft.com/fr-fr/microsoft-edge'],
             ].map(([name, url]) => (
               <a
@@ -85,7 +95,7 @@ async function CookiePolicyPage() {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-lg border bg-card px-4 py-3 text-center text-sm font-medium text-foreground transition-colors hover:border-primary/50 hover:text-primary"
+                className="bg-card text-foreground hover:border-primary/50 hover:text-primary rounded-lg border px-4 py-3 text-center text-sm font-medium transition-colors"
               >
                 {name}
               </a>
@@ -97,7 +107,9 @@ async function CookiePolicyPage() {
           <p>
             {"Le refus des cookies essentiels peut empêcher l'utilisation de"}
             certaines fonctionnalités de la Plateforme (connexion, préférences).
-            {"Le refus des cookies analytiques n'affecte pas l'utilisation de la"}
+            {
+              "Le refus des cookies analytiques n'affecte pas l'utilisation de la"
+            }
             Plateforme.
           </p>
         </Section>
@@ -108,14 +120,14 @@ async function CookiePolicyPage() {
             contactez-nous à{' '}
             <a
               href="mailto:contact@greenecogenius.fr"
-              className="text-primary underline underline-offset-4 hover:text-primary/80"
+              className="text-primary hover:text-primary/80 underline underline-offset-4"
             >
               contact@greenecogenius.fr
             </a>
             .
           </p>
-          <div className="mt-4 rounded-lg border bg-card p-5 text-sm">
-            <p className="font-semibold text-foreground">GreenEcoGenius OÜ</p>
+          <div className="bg-card mt-4 rounded-lg border p-5 text-sm">
+            <p className="text-foreground font-semibold">GreenEcoGenius OÜ</p>
             <p className="text-muted-foreground mt-1">
               Tornimäe tn 5, 10145 Tallinn, Estonie
             </p>
@@ -150,29 +162,32 @@ function Section({
 
 function CookieTable({ rows }: { rows: [string, string, string][] }) {
   return (
-    <div className="overflow-hidden rounded-lg border bg-card">
+    <div className="bg-card overflow-hidden rounded-lg border">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b bg-secondary/50">
-            <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <tr className="bg-secondary/50 border-b">
+            <th className="text-muted-foreground px-4 py-2.5 text-left text-xs font-semibold tracking-wider uppercase">
               Cookie
             </th>
-            <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <th className="text-muted-foreground px-4 py-2.5 text-left text-xs font-semibold tracking-wider uppercase">
               Finalité
             </th>
-            <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <th className="text-muted-foreground px-4 py-2.5 text-left text-xs font-semibold tracking-wider uppercase">
               Durée
             </th>
           </tr>
         </thead>
         <tbody>
           {rows.map(([cookie, purpose, duration], i) => (
-            <tr key={cookie} className={i > 0 ? 'border-t border-border/50' : ''}>
-              <td className="px-4 py-3 font-mono text-xs text-foreground">
+            <tr
+              key={cookie}
+              className={i > 0 ? 'border-border/50 border-t' : ''}
+            >
+              <td className="text-foreground px-4 py-3 font-mono text-xs">
                 {cookie}
               </td>
-              <td className="px-4 py-3 text-muted-foreground">{purpose}</td>
-              <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">
+              <td className="text-muted-foreground px-4 py-3">{purpose}</td>
+              <td className="text-muted-foreground px-4 py-3 whitespace-nowrap">
                 {duration}
               </td>
             </tr>

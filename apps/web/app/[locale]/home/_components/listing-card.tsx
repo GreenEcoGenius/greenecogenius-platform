@@ -21,11 +21,13 @@ interface ListingCardProps {
     listing_type: string;
     status: string;
     created_at: string | null;
-    material_categories: Record<string, unknown> & {
-      name: string;
-      name_fr: string;
-      slug: string;
-    } | null;
+    material_categories:
+      | (Record<string, unknown> & {
+          name: string;
+          name_fr: string;
+          slug: string;
+        })
+      | null;
   };
   account: string;
 }
@@ -47,21 +49,21 @@ export function ListingCard({ listing, account }: ListingCardProps) {
   return (
     <Link
       href={`/home/${account}/marketplace/${listing.id}`}
-      className="group rounded-lg border bg-card p-5 transition-shadow hover:shadow-md"
+      className="group bg-card rounded-lg border p-5 transition-shadow hover:shadow-md"
     >
       <div className="flex items-start justify-between">
-        <Badge
-          className={typeColors[listing.listing_type] ?? 'bg-muted'}
-        >
+        <Badge className={typeColors[listing.listing_type] ?? 'bg-muted'}>
           <Trans i18nKey={typeLabel} />
         </Badge>
 
         <span className="text-muted-foreground text-xs">
-          {listing.created_at ? new Date(listing.created_at).toLocaleDateString('fr-FR') : ''}
+          {listing.created_at
+            ? new Date(listing.created_at).toLocaleDateString('fr-FR')
+            : ''}
         </span>
       </div>
 
-      <h3 className="mt-3 text-sm font-semibold group-hover:text-primary">
+      <h3 className="group-hover:text-primary mt-3 text-sm font-semibold">
         {listing.title}
       </h3>
 
@@ -73,19 +75,19 @@ export function ListingCard({ listing, account }: ListingCardProps) {
 
       <div className="mt-4 flex flex-wrap gap-3 text-xs">
         {listing.material_categories && (
-          <span className="flex items-center gap-1 text-muted-foreground">
+          <span className="text-muted-foreground flex items-center gap-1">
             <Tag className="h-3 w-3" />
             {listing.material_categories.name_fr}
           </span>
         )}
 
-        <span className="flex items-center gap-1 text-muted-foreground">
+        <span className="text-muted-foreground flex items-center gap-1">
           <Package className="h-3 w-3" />
           {listing.quantity} {listing.unit}
         </span>
 
         {listing.location_city && (
-          <span className="flex items-center gap-1 text-muted-foreground">
+          <span className="text-muted-foreground flex items-center gap-1">
             <MapPin className="h-3 w-3" />
             {listing.location_city}
           </span>
@@ -93,7 +95,7 @@ export function ListingCard({ listing, account }: ListingCardProps) {
       </div>
 
       {listing.price_per_unit !== null && listing.price_per_unit > 0 && (
-        <div className="mt-3 text-sm font-semibold text-primary">
+        <div className="text-primary mt-3 text-sm font-semibold">
           {listing.price_per_unit} {listing.currency}/{listing.unit}
         </div>
       )}

@@ -52,7 +52,9 @@ export function AnimateOnScroll({
       ref={ref}
       className={cn(
         'transition-all duration-700 ease-out',
-        isVisible ? 'translate-x-0 translate-y-0 scale-100 opacity-100' : animations[animation],
+        isVisible
+          ? 'translate-x-0 translate-y-0 scale-100 opacity-100'
+          : animations[animation],
         className,
       )}
       style={{ transitionDelay: isVisible ? `${delay}ms` : '0ms' }}

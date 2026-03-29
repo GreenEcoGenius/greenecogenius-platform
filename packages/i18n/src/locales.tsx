@@ -6,7 +6,4 @@ import { defaultLocale } from './default-locale';
  * @type {string[]}
  * @default [defaultLocale]
  */
-export const locales: string[] = [
-  defaultLocale,
-  'fr',
-];
+export const locales: string[] = [defaultLocale, 'fr'];

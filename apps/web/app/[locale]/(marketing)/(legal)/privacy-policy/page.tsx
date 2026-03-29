@@ -34,7 +34,10 @@ async function PrivacyPolicyPage() {
           </p>
           <p>
             <strong className="text-foreground">Contact DPO :</strong>{' '}
-            <a href="mailto:contact@greenecogenius.fr" className="text-primary underline underline-offset-4 hover:text-primary/80">
+            <a
+              href="mailto:contact@greenecogenius.fr"
+              className="text-primary hover:text-primary/80 underline underline-offset-4"
+            >
               contact@greenecogenius.fr
             </a>
           </p>
@@ -44,11 +47,26 @@ async function PrivacyPolicyPage() {
           <p>Nous collectons les données suivantes :</p>
           <DataTable
             rows={[
-              ['Identification', 'Nom, prénom, adresse e-mail, numéro de téléphone'],
-              ['Entreprise', "Raison sociale, numéro SIRET/TVA, adresse, secteur d'activité"],
-              ['Transactions', 'Annonces publiées, transactions réalisées, matières échangées'],
-              ['Techniques', 'Adresse IP, type de navigateur, pages visitées, cookies'],
-              ['Environnementales', 'Empreinte carbone calculée, rapports RSE générés'],
+              [
+                'Identification',
+                'Nom, prénom, adresse e-mail, numéro de téléphone',
+              ],
+              [
+                'Entreprise',
+                "Raison sociale, numéro SIRET/TVA, adresse, secteur d'activité",
+              ],
+              [
+                'Transactions',
+                'Annonces publiées, transactions réalisées, matières échangées',
+              ],
+              [
+                'Techniques',
+                'Adresse IP, type de navigateur, pages visitées, cookies',
+              ],
+              [
+                'Environnementales',
+                'Empreinte carbone calculée, rapports RSE générés',
+              ],
             ]}
           />
         </Section>
@@ -69,10 +87,22 @@ async function PrivacyPolicyPage() {
         <Section title="4. Base juridique">
           <DataTable
             rows={[
-              ['Exécution du contrat', 'Fourniture des services de la Plateforme'],
-              ['Consentement', 'Cookies non essentiels et communications marketing'],
-              ['Intérêt légitime', 'Amélioration de nos services et prévention de la fraude'],
-              ['Obligation légale', 'Respect des réglementations fiscales et environnementales'],
+              [
+                'Exécution du contrat',
+                'Fourniture des services de la Plateforme',
+              ],
+              [
+                'Consentement',
+                'Cookies non essentiels et communications marketing',
+              ],
+              [
+                'Intérêt légitime',
+                'Amélioration de nos services et prévention de la fraude',
+              ],
+              [
+                'Obligation légale',
+                'Respect des réglementations fiscales et environnementales',
+              ],
             ]}
           />
         </Section>
@@ -93,9 +123,18 @@ async function PrivacyPolicyPage() {
         <Section title="6. Partage des données">
           <DataTable
             rows={[
-              ['Autres utilisateurs', 'Informations publiques de votre profil dans le cadre des transactions'],
-              ['Sous-traitants techniques', 'Hébergement (Vercel, Supabase), analytics, services e-mail'],
-              ['Blockchain Polygon', 'Données de traçabilité des matières (anonymisées)'],
+              [
+                'Autres utilisateurs',
+                'Informations publiques de votre profil dans le cadre des transactions',
+              ],
+              [
+                'Sous-traitants techniques',
+                'Hébergement (Vercel, Supabase), analytics, services e-mail',
+              ],
+              [
+                'Blockchain Polygon',
+                'Données de traçabilité des matières (anonymisées)',
+              ],
             ]}
           />
           <p className="mt-4">
@@ -119,17 +158,32 @@ async function PrivacyPolicyPage() {
           </p>
           <DataTable
             rows={[
-              ["Droit d'accès", 'Obtenir une copie de vos données personnelles'],
+              [
+                "Droit d'accès",
+                'Obtenir une copie de vos données personnelles',
+              ],
               ['Droit de rectification', 'Corriger des données inexactes'],
-              ["Droit à l'effacement", 'Demander la suppression de vos données'],
-              ['Droit à la portabilité', 'Recevoir vos données dans un format structuré'],
-              ["Droit d'opposition", 'Vous opposer au traitement de vos données'],
+              [
+                "Droit à l'effacement",
+                'Demander la suppression de vos données',
+              ],
+              [
+                'Droit à la portabilité',
+                'Recevoir vos données dans un format structuré',
+              ],
+              [
+                "Droit d'opposition",
+                'Vous opposer au traitement de vos données',
+              ],
               ['Droit à la limitation', 'Limiter le traitement de vos données'],
             ]}
           />
           <p className="mt-4">
             Pour exercer vos droits, contactez-nous à{' '}
-            <a href="mailto:contact@greenecogenius.fr" className="text-primary underline underline-offset-4 hover:text-primary/80">
+            <a
+              href="mailto:contact@greenecogenius.fr"
+              className="text-primary hover:text-primary/80 underline underline-offset-4"
+            >
               contact@greenecogenius.fr
             </a>
             . Nous répondrons dans un délai de 30 jours.
@@ -148,7 +202,10 @@ async function PrivacyPolicyPage() {
         <Section title="10. Contact et réclamations">
           <p>
             Pour toute question concernant cette politique, contactez-nous à{' '}
-            <a href="mailto:contact@greenecogenius.fr" className="text-primary underline underline-offset-4 hover:text-primary/80">
+            <a
+              href="mailto:contact@greenecogenius.fr"
+              className="text-primary hover:text-primary/80 underline underline-offset-4"
+            >
               contact@greenecogenius.fr
             </a>
             .
@@ -157,7 +214,12 @@ async function PrivacyPolicyPage() {
             Vous pouvez également introduire une réclamation auprès de
             {"l'Autorité estonienne de protection des données (Andmekaitse"}
             Inspektsioon) —{' '}
-            <a href="https://www.aki.ee" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-4 hover:text-primary/80">
+            <a
+              href="https://www.aki.ee"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:text-primary/80 underline underline-offset-4"
+            >
               www.aki.ee
             </a>
             .
@@ -189,15 +251,18 @@ function Section({
 
 function DataTable({ rows }: { rows: [string, string][] }) {
   return (
-    <div className="mt-3 overflow-hidden rounded-lg border bg-card">
+    <div className="bg-card mt-3 overflow-hidden rounded-lg border">
       <table className="w-full text-sm">
         <tbody>
           {rows.map(([label, value], i) => (
-            <tr key={label} className={i > 0 ? 'border-t border-border/50' : ''}>
-              <td className="px-4 py-3 font-medium text-foreground whitespace-nowrap align-top w-1/3">
+            <tr
+              key={label}
+              className={i > 0 ? 'border-border/50 border-t' : ''}
+            >
+              <td className="text-foreground w-1/3 px-4 py-3 align-top font-medium whitespace-nowrap">
                 {label}
               </td>
-              <td className="px-4 py-3 text-muted-foreground">{value}</td>
+              <td className="text-muted-foreground px-4 py-3">{value}</td>
             </tr>
           ))}
         </tbody>
@@ -211,7 +276,7 @@ function BulletList({ items }: { items: string[] }) {
     <ul className="mt-3 space-y-2">
       {items.map((item) => (
         <li key={item} className="flex gap-3">
-          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+          <span className="bg-primary mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" />
           <span>{item}</span>
         </li>
       ))}

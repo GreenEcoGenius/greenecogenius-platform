@@ -16,7 +16,7 @@ export const generateMetadata = async () => {
 
 async function NewListingPage() {
   const client = getSupabaseServerClient();
-  const user = await requireUser(client);
+  await requireUser(client);
 
   const { data: categories } = await client
     .from('material_categories')
@@ -32,10 +32,7 @@ async function NewListingPage() {
       </PageHeader>
 
       <div className="mx-auto max-w-2xl">
-        <CreateListingForm
-          account=""
-          categories={categories ?? []}
-        />
+        <CreateListingForm account="" categories={categories ?? []} />
       </div>
     </PageBody>
   );

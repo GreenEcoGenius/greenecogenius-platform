@@ -14,25 +14,25 @@ import { Trans } from '@kit/ui/trans';
 import { SiteNavigationItem } from './site-navigation-item';
 
 const links = {
-  Blog: {
-    label: 'marketing.blog',
-    path: '/blog',
-  },
-  Changelog: {
-    label: 'marketing.changelog',
-    path: '/changelog',
-  },
-  Docs: {
-    label: 'marketing.documentation',
-    path: '/docs',
+  About: {
+    label: 'marketing.about',
+    path: '/about',
   },
   Pricing: {
     label: 'marketing.pricing',
     path: '/pricing',
   },
+  Blog: {
+    label: 'marketing.blog',
+    path: '/blog',
+  },
   FAQ: {
     label: 'marketing.faq',
     path: '/faq',
+  },
+  Contact: {
+    label: 'marketing.contact',
+    path: '/contact',
   },
 };
 

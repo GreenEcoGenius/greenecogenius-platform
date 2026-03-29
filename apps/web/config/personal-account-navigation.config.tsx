@@ -1,10 +1,4 @@
-import {
-  CreditCard,
-  Home,
-  PackageSearch,
-  Recycle,
-  User,
-} from 'lucide-react';
+import { CreditCard, Home, PackageSearch, Recycle, User } from 'lucide-react';
 import * as z from 'zod';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
