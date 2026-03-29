@@ -13,11 +13,11 @@ export function LogoImage({
     <Image
       src="/images/logo.png"
       alt="GreenEcoGenius"
-      width={280}
-      height={56}
+      width={320}
+      height={64}
       className={cn(
-        'h-10 w-auto mix-blend-multiply sm:h-11 lg:h-12',
-        'dark:mix-blend-normal dark:invert dark:hue-rotate-180',
+        'h-12 w-auto sm:h-14 lg:h-16',
+        'dark:brightness-200 dark:saturate-50',
         className,
       )}
       priority

@@ -38,20 +38,49 @@ export default async function Home() {
   return (
     <div className="flex flex-col">
       {/* ───── HERO ───── */}
-      <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
-        <Image
-          src="/images/hero-circular-hub.png"
-          alt=""
-          fill
-          className="object-cover"
-          priority
-          quality={90}
+      <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#021a12]">
+        {/* Animated gradient orbs */}
+        <div className="absolute inset-0">
+          <div className="animate-pulse-slow absolute -top-1/4 -left-1/4 h-[60vw] w-[60vw] rounded-full bg-[#065F46]/40 blur-[120px]" />
+          <div className="animate-pulse-slow absolute -right-1/4 top-1/3 h-[50vw] w-[50vw] rounded-full bg-[#0D9488]/30 blur-[100px] [animation-delay:2s]" />
+          <div className="animate-pulse-slow absolute -bottom-1/4 left-1/3 h-[45vw] w-[45vw] rounded-full bg-[#059669]/25 blur-[80px] [animation-delay:4s]" />
+        </div>
+
+        {/* Grid pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px)',
+            backgroundSize: '60px 60px',
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+
+        {/* Floating icons */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="animate-float absolute top-[15%] left-[10%] rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm sm:p-4">
+            <Recycle className="h-6 w-6 text-emerald-400 sm:h-8 sm:w-8" />
+          </div>
+          <div className="animate-float absolute top-[20%] right-[12%] rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm [animation-delay:1.5s] sm:p-4">
+            <Shield className="h-6 w-6 text-teal-400 sm:h-8 sm:w-8" />
+          </div>
+          <div className="animate-float absolute bottom-[25%] left-[8%] rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm [animation-delay:3s] sm:p-4">
+            <BarChart3 className="h-6 w-6 text-green-400 sm:h-8 sm:w-8" />
+          </div>
+          <div className="animate-float absolute right-[8%] bottom-[30%] rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm [animation-delay:2s] sm:p-4">
+            <Globe className="h-6 w-6 text-emerald-300 sm:h-8 sm:w-8" />
+          </div>
+          <div className="animate-float absolute top-[45%] left-[20%] hidden rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm [animation-delay:4s] md:block">
+            <Leaf className="h-7 w-7 text-green-300" />
+          </div>
+          <div className="animate-float absolute top-[40%] right-[18%] hidden rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm [animation-delay:0.5s] md:block">
+            <Sparkles className="h-7 w-7 text-teal-300" />
+          </div>
+        </div>
 
         <div className="relative z-10 mx-auto max-w-5xl px-4 py-32 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
+            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-300 backdrop-blur-sm">
               <Leaf className="h-4 w-4" />
               {t('heroPill')}
             </span>
@@ -64,7 +93,7 @@ export default async function Home() {
           </AnimateOnScroll>
 
           <AnimateOnScroll animation="fade-up" delay={200}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80 sm:text-xl">
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-emerald-100/70 sm:text-xl">
               {t('heroSubtitle')}
             </p>
           </AnimateOnScroll>
@@ -73,14 +102,14 @@ export default async function Home() {
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
                 href="/auth/sign-up"
-                className="group text-primary inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold transition-all hover:bg-white/90 hover:shadow-xl hover:shadow-white/10"
+                className="group inline-flex items-center justify-center rounded-full bg-emerald-500 px-8 py-4 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-xl hover:shadow-emerald-500/20"
               >
                 {t('heroCta1')}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
               <Link
                 href="#features"
-                className="group inline-flex items-center gap-2 rounded-full border border-white/30 px-8 py-4 text-sm font-medium text-white backdrop-blur-sm transition-all hover:border-white/60 hover:bg-white/10"
+                className="group inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 text-sm font-medium text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/5"
               >
                 {t('heroCta2')}
                 <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -89,7 +118,7 @@ export default async function Home() {
           </AnimateOnScroll>
         </div>
 
-        <div className="from-background absolute right-0 bottom-0 left-0 h-24 bg-gradient-to-t to-transparent" />
+        <div className="from-background absolute right-0 bottom-0 left-0 h-32 bg-gradient-to-t to-transparent" />
       </section>
 
       {/* ───── STATS ───── */}
