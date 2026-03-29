@@ -66,7 +66,9 @@
     "dashboard": "Tableau de bord",
     "settings": "Paramètres",
     "profile": "Profil",
-    "application": "Application"
+    "application": "Application",
+    "marketplace": "Le Comptoir",
+    "myListings": "Mes Annonces"
   },
   "roles": {
     "owner": {

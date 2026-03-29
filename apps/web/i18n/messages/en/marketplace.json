@@ -1,0 +1,33 @@
+{
+  "listingsAvailable": "listings available",
+  "totalListings": "listing(s)",
+  "createListing": "Create Listing",
+  "createFirstListing": "Create your first listing",
+  "noListings": "No listings available yet. Be the first to post!",
+  "noOwnListings": "You haven't created any listings yet.",
+  "publishListing": "Publish Listing",
+  "publishing": "Publishing...",
+  "listingType": "Listing Type",
+  "typeSell": "Sell",
+  "typeBuy": "Buy",
+  "typeCollect": "Collect",
+  "listingTitle": "Title",
+  "listingDescription": "Description",
+  "category": "Material Category",
+  "quantity": "Quantity",
+  "unit": "Unit",
+  "pricePerUnit": "Price per unit",
+  "city": "City",
+  "country": "Country",
+  "location": "Location",
+  "publishedOn": "Published on",
+  "descriptionLabel": "Description",
+  "backToMarketplace": "Back to Marketplace",
+  "contactSeller": "Contact Seller",
+  "status": {
+    "active": "Active",
+    "sold": "Sold",
+    "expired": "Expired",
+    "draft": "Draft"
+  }
+}

@@ -270,6 +270,157 @@ export type Database = {
           },
         ]
       }
+      listing_images: {
+        Row: {
+          created_at: string | null
+          id: string
+          listing_id: string
+          position: number
+          storage_path: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          listing_id: string
+          position?: number
+          storage_path: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          listing_id?: string
+          position?: number
+          storage_path?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "listing_images_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      listings: {
+        Row: {
+          account_id: string
+          category_id: string
+          created_at: string | null
+          currency: string
+          description: string | null
+          expires_at: string | null
+          id: string
+          listing_type: string
+          location_city: string | null
+          location_country: string | null
+          location_postal_code: string | null
+          material_details: string | null
+          price_per_unit: number | null
+          quantity: number
+          status: string
+          title: string
+          unit: string
+          updated_at: string | null
+        }
+        Insert: {
+          account_id: string
+          category_id: string
+          created_at?: string | null
+          currency?: string
+          description?: string | null
+          expires_at?: string | null
+          id?: string
+          listing_type?: string
+          location_city?: string | null
+          location_country?: string | null
+          location_postal_code?: string | null
+          material_details?: string | null
+          price_per_unit?: number | null
+          quantity: number
+          status?: string
+          title: string
+          unit?: string
+          updated_at?: string | null
+        }
+        Update: {
+          account_id?: string
+          category_id?: string
+          created_at?: string | null
+          currency?: string
+          description?: string | null
+          expires_at?: string | null
+          id?: string
+          listing_type?: string
+          location_city?: string | null
+          location_country?: string | null
+          location_postal_code?: string | null
+          material_details?: string | null
+          price_per_unit?: number | null
+          quantity?: number
+          status?: string
+          title?: string
+          unit?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "listings_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "listings_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "listings_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "listings_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "material_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      material_categories: {
+        Row: {
+          created_at: string | null
+          icon: string | null
+          id: string
+          name: string
+          name_fr: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+          name_fr: string
+          slug: string
+        }
+        Update: {
+          created_at?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+          name_fr?: string
+          slug?: string
+        }
+        Relationships: []
+      }
       nonces: {
         Row: {
           client_token: string
@@ -743,7 +894,7 @@ export type Database = {
         Returns: Json
       }
       create_team_account: {
-        Args: { account_name: string; account_slug?: string }
+        Args: { account_name: string; account_slug?: string; user_id: string }
         Returns: {
           created_at: string | null
           created_by: string | null
@@ -1193,7 +1344,6 @@ export type Database = {
           created_at: string | null
           id: string
           last_accessed_at: string | null
-          level: number | null
           metadata: Json | null
           name: string | null
           owner: string | null
@@ -1208,7 +1358,6 @@ export type Database = {
           created_at?: string | null
           id?: string
           last_accessed_at?: string | null
-          level?: number | null
           metadata?: Json | null
           name?: string | null
           owner?: string | null
@@ -1223,7 +1372,6 @@ export type Database = {
           created_at?: string | null
           id?: string
           last_accessed_at?: string | null
-          level?: number | null
           metadata?: Json | null
           name?: string | null
           owner?: string | null
@@ -1236,38 +1384,6 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "objects_bucketId_fkey"
-            columns: ["bucket_id"]
-            isOneToOne: false
-            referencedRelation: "buckets"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      prefixes: {
-        Row: {
-          bucket_id: string
-          created_at: string | null
-          level: number
-          name: string
-          updated_at: string | null
-        }
-        Insert: {
-          bucket_id: string
-          created_at?: string | null
-          level?: number
-          name: string
-          updated_at?: string | null
-        }
-        Update: {
-          bucket_id?: string
-          created_at?: string | null
-          level?: number
-          name?: string
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "prefixes_bucketId_fkey"
             columns: ["bucket_id"]
             isOneToOne: false
             referencedRelation: "buckets"
@@ -1422,28 +1538,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      add_prefixes: {
-        Args: { _bucket_id: string; _name: string }
-        Returns: undefined
-      }
       can_insert_object: {
         Args: { bucketid: string; metadata: Json; name: string; owner: string }
         Returns: undefined
       }
-      delete_leaf_prefixes: {
-        Args: { bucket_ids: string[]; names: string[] }
-        Returns: undefined
-      }
-      delete_prefix: {
-        Args: { _bucket_id: string; _name: string }
-        Returns: boolean
-      }
       extension: { Args: { name: string }; Returns: string }
       filename: { Args: { name: string }; Returns: string }
       foldername: { Args: { name: string }; Returns: string[] }
-      get_level: { Args: { name: string }; Returns: number }
-      get_prefix: { Args: { name: string }; Returns: string }
-      get_prefixes: { Args: { name: string }; Returns: string[] }
+      get_common_prefix: {
+        Args: { p_delimiter: string; p_key: string; p_prefix: string }
+        Returns: string
+      }
       get_size_by_bucket: {
         Args: never
         Returns: {
@@ -1468,64 +1573,25 @@ export type Database = {
       }
       list_objects_with_delimiter: {
         Args: {
-          bucket_id: string
+          _bucket_id: string
           delimiter_param: string
           max_keys?: number
           next_token?: string
           prefix_param: string
+          sort_order?: string
           start_after?: string
         }
         Returns: {
+          created_at: string
           id: string
+          last_accessed_at: string
           metadata: Json
           name: string
           updated_at: string
         }[]
-      }
-      lock_top_prefixes: {
-        Args: { bucket_ids: string[]; names: string[] }
-        Returns: undefined
       }
       operation: { Args: never; Returns: string }
-      search:
-        | {
-            Args: {
-              bucketname: string
-              levels?: number
-              limits?: number
-              offsets?: number
-              prefix: string
-            }
-            Returns: {
-              created_at: string
-              id: string
-              last_accessed_at: string
-              metadata: Json
-              name: string
-              updated_at: string
-            }[]
-          }
-        | {
-            Args: {
-              bucketname: string
-              levels?: number
-              limits?: number
-              offsets?: number
-              prefix: string
-              search?: string
-              sortcolumn?: string
-              sortorder?: string
-            }
-            Returns: {
-              created_at: string
-              id: string
-              last_accessed_at: string
-              metadata: Json
-              name: string
-              updated_at: string
-            }[]
-          }
-      search_legacy_v1: {
+      search: {
         Args: {
           bucketname: string
           levels?: number
@@ -1545,65 +1611,48 @@ export type Database = {
           updated_at: string
         }[]
       }
-      search_v1_optimised: {
+      search_by_timestamp: {
         Args: {
-          bucketname: string
-          levels?: number
-          limits?: number
-          offsets?: number
-          prefix: string
-          search?: string
-          sortcolumn?: string
-          sortorder?: string
+          p_bucket_id: string
+          p_level: number
+          p_limit: number
+          p_prefix: string
+          p_sort_column: string
+          p_sort_column_after: string
+          p_sort_order: string
+          p_start_after: string
         }
         Returns: {
           created_at: string
           id: string
+          key: string
           last_accessed_at: string
           metadata: Json
           name: string
           updated_at: string
         }[]
       }
-      search_v2:
-        | {
-            Args: {
-              bucket_name: string
-              levels?: number
-              limits?: number
-              prefix: string
-              start_after?: string
-            }
-            Returns: {
-              created_at: string
-              id: string
-              key: string
-              metadata: Json
-              name: string
-              updated_at: string
-            }[]
-          }
-        | {
-            Args: {
-              bucket_name: string
-              levels?: number
-              limits?: number
-              prefix: string
-              sort_column?: string
-              sort_column_after?: string
-              sort_order?: string
-              start_after?: string
-            }
-            Returns: {
-              created_at: string
-              id: string
-              key: string
-              last_accessed_at: string
-              metadata: Json
-              name: string
-              updated_at: string
-            }[]
-          }
+      search_v2: {
+        Args: {
+          bucket_name: string
+          levels?: number
+          limits?: number
+          prefix: string
+          sort_column?: string
+          sort_column_after?: string
+          sort_order?: string
+          start_after?: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          key: string
+          last_accessed_at: string
+          metadata: Json
+          name: string
+          updated_at: string
+        }[]
+      }
     }
     Enums: {
       buckettype: "STANDARD" | "ANALYTICS" | "VECTOR"

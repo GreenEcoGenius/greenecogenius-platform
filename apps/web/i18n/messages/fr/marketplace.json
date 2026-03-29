@@ -1,0 +1,33 @@
+{
+  "listingsAvailable": "annonces disponibles",
+  "totalListings": "annonce(s)",
+  "createListing": "Créer une annonce",
+  "createFirstListing": "Créer votre première annonce",
+  "noListings": "Aucune annonce disponible. Soyez le premier à publier !",
+  "noOwnListings": "Vous n'avez pas encore créé d'annonce.",
+  "publishListing": "Publier l'annonce",
+  "publishing": "Publication...",
+  "listingType": "Type d'annonce",
+  "typeSell": "Vente",
+  "typeBuy": "Achat",
+  "typeCollect": "Collecte",
+  "listingTitle": "Titre",
+  "listingDescription": "Description",
+  "category": "Catégorie de matière",
+  "quantity": "Quantité",
+  "unit": "Unité",
+  "pricePerUnit": "Prix par unité",
+  "city": "Ville",
+  "country": "Pays",
+  "location": "Localisation",
+  "publishedOn": "Publié le",
+  "descriptionLabel": "Description",
+  "backToMarketplace": "Retour au Comptoir",
+  "contactSeller": "Contacter le vendeur",
+  "status": {
+    "active": "Actif",
+    "sold": "Vendu",
+    "expired": "Expiré",
+    "draft": "Brouillon"
+  }
+}

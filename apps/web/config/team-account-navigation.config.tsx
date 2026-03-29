@@ -1,4 +1,11 @@
-import { CreditCard, LayoutDashboard, Settings, Users } from 'lucide-react';
+import {
+  CreditCard,
+  LayoutDashboard,
+  PackageSearch,
+  Recycle,
+  Settings,
+  Users,
+} from 'lucide-react';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
 
@@ -16,6 +23,16 @@ const getRoutes = (account: string) => [
         path: pathsConfig.app.accountHome.replace('[account]', account),
         Icon: <LayoutDashboard className={iconClasses} />,
         highlightMatch: `${pathsConfig.app.home}$`,
+      },
+      {
+        label: 'common.routes.marketplace',
+        path: createPath('/home/[account]/marketplace', account),
+        Icon: <Recycle className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.myListings',
+        path: createPath('/home/[account]/my-listings', account),
+        Icon: <PackageSearch className={iconClasses} />,
       },
     ],
   },
