@@ -156,15 +156,17 @@ export function PageHeader({
     <div className={cn('flex items-center justify-between py-4', className)}>
       <div className={'flex flex-col gap-y-2'}>
         <div className="flex items-center gap-x-2.5">
-          <SidebarTrigger className="text-muted-foreground hover:text-secondary-foreground h-7 w-7 cursor-pointer" />
+          <SidebarTrigger className="text-foreground hover:text-primary h-9 w-9 cursor-pointer lg:h-7 lg:w-7" />
 
           <If condition={description}>
             <Separator
               orientation="vertical"
-              className="hidden h-4 w-px lg:group-data-[collapsible=icon]:block"
+              className="hidden h-4 w-px lg:block"
             />
 
-            <PageDescription>{description}</PageDescription>
+            <span className="hidden lg:block">
+              <PageDescription>{description}</PageDescription>
+            </span>
           </If>
         </div>
 
