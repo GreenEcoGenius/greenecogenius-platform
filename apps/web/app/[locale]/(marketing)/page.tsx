@@ -178,7 +178,7 @@ export default async function Home() {
       <section className="bg-secondary/30 py-20 sm:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-start gap-12 lg:grid-cols-2">
-            <AnimateOnScroll animation="fade-right">
+            <AnimateOnScroll animation="fade-right" className="lg:pt-12">
               <div className="overflow-hidden rounded-2xl shadow-2xl">
                 <Image
                   src="/images/blockchain-tablet.png"
