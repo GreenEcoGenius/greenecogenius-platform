@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 import { useLocale } from 'next-intl';
 
-import { usePathname, useRouter } from '@kit/i18n/navigation';
 import { PersonalAccountDropdown } from '@kit/accounts/personal-account-dropdown';
+import { usePathname, useRouter } from '@kit/i18n/navigation';
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
 import { JWTUserData } from '@kit/supabase/types';
 import { Button } from '@kit/ui/button';
@@ -71,7 +71,7 @@ function LocaleToggle() {
   return (
     <button
       onClick={toggle}
-      className="text-muted-foreground hover:text-foreground rounded-md px-2 py-1 text-xs font-semibold uppercase tracking-wider transition-colors"
+      className="text-muted-foreground hover:text-foreground rounded-md px-2 py-1 text-xs font-semibold tracking-wider uppercase transition-colors"
       aria-label="Change language"
     >
       {locale === 'fr' ? 'EN' : 'FR'}

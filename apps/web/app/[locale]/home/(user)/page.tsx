@@ -12,10 +12,9 @@ import {
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
+import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { PageBody } from '@kit/ui/page';
-
-import { requireUser } from '@kit/supabase/require-user';
 
 import { HomeLayoutPageHeader } from './_components/home-page-header';
 
@@ -32,7 +31,10 @@ async function UserHomePage() {
   const user = await requireUser(client);
   const userId = user.data?.id;
   const t = await getTranslations('marketplace');
-  const locale = (await getTranslations())('common.languageCode' as never) === 'fr' ? 'fr' : 'en';
+  const locale =
+    (await getTranslations())('common.languageCode' as never) === 'fr'
+      ? 'fr'
+      : 'en';
 
   const [
     { count: totalActive },
@@ -43,21 +45,50 @@ async function UserHomePage() {
     { data: categories },
     { data: myListings },
   ] = await Promise.all([
-    client.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'active'),
-    client.from('listings').select('*', { count: 'exact', head: true }).eq('account_id', userId!).eq('listing_type', 'sell'),
-    client.from('listings').select('*', { count: 'exact', head: true }).eq('account_id', userId!).eq('listing_type', 'buy'),
-    client.from('listings').select('*', { count: 'exact', head: true }).eq('account_id', userId!).eq('listing_type', 'collect'),
-    client.from('listings').select('*, material_categories(name, name_fr, slug)').eq('status', 'active').order('created_at', { ascending: false }).limit(5),
+    client
+      .from('listings')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'active'),
+    client
+      .from('listings')
+      .select('*', { count: 'exact', head: true })
+      .eq('account_id', userId!)
+      .eq('listing_type', 'sell'),
+    client
+      .from('listings')
+      .select('*', { count: 'exact', head: true })
+      .eq('account_id', userId!)
+      .eq('listing_type', 'buy'),
+    client
+      .from('listings')
+      .select('*', { count: 'exact', head: true })
+      .eq('account_id', userId!)
+      .eq('listing_type', 'collect'),
+    client
+      .from('listings')
+      .select('*, material_categories(name, name_fr, slug)')
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+      .limit(5),
     client.from('material_categories').select('id, name, name_fr, slug'),
-    client.from('listings').select('*, material_categories(name, name_fr, slug)').eq('account_id', userId!).order('created_at', { ascending: false }).limit(10),
+    client
+      .from('listings')
+      .select('*, material_categories(name, name_fr, slug)')
+      .eq('account_id', userId!)
+      .order('created_at', { ascending: false })
+      .limit(10),
   ]);
 
-  const categoryStats = (categories ?? []).map((cat) => {
-    const count = (recentListings ?? []).filter(
-      (l: Record<string, unknown>) => (l.material_categories as Record<string, unknown>)?.slug === cat.slug,
-    ).length;
-    return { ...cat, count };
-  }).filter((c) => c.count > 0).sort((a, b) => b.count - a.count);
+  const categoryStats = (categories ?? [])
+    .map((cat) => {
+      const count = (recentListings ?? []).filter(
+        (l: Record<string, unknown>) =>
+          (l.material_categories as Record<string, unknown>)?.slug === cat.slug,
+      ).length;
+      return { ...cat, count };
+    })
+    .filter((c) => c.count > 0)
+    .sort((a, b) => b.count - a.count);
 
   return (
     <PageBody>
@@ -70,28 +101,30 @@ async function UserHomePage() {
         {/* Stats Cards */}
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           <StatCard
-            icon={<Package className="h-5 w-5 text-emerald-600" />}
+            icon={<Package className="text-primary h-5 w-5" />}
             label={t('totalListingsActive')}
             value={totalActive ?? 0}
-            color="emerald"
+            color="primary"
           />
           <StatCard
-            icon={<ShoppingCart className="h-5 w-5 text-blue-600" />}
+            icon={<ShoppingCart className="h-5 w-5 text-[#457B9D]" />}
             label={t('myArticles')}
-            value={(mySellCount ?? 0) + (myBuyCount ?? 0) + (myCollectCount ?? 0)}
-            color="blue"
+            value={
+              (mySellCount ?? 0) + (myBuyCount ?? 0) + (myCollectCount ?? 0)
+            }
+            color="info"
           />
           <StatCard
-            icon={<Truck className="h-5 w-5 text-amber-600" />}
+            icon={<Truck className="h-5 w-5 text-[#F4A261]" />}
             label={t('myCollections')}
             value={myCollectCount ?? 0}
-            color="amber"
+            color="warning"
           />
           <StatCard
-            icon={<Users className="h-5 w-5 text-violet-600" />}
+            icon={<Users className="h-5 w-5 text-[#3BB54A]" />}
             label={t('myPurchases')}
             value={myBuyCount ?? 0}
-            color="violet"
+            color="secondary"
           />
         </div>
 
@@ -100,7 +133,10 @@ async function UserHomePage() {
           <div className="bg-card rounded-xl border p-6 lg:col-span-2">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-lg font-semibold">{t('myArticles')}</h3>
-              <Link href="/home/my-listings" className="text-primary flex items-center gap-1 text-sm font-medium hover:underline">
+              <Link
+                href="/home/my-listings"
+                className="text-primary flex items-center gap-1 text-sm font-medium hover:underline"
+              >
                 {t('viewAll')} <ArrowRight className="h-3 w-3" />
               </Link>
             </div>
@@ -119,28 +155,45 @@ async function UserHomePage() {
                   </thead>
                   <tbody className="divide-y">
                     {myListings.map((listing: Record<string, unknown>) => {
-                      const cat = listing.material_categories as Record<string, string> | null;
+                      const cat = listing.material_categories as Record<
+                        string,
+                        string
+                      > | null;
                       return (
-                        <tr key={listing.id as string} className="hover:bg-muted/50">
+                        <tr
+                          key={listing.id as string}
+                          className="hover:bg-muted/50"
+                        >
                           <td className="py-3">
                             <div>
-                              <p className="font-medium">{listing.title as string}</p>
+                              <p className="font-medium">
+                                {listing.title as string}
+                              </p>
                               <p className="text-muted-foreground text-xs">
                                 {locale === 'fr' ? cat?.name_fr : cat?.name}
                               </p>
                             </div>
                           </td>
                           <td className="py-3">
-                            <TypeBadge type={listing.listing_type as string} t={t} />
+                            <TypeBadge
+                              type={listing.listing_type as string}
+                              t={t}
+                            />
                           </td>
-                          <td className="py-3">{listing.quantity as number} {listing.unit as string}</td>
+                          <td className="py-3">
+                            {listing.quantity as number}{' '}
+                            {listing.unit as string}
+                          </td>
                           <td className="py-3">
                             {listing.price_per_unit
                               ? `€${listing.price_per_unit}/${listing.unit as string}`
                               : t('negotiable')}
                           </td>
                           <td className="py-3">
-                            <StatusBadge status={listing.status as string} t={t} />
+                            <StatusBadge
+                              status={listing.status as string}
+                              t={t}
+                            />
                           </td>
                         </tr>
                       );
@@ -152,8 +205,12 @@ async function UserHomePage() {
               <div className="text-muted-foreground flex flex-col items-center justify-center py-12 text-center">
                 <Recycle className="mb-3 h-10 w-10 opacity-40" />
                 <p>{t('noListingsYet')}</p>
-                <Link href="/home/marketplace/new" className="text-primary mt-3 text-sm font-medium hover:underline">
-                  {t('createListing')} <ArrowRight className="ml-1 inline h-3 w-3" />
+                <Link
+                  href="/home/marketplace/new"
+                  className="text-primary mt-3 text-sm font-medium hover:underline"
+                >
+                  {t('createListing')}{' '}
+                  <ArrowRight className="ml-1 inline h-3 w-3" />
                 </Link>
               </div>
             )}
@@ -163,12 +220,19 @@ async function UserHomePage() {
           <div className="flex flex-col gap-6">
             {/* Top Categories */}
             <div className="bg-card rounded-xl border p-6">
-              <h3 className="mb-4 text-lg font-semibold">{t('topCategories')}</h3>
+              <h3 className="mb-4 text-lg font-semibold">
+                {t('topCategories')}
+              </h3>
               {categoryStats.length > 0 ? (
                 <div className="space-y-3">
                   {categoryStats.slice(0, 5).map((cat) => (
-                    <div key={cat.id} className="flex items-center justify-between">
-                      <span className="text-sm">{locale === 'fr' ? cat.name_fr : cat.name}</span>
+                    <div
+                      key={cat.id}
+                      className="flex items-center justify-between"
+                    >
+                      <span className="text-sm">
+                        {locale === 'fr' ? cat.name_fr : cat.name}
+                      </span>
                       <span className="bg-primary/10 text-primary rounded-full px-2.5 py-0.5 text-xs font-semibold">
                         {cat.count}
                       </span>
@@ -176,31 +240,33 @@ async function UserHomePage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-muted-foreground text-sm">{t('noListingsYet')}</p>
+                <p className="text-muted-foreground text-sm">
+                  {t('noListingsYet')}
+                </p>
               )}
             </div>
 
             {/* Carbon Metrics */}
             <div className="bg-card rounded-xl border p-6">
               <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
-                <Leaf className="h-5 w-5 text-emerald-600" />
+                <Leaf className="text-primary h-5 w-5" />
                 {t('carbonMetrics')}
               </h3>
               <div className="space-y-4">
                 <MetricRow
                   label={t('totalCO2Offset')}
                   value="—"
-                  icon={<TrendingUp className="h-4 w-4 text-emerald-500" />}
+                  icon={<TrendingUp className="text-primary h-4 w-4" />}
                 />
                 <MetricRow
                   label={t('renewedMaterials')}
                   value="—"
-                  icon={<Recycle className="h-4 w-4 text-teal-500" />}
+                  icon={<Recycle className="h-4 w-4 text-[#3BB54A]" />}
                 />
                 <MetricRow
                   label={t('avgLogisticsImpact')}
                   value="—"
-                  icon={<Truck className="h-4 w-4 text-amber-500" />}
+                  icon={<Truck className="h-4 w-4 text-[#F4A261]" />}
                 />
               </div>
               <p className="text-muted-foreground mt-4 text-xs italic">
@@ -216,19 +282,31 @@ async function UserHomePage() {
   );
 }
 
-function StatCard({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: number; color: string }) {
+function StatCard({
+  icon,
+  label,
+  value,
+  color,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: number;
+  color: string;
+}) {
   const bgMap: Record<string, string> = {
-    emerald: 'bg-emerald-50 dark:bg-emerald-950/30',
-    blue: 'bg-blue-50 dark:bg-blue-950/30',
-    amber: 'bg-amber-50 dark:bg-amber-950/30',
-    violet: 'bg-violet-50 dark:bg-violet-950/30',
+    primary: 'bg-[#1B9E77]/5 dark:bg-[#1B9E77]/10',
+    info: 'bg-[#457B9D]/5 dark:bg-[#457B9D]/10',
+    warning: 'bg-[#F4A261]/5 dark:bg-[#F4A261]/10',
+    secondary: 'bg-[#3BB54A]/5 dark:bg-[#3BB54A]/10',
   };
 
   return (
     <div className={`rounded-xl border p-5 ${bgMap[color] ?? ''}`}>
       <div className="mb-2 flex items-center gap-2">
         {icon}
-        <span className="text-muted-foreground text-xs font-medium">{label}</span>
+        <span className="text-muted-foreground text-xs font-medium">
+          {label}
+        </span>
       </div>
       <p className="text-3xl font-bold">{value}</p>
     </div>
@@ -237,9 +315,10 @@ function StatCard({ icon, label, value, color }: { icon: React.ReactNode; label:
 
 function TypeBadge({ type, t }: { type: string; t: (key: string) => string }) {
   const styles: Record<string, string> = {
-    sell: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
-    buy: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-    collect: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+    sell: 'bg-[#1B9E77]/10 text-[#1B9E77] dark:bg-[#1B9E77]/20 dark:text-[#3BB54A]',
+    buy: 'bg-[#457B9D]/10 text-[#457B9D] dark:bg-[#457B9D]/20 dark:text-[#457B9D]',
+    collect:
+      'bg-[#F4A261]/10 text-[#F4A261] dark:bg-[#F4A261]/20 dark:text-[#F4A261]',
   };
 
   const labels: Record<string, string> = {
@@ -249,28 +328,49 @@ function TypeBadge({ type, t }: { type: string; t: (key: string) => string }) {
   };
 
   return (
-    <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles[type] ?? ''}`}>
+    <span
+      className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles[type] ?? ''}`}
+    >
       {labels[type] ?? type}
     </span>
   );
 }
 
-function StatusBadge({ status, t }: { status: string; t: (key: string) => string }) {
+function StatusBadge({
+  status,
+  t,
+}: {
+  status: string;
+  t: (key: string) => string;
+}) {
   const styles: Record<string, string> = {
-    active: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-    sold: 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400',
-    expired: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-    draft: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
+    active:
+      'bg-[#40916C]/10 text-[#40916C] dark:bg-[#40916C]/20 dark:text-[#3BB54A]',
+    sold: 'bg-[#8D99AE]/10 text-[#4A4A4A] dark:bg-[#8D99AE]/20 dark:text-[#8D99AE]',
+    expired:
+      'bg-[#E63946]/10 text-[#E63946] dark:bg-[#E63946]/20 dark:text-[#E63946]',
+    draft:
+      'bg-[#F4A261]/10 text-[#F4A261] dark:bg-[#F4A261]/20 dark:text-[#F4A261]',
   };
 
   return (
-    <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles[status] ?? ''}`}>
+    <span
+      className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles[status] ?? ''}`}
+    >
       {t(`status.${status}`)}
     </span>
   );
 }
 
-function MetricRow({ label, value, icon }: { label: string; value: string; icon: React.ReactNode }) {
+function MetricRow({
+  label,
+  value,
+  icon,
+}: {
+  label: string;
+  value: string;
+  icon: React.ReactNode;
+}) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">

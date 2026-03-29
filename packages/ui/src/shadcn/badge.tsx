@@ -20,9 +20,9 @@ const badgeVariants = cva(
           'hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50',
         link: 'text-primary underline-offset-4 hover:underline',
         success:
-          'bg-green-600/10 text-green-600 dark:bg-green-600/20 [&>svg]:text-green-600',
+          'bg-[#40916C]/10 text-[#40916C] dark:bg-[#40916C]/20 [&>svg]:text-[#40916C]',
         warning:
-          'border-yellow-600 text-yellow-600 dark:border-yellow-600 [&>svg]:text-yellow-600',
+          'border-[#F4A261] text-[#F4A261] dark:border-[#F4A261] [&>svg]:text-[#F4A261]',
       },
     },
     defaultVariants: {

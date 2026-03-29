@@ -33,9 +33,10 @@ interface ListingCardProps {
 }
 
 const typeColors: Record<string, string> = {
-  sell: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200',
-  buy: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-  collect: 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200',
+  sell: 'bg-[#1B9E77]/10 text-[#1B9E77] dark:bg-[#1B9E77]/20 dark:text-[#3BB54A]',
+  buy: 'bg-[#457B9D]/10 text-[#457B9D] dark:bg-[#457B9D]/20 dark:text-[#457B9D]',
+  collect:
+    'bg-[#F4A261]/10 text-[#F4A261] dark:bg-[#F4A261]/20 dark:text-[#F4A261]',
 };
 
 export function ListingCard({ listing, account }: ListingCardProps) {

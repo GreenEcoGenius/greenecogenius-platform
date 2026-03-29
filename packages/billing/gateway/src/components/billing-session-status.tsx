@@ -34,8 +34,8 @@ export function BillingSessionStatus({
       >
         <Check
           className={
-            'h-16 w-16 rounded-full bg-green-500 p-1 text-white ring-8' +
-            ' ring-green-500/30 dark:ring-green-500/50'
+            'h-16 w-16 rounded-full bg-[#40916C] p-1 text-white ring-8' +
+            ' ring-[#40916C]/30 dark:ring-[#40916C]/50'
           }
         />
 

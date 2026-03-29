@@ -226,16 +226,96 @@ function CustomersTable() {
   const t = useTranslations('marketplace');
 
   const customers = [
-    { name: 'John Doe', email: 'john@makerkit.dev', plan: 'Pro', mrr: '$120.5', logins: 1020, status: 'statusHealthy' as const, trend: 'up' },
-    { name: 'Emma Smith', email: 'emma@makerit.dev', plan: 'Basic', mrr: '$65.4', logins: 570, status: 'statusPossibleChurn' as const, trend: 'stale' },
-    { name: 'Robert Johnson', email: 'robert@makerkit.dev', plan: 'Pro', mrr: '$500.1', logins: 2050, status: 'statusHealthy' as const, trend: 'up' },
-    { name: 'Olivia Brown', email: 'olivia@makerkit.dev', plan: 'Basic', mrr: '$10', logins: 50, status: 'statusChurn' as const, trend: 'down' },
-    { name: 'Michael Davis', email: 'michael@makerkit.dev', plan: 'Pro', mrr: '$300.2', logins: 1520, status: 'statusHealthy' as const, trend: 'up' },
-    { name: 'Emily Jones', email: 'emily@makerkit.dev', plan: 'Pro', mrr: '$75.7', logins: 780, status: 'statusHealthy' as const, trend: 'up' },
-    { name: 'Daniel Garcia', email: 'daniel@makerkit.dev', plan: 'Basic', mrr: '$50', logins: 320, status: 'statusPossibleChurn' as const, trend: 'stale' },
-    { name: 'Liam Miller', email: 'liam@makerkit.dev', plan: 'Pro', mrr: '$90.8', logins: 1260, status: 'statusHealthy' as const, trend: 'up' },
-    { name: 'Emma Clark', email: 'emma@makerkit.dev', plan: 'Basic', mrr: '$0', logins: 20, status: 'statusChurn' as const, trend: 'down' },
-    { name: 'Elizabeth Rodriguez', email: 'liz@makerkit.dev', plan: 'Pro', mrr: '$145.3', logins: 1380, status: 'statusHealthy' as const, trend: 'up' },
+    {
+      name: 'John Doe',
+      email: 'john@makerkit.dev',
+      plan: 'Pro',
+      mrr: '$120.5',
+      logins: 1020,
+      status: 'statusHealthy' as const,
+      trend: 'up',
+    },
+    {
+      name: 'Emma Smith',
+      email: 'emma@makerit.dev',
+      plan: 'Basic',
+      mrr: '$65.4',
+      logins: 570,
+      status: 'statusPossibleChurn' as const,
+      trend: 'stale',
+    },
+    {
+      name: 'Robert Johnson',
+      email: 'robert@makerkit.dev',
+      plan: 'Pro',
+      mrr: '$500.1',
+      logins: 2050,
+      status: 'statusHealthy' as const,
+      trend: 'up',
+    },
+    {
+      name: 'Olivia Brown',
+      email: 'olivia@makerkit.dev',
+      plan: 'Basic',
+      mrr: '$10',
+      logins: 50,
+      status: 'statusChurn' as const,
+      trend: 'down',
+    },
+    {
+      name: 'Michael Davis',
+      email: 'michael@makerkit.dev',
+      plan: 'Pro',
+      mrr: '$300.2',
+      logins: 1520,
+      status: 'statusHealthy' as const,
+      trend: 'up',
+    },
+    {
+      name: 'Emily Jones',
+      email: 'emily@makerkit.dev',
+      plan: 'Pro',
+      mrr: '$75.7',
+      logins: 780,
+      status: 'statusHealthy' as const,
+      trend: 'up',
+    },
+    {
+      name: 'Daniel Garcia',
+      email: 'daniel@makerkit.dev',
+      plan: 'Basic',
+      mrr: '$50',
+      logins: 320,
+      status: 'statusPossibleChurn' as const,
+      trend: 'stale',
+    },
+    {
+      name: 'Liam Miller',
+      email: 'liam@makerkit.dev',
+      plan: 'Pro',
+      mrr: '$90.8',
+      logins: 1260,
+      status: 'statusHealthy' as const,
+      trend: 'up',
+    },
+    {
+      name: 'Emma Clark',
+      email: 'emma@makerkit.dev',
+      plan: 'Basic',
+      mrr: '$0',
+      logins: 20,
+      status: 'statusChurn' as const,
+      trend: 'down',
+    },
+    {
+      name: 'Elizabeth Rodriguez',
+      email: 'liz@makerkit.dev',
+      plan: 'Pro',
+      mrr: '$145.3',
+      logins: 1380,
+      status: 'statusHealthy' as const,
+      trend: 'up',
+    },
   ];
 
   return (
@@ -277,11 +357,11 @@ function BadgeWithTrend(props: React.PropsWithChildren<{ trend: string }>) {
   const className = useMemo(() => {
     switch (props.trend) {
       case 'up':
-        return 'text-green-500';
+        return 'text-[#40916C]';
       case 'down':
         return 'text-destructive';
       case 'stale':
-        return 'text-orange-500';
+        return 'text-[#F4A261]';
     }
   }, [props.trend]);
 
@@ -311,11 +391,11 @@ function Trend(
   const Icon = useMemo(() => {
     switch (props.trend) {
       case 'up':
-        return <ArrowUp className={'h-3 w-3 text-green-500'} />;
+        return <ArrowUp className={'h-3 w-3 text-[#40916C]'} />;
       case 'down':
         return <ArrowDown className={'text-destructive h-3 w-3'} />;
       case 'stale':
-        return <Menu className={'h-3 w-3 text-orange-500'} />;
+        return <Menu className={'h-3 w-3 text-[#F4A261]'} />;
     }
   }, [props.trend]);
 
@@ -461,12 +541,28 @@ export function VisitorsChart() {
           <AreaChart data={chartData}>
             <defs>
               <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--color-desktop)" stopOpacity={1.0} />
-                <stop offset="95%" stopColor="var(--color-desktop)" stopOpacity={0.1} />
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-desktop)"
+                  stopOpacity={1.0}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-desktop)"
+                  stopOpacity={0.1}
+                />
               </linearGradient>
               <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--color-mobile)" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="var(--color-mobile)" stopOpacity={0.1} />
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-mobile)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-mobile)"
+                  stopOpacity={0.1}
+                />
               </linearGradient>
             </defs>
             <CartesianGrid vertical={false} />
@@ -500,8 +596,20 @@ export function VisitorsChart() {
                 />
               )}
             />
-            <Area dataKey="mobile" type="natural" fill="url(#fillMobile)" stroke="var(--color-mobile)" stackId="a" />
-            <Area dataKey="desktop" type="natural" fill="url(#fillDesktop)" stroke="var(--color-desktop)" stackId="a" />
+            <Area
+              dataKey="mobile"
+              type="natural"
+              fill="url(#fillMobile)"
+              stroke="var(--color-mobile)"
+              stackId="a"
+            />
+            <Area
+              dataKey="desktop"
+              type="natural"
+              fill="url(#fillDesktop)"
+              stroke="var(--color-desktop)"
+              stackId="a"
+            />
           </AreaChart>
         </ChartContainer>
       </CardContent>

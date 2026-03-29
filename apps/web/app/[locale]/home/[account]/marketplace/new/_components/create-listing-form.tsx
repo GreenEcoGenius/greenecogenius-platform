@@ -40,7 +40,8 @@ export function CreateListingForm({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const t = useTranslations('marketplace');
-  const locale = useTranslations()('common.languageCode' as never) === 'fr' ? 'fr' : 'en';
+  const locale =
+    useTranslations()('common.languageCode' as never) === 'fr' ? 'fr' : 'en';
 
   async function handleSubmit(formData: FormData) {
     const title = formData.get('title') as string;

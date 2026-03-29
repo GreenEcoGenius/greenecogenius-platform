@@ -7,7 +7,7 @@
 .site-footer > .container:before {
   background: radial-gradient(
     62.87% 100% at 50% 100%,
-    #a7f3d0 0%,
+    #1b9e77 0%,
     rgba(255, 255, 255, 0) 100%
   );
 
@@ -23,7 +23,7 @@
 .dark .site-footer > .container:before {
   background: radial-gradient(
     62.87% 100% at 50% 100%,
-    rgba(110, 231, 183, 0.12) 0%,
+    rgba(27, 158, 119, 0.12) 0%,
     rgba(255, 255, 255, 0) 100%
   );
 }

@@ -3,14 +3,14 @@
 import { cn } from '@kit/ui/utils';
 
 const partners = [
-  { name: 'EcoMetal', accent: '#065F46' },
-  { name: 'VeoliaGreen', accent: '#0D9488' },
-  { name: 'CircuLoop', accent: '#059669' },
-  { name: 'ReNova', accent: '#065F46' },
-  { name: 'GreenTrace', accent: '#0D9488' },
-  { name: 'BioRecycle', accent: '#059669' },
-  { name: 'TraceWaste', accent: '#065F46' },
-  { name: 'NeoCircular', accent: '#0D9488' },
+  { name: 'EcoMetal', accent: '#1B9E77' },
+  { name: 'VeoliaGreen', accent: '#3BB54A' },
+  { name: 'CircuLoop', accent: '#40916C' },
+  { name: 'ReNova', accent: '#1B9E77' },
+  { name: 'GreenTrace', accent: '#3BB54A' },
+  { name: 'BioRecycle', accent: '#40916C' },
+  { name: 'TraceWaste', accent: '#1B9E77' },
+  { name: 'NeoCircular', accent: '#3BB54A' },
 ];
 
 function LogoItem({ name, accent }: { name: string; accent: string }) {
@@ -30,7 +30,7 @@ function LogoItem({ name, accent }: { name: string; accent: string }) {
         />
       </svg>
       <span
-        className="whitespace-nowrap text-lg font-semibold tracking-tight"
+        className="text-lg font-semibold tracking-tight whitespace-nowrap"
         style={{ color: accent }}
       >
         {name}

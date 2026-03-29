@@ -4,12 +4,7 @@ import { useMemo } from 'react';
 
 import Link from 'next/link';
 
-import {
-  ChevronsUpDown,
-  Home,
-  LogOut,
-  Shield,
-} from 'lucide-react';
+import { ChevronsUpDown, Home, LogOut, Shield } from 'lucide-react';
 
 import { JWTUserData } from '@kit/supabase/types';
 import {

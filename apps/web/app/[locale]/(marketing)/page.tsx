@@ -39,12 +39,12 @@ export default async function Home() {
   return (
     <div className="flex flex-col">
       {/* ───── HERO ───── */}
-      <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-gradient-to-b from-[#022c22] via-[#064e3b] to-[#065f46]">
+      <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-gradient-to-b from-[#0d2e24] via-[#145a42] to-[#1B9E77]">
         {/* Luminous gradient blobs */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-[20%] left-[10%] h-[50vw] w-[50vw] rounded-full bg-emerald-400/15 blur-[120px]" />
-          <div className="absolute -right-[10%] top-[20%] h-[40vw] w-[40vw] rounded-full bg-teal-300/15 blur-[100px]" />
-          <div className="absolute -bottom-[15%] left-[30%] h-[35vw] w-[35vw] rounded-full bg-cyan-400/10 blur-[80px]" />
+          <div className="absolute -top-[20%] left-[10%] h-[50vw] w-[50vw] rounded-full bg-[#3BB54A]/15 blur-[120px]" />
+          <div className="absolute top-[20%] -right-[10%] h-[40vw] w-[40vw] rounded-full bg-[#1B9E77]/15 blur-[100px]" />
+          <div className="absolute -bottom-[15%] left-[30%] h-[35vw] w-[35vw] rounded-full bg-[#8DC63F]/10 blur-[80px]" />
         </div>
 
         {/* Orbital visualization */}
@@ -52,20 +52,20 @@ export default async function Home() {
 
         <div className="relative z-10 mx-auto max-w-5xl px-4 py-32 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-white/5 px-5 py-2 text-sm font-medium text-emerald-200 backdrop-blur-md">
+            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#8DC63F]/30 bg-white/5 px-5 py-2 text-sm font-medium text-[#8DC63F] backdrop-blur-md">
               <Leaf className="h-4 w-4" />
               {t('heroPill')}
             </span>
           </AnimateOnScroll>
 
           <AnimateOnScroll animation="fade-up" delay={100}>
-            <h1 className="mt-6 bg-gradient-to-b from-white to-emerald-200 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl lg:text-7xl">
+            <h1 className="mt-6 bg-gradient-to-b from-white to-[#8DC63F] bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl lg:text-7xl">
               {t('heroHeadline')}
             </h1>
           </AnimateOnScroll>
 
           <AnimateOnScroll animation="fade-up" delay={200}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-emerald-100/80 sm:text-xl">
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80 sm:text-xl">
               {t('heroSubtitle')}
             </p>
           </AnimateOnScroll>
@@ -74,14 +74,14 @@ export default async function Home() {
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
                 href="/auth/sign-up"
-                className="group inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold text-emerald-900 transition-all hover:shadow-xl hover:shadow-white/15"
+                className="group inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold text-[#1A1A2E] transition-all hover:shadow-xl hover:shadow-white/15"
               >
                 {t('heroCta1')}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
               <Link
                 href="#features"
-                className="group inline-flex items-center gap-2 rounded-full border border-emerald-300/30 px-8 py-4 text-sm font-medium text-white backdrop-blur-sm transition-all hover:border-emerald-300/60 hover:bg-white/5"
+                className="group inline-flex items-center gap-2 rounded-full border border-[#8DC63F]/30 px-8 py-4 text-sm font-medium text-white backdrop-blur-sm transition-all hover:border-[#8DC63F]/60 hover:bg-white/5"
               >
                 {t('heroCta2')}
                 <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
