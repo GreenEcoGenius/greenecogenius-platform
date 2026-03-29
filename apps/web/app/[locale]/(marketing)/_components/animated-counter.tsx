@@ -16,6 +16,24 @@ export function AnimatedCounter({ target, duration = 2000 }: AnimatedCounterProp
     const el = ref.current;
     if (!el) return;
 
+    function animateCount() {
+      const start = performance.now();
+
+      function update(now: number) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+
+        setCount(Math.round(eased * target));
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      }
+
+      requestAnimationFrame(update);
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting && !hasAnimated.current) {
@@ -31,24 +49,6 @@ export function AnimatedCounter({ target, duration = 2000 }: AnimatedCounterProp
 
     return () => observer.disconnect();
   }, [target, duration]);
-
-  function animateCount() {
-    const start = performance.now();
-
-    function update(now: number) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-
-      setCount(Math.round(eased * target));
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      }
-    }
-
-    requestAnimationFrame(update);
-  }
 
   return <span ref={ref}>{count}</span>;
 }

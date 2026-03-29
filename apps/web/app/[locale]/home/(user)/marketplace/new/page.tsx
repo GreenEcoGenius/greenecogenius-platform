@@ -16,7 +16,7 @@ export const generateMetadata = async () => {
 
 async function NewListingPage() {
   const client = getSupabaseServerClient();
-  const user = await requireUser(client);
+  await requireUser(client);
 
   const { data: categories } = await client
     .from('material_categories')
