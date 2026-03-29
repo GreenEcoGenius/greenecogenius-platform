@@ -13,9 +13,9 @@ export function LogoImage({
     <Image
       src="/images/logo.png"
       alt="GreenEcoGenius"
-      width={180}
-      height={36}
-      className={cn('h-7 w-auto dark:brightness-150 dark:saturate-150 lg:h-8', className)}
+      width={240}
+      height={48}
+      className={cn('h-9 w-auto dark:brightness-150 dark:saturate-150 sm:h-10 lg:h-11', className)}
       priority
     />
   );
