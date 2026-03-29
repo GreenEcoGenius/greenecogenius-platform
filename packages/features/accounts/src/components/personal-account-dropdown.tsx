@@ -8,7 +8,6 @@ import {
   ChevronsUpDown,
   Home,
   LogOut,
-  MessageCircleQuestion,
   Shield,
 } from 'lucide-react';
 
@@ -165,20 +164,6 @@ export function PersonalAccountDropdown({
 
           <span>
             <Trans i18nKey={'common.routes.home'} />
-          </span>
-        </DropdownMenuItem>
-
-        <DropdownMenuSeparator />
-
-        <DropdownMenuItem
-          render={
-            <Link className={'flex items-center gap-x-2'} href={'/docs'} />
-          }
-        >
-          <MessageCircleQuestion className={'h-4 w-4'} />
-
-          <span>
-            <Trans i18nKey={'common.documentation'} />
           </span>
         </DropdownMenuItem>
 
