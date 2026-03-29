@@ -15,9 +15,9 @@ export function LogoImage({
         className,
       )}
     >
-      <span className="text-[#1A3C34] dark:text-[#D8F3DC]">Green</span>
-      <span className="text-[#52B788]">Eco</span>
-      <span className="text-[#1A3C34] dark:text-[#D8F3DC]">Genius</span>
+      <span className="text-[#064E3B] dark:text-[#D1FAE5]">Green</span>
+      <span className="text-[#059669] dark:text-[#6EE7B7]">Eco</span>
+      <span className="text-[#064E3B] dark:text-[#D1FAE5]">Genius</span>
     </span>
   );
 }

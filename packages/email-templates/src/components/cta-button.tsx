@@ -7,7 +7,7 @@ export function CtaButton(
 ) {
   return (
     <Button
-      className="w-full rounded bg-[#2D6A4F] py-3 text-center text-[16px] font-semibold text-white no-underline"
+      className="w-full rounded bg-[#065F46] py-3 text-center text-[16px] font-semibold text-white no-underline"
       href={props.href}
     >
       {props.children}
