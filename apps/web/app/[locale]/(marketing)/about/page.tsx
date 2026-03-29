@@ -69,7 +69,7 @@ export default async function AboutPage() {
       {/* ───── MISSION ───── */}
       <section className="py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="grid items-start gap-12 lg:grid-cols-2">
             <AnimateOnScroll animation="fade-right">
               <div className="bg-primary/10 text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
                 <Target className="h-8 w-8" />

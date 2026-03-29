@@ -177,7 +177,7 @@ export default async function Home() {
       {/* ───── BLOCKCHAIN TRACEABILITY ───── */}
       <section className="bg-secondary/30 py-20 sm:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="grid items-start gap-12 lg:grid-cols-2">
             <AnimateOnScroll animation="fade-right">
               <div className="overflow-hidden rounded-2xl shadow-2xl">
                 <Image
