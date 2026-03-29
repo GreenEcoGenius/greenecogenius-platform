@@ -2,8 +2,6 @@
 
 import { useCallback } from 'react';
 
-import { useRouter } from 'next/navigation';
-
 import type { Provider } from '@supabase/supabase-js';
 
 import { isBrowser } from '@kit/shared/utils';
