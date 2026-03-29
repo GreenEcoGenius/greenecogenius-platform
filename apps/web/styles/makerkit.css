@@ -58,6 +58,10 @@
   animation: spin-orbit-reverse 45s linear infinite;
 }
 
+@utility animate-counter-orbit {
+  animation: spin-orbit-reverse 60s linear infinite;
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(0);
