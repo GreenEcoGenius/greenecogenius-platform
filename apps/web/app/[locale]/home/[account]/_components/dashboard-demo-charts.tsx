@@ -357,11 +357,11 @@ function BadgeWithTrend(props: React.PropsWithChildren<{ trend: string }>) {
   const className = useMemo(() => {
     switch (props.trend) {
       case 'up':
-        return 'text-[#40916C]';
+        return 'text-[#1b9e77]';
       case 'down':
         return 'text-destructive';
       case 'stale':
-        return 'text-[#F4A261]';
+        return 'text-[#e8943a]';
     }
   }, [props.trend]);
 
@@ -391,11 +391,11 @@ function Trend(
   const Icon = useMemo(() => {
     switch (props.trend) {
       case 'up':
-        return <ArrowUp className={'h-3 w-3 text-[#40916C]'} />;
+        return <ArrowUp className={'h-3 w-3 text-[#1b9e77]'} />;
       case 'down':
         return <ArrowDown className={'text-destructive h-3 w-3'} />;
       case 'stale':
-        return <Menu className={'h-3 w-3 text-[#F4A261]'} />;
+        return <Menu className={'h-3 w-3 text-[#e8943a]'} />;
     }
   }, [props.trend]);
 

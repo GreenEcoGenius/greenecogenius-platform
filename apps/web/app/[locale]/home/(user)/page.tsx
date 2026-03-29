@@ -101,13 +101,13 @@ async function UserHomePage() {
         {/* Stats Cards */}
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           <StatCard
-            icon={<Package className="text-primary h-5 w-5" />}
+            icon={<Package className="h-5 w-5 text-[#1b9e77]" />}
             label={t('totalListingsActive')}
             value={totalActive ?? 0}
             color="primary"
           />
           <StatCard
-            icon={<ShoppingCart className="h-5 w-5 text-[#457B9D]" />}
+            icon={<ShoppingCart className="h-5 w-5 text-[#457b9d]" />}
             label={t('myArticles')}
             value={
               (mySellCount ?? 0) + (myBuyCount ?? 0) + (myCollectCount ?? 0)
@@ -115,13 +115,13 @@ async function UserHomePage() {
             color="info"
           />
           <StatCard
-            icon={<Truck className="h-5 w-5 text-[#F4A261]" />}
+            icon={<Truck className="h-5 w-5 text-[#e8943a]" />}
             label={t('myCollections')}
             value={myCollectCount ?? 0}
             color="warning"
           />
           <StatCard
-            icon={<Users className="h-5 w-5 text-[#3BB54A]" />}
+            icon={<Users className="h-5 w-5 text-[#2e8b6e]" />}
             label={t('myPurchases')}
             value={myBuyCount ?? 0}
             color="secondary"
@@ -256,17 +256,17 @@ async function UserHomePage() {
                 <MetricRow
                   label={t('totalCO2Offset')}
                   value="—"
-                  icon={<TrendingUp className="text-primary h-4 w-4" />}
+                  icon={<TrendingUp className="h-4 w-4 text-[#1b9e77]" />}
                 />
                 <MetricRow
                   label={t('renewedMaterials')}
                   value="—"
-                  icon={<Recycle className="h-4 w-4 text-[#3BB54A]" />}
+                  icon={<Recycle className="h-4 w-4 text-[#2e8b6e]" />}
                 />
                 <MetricRow
                   label={t('avgLogisticsImpact')}
                   value="—"
-                  icon={<Truck className="h-4 w-4 text-[#F4A261]" />}
+                  icon={<Truck className="h-4 w-4 text-[#e8943a]" />}
                 />
               </div>
               <p className="text-muted-foreground mt-4 text-xs italic">
@@ -315,10 +315,10 @@ function StatCard({
 
 function TypeBadge({ type, t }: { type: string; t: (key: string) => string }) {
   const styles: Record<string, string> = {
-    sell: 'bg-[#1B9E77]/10 text-[#1B9E77] dark:bg-[#1B9E77]/20 dark:text-[#3BB54A]',
-    buy: 'bg-[#457B9D]/10 text-[#457B9D] dark:bg-[#457B9D]/20 dark:text-[#457B9D]',
+    sell: 'bg-[#1b9e77]/10 text-[#1b9e77] dark:bg-[#1b9e77]/20 dark:text-[#2e8b6e]',
+    buy: 'bg-[#457b9d]/10 text-[#457b9d] dark:bg-[#457b9d]/20 dark:text-[#5a9abf]',
     collect:
-      'bg-[#F4A261]/10 text-[#F4A261] dark:bg-[#F4A261]/20 dark:text-[#F4A261]',
+      'bg-[#e8943a]/10 text-[#c47a2a] dark:bg-[#e8943a]/20 dark:text-[#e8943a]',
   };
 
   const labels: Record<string, string> = {
@@ -345,12 +345,12 @@ function StatusBadge({
 }) {
   const styles: Record<string, string> = {
     active:
-      'bg-[#40916C]/10 text-[#40916C] dark:bg-[#40916C]/20 dark:text-[#3BB54A]',
-    sold: 'bg-[#8D99AE]/10 text-[#4A4A4A] dark:bg-[#8D99AE]/20 dark:text-[#8D99AE]',
+      'bg-[#1b9e77]/10 text-[#1b9e77] dark:bg-[#1b9e77]/20 dark:text-[#2e8b6e]',
+    sold: 'bg-[#6b7d8e]/10 text-[#4a5c6b] dark:bg-[#6b7d8e]/20 dark:text-[#7a9bb0]',
     expired:
-      'bg-[#E63946]/10 text-[#E63946] dark:bg-[#E63946]/20 dark:text-[#E63946]',
+      'bg-[#e63946]/10 text-[#e63946] dark:bg-[#e63946]/20 dark:text-[#e63946]',
     draft:
-      'bg-[#F4A261]/10 text-[#F4A261] dark:bg-[#F4A261]/20 dark:text-[#F4A261]',
+      'bg-[#e8943a]/10 text-[#c47a2a] dark:bg-[#e8943a]/20 dark:text-[#e8943a]',
   };
 
   return (
