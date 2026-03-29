@@ -107,10 +107,10 @@ async function CookiePolicyPage() {
             Pour toute question concernant notre utilisation des cookies,
             contactez-nous à{' '}
             <a
-              href="mailto:ervis@greenecogenius.fr"
+              href="mailto:contact@greenecogenius.fr"
               className="text-primary underline underline-offset-4 hover:text-primary/80"
             >
-              ervis@greenecogenius.fr
+              contact@greenecogenius.fr
             </a>
             .
           </p>

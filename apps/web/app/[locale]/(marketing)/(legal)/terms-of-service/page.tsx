@@ -37,7 +37,7 @@ async function TermsOfServicePage() {
               ['Siège social', 'Tornimäe tn 5, 10145 Tallinn, Harju maakond, Estonie'],
               ['Capital social', '10 000,00 €'],
               ['Directeur', 'Ervis Ago'],
-              ['Email', 'ervis@greenecogenius.fr'],
+              ['Email', 'contact@greenecogenius.fr'],
               ['Code EMTAK', "70221 — Conseil en gestion d'entreprise"],
             ]}
           />
@@ -129,10 +129,10 @@ async function TermsOfServicePage() {
             Pour toute question relative aux présentes CGU, contactez-nous à
             {"l'adresse"}{' '}
             <a
-              href="mailto:ervis@greenecogenius.fr"
+              href="mailto:contact@greenecogenius.fr"
               className="text-primary underline underline-offset-4 hover:text-primary/80"
             >
-              ervis@greenecogenius.fr
+              contact@greenecogenius.fr
             </a>
             .
           </p>

@@ -34,8 +34,8 @@ async function PrivacyPolicyPage() {
           </p>
           <p>
             <strong className="text-foreground">Contact DPO :</strong>{' '}
-            <a href="mailto:ervis@greenecogenius.fr" className="text-primary underline underline-offset-4 hover:text-primary/80">
-              ervis@greenecogenius.fr
+            <a href="mailto:contact@greenecogenius.fr" className="text-primary underline underline-offset-4 hover:text-primary/80">
+              contact@greenecogenius.fr
             </a>
           </p>
         </Section>
@@ -129,8 +129,8 @@ async function PrivacyPolicyPage() {
           />
           <p className="mt-4">
             Pour exercer vos droits, contactez-nous à{' '}
-            <a href="mailto:ervis@greenecogenius.fr" className="text-primary underline underline-offset-4 hover:text-primary/80">
-              ervis@greenecogenius.fr
+            <a href="mailto:contact@greenecogenius.fr" className="text-primary underline underline-offset-4 hover:text-primary/80">
+              contact@greenecogenius.fr
             </a>
             . Nous répondrons dans un délai de 30 jours.
           </p>
@@ -148,8 +148,8 @@ async function PrivacyPolicyPage() {
         <Section title="10. Contact et réclamations">
           <p>
             Pour toute question concernant cette politique, contactez-nous à{' '}
-            <a href="mailto:ervis@greenecogenius.fr" className="text-primary underline underline-offset-4 hover:text-primary/80">
-              ervis@greenecogenius.fr
+            <a href="mailto:contact@greenecogenius.fr" className="text-primary underline underline-offset-4 hover:text-primary/80">
+              contact@greenecogenius.fr
             </a>
             .
           </p>

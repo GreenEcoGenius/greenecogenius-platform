@@ -190,6 +190,22 @@ async function matchUrlPattern(url: string) {
       return pattern.handler;
     }
   }
+
+  const strippedInput = stripLocalePrefix(input);
+
+  if (strippedInput !== input) {
+    for (const pattern of patterns) {
+      const patternResult = pattern.pattern.exec(strippedInput);
+
+      if (patternResult !== null && 'pathname' in patternResult) {
+        return pattern.handler;
+      }
+    }
+  }
+}
+
+function stripLocalePrefix(url: string) {
+  return url.replace(/^(https?:\/\/[^/]+)?\/(?:fr|en)(\/|$)/, '$1/$2');
 }
 
 /**
