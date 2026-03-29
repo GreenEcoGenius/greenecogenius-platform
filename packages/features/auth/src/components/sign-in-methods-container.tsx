@@ -31,8 +31,6 @@ export function SignInMethodsContainer(props: {
 
   captchaSiteKey?: string;
 }) {
-  const router = useRouter();
-
   const redirectUrl = isBrowser()
     ? new URL(props.paths.callback, window?.location.origin).toString()
     : '';
