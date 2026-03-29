@@ -12,7 +12,9 @@ async function SiteLayout(props: React.PropsWithChildren) {
     <div className={'flex min-h-[100vh] flex-col overflow-x-hidden'}>
       <SiteHeader user={user.data} />
 
-      {props.children}
+      <div className="pt-24 md:pt-36">
+        {props.children}
+      </div>
 
       <SiteFooter />
     </div>

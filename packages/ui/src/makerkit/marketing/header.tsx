@@ -1,3 +1,7 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
 import { cn } from '../../lib/utils';
 import { If } from '../if';
 
@@ -23,13 +27,38 @@ export const Header: React.FC<HeaderProps> = function ({
   };
 
   const gridAmount = [logo, navigation, actions].filter(Boolean).length;
-
   const gridClassName = grids[gridAmount as keyof typeof grids];
+
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const currentY = window.scrollY;
+
+      if (currentY < 100) {
+        // Always show near top
+        setVisible(true);
+      } else if (currentY < lastScrollY.current) {
+        // Scrolling up → show
+        setVisible(true);
+      } else {
+        // Scrolling down → hide
+        setVisible(false);
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <div
       className={cn(
-        'site-header bg-background/80 dark:bg-background/80 sticky top-0 z-10 w-full backdrop-blur-lg',
+        'site-header bg-background/80 dark:bg-background/80 fixed top-0 z-50 w-full backdrop-blur-lg transition-transform duration-300',
+        visible ? 'translate-y-0' : '-translate-y-full',
         className,
       )}
       {...props}
