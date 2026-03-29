@@ -70,17 +70,6 @@ async function Home() {
               </Link>
             </div>
           </div>
-
-          <div className="mt-20 lg:mt-28">
-            <Image
-              priority
-              className="dark:border-primary/10 w-full rounded-2xl border shadow-2xl shadow-primary/10"
-              width={3558}
-              height={2222}
-              src="/images/dashboard.webp"
-              alt="GreenEcoGenius Dashboard"
-            />
-          </div>
         </div>
       </section>
 
