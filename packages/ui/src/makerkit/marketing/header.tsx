@@ -39,7 +39,7 @@ export const Header: React.FC<HeaderProps> = function ({
           'container mx-auto': centered,
         })}
       >
-        <div className={cn('grid h-20 items-center lg:h-28', gridClassName)}>
+        <div className={cn('grid h-22 items-center lg:h-32', gridClassName)}>
           {logo}
 
           <If condition={navigation}>
