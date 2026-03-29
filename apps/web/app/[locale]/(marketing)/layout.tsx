@@ -9,7 +9,7 @@ async function SiteLayout(props: React.PropsWithChildren) {
   const user = await requireUser(client, { verifyMfa: false });
 
   return (
-    <div className={'flex min-h-[100vh] flex-col'}>
+    <div className={'flex min-h-[100vh] flex-col overflow-x-hidden'}>
       <SiteHeader user={user.data} />
 
       {props.children}
