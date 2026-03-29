@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { cn } from '@kit/ui/utils';
@@ -9,16 +10,14 @@ export function LogoImage({
   width?: number;
 }) {
   return (
-    <span
-      className={cn(
-        'flex items-baseline gap-0 text-lg font-bold tracking-tight lg:text-xl',
-        className,
-      )}
-    >
-      <span className="text-[#064E3B] dark:text-[#D1FAE5]">Green</span>
-      <span className="text-[#059669] dark:text-[#6EE7B7]">Eco</span>
-      <span className="text-[#064E3B] dark:text-[#D1FAE5]">Genius</span>
-    </span>
+    <Image
+      src="/images/logo.png"
+      alt="GreenEcoGenius"
+      width={180}
+      height={36}
+      className={cn('h-7 w-auto dark:brightness-150 dark:saturate-150 lg:h-8', className)}
+      priority
+    />
   );
 }
 
