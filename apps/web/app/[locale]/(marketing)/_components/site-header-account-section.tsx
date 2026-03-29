@@ -71,7 +71,7 @@ function LocaleToggle() {
   return (
     <button
       onClick={toggle}
-      className="text-muted-foreground hover:text-foreground rounded-md px-2 py-1 text-xs font-semibold tracking-wider uppercase transition-colors"
+      className="text-muted-foreground hover:text-foreground rounded-md px-2.5 py-1.5 text-sm font-semibold tracking-wider uppercase transition-colors"
       aria-label="Change language"
     >
       {locale === 'fr' ? 'EN' : 'FR'}

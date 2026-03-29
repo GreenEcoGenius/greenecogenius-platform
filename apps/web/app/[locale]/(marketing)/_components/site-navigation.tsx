@@ -66,16 +66,17 @@ function MobileDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger aria-label={'Open Menu'}>
-        <Menu className={'h-8 w-8'} />
+        <Menu className={'h-9 w-9'} />
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className={'w-full'}>
+      <DropdownMenuContent className={'w-screen rounded-none'}>
         {Object.values(links).map((item) => {
-          const className = 'flex w-full h-full items-center';
+          const className = 'flex w-full h-full items-center text-base py-1';
 
           return (
             <DropdownMenuItem
               key={item.path}
+              className={'py-3'}
               render={
                 <Link className={className} href={item.path}>
                   <Trans i18nKey={item.label} />
