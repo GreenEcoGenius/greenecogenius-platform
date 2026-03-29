@@ -181,7 +181,7 @@ async function getPatterns() {
  */
 async function matchUrlPattern(url: string) {
   const patterns = await getPatterns();
-  const input = url.split('?')[0];
+  const input = url.split('?')[0] ?? url;
 
   for (const pattern of patterns) {
     const patternResult = pattern.pattern.exec(input);
@@ -191,7 +191,7 @@ async function matchUrlPattern(url: string) {
     }
   }
 
-  const strippedInput = stripLocalePrefix(input);
+  const strippedInput = stripLocalePrefix(input) ?? input;
 
   if (strippedInput !== input) {
     for (const pattern of patterns) {
@@ -204,8 +204,8 @@ async function matchUrlPattern(url: string) {
   }
 }
 
-function stripLocalePrefix(url: string) {
-  return url.replace(/^(https?:\/\/[^/]+)?\/(?:fr|en)(\/|$)/, '$1/$2');
+function stripLocalePrefix(url: string): string {
+  return url.replace(/^(https?:\/\/[^\/]+)?\/(?:fr|en)(\/|$)/, '$1/$2') as string;
 }
 
 /**
