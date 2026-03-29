@@ -21,7 +21,7 @@ export default createBillingSchema({
           interval: 'month',
           lineItems: [
             {
-              id: 'price_1TGNyVEQ2HzlC8beok3P4gVE',
+              id: 'price_1TGOl1HzZIeB0U46D0mCsd3x',
               name: 'Starter',
               cost: 29,
               type: 'flat' as const,
@@ -35,7 +35,7 @@ export default createBillingSchema({
           interval: 'year',
           lineItems: [
             {
-              id: 'price_1TGNyXEQ2HzlC8beTTfslSL3',
+              id: 'price_1TGOl1HzZIeB0U46gPUhWONZ',
               name: 'Starter',
               cost: 290,
               type: 'flat' as const,
@@ -65,7 +65,7 @@ export default createBillingSchema({
           interval: 'month',
           lineItems: [
             {
-              id: 'price_1TGNyZEQ2HzlC8beO3EAlvvo',
+              id: 'price_1TGOl2HzZIeB0U46YAiJSsS6',
               name: 'Pro',
               cost: 79,
               type: 'flat' as const,
@@ -79,7 +79,7 @@ export default createBillingSchema({
           interval: 'year',
           lineItems: [
             {
-              id: 'price_1TGNybEQ2HzlC8be9iLCV5hE',
+              id: 'price_1TGOl2HzZIeB0U46Q7mXDRn0',
               name: 'Pro',
               cost: 790,
               type: 'flat' as const,
@@ -108,7 +108,7 @@ export default createBillingSchema({
           interval: 'month',
           lineItems: [
             {
-              id: 'price_1TGNydEQ2HzlC8beYbUeXN6P',
+              id: 'price_1TGOl2HzZIeB0U46bOoTFGmA',
               name: 'Enterprise',
               cost: 199,
               type: 'flat' as const,
@@ -122,7 +122,7 @@ export default createBillingSchema({
           interval: 'year',
           lineItems: [
             {
-              id: 'price_1TGNyfEQ2HzlC8beMXjDfZww',
+              id: 'price_1TGOl3HzZIeB0U46rSbnUxhk',
               name: 'Enterprise',
               cost: 1990,
               type: 'flat' as const,
