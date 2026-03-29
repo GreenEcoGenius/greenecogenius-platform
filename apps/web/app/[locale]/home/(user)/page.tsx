@@ -93,8 +93,8 @@ async function UserHomePage() {
   return (
     <PageBody>
       <HomeLayoutPageHeader
-        title={t('myDashboard')}
-        description={t('myDashboardDesc')}
+        title="Le Comptoir Circulaire"
+        description=""
       />
 
       <div className="flex flex-col gap-6">
