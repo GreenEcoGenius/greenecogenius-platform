@@ -16,7 +16,7 @@ export function LogoImage({
       width={4232}
       height={2362}
       className={cn(
-        'h-12 w-auto sm:h-14 lg:h-16',
+        'h-16 w-auto sm:h-18 lg:h-20',
         className,
       )}
       priority
