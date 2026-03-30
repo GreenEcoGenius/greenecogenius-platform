@@ -27,34 +27,10 @@ export const createPersonalAccountCheckoutSession = authActionClient
       throw new Error('Personal account billing is not enabled');
     }
 
-    console.log('[BILLING DEBUG] Step 1: Input received', JSON.stringify(data));
-    console.log('[BILLING DEBUG] Step 2: STRIPE_SECRET_KEY present:', !!process.env.STRIPE_SECRET_KEY);
-    console.log('[BILLING DEBUG] Step 2: STRIPE_SECRET_KEY starts with sk_:', process.env.STRIPE_SECRET_KEY?.startsWith('sk_'));
-    console.log('[BILLING DEBUG] Step 2: STRIPE_WEBHOOK_SECRET present:', !!process.env.STRIPE_WEBHOOK_SECRET);
-    console.log('[BILLING DEBUG] Step 2: STRIPE_WEBHOOK_SECRET starts with whsec_:', process.env.STRIPE_WEBHOOK_SECRET?.startsWith('whsec_'));
+    const client = getSupabaseServerClient();
+    const service = createUserBillingService(client);
 
-    try {
-      const client = getSupabaseServerClient();
-      console.log('[BILLING DEBUG] Step 3: Supabase client created');
-
-      const service = createUserBillingService(client);
-      console.log('[BILLING DEBUG] Step 4: Billing service created');
-
-      const result = await service.createCheckoutSession(data);
-      console.log('[BILLING DEBUG] Step 5: Checkout session created successfully');
-
-      return result;
-    } catch (error) {
-      console.error('[BILLING DEBUG] Error caught:', error);
-      console.error('[BILLING DEBUG] Error name:', (error as Error).name);
-      console.error('[BILLING DEBUG] Error message:', (error as Error).message);
-
-      if ((error as Error).name === 'ZodError') {
-        console.error('[BILLING DEBUG] ZodError issues:', JSON.stringify((error as { issues?: unknown[] }).issues));
-      }
-
-      throw error;
-    }
+    return service.createCheckoutSession(data);
   });
 
 /**
