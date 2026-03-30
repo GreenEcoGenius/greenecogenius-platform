@@ -65,16 +65,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Get commission rate from config
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: config } = await (adminClient as any)
-    .from('marketplace_config')
-    .select('commission_rate')
-    .limit(1)
-    .single();
-
-  const commissionRate = config?.commission_rate ?? 0.2;
-
   // Calculate amounts (in cents)
   const pricePerUnit = listing.price_per_unit ?? 0;
   const materialAmount = Math.round(pricePerUnit * listing.quantity * 100);
@@ -91,8 +81,21 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const platformFee = Math.round(totalAmount * Number(commissionRate));
-  const sellerAmount = totalAmount - platformFee;
+  // Calculate degressive commission via SQL function
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: commissionResult } = await (adminClient as any).rpc(
+    'calculate_commission',
+    { p_amount_cents: totalAmount },
+  );
+
+  const commission = commissionResult?.[0];
+  const commissionRate = commission?.commission_rate
+    ? Number(commission.commission_rate)
+    : 0.05;
+  const platformFee = commission?.commission_amount ?? Math.round(totalAmount * commissionRate);
+  const sellerAmount = commission?.seller_amount ?? (totalAmount - platformFee);
+  const commissionConfigId = commission?.config_id ?? null;
+  const commissionConfigName = commission?.config_name ?? 'unknown';
 
   // Create the marketplace transaction record
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -108,6 +111,7 @@ export async function POST(req: NextRequest) {
       transport_amount: transportAmount,
       currency: listing.currency.toLowerCase(),
       commission_rate: commissionRate,
+      commission_config_id: commissionConfigId,
       status: 'pending_payment',
       payment_status: 'pending',
     })
@@ -129,7 +133,14 @@ export async function POST(req: NextRequest) {
     event_type: 'payment_created',
     actor_account_id: user.id,
     actor_role: 'buyer',
-    metadata: { listing_id: listingId, total_amount: totalAmount },
+    metadata: {
+      listing_id: listingId,
+      total_amount: totalAmount,
+      commission_rate: commissionRate,
+      commission_config: commissionConfigName,
+      platform_fee: platformFee,
+      seller_amount: sellerAmount,
+    },
   });
 
   // Create Stripe PaymentIntent — Separate Charges and Transfers

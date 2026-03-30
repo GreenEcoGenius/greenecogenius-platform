@@ -69,7 +69,8 @@
     "application": "Application",
     "marketplace": "Le Comptoir Circulaire",
     "myListings": "My Listings",
-    "wallet": "Wallet"
+    "wallet": "Wallet",
+    "traceability": "Traceability"
   },
   "roles": {
     "owner": {

@@ -21,6 +21,7 @@ const namespaces = [
   'marketing',
   'marketplace',
   'wallet',
+  'pricing',
 ] as const;
 
 const isDevelopment = process.env.NODE_ENV === 'development';

@@ -6,6 +6,7 @@ import { Heading } from '@kit/ui/heading';
 import { PageBody, PageHeader } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
+import { CommissionInfo } from './_components/commission-info';
 import { StripeConnectSetup } from './_components/stripe-connect-setup';
 import { TransactionHistory } from './_components/transaction-history';
 import { WalletOverview } from './_components/wallet-overview';
@@ -94,6 +95,8 @@ async function WalletPage() {
               : null
           }
         />
+
+        <CommissionInfo />
 
         <TransactionHistory
           sellerTransactions={sellerTransactions ?? []}

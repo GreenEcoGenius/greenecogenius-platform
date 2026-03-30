@@ -1,0 +1,29 @@
+{
+  "title": "Blockchain Traceability — Plans",
+  "subtitle": "Trace your recycled materials with blockchain. Coming soon.",
+  "popular": "Popular",
+  "orAnnual": "or",
+  "onQuote": "Custom Quote",
+  "comingSoon": "Coming Soon",
+  "contactUs": "Contact Us",
+  "plan": {
+    "essentiel": "Essential Plan",
+    "avance": "Advanced Plan",
+    "enterprise": "Enterprise"
+  },
+  "feat50Lots": "Up to 50 traced lots/month",
+  "featBasicTracing": "Basic blockchain traceability",
+  "featPdfCertificates": "Automatic PDF certificates",
+  "featEmailSupport": "Email support",
+  "featUnlimitedLots": "Unlimited traced lots",
+  "featFullApi": "Full API access",
+  "featAdvancedDashboard": "Advanced analytics dashboard",
+  "featDataExport": "Data export",
+  "featPrioritySupport": "Priority support",
+  "featEverythingAdvanced": "Everything in Advanced",
+  "featErpIntegration": "Custom ERP integration",
+  "featDedicatedSupport": "Dedicated support",
+  "featSla": "Guaranteed SLA",
+  "featCustomReports": "Custom ESG reports",
+  "pillar2Note": "Blockchain traceability (Pillar 2) is under development. These subscriptions will be activated soon. In the meantime, use Le Comptoir Circulaire to buy and sell your recyclable materials."
+}

@@ -109,7 +109,7 @@ export async function POST(req: NextRequest) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: wallet } = await (adminClient as any)
     .from('wallet_balances')
-    .select('pending_balance, available_balance, total_earned')
+    .select('pending_balance, available_balance, total_earned, total_commission_paid, total_transactions')
     .eq('account_id', tx.seller_account_id)
     .single();
 
@@ -121,6 +121,8 @@ export async function POST(req: NextRequest) {
         pending_balance: Math.max(0, wallet.pending_balance - tx.seller_amount),
         available_balance: wallet.available_balance + tx.seller_amount,
         total_earned: wallet.total_earned + tx.seller_amount,
+        total_commission_paid: (wallet.total_commission_paid ?? 0) + tx.platform_fee,
+        total_transactions: (wallet.total_transactions ?? 0) + 1,
       })
       .eq('account_id', tx.seller_account_id);
   }
