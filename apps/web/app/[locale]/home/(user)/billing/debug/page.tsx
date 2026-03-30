@@ -86,31 +86,34 @@ export default async function DebugBillingPage() {
       checks.step5_issues = schemaResult.error.issues;
     }
 
-    // Step 6: Direct Stripe API test via gateway
+    // Step 6: Raw HTTP call to Stripe API (bypass SDK)
+    try {
+      const res = await fetch('https://api.stripe.com/v1/balance', {
+        headers: {
+          Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}`,
+        },
+      });
+
+      const body = await res.json();
+
+      checks.step6_raw_http = {
+        status: res.status,
+        ok: res.ok,
+        body: res.ok ? { currency: body.available?.[0]?.currency, amount: body.available?.[0]?.amount } : body,
+      };
+    } catch (e) {
+      checks.step6_raw_error = (e as Error).message;
+    }
+
+    // Step 6b: Stripe SDK via gateway
     try {
       const service = await getBillingGatewayProvider(client);
-      // Try to get plan details (simpler than checkout)
       const planDetails = await service.getPlanById(plan.lineItems[0]!.id);
-      checks.step6_plan_lookup = 'OK';
-      checks.step6_plan_details = planDetails;
+      checks.step6b_plan_lookup = 'OK';
+      checks.step6b_plan_details = planDetails;
     } catch (e) {
-      checks.step6_error = (e as Error).message;
-      checks.step6_error_name = (e as Error).name;
-      checks.step6_error_type = (e as { type?: string }).type;
-      checks.step6_error_code = (e as { code?: string }).code;
-      checks.step6_error_statusCode = (e as { statusCode?: number }).statusCode;
-
-      const cause = (e as Error).cause as Error | undefined;
-      if (cause) {
-        checks.step6_cause = {
-          message: cause.message,
-          name: cause.name,
-          type: (cause as { type?: string }).type,
-          code: (cause as { code?: string }).code,
-          statusCode: (cause as { statusCode?: number }).statusCode,
-          rawType: (cause as { rawType?: string }).rawType,
-        };
-      }
+      checks.step6b_error = (e as Error).message;
+      checks.step6b_cause_type = ((e as Error).cause as { type?: string })?.type;
     }
 
     // Step 7: Try full checkout
