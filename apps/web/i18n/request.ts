@@ -21,6 +21,7 @@ const namespaces = [
   'marketing',
   'marketplace',
   'wallet',
+  'carbon',
   'pricing',
 ] as const;
 

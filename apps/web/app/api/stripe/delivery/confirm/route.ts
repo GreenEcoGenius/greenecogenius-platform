@@ -148,9 +148,56 @@ export async function POST(req: NextRequest) {
     },
   ]);
 
+  // Step A: Calculate carbon footprint for this transaction
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await (adminClient as any).rpc('calculate_transaction_carbon', {
+    p_transaction_id: transactionId,
+  });
+
+  // Step B: Generate blockchain record for traceability
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: hashResult } = await (adminClient as any).rpc(
+    'generate_blockchain_record',
+    { p_transaction_id: transactionId },
+  );
+
+  // Step C: Generate traceability certificate
+  const certNumber = `GEG-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: carbonRecord } = await (adminClient as any)
+    .from('carbon_records')
+    .select('id')
+    .eq('transaction_id', transactionId)
+    .single();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: blockchainRecord } = await (adminClient as any)
+    .from('blockchain_records')
+    .select('id, record_hash')
+    .eq('transaction_id', transactionId)
+    .single();
+
+  if (carbonRecord && blockchainRecord) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (adminClient as any).from('traceability_certificates').insert({
+      certificate_number: certNumber,
+      transaction_id: transactionId,
+      carbon_record_id: carbonRecord.id,
+      blockchain_record_id: blockchainRecord.id,
+      account_id: tx.seller_account_id,
+      buyer_account_id: tx.buyer_account_id,
+      verification_hash: blockchainRecord.record_hash,
+      status: 'active',
+    });
+  }
+
   return NextResponse.json({
     success: true,
     transferId: transfer.id,
     sellerAmount: tx.seller_amount,
+    carbonCalculated: !!carbonRecord,
+    blockchainHash: hashResult ?? blockchainRecord?.record_hash ?? null,
+    certificateNumber: carbonRecord && blockchainRecord ? certNumber : null,
   });
 }
