@@ -1,64 +1,99 @@
 import { NextResponse } from 'next/server';
 
-import * as z from 'zod';
+import { getProductPlanPair } from '@kit/billing';
+import { CreateBillingCheckoutSchema } from '@kit/billing/schema';
+import { getBillingGatewayProvider } from '@kit/billing-gateway';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
+
+import appConfig from '~/config/app.config';
+import billingConfig from '~/config/billing.config';
+import pathsConfig from '~/config/paths.config';
 
 export async function GET() {
   const checks: Record<string, unknown> = {};
 
-  // Check env vars
-  checks.STRIPE_SECRET_KEY_present = !!process.env.STRIPE_SECRET_KEY;
-  checks.STRIPE_SECRET_KEY_prefix = process.env.STRIPE_SECRET_KEY?.substring(0, 7) + '...';
-  checks.STRIPE_SECRET_KEY_length = process.env.STRIPE_SECRET_KEY?.length;
-  checks.STRIPE_WEBHOOK_SECRET_present = !!process.env.STRIPE_WEBHOOK_SECRET;
-  checks.STRIPE_WEBHOOK_SECRET_prefix = process.env.STRIPE_WEBHOOK_SECRET?.substring(0, 10) + '...';
-  checks.STRIPE_WEBHOOK_SECRET_length = process.env.STRIPE_WEBHOOK_SECRET?.length;
-  checks.NEXT_PUBLIC_BILLING_PROVIDER = process.env.NEXT_PUBLIC_BILLING_PROVIDER;
-  checks.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_present = !!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+  try {
+    // Step 1: Check env vars
+    checks.step1_env = {
+      STRIPE_SECRET_KEY_present: !!process.env.STRIPE_SECRET_KEY,
+      STRIPE_SECRET_KEY_prefix: process.env.STRIPE_SECRET_KEY?.substring(0, 7),
+      STRIPE_WEBHOOK_SECRET_present: !!process.env.STRIPE_WEBHOOK_SECRET,
+      STRIPE_WEBHOOK_SECRET_prefix: process.env.STRIPE_WEBHOOK_SECRET?.substring(0, 10),
+    };
 
-  // Replicate the same Zod schema as StripeServerEnvSchema
-  const StripeServerEnvSchema = z
-    .object({
-      secretKey: z.string({ error: 'Missing STRIPE_SECRET_KEY' }).min(1),
-      webhooksSecret: z.string({ error: 'Missing STRIPE_WEBHOOK_SECRET' }).min(1),
-    })
-    .refine(
-      (schema) => {
-        return schema.secretKey.startsWith('sk_') || schema.secretKey.startsWith('rk_');
-      },
-      { path: ['STRIPE_SECRET_KEY'], message: "Must start with 'sk_' or 'rk_'" },
-    )
-    .refine(
-      (schema) => {
-        return schema.webhooksSecret.startsWith('whsec_');
-      },
-      { path: ['STRIPE_WEBHOOK_SECRET'], message: "Must start with 'whsec_'" },
-    );
+    // Step 2: Check billing config
+    const product = billingConfig.products[0];
+    const planId = product?.plans[0]?.id;
 
-  const result = StripeServerEnvSchema.safeParse({
-    secretKey: process.env.STRIPE_SECRET_KEY,
-    webhooksSecret: process.env.STRIPE_WEBHOOK_SECRET,
-  });
+    checks.step2_billing_config = {
+      provider: billingConfig.provider,
+      productId: product?.id,
+      planId,
+      planName: product?.plans[0]?.name,
+    };
 
-  if (result.success) {
-    checks.stripe_env_schema = 'PASS';
-  } else {
-    checks.stripe_env_schema = 'FAIL';
-    checks.stripe_env_issues = result.error.issues;
-  }
+    // Step 3: Get plan pair
+    if (planId) {
+      const { plan } = getProductPlanPair(billingConfig, planId);
+      checks.step3_plan = {
+        id: plan.id,
+        name: plan.name,
+        paymentType: plan.paymentType,
+        lineItemsCount: plan.lineItems.length,
+        lineItems: plan.lineItems,
+      };
 
-  // Try Stripe API call if schema passes
-  if (result.success) {
-    try {
-      const { default: Stripe } = await import('stripe');
-      const stripe = new Stripe(result.data.secretKey, {
-        apiVersion: '2026-02-25.clover' as Parameters<typeof Stripe>[1]['apiVersion'],
-      });
+      // Step 4: Build checkout params (same as user-billing.service.ts)
+      const returnUrl = new URL(
+        pathsConfig.app.personalAccountBillingReturn,
+        appConfig.url,
+      ).toString();
 
-      const balance = await stripe.balance.retrieve();
-      checks.stripe_api = 'OK';
-      checks.stripe_currency = balance.available?.[0]?.currency;
-    } catch (e) {
-      checks.stripe_api_error = (e as Error).message;
+      const checkoutParams = {
+        returnUrl,
+        accountId: '00000000-0000-0000-0000-000000000000', // fake UUID
+        customerEmail: 'test@test.com',
+        plan,
+        variantQuantities: [],
+        enableDiscountField: product.enableDiscountField,
+      };
+
+      checks.step4_checkout_params = {
+        returnUrl: checkoutParams.returnUrl,
+        accountId: checkoutParams.accountId,
+      };
+
+      // Step 5: Validate with CreateBillingCheckoutSchema
+      const schemaResult = CreateBillingCheckoutSchema.safeParse(checkoutParams);
+
+      if (schemaResult.success) {
+        checks.step5_schema = 'PASS';
+      } else {
+        checks.step5_schema = 'FAIL';
+        checks.step5_issues = schemaResult.error.issues;
+      }
+
+      // Step 6: Try to get billing gateway provider
+      try {
+        const client = getSupabaseServerClient();
+        const service = await getBillingGatewayProvider(client);
+        checks.step6_gateway = 'OK - provider loaded';
+      } catch (e) {
+        checks.step6_gateway_error = (e as Error).message;
+        checks.step6_gateway_error_name = (e as Error).name;
+
+        if ((e as Error).name === 'ZodError') {
+          checks.step6_zod_issues = (e as { issues?: unknown[] }).issues;
+        }
+      }
+    }
+  } catch (e) {
+    checks.error = (e as Error).message;
+    checks.error_name = (e as Error).name;
+    checks.error_stack = (e as Error).stack?.split('\n').slice(0, 5);
+
+    if ((e as Error).name === 'ZodError') {
+      checks.zod_issues = (e as { issues?: unknown[] }).issues;
     }
   }
 
