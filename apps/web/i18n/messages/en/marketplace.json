@@ -109,5 +109,11 @@
   "deleteConfirmTitle": "Delete this listing?",
   "deleteConfirmDescription": "This action cannot be undone. The listing will be permanently deleted.",
   "delete": "Delete",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "buyLot": "Buy this lot",
+  "processing": "Processing...",
+  "paymentSuccess": "Payment confirmed!",
+  "paymentSuccessDesc": "Your purchase was successful. The seller will be notified of your order.",
+  "backToListing": "View listing",
+  "backToMarketplace": "Back to Marketplace"
 }

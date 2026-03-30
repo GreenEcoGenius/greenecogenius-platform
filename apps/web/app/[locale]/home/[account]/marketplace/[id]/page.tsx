@@ -5,11 +5,14 @@ import { notFound } from 'next/navigation';
 
 import { ArrowLeft, MapPin, Package, Tag, Truck } from 'lucide-react';
 
+import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
+
+import { BuyListingButton } from '~/home/_components/buy-listing-button';
 
 interface ListingDetailPageProps {
   params: Promise<{ account: string; id: string }>;
@@ -32,6 +35,9 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
   const { account, id } = use(params);
   const client = getSupabaseServerClient();
 
+  const { data: user } = await requireUser(client);
+  const currentUserId = user?.id;
+
   const { data: listing } = await client
     .from('listings')
     .select('*, material_categories(*)')
@@ -53,6 +59,14 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
     listing.price_per_unit !== null && listing.price_per_unit > 0
       ? listing.price_per_unit * listing.quantity
       : null;
+
+  const transportPrice = (listing as Record<string, unknown>)
+    .transport_price as number | null;
+
+  const isOwner = currentUserId === listing.account_id;
+  const hasPrice =
+    (listing.price_per_unit !== null && listing.price_per_unit > 0) ||
+    (transportPrice !== null && transportPrice > 0);
 
   return (
     <PageBody>
@@ -158,23 +172,24 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
         </div>
 
         {listing.listing_type === 'collect' &&
-          (listing as Record<string, unknown>).transport_price != null &&
-          ((listing as Record<string, unknown>).transport_price as number) > 0 && (
+          transportPrice !== null &&
+          transportPrice > 0 && (
             <div className="mt-4 flex items-center gap-2 rounded-lg border border-[#e8943a]/30 bg-[#e8943a]/5 p-3">
               <Truck className="h-4 w-4 text-[#e8943a]" />
               <span className="text-sm font-medium">
                 <Trans i18nKey="marketplace.transportLabel" />
                 {' : '}
-                {(listing as Record<string, unknown>).transport_price as number}{' '}
-                {listing.currency}
+                {transportPrice} {listing.currency}
               </span>
             </div>
           )}
 
         <div className="mt-8">
-          <Button className="w-full">
-            <Trans i18nKey="marketplace.contactSeller" />
-          </Button>
+          <BuyListingButton
+            listingId={listing.id}
+            isOwner={isOwner}
+            hasPrice={hasPrice}
+          />
         </div>
       </div>
     </PageBody>
