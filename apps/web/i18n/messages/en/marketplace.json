@@ -101,5 +101,13 @@
   "myCollections": "My Collections",
   "noPurchases": "No purchases yet",
   "noCollections": "No collections yet",
-  "negotiable": "Negotiable"
+  "negotiable": "Negotiable",
+  "totalLabel": "Total",
+  "transportPrice": "Transport cost (EUR)",
+  "transportPricePlaceholder": "Cost of transport for collection",
+  "transportLabel": "Transport",
+  "deleteConfirmTitle": "Delete this listing?",
+  "deleteConfirmDescription": "This action cannot be undone. The listing will be permanently deleted.",
+  "delete": "Delete",
+  "cancel": "Cancel"
 }

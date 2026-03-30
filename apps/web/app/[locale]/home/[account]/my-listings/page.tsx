@@ -70,7 +70,12 @@ async function MyListingsPage({ params }: MyListingsPageProps) {
       {listings && listings.length > 0 ? (
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {listings.map((listing) => (
-            <ListingCard key={listing.id} listing={listing} account={account} />
+            <ListingCard
+              key={listing.id}
+              listing={listing}
+              account={account}
+              showDelete
+            />
           ))}
         </div>
       ) : (

@@ -1,6 +1,6 @@
 'use client';
 
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -39,6 +39,7 @@ export function CreateListingForm({
   const supabase = useSupabase();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [listingType, setListingType] = useState('sell');
   const t = useTranslations('marketplace');
   const locale =
     useTranslations()('common.languageCode' as never) === 'fr' ? 'fr' : 'en';
@@ -50,6 +51,7 @@ export function CreateListingForm({
     const quantity = parseFloat(formData.get('quantity') as string);
     const unit = formData.get('unit') as string;
     const pricePerUnit = formData.get('price_per_unit') as string;
+    const transportPrice = formData.get('transport_price') as string;
     const listingType = formData.get('listing_type') as string;
     const locationCity = formData.get('location_city') as string;
     const locationCountry = formData.get('location_country') as string;
@@ -77,6 +79,7 @@ export function CreateListingForm({
       quantity,
       unit,
       price_per_unit: pricePerUnit ? parseFloat(pricePerUnit) : null,
+      transport_price: transportPrice ? parseFloat(transportPrice) : null,
       listing_type: listingType,
       location_city: locationCity || null,
       location_country: locationCountry || 'FR',
@@ -101,16 +104,17 @@ export function CreateListingForm({
         <Label htmlFor="listing_type">
           <Trans i18nKey="marketplace.listingType" />
         </Label>
-        <Select name="listing_type" defaultValue="sell">
+        <Select
+          name="listing_type"
+          defaultValue="sell"
+          onValueChange={(val) => val && setListingType(val)}
+        >
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="sell">
               <Trans i18nKey="marketplace.typeSell" />
-            </SelectItem>
-            <SelectItem value="buy">
-              <Trans i18nKey="marketplace.typeBuy" />
             </SelectItem>
             <SelectItem value="collect">
               <Trans i18nKey="marketplace.typeCollect" />
@@ -208,6 +212,22 @@ export function CreateListingForm({
           placeholder={t('pricePlaceholder')}
         />
       </div>
+
+      {listingType === 'collect' && (
+        <div className="space-y-2">
+          <Label htmlFor="transport_price">
+            <Trans i18nKey="marketplace.transportPrice" />
+          </Label>
+          <Input
+            id="transport_price"
+            name="transport_price"
+            type="number"
+            step="0.01"
+            min="0"
+            placeholder={t('transportPricePlaceholder')}
+          />
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">

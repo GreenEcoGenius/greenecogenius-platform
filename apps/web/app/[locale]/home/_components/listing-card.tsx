@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 
-import { MapPin, Package, Tag } from 'lucide-react';
+import { MapPin, Package, Tag, Truck } from 'lucide-react';
 
 import { Badge } from '@kit/ui/badge';
 import { Trans } from '@kit/ui/trans';
+
+import { DeleteListingButton } from './delete-listing-button';
 
 interface ListingCardProps {
   listing: Record<string, unknown> & {
@@ -15,6 +17,7 @@ interface ListingCardProps {
     quantity: number;
     unit: string;
     price_per_unit: number | null;
+    transport_price?: number | null;
     currency: string;
     location_city: string | null;
     location_country: string | null;
@@ -30,6 +33,7 @@ interface ListingCardProps {
       | null;
   };
   account: string;
+  showDelete?: boolean;
 }
 
 const typeColors: Record<string, string> = {
@@ -39,7 +43,15 @@ const typeColors: Record<string, string> = {
     'bg-[#e8943a]/10 text-[#c47a2a] dark:bg-[#e8943a]/20 dark:text-[#e8943a]',
 };
 
-export function ListingCard({ listing, account }: ListingCardProps) {
+function computeTotalPrice(listing: ListingCardProps['listing']) {
+  if (listing.price_per_unit === null || listing.price_per_unit <= 0) {
+    return null;
+  }
+
+  return listing.price_per_unit * listing.quantity;
+}
+
+export function ListingCard({ listing, account, showDelete }: ListingCardProps) {
   const typeLabel =
     listing.listing_type === 'sell'
       ? 'marketplace.typeSell'
@@ -51,11 +63,19 @@ export function ListingCard({ listing, account }: ListingCardProps) {
     ? `/home/${account}/marketplace/${listing.id}`
     : `/home/marketplace/${listing.id}`;
 
+  const totalPrice = computeTotalPrice(listing);
+
   return (
     <Link
       href={detailHref}
-      className="group bg-card rounded-lg border p-5 transition-shadow hover:shadow-md"
+      className="group bg-card relative rounded-lg border p-5 transition-shadow hover:shadow-md"
     >
+      {showDelete && (
+        <div className="absolute right-2 top-2 z-10">
+          <DeleteListingButton listingId={listing.id} />
+        </div>
+      )}
+
       <div className="flex items-start justify-between">
         <Badge className={typeColors[listing.listing_type] ?? 'bg-muted'}>
           <Trans i18nKey={typeLabel} />
@@ -100,10 +120,34 @@ export function ListingCard({ listing, account }: ListingCardProps) {
       </div>
 
       {listing.price_per_unit !== null && listing.price_per_unit > 0 && (
-        <div className="text-primary mt-3 text-sm font-semibold">
-          {listing.price_per_unit} {listing.currency}/{listing.unit}
+        <div className="mt-3 space-y-0.5">
+          <div className="text-primary text-sm font-semibold">
+            {listing.price_per_unit} {listing.currency}/{listing.unit}
+          </div>
+          {totalPrice !== null && (
+            <div className="text-muted-foreground text-xs">
+              <Trans i18nKey="marketplace.totalLabel" />
+              {' : '}
+              {totalPrice.toLocaleString('fr-FR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{' '}
+              {listing.currency}
+            </div>
+          )}
         </div>
       )}
+
+      {listing.listing_type === 'collect' &&
+        listing.transport_price != null &&
+        listing.transport_price > 0 && (
+          <div className="mt-1 flex items-center gap-1 text-xs text-[#e8943a]">
+            <Truck className="h-3 w-3" />
+            <Trans i18nKey="marketplace.transportLabel" />
+            {' : '}
+            {listing.transport_price} {listing.currency}
+          </div>
+        )}
     </Link>
   );
 }

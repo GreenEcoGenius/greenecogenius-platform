@@ -101,5 +101,13 @@
   "myCollections": "Mes Collectes",
   "noPurchases": "Aucun achat pour le moment",
   "noCollections": "Aucune collecte pour le moment",
-  "negotiable": "À négocier"
+  "negotiable": "À négocier",
+  "totalLabel": "Total",
+  "transportPrice": "Frais de transport (EUR)",
+  "transportPricePlaceholder": "Coût du transport pour la collecte",
+  "transportLabel": "Transport",
+  "deleteConfirmTitle": "Supprimer cette annonce ?",
+  "deleteConfirmDescription": "Cette action est irréversible. L'annonce sera définitivement supprimée.",
+  "delete": "Supprimer",
+  "cancel": "Annuler"
 }

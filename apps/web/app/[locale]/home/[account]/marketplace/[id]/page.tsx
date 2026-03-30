@@ -3,7 +3,7 @@ import { use } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { ArrowLeft, MapPin, Package, Tag } from 'lucide-react';
+import { ArrowLeft, MapPin, Package, Tag, Truck } from 'lucide-react';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Badge } from '@kit/ui/badge';
@@ -45,9 +45,14 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
   const typeLabel =
     listing.listing_type === 'sell'
       ? 'marketplace.typeSell'
-      : listing.listing_type === 'buy'
-        ? 'marketplace.typeBuy'
-        : 'marketplace.typeCollect';
+      : listing.listing_type === 'collect'
+        ? 'marketplace.typeCollect'
+        : 'marketplace.typeSell';
+
+  const totalPrice =
+    listing.price_per_unit !== null && listing.price_per_unit > 0
+      ? listing.price_per_unit * listing.quantity
+      : null;
 
   return (
     <PageBody>
@@ -83,6 +88,17 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
               <div className="text-muted-foreground text-sm">
                 / {listing.unit}
               </div>
+              {totalPrice !== null && (
+                <div className="text-muted-foreground mt-1 text-xs">
+                  <Trans i18nKey="marketplace.totalLabel" />
+                  {' : '}
+                  {totalPrice.toLocaleString('fr-FR', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}{' '}
+                  {listing.currency}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -140,6 +156,20 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
             </div>
           </div>
         </div>
+
+        {listing.listing_type === 'collect' &&
+          (listing as Record<string, unknown>).transport_price != null &&
+          ((listing as Record<string, unknown>).transport_price as number) > 0 && (
+            <div className="mt-4 flex items-center gap-2 rounded-lg border border-[#e8943a]/30 bg-[#e8943a]/5 p-3">
+              <Truck className="h-4 w-4 text-[#e8943a]" />
+              <span className="text-sm font-medium">
+                <Trans i18nKey="marketplace.transportLabel" />
+                {' : '}
+                {(listing as Record<string, unknown>).transport_price as number}{' '}
+                {listing.currency}
+              </span>
+            </div>
+          )}
 
         <div className="mt-8">
           <Button className="w-full">
