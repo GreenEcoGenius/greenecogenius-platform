@@ -86,23 +86,31 @@ export default async function DebugBillingPage() {
       checks.step5_issues = schemaResult.error.issues;
     }
 
-    // Step 6: Direct Stripe API test
+    // Step 6: Direct Stripe API test via gateway
     try {
-      const { default: Stripe } = await import('stripe');
-      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-        apiVersion: '2026-02-25.clover' as never,
-      });
-
-      // Simple test: list 1 product
-      const products = await stripe.products.list({ limit: 1 });
-      checks.step6_stripe_api = 'OK';
-      checks.step6_products_count = products.data.length;
-      checks.step6_first_product = products.data[0]?.name;
+      const service = await getBillingGatewayProvider(client);
+      // Try to get plan details (simpler than checkout)
+      const planDetails = await service.getPlanById(plan.lineItems[0]!.id);
+      checks.step6_plan_lookup = 'OK';
+      checks.step6_plan_details = planDetails;
     } catch (e) {
-      checks.step6_stripe_error = (e as Error).message;
-      checks.step6_stripe_error_type = (e as { type?: string }).type;
-      checks.step6_stripe_error_code = (e as { code?: string }).code;
-      checks.step6_stripe_status = (e as { statusCode?: number }).statusCode;
+      checks.step6_error = (e as Error).message;
+      checks.step6_error_name = (e as Error).name;
+      checks.step6_error_type = (e as { type?: string }).type;
+      checks.step6_error_code = (e as { code?: string }).code;
+      checks.step6_error_statusCode = (e as { statusCode?: number }).statusCode;
+
+      const cause = (e as Error).cause as Error | undefined;
+      if (cause) {
+        checks.step6_cause = {
+          message: cause.message,
+          name: cause.name,
+          type: (cause as { type?: string }).type,
+          code: (cause as { code?: string }).code,
+          statusCode: (cause as { statusCode?: number }).statusCode,
+          rawType: (cause as { rawType?: string }).rawType,
+        };
+      }
     }
 
     // Step 7: Try full checkout
