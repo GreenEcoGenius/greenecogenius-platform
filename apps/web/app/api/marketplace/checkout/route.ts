@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Create Stripe checkout session directly
-  const { default: Stripe } = await import('stripe');
+  const Stripe = (await import('stripe')).default;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
   type LineItem = {
