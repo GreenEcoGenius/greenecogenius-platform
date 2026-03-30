@@ -41,5 +41,7 @@
     "disputed": "Litige",
     "refunded": "Remboursé",
     "cancelled": "Annulé"
-  }
+  },
+  "upgradeRequired": "Cette fonctionnalité nécessite un abonnement supérieur.",
+  "upgradeTo": "Passer au plan"
 }

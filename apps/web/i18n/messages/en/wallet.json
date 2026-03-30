@@ -41,5 +41,7 @@
     "disputed": "Disputed",
     "refunded": "Refunded",
     "cancelled": "Cancelled"
-  }
+  },
+  "upgradeRequired": "This feature requires a higher plan.",
+  "upgradeTo": "Upgrade to"
 }

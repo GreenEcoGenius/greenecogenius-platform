@@ -181,6 +181,135 @@ export async function POST(req: NextRequest) {
 
       break;
     }
+
+    // ========================================
+    // SUBSCRIPTION EVENTS
+    // ========================================
+
+    case 'checkout.session.completed': {
+      const session = event.data
+        .object as import('stripe').Stripe.Checkout.Session;
+
+      // Only handle subscription checkouts
+      if (session.mode !== 'subscription') break;
+
+      const accountId = session.metadata?.account_id;
+      const planId = session.metadata?.plan_id;
+      const subscriptionId =
+        typeof session.subscription === 'string'
+          ? session.subscription
+          : session.subscription?.id;
+      const customerId =
+        typeof session.customer === 'string'
+          ? session.customer
+          : session.customer?.id;
+
+      if (accountId && planId && subscriptionId) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (adminClient as any)
+          .from('organization_subscriptions')
+          .upsert(
+            {
+              account_id: accountId,
+              plan_id: planId,
+              stripe_subscription_id: subscriptionId,
+              stripe_customer_id: customerId,
+              status: 'trialing',
+            },
+            { onConflict: 'account_id' },
+          );
+      }
+      break;
+    }
+
+    case 'customer.subscription.updated': {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const subscription = event.data.object as any;
+      const stripeSubId = subscription.id as string;
+      const status = subscription.status as string;
+
+      const mappedStatus =
+        status === 'active'
+          ? 'active'
+          : status === 'trialing'
+            ? 'trialing'
+            : status === 'past_due'
+              ? 'past_due'
+              : status === 'canceled' || status === 'unpaid'
+                ? 'cancelled'
+                : 'active';
+
+      const updateData: Record<string, unknown> = { status: mappedStatus };
+
+      if (subscription.current_period_start) {
+        updateData.current_period_start = new Date(
+          subscription.current_period_start * 1000,
+        ).toISOString();
+      }
+      if (subscription.current_period_end) {
+        updateData.current_period_end = new Date(
+          subscription.current_period_end * 1000,
+        ).toISOString();
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (adminClient as any)
+        .from('organization_subscriptions')
+        .update(updateData)
+        .eq('stripe_subscription_id', stripeSubId);
+
+      break;
+    }
+
+    case 'customer.subscription.deleted': {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const subscription = event.data.object as any;
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (adminClient as any)
+        .from('organization_subscriptions')
+        .update({
+          status: 'cancelled',
+          cancelled_at: new Date().toISOString(),
+        })
+        .eq('stripe_subscription_id', subscription.id);
+
+      break;
+    }
+
+    case 'invoice.payment_succeeded': {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const invoice = event.data.object as any;
+      const stripeSubId = invoice.subscription
+        ? String(invoice.subscription)
+        : null;
+
+      if (stripeSubId) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (adminClient as any)
+          .from('organization_subscriptions')
+          .update({ status: 'active' })
+          .eq('stripe_subscription_id', stripeSubId);
+      }
+      break;
+    }
+
+    case 'invoice.payment_failed': {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const invoice = event.data.object as any;
+      const stripeSubId = invoice.subscription
+        ? String(invoice.subscription)
+        : null;
+
+      if (stripeSubId) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (adminClient as any)
+          .from('organization_subscriptions')
+          .update({ status: 'past_due' })
+          .eq('stripe_subscription_id', stripeSubId);
+      }
+      break;
+    }
   }
 
   return NextResponse.json({ received: true });
