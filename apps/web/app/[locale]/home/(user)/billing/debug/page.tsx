@@ -86,7 +86,26 @@ export default async function DebugBillingPage() {
       checks.step5_issues = schemaResult.error.issues;
     }
 
-    // Step 6: Try full checkout
+    // Step 6: Direct Stripe API test
+    try {
+      const { default: Stripe } = await import('stripe');
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2026-02-25.clover' as never,
+      });
+
+      // Simple test: list 1 product
+      const products = await stripe.products.list({ limit: 1 });
+      checks.step6_stripe_api = 'OK';
+      checks.step6_products_count = products.data.length;
+      checks.step6_first_product = products.data[0]?.name;
+    } catch (e) {
+      checks.step6_stripe_error = (e as Error).message;
+      checks.step6_stripe_error_type = (e as { type?: string }).type;
+      checks.step6_stripe_error_code = (e as { code?: string }).code;
+      checks.step6_stripe_status = (e as { statusCode?: number }).statusCode;
+    }
+
+    // Step 7: Try full checkout
     try {
       const service = await getBillingGatewayProvider(client);
 
@@ -100,24 +119,16 @@ export default async function DebugBillingPage() {
         enableDiscountField: product.enableDiscountField,
       });
 
-      checks.step6_checkout = 'OK';
-      checks.step6_token = result.checkoutToken ? 'received' : 'missing';
+      checks.step7_checkout = 'OK';
+      checks.step7_token = result.checkoutToken ? 'received' : 'missing';
     } catch (e) {
-      checks.step6_error = (e as Error).message;
-      checks.step6_error_name = (e as Error).name;
+      checks.step7_error = (e as Error).message;
+      checks.step7_error_name = (e as Error).name;
 
       const cause = (e as Error).cause as Error | undefined;
       if (cause) {
-        checks.step6_cause_message = cause.message;
-        checks.step6_cause_name = cause.name;
-
-        if (cause.name === 'ZodError') {
-          checks.step6_cause_zod = (cause as { issues?: unknown[] }).issues;
-        }
-      }
-
-      if ((e as Error).name === 'ZodError') {
-        checks.step6_zod_issues = (e as { issues?: unknown[] }).issues;
+        checks.step7_cause_message = cause.message;
+        checks.step7_cause_name = cause.name;
       }
     }
   } catch (e) {
