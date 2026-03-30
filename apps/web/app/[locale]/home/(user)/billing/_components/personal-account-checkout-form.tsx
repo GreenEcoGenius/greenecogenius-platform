@@ -5,7 +5,6 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import { TriangleAlert } from 'lucide-react';
-import { useAction } from 'next-safe-action/hooks';
 
 import { PlanPicker } from '@kit/billing-gateway/components';
 import { useAppEvents } from '@kit/shared/events';
@@ -21,8 +20,6 @@ import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
 
 import billingConfig from '~/config/billing.config';
-
-import { createPersonalAccountCheckoutSession } from '../_lib/server/server-actions';
 
 const EmbeddedCheckout = dynamic(
   async () => {
@@ -41,25 +38,42 @@ export function PersonalAccountCheckoutForm(props: {
   customerId: string | null | undefined;
 }) {
   const [error, setError] = useState(false);
+  const [errorDetails, setErrorDetails] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState(false);
   const appEvents = useAppEvents();
 
   const [checkoutToken, setCheckoutToken] = useState<string | undefined>(
     undefined,
   );
 
-  const { execute, isPending } = useAction(
-    createPersonalAccountCheckoutSession,
-    {
-      onSuccess: ({ data }) => {
-        if (data?.checkoutToken) {
-          setCheckoutToken(data.checkoutToken);
-        }
-      },
-      onError: () => {
+  const execute = async (params: { planId: string; productId: string }) => {
+    setIsPending(true);
+    setError(false);
+    setErrorDetails(null);
+
+    try {
+      const res = await fetch('/api/billing/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.checkoutToken) {
         setError(true);
-      },
-    },
-  );
+        setErrorDetails(JSON.stringify(data, null, 2));
+        return;
+      }
+
+      setCheckoutToken(data.checkoutToken);
+    } catch (e) {
+      setError(true);
+      setErrorDetails((e as Error).message);
+    } finally {
+      setIsPending(false);
+    }
+  };
 
   // only allow trial if the user is not already a customer
   const canStartTrial = !props.customerId;
@@ -91,7 +105,7 @@ export function PersonalAccountCheckoutForm(props: {
 
         <CardContent className={'space-y-4'}>
           <If condition={error}>
-            <ErrorAlert />
+            <ErrorAlert details={errorDetails} />
           </If>
 
           <PlanPicker
@@ -116,7 +130,7 @@ export function PersonalAccountCheckoutForm(props: {
   );
 }
 
-function ErrorAlert() {
+function ErrorAlert({ details }: { details?: string | null }) {
   return (
     <Alert variant={'destructive'}>
       <TriangleAlert className={'h-4'} />
@@ -127,6 +141,18 @@ function ErrorAlert() {
 
       <AlertDescription>
         <Trans i18nKey={'billing.planPickerAlertErrorDescription'} />
+        {details && (
+          <pre
+            style={{
+              marginTop: 8,
+              fontSize: 11,
+              whiteSpace: 'pre-wrap',
+              wordBreak: 'break-all',
+            }}
+          >
+            {details}
+          </pre>
+        )}
       </AlertDescription>
     </Alert>
   );
