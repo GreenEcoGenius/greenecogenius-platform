@@ -1,4 +1,4 @@
-import { CreditCard, Home, PackageSearch, Recycle, User } from 'lucide-react';
+import { CreditCard, Home, PackageSearch, Recycle, User, Wallet } from 'lucide-react';
 import * as z from 'zod';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
@@ -27,6 +27,11 @@ const routes = [
         label: 'common.routes.myListings',
         path: '/home/my-listings',
         Icon: <PackageSearch className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.wallet',
+        path: '/home/wallet',
+        Icon: <Wallet className={iconClasses} />,
       },
     ],
   },

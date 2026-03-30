@@ -68,7 +68,8 @@
     "profile": "Profil",
     "application": "Application",
     "marketplace": "Le Comptoir Circulaire",
-    "myListings": "Mes Annonces"
+    "myListings": "Mes Annonces",
+    "wallet": "Portefeuille"
   },
   "roles": {
     "owner": {
