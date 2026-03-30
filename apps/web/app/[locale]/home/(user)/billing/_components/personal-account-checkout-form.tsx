@@ -5,7 +5,6 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import { TriangleAlert } from 'lucide-react';
-import { useAction } from 'next-safe-action/hooks';
 
 import { PlanPicker } from '@kit/billing-gateway/components';
 import { useAppEvents } from '@kit/shared/events';
@@ -21,8 +20,6 @@ import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
 
 import billingConfig from '~/config/billing.config';
-
-import { createPersonalAccountCheckoutSession } from '../_lib/server/server-actions';
 
 const EmbeddedCheckout = dynamic(
   async () => {
@@ -41,25 +38,38 @@ export function PersonalAccountCheckoutForm(props: {
   customerId: string | null | undefined;
 }) {
   const [error, setError] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const appEvents = useAppEvents();
 
   const [checkoutToken, setCheckoutToken] = useState<string | undefined>(
     undefined,
   );
 
-  const { execute, isPending } = useAction(
-    createPersonalAccountCheckoutSession,
-    {
-      onSuccess: ({ data }) => {
-        if (data?.checkoutToken) {
-          setCheckoutToken(data.checkoutToken);
-        }
-      },
-      onError: () => {
+  const execute = async (params: { planId: string; productId: string }) => {
+    setIsPending(true);
+    setError(false);
+
+    try {
+      const res = await fetch('/api/billing/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.checkoutToken) {
         setError(true);
-      },
-    },
-  );
+        return;
+      }
+
+      setCheckoutToken(data.checkoutToken);
+    } catch {
+      setError(true);
+    } finally {
+      setIsPending(false);
+    }
+  };
 
   // only allow trial if the user is not already a customer
   const canStartTrial = !props.customerId;
