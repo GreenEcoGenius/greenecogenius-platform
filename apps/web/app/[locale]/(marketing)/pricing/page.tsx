@@ -1,35 +1,39 @@
 import { getTranslations } from 'next-intl/server';
 
-import { PricingTable } from '@kit/billing-gateway/marketing';
+import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
-import { SitePageHeader } from '~/(marketing)/_components/site-page-header';
-import billingConfig from '~/config/billing.config';
-import pathsConfig from '~/config/paths.config';
+import { PricingContent } from './_components/pricing-content';
 
 export const generateMetadata = async () => {
-  const t = await getTranslations('marketing');
+  const t = await getTranslations('pricingPage');
 
   return {
-    title: t('pricing'),
+    title: t('metaTitle'),
+    description: t('metaDescription'),
   };
 };
 
-const paths = {
-  signUp: pathsConfig.auth.signUp,
-  return: pathsConfig.app.home,
-};
-
 async function PricingPage() {
-  const t = await getTranslations('marketing');
+  const adminClient = getSupabaseServerAdminClient();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: plans } = await (adminClient as any)
+    .from('subscription_plans')
+    .select('*')
+    .eq('is_active', true)
+    .order('sort_order');
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: commissionConfigs } = await (adminClient as any)
+    .from('commission_config')
+    .select('*')
+    .order('is_active', { ascending: false });
 
   return (
-    <div className={'flex flex-col space-y-8'}>
-      <SitePageHeader title={t('pricing')} subtitle={t('pricingSubtitle')} />
-
-      <div className={'container mx-auto pb-8 xl:pb-16'}>
-        <PricingTable paths={paths} config={billingConfig} />
-      </div>
-    </div>
+    <PricingContent
+      plans={plans ?? []}
+      commissionConfigs={commissionConfigs ?? []}
+    />
   );
 }
 
