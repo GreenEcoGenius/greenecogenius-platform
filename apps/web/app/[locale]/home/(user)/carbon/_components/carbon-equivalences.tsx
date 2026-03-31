@@ -1,7 +1,5 @@
 'use client';
 
-import { Car, Plane, TreePine } from 'lucide-react';
-
 import { Card, CardContent } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
 
@@ -10,49 +8,59 @@ interface CarbonEquivalencesProps {
 }
 
 export function CarbonEquivalences({ co2Avoided }: CarbonEquivalencesProps) {
-  const treesPlanted = Math.round(co2Avoided / 25);
-  const carKmAvoided = Math.round(co2Avoided / 0.21);
-  const flightsAvoided = (co2Avoided / 1000).toFixed(1);
+  const co2Kg = co2Avoided;
+
+  const equivalences = [
+    {
+      emoji: '\u{1F333}',
+      value: Math.round(co2Kg / 25),
+      labelKey: 'carbon:treesPlanted',
+    },
+    {
+      emoji: '\u{1F697}',
+      value: Math.round(co2Kg / 0.217),
+      labelKey: 'carbon:carKmAvoided',
+    },
+    {
+      emoji: '\u{2708}\u{FE0F}',
+      value: parseFloat((co2Kg / 1000).toFixed(1)),
+      labelKey: 'carbon:flightsAvoided',
+    },
+    {
+      emoji: '\u{1F3E0}',
+      value: parseFloat((co2Kg / 2500).toFixed(2)),
+      labelKey: 'carbon:homesEquiv',
+    },
+    {
+      emoji: '\u{1F4F1}',
+      value: Math.round(co2Kg / 0.008),
+      labelKey: 'carbon:smartphonesEquiv',
+    },
+  ];
 
   return (
     <div>
       <h3 className="mb-4 text-lg font-semibold">
         <Trans i18nKey="carbon:equivalences" />
       </h3>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <Card>
-          <CardContent className="flex flex-col items-center gap-2 pt-6">
-            <TreePine className="h-10 w-10 text-green-600" />
-            <div className="text-3xl font-bold">
-              {treesPlanted.toLocaleString('fr-FR')}
-            </div>
-            <p className="text-muted-foreground text-center text-sm">
-              <Trans i18nKey="carbon:treesPlanted" />
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex flex-col items-center gap-2 pt-6">
-            <Car className="h-10 w-10 text-blue-600" />
-            <div className="text-3xl font-bold">
-              {carKmAvoided.toLocaleString('fr-FR')}
-            </div>
-            <p className="text-muted-foreground text-center text-sm">
-              <Trans i18nKey="carbon:carKmAvoided" />
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex flex-col items-center gap-2 pt-6">
-            <Plane className="h-10 w-10 text-orange-600" />
-            <div className="text-3xl font-bold">{flightsAvoided}</div>
-            <p className="text-muted-foreground text-center text-sm">
-              <Trans i18nKey="carbon:flightsAvoided" />
-            </p>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+        {equivalences.map((eq) => (
+          <Card key={eq.labelKey}>
+            <CardContent className="flex flex-col items-center gap-2 p-5">
+              <span className="text-4xl" role="img">
+                {eq.emoji}
+              </span>
+              <div className="text-2xl font-bold">
+                {typeof eq.value === 'number'
+                  ? eq.value.toLocaleString('fr-FR')
+                  : eq.value}
+              </div>
+              <p className="text-muted-foreground text-center text-xs leading-tight">
+                <Trans i18nKey={eq.labelKey} />
+              </p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );
