@@ -15,10 +15,7 @@ export function LogoImage({
       alt="GreenEcoGenius"
       width={4232}
       height={2362}
-      className={cn(
-        'h-20 w-auto sm:h-24 lg:h-28',
-        className,
-      )}
+      className={cn('h-20 w-auto sm:h-24 lg:h-28', className)}
       priority
     />
   );

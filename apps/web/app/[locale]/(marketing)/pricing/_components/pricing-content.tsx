@@ -104,7 +104,10 @@ const faqKeys = [
   'pricingPage.faq5',
 ];
 
-export function PricingContent({ plans, commissionConfigs }: PricingContentProps) {
+export function PricingContent({
+  plans,
+  commissionConfigs,
+}: PricingContentProps) {
   const [annual, setAnnual] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -165,11 +168,23 @@ export function PricingContent({ plans, commissionConfigs }: PricingContentProps
           </h2>
           <div className="flex flex-wrap justify-center gap-3">
             {[
-              { icon: <Link2 className="h-4 w-4" />, key: 'pricingPage.tagBlockchain' },
+              {
+                icon: <Link2 className="h-4 w-4" />,
+                key: 'pricingPage.tagBlockchain',
+              },
               { icon: <Leaf className="h-4 w-4" />, key: 'pricingPage.tagCO2' },
-              { icon: <FileText className="h-4 w-4" />, key: 'pricingPage.tagCertificate' },
-              { icon: <BarChart3 className="h-4 w-4" />, key: 'pricingPage.tagDashboard' },
-              { icon: <ArrowRight className="h-4 w-4" />, key: 'pricingPage.tagExport' },
+              {
+                icon: <FileText className="h-4 w-4" />,
+                key: 'pricingPage.tagCertificate',
+              },
+              {
+                icon: <BarChart3 className="h-4 w-4" />,
+                key: 'pricingPage.tagDashboard',
+              },
+              {
+                icon: <ArrowRight className="h-4 w-4" />,
+                key: 'pricingPage.tagExport',
+              },
             ].map((tag, i) => (
               <span
                 key={i}
@@ -199,7 +214,11 @@ export function PricingContent({ plans, commissionConfigs }: PricingContentProps
               <div className="mt-4">
                 <span className="text-4xl font-bold">
                   {essentiel
-                    ? formatPrice(annual ? Math.round(essentiel.annual_price! / 12) : essentiel.monthly_price!)
+                    ? formatPrice(
+                        annual
+                          ? Math.round(essentiel.annual_price! / 12)
+                          : essentiel.monthly_price!,
+                      )
                     : '149'}
                   €
                 </span>
@@ -252,7 +271,11 @@ export function PricingContent({ plans, commissionConfigs }: PricingContentProps
               <div className="mt-4">
                 <span className="text-4xl font-bold">
                   {avance
-                    ? formatPrice(annual ? Math.round(avance.annual_price! / 12) : avance.monthly_price!)
+                    ? formatPrice(
+                        annual
+                          ? Math.round(avance.annual_price! / 12)
+                          : avance.monthly_price!,
+                      )
                     : '449'}
                   €
                 </span>
@@ -345,9 +368,21 @@ export function PricingContent({ plans, commissionConfigs }: PricingContentProps
 
           <div className="mx-auto grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
             {[
-              { rate: '8%', range: 'pricingPage.tier1Range', icon: <Recycle className="h-6 w-6" /> },
-              { rate: '5%', range: 'pricingPage.tier2Range', icon: <TrendingDown className="h-6 w-6" /> },
-              { rate: '3%', range: 'pricingPage.tier3Range', icon: <Globe className="h-6 w-6" /> },
+              {
+                rate: '8%',
+                range: 'pricingPage.tier1Range',
+                icon: <Recycle className="h-6 w-6" />,
+              },
+              {
+                rate: '5%',
+                range: 'pricingPage.tier2Range',
+                icon: <TrendingDown className="h-6 w-6" />,
+              },
+              {
+                rate: '3%',
+                range: 'pricingPage.tier3Range',
+                icon: <Globe className="h-6 w-6" />,
+              },
             ].map((tier, i) => (
               <Card key={i} className="text-center">
                 <CardContent className="pt-6">
@@ -429,7 +464,10 @@ export function PricingContent({ plans, commissionConfigs }: PricingContentProps
 
           <div className="space-y-3">
             {faqKeys.map((key, i) => (
-              <div key={i} className="rounded-lg border bg-white dark:bg-gray-950">
+              <div
+                key={i}
+                className="rounded-lg border bg-white dark:bg-gray-950"
+              >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="flex w-full items-center justify-between p-4 text-left"
@@ -442,7 +480,7 @@ export function PricingContent({ plans, commissionConfigs }: PricingContentProps
                   />
                 </button>
                 {openFaq === i && (
-                  <div className="text-muted-foreground border-t px-4 pb-4 pt-3 text-sm">
+                  <div className="text-muted-foreground border-t px-4 pt-3 pb-4 text-sm">
                     <Trans i18nKey={`${key}A`} />
                   </div>
                 )}

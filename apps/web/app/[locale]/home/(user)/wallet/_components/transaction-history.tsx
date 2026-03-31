@@ -54,10 +54,7 @@ function formatDate(dateStr: string): string {
   });
 }
 
-const statusConfig: Record<
-  string,
-  { color: string; icon: React.ReactNode }
-> = {
+const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
   pending_payment: {
     color: 'bg-gray-100 text-gray-800',
     icon: <Clock className="h-3 w-3" />,
@@ -91,8 +88,7 @@ function TransactionRow({
   tx: Transaction;
   role: 'seller' | 'buyer';
 }) {
-  const config =
-    statusConfig[tx.status] ?? statusConfig['pending_payment']!;
+  const config = statusConfig[tx.status] ?? statusConfig['pending_payment']!;
 
   return (
     <div className="flex items-center justify-between border-b py-3 last:border-0">
@@ -130,7 +126,8 @@ function TransactionRow({
           </p>
           {role === 'seller' && tx.platform_fee > 0 && (
             <p className="text-muted-foreground text-xs">
-              <Trans i18nKey="wallet.feeDeducted" /> {formatCents(tx.platform_fee)}
+              <Trans i18nKey="wallet.feeDeducted" />{' '}
+              {formatCents(tx.platform_fee)}
             </p>
           )}
         </div>
@@ -149,8 +146,7 @@ export function TransactionHistory({
 }: TransactionHistoryProps) {
   const [tab, setTab] = useState<'sales' | 'purchases'>('sales');
 
-  const transactions =
-    tab === 'sales' ? sellerTransactions : buyerTransactions;
+  const transactions = tab === 'sales' ? sellerTransactions : buyerTransactions;
   const role = tab === 'sales' ? 'seller' : 'buyer';
 
   return (
@@ -189,9 +185,7 @@ export function TransactionHistory({
           <p className="text-muted-foreground py-8 text-center">
             <Trans
               i18nKey={
-                tab === 'sales'
-                  ? 'wallet.noSales'
-                  : 'wallet.noPurchases'
+                tab === 'sales' ? 'wallet.noSales' : 'wallet.noPurchases'
               }
             />
           </p>

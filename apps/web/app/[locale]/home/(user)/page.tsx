@@ -92,10 +92,7 @@ async function UserHomePage() {
 
   return (
     <PageBody>
-      <HomeLayoutPageHeader
-        title="Le Comptoir Circulaire"
-        description=""
-      />
+      <HomeLayoutPageHeader title="Le Comptoir Circulaire" description="" />
 
       <div className="flex flex-col gap-6">
         {/* Stats Cards */}

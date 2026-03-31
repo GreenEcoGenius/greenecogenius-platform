@@ -113,13 +113,11 @@ export function HeroVisual() {
               ref={(el) => {
                 nodeRefs.current[i] = el;
               }}
-              className="absolute -translate-x-1/2 -translate-y-1/2 will-change-transform transition-none"
+              className="absolute -translate-x-1/2 -translate-y-1/2 transition-none will-change-transform"
               style={{ left: pos.left, top: pos.top }}
             >
               <div className="animate-counter-orbit flex flex-col items-center gap-1.5">
-                <div
-                  className="flex h-14 w-14 items-center justify-center rounded-xl border border-white/15 bg-white/10 shadow-lg backdrop-blur-md sm:h-16 sm:w-16 lg:h-18 lg:w-18"
-                >
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-white/15 bg-white/10 shadow-lg backdrop-blur-md sm:h-16 sm:w-16 lg:h-18 lg:w-18">
                   <node.icon
                     className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8"
                     style={{ color: node.color }}

@@ -344,11 +344,7 @@ export function ESGFormWizard() {
 
       {/* Navigation buttons */}
       <div className="flex justify-between">
-        <Button
-          variant="outline"
-          onClick={goBack}
-          disabled={currentStep === 0}
-        >
+        <Button variant="outline" onClick={goBack} disabled={currentStep === 0}>
           <Trans i18nKey="esg:back" />
         </Button>
 

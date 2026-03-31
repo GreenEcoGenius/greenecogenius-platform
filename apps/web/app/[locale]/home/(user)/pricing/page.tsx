@@ -99,8 +99,7 @@ async function PricingPage() {
                       <span className="text-4xl font-bold">{plan.price}€</span>
                       <span className="text-muted-foreground">/mois</span>
                       <p className="text-muted-foreground mt-1 text-sm">
-                        <Trans i18nKey="pricing.orAnnual" />{' '}
-                        {plan.annual}€/an
+                        <Trans i18nKey="pricing.orAnnual" /> {plan.annual}€/an
                       </p>
                     </>
                   ) : (

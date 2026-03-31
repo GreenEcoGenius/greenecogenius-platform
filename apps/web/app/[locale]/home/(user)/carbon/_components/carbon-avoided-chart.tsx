@@ -129,9 +129,7 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
               axisLine={false}
               tickFormatter={(v: number) => `${fmtKg(v)}`}
             />
-            <Tooltip
-              content={<CustomTooltip />}
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend
               verticalAlign="top"
               height={36}

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 
-import { getTranslations } from 'next-intl/server';
 import {
   BarChart3,
   ClipboardList,
@@ -8,6 +7,7 @@ import {
   Lightbulb,
   TrendingDown,
 } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -166,9 +166,7 @@ function LatestReportCard({ report }: { report: ReportData }) {
               <Badge variant={'outline'}>{report.reporting_year}</Badge>
             )}
           </div>
-          <Badge
-            variant={report.status === 'ready' ? 'default' : 'outline'}
-          >
+          <Badge variant={report.status === 'ready' ? 'default' : 'outline'}>
             {report.status === 'ready' ? (
               <Trans i18nKey="esg:reportReady" />
             ) : (

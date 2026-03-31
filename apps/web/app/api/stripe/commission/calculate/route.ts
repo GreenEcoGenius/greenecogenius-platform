@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 export async function GET(req: NextRequest) {
   const client = getSupabaseServerClient();
@@ -24,10 +24,7 @@ export async function GET(req: NextRequest) {
   const amountCents = parseInt(amountParam, 10);
 
   if (isNaN(amountCents) || amountCents <= 0) {
-    return NextResponse.json(
-      { error: 'Invalid amount' },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
   }
 
   const adminClient = getSupabaseServerAdminClient();
@@ -56,7 +53,8 @@ export async function GET(req: NextRequest) {
     .eq('id', result.config_id)
     .single();
 
-  const isPromo = configData?.commission_type === 'flat' && configData?.valid_until;
+  const isPromo =
+    configData?.commission_type === 'flat' && configData?.valid_until;
 
   return NextResponse.json({
     total_amount: amountCents,

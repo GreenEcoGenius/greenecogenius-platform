@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 interface CsrdIndicator {
   code: string;
@@ -66,13 +66,10 @@ export async function GET() {
 
   const hasResourceData =
     esg &&
-    ((esg.waste_tonnes ?? 0) > 0 ||
-      (esg.platform_tonnes_recycled ?? 0) > 0);
+    ((esg.waste_tonnes ?? 0) > 0 || (esg.platform_tonnes_recycled ?? 0) > 0);
 
   const hasSocialData =
-    esg &&
-    ((esg.nb_employees ?? 0) > 0 &&
-      (esg.commuting_employees ?? 0) > 0);
+    esg && (esg.nb_employees ?? 0) > 0 && (esg.commuting_employees ?? 0) > 0;
 
   const indicators: CsrdIndicator[] = [
     {

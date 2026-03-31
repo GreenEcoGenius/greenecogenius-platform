@@ -206,18 +206,16 @@ export async function POST(req: NextRequest) {
 
       if (accountId && planId && subscriptionId) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (adminClient as any)
-          .from('organization_subscriptions')
-          .upsert(
-            {
-              account_id: accountId,
-              plan_id: planId,
-              stripe_subscription_id: subscriptionId,
-              stripe_customer_id: customerId,
-              status: 'trialing',
-            },
-            { onConflict: 'account_id' },
-          );
+        await (adminClient as any).from('organization_subscriptions').upsert(
+          {
+            account_id: accountId,
+            plan_id: planId,
+            stripe_subscription_id: subscriptionId,
+            stripe_customer_id: customerId,
+            status: 'trialing',
+          },
+          { onConflict: 'account_id' },
+        );
       }
       break;
     }

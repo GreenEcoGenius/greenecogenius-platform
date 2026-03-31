@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 interface EsgData {
   natural_gas_kwh: number;
@@ -99,9 +99,18 @@ function calculateEmissions(esg: EsgData) {
     per_employee_kg,
     per_employee_tonnes: per_employee_kg / 1000,
     breakdown: {
-      scope1: { natural_gas: scope1_natural_gas, fuel: scope1_fuel, other: scope1_other },
+      scope1: {
+        natural_gas: scope1_natural_gas,
+        fuel: scope1_fuel,
+        other: scope1_other,
+      },
       scope2: { electricity: scope2_electricity, heating: scope2_heating },
-      scope3: { travel: scope3_travel, commuting: scope3_commuting, goods: scope3_goods, waste: scope3_waste },
+      scope3: {
+        travel: scope3_travel,
+        commuting: scope3_commuting,
+        goods: scope3_goods,
+        waste: scope3_waste,
+      },
     },
   };
 }
@@ -219,7 +228,10 @@ export async function POST(req: NextRequest) {
 
   if (!esgRows || esgRows.length === 0) {
     return NextResponse.json(
-      { error: 'No ESG data found for this year. Please fill in your data first.' },
+      {
+        error:
+          'No ESG data found for this year. Please fill in your data first.',
+      },
       { status: 404 },
     );
   }
@@ -255,7 +267,10 @@ export async function POST(req: NextRequest) {
   // Apply custom factors if available
   if (factors && factors.length > 0) {
     for (const factor of factors) {
-      if (factor.factor_key === 'electricity' && factor.source === esg.electricity_source) {
+      if (
+        factor.factor_key === 'electricity' &&
+        factor.source === esg.electricity_source
+      ) {
         ELEC_FACTORS[esg.electricity_source] = factor.value_kg_co2;
       }
 

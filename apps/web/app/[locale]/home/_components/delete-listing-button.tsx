@@ -65,11 +65,7 @@ export function DeleteListingButton({ listingId }: { listingId: string }) {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setOpen(false)}
-            >
+            <Button variant="outline" size="sm" onClick={() => setOpen(false)}>
               <Trans i18nKey="marketplace.cancel" />
             </Button>
             <Button

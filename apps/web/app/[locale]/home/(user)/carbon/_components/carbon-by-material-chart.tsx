@@ -1,6 +1,13 @@
 'use client';
 
-import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from 'recharts';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
@@ -38,8 +45,15 @@ const FALLBACK_COLORS = [
 ];
 
 function getColor(category: string, index: number): string {
-  const key = category.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  return MATERIAL_COLORS[key] ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length] ?? '#6B7280';
+  const key = category
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+  return (
+    MATERIAL_COLORS[key] ??
+    FALLBACK_COLORS[index % FALLBACK_COLORS.length] ??
+    '#6B7280'
+  );
 }
 
 function fmtKg(value: number): string {
@@ -67,7 +81,12 @@ function CustomTooltip({
       <p className="mb-1 text-sm font-semibold capitalize">{item.category}</p>
       <p className="text-sm">CO₂ évité: {fmtKg(item.co2_avoided)} kg</p>
       <p className="text-muted-foreground text-sm">
-        Poids: {(item.weight / 1000).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} t
+        Poids:{' '}
+        {(item.weight / 1000).toLocaleString('fr-FR', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}{' '}
+        t
       </p>
     </div>
   );

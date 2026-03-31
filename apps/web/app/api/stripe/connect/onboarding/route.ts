@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import appConfig from '~/config/app.config';
 
@@ -79,8 +79,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ url: accountLink.url });
   } catch (err: unknown) {
-    const message =
-      err instanceof Error ? err.message : 'Unknown error';
+    const message = err instanceof Error ? err.message : 'Unknown error';
     console.error('Stripe Connect onboarding error:', message);
     return NextResponse.json({ error: message }, { status: 400 });
   }

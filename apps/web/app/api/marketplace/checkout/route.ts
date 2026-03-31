@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import * as z from 'zod';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import appConfig from '~/config/app.config';
 
@@ -92,8 +92,9 @@ export async function POST(req: NextRequest) {
   const commissionRate = commission?.commission_rate
     ? Number(commission.commission_rate)
     : 0.05;
-  const platformFee = commission?.commission_amount ?? Math.round(totalAmount * commissionRate);
-  const sellerAmount = commission?.seller_amount ?? (totalAmount - platformFee);
+  const platformFee =
+    commission?.commission_amount ?? Math.round(totalAmount * commissionRate);
+  const sellerAmount = commission?.seller_amount ?? totalAmount - platformFee;
   const commissionConfigId = commission?.config_id ?? null;
   const commissionConfigName = commission?.config_name ?? 'unknown';
 

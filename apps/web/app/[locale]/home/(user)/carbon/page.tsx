@@ -75,18 +75,31 @@ async function CarbonPage() {
   const certs = certificates ?? [];
 
   // Aggregate totals
-  const totalAvoided = records.reduce((sum, r) => sum + (r.co2_avoided ?? 0), 0);
-  const totalTransport = records.reduce((sum, r) => sum + (r.co2_transport ?? 0), 0);
+  const totalAvoided = records.reduce(
+    (sum, r) => sum + (r.co2_avoided ?? 0),
+    0,
+  );
+  const totalTransport = records.reduce(
+    (sum, r) => sum + (r.co2_transport ?? 0),
+    0,
+  );
   const totalNet = records.reduce((sum, r) => sum + (r.co2_net ?? 0), 0);
   const totalWeightKg = records.reduce((sum, r) => sum + (r.weight_kg ?? 0), 0);
   const totalWeightTonnes = totalWeightKg / 1000;
 
   // Aggregate by month for chart
-  const monthlyMap = new Map<string, { co2_avoided: number; co2_transport: number; co2_net: number }>();
+  const monthlyMap = new Map<
+    string,
+    { co2_avoided: number; co2_transport: number; co2_net: number }
+  >();
   for (const r of records) {
     const month = (r.created_at ?? '').slice(0, 7); // "2026-01"
     if (!month) continue;
-    const existing = monthlyMap.get(month) ?? { co2_avoided: 0, co2_transport: 0, co2_net: 0 };
+    const existing = monthlyMap.get(month) ?? {
+      co2_avoided: 0,
+      co2_transport: 0,
+      co2_net: 0,
+    };
     monthlyMap.set(month, {
       co2_avoided: existing.co2_avoided + (r.co2_avoided ?? 0),
       co2_transport: existing.co2_transport + (r.co2_transport ?? 0),
@@ -98,7 +111,10 @@ async function CarbonPage() {
     .map(([month, data]) => ({ month, ...data }));
 
   // Aggregate by material for donut chart
-  const materialMap = new Map<string, { co2_avoided: number; weight: number }>();
+  const materialMap = new Map<
+    string,
+    { co2_avoided: number; weight: number }
+  >();
   for (const r of records) {
     const cat = r.material_category ?? 'Autre';
     const existing = materialMap.get(cat) ?? { co2_avoided: 0, weight: 0 };
@@ -107,10 +123,12 @@ async function CarbonPage() {
       weight: existing.weight + (r.weight_kg ?? 0),
     });
   }
-  const materialData = Array.from(materialMap.entries()).map(([category, data]) => ({
-    category,
-    ...data,
-  }));
+  const materialData = Array.from(materialMap.entries()).map(
+    ([category, data]) => ({
+      category,
+      ...data,
+    }),
+  );
 
   // Recent transactions for table (last 20)
   const recentTransactions = [...records]
@@ -133,10 +151,13 @@ async function CarbonPage() {
         total: (scoreData as Record<string, number>).total_score ?? 0,
         level: (scoreData as Record<string, string>).level ?? 'bronze',
         volume_score: (scoreData as Record<string, number>).volume_score ?? 0,
-        diversity_score: (scoreData as Record<string, number>).diversity_score ?? 0,
-        regularity_score: (scoreData as Record<string, number>).regularity_score ?? 0,
+        diversity_score:
+          (scoreData as Record<string, number>).diversity_score ?? 0,
+        regularity_score:
+          (scoreData as Record<string, number>).regularity_score ?? 0,
         co2_score: (scoreData as Record<string, number>).co2_score ?? 0,
-        seniority_score: (scoreData as Record<string, number>).seniority_score ?? 0,
+        seniority_score:
+          (scoreData as Record<string, number>).seniority_score ?? 0,
       }
     : null;
 

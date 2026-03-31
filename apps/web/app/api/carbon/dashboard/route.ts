@@ -46,14 +46,12 @@ function computeScore(params: {
   totalCo2Net: number;
   monthsOnPlatform: number;
 }) {
-  const volumeScore =
-    Math.min((params.totalTonnes / 100) * 100, 100) * 0.3;
+  const volumeScore = Math.min((params.totalTonnes / 100) * 100, 100) * 0.3;
   const diversityScore =
     Math.min((params.uniqueMaterials / 5) * 100, 100) * 0.15;
   const regularityScore =
     Math.min((params.activeMonthsLast6 / 6) * 100, 100) * 0.2;
-  const co2Score =
-    Math.min((params.totalCo2Net / 50000) * 100, 100) * 0.25;
+  const co2Score = Math.min((params.totalCo2Net / 50000) * 100, 100) * 0.25;
   const seniorityScore =
     Math.min((params.monthsOnPlatform / 12) * 100, 100) * 0.1;
 
@@ -260,8 +258,7 @@ export async function GET(req: NextRequest) {
   hero.co2_net = Math.round(hero.co2_net * 100) / 100;
   hero.weight_tonnes = Math.round(hero.weight_tonnes * 1000) / 1000;
   hero.prev_co2_avoided = Math.round(hero.prev_co2_avoided * 100) / 100;
-  hero.prev_weight_tonnes =
-    Math.round(hero.prev_weight_tonnes * 1000) / 1000;
+  hero.prev_weight_tonnes = Math.round(hero.prev_weight_tonnes * 1000) / 1000;
 
   // ---------------------------------------------------------------------------
   // MONTHLY aggregation (last 12 months, always from all-time filtered records)

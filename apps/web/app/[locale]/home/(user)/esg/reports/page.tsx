@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { getTranslations } from 'next-intl/server';
 import { Download, FileText } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -106,8 +106,7 @@ function ReportCard({ report }: { report: ESGReport }) {
           <div>
             <div className="flex items-center gap-2">
               <span className="font-semibold">
-                <Trans i18nKey="esg:reportYear" />:{' '}
-                {report.reporting_year}
+                <Trans i18nKey="esg:reportYear" />: {report.reporting_year}
               </span>
               <Badge variant={'outline'}>{report.report_type}</Badge>
             </div>
@@ -119,9 +118,7 @@ function ReportCard({ report }: { report: ESGReport }) {
         </div>
 
         <div className="flex items-center gap-3">
-          <Badge
-            variant={report.status === 'ready' ? 'default' : 'outline'}
-          >
+          <Badge variant={report.status === 'ready' ? 'default' : 'outline'}>
             {report.status === 'ready' ? (
               <Trans i18nKey="esg:reportReady" />
             ) : (

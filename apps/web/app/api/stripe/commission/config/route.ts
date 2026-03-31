@@ -14,7 +14,9 @@ export async function GET() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data } = await (client as any)
     .from('commission_config')
-    .select('name, commission_type, flat_rate, tiers, valid_from, valid_until, is_active, description')
+    .select(
+      'name, commission_type, flat_rate, tiers, valid_from, valid_until, is_active, description',
+    )
     .order('is_active', { ascending: false });
 
   return NextResponse.json(data ?? []);

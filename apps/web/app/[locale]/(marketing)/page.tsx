@@ -41,63 +41,63 @@ export default async function Home() {
     <div className="-mt-24 flex flex-col md:-mt-36">
       {/* ───── HERO ───── */}
       <HeroScrollEffect>
-      <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
-        {/* Background image */}
-        <Image
-          src="/images/hero-aerial.png"
-          alt=""
-          fill
-          className="object-cover object-center"
-          priority
-        />
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/60 via-[#0a1628]/40 to-[#0a1628]/70" />
+        <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
+          {/* Background image */}
+          <Image
+            src="/images/hero-aerial.png"
+            alt=""
+            fill
+            className="object-cover object-center"
+            priority
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/60 via-[#0a1628]/40 to-[#0a1628]/70" />
 
-        {/* Orbital visualization */}
-        <HeroVisual />
+          {/* Orbital visualization */}
+          <HeroVisual />
 
-        <div className="relative z-10 mx-auto max-w-5xl px-4 py-32 text-center sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#8DC63F]/30 bg-white/10 px-5 py-2 text-sm font-medium text-[#8DC63F] backdrop-blur-md">
-              <Leaf className="h-4 w-4" />
-              {t('heroPill')}
-            </span>
-          </AnimateOnScroll>
+          <div className="relative z-10 mx-auto max-w-5xl px-4 py-32 text-center sm:px-6 lg:px-8">
+            <AnimateOnScroll animation="fade-up">
+              <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#8DC63F]/30 bg-white/10 px-5 py-2 text-sm font-medium text-[#8DC63F] backdrop-blur-md">
+                <Leaf className="h-4 w-4" />
+                {t('heroPill')}
+              </span>
+            </AnimateOnScroll>
 
-          <AnimateOnScroll animation="fade-up" delay={100}>
-            <h1 className="mt-6 bg-gradient-to-b from-white to-[#8DC63F] bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl lg:text-7xl">
-              {t('heroHeadline')}
-            </h1>
-          </AnimateOnScroll>
+            <AnimateOnScroll animation="fade-up" delay={100}>
+              <h1 className="mt-6 bg-gradient-to-b from-white to-[#8DC63F] bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl lg:text-7xl">
+                {t('heroHeadline')}
+              </h1>
+            </AnimateOnScroll>
 
-          <AnimateOnScroll animation="fade-up" delay={200}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80 sm:text-xl">
-              {t('heroSubtitle')}
-            </p>
-          </AnimateOnScroll>
+            <AnimateOnScroll animation="fade-up" delay={200}>
+              <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80 sm:text-xl">
+                {t('heroSubtitle')}
+              </p>
+            </AnimateOnScroll>
 
-          <AnimateOnScroll animation="fade-up" delay={300}>
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link
-                href="/auth/sign-up"
-                className="group inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold text-[#1A1A2E] shadow-lg transition-all hover:shadow-xl hover:shadow-white/15"
-              >
-                {t('heroCta1')}
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </Link>
-              <Link
-                href="#features"
-                className="group inline-flex items-center gap-2 rounded-full border border-[#8DC63F]/30 px-8 py-4 text-sm font-medium text-white backdrop-blur-sm transition-all hover:border-[#8DC63F]/60 hover:bg-white/5"
-              >
-                {t('heroCta2')}
-                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </Link>
-            </div>
-          </AnimateOnScroll>
-        </div>
+            <AnimateOnScroll animation="fade-up" delay={300}>
+              <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <Link
+                  href="/auth/sign-up"
+                  className="group inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold text-[#1A1A2E] shadow-lg transition-all hover:shadow-xl hover:shadow-white/15"
+                >
+                  {t('heroCta1')}
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+                <Link
+                  href="#features"
+                  className="group inline-flex items-center gap-2 rounded-full border border-[#8DC63F]/30 px-8 py-4 text-sm font-medium text-white backdrop-blur-sm transition-all hover:border-[#8DC63F]/60 hover:bg-white/5"
+                >
+                  {t('heroCta2')}
+                  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              </div>
+            </AnimateOnScroll>
+          </div>
 
-        <div className="from-background absolute right-0 bottom-0 left-0 h-32 bg-gradient-to-t to-transparent" />
-      </section>
+          <div className="from-background absolute right-0 bottom-0 left-0 h-32 bg-gradient-to-t to-transparent" />
+        </section>
       </HeroScrollEffect>
 
       {/* ───── STATS ───── */}

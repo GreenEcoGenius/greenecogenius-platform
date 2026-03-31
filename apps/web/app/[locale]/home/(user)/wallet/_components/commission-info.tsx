@@ -98,19 +98,17 @@ export function CommissionInfo() {
                   </tr>
                 </thead>
                 <tbody>
-                  {(activeConfig.tiers as CommissionTier[]).map(
-                    (tier, i) => (
-                      <tr key={i} className="border-t">
-                        <td className="px-3 py-2">
-                          {formatCents(tier.min)} —{' '}
-                          {tier.max ? formatCents(tier.max) : '∞'}
-                        </td>
-                        <td className="px-3 py-2 text-right font-semibold">
-                          {(tier.rate * 100).toFixed(0)}%
-                        </td>
-                      </tr>
-                    ),
-                  )}
+                  {(activeConfig.tiers as CommissionTier[]).map((tier, i) => (
+                    <tr key={i} className="border-t">
+                      <td className="px-3 py-2">
+                        {formatCents(tier.min)} —{' '}
+                        {tier.max ? formatCents(tier.max) : '∞'}
+                      </td>
+                      <td className="px-3 py-2 text-right font-semibold">
+                        {(tier.rate * 100).toFixed(0)}%
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

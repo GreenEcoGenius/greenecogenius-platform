@@ -17,7 +17,10 @@ interface CarbonScoreCardProps {
   score: ScoreData;
 }
 
-const LEVEL_CONFIG: Record<string, { emoji: string; i18nKey: string; color: string }> = {
+const LEVEL_CONFIG: Record<
+  string,
+  { emoji: string; i18nKey: string; color: string }
+> = {
   bronze: {
     emoji: '\u{1F949}',
     i18nKey: 'carbon:scoreBronze',
@@ -47,8 +50,12 @@ const LEVEL_THRESHOLDS = [
   { level: 'platine', min: 75 },
 ];
 
-function getNextLevel(current: string): { name: string; threshold: number } | null {
-  const idx = LEVEL_THRESHOLDS.findIndex((l) => l.level === current.toLowerCase());
+function getNextLevel(
+  current: string,
+): { name: string; threshold: number } | null {
+  const idx = LEVEL_THRESHOLDS.findIndex(
+    (l) => l.level === current.toLowerCase(),
+  );
   if (idx === -1 || idx >= LEVEL_THRESHOLDS.length - 1) return null;
   const next = LEVEL_THRESHOLDS[idx + 1];
   return next ? { name: next.level, threshold: next.min } : null;
@@ -147,7 +154,9 @@ export function CarbonScoreCard({ score }: CarbonScoreCardProps) {
                 </text>
               </svg>
             </div>
-            <div className={`flex items-center gap-1.5 text-sm font-semibold ${config.color}`}>
+            <div
+              className={`flex items-center gap-1.5 text-sm font-semibold ${config.color}`}
+            >
               <span>{config.emoji}</span>
               <Trans i18nKey={config.i18nKey} />
             </div>

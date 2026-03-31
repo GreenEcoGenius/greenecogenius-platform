@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  ArrowDownToLine,
-  Clock,
-  Euro,
-  TrendingUp,
-} from 'lucide-react';
+import { ArrowDownToLine, Clock, Euro, TrendingUp } from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';

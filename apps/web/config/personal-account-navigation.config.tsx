@@ -1,4 +1,14 @@
-import { CreditCard, FileBarChart, Home, Leaf, Link2, PackageSearch, Recycle, User, Wallet } from 'lucide-react';
+import {
+  CreditCard,
+  FileBarChart,
+  Home,
+  Leaf,
+  Link2,
+  PackageSearch,
+  Recycle,
+  User,
+  Wallet,
+} from 'lucide-react';
 import * as z from 'zod';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';

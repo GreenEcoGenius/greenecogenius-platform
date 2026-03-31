@@ -60,8 +60,9 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
       ? listing.price_per_unit * listing.quantity
       : null;
 
-  const transportPrice = (listing as Record<string, unknown>)
-    .transport_price as number | null;
+  const transportPrice = (listing as Record<string, unknown>).transport_price as
+    | number
+    | null;
 
   const isOwner = currentUserId === listing.account_id;
   const hasPrice =

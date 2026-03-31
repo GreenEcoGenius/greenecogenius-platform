@@ -109,10 +109,7 @@ export function CarbonHeroMetrics({
               <div className="rounded-lg bg-gray-100 p-2 dark:bg-gray-800">
                 {card.icon}
               </div>
-              <VariationBadge
-                current={card.current}
-                previous={card.previous}
-              />
+              <VariationBadge current={card.current} previous={card.previous} />
             </div>
             <div className="mt-4">
               <div className={`text-3xl font-bold ${card.color}`}>

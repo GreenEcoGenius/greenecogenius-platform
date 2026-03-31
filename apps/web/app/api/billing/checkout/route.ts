@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import * as z from 'zod';
 
+import { createAccountsApi } from '@kit/accounts/api';
 import { getProductPlanPair } from '@kit/billing';
 import { getBillingGatewayProvider } from '@kit/billing-gateway';
-import { createAccountsApi } from '@kit/accounts/api';
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
@@ -37,10 +37,7 @@ export async function POST(req: NextRequest) {
   const parsed = CheckoutSchema.safeParse(body);
 
   if (!parsed.success) {
-    return NextResponse.json(
-      { error: 'Invalid input' },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
   }
 
   const { planId, productId } = parsed.data;

@@ -51,7 +51,11 @@ function computeTotalPrice(listing: ListingCardProps['listing']) {
   return listing.price_per_unit * listing.quantity;
 }
 
-export function ListingCard({ listing, account, showDelete }: ListingCardProps) {
+export function ListingCard({
+  listing,
+  account,
+  showDelete,
+}: ListingCardProps) {
   const typeLabel =
     listing.listing_type === 'sell'
       ? 'marketplace.typeSell'
@@ -71,7 +75,7 @@ export function ListingCard({ listing, account, showDelete }: ListingCardProps) 
       className="group bg-card relative rounded-lg border p-5 transition-shadow hover:shadow-md"
     >
       {showDelete && (
-        <div className="absolute right-2 top-2 z-10">
+        <div className="absolute top-2 right-2 z-10">
           <DeleteListingButton listingId={listing.id} />
         </div>
       )}

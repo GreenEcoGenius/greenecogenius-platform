@@ -77,26 +77,26 @@ export function CarbonTransactionsTable({
                 key={`${tx.created_at}-${idx}`}
                 className="hover:bg-gray-50 dark:hover:bg-gray-800/30"
               >
-                <td className="whitespace-nowrap px-4 py-3 text-gray-600 dark:text-gray-400">
+                <td className="px-4 py-3 whitespace-nowrap text-gray-600 dark:text-gray-400">
                   {new Date(tx.created_at).toLocaleDateString('fr-FR')}
                 </td>
                 <td className="max-w-[200px] truncate px-4 py-3 font-medium">
                   {tx.listing_title}
                 </td>
                 <td className="px-4 py-3 capitalize">{tx.material_category}</td>
-                <td className="whitespace-nowrap px-4 py-3 text-right">
+                <td className="px-4 py-3 text-right whitespace-nowrap">
                   {tx.weight_tonnes.toLocaleString('fr-FR', {
                     minimumFractionDigits: 3,
                     maximumFractionDigits: 3,
                   })}
                 </td>
-                <td className="whitespace-nowrap px-4 py-3 text-right text-green-600">
+                <td className="px-4 py-3 text-right whitespace-nowrap text-green-600">
                   {fmt(tx.co2_avoided)} kg
                 </td>
-                <td className="whitespace-nowrap px-4 py-3 text-right text-orange-500">
+                <td className="px-4 py-3 text-right whitespace-nowrap text-orange-500">
                   {fmt(tx.co2_transport)} kg
                 </td>
-                <td className="whitespace-nowrap px-4 py-3 text-right font-medium">
+                <td className="px-4 py-3 text-right font-medium whitespace-nowrap">
                   {fmt(tx.co2_net_benefit)} kg
                 </td>
                 <td className="px-4 py-3">
