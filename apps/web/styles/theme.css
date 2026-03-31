@@ -8,6 +8,21 @@
  */
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --color-brand: #009C6E;
+  --color-brand-hover: #007A52;
+  --color-brand-light: #E8F5EE;
+  --color-accent-brand: #64CC04;
+  --color-accent-brand-hover: #4FA600;
+  --color-accent-brand-light: #EEFBE5;
+  --color-forest: #1A2E1A;
+  --color-forest-muted: #5C6E5C;
+  --color-forest-subtle: #8A9E8A;
+  --color-surface-page: #F5FAF5;
+  --color-surface-card: #FFFFFF;
+  --color-surface-border: #D4DDD4;
+}
+
 @utility container {
   @apply mx-auto px-4 lg:px-8 xl:max-w-[80rem];
 }

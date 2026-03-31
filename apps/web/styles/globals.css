@@ -52,3 +52,19 @@
     color: theme(--color-muted-foreground);
   }
 }
+
+/* === GreenEcoGenius Brand Palette === */
+:root {
+  --brand-primary: #009C6E;
+  --brand-primary-hover: #007A52;
+  --brand-primary-light: #E8F5EE;
+  --brand-accent: #64CC04;
+  --brand-accent-hover: #4FA600;
+  --brand-accent-light: #EEFBE5;
+  --text-primary: #1A2E1A;
+  --text-secondary: #5C6E5C;
+  --text-muted: #8A9E8A;
+  --bg-page: #F5FAF5;
+  --bg-card: #FFFFFF;
+  --border: #D4DDD4;
+}
