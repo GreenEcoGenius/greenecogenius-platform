@@ -72,7 +72,9 @@
     "wallet": "Wallet",
     "carbon": "Carbon Impact",
     "esg": "ESG Reporting",
-    "traceability": "Traceability"
+    "traceability": "Traceability",
+    "rse": "CSR & Labels",
+    "compliance": "Compliance"
   },
   "roles": {
     "owner": {

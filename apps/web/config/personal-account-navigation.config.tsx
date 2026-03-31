@@ -1,4 +1,5 @@
 import {
+  Award,
   CreditCard,
   FileBarChart,
   Home,
@@ -6,6 +7,7 @@ import {
   Link2,
   PackageSearch,
   Recycle,
+  ShieldCheck,
   User,
   Wallet,
 } from 'lucide-react';
@@ -57,6 +59,16 @@ const routes = [
         label: 'common.routes.traceability',
         path: '/home/traceability',
         Icon: <Link2 className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.rse',
+        path: '/home/rse',
+        Icon: <Award className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.compliance',
+        path: '/home/compliance',
+        Icon: <ShieldCheck className={iconClasses} />,
       },
     ],
   },

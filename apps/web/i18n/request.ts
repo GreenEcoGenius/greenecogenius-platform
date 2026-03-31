@@ -27,6 +27,8 @@ const namespaces = [
   'esg',
   'verify',
   'blockchain',
+  'rse',
+  'compliance',
 ] as const;
 
 const isDevelopment = process.env.NODE_ENV === 'development';
