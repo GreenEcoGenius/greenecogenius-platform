@@ -171,23 +171,23 @@ async function PersonalAccountBillingPage() {
 
         {/* AVANCÉ */}
         <Card
-          className={`relative flex flex-col ${currentPlan === 'avance' ? 'border-primary ring-primary/20 ring-2' : 'border-primary shadow-lg'}`}
+          className={`flex flex-col ${currentPlan === 'avance' ? 'border-primary ring-primary/20 ring-2' : 'border-primary shadow-lg'}`}
         >
-          {!currentPlan && (
-            <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white">
-              <Sparkles className="mr-1 h-3 w-3" />
-              <Trans i18nKey="pricingPage.popular" />
-            </Badge>
-          )}
-          {currentPlan === 'avance' && (
-            <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white">
-              Plan actuel
-            </Badge>
-          )}
           <CardHeader className="text-center">
             <div className="mb-2 flex items-center justify-center gap-2">
               <BarChart3 className="text-primary h-5 w-5" />
               <CardTitle>{avance?.display_name ?? 'Plan Avancé'}</CardTitle>
+              {!currentPlan && (
+                <Badge className="animate-pulse bg-green-600 text-white">
+                  <Sparkles className="mr-1 h-3 w-3" />
+                  <Trans i18nKey="pricingPage.popular" />
+                </Badge>
+              )}
+              {currentPlan === 'avance' && (
+                <Badge className="bg-green-600 text-white">
+                  Plan actuel
+                </Badge>
+              )}
             </div>
             <div className="mt-3">
               <span className="text-3xl font-bold">

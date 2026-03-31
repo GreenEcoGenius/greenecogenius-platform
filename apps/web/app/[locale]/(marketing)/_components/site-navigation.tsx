@@ -20,7 +20,7 @@ const links = {
   },
   Pricing: {
     label: 'marketing.pricing',
-    path: '/pricing',
+    path: '/home/billing',
   },
   Blog: {
     label: 'marketing.blog',

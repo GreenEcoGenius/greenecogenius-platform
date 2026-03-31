@@ -255,15 +255,15 @@ export function PricingContent({
           </Card>
 
           {/* AVANCÉ */}
-          <Card className="border-primary relative flex scale-[1.02] flex-col shadow-lg shadow-green-100 transition-all hover:-translate-y-1 hover:shadow-xl dark:shadow-green-900/20">
-            <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white">
-              <Sparkles className="mr-1 h-3 w-3" />
-              <Trans i18nKey="pricingPage.popular" />
-            </Badge>
+          <Card className="border-primary flex scale-[1.02] flex-col shadow-lg shadow-green-100 transition-all hover:-translate-y-1 hover:shadow-xl dark:shadow-green-900/20">
             <CardHeader className="text-center">
               <div className="mb-2 flex items-center justify-center gap-2">
                 <BarChart3 className="text-primary h-5 w-5" />
                 <CardTitle>{avance?.display_name ?? 'Avancé'}</CardTitle>
+                <Badge className="animate-pulse bg-green-600 text-white">
+                  <Sparkles className="mr-1 h-3 w-3" />
+                  <Trans i18nKey="pricingPage.popular" />
+                </Badge>
               </div>
               <p className="text-muted-foreground text-sm">
                 <Trans i18nKey="pricingPage.avanceTarget" />

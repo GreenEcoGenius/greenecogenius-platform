@@ -92,9 +92,13 @@ function MobileNavigation({
 }) {
   return (
     <>
-      <AppLogo />
+      <div className="flex-1" />
 
-      <HomeMobileNavigation workspace={workspace} />
+      <AppLogo className="h-12" />
+
+      <div className="flex flex-1 justify-end">
+        <HomeMobileNavigation workspace={workspace} />
+      </div>
     </>
   );
 }
