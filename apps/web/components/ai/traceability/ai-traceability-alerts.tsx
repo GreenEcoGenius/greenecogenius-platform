@@ -15,6 +15,22 @@ import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
 
 import { AIPoweredBadge } from '~/components/ai/shared/ai-powered-badge';
+import { AlertActionModal } from '~/components/ai/traceability/alert-action-modal';
+
+type ActionType =
+  | 'corriger'
+  | 'signaler'
+  | 'contacter_transporteur'
+  | 'marquer_retarde'
+  | 'emettre_certificats';
+
+const ACTION_MAP: Record<string, ActionType> = {
+  'Corriger': 'corriger',
+  'Signaler': 'signaler',
+  'Contacter transporteur': 'contacter_transporteur',
+  'Marquer retarde': 'marquer_retarde',
+  'Emettre les certificats': 'emettre_certificats',
+};
 
 interface Alert {
   type: 'error' | 'warning' | 'info';
@@ -77,8 +93,32 @@ export function AITraceabilityAlerts({
   className?: string;
 }) {
   const [dismissed, setDismissed] = useState<Set<number>>(new Set());
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeAction, setActiveAction] = useState<ActionType | null>(null);
+  const [activeLotId, setActiveLotId] = useState<string | undefined>();
+  const [activeMessage, setActiveMessage] = useState<string | undefined>();
 
   const visibleAlerts = mockAlerts.filter((_, i) => !dismissed.has(i));
+
+  function handleActionClick(
+    action: string,
+    lotId?: string,
+    message?: string,
+  ) {
+    const actionType = ACTION_MAP[action];
+    if (!actionType) return;
+
+    // "Marquer retarde" is instant
+    if (actionType === 'marquer_retarde') {
+      alert(`Lot ${lotId ?? ''} marque comme retarde.`);
+      return;
+    }
+
+    setActiveAction(actionType);
+    setActiveLotId(lotId);
+    setActiveMessage(message);
+    setModalOpen(true);
+  }
 
   if (visibleAlerts.length === 0) return null;
 
@@ -133,6 +173,10 @@ export function AITraceabilityAlerts({
                         variant="outline"
                         size="sm"
                         className="h-7 text-xs"
+                        data-test={`alert-action-${action.toLowerCase().replace(/\s+/g, '-')}`}
+                        onClick={() =>
+                          handleActionClick(action, alert.lotId, alert.message)
+                        }
                       >
                         {action}
                       </Button>
@@ -154,6 +198,23 @@ export function AITraceabilityAlerts({
           );
         })}
       </div>
+
+      {activeAction && (
+        <AlertActionModal
+          actionType={activeAction}
+          open={modalOpen}
+          onOpenChange={(open) => {
+            setModalOpen(open);
+            if (!open) {
+              setActiveAction(null);
+              setActiveLotId(undefined);
+              setActiveMessage(undefined);
+            }
+          }}
+          lotId={activeLotId}
+          alertMessage={activeMessage}
+        />
+      )}
     </div>
   );
 }

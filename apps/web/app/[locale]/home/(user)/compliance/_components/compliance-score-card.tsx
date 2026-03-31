@@ -1,9 +1,11 @@
 'use client';
 
-import { AlertTriangle, CheckCircle2, Shield } from 'lucide-react';
+import { AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 import { Card, CardContent } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
+
+import { PreAuditButton } from './pre-audit-button';
 
 interface ComplianceScoreCardProps {
   score: number;
@@ -109,10 +111,7 @@ export function ComplianceScoreCard({
             </div>
 
             <div className="flex gap-2">
-              <button className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700">
-                <Shield className="mr-1 inline-block h-4 w-4" />
-                <Trans i18nKey="compliance:launchAudit" />
-              </button>
+              <PreAuditButton />
               <button className="text-muted-foreground rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-900">
                 <Trans i18nKey="compliance:exportReport" />
               </button>

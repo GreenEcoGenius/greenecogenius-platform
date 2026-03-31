@@ -22,6 +22,7 @@ import { Trans } from '@kit/ui/trans';
 
 import { BenchmarkCard } from './_components/benchmark-card';
 import { ESGReportAccordion } from './_components/esg-report-accordion';
+import { GenerateEsgReportButton } from './_components/generate-esg-report-button';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('esg');
@@ -156,16 +157,7 @@ function ReportStatusBanner({
               }
               nativeButton={false}
             />
-            <Button
-              variant="ghost"
-              className="text-white hover:bg-indigo-500/30 hover:text-white"
-              render={
-                <Link href="/home/esg/reports">
-                  <Trans i18nKey="esg:generateReport" />
-                </Link>
-              }
-              nativeButton={false}
-            />
+            <GenerateEsgReportButton />
           </div>
         </div>
       </CardContent>

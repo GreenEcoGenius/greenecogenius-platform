@@ -1,5 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 
+import Link from 'next/link';
+
 import {
   ArrowRight,
   Database,
@@ -121,7 +123,7 @@ async function RSEPage() {
           <Heading level={3}>
             <Trans i18nKey="rse:title" />
           </Heading>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" render={<Link href="/home/rse/diagnostic" />} nativeButton={false}>
             <Sparkles className="mr-2 h-4 w-4" />
             <Trans i18nKey="rse:newDiagnostic" />
           </Button>
@@ -144,10 +146,10 @@ async function RSEPage() {
                 <Trans i18nKey="rse:lastEval" /> : {MOCK_LAST_EVAL}
               </p>
               <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
-                <Button size="sm">
+                <Button size="sm" render={<Link href="/home/rse/diagnostic" />} nativeButton={false}>
                   <Trans i18nKey="rse:newDiagnostic" />
                 </Button>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" render={<Link href="/home/rse/roadmap" />} nativeButton={false}>
                   <ArrowRight className="mr-1.5 h-3.5 w-3.5" />
                   <Trans i18nKey="rse:viewRoadmap" />
                 </Button>
