@@ -22,7 +22,7 @@ export interface CertificateData {
 
 export async function generateCertificatePDF(
   data: CertificateData,
-): Promise<Uint8Array> {
+): Promise<ArrayBuffer> {
   const doc = pdfService.createDocument();
   const pw = pdfService.pageWidth;
   const ph = pdfService.pageHeight;
@@ -207,5 +207,5 @@ export async function generateCertificatePDF(
   doc.setFillColor(...COLORS.primary);
   doc.rect(0, ph - 4, pw, 4, 'F');
 
-  return pdfService.toBuffer(doc);
+  return pdfService.toArrayBuffer(doc);
 }

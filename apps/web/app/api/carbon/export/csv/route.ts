@@ -115,7 +115,7 @@ export async function GET() {
     .eq('account_id', accountId)
     .order('created_at', { ascending: false });
 
-  // Use real data if available, otherwise use mock data
+  // Use real data if available, otherwise use demo data
   const allRecords: any[] =
     records && records.length > 0 ? records : getMockCarbonData();
 

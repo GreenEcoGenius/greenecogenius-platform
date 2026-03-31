@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useState, useTransition } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import Link from 'next/link';
 
@@ -402,41 +402,45 @@ export function DiagnosticWizard() {
   const strengths = sorted.slice(0, 3);
   const improvements = [...sorted].reverse().slice(0, 3);
 
-  const [downloading, startDownload] = useTransition();
+  const [downloading, setDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState(false);
 
-  const handleDownloadReport = useCallback(() => {
-    startDownload(async () => {
-      try {
-        const response = await fetch('/api/reports/rse-diagnostic', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            scores,
-            labels,
-            strengths,
-            improvements,
-          }),
-        });
+  const handleDownloadReport = useCallback(async () => {
+    setDownloading(true);
+    setDownloadError(false);
 
-        if (!response.ok) throw new Error('Failed to generate report');
+    try {
+      const response = await fetch('/api/reports/rse-diagnostic', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          scores,
+          labels,
+          strengths,
+          improvements,
+        }),
+      });
 
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
+      if (!response.ok) throw new Error('Failed to generate report');
 
-        const disposition = response.headers.get('Content-Disposition');
-        const filenameMatch = disposition?.match(/filename="(.+)"/);
-        a.download = filenameMatch?.[1] ?? 'Diagnostic-RSE-GreenEcoGenius.pdf';
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
 
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      } catch {
-        // Error handled silently - the button resets automatically
-      }
-    });
+      const disposition = response.headers.get('Content-Disposition');
+      const filenameMatch = disposition?.match(/filename="(.+)"/);
+      a.download = filenameMatch?.[1] ?? 'Diagnostic-RSE-GreenEcoGenius.pdf';
+
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch {
+      setDownloadError(true);
+    } finally {
+      setDownloading(false);
+    }
   }, [scores, labels, strengths, improvements]);
 
   return (
@@ -476,6 +480,7 @@ export function DiagnosticWizard() {
             improvements={improvements}
             onDownload={handleDownloadReport}
             downloading={downloading}
+            downloadError={downloadError}
           />
         )}
       </div>
@@ -787,6 +792,7 @@ function ResultsStep({
   improvements,
   onDownload,
   downloading,
+  downloadError,
 }: {
   scores: {
     governance: number;
@@ -803,6 +809,7 @@ function ResultsStep({
   improvements: { name: string; score: number; max: number }[];
   onDownload: () => void;
   downloading: boolean;
+  downloadError: boolean;
 }) {
   function getLevelColor(levelKey: string) {
     switch (levelKey) {
@@ -924,9 +931,15 @@ function ResultsStep({
 
       {/* Action buttons */}
       <div className="flex flex-wrap gap-3">
-        <Button variant="outline" onClick={onDownload} disabled={downloading}>
+        <Button
+          variant={downloadError ? 'destructive' : 'outline'}
+          onClick={onDownload}
+          disabled={downloading}
+        >
           {downloading ? (
             'Telechargement...'
+          ) : downloadError ? (
+            'Erreur, reessayez'
           ) : (
             <Trans i18nKey="rse:downloadReport" />
           )}

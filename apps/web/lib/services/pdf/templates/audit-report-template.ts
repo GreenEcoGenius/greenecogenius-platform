@@ -51,7 +51,7 @@ function severityLabel(severity: string): string {
   }
 }
 
-export function generateAuditReportPDF(data: AuditReportData): Uint8Array {
+export function generateAuditReportPDF(data: AuditReportData): ArrayBuffer {
   const doc = pdfService.createDocument();
   const headerTitle = 'Rapport de Pre-Audit de Conformite';
 
@@ -226,5 +226,5 @@ export function generateAuditReportPDF(data: AuditReportData): Uint8Array {
 
   pdfService.addFooter(doc, pageNum);
 
-  return pdfService.toBuffer(doc);
+  return pdfService.toArrayBuffer(doc);
 }

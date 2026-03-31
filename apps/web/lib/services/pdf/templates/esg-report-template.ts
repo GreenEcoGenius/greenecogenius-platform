@@ -29,7 +29,7 @@ export interface ESGReportData {
 const fmt = (v: number) => v.toFixed(1);
 const fmtT = (v: number) => (v / 1000).toFixed(2);
 
-export function generateESGReportPDF(data: ESGReportData): Uint8Array {
+export function generateESGReportPDF(data: ESGReportData): ArrayBuffer {
   const doc = pdfService.createDocument();
   const pw = pdfService.pageWidth;
   const headerTitle = `Rapport ESG ${data.year}`;
@@ -287,5 +287,5 @@ export function generateESGReportPDF(data: ESGReportData): Uint8Array {
 
   pdfService.addFooter(doc, 6);
 
-  return pdfService.toBuffer(doc);
+  return pdfService.toArrayBuffer(doc);
 }

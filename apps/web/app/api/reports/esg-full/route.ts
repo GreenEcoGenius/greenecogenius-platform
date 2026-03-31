@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import * as z from 'zod';
+
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { generateESGReportPDF } from '~/lib/services/pdf/templates/esg-report-template';
+
+const ESGReportSchema = z.object({
+  reportingYear: z.number().int().min(2020).max(2100).optional(),
+  format: z.enum(['ghg_protocol', 'csrd', 'gri']).optional(),
+});
 
 export async function POST(req: NextRequest) {
   const client = getSupabaseServerClient();
@@ -14,19 +21,25 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  let body: {
-    reportingYear?: number;
-    format?: 'ghg_protocol' | 'csrd' | 'gri';
-  };
+  let rawBody: unknown;
 
   try {
-    body = await req.json();
+    rawBody = await req.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const year = body.reportingYear ?? new Date().getFullYear();
-  const format = body.format ?? 'ghg_protocol';
+  const parsed = ESGReportSchema.safeParse(rawBody);
+
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: 'Invalid input', details: parsed.error.flatten() },
+      { status: 400 },
+    );
+  }
+
+  const year = parsed.data.reportingYear ?? new Date().getFullYear();
+  const format = parsed.data.format ?? 'ghg_protocol';
 
   const adminClient = getSupabaseServerAdminClient();
 
@@ -196,7 +209,7 @@ Ce rapport suit les standards du ${formatLabel} et s'appuie sur les facteurs d'e
 
   const safeCompanyName = companyName.replace(/[^a-zA-Z0-9]/g, '_');
 
-  return new Response(pdfBuffer as unknown as BodyInit, {
+  return new Response(pdfBuffer, {
     status: 200,
     headers: {
       'Content-Type': 'application/pdf',

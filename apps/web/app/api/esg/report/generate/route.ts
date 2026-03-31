@@ -156,7 +156,7 @@ Ce rapport suit les standards du GHG Protocol et s'appuie sur les facteurs d'emi
 
   const safeCompanyName = companyName.replace(/[^a-zA-Z0-9]/g, '_');
 
-  return new Response(pdfBuffer as unknown as BodyInit, {
+  return new Response(pdfBuffer, {
     status: 200,
     headers: {
       'Content-Type': 'application/pdf',

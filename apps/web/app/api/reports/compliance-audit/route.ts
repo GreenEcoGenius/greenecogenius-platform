@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+import * as z from 'zod';
+
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -193,6 +195,18 @@ function generateMockAnalysis(): AuditResult {
   };
 }
 
+const AINormSchema = z.object({
+  name: z.string(),
+  status: z.enum(['conforme', 'partiel', 'non_conforme']),
+  severity: z.enum(['critique', 'majeur', 'mineur', 'info']),
+  finding: z.string(),
+  recommendation: z.string(),
+});
+
+const AIResponseSchema = z.object({
+  norms: z.array(AINormSchema),
+});
+
 // Audit a single pillar via AI (fast, focused)
 async function auditPillarWithAI(
   pillarName: string,
@@ -222,20 +236,13 @@ Reponds UNIQUEMENT en JSON avec ce format:
 
     if (jsonMatch) {
       const parsed = JSON.parse(jsonMatch[0]);
+      const result = AIResponseSchema.safeParse(parsed);
 
-      if (parsed.norms && Array.isArray(parsed.norms)) {
-        return parsed.norms.map(
-          (n: {
-            name: string;
-            status: string;
-            severity: string;
-            finding: string;
-            recommendation: string;
-          }) => ({
-            ...n,
-            pillar: pillarName,
-          }),
-        );
+      if (result.success) {
+        return result.data.norms.map((n) => ({
+          ...n,
+          pillar: pillarName,
+        }));
       }
     }
   } catch {
@@ -374,7 +381,7 @@ export async function POST() {
 
   const safeCompanyName = companyName.replace(/[^a-zA-Z0-9]/g, '_');
 
-  return new Response(pdfBuffer as unknown as BodyInit, {
+  return new Response(pdfBuffer, {
     status: 200,
     headers: {
       'Content-Type': 'application/pdf',

@@ -1,3 +1,4 @@
+import 'server-only';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
@@ -326,9 +327,8 @@ class GEGPDFService {
     return currentY;
   }
 
-  toBuffer(doc: jsPDF): Uint8Array {
-    const arrayBuffer = doc.output('arraybuffer');
-    return new Uint8Array(arrayBuffer);
+  toArrayBuffer(doc: jsPDF): ArrayBuffer {
+    return doc.output('arraybuffer');
   }
 }
 

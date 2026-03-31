@@ -24,7 +24,7 @@ export interface RSEDiagnosticData {
   }>;
 }
 
-export function generateRSEDiagnosticPDF(data: RSEDiagnosticData): Uint8Array {
+export function generateRSEDiagnosticPDF(data: RSEDiagnosticData): ArrayBuffer {
   const doc = pdfService.createDocument();
   const headerTitle = 'Diagnostic RSE & Labels';
 
@@ -153,5 +153,5 @@ export function generateRSEDiagnosticPDF(data: RSEDiagnosticData): Uint8Array {
     pdfService.addFooter(doc, 5);
   }
 
-  return pdfService.toBuffer(doc);
+  return pdfService.toArrayBuffer(doc);
 }

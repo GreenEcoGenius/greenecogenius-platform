@@ -10,12 +10,12 @@ import { generateRSEDiagnosticPDF } from '~/lib/services/pdf/templates/rse-diagn
 
 const DiagnosticSchema = z.object({
   scores: z.object({
-    governance: z.number(),
-    environment: z.number(),
-    social: z.number(),
-    ethics: z.number(),
-    stakeholders: z.number(),
-    total: z.number(),
+    governance: z.number().min(0).max(20),
+    environment: z.number().min(0).max(30),
+    social: z.number().min(0).max(20),
+    ethics: z.number().min(0).max(20),
+    stakeholders: z.number().min(0).max(20),
+    total: z.number().min(0).max(100),
     level: z.string(),
   }),
   labels: z.array(
@@ -136,7 +136,7 @@ export async function POST(req: NextRequest) {
 
   const safeCompanyName = companyName.replace(/[^a-zA-Z0-9]/g, '_');
 
-  return new Response(pdfBuffer as unknown as BodyInit, {
+  return new Response(pdfBuffer, {
     status: 200,
     headers: {
       'Content-Type': 'application/pdf',
