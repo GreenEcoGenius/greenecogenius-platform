@@ -1,5 +1,7 @@
 'use client';
 
+import { Car, Home, Plane, Smartphone, TreePine } from 'lucide-react';
+
 import { Card, CardContent } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
 
@@ -12,27 +14,27 @@ export function CarbonEquivalences({ co2Avoided }: CarbonEquivalencesProps) {
 
   const equivalences = [
     {
-      emoji: '\u{1F333}',
+      icon: <TreePine className="h-6 w-6" strokeWidth={1.5} />,
       value: Math.round(co2Kg / 25),
       labelKey: 'carbon:treesPlanted',
     },
     {
-      emoji: '\u{1F697}',
+      icon: <Car className="h-6 w-6" strokeWidth={1.5} />,
       value: Math.round(co2Kg / 0.217),
       labelKey: 'carbon:carKmAvoided',
     },
     {
-      emoji: '\u{2708}\u{FE0F}',
+      icon: <Plane className="h-6 w-6" strokeWidth={1.5} />,
       value: parseFloat((co2Kg / 1000).toFixed(1)),
       labelKey: 'carbon:flightsAvoided',
     },
     {
-      emoji: '\u{1F3E0}',
+      icon: <Home className="h-6 w-6" strokeWidth={1.5} />,
       value: parseFloat((co2Kg / 2500).toFixed(2)),
       labelKey: 'carbon:homesEquiv',
     },
     {
-      emoji: '\u{1F4F1}',
+      icon: <Smartphone className="h-6 w-6" strokeWidth={1.5} />,
       value: Math.round(co2Kg / 0.008),
       labelKey: 'carbon:smartphonesEquiv',
     },
@@ -47,9 +49,7 @@ export function CarbonEquivalences({ co2Avoided }: CarbonEquivalencesProps) {
         {equivalences.map((eq) => (
           <Card key={eq.labelKey}>
             <CardContent className="flex flex-col items-center gap-2 p-5">
-              <span className="text-4xl" role="img">
-                {eq.emoji}
-              </span>
+              <div className="text-[#0d9488]">{eq.icon}</div>
               <div className="text-2xl font-bold">
                 {typeof eq.value === 'number'
                   ? eq.value.toLocaleString('fr-FR')

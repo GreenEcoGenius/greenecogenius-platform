@@ -151,7 +151,7 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
             <Line
               type="monotone"
               dataKey="co2_transport"
-              stroke="#f97316"
+              stroke="#059669"
               strokeWidth={2}
               strokeDasharray="6 3"
               dot={false}

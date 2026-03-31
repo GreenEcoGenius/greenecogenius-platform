@@ -259,14 +259,14 @@ async function CarbonPage() {
           <Card>
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-orange-50 p-2 dark:bg-orange-950/30">
-                  <Flame className="h-5 w-5 text-orange-600" />
+                <div className="rounded-lg bg-teal-50 p-2 dark:bg-teal-950/30">
+                  <Flame className="h-5 w-5 text-teal-600" />
                 </div>
                 <div className="flex-1">
                   <p className="text-muted-foreground text-xs">
                     <Trans i18nKey="carbon:scope1" />
                   </p>
-                  <p className="text-2xl font-bold text-orange-600">
+                  <p className="text-2xl font-bold text-teal-600">
                     {mockScope1}
                     <span className="ml-1 text-sm font-normal text-gray-500">
                       t
@@ -297,14 +297,14 @@ async function CarbonPage() {
           <Card>
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-blue-50 p-2 dark:bg-blue-950/30">
-                  <Zap className="h-5 w-5 text-blue-600" />
+                <div className="rounded-lg bg-emerald-50 p-2 dark:bg-emerald-950/30">
+                  <Zap className="h-5 w-5 text-emerald-600" />
                 </div>
                 <div className="flex-1">
                   <p className="text-muted-foreground text-xs">
                     <Trans i18nKey="carbon:scope2" />
                   </p>
-                  <p className="text-2xl font-bold text-blue-600">
+                  <p className="text-2xl font-bold text-emerald-600">
                     {mockScope2}
                     <span className="ml-1 text-sm font-normal text-gray-500">
                       t
@@ -335,14 +335,14 @@ async function CarbonPage() {
           <Card className="border-purple-200 dark:border-purple-800">
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-purple-50 p-2 dark:bg-purple-950/30">
-                  <Link2 className="h-5 w-5 text-purple-600" />
+                <div className="rounded-lg bg-green-50 p-2 dark:bg-green-950/30">
+                  <Link2 className="h-5 w-5 text-green-600" />
                 </div>
                 <div className="flex-1">
                   <p className="text-muted-foreground text-xs">
                     <Trans i18nKey="carbon:scope3" />
                   </p>
-                  <p className="text-2xl font-bold text-purple-600">
+                  <p className="text-2xl font-bold text-green-600">
                     {mockScope3}
                     <span className="ml-1 text-sm font-normal text-gray-500">
                       t
@@ -354,7 +354,7 @@ async function CarbonPage() {
                     </p>
                     <Badge
                       variant="outline"
-                      className="border-purple-300 text-[10px] text-purple-600"
+                      className="border-purple-300 text-[10px] text-green-600"
                     >
                       73% <Trans i18nKey="carbon:scope3Auto" />
                     </Badge>
@@ -476,24 +476,24 @@ function ScopeProgressSection() {
       labelKey: 'carbon:scope1Desc',
       progress: 65,
       status: 'partial' as const,
-      color: 'bg-orange-500',
-      bgColor: 'bg-orange-100 dark:bg-orange-950/30',
+      color: 'bg-teal-500',
+      bgColor: 'bg-teal-100 dark:bg-teal-950/30',
     },
     {
       name: 'Scope 2',
       labelKey: 'carbon:scope2Desc',
       progress: 80,
       status: 'partial' as const,
-      color: 'bg-blue-500',
-      bgColor: 'bg-blue-100 dark:bg-blue-950/30',
+      color: 'bg-emerald-500',
+      bgColor: 'bg-emerald-100 dark:bg-emerald-950/30',
     },
     {
       name: 'Scope 3',
       labelKey: 'carbon:scope3Desc',
       progress: 73,
       status: 'auto' as const,
-      color: 'bg-purple-500',
-      bgColor: 'bg-purple-100 dark:bg-purple-950/30',
+      color: 'bg-green-500',
+      bgColor: 'bg-green-100 dark:bg-green-950/30',
     },
   ];
 

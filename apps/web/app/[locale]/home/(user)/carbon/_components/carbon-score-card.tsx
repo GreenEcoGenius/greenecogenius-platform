@@ -1,5 +1,7 @@
 'use client';
 
+import { Award, Gem, Medal, Trophy } from 'lucide-react';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
 
@@ -19,27 +21,27 @@ interface CarbonScoreCardProps {
 
 const LEVEL_CONFIG: Record<
   string,
-  { emoji: string; i18nKey: string; color: string }
+  { icon: React.ReactNode; i18nKey: string; color: string }
 > = {
   bronze: {
-    emoji: '\u{1F949}',
+    icon: <Medal className="h-4 w-4" strokeWidth={1.5} />,
     i18nKey: 'carbon:scoreBronze',
     color: 'text-amber-700',
   },
   argent: {
-    emoji: '\u{1F948}',
+    icon: <Award className="h-4 w-4" strokeWidth={1.5} />,
     i18nKey: 'carbon:scoreArgent',
-    color: 'text-gray-500',
+    color: 'text-slate-500',
   },
   or: {
-    emoji: '\u{1F947}',
+    icon: <Trophy className="h-4 w-4" strokeWidth={1.5} />,
     i18nKey: 'carbon:scoreOr',
-    color: 'text-yellow-500',
+    color: 'text-amber-500',
   },
   platine: {
-    emoji: '\u{1F48E}',
+    icon: <Gem className="h-4 w-4" strokeWidth={1.5} />,
     i18nKey: 'carbon:scorePlatine',
-    color: 'text-cyan-500',
+    color: 'text-teal-500',
   },
 };
 
@@ -157,7 +159,7 @@ export function CarbonScoreCard({ score }: CarbonScoreCardProps) {
             <div
               className={`flex items-center gap-1.5 text-sm font-semibold ${config.color}`}
             >
-              <span>{config.emoji}</span>
+              <span>{config.icon}</span>
               <Trans i18nKey={config.i18nKey} />
             </div>
             {nextLevel && (
