@@ -55,7 +55,7 @@ const routes = [
       },
       {
         label: 'common.routes.traceability',
-        path: '/home/pricing',
+        path: '/home/traceability',
         Icon: <Link2 className={iconClasses} />,
       },
     ],
