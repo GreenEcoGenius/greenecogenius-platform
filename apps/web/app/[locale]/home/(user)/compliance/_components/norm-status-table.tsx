@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { Eye } from 'lucide-react';
+import { BarChart3, Eye, Hand, Link2, Sparkles } from 'lucide-react';
 
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -292,12 +292,24 @@ const STATUS_CONFIG: Record<
 
 const VERIFICATION_CONFIG: Record<
   VerificationType,
-  { emoji: string; i18nKey: string }
+  { icon: React.ReactNode; i18nKey: string }
 > = {
-  blockchain: { emoji: '\uD83D\uDD17', i18nKey: 'compliance:viaBlockchain' },
-  ai: { emoji: '\uD83E\uDD16', i18nKey: 'compliance:viaAI' },
-  ecosystem: { emoji: '\uD83D\uDCCA', i18nKey: 'compliance:viaEcosystem' },
-  manual: { emoji: '\u270B', i18nKey: 'compliance:manual' },
+  blockchain: {
+    icon: <Link2 size={14} strokeWidth={1.5} />,
+    i18nKey: 'compliance:viaBlockchain',
+  },
+  ai: {
+    icon: <Sparkles size={14} strokeWidth={1.5} />,
+    i18nKey: 'compliance:viaAI',
+  },
+  ecosystem: {
+    icon: <BarChart3 size={14} strokeWidth={1.5} />,
+    i18nKey: 'compliance:viaEcosystem',
+  },
+  manual: {
+    icon: <Hand size={14} strokeWidth={1.5} />,
+    i18nKey: 'compliance:manual',
+  },
 };
 
 const PILLAR_NAMES: Record<string, string> = {
@@ -410,7 +422,7 @@ export function NormStatusTable() {
                           variant="outline"
                           className="text-xs font-normal"
                         >
-                          {verifCfg.emoji} <Trans i18nKey={verifCfg.i18nKey} />
+                          {verifCfg.icon} <Trans i18nKey={verifCfg.i18nKey} />
                         </Badge>
                       ) : (
                         <span className="text-muted-foreground text-xs">

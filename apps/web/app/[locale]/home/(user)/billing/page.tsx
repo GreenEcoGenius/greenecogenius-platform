@@ -6,6 +6,10 @@ import {
   BarChart3,
   Building2,
   Check,
+  Download,
+  FileText,
+  Leaf,
+  Link2,
   Sparkles,
   Zap,
 } from 'lucide-react';
@@ -277,11 +281,52 @@ async function PersonalAccountBillingPage() {
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           {[
-            { icon: '🔗', label: 'Traçabilité blockchain' },
-            { icon: '🌱', label: 'Calcul CO₂ automatique' },
-            { icon: '📄', label: 'Certificat PDF' },
-            { icon: '📊', label: 'Dashboard carbone' },
-            { icon: '📥', label: 'Export PDF/CSV' },
+            {
+              icon: (
+                <Link2 size={16} strokeWidth={1.5} className="text-teal-600" />
+              ),
+              label: 'Traçabilité blockchain',
+            },
+            {
+              icon: (
+                <Leaf
+                  size={16}
+                  strokeWidth={1.5}
+                  className="text-emerald-600"
+                />
+              ),
+              label: 'Calcul CO₂ automatique',
+            },
+            {
+              icon: (
+                <FileText
+                  size={16}
+                  strokeWidth={1.5}
+                  className="text-teal-600"
+                />
+              ),
+              label: 'Certificat PDF',
+            },
+            {
+              icon: (
+                <BarChart3
+                  size={16}
+                  strokeWidth={1.5}
+                  className="text-emerald-600"
+                />
+              ),
+              label: 'Dashboard carbone',
+            },
+            {
+              icon: (
+                <Download
+                  size={16}
+                  strokeWidth={1.5}
+                  className="text-teal-600"
+                />
+              ),
+              label: 'Export PDF/CSV',
+            },
           ].map((tag) => (
             <span
               key={tag.label}

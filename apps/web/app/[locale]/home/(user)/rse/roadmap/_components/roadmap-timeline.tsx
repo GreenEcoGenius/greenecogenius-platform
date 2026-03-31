@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { CheckCircle2, Loader2, Square } from 'lucide-react';
+
 import { Badge } from '@kit/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
@@ -24,28 +26,30 @@ interface RoadmapAction {
 
 const STATUS_CYCLE: ActionStatus[] = ['todo', 'in_progress', 'done'];
 
-const STATUS_ICONS: Record<ActionStatus, string> = {
-  done: '\u2705',
-  in_progress: '\uD83D\uDD04',
-  todo: '\u2B1C',
+const STATUS_ICONS: Record<ActionStatus, React.ReactNode> = {
+  done: (
+    <CheckCircle2 size={16} strokeWidth={1.5} className="text-emerald-500" />
+  ),
+  in_progress: (
+    <Loader2 size={16} strokeWidth={1.5} className="text-amber-500" />
+  ),
+  todo: <Square size={16} strokeWidth={1.5} className="text-slate-400" />,
 };
 
 const PILLAR_COLORS: Record<string, string> = {
-  governance:
-    'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300',
+  governance: 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300',
   environment:
-    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
-  social: 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300',
-  ethics:
-    'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300',
-  stakeholders: 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300',
+    'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300',
+  social: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+  ethics: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
+  stakeholders: 'bg-teal-50 text-teal-700 dark:bg-teal-900 dark:text-teal-300',
 };
 
 const PRIORITY_STYLES: Record<ActionPriority, string> = {
   urgent: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
   important:
-    'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300',
-  quick_win: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
+    'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300',
+  quick_win: 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300',
 };
 
 const PILLAR_LABELS: Record<string, string> = {
