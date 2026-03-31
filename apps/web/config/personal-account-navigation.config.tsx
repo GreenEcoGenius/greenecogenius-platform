@@ -1,4 +1,4 @@
-import { CreditCard, Home, Leaf, Link2, PackageSearch, Recycle, User, Wallet } from 'lucide-react';
+import { CreditCard, FileBarChart, Home, Leaf, Link2, PackageSearch, Recycle, User, Wallet } from 'lucide-react';
 import * as z from 'zod';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
@@ -37,6 +37,11 @@ const routes = [
         label: 'common.routes.carbon',
         path: '/home/carbon',
         Icon: <Leaf className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.esg',
+        path: '/home/esg',
+        Icon: <FileBarChart className={iconClasses} />,
       },
       {
         label: 'common.routes.traceability',

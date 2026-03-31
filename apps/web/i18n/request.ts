@@ -24,6 +24,7 @@ const namespaces = [
   'carbon',
   'pricing',
   'pricingPage',
+  'esg',
 ] as const;
 
 const isDevelopment = process.env.NODE_ENV === 'development';
