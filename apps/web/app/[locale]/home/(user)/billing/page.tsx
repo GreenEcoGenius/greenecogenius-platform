@@ -12,10 +12,10 @@ import {
 import { getTranslations } from 'next-intl/server';
 
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
+import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
-import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
@@ -113,7 +113,7 @@ async function PersonalAccountBillingPage() {
                 </p>
                 <p className="text-muted-foreground text-sm">
                   {currentSub.status === 'trialing'
-                    ? 'Période d\'essai en cours'
+                    ? "Période d'essai en cours"
                     : 'Abonnement actif'}
                 </p>
               </div>
@@ -184,9 +184,7 @@ async function PersonalAccountBillingPage() {
                 </Badge>
               )}
               {currentPlan === 'avance' && (
-                <Badge className="bg-green-600 text-white">
-                  Plan actuel
-                </Badge>
+                <Badge className="bg-green-600 text-white">Plan actuel</Badge>
               )}
             </div>
             <div className="mt-3">
@@ -274,7 +272,8 @@ async function PersonalAccountBillingPage() {
           Inclus dans chaque transaction marketplace
         </h3>
         <p className="text-muted-foreground mb-4 text-center text-sm">
-          Sans abonnement, vous bénéficiez déjà de ces fonctionnalités via la commission marketplace.
+          Sans abonnement, vous bénéficiez déjà de ces fonctionnalités via la
+          commission marketplace.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           {[
@@ -299,21 +298,33 @@ async function PersonalAccountBillingPage() {
         <h3 className="text-lg font-semibold">Questions fréquentes</h3>
         <div className="space-y-3">
           <div className="rounded-lg border p-4">
-            <p className="font-medium">Qu&apos;est-ce qui est inclus gratuitement ?</p>
+            <p className="font-medium">
+              Qu&apos;est-ce qui est inclus gratuitement ?
+            </p>
             <p className="text-muted-foreground mt-1 text-sm">
-              Chaque transaction sur Le Comptoir Circulaire inclut la traçabilité blockchain, le calcul CO₂, un certificat PDF et le dashboard carbone. Tout est compris dans la commission marketplace.
+              Chaque transaction sur Le Comptoir Circulaire inclut la
+              traçabilité blockchain, le calcul CO₂, un certificat PDF et le
+              dashboard carbone. Tout est compris dans la commission
+              marketplace.
             </p>
           </div>
           <div className="rounded-lg border p-4">
-            <p className="font-medium">Comment fonctionne l&apos;essai gratuit ?</p>
+            <p className="font-medium">
+              Comment fonctionne l&apos;essai gratuit ?
+            </p>
             <p className="text-muted-foreground mt-1 text-sm">
-              14 jours d&apos;accès complet à toutes les fonctionnalités de votre plan. Aucun paiement avant la fin de la période d&apos;essai. Annulable à tout moment.
+              14 jours d&apos;accès complet à toutes les fonctionnalités de
+              votre plan. Aucun paiement avant la fin de la période
+              d&apos;essai. Annulable à tout moment.
             </p>
           </div>
           <div className="rounded-lg border p-4">
-            <p className="font-medium">Puis-je changer de plan à tout moment ?</p>
+            <p className="font-medium">
+              Puis-je changer de plan à tout moment ?
+            </p>
             <p className="text-muted-foreground mt-1 text-sm">
-              Oui, vous pouvez upgrader ou downgrader à tout moment. La différence est calculée au prorata.
+              Oui, vous pouvez upgrader ou downgrader à tout moment. La
+              différence est calculée au prorata.
             </p>
           </div>
         </div>

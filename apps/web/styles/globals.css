@@ -55,16 +55,16 @@
 
 /* === GreenEcoGenius Brand Palette === */
 :root {
-  --brand-primary: #009C6E;
-  --brand-primary-hover: #007A52;
-  --brand-primary-light: #E8F5EE;
-  --brand-accent: #64CC04;
-  --brand-accent-hover: #4FA600;
-  --brand-accent-light: #EEFBE5;
-  --text-primary: #1A2E1A;
-  --text-secondary: #5C6E5C;
-  --text-muted: #8A9E8A;
-  --bg-page: #F5FAF5;
-  --bg-card: #FFFFFF;
-  --border: #D4DDD4;
+  --brand-primary: #009c6e;
+  --brand-primary-hover: #007a52;
+  --brand-primary-light: #e8f5ee;
+  --brand-accent: #64cc04;
+  --brand-accent-hover: #4fa600;
+  --brand-accent-light: #eefbe5;
+  --text-primary: #1a2e1a;
+  --text-secondary: #5c6e5c;
+  --text-muted: #8a9e8a;
+  --bg-page: #f5faf5;
+  --bg-card: #ffffff;
+  --border: #d4ddd4;
 }

@@ -261,8 +261,10 @@ export function ESGFormWizard() {
       const a = document.createElement('a');
       a.href = url;
       a.download =
-        res.headers.get('Content-Disposition')?.split('filename="')[1]?.replace('"', '') ??
-        `rapport-esg-${formData.reporting_year}.html`;
+        res.headers
+          .get('Content-Disposition')
+          ?.split('filename="')[1]
+          ?.replace('"', '') ?? `rapport-esg-${formData.reporting_year}.html`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

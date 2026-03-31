@@ -72,7 +72,7 @@ export function ListingCard({
   return (
     <Link
       href={detailHref}
-      className="group bg-card relative rounded-lg border border-border/40 p-5 transition-shadow hover:shadow-md"
+      className="group bg-card border-border/40 relative rounded-lg border p-5 transition-shadow hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-2">
         <Badge className={typeColors[listing.listing_type] ?? 'bg-muted'}>
@@ -85,9 +85,7 @@ export function ListingCard({
               ? new Date(listing.created_at).toLocaleDateString('fr-FR')
               : ''}
           </span>
-          {showDelete && (
-            <DeleteListingButton listingId={listing.id} />
-          )}
+          {showDelete && <DeleteListingButton listingId={listing.id} />}
         </div>
       </div>
 

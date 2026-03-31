@@ -69,7 +69,9 @@ export async function GET(request: NextRequest) {
 
   if (!orgData || !orgData.nb_employees || orgData.nb_employees === 0) {
     return NextResponse.json(
-      { error: 'No organization data found. Please complete data entry first.' },
+      {
+        error: 'No organization data found. Please complete data entry first.',
+      },
       { status: 404 },
     );
   }
@@ -92,7 +94,9 @@ export async function GET(request: NextRequest) {
   const sectorAverage = sectorAverages[sector] ?? sectorAverages['autre']!;
   const comparisonPct =
     sectorAverage > 0
-      ? Math.round(((emissionsPerEmployee - sectorAverage) / sectorAverage) * 100)
+      ? Math.round(
+          ((emissionsPerEmployee - sectorAverage) / sectorAverage) * 100,
+        )
       : 0;
 
   const rating = getRating(comparisonPct);

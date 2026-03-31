@@ -105,7 +105,7 @@ export async function POST(req: NextRequest) {
     breakdown =
       typeof report?.breakdown === 'string'
         ? JSON.parse(report.breakdown)
-        : report?.breakdown ?? breakdown;
+        : (report?.breakdown ?? breakdown);
   } catch {
     // keep default
   }
@@ -251,12 +251,12 @@ export async function POST(req: NextRequest) {
       <tr>
         <td>Gaz naturel</td>
         <td>${esg.natural_gas_kwh ?? 0} kWh</td>
-        <td>${fmt(breakdown.scope1?.natural_gas ?? 0)}<div class="bar-container"><div class="bar scope1" style="width:${totalKg > 0 ? ((breakdown.scope1?.natural_gas ?? 0) / totalKg * 100) : 0}%"></div></div></td>
+        <td>${fmt(breakdown.scope1?.natural_gas ?? 0)}<div class="bar-container"><div class="bar scope1" style="width:${totalKg > 0 ? ((breakdown.scope1?.natural_gas ?? 0) / totalKg) * 100 : 0}%"></div></div></td>
       </tr>
       <tr>
         <td>Carburant (${esg.fuel_type ?? 'diesel'})</td>
         <td>${esg.fuel_liters ?? 0} litres</td>
-        <td>${fmt(breakdown.scope1?.fuel ?? 0)}<div class="bar-container"><div class="bar scope1" style="width:${totalKg > 0 ? ((breakdown.scope1?.fuel ?? 0) / totalKg * 100) : 0}%"></div></div></td>
+        <td>${fmt(breakdown.scope1?.fuel ?? 0)}<div class="bar-container"><div class="bar scope1" style="width:${totalKg > 0 ? ((breakdown.scope1?.fuel ?? 0) / totalKg) * 100 : 0}%"></div></div></td>
       </tr>
       <tr>
         <td>Autres emissions directes</td>
@@ -279,12 +279,12 @@ export async function POST(req: NextRequest) {
       <tr>
         <td>Electricite (${esg.electricity_source === 'renewable' ? '100% renouvelable' : 'reseau FR'})</td>
         <td>${esg.electricity_kwh ?? 0} kWh</td>
-        <td>${fmt(breakdown.scope2?.electricity ?? 0)}<div class="bar-container"><div class="bar scope2" style="width:${totalKg > 0 ? ((breakdown.scope2?.electricity ?? 0) / totalKg * 100) : 0}%"></div></div></td>
+        <td>${fmt(breakdown.scope2?.electricity ?? 0)}<div class="bar-container"><div class="bar scope2" style="width:${totalKg > 0 ? ((breakdown.scope2?.electricity ?? 0) / totalKg) * 100 : 0}%"></div></div></td>
       </tr>
       <tr>
         <td>Chauffage</td>
         <td>${esg.heating_kwh ?? 0} kWh</td>
-        <td>${fmt(breakdown.scope2?.heating ?? 0)}<div class="bar-container"><div class="bar scope2" style="width:${totalKg > 0 ? ((breakdown.scope2?.heating ?? 0) / totalKg * 100) : 0}%"></div></div></td>
+        <td>${fmt(breakdown.scope2?.heating ?? 0)}<div class="bar-container"><div class="bar scope2" style="width:${totalKg > 0 ? ((breakdown.scope2?.heating ?? 0) / totalKg) * 100 : 0}%"></div></div></td>
       </tr>
       <tr style="font-weight:600;background:#eff6ff;">
         <td colspan="2">Total Scope 2</td>
@@ -303,22 +303,22 @@ export async function POST(req: NextRequest) {
       <tr>
         <td>Deplacements professionnels</td>
         <td>${esg.business_travel_km ?? 0} km (${esg.travel_mode ?? 'car'})</td>
-        <td>${fmt(breakdown.scope3?.travel ?? 0)}<div class="bar-container"><div class="bar scope3" style="width:${totalKg > 0 ? ((breakdown.scope3?.travel ?? 0) / totalKg * 100) : 0}%"></div></div></td>
+        <td>${fmt(breakdown.scope3?.travel ?? 0)}<div class="bar-container"><div class="bar scope3" style="width:${totalKg > 0 ? ((breakdown.scope3?.travel ?? 0) / totalKg) * 100 : 0}%"></div></div></td>
       </tr>
       <tr>
         <td>Trajets domicile-travail</td>
         <td>${esg.commuting_employees ?? 0} employes x ${esg.commuting_avg_km ?? 0} km</td>
-        <td>${fmt(breakdown.scope3?.commuting ?? 0)}<div class="bar-container"><div class="bar scope3" style="width:${totalKg > 0 ? ((breakdown.scope3?.commuting ?? 0) / totalKg * 100) : 0}%"></div></div></td>
+        <td>${fmt(breakdown.scope3?.commuting ?? 0)}<div class="bar-container"><div class="bar scope3" style="width:${totalKg > 0 ? ((breakdown.scope3?.commuting ?? 0) / totalKg) * 100 : 0}%"></div></div></td>
       </tr>
       <tr>
         <td>Achats de biens et services</td>
         <td>${esg.purchased_goods_eur ?? 0} EUR</td>
-        <td>${fmt(breakdown.scope3?.goods ?? 0)}<div class="bar-container"><div class="bar scope3" style="width:${totalKg > 0 ? ((breakdown.scope3?.goods ?? 0) / totalKg * 100) : 0}%"></div></div></td>
+        <td>${fmt(breakdown.scope3?.goods ?? 0)}<div class="bar-container"><div class="bar scope3" style="width:${totalKg > 0 ? ((breakdown.scope3?.goods ?? 0) / totalKg) * 100 : 0}%"></div></div></td>
       </tr>
       <tr>
         <td>Dechets</td>
         <td>${esg.waste_tonnes ?? 0} tonnes</td>
-        <td>${fmt(breakdown.scope3?.waste ?? 0)}<div class="bar-container"><div class="bar scope3" style="width:${totalKg > 0 ? ((breakdown.scope3?.waste ?? 0) / totalKg * 100) : 0}%"></div></div></td>
+        <td>${fmt(breakdown.scope3?.waste ?? 0)}<div class="bar-container"><div class="bar scope3" style="width:${totalKg > 0 ? ((breakdown.scope3?.waste ?? 0) / totalKg) * 100 : 0}%"></div></div></td>
       </tr>
       <tr style="font-weight:600;background:#f5f3ff;">
         <td colspan="2">Total Scope 3</td>

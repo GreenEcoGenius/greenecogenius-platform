@@ -70,7 +70,10 @@ export function BenchmarkCard() {
 
   const ratingConfig: Record<
     string,
-    { variant: 'default' | 'secondary' | 'outline' | 'destructive'; i18nKey: string }
+    {
+      variant: 'default' | 'secondary' | 'outline' | 'destructive';
+      i18nKey: string;
+    }
   > = {
     excellent: { variant: 'default', i18nKey: 'esg:benchmarkExcellent' },
     good: { variant: 'secondary', i18nKey: 'esg:benchmarkGood' },

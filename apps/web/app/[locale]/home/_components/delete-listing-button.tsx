@@ -57,7 +57,12 @@ export function DeleteListingButton({ listingId }: { listingId: string }) {
         <Trash2 className="h-3.5 w-3.5" />
       </button>
 
-      <Dialog open={open} onOpenChange={(v) => { setOpen(v); }}>
+      <Dialog
+        open={open}
+        onOpenChange={(v) => {
+          setOpen(v);
+        }}
+      >
         <DialogContent onClick={(e) => e.stopPropagation()}>
           <DialogHeader>
             <DialogTitle>

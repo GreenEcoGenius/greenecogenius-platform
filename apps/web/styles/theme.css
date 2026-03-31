@@ -9,18 +9,18 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-brand: #009C6E;
-  --color-brand-hover: #007A52;
-  --color-brand-light: #E8F5EE;
-  --color-accent-brand: #64CC04;
-  --color-accent-brand-hover: #4FA600;
-  --color-accent-brand-light: #EEFBE5;
-  --color-forest: #1A2E1A;
-  --color-forest-muted: #5C6E5C;
-  --color-forest-subtle: #8A9E8A;
-  --color-surface-page: #F5FAF5;
-  --color-surface-card: #FFFFFF;
-  --color-surface-border: #D4DDD4;
+  --color-brand: #009c6e;
+  --color-brand-hover: #007a52;
+  --color-brand-light: #e8f5ee;
+  --color-accent-brand: #64cc04;
+  --color-accent-brand-hover: #4fa600;
+  --color-accent-brand-light: #eefbe5;
+  --color-forest: #1a2e1a;
+  --color-forest-muted: #5c6e5c;
+  --color-forest-subtle: #8a9e8a;
+  --color-surface-page: #f5faf5;
+  --color-surface-card: #ffffff;
+  --color-surface-border: #d4ddd4;
 }
 
 @utility container {

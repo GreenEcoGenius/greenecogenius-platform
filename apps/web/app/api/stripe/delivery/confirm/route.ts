@@ -157,12 +157,53 @@ export async function POST(req: NextRequest) {
     p_transaction_id: transactionId,
   });
 
-  // Step B: Generate blockchain record for traceability
+  // Step B: Generate blockchain record for traceability (off-chain hash)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: hashResult } = await (adminClient as any).rpc(
     'generate_blockchain_record',
     { p_transaction_id: transactionId },
   );
+
+  // Optional: Register on Polygon blockchain if configured
+  if (process.env.CONTRACT_ADDRESS && process.env.DEPLOYER_PRIVATE_KEY) {
+    try {
+      const { registerLotOnChain } =
+        await import('~/lib/blockchain/alchemy-service');
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: listing } = await (adminClient as any)
+        .from('marketplace_listings')
+        .select(
+          'material_type, weight_kg, co2_avoided, origin_location, destination_location',
+        )
+        .eq('id', tx.listing_id)
+        .single();
+
+      const onChainResult = await registerLotOnChain({
+        lotId: transactionId,
+        materialType: listing?.material_type ?? 'unknown',
+        weightKg: listing?.weight_kg ?? 0,
+        sellerName: tx.seller_account_id,
+        buyerName: tx.buyer_account_id,
+        co2Avoided: listing?.co2_avoided ?? 0,
+        originLocation: listing?.origin_location,
+        destinationLocation: listing?.destination_location,
+      });
+
+      // Update the blockchain_records entry with the polygon tx hash
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (adminClient as any)
+        .from('blockchain_records')
+        .update({
+          polygon_tx_hash: onChainResult.txHash,
+          block_number: onChainResult.blockNumber,
+        })
+        .eq('transaction_id', transactionId);
+    } catch (err) {
+      console.error('On-chain registration failed (non-blocking):', err);
+      // Non-blocking — the off-chain hash is already recorded
+    }
+  }
 
   // Step C: Generate traceability certificate
   const certNumber = `GEG-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`;
