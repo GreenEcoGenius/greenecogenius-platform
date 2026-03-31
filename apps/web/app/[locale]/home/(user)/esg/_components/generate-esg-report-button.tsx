@@ -4,9 +4,13 @@ import { useState } from 'react';
 
 import { FileText, Loader2 } from 'lucide-react';
 
-import { Trans } from '@kit/ui/trans';
+import { Button } from '@kit/ui/button';
 
-export function GenerateEsgReportButton() {
+export function GenerateEsgReportButton({
+  format = 'ghg_protocol',
+}: {
+  format?: 'ghg_protocol' | 'csrd' | 'gri';
+}) {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
@@ -22,7 +26,7 @@ export function GenerateEsgReportButton() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           reportingYear: new Date().getFullYear(),
-          format: 'ghg_protocol',
+          format,
         }),
       });
 
@@ -55,25 +59,24 @@ export function GenerateEsgReportButton() {
   };
 
   return (
-    <button
+    <Button
+      size="sm"
+      variant="outline"
       onClick={handleClick}
       disabled={loading}
-      className="inline-flex items-center gap-1.5 rounded-md bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-60"
     >
       {loading ? (
-        <Loader2 className="h-4 w-4 animate-spin" />
+        <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
       ) : (
-        <FileText className="h-4 w-4" />
+        <FileText className="mr-1.5 h-4 w-4" />
       )}
-      {status === 'loading' ? (
-        'Generation en cours...'
-      ) : status === 'success' ? (
-        'Rapport telecharge !'
-      ) : status === 'error' ? (
-        'Erreur, reessayez'
-      ) : (
-        <Trans i18nKey="esg:generateReport" />
-      )}
-    </button>
+      {status === 'loading'
+        ? 'Generation en cours...'
+        : status === 'success'
+          ? 'Rapport telecharge !'
+          : status === 'error'
+            ? 'Erreur, reessayez'
+            : 'Generer le rapport PDF'}
+    </Button>
   );
 }

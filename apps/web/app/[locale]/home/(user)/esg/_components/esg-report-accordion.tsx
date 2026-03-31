@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import {
+  Bot,
   CheckCircle2,
   ChevronDown,
   ChevronRight,
@@ -14,68 +15,11 @@ import {
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
-import { Trans } from '@kit/ui/trans';
 
-interface ReportSection {
-  titleKey: string;
-  completionPct: number;
-  sources: Array<'auto' | 'manual' | 'blockchain'>;
-  status: 'complete' | 'warning';
-  linkHref?: string;
-  linkLabelKey?: string;
-}
-
-const REPORT_SECTIONS: ReportSection[] = [
-  {
-    titleKey: 'esg:executiveSummary',
-    completionPct: 100,
-    sources: ['auto'],
-    status: 'complete',
-  },
-  {
-    titleKey: 'esg:carbonBalance',
-    completionPct: 94,
-    sources: ['auto', 'blockchain'],
-    status: 'complete',
-    linkHref: '/home/carbon',
-    linkLabelKey: 'esg:viewInCarbon',
-  },
-  {
-    titleKey: 'esg:circularEconomy',
-    completionPct: 98,
-    sources: ['auto', 'blockchain'],
-    status: 'complete',
-    linkHref: '/home/traceability',
-    linkLabelKey: 'esg:viewInTraceability',
-  },
-  {
-    titleKey: 'esg:climateChange',
-    completionPct: 72,
-    sources: ['auto', 'manual'],
-    status: 'warning',
-    linkHref: '/home/esg/data-entry',
-    linkLabelKey: 'esg:completeFields',
-  },
-  {
-    titleKey: 'esg:socialImpact',
-    completionPct: 45,
-    sources: ['manual'],
-    status: 'warning',
-    linkHref: '/home/esg/data-entry',
-    linkLabelKey: 'esg:completeFields',
-  },
-  {
-    titleKey: 'esg:governance',
-    completionPct: 60,
-    sources: ['manual'],
-    status: 'warning',
-    linkHref: '/home/esg/data-entry',
-    linkLabelKey: 'esg:completeFields',
-  },
-];
+import type { ReportSection, SourceType } from '../_lib/esg-mock-data';
 
 const SOURCE_STYLES: Record<
-  string,
+  SourceType,
   { variant: 'default' | 'secondary' | 'outline'; className: string }
 > = {
   auto: {
@@ -95,7 +39,7 @@ const SOURCE_STYLES: Record<
   },
 };
 
-function getSourceLabel(source: string): string {
+function getSourceLabel(source: SourceType): string {
   switch (source) {
     case 'auto':
       return 'Auto';
@@ -103,57 +47,66 @@ function getSourceLabel(source: string): string {
       return 'Manuel';
     case 'blockchain':
       return 'Blockchain';
-    default:
-      return source;
   }
 }
 
-export function ESGReportAccordion() {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+function getStatusIcon(status: string, pct: number) {
+  if (status === 'complete' || pct >= 90) {
+    return <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-500" />;
+  }
+  return (
+    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-amber-400">
+      <span className="text-[10px] font-bold text-amber-500">!</span>
+    </div>
+  );
+}
+
+export function ESGReportAccordion({
+  sections,
+}: {
+  sections: ReportSection[];
+}) {
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   return (
     <Card>
       <CardContent className="p-6">
-        <h3 className="mb-4 text-lg font-semibold">
-          <Trans i18nKey="esg:reportContent" />
-        </h3>
+        <h3 className="mb-4 text-sm font-semibold">Contenu du rapport</h3>
 
         <div className="space-y-2">
-          {REPORT_SECTIONS.map((section, index) => {
-            const isExpanded = expandedIndex === index;
-            const isComplete = section.status === 'complete';
+          {sections.map((section) => {
+            const isExpanded = expandedId === section.id;
+            const isComplete =
+              section.status === 'complete' || section.completionPct >= 90;
 
             return (
               <div
-                key={section.titleKey}
+                key={section.id}
                 className="overflow-hidden rounded-lg border"
               >
                 {/* Header row */}
                 <button
                   type="button"
-                  onClick={() => setExpandedIndex(isExpanded ? null : index)}
+                  onClick={() => setExpandedId(isExpanded ? null : section.id)}
                   className="flex w-full items-center justify-between p-4 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-900/50"
                 >
                   <div className="flex items-center gap-3">
-                    {isComplete ? (
-                      <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-500" />
-                    ) : (
-                      <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-amber-400">
-                        <span className="text-[10px] font-bold text-amber-500">
-                          !
-                        </span>
-                      </div>
-                    )}
+                    {getStatusIcon(section.status, section.completionPct)}
                     <span className="text-sm font-medium">
-                      <Trans i18nKey={section.titleKey} />
+                      {section.esrsCode && (
+                        <span className="text-muted-foreground mr-1.5 font-normal">
+                          {section.esrsCode}
+                        </span>
+                      )}
+                      <span>{section.titleKey.replace('esg:', '')}</span>
                     </span>
-                    {section.titleKey === 'esg:executiveSummary' && (
+                    {section.id === 'methodology' && (
                       <Badge
                         variant="outline"
                         className="border-purple-300 text-[10px] text-purple-600"
                       >
                         <Sparkles className="mr-1 h-3 w-3" />
-                        <Trans i18nKey="esg:autoGenerated" />
+                        Auto
                       </Badge>
                     )}
                   </div>
@@ -165,8 +118,8 @@ export function ESGReportAccordion() {
                         return (
                           <Badge
                             key={source}
-                            variant={style?.variant ?? 'outline'}
-                            className={`text-[10px] ${style?.className ?? ''}`}
+                            variant={style.variant}
+                            className={`text-[10px] ${style.className}`}
                           >
                             {getSourceLabel(source)}
                           </Badge>
@@ -191,42 +144,82 @@ export function ESGReportAccordion() {
                 {/* Expanded content */}
                 {isExpanded && (
                   <div className="border-t bg-gray-50/50 px-4 py-3 dark:bg-gray-900/20">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        {/* Progress bar */}
-                        <div className="bg-muted h-2 w-full max-w-md overflow-hidden rounded-full">
+                    {/* Fields list */}
+                    {section.fields.length > 0 && (
+                      <div className="mb-3 space-y-1.5">
+                        {section.fields.map((field) => (
                           <div
-                            className={`h-full rounded-full transition-all duration-500 ${
-                              isComplete ? 'bg-emerald-500' : 'bg-amber-500'
-                            }`}
-                            style={{
-                              width: `${section.completionPct}%`,
-                            }}
-                          />
-                        </div>
-                        <div className="mt-2 flex gap-1 sm:hidden">
-                          {section.sources.map((source) => {
-                            const style = SOURCE_STYLES[source];
-                            return (
-                              <Badge
-                                key={source}
-                                variant={style?.variant ?? 'outline'}
-                                className={`text-[10px] ${style?.className ?? ''}`}
+                            key={field.label}
+                            className="flex items-center justify-between text-sm"
+                          >
+                            <div className="flex items-center gap-2">
+                              {field.complete ? (
+                                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                              ) : (
+                                <div className="h-3.5 w-3.5 rounded-full border-2 border-amber-300" />
+                              )}
+                              <span
+                                className={
+                                  field.complete ? '' : 'text-muted-foreground'
+                                }
                               >
-                                {getSourceLabel(source)}
+                                {field.label}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-muted-foreground text-xs">
+                                {field.value}
+                              </span>
+                              <Badge
+                                variant={SOURCE_STYLES[field.source].variant}
+                                className={`text-[9px] ${SOURCE_STYLES[field.source].className}`}
+                              >
+                                {getSourceLabel(field.source)}
                               </Badge>
-                            );
-                          })}
-                        </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
+                    )}
 
+                    {/* Progress bar */}
+                    <div className="bg-muted h-1.5 w-full max-w-md overflow-hidden rounded-full">
+                      <div
+                        className={`h-full rounded-full transition-all duration-500 ${
+                          isComplete ? 'bg-emerald-500' : 'bg-amber-500'
+                        }`}
+                        style={{ width: `${section.completionPct}%` }}
+                      />
+                    </div>
+
+                    {/* Actions */}
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                      {!isComplete && section.wizardStep && (
+                        <Button
+                          size="sm"
+                          variant="default"
+                          className="h-7 text-xs"
+                          render={
+                            <Link
+                              href={`/home/esg/wizard?step=${section.wizardStep}`}
+                            >
+                              <Bot className="mr-1 h-3 w-3" />
+                              Completer avec l&apos;IA
+                              {section.estimatedMinutes &&
+                                ` (~${section.estimatedMinutes} min)`}
+                            </Link>
+                          }
+                          nativeButton={false}
+                        />
+                      )}
                       {section.linkHref && section.linkLabelKey && (
                         <Button
                           size="sm"
-                          variant={isComplete ? 'ghost' : 'default'}
+                          variant="ghost"
+                          className="h-7 text-xs"
                           render={
                             <Link href={section.linkHref}>
-                              <Trans i18nKey={section.linkLabelKey} />
+                              {section.linkLabelKey.replace('esg:', '')}
                               <ChevronRight className="ml-1 h-3 w-3" />
                             </Link>
                           }
