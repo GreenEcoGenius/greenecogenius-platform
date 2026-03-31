@@ -15,9 +15,11 @@ export function SubscribeClientButton({
   variant: 'default' | 'outline';
 }) {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleClick = async () => {
     setLoading(true);
+    setError(null);
 
     try {
       const res = await fetch('/api/stripe/subscription/checkout', {
@@ -28,28 +30,43 @@ export function SubscribeClientButton({
 
       const data = await res.json();
 
+      if (!res.ok) {
+        setError(data.error ?? 'Une erreur est survenue');
+        setLoading(false);
+        return;
+      }
+
       if (data.url) {
         window.location.href = data.url;
+      } else {
+        setError('Aucune URL de paiement reçue');
+        setLoading(false);
       }
-    } finally {
+    } catch (err) {
+      setError('Erreur réseau. Réessayez.');
       setLoading(false);
     }
   };
 
   return (
-    <Button
-      variant={variant}
-      className="mt-6 w-full"
-      onClick={handleClick}
-      disabled={loading}
-    >
-      {loading ? (
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-      ) : (
-        <ArrowRight className="mr-2 h-4 w-4" />
+    <div className="mt-6">
+      <Button
+        variant={variant}
+        className="w-full"
+        onClick={handleClick}
+        disabled={loading}
+      >
+        {loading ? (
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <ArrowRight className="mr-2 h-4 w-4" />
+        )}
+        <Trans i18nKey="pricingPage.startTrial" />
+      </Button>
+      {error && (
+        <p className="mt-2 text-center text-sm text-red-500">{error}</p>
       )}
-      <Trans i18nKey="pricingPage.startTrial" />
-    </Button>
+    </div>
   );
 }
 
@@ -75,7 +92,12 @@ export function ManageClientButton() {
   };
 
   return (
-    <Button variant="outline" size="sm" onClick={handleClick} disabled={loading}>
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={handleClick}
+      disabled={loading}
+    >
       {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
       Gérer mon abonnement
     </Button>

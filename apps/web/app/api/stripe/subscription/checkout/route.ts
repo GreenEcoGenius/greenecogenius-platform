@@ -71,31 +71,37 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const Stripe = (await import('stripe')).default;
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  try {
+    const Stripe = (await import('stripe')).default;
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-  const session = await stripe.checkout.sessions.create({
-    mode: 'subscription',
-    customer_email: user.email,
-    line_items: [{ price: stripePriceId, quantity: 1 }],
-    success_url: new URL(
-      '/home/carbon?subscription=success',
-      appConfig.url,
-    ).toString(),
-    cancel_url: new URL('/pricing?cancelled=true', appConfig.url).toString(),
-    subscription_data: {
-      trial_period_days: 14,
+    const session = await stripe.checkout.sessions.create({
+      mode: 'subscription',
+      customer_email: user.email,
+      line_items: [{ price: stripePriceId, quantity: 1 }],
+      success_url: new URL(
+        '/home/carbon?subscription=success',
+        appConfig.url,
+      ).toString(),
+      cancel_url: new URL('/pricing?cancelled=true', appConfig.url).toString(),
+      subscription_data: {
+        trial_period_days: 14,
+        metadata: {
+          account_id: user.id,
+          plan_id: planId,
+          plan_name: plan.name,
+        },
+      },
       metadata: {
         account_id: user.id,
         plan_id: planId,
-        plan_name: plan.name,
       },
-    },
-    metadata: {
-      account_id: user.id,
-      plan_id: planId,
-    },
-  });
+    });
 
-  return NextResponse.json({ url: session.url });
+    return NextResponse.json({ url: session.url });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Stripe error';
+    console.error('Subscription checkout error:', message);
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }
