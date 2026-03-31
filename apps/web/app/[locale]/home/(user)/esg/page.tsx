@@ -13,7 +13,6 @@ import { EsgKpiCards } from './_components/esg-kpi-cards';
 import { ESGReportAccordion } from './_components/esg-report-accordion';
 import { EsgStatusHeader } from './_components/esg-status-header';
 import { FormatSelectorWrapper } from './_components/format-selector-wrapper';
-import { NoSubscriptionPreview } from './_components/no-subscription-preview';
 import { ReportHistoryTable } from './_components/report-history-table';
 import {
   MOCK_AI_INSIGHTS,
@@ -36,21 +35,6 @@ async function ESGPage() {
 
   if (!userId) {
     return null;
-  }
-
-  // Check if user has an active subscription
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: subscription } = await (client as any)
-    .from('organization_subscriptions')
-    .select('status, subscription_plans(name)')
-    .eq('account_id', userId)
-    .in('status', ['active', 'trialing', 'past_due'])
-    .maybeSingle();
-
-  const hasSubscription = !!subscription;
-
-  if (!hasSubscription) {
-    return <NoSubscriptionPreview />;
   }
 
   const kpi = MOCK_KPI;

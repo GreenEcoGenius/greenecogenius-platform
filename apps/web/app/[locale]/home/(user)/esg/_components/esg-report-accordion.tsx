@@ -149,6 +149,13 @@ export function ESGReportAccordion({
                 {/* Expanded content */}
                 {isExpanded && (
                   <div className="border-t bg-gray-50/50 px-4 py-3 dark:bg-gray-900/20">
+                    {/* Description */}
+                    {section.description && (
+                      <p className="text-muted-foreground mb-3 text-xs italic">
+                        {section.description}
+                      </p>
+                    )}
+
                     {/* Fields list */}
                     {section.fields.length > 0 && (
                       <div className="mb-3 space-y-1.5">
@@ -175,16 +182,38 @@ export function ESGReportAccordion({
                               <span className="text-muted-foreground text-xs">
                                 {field.value}
                               </span>
-                              <Badge
-                                variant={SOURCE_STYLES[field.source].variant}
-                                className={`text-[9px] ${SOURCE_STYLES[field.source].className}`}
-                              >
-                                {getSourceLabel(field.source)}
-                              </Badge>
+                              {field.sourceLink ? (
+                                <Link href={field.sourceLink}>
+                                  <Badge
+                                    variant={
+                                      SOURCE_STYLES[field.source].variant
+                                    }
+                                    className={`cursor-pointer text-[9px] hover:opacity-80 ${SOURCE_STYLES[field.source].className}`}
+                                  >
+                                    {field.sourceLabel ??
+                                      getSourceLabel(field.source)}
+                                  </Badge>
+                                </Link>
+                              ) : (
+                                <Badge
+                                  variant={SOURCE_STYLES[field.source].variant}
+                                  className={`text-[9px] ${SOURCE_STYLES[field.source].className}`}
+                                >
+                                  {field.sourceLabel ??
+                                    getSourceLabel(field.source)}
+                                </Badge>
+                              )}
                             </div>
                           </div>
                         ))}
                       </div>
+                    )}
+
+                    {/* Blockchain hash */}
+                    {section.blockchainHash && (
+                      <p className="text-muted-foreground mb-2 font-mono text-[10px]">
+                        Hash blockchain : {section.blockchainHash}
+                      </p>
                     )}
 
                     {/* Progress bar */}
@@ -199,7 +228,7 @@ export function ESGReportAccordion({
 
                     {/* Actions */}
                     <div className="mt-3 flex flex-wrap items-center gap-2">
-                      {!isComplete && section.wizardStep && (
+                      {!isComplete && section.wizardStep !== undefined && (
                         <Button
                           size="sm"
                           variant="default"

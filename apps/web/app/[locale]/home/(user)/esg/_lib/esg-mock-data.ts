@@ -10,12 +10,15 @@ export interface EsgKpiData {
   autoFilledFields: number;
   totalFields: number;
   csrdCompliancePct: number;
+  blockchainProofs: number;
 }
 
 export interface SectionField {
   label: string;
   value: string;
   source: SourceType;
+  sourceLabel?: string;
+  sourceLink?: string;
   complete: boolean;
 }
 
@@ -26,11 +29,13 @@ export interface ReportSection {
   completionPct: number;
   sources: SourceType[];
   status: SectionStatus;
+  description?: string;
   fields: SectionField[];
   linkHref?: string;
   linkLabelKey?: string;
   wizardStep?: number;
   estimatedMinutes?: number;
+  blockchainHash?: string;
 }
 
 export interface CsrdIndicator {
@@ -71,6 +76,7 @@ export const MOCK_KPI: EsgKpiData = {
   autoFilledFields: 42,
   totalFields: 48,
   csrdCompliancePct: 72,
+  blockchainProofs: 14,
 };
 
 export const MOCK_SECTIONS: ReportSection[] = [
@@ -81,22 +87,29 @@ export const MOCK_SECTIONS: ReportSection[] = [
     completionPct: 94,
     sources: ['auto', 'blockchain'],
     status: 'complete',
+    description:
+      'Bilan carbone complet Scopes 1, 2 et 3 selon le GHG Protocol.',
+    blockchainHash: '0xa7f3d2e1b9c4f5a6',
     fields: [
       {
         label: 'Scope 1 -- Emissions directes',
         value: '12.4 t',
         source: 'auto',
+        sourceLabel: 'Impact Carbone',
+        sourceLink: '/home/carbon',
         complete: true,
       },
       {
         label: 'Scope 2 -- Energie achetee',
         value: '8.7 t',
         source: 'auto',
+        sourceLabel: 'Impact Carbone',
+        sourceLink: '/home/carbon',
         complete: true,
       },
       {
         label: 'Scope 3 -- Chaine de valeur',
-        value: '45.2 t',
+        value: '45.2 t (78%)',
         source: 'auto',
         complete: false,
       },
@@ -104,16 +117,42 @@ export const MOCK_SECTIONS: ReportSection[] = [
         label: 'Cat. 1 Achats',
         value: '12 400 EUR',
         source: 'auto',
+        sourceLabel: 'Le Comptoir',
+        sourceLink: '/home/marketplace',
         complete: true,
       },
       {
         label: 'Cat. 4 Transport amont',
         value: '2 340 km',
         source: 'blockchain',
+        sourceLabel: 'Tracabilite',
+        sourceLink: '/home/traceability',
+        complete: true,
+      },
+      {
+        label: 'Cat. 5 Dechets',
+        value: '8.2 t',
+        source: 'auto',
+        sourceLabel: 'Le Comptoir',
+        sourceLink: '/home/marketplace',
         complete: true,
       },
       {
         label: 'Cat. 6 Deplacements pro',
+        value: '--',
+        source: 'manual',
+        complete: false,
+      },
+      {
+        label: 'Cat. 9 Transport aval',
+        value: '1 120 km',
+        source: 'blockchain',
+        sourceLabel: 'Tracabilite',
+        sourceLink: '/home/traceability',
+        complete: true,
+      },
+      {
+        label: 'Cat. 11 Utilisation produits',
         value: '--',
         source: 'manual',
         complete: false,
@@ -130,29 +169,46 @@ export const MOCK_SECTIONS: ReportSection[] = [
     completionPct: 98,
     sources: ['auto', 'blockchain'],
     status: 'complete',
+    description:
+      'Section quasi-entierement auto-remplie grace au Comptoir Circulaire et a la Tracabilite blockchain.',
     fields: [
       {
         label: 'Tonnes recyclees',
         value: '306.6 t',
         source: 'auto',
+        sourceLabel: 'Le Comptoir',
+        sourceLink: '/home/marketplace',
         complete: true,
       },
       {
         label: 'Lots traces blockchain',
         value: '30',
         source: 'blockchain',
+        sourceLabel: 'Tracabilite',
+        sourceLink: '/home/traceability',
         complete: true,
       },
       {
         label: 'Taux de circularite',
         value: '67%',
         source: 'auto',
+        sourceLabel: 'Calcule',
         complete: true,
       },
       {
         label: 'CO2 evite par recyclage',
         value: '545.5 t',
         source: 'blockchain',
+        sourceLabel: 'Tracabilite',
+        sourceLink: '/home/traceability',
+        complete: true,
+      },
+      {
+        label: 'Matieres par type',
+        value: 'Detail disponible',
+        source: 'auto',
+        sourceLabel: 'Le Comptoir',
+        sourceLink: '/home/marketplace',
         complete: true,
       },
     ],

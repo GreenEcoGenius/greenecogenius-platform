@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { ArrowUpRight, Cloud, FileCheck, Leaf, Shield } from 'lucide-react';
+import { ArrowUpRight, Cloud, FileCheck, Leaf, LinkIcon } from 'lucide-react';
 
 import { Card, CardContent } from '@kit/ui/card';
 
@@ -76,12 +76,12 @@ export function EsgKpiCards({ data }: { data: EsgKpiData }) {
         iconBgClass="bg-blue-50 dark:bg-blue-950/30"
       />
       <KpiCard
-        icon={<Shield className="h-5 w-5 text-amber-600" />}
-        label="Conformite CSRD"
-        value={`${data.csrdCompliancePct}%`}
-        sub="Normes ESRS"
-        href="/home/esg/csrd"
-        iconBgClass="bg-amber-50 dark:bg-amber-950/30"
+        icon={<LinkIcon className="h-5 w-5 text-indigo-600" />}
+        label="Preuves blockchain"
+        value={`${data.blockchainProofs} hash`}
+        sub="Verifies on-chain"
+        href="https://polygonscan.com"
+        iconBgClass="bg-indigo-50 dark:bg-indigo-950/30"
       />
     </div>
   );
