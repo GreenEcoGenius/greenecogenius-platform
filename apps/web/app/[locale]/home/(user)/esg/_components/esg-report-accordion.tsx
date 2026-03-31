@@ -15,8 +15,13 @@ import {
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
+import { Trans } from '@kit/ui/trans';
 
-import type { ReportSection, SourceType } from '../_lib/esg-mock-data';
+import type {
+  ReportSection,
+  SectionStatus,
+  SourceType,
+} from '../_lib/esg-mock-data';
 
 const SOURCE_STYLES: Record<
   SourceType,
@@ -50,7 +55,7 @@ function getSourceLabel(source: SourceType): string {
   }
 }
 
-function getStatusIcon(status: string, pct: number) {
+function getStatusIcon(status: SectionStatus, pct: number) {
   if (status === 'complete' || pct >= 90) {
     return <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-500" />;
   }
@@ -98,7 +103,7 @@ export function ESGReportAccordion({
                           {section.esrsCode}
                         </span>
                       )}
-                      <span>{section.titleKey.replace('esg:', '')}</span>
+                      <Trans i18nKey={section.titleKey} />
                     </span>
                     {section.id === 'methodology' && (
                       <Badge
@@ -219,7 +224,7 @@ export function ESGReportAccordion({
                           className="h-7 text-xs"
                           render={
                             <Link href={section.linkHref}>
-                              {section.linkLabelKey.replace('esg:', '')}
+                              <Trans i18nKey={section.linkLabelKey} />
                               <ChevronRight className="ml-1 h-3 w-3" />
                             </Link>
                           }

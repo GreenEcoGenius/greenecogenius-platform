@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
+import { requireUser } from '@kit/supabase/require-user';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Button } from '@kit/ui/button';
 import { Heading } from '@kit/ui/heading';
 import { PageBody, PageHeader } from '@kit/ui/page';
@@ -15,7 +17,14 @@ export const generateMetadata = async () => {
   return { title: `${t('title')} - CSRD` };
 };
 
-export default function CSRDPage() {
+export default async function CSRDPage() {
+  const client = getSupabaseServerClient();
+  const user = await requireUser(client);
+
+  if (!user.data?.id) {
+    return null;
+  }
+
   return (
     <PageBody>
       <PageHeader description="">

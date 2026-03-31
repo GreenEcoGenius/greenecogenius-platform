@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 
 import { ArrowUpRight, Cloud, FileCheck, Leaf, Shield } from 'lucide-react';
@@ -14,19 +12,15 @@ interface KpiCardProps {
   value: string;
   sub: string;
   href?: string;
-  color: string;
+  iconBgClass: string;
 }
 
-function KpiCard({ icon, label, value, sub, href, color }: KpiCardProps) {
+function KpiCard({ icon, label, value, sub, href, iconBgClass }: KpiCardProps) {
   const content = (
     <Card className="group transition-shadow hover:shadow-md">
       <CardContent className="p-5">
         <div className="flex items-start justify-between">
-          <div
-            className={`rounded-lg bg-${color}-50 p-2 dark:bg-${color}-950/30`}
-          >
-            {icon}
-          </div>
+          <div className={`rounded-lg p-2 ${iconBgClass}`}>{icon}</div>
           {href && (
             <ArrowUpRight className="text-muted-foreground h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
           )}
@@ -64,7 +58,7 @@ export function EsgKpiCards({ data }: { data: EsgKpiData }) {
         value={`${data.totalEmissionsT} t`}
         sub="CO2e Scopes 1+2+3"
         href="/home/carbon"
-        color="slate"
+        iconBgClass="bg-slate-50 dark:bg-slate-950/30"
       />
       <KpiCard
         icon={<Leaf className="h-5 w-5 text-emerald-600" />}
@@ -72,14 +66,14 @@ export function EsgKpiCards({ data }: { data: EsgKpiData }) {
         value={`${data.co2AvoidedT} t`}
         sub="Via recyclage"
         href="/home/traceability"
-        color="emerald"
+        iconBgClass="bg-emerald-50 dark:bg-emerald-950/30"
       />
       <KpiCard
         icon={<FileCheck className="h-5 w-5 text-blue-600" />}
         label="Champs auto"
         value={`${data.autoFilledFields} / ${data.totalFields}`}
         sub={`${autoPct}% auto-rempli`}
-        color="blue"
+        iconBgClass="bg-blue-50 dark:bg-blue-950/30"
       />
       <KpiCard
         icon={<Shield className="h-5 w-5 text-amber-600" />}
@@ -87,7 +81,7 @@ export function EsgKpiCards({ data }: { data: EsgKpiData }) {
         value={`${data.csrdCompliancePct}%`}
         sub="Normes ESRS"
         href="/home/esg/csrd"
-        color="amber"
+        iconBgClass="bg-amber-50 dark:bg-amber-950/30"
       />
     </div>
   );

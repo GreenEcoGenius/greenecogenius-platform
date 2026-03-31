@@ -167,7 +167,9 @@ export function ESGFormWizard({
   initialStep?: number;
 } = {}) {
   const [currentStep, setCurrentStep] = useState(
-    initialStep && initialStep >= 0 && initialStep <= 4 ? initialStep : 0,
+    initialStep !== undefined && initialStep >= 0 && initialStep < STEPS.length
+      ? initialStep
+      : 0,
   );
   const [formData, setFormData] = useState<ESGFormData>(defaultFormData);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>(
