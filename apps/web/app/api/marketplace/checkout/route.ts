@@ -30,6 +30,40 @@ export async function POST(req: NextRequest) {
   const { listingId } = parsed.data;
   const adminClient = getSupabaseServerAdminClient();
 
+  // Lot limit enforcement based on subscription plan
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: sub } = await (adminClient as any)
+    .from('organization_subscriptions')
+    .select('status, subscription_plans(name, max_traced_lots_per_month)')
+    .eq('account_id', user.id)
+    .in('status', ['active', 'trialing'])
+    .single();
+
+  const lotLimit = sub?.subscription_plans?.max_traced_lots_per_month;
+
+  if (lotLimit) {
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { count } = await (adminClient as any)
+      .from('marketplace_transactions')
+      .select('id', { count: 'exact', head: true })
+      .eq('buyer_account_id', user.id)
+      .gte('created_at', startOfMonth.toISOString());
+
+    if ((count ?? 0) >= lotLimit) {
+      return NextResponse.json(
+        {
+          error:
+            'Monthly lot limit reached. Upgrade your plan for unlimited lots.',
+        },
+        { status: 403 },
+      );
+    }
+  }
+
   // Fetch the listing
   const { data: listing } = await client
     .from('listings')

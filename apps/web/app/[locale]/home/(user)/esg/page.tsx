@@ -18,6 +18,8 @@ import { Heading } from '@kit/ui/heading';
 import { PageBody, PageHeader } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
+import { BenchmarkCard } from './_components/benchmark-card';
+
 export const generateMetadata = async () => {
   const t = await getTranslations('esg');
 
@@ -91,6 +93,9 @@ async function ESGPage() {
             color="amber"
           />
         </div>
+
+        {/* Sector benchmarking */}
+        <BenchmarkCard />
 
         {/* Latest report summary or empty state */}
         {latestReport ? (

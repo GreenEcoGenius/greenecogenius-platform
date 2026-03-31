@@ -95,5 +95,15 @@
   "periodH2": "S2 (Jul-Déc)",
   "periodYear": "Année complète",
   "autoSaved": "Sauvegarde automatique",
-  "saving": "Sauvegarde..."
+  "saving": "Sauvegarde...",
+  "benchmarkTitle": "Benchmarking sectoriel",
+  "benchmarkYourCompany": "Votre entreprise",
+  "benchmarkSectorAvg": "Moyenne du secteur",
+  "benchmarkPerEmployee": "tonnes CO₂e / employé / an",
+  "benchmarkExcellent": "Excellent",
+  "benchmarkGood": "Bon",
+  "benchmarkAverage": "Dans la moyenne",
+  "benchmarkNeedsImprovement": "À améliorer",
+  "benchmarkBelowAvg": "en dessous de la moyenne sectorielle",
+  "benchmarkAboveAvg": "au dessus de la moyenne sectorielle"
 }

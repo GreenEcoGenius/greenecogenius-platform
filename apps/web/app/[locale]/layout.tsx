@@ -9,6 +9,7 @@ import { routing } from '@kit/i18n/routing';
 import { Toaster } from '@kit/ui/sonner';
 import { cn } from '@kit/ui/utils';
 
+import { CrispChat } from '~/components/crisp-chat';
 import { RootProviders } from '~/components/root-providers';
 import { getFontsClassName } from '~/lib/fonts';
 import { generateRootMetadata } from '~/lib/root-metadata';
@@ -57,6 +58,8 @@ export default async function LocaleLayout({
           {children}
 
           <Toaster richColors={true} theme={theme} position="top-center" />
+
+          <CrispChat />
         </RootProviders>
       </body>
     </html>

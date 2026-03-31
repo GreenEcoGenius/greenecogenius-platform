@@ -95,5 +95,15 @@
   "periodH2": "H2 (Jul-Dec)",
   "periodYear": "Full year",
   "autoSaved": "Auto-saved",
-  "saving": "Saving..."
+  "saving": "Saving...",
+  "benchmarkTitle": "Sector Benchmarking",
+  "benchmarkYourCompany": "Your Company",
+  "benchmarkSectorAvg": "Sector Average",
+  "benchmarkPerEmployee": "tonnes CO₂e / employee / year",
+  "benchmarkExcellent": "Excellent",
+  "benchmarkGood": "Good",
+  "benchmarkAverage": "Average",
+  "benchmarkNeedsImprovement": "Needs Improvement",
+  "benchmarkBelowAvg": "below sector average",
+  "benchmarkAboveAvg": "above sector average"
 }

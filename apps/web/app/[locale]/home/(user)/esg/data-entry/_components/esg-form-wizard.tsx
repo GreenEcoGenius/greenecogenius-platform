@@ -225,28 +225,52 @@ export function ESGFormWizard() {
   const goNext = () => setCurrentStep((s) => Math.min(s + 1, STEPS.length - 1));
   const goBack = () => setCurrentStep((s) => Math.max(s - 1, 0));
 
+  const [generating, setGenerating] = useState(false);
+
   const handleGenerateReport = async () => {
+    setGenerating(true);
+
     try {
+      // 1. Save current data
       await fetch('/api/esg/data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      await fetch('/api/esg/report/generate', {
+
+      // 2. Calculate emissions server-side
+      await fetch('/api/esg/calculate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          reporting_year: formData.reporting_year,
-          total_scope1: scope1,
-          total_scope2: scope2,
-          total_scope3: scope3,
-          total_emissions: total,
-          co2_avoided: avoided,
-          net_emissions: net,
-        }),
+        body: JSON.stringify({ reporting_year: formData.reporting_year }),
       });
+
+      // 3. Generate & download HTML report
+      const res = await fetch('/api/esg/report/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reporting_year: formData.reporting_year }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to generate report');
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download =
+        res.headers.get('Content-Disposition')?.split('filename="')[1]?.replace('"', '') ??
+        `rapport-esg-${formData.reporting_year}.html`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     } catch {
       // handled silently
+    } finally {
+      setGenerating(false);
     }
   };
 
@@ -354,8 +378,12 @@ export function ESGFormWizard() {
               <Button variant="outline" onClick={() => autoSave(formData)}>
                 <Trans i18nKey="esg:save" />
               </Button>
-              <Button onClick={handleGenerateReport}>
-                <Trans i18nKey="esg:generateReport" />
+              <Button onClick={handleGenerateReport} disabled={generating}>
+                {generating ? (
+                  <Trans i18nKey="esg:generating" />
+                ) : (
+                  <Trans i18nKey="esg:generateReport" />
+                )}
               </Button>
             </>
           ) : (
