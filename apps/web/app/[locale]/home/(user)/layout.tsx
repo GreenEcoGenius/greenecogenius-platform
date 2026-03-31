@@ -10,6 +10,7 @@ import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/sidebar';
 
 import { AppLogo } from '~/components/app-logo';
+import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
@@ -57,6 +58,7 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
           </PageMobileNavigation>
 
           {children}
+          <GlobalAIAssistant />
         </Page>
       </SidebarProvider>
     </UserWorkspaceContextProvider>
@@ -80,6 +82,7 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
         </PageMobileNavigation>
 
         {children}
+        <GlobalAIAssistant />
       </Page>
     </UserWorkspaceContextProvider>
   );

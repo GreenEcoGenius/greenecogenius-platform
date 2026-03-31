@@ -66,5 +66,20 @@
   "certDate": "Date",
   "noCarbonData": "Aucune donnée carbone disponible. Complétez une transaction pour voir votre impact.",
   "noCertificates": "Aucun certificat disponible.",
-  "verify": "Vérifier"
+  "verify": "Vérifier",
+  "bannerTitle": "Impact Environnemental",
+  "bannerSubtitle": "Méthodologie : GHG Protocol + ADEME Base Carbone",
+  "bannerBlockchain": "Données vérifiées blockchain",
+  "scope1": "Scope 1",
+  "scope1Desc": "Émissions directes",
+  "scope2": "Scope 2",
+  "scope2Desc": "Énergie achetée",
+  "scope3": "Scope 3",
+  "scope3Desc": "Chaîne de valeur",
+  "scope3Auto": "auto-rempli",
+  "totalEmissions": "Total émissions",
+  "scopeProgress": "Progression du bilan",
+  "autoFilled": "Auto-rempli",
+  "toComplete": "À saisir",
+  "completeNow": "Compléter maintenant"
 }

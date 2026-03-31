@@ -115,5 +115,19 @@
   "paymentSuccess": "Paiement confirmé !",
   "paymentSuccessDesc": "Votre achat a été effectué avec succès. Le vendeur sera notifié de votre commande.",
   "backToListing": "Voir l'annonce",
-  "backToMarketplace": "Retour au Comptoir"
+  "backToMarketplace": "Retour au Comptoir",
+  "welcomeTitle": "Bonjour",
+  "ecosystemActive": "Votre ecosysteme GreenEcoGenius est actif",
+  "kpiComptoir": "Annonces actives",
+  "kpiLots": "Lots traces on-chain",
+  "kpiCO2": "CO₂ evite",
+  "kpiReporting": "Reporting complete",
+  "kpiRSE": "Score RSE",
+  "kpiCompliance": "Conformite",
+  "aiActions": "Actions recommandees",
+  "recentActivity": "Activite recente",
+  "marketplaceBanner": "Marketplace B2B de matieres recyclables",
+  "kpiVolume": "Volume total",
+  "kpiTransactions": "Transactions ce mois",
+  "kpiCO2Market": "CO₂ evite marketplace"
 }
