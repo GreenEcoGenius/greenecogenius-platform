@@ -72,24 +72,23 @@ export function ListingCard({
   return (
     <Link
       href={detailHref}
-      className="group bg-card relative rounded-lg border p-5 transition-shadow hover:shadow-md"
+      className="group bg-card relative rounded-lg border border-border/40 p-5 transition-shadow hover:shadow-md"
     >
-      {showDelete && (
-        <div className="absolute top-2 right-2 z-10">
-          <DeleteListingButton listingId={listing.id} />
-        </div>
-      )}
-
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between gap-2">
         <Badge className={typeColors[listing.listing_type] ?? 'bg-muted'}>
           <Trans i18nKey={typeLabel} />
         </Badge>
 
-        <span className="text-muted-foreground text-xs">
-          {listing.created_at
-            ? new Date(listing.created_at).toLocaleDateString('fr-FR')
-            : ''}
-        </span>
+        <div className="flex items-center gap-1">
+          <span className="text-muted-foreground text-xs">
+            {listing.created_at
+              ? new Date(listing.created_at).toLocaleDateString('fr-FR')
+              : ''}
+          </span>
+          {showDelete && (
+            <DeleteListingButton listingId={listing.id} />
+          )}
+        </div>
       </div>
 
       <h3 className="group-hover:text-primary mt-3 text-sm font-semibold">

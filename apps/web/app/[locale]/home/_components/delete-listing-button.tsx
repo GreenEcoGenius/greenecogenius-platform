@@ -25,37 +25,40 @@ export function DeleteListingButton({ listingId }: { listingId: string }) {
   const [open, setOpen] = useState(false);
 
   async function handleDelete() {
-    const { error } = await supabase
-      .from('listings')
-      .delete()
-      .eq('id', listingId);
+    try {
+      const { error } = await supabase
+        .from('listings')
+        .delete()
+        .eq('id', listingId);
 
-    if (!error) {
+      if (!error) {
+        setOpen(false);
+
+        startTransition(() => {
+          router.refresh();
+        });
+      }
+    } catch {
       setOpen(false);
-
-      startTransition(() => {
-        router.refresh();
-      });
+      router.refresh();
     }
   }
 
   return (
     <>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="text-destructive hover:bg-destructive/10 h-8 w-8"
+      <button
+        className="text-muted-foreground hover:text-destructive rounded p-1 transition-colors"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           setOpen(true);
         }}
       >
-        <Trash2 className="h-4 w-4" />
-      </Button>
+        <Trash2 className="h-3.5 w-3.5" />
+      </button>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
+      <Dialog open={open} onOpenChange={(v) => { setOpen(v); }}>
+        <DialogContent onClick={(e) => e.stopPropagation()}>
           <DialogHeader>
             <DialogTitle>
               <Trans i18nKey="marketplace.deleteConfirmTitle" />
