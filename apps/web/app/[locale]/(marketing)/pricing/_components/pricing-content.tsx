@@ -200,7 +200,7 @@ export function PricingContent({
 
       {/* PLANS */}
       <section className="container mx-auto px-4 py-16">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 pt-4 md:grid-cols-3">
           {/* ESSENTIEL */}
           <Card className="flex flex-col transition-all hover:-translate-y-1 hover:shadow-lg">
             <CardHeader className="text-center">

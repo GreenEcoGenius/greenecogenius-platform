@@ -124,7 +124,7 @@ async function PersonalAccountBillingPage() {
       )}
 
       {/* Plans grid */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-6 pt-4 md:grid-cols-3">
         {/* ESSENTIEL */}
         <Card
           className={`flex flex-col ${currentPlan === 'essentiel' ? 'border-primary ring-primary/20 ring-2' : ''}`}
@@ -267,6 +267,57 @@ async function PersonalAccountBillingPage() {
           <ManageButton />
         </div>
       )}
+
+      {/* Bottom section — included with marketplace */}
+      <div className="mt-10 rounded-xl border border-green-200 bg-green-50/50 p-6 dark:border-green-900 dark:bg-green-950/30">
+        <h3 className="mb-3 text-center text-lg font-semibold">
+          Inclus dans chaque transaction marketplace
+        </h3>
+        <p className="text-muted-foreground mb-4 text-center text-sm">
+          Sans abonnement, vous bénéficiez déjà de ces fonctionnalités via la commission marketplace.
+        </p>
+        <div className="flex flex-wrap justify-center gap-3">
+          {[
+            { icon: '🔗', label: 'Traçabilité blockchain' },
+            { icon: '🌱', label: 'Calcul CO₂ automatique' },
+            { icon: '📄', label: 'Certificat PDF' },
+            { icon: '📊', label: 'Dashboard carbone' },
+            { icon: '📥', label: 'Export PDF/CSV' },
+          ].map((tag) => (
+            <span
+              key={tag.label}
+              className="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-white px-3 py-1.5 text-sm dark:border-green-800 dark:bg-green-950"
+            >
+              {tag.icon} {tag.label}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* FAQ */}
+      <div className="mt-8 space-y-4">
+        <h3 className="text-lg font-semibold">Questions fréquentes</h3>
+        <div className="space-y-3">
+          <div className="rounded-lg border p-4">
+            <p className="font-medium">Qu&apos;est-ce qui est inclus gratuitement ?</p>
+            <p className="text-muted-foreground mt-1 text-sm">
+              Chaque transaction sur Le Comptoir Circulaire inclut la traçabilité blockchain, le calcul CO₂, un certificat PDF et le dashboard carbone. Tout est compris dans la commission marketplace.
+            </p>
+          </div>
+          <div className="rounded-lg border p-4">
+            <p className="font-medium">Comment fonctionne l&apos;essai gratuit ?</p>
+            <p className="text-muted-foreground mt-1 text-sm">
+              14 jours d&apos;accès complet à toutes les fonctionnalités de votre plan. Aucun paiement avant la fin de la période d&apos;essai. Annulable à tout moment.
+            </p>
+          </div>
+          <div className="rounded-lg border p-4">
+            <p className="font-medium">Puis-je changer de plan à tout moment ?</p>
+            <p className="text-muted-foreground mt-1 text-sm">
+              Oui, vous pouvez upgrader ou downgrader à tout moment. La différence est calculée au prorata.
+            </p>
+          </div>
+        </div>
+      </div>
     </PageBody>
   );
 }
