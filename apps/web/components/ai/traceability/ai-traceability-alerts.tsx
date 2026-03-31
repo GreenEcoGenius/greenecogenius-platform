@@ -2,13 +2,7 @@
 
 import { useState } from 'react';
 
-import {
-  AlertTriangle,
-  CheckCircle,
-  Info,
-  X,
-  XCircle,
-} from 'lucide-react';
+import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
 
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -25,8 +19,8 @@ type ActionType =
   | 'emettre_certificats';
 
 const ACTION_MAP: Record<string, ActionType> = {
-  'Corriger': 'corriger',
-  'Signaler': 'signaler',
+  Corriger: 'corriger',
+  Signaler: 'signaler',
   'Contacter transporteur': 'contacter_transporteur',
   'Marquer retarde': 'marquer_retarde',
   'Emettre les certificats': 'emettre_certificats',
@@ -54,8 +48,7 @@ const mockAlerts: Alert[] = [
   },
   {
     type: 'info',
-    message:
-      '3 certificats prets a emettre (LOT-0238, 0239, 0240)',
+    message: '3 certificats prets a emettre (LOT-0238, 0239, 0240)',
     actions: ['Emettre les certificats'],
   },
 ];
@@ -87,11 +80,7 @@ const alertConfig = {
   },
 };
 
-export function AITraceabilityAlerts({
-  className,
-}: {
-  className?: string;
-}) {
+export function AITraceabilityAlerts({ className }: { className?: string }) {
   const [dismissed, setDismissed] = useState<Set<number>>(new Set());
   const [modalOpen, setModalOpen] = useState(false);
   const [activeAction, setActiveAction] = useState<ActionType | null>(null);
@@ -100,11 +89,7 @@ export function AITraceabilityAlerts({
 
   const visibleAlerts = mockAlerts.filter((_, i) => !dismissed.has(i));
 
-  function handleActionClick(
-    action: string,
-    lotId?: string,
-    message?: string,
-  ) {
+  function handleActionClick(action: string, lotId?: string, message?: string) {
     const actionType = ACTION_MAP[action];
     if (!actionType) return;
 
@@ -127,9 +112,7 @@ export function AITraceabilityAlerts({
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Info className="h-4 w-4 text-violet-500" />
-          <span className="text-sm font-medium">
-            Alertes intelligentes
-          </span>
+          <span className="text-sm font-medium">Alertes intelligentes</span>
           <AIPoweredBadge />
         </div>
         <Badge variant="outline" className="text-xs">
@@ -150,15 +133,20 @@ export function AITraceabilityAlerts({
               className={`${config.border} ${config.bg} overflow-hidden`}
             >
               <CardContent className="flex items-start gap-3 p-4">
-                <Icon className={`mt-0.5 h-5 w-5 shrink-0 ${config.iconColor}`} />
+                <Icon
+                  className={`mt-0.5 h-5 w-5 shrink-0 ${config.iconColor}`}
+                />
 
                 <div className="min-w-0 flex-1">
                   <div className="mb-1 flex items-center gap-2">
-                    <Badge variant={config.badgeVariant} className="text-[10px]">
+                    <Badge
+                      variant={config.badgeVariant}
+                      className="text-[10px]"
+                    >
                       {config.label}
                     </Badge>
                     {alert.lotId && (
-                      <span className="text-muted-foreground text-xs font-mono">
+                      <span className="text-muted-foreground font-mono text-xs">
                         {alert.lotId}
                       </span>
                     )}

@@ -40,8 +40,7 @@ const SECTION_COLORS: Record<string, string> = {
     'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
   blockchain:
     'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300',
-  dashboard:
-    'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
+  dashboard: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
 };
 
 function formatTimeAgo(isoDate: string): string {
@@ -82,12 +81,12 @@ export function TraceabilityActivityFeed({
           >
             {/* Green dot + icon */}
             <div className="relative mt-0.5 flex-shrink-0">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted">
+              <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-full">
                 {ACTIVITY_ICONS[activity.type] ?? (
                   <Package className="h-4 w-4 text-gray-500" />
                 )}
               </div>
-              <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500 dark:border-gray-900" />
+              <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500 dark:border-gray-900" />
             </div>
 
             {/* Content */}

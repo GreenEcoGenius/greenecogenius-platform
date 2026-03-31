@@ -8,7 +8,9 @@ import { Trans } from '@kit/ui/trans';
 
 export function GenerateEsgReportButton() {
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<
+    'idle' | 'loading' | 'success' | 'error'
+  >('idle');
 
   const handleClick = async () => {
     setLoading(true);
@@ -35,7 +37,7 @@ export function GenerateEsgReportButton() {
 
       const disposition = response.headers.get('Content-Disposition');
       const filenameMatch = disposition?.match(/filename="(.+)"/);
-      a.download = filenameMatch?.[1] ?? 'rapport-esg-complet.html';
+      a.download = filenameMatch?.[1] ?? 'Rapport-ESG-GreenEcoGenius.pdf';
 
       document.body.appendChild(a);
       a.click();
@@ -56,7 +58,7 @@ export function GenerateEsgReportButton() {
     <button
       onClick={handleClick}
       disabled={loading}
-      className="inline-flex items-center gap-1.5 rounded-md bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm hover:bg-white/30 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+      className="inline-flex items-center gap-1.5 rounded-md bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-60"
     >
       {loading ? (
         <Loader2 className="h-4 w-4 animate-spin" />

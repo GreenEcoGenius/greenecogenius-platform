@@ -87,7 +87,8 @@ export function calculateLotCo2(
   transportMode: string = 'camion',
 ): Co2Calculation {
   const factors = EMISSION_FACTORS[material] ?? { virgin: 1.0, recycled: 0.3 };
-  const transportFactor = TRANSPORT_FACTORS[transportMode] ?? TRANSPORT_FACTORS.camion!;
+  const transportFactor =
+    TRANSPORT_FACTORS[transportMode] ?? TRANSPORT_FACTORS.camion!;
 
   const co2Virgin = round(weightKg * factors.virgin);
   const co2Recycled = round(weightKg * factors.recycled);

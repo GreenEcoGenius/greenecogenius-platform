@@ -7,10 +7,7 @@ import { execute } from '~/lib/ai/orchestrator';
 
 export async function POST(req: NextRequest) {
   if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json(
-      { error: 'AI not configured' },
-      { status: 503 },
-    );
+    return NextResponse.json({ error: 'AI not configured' }, { status: 503 });
   }
 
   try {
@@ -22,16 +19,10 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const {
-      title,
-      description,
-    }: { title: string; description: string } = body;
+    const { title, description }: { title: string; description: string } = body;
 
     if (!title || typeof title !== 'string') {
-      return NextResponse.json(
-        { error: 'title is required' },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: 'title is required' }, { status: 400 });
     }
 
     const prompt = `Categorize the following material listing for the GreenEcoGenius circular economy marketplace.

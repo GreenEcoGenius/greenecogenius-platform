@@ -4,6 +4,8 @@ import { Heading } from '@kit/ui/heading';
 import { PageBody, PageHeader } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
+import { AIAssistant } from '~/components/ai/ai-assistant';
+import { AITraceabilityAlerts } from '~/components/ai/traceability/ai-traceability-alerts';
 import {
   getAllLots,
   getMaterialBreakdown,
@@ -11,9 +13,6 @@ import {
   getRecentActivity,
   getTotalStats,
 } from '~/lib/mock/traceability-mock-data';
-
-import { AIAssistant } from '~/components/ai/ai-assistant';
-import { AITraceabilityAlerts } from '~/components/ai/traceability/ai-traceability-alerts';
 
 import { EcosystemBanner } from './_components/ecosystem-banner';
 import { TraceabilityActivityFeed } from './_components/traceability-activity-feed';
@@ -88,9 +87,7 @@ async function TraceabilityPage() {
 
   return (
     <PageBody>
-      <PageHeader
-        description={<Trans i18nKey="blockchain:subtitle" />}
-      >
+      <PageHeader description={<Trans i18nKey="blockchain:subtitle" />}>
         <Heading level={3}>
           <Trans i18nKey="blockchain:title" />
         </Heading>

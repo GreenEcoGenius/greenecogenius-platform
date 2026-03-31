@@ -84,11 +84,13 @@ export function TraceabilityEvolutionChart({
                 fontSize: '12px',
               }}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              formatter={((value: any, name: any) => {
-                if (name === 'co2AvoidedTonnes')
-                  return [`${value}t`, 'CO\u2082 \u00e9vit\u00e9'];
-                return [value, 'Lots'];
-              }) as any}
+              formatter={
+                ((value: any, name: any) => {
+                  if (name === 'co2AvoidedTonnes')
+                    return [`${value}t`, 'CO\u2082 \u00e9vit\u00e9'];
+                  return [value, 'Lots'];
+                }) as any
+              }
             />
             <Legend
               wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}

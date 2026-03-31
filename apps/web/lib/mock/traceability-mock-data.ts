@@ -364,7 +364,8 @@ function generateLots(): MockLot[] {
 
     const createdOffset = Math.round(rand() * 85) * 24 * 60 * 60 * 1000; // up to ~85 days ago
     const createdAt = new Date(baseDateMs + createdOffset).toISOString();
-    const updatedOffset = createdOffset + Math.round(rand() * 10) * 24 * 60 * 60 * 1000;
+    const updatedOffset =
+      createdOffset + Math.round(rand() * 10) * 24 * 60 * 60 * 1000;
     const updatedAt = new Date(baseDateMs + updatedOffset).toISOString();
 
     lots.push({
@@ -420,7 +421,8 @@ function generateActivities(lots: MockLot[]): MockActivity[] {
   }> = [
     {
       type: 'lot_created',
-      descFn: (l) => `Lot ${l.lotId} cree par ${l.sellerName} (${l.materialType}, ${l.weightKg} kg)`,
+      descFn: (l) =>
+        `Lot ${l.lotId} cree par ${l.sellerName} (${l.materialType}, ${l.weightKg} kg)`,
       sections: ['inventaire', 'dashboard'],
       minStatus: 0,
     },
@@ -622,10 +624,7 @@ export interface MaterialBreakdown {
  */
 export function getMaterialBreakdown(): MaterialBreakdown[] {
   const lots = getLots();
-  const map = new Map<
-    string,
-    { count: number; weight: number; co2: number }
-  >();
+  const map = new Map<string, { count: number; weight: number; co2: number }>();
 
   for (const lot of lots) {
     const entry = map.get(lot.materialType) ?? { count: 0, weight: 0, co2: 0 };

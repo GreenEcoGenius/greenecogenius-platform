@@ -97,7 +97,7 @@ const mockActions = [
   },
   {
     id: '8',
-    title: 'Former equipe a l\'anti-corruption',
+    title: "Former equipe a l'anti-corruption",
     pillar: 'ethics',
     impact: 4,
     effort: '2 jours',

@@ -27,13 +27,7 @@ interface AIReportStatusProps {
   className?: string;
 }
 
-function ScopeItem({
-  label,
-  complete,
-}: {
-  label: string;
-  complete: boolean;
-}) {
+function ScopeItem({ label, complete }: { label: string; complete: boolean }) {
   return (
     <div className="flex items-center gap-2 text-sm">
       {complete ? (
@@ -41,9 +35,7 @@ function ScopeItem({
       ) : (
         <AlertTriangle className="h-4 w-4 text-amber-500" />
       )}
-      <span className={complete ? '' : 'text-muted-foreground'}>
-        {label}
-      </span>
+      <span className={complete ? '' : 'text-muted-foreground'}>{label}</span>
       <span
         className={cn(
           'ml-auto text-xs font-medium',
@@ -71,7 +63,8 @@ export function AIReportStatus({
       <CardHeader>
         <CardTitle>Statut du rapport ESG</CardTitle>
         <CardDescription>
-          Compl\u00e9tude des donn\u00e9es pour la g\u00e9n\u00e9ration du rapport
+          Compl\u00e9tude des donn\u00e9es pour la g\u00e9n\u00e9ration du
+          rapport
         </CardDescription>
       </CardHeader>
 
@@ -101,12 +94,21 @@ export function AIReportStatus({
 
         {/* Scope checklist */}
         <div className="space-y-2.5">
-          <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+          <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
             V\u00e9rification des scopes
           </p>
-          <ScopeItem label="Scope 1 — \u00c9missions directes" complete={scope1Complete} />
-          <ScopeItem label="Scope 2 — \u00c9nergie indirecte" complete={scope2Complete} />
-          <ScopeItem label="Scope 3 — Cha\u00eene de valeur" complete={scope3Complete} />
+          <ScopeItem
+            label="Scope 1 — \u00c9missions directes"
+            complete={scope1Complete}
+          />
+          <ScopeItem
+            label="Scope 2 — \u00c9nergie indirecte"
+            complete={scope2Complete}
+          />
+          <ScopeItem
+            label="Scope 3 — Cha\u00eene de valeur"
+            complete={scope3Complete}
+          />
         </div>
 
         {/* Blockchain proofs */}

@@ -1,6 +1,13 @@
 import Link from 'next/link';
 
-import { Activity, Leaf, Package, Plus, Search, TrendingUp } from 'lucide-react';
+import {
+  Activity,
+  Leaf,
+  Package,
+  Plus,
+  Search,
+  TrendingUp,
+} from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -62,8 +69,7 @@ async function MarketplacePage() {
               variant="secondary"
               className="gap-1.5 rounded-full px-3 py-1"
             >
-              <Activity className="h-3.5 w-3.5" />
-              8 entreprises
+              <Activity className="h-3.5 w-3.5" />8 entreprises
             </Badge>
             <Badge
               variant="secondary"

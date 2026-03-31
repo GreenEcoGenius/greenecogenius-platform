@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useTransition } from 'react';
 
 import Link from 'next/link';
 
@@ -208,13 +208,11 @@ function RadarChart({
     return getPoint(i, r);
   });
   const dataPath =
-    dataPoints.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ') + ' Z';
+    dataPoints.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ') +
+    ' Z';
 
   return (
-    <svg
-      viewBox="0 0 300 300"
-      className="mx-auto h-64 w-64 sm:h-72 sm:w-72"
-    >
+    <svg viewBox="0 0 300 300" className="mx-auto h-64 w-64 sm:h-72 sm:w-72">
       {/* Grid */}
       {gridLevels.map((level) => {
         const points = labels
@@ -369,12 +367,9 @@ export function DiagnosticWizard() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<WizardAnswers>(INITIAL_ANSWERS);
 
-  const update = useCallback(
-    (key: keyof WizardAnswers, value: string) => {
-      setAnswers((prev) => ({ ...prev, [key]: value }));
-    },
-    [],
-  );
+  const update = useCallback((key: keyof WizardAnswers, value: string) => {
+    setAnswers((prev) => ({ ...prev, [key]: value }));
+  }, []);
 
   const scores = useMemo(() => computeScores(answers), [answers]);
 
@@ -382,12 +377,15 @@ export function DiagnosticWizard() {
   const canGoBack = step > 0;
 
   // Label eligibility
-  const labels = [
-    { name: 'B Corp', threshold: 80 },
-    { name: 'GreenTech', threshold: 70 },
-    { name: 'Label NR', threshold: 75 },
-    { name: 'GEG Label', threshold: 80 },
-  ];
+  const labels = useMemo(
+    () => [
+      { name: 'B Corp', threshold: 80 },
+      { name: 'GreenTech', threshold: 70 },
+      { name: 'Label NR', threshold: 75 },
+      { name: 'GEG Label', threshold: 80 },
+    ],
+    [],
+  );
 
   // Strengths and improvements
   const pillarScores = [
@@ -404,14 +402,51 @@ export function DiagnosticWizard() {
   const strengths = sorted.slice(0, 3);
   const improvements = [...sorted].reverse().slice(0, 3);
 
+  const [downloading, startDownload] = useTransition();
+
+  const handleDownloadReport = useCallback(() => {
+    startDownload(async () => {
+      try {
+        const response = await fetch('/api/reports/rse-diagnostic', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            scores,
+            labels,
+            strengths,
+            improvements,
+          }),
+        });
+
+        if (!response.ok) throw new Error('Failed to generate report');
+
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+
+        const disposition = response.headers.get('Content-Disposition');
+        const filenameMatch = disposition?.match(/filename="(.+)"/);
+        a.download = filenameMatch?.[1] ?? 'Diagnostic-RSE-GreenEcoGenius.pdf';
+
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch {
+        // Error handled silently - the button resets automatically
+      }
+    });
+  }, [scores, labels, strengths, improvements]);
+
   return (
     <div className="space-y-6">
       {/* Progress bar */}
       <div className="space-y-2">
         <div className="flex items-center justify-between text-sm">
           <span className="font-medium">
-            <Trans i18nKey="rse:step" /> {step + 1}{' '}
-            <Trans i18nKey="rse:of" /> {TOTAL_STEPS}
+            <Trans i18nKey="rse:step" /> {step + 1} <Trans i18nKey="rse:of" />{' '}
+            {TOTAL_STEPS}
           </span>
           <span className="text-muted-foreground">
             <Trans i18nKey={`rse:${STEP_LABELS[step]}`} />
@@ -439,6 +474,8 @@ export function DiagnosticWizard() {
             labels={labels}
             strengths={strengths}
             improvements={improvements}
+            onDownload={handleDownloadReport}
+            downloading={downloading}
           />
         )}
       </div>
@@ -748,6 +785,8 @@ function ResultsStep({
   labels,
   strengths,
   improvements,
+  onDownload,
+  downloading,
 }: {
   scores: {
     governance: number;
@@ -762,6 +801,8 @@ function ResultsStep({
   labels: { name: string; threshold: number }[];
   strengths: { name: string; score: number; max: number }[];
   improvements: { name: string; score: number; max: number }[];
+  onDownload: () => void;
+  downloading: boolean;
 }) {
   function getLevelColor(levelKey: string) {
     switch (levelKey) {
@@ -789,9 +830,7 @@ function ResultsStep({
         <CardContent className="flex flex-col items-center gap-4 py-8">
           <div className="text-6xl font-bold">{scores.total}</div>
           <p className="text-muted-foreground text-sm">/ 100</p>
-          <Badge
-            className={`${getLevelColor(scores.levelKey)} text-white`}
-          >
+          <Badge className={`${getLevelColor(scores.levelKey)} text-white`}>
             <Trans i18nKey="rse:level" /> :{' '}
             <Trans i18nKey={`rse:${scores.levelKey}`} />
           </Badge>
@@ -872,11 +911,7 @@ function ResultsStep({
                   <span className="text-sm font-medium">{l.name}</span>
                   <Badge
                     variant={eligible ? 'default' : 'outline'}
-                    className={
-                      eligible
-                        ? 'bg-green-500 text-white'
-                        : ''
-                    }
+                    className={eligible ? 'bg-green-500 text-white' : ''}
                   >
                     {eligible ? 'Eligible' : `${l.threshold} requis`}
                   </Badge>
@@ -889,13 +924,14 @@ function ResultsStep({
 
       {/* Action buttons */}
       <div className="flex flex-wrap gap-3">
-        <Button variant="outline">
-          <Trans i18nKey="rse:downloadReport" />
+        <Button variant="outline" onClick={onDownload} disabled={downloading}>
+          {downloading ? (
+            'Telechargement...'
+          ) : (
+            <Trans i18nKey="rse:downloadReport" />
+          )}
         </Button>
-        <Button
-          render={<Link href="/home/rse/roadmap" />}
-          nativeButton={false}
-        >
+        <Button render={<Link href="/home/rse/roadmap" />} nativeButton={false}>
           <Trans i18nKey="rse:viewRoadmap" />
         </Button>
       </div>

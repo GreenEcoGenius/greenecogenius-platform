@@ -22,8 +22,8 @@ import {
 } from '@kit/ui/card';
 import { cn } from '@kit/ui/utils';
 
-import { AIPoweredBadge } from '~/components/ai/shared/ai-powered-badge';
 import { AILoadingState } from '~/components/ai/shared/ai-loading-state';
+import { AIPoweredBadge } from '~/components/ai/shared/ai-powered-badge';
 import { UpgradePrompt } from '~/home/_components/upgrade-prompt';
 import { useCarbonAI } from '~/lib/hooks/use-ai';
 import { useSubscription } from '~/lib/hooks/use-subscription';
@@ -122,17 +122,15 @@ export function AIReductionPlan({ className }: { className?: string }) {
           <AILoadingState lines={5} />
         ) : error ? (
           <div className="text-muted-foreground py-4 text-center text-sm">
-            Impossible de g\u00e9n\u00e9rer le plan de r\u00e9duction. Veuillez r\u00e9essayer.
+            Impossible de g\u00e9n\u00e9rer le plan de r\u00e9duction. Veuillez
+            r\u00e9essayer.
           </div>
         ) : (
           <div className="space-y-3">
             {fallbackActions.map((action, index) => {
               const Icon = action.icon;
               return (
-                <div
-                  key={index}
-                  className="bg-muted/40 rounded-lg border p-4"
-                >
+                <div key={index} className="bg-muted/40 rounded-lg border p-4">
                   <div className="flex items-start gap-3">
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
                       <Icon className="h-5 w-5" />

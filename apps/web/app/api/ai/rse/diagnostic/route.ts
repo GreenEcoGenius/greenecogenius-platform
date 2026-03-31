@@ -7,10 +7,7 @@ import { execute } from '~/lib/ai/orchestrator';
 
 export async function POST(req: NextRequest) {
   if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json(
-      { error: 'AI not configured' },
-      { status: 503 },
-    );
+    return NextResponse.json({ error: 'AI not configured' }, { status: 503 });
   }
 
   try {

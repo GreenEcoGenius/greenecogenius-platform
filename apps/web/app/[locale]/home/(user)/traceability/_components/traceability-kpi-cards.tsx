@@ -45,9 +45,7 @@ function KpiCard({
 
   return (
     <Card className="relative overflow-hidden">
-      <div
-        className={`absolute top-0 left-0 h-1 w-full ${accentColor}`}
-      />
+      <div className={`absolute top-0 left-0 h-1 w-full ${accentColor}`} />
       <CardContent className="p-5">
         <div className="mb-3 flex items-start justify-between">
           <div className="flex items-center gap-2">
@@ -59,9 +57,7 @@ function KpiCard({
           {badge}
         </div>
 
-        <div className="mb-1 text-3xl font-bold tracking-tight">
-          {value}
-        </div>
+        <div className="mb-1 text-3xl font-bold tracking-tight">{value}</div>
 
         <div className="mb-3 flex items-center gap-2">
           <span className="text-muted-foreground text-xs">{subtitle}</span>
@@ -127,9 +123,7 @@ export function TraceabilityKpiCards({
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <KpiCard
-        icon={
-          <Boxes className="h-5 w-5 text-teal-600 dark:text-teal-400" />
-        }
+        icon={<Boxes className="h-5 w-5 text-teal-600 dark:text-teal-400" />}
         value={totalLots.toLocaleString('fr-FR')}
         label={<Trans i18nKey="blockchain:lotsTracked" />}
         subtitle={
@@ -143,9 +137,7 @@ export function TraceabilityKpiCards({
       />
 
       <KpiCard
-        icon={
-          <Leaf className="h-5 w-5 text-green-600 dark:text-green-400" />
-        }
+        icon={<Leaf className="h-5 w-5 text-green-600 dark:text-green-400" />}
         value={`${co2AvoidedTonnes.toLocaleString('fr-FR')}t`}
         label={<Trans i18nKey="blockchain:co2AvoidedCard" />}
         subtitle={
@@ -161,15 +153,12 @@ export function TraceabilityKpiCards({
       />
 
       <KpiCard
-        icon={
-          <Recycle className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-        }
+        icon={<Recycle className="h-5 w-5 text-blue-600 dark:text-blue-400" />}
         value={`${totalTonnes.toLocaleString('fr-FR')}t`}
         label={<Trans i18nKey="blockchain:tonnesRecycled" />}
         subtitle={
           <>
-            {tonnesThisMonth}t{' '}
-            <Trans i18nKey="blockchain:lotsThisMonth" />
+            {tonnesThisMonth}t <Trans i18nKey="blockchain:lotsThisMonth" />
           </>
         }
         trend={tonnesTrend}
@@ -180,15 +169,12 @@ export function TraceabilityKpiCards({
       />
 
       <KpiCard
-        icon={
-          <Award className="h-5 w-5 text-amber-600 dark:text-amber-400" />
-        }
+        icon={<Award className="h-5 w-5 text-amber-600 dark:text-amber-400" />}
         value={certificates.toLocaleString('fr-FR')}
         label={<Trans i18nKey="blockchain:certificatesCard" />}
         subtitle={
           <>
-            {certificatesThisMonth}{' '}
-            <Trans i18nKey="blockchain:lotsThisMonth" />
+            {certificatesThisMonth} <Trans i18nKey="blockchain:lotsThisMonth" />
           </>
         }
         trend={certificatesTrend}

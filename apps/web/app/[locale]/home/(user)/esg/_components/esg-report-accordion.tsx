@@ -74,18 +74,24 @@ const REPORT_SECTIONS: ReportSection[] = [
   },
 ];
 
-const SOURCE_STYLES: Record<string, { variant: 'default' | 'secondary' | 'outline'; className: string }> = {
+const SOURCE_STYLES: Record<
+  string,
+  { variant: 'default' | 'secondary' | 'outline'; className: string }
+> = {
   auto: {
     variant: 'default',
-    className: 'bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800',
+    className:
+      'bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800',
   },
   manual: {
     variant: 'outline',
-    className: 'border-amber-300 text-amber-700 dark:border-amber-700 dark:text-amber-300',
+    className:
+      'border-amber-300 text-amber-700 dark:border-amber-700 dark:text-amber-300',
   },
   blockchain: {
     variant: 'secondary',
-    className: 'bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-300 dark:border-indigo-800',
+    className:
+      'bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-300 dark:border-indigo-800',
   },
 };
 
@@ -125,9 +131,7 @@ export function ESGReportAccordion() {
                 {/* Header row */}
                 <button
                   type="button"
-                  onClick={() =>
-                    setExpandedIndex(isExpanded ? null : index)
-                  }
+                  onClick={() => setExpandedIndex(isExpanded ? null : index)}
                   className="flex w-full items-center justify-between p-4 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-900/50"
                 >
                   <div className="flex items-center gap-3">

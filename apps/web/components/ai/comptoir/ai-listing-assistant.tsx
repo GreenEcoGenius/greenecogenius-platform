@@ -34,7 +34,8 @@ function parseClassification(content: string): ClassificationResult | null {
       fluxCategory: parsed.fluxCategory || parsed.flux_category || '-',
       wasteCode: parsed.wasteCode || parsed.waste_code || '-',
       norm: parsed.norm || parsed.applicable_norm || '-',
-      certification: parsed.certification || parsed.suggested_certification || '-',
+      certification:
+        parsed.certification || parsed.suggested_certification || '-',
       co2Avoided: parsed.co2Avoided || parsed.co2_avoided || '-',
       priceRange: parsed.priceRange || parsed.price_range || '-',
     };
@@ -108,7 +109,9 @@ export function AIListingAssistant({
             <div className="flex items-start gap-2">
               <Scale className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
               <div>
-                <p className="text-muted-foreground text-xs">Code d\u00e9chet</p>
+                <p className="text-muted-foreground text-xs">
+                  Code d\u00e9chet
+                </p>
                 <p className="text-sm font-medium">
                   {classification.wasteCode}
                 </p>

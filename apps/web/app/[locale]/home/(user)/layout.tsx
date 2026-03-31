@@ -9,8 +9,8 @@ import { UserWorkspaceContextProvider } from '@kit/accounts/components';
 import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/sidebar';
 
-import { AppLogo } from '~/components/app-logo';
 import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
+import { AppLogo } from '~/components/app-logo';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';

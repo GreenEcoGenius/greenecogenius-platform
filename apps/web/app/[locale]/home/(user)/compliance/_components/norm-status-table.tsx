@@ -357,16 +357,16 @@ export function NormStatusTable() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-muted-foreground border-b text-left text-xs">
-                <th className="pb-2 pr-4 font-medium">
+                <th className="pr-4 pb-2 font-medium">
                   <Trans i18nKey="compliance:norm" />
                 </th>
-                <th className="pb-2 pr-4 font-medium">
+                <th className="pr-4 pb-2 font-medium">
                   <Trans i18nKey="compliance:pillar" />
                 </th>
-                <th className="pb-2 pr-4 font-medium">
+                <th className="pr-4 pb-2 font-medium">
                   <Trans i18nKey="compliance:status" />
                 </th>
-                <th className="pb-2 pr-4 font-medium">
+                <th className="pr-4 pb-2 font-medium">
                   <Trans i18nKey="compliance:autoVerified" />
                 </th>
                 <th className="pb-2 font-medium">
@@ -410,8 +410,7 @@ export function NormStatusTable() {
                           variant="outline"
                           className="text-xs font-normal"
                         >
-                          {verifCfg.emoji}{' '}
-                          <Trans i18nKey={verifCfg.i18nKey} />
+                          {verifCfg.emoji} <Trans i18nKey={verifCfg.i18nKey} />
                         </Badge>
                       ) : (
                         <span className="text-muted-foreground text-xs">
@@ -434,8 +433,7 @@ export function NormStatusTable() {
 
         <p className="text-muted-foreground mt-3 text-xs">
           {MOCK_NORMS.filter((n) => n.autoVerified !== 'manual').length}/
-          {MOCK_NORMS.length}{' '}
-          <Trans i18nKey="compliance:autoVerifiedNote" />
+          {MOCK_NORMS.length} <Trans i18nKey="compliance:autoVerifiedNote" />
         </p>
       </CardContent>
     </Card>

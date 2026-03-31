@@ -3,18 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
-import {
-  execute,
-  routeRequest,
-} from '~/lib/ai/orchestrator';
 import type { AgentType } from '~/lib/ai/client';
+import { execute, routeRequest } from '~/lib/ai/orchestrator';
 
 export async function POST(req: NextRequest) {
   if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json(
-      { error: 'AI not configured' },
-      { status: 503 },
-    );
+    return NextResponse.json({ error: 'AI not configured' }, { status: 503 });
   }
 
   try {

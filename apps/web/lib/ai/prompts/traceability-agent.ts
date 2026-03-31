@@ -1,5 +1,5 @@
-import { SYSTEM_BASE } from './system-base';
 import { NORMS_KNOWLEDGE } from './norms-knowledge';
+import { SYSTEM_BASE } from './system-base';
 
 export const TRACEABILITY_AGENT_PROMPT = `${SYSTEM_BASE}
 

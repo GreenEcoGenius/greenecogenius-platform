@@ -57,9 +57,9 @@ const labelCards: LabelCard[] = [
     bgColor: 'bg-green-50 dark:bg-green-950/30',
     status: 'Eligible',
     detail:
-      'Criteres d\'innovation verte satisfaits. Impact environnemental positif mesurable detecte.',
+      "Criteres d'innovation verte satisfaits. Impact environnemental positif mesurable detecte.",
     simulatePrompt:
-      'Simule une candidature GreenTech Innovation. Evalue nos criteres d\'eligibilite: innovation technologique, impact environnemental, modele economique vert, et potentiel de deploiement.',
+      "Simule une candidature GreenTech Innovation. Evalue nos criteres d'eligibilite: innovation technologique, impact environnemental, modele economique vert, et potentiel de deploiement.",
   },
   {
     id: 'labelnr',
@@ -69,17 +69,13 @@ const labelCards: LabelCard[] = [
     bgColor: 'bg-purple-50 dark:bg-purple-950/30',
     status: 'Niveau NR1 atteignable',
     detail:
-      'Numerique responsable: niveau NR1 accessible. Progression vers NR2 necessiterait des actions sur l\'accessibilite et l\'ecoconception.',
+      "Numerique responsable: niveau NR1 accessible. Progression vers NR2 necessiterait des actions sur l'accessibilite et l'ecoconception.",
     simulatePrompt:
       'Simule une evaluation Label Numerique Responsable (INR). Evalue notre niveau (NR1/NR2) selon les axes: strategie, formation, achats, usages, fin de vie. Donne les actions prioritaires.',
   },
 ];
 
-function LabelSimulatorCard({
-  label,
-}: {
-  label: LabelCard;
-}) {
+function LabelSimulatorCard({ label }: { label: LabelCard }) {
   const { ask, loading, response, error, reset } = useRSEAI();
   const [expanded, setExpanded] = useState(false);
 
@@ -123,26 +119,29 @@ function LabelSimulatorCard({
                 <div className="relative h-2 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
                   <div
                     className="h-full rounded-full bg-blue-500 transition-all duration-500"
-                    style={{ width: `${(label.score / (label.threshold * 2.5)) * 100}%` }}
+                    style={{
+                      width: `${(label.score / (label.threshold * 2.5)) * 100}%`,
+                    }}
                   />
                   {/* Threshold marker */}
                   <div
                     className="absolute top-0 h-full w-0.5 bg-red-400"
-                    style={{ left: `${(label.threshold / (label.threshold * 2.5)) * 100}%` }}
+                    style={{
+                      left: `${(label.threshold / (label.threshold * 2.5)) * 100}%`,
+                    }}
                   />
                 </div>
                 <div className="mt-1 flex justify-between text-[10px]">
-                  <span className="text-muted-foreground">Score: {label.score}</span>
+                  <span className="text-muted-foreground">
+                    Score: {label.score}
+                  </span>
                   <span className="text-red-500">Seuil: {label.threshold}</span>
                 </div>
               </div>
             )}
 
             <div className="mt-2 flex items-center gap-2">
-              <Badge
-                variant="outline"
-                className="text-[10px]"
-              >
+              <Badge variant="outline" className="text-[10px]">
                 <Target className="mr-1 h-3 w-3" />
                 {label.status}
               </Badge>

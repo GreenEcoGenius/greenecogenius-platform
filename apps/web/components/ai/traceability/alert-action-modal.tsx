@@ -66,7 +66,9 @@ function CorrigerForm({
     // Simulate API call
     await new Promise((r) => setTimeout(r, 800));
     setIsSubmitting(false);
-    alert(`Correction enregistree pour ${lotId ?? 'lot'}: ${currentWeight} kg -> ${newWeight} kg`);
+    alert(
+      `Correction enregistree pour ${lotId ?? 'lot'}: ${currentWeight} kg -> ${newWeight} kg`,
+    );
     onSuccess();
   }
 
@@ -156,9 +158,7 @@ function SignalerForm({
   onSuccess: () => void;
 }) {
   const [recipient] = useState('vendeur@ecorecycle.fr');
-  const [subject] = useState(
-    `Ecart de poids - ${lotId ?? 'Lot'}`,
-  );
+  const [subject] = useState(`Ecart de poids - ${lotId ?? 'Lot'}`);
   const [message, setMessage] = useState(
     `Bonjour,\n\nNous avons constate un ecart de poids concernant le lot ${lotId ?? 'N/A'}.\n\nDetail: ${alertMessage ?? 'Ecart detecte'}\n\nMerci de bien vouloir verifier et nous recontacter.\n\nCordialement,\nEquipe GreenEcoGenius`,
   );

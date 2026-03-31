@@ -260,11 +260,10 @@ export function ESGFormWizard() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
+      const disposition = res.headers.get('Content-Disposition');
+      const filenameMatch = disposition?.match(/filename="(.+)"/);
       a.download =
-        res.headers
-          .get('Content-Disposition')
-          ?.split('filename="')[1]
-          ?.replace('"', '') ?? `rapport-esg-${formData.reporting_year}.html`;
+        filenameMatch?.[1] ?? `Rapport-ESG-${formData.reporting_year}.pdf`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

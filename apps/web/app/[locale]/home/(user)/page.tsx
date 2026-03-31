@@ -123,16 +123,14 @@ async function UserHomePage() {
                 className="gap-1.5 rounded-full px-3 py-1"
               >
                 <Package className="h-3.5 w-3.5" />
-                {myTotalListings}{' '}
-                {locale === 'fr' ? 'annonces' : 'listings'}
+                {myTotalListings} {locale === 'fr' ? 'annonces' : 'listings'}
               </Badge>
               <Badge
                 variant="secondary"
                 className="gap-1.5 rounded-full px-3 py-1"
               >
                 <Leaf className="h-3.5 w-3.5" />
-                545.5t CO₂{' '}
-                {locale === 'fr' ? 'evite' : 'avoided'}
+                545.5t CO₂ {locale === 'fr' ? 'evite' : 'avoided'}
               </Badge>
               <Badge
                 variant="secondary"
@@ -143,7 +141,7 @@ async function UserHomePage() {
               </Badge>
             </div>
           </div>
-          <div className="absolute -right-8 -top-8 opacity-5">
+          <div className="absolute -top-8 -right-8 opacity-5">
             <Recycle className="h-48 w-48" />
           </div>
         </div>
@@ -365,9 +363,7 @@ async function UserHomePage() {
             <ActionCard
               icon={<BarChart3 className="h-5 w-5 text-[#457b9d]" />}
               title={
-                locale === 'fr'
-                  ? 'ESG a completer'
-                  : 'ESG report to complete'
+                locale === 'fr' ? 'ESG a completer' : 'ESG report to complete'
               }
               description={
                 locale === 'fr'
@@ -399,7 +395,7 @@ async function UserHomePage() {
               }
               description={
                 locale === 'fr'
-                  ? '2 sous-traitants n\'ont pas signe leur DPA. Action requise avant le 15/04.'
+                  ? "2 sous-traitants n'ont pas signe leur DPA. Action requise avant le 15/04."
                   : '2 subcontractors have not signed their DPA. Action required before 04/15.'
               }
               href="/home/compliance"
@@ -512,9 +508,7 @@ function KpiCard({
         {icon}
       </div>
       <p className="text-2xl font-bold">{value}</p>
-      {sublabel && (
-        <p className="text-muted-foreground text-xs">{sublabel}</p>
-      )}
+      {sublabel && <p className="text-muted-foreground text-xs">{sublabel}</p>}
       <p className="text-muted-foreground mt-1 text-sm">{label}</p>
       <div className="text-primary mt-2 flex items-center gap-1 text-xs font-medium opacity-0 transition-opacity group-hover:opacity-100">
         <ArrowRight className="h-3 w-3" />

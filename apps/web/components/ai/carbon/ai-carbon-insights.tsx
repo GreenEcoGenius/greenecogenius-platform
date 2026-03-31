@@ -20,8 +20,8 @@ import {
 } from '@kit/ui/card';
 import { cn } from '@kit/ui/utils';
 
-import { AIPoweredBadge } from '~/components/ai/shared/ai-powered-badge';
 import { AILoadingState } from '~/components/ai/shared/ai-loading-state';
+import { AIPoweredBadge } from '~/components/ai/shared/ai-powered-badge';
 import { useCarbonAI } from '~/lib/hooks/use-ai';
 
 interface Insight {
@@ -109,7 +109,7 @@ export function AICarbonInsights({ className }: { className?: string }) {
   function formatTimeSince(date: Date): string {
     const diffMs = Date.now() - date.getTime();
     const diffMin = Math.floor(diffMs / 60_000);
-    if (diffMin < 1) return "il y a quelques secondes";
+    if (diffMin < 1) return 'il y a quelques secondes';
     if (diffMin < 60) return `il y a ${diffMin}min`;
     const diffH = Math.floor(diffMin / 60);
     return `il y a ${diffH}h`;
@@ -124,7 +124,8 @@ export function AICarbonInsights({ className }: { className?: string }) {
         </div>
         <CardDescription className="flex items-center gap-1">
           <Clock className="h-3 w-3" />
-          Derni\u00e8re analyse: {loading ? 'en cours...' : formatTimeSince(analysisTime)}
+          Derni\u00e8re analyse:{' '}
+          {loading ? 'en cours...' : formatTimeSince(analysisTime)}
         </CardDescription>
       </CardHeader>
 
@@ -160,7 +161,7 @@ export function AICarbonInsights({ className }: { className?: string }) {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-primary -ml-2 mt-1 h-7 text-xs"
+                      className="text-primary mt-1 -ml-2 h-7 text-xs"
                       data-test={`carbon-insight-action-${index}`}
                     >
                       {insight.action}

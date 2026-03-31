@@ -56,8 +56,7 @@ const IMPACT_STYLES: Record<
   { className: string; i18nKey: string }
 > = {
   low: {
-    className:
-      'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+    className: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
     i18nKey: 'compliance:impactLow',
   },
   medium: {
@@ -110,10 +109,7 @@ export function RegulatoryWatch() {
                 <div className="flex-1">
                   <div className="mb-1 flex items-center gap-2">
                     <span className="font-semibold">{item.title}</span>
-                    <Badge
-                      variant="outline"
-                      className={impactStyle.className}
-                    >
+                    <Badge variant="outline" className={impactStyle.className}>
                       <Trans i18nKey={impactStyle.i18nKey} />
                     </Badge>
                   </div>

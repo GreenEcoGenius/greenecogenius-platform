@@ -1,5 +1,3 @@
-import { getTranslations } from 'next-intl/server';
-
 import Link from 'next/link';
 
 import {
@@ -11,6 +9,7 @@ import {
   Shield,
   Sparkles,
 } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
 import { Button } from '@kit/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
@@ -38,7 +37,12 @@ const MOCK_LEVEL = 'Interm\u00e9diaire';
 const MOCK_LAST_EVAL = '2026-03-15';
 
 const MOCK_PILLARS = [
-  { name: 'governance', score: 68, norm: 'ISO 26000 \u00a76', color: '#6366F1' },
+  {
+    name: 'governance',
+    score: 68,
+    norm: 'ISO 26000 \u00a76',
+    color: '#6366F1',
+  },
   { name: 'environment', score: 89, norm: 'ISO 14001', color: '#10B981' },
   { name: 'social', score: 52, norm: 'SA8000', color: '#F59E0B' },
   { name: 'ethics', score: 76, norm: 'ISO 37001', color: '#8B5CF6' },
@@ -46,15 +50,40 @@ const MOCK_PILLARS = [
 ];
 
 const MOCK_LABELS = [
-  { name: 'GreenTech', score: 85, threshold: 70, status: 'eligible', color: '#10B981' },
-  { name: 'B Corp', score: 62, threshold: 80, status: 'in_progress', color: '#3B82F6' },
-  { name: 'Label NR', score: 71, threshold: 75, status: 'in_progress', color: '#8B5CF6' },
-  { name: 'GEG Label', score: 74, threshold: 80, status: 'in_progress', color: '#F59E0B' },
+  {
+    name: 'GreenTech',
+    score: 85,
+    threshold: 70,
+    status: 'eligible',
+    color: '#10B981',
+  },
+  {
+    name: 'B Corp',
+    score: 62,
+    threshold: 80,
+    status: 'in_progress',
+    color: '#3B82F6',
+  },
+  {
+    name: 'Label NR',
+    score: 71,
+    threshold: 75,
+    status: 'in_progress',
+    color: '#8B5CF6',
+  },
+  {
+    name: 'GEG Label',
+    score: 74,
+    threshold: 80,
+    status: 'in_progress',
+    color: '#F59E0B',
+  },
 ];
 
 const MOCK_ACTIONS = [
   {
-    title: 'Mettre en place une charte \u00e9thique fournisseurs avec audit annuel',
+    title:
+      'Mettre en place une charte \u00e9thique fournisseurs avec audit annuel',
     impact: 12,
     effort: '15 jours',
     priority: 'urgent',
@@ -63,7 +92,8 @@ const MOCK_ACTIONS = [
     status: 'todo',
   },
   {
-    title: 'D\u00e9ployer un plan de formation RSE pour tous les collaborateurs',
+    title:
+      'D\u00e9ployer un plan de formation RSE pour tous les collaborateurs',
     impact: 8,
     effort: '10 jours',
     priority: 'important',
@@ -116,14 +146,17 @@ function getEcosystemIcon(icon: string) {
 async function RSEPage() {
   return (
     <PageBody>
-      <PageHeader
-        description=""
-      >
+      <PageHeader description="">
         <div className="flex items-center justify-between">
           <Heading level={3}>
             <Trans i18nKey="rse:title" />
           </Heading>
-          <Button variant="outline" size="sm" render={<Link href="/home/rse/diagnostic" />} nativeButton={false}>
+          <Button
+            variant="outline"
+            size="sm"
+            render={<Link href="/home/rse/diagnostic" />}
+            nativeButton={false}
+          >
             <Sparkles className="mr-2 h-4 w-4" />
             <Trans i18nKey="rse:newDiagnostic" />
           </Button>
@@ -146,10 +179,19 @@ async function RSEPage() {
                 <Trans i18nKey="rse:lastEval" /> : {MOCK_LAST_EVAL}
               </p>
               <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
-                <Button size="sm" render={<Link href="/home/rse/diagnostic" />} nativeButton={false}>
+                <Button
+                  size="sm"
+                  render={<Link href="/home/rse/diagnostic" />}
+                  nativeButton={false}
+                >
                   <Trans i18nKey="rse:newDiagnostic" />
                 </Button>
-                <Button variant="outline" size="sm" render={<Link href="/home/rse/roadmap" />} nativeButton={false}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  render={<Link href="/home/rse/roadmap" />}
+                  nativeButton={false}
+                >
                   <ArrowRight className="mr-1.5 h-3.5 w-3.5" />
                   <Trans i18nKey="rse:viewRoadmap" />
                 </Button>

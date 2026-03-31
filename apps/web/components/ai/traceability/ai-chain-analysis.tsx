@@ -22,10 +22,9 @@ export function AIChainAnalysis({ lotId, lotData }: AIChainAnalysisProps) {
 
   const handleAnalyze = async () => {
     setHasAnalyzed(true);
-    await ask(
-      `Analyse la chaine de tracabilite complete du lot ${lotId}`,
-      { context: lotData ? { lotId, ...lotData } : { lotId } },
-    );
+    await ask(`Analyse la chaine de tracabilite complete du lot ${lotId}`, {
+      context: lotData ? { lotId, ...lotData } : { lotId },
+    });
   };
 
   return (

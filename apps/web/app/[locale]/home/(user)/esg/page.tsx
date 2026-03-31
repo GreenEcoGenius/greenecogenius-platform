@@ -116,9 +116,7 @@ function ReportStatusBanner({
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex-1">
             <div className="flex items-center gap-2">
-              <h2 className="text-2xl font-bold">
-                Reporting ESG
-              </h2>
+              <h2 className="text-2xl font-bold">Reporting ESG</h2>
               <Badge className="border-indigo-400 bg-indigo-500/30 text-white">
                 T1 2026
               </Badge>
@@ -214,9 +212,7 @@ function NoSubscriptionPreview() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-2xl font-bold">
-                    Reporting ESG
-                  </h2>
+                  <h2 className="text-2xl font-bold">Reporting ESG</h2>
                   <Badge className="border-indigo-400 bg-indigo-500/30 text-white">
                     T1 2026
                   </Badge>

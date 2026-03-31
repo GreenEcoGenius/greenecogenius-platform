@@ -71,7 +71,11 @@ async function getContractInstance() {
   const provider = new ethers.JsonRpcProvider(rpcUrl);
   const wallet = new ethers.Wallet(privateKey, provider);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const contract = new ethers.Contract(contractAddress, CONTRACT_ABI, wallet) as any;
+  const contract = new ethers.Contract(
+    contractAddress,
+    CONTRACT_ABI,
+    wallet,
+  ) as any;
 
   return { provider, wallet, contract };
 }
@@ -91,7 +95,11 @@ async function getReadOnlyContract() {
 
   const provider = new ethers.JsonRpcProvider(rpcUrl);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const contract = new ethers.Contract(contractAddress, CONTRACT_ABI, provider) as any;
+  const contract = new ethers.Contract(
+    contractAddress,
+    CONTRACT_ABI,
+    provider,
+  ) as any;
 
   return { provider, contract };
 }

@@ -129,7 +129,8 @@ export function AIComplianceOverview({ className }: { className?: string }) {
           <AIPoweredBadge />
         </div>
         <CardDescription>
-          Vue d&apos;ensemble de la conformit\u00e9 aux r\u00e9glementations en vigueur
+          Vue d&apos;ensemble de la conformit\u00e9 aux r\u00e9glementations en
+          vigueur
         </CardDescription>
       </CardHeader>
 
@@ -139,7 +140,7 @@ export function AIComplianceOverview({ className }: { className?: string }) {
           {regulations.map((reg) => (
             <div
               key={reg.name}
-              className="flex items-center justify-between rounded-lg px-3 py-2 odd:bg-muted/40"
+              className="odd:bg-muted/40 flex items-center justify-between rounded-lg px-3 py-2"
             >
               <span className="text-sm font-medium">{reg.name}</span>
               <StatusBadge regulation={reg} />
@@ -155,10 +156,7 @@ export function AIComplianceOverview({ className }: { className?: string }) {
           </div>
 
           {upcomingChanges.map((change, index) => (
-            <div
-              key={index}
-              className="rounded-lg border p-3"
-            >
+            <div key={index} className="rounded-lg border p-3">
               <div className="flex items-start justify-between gap-2">
                 <div className="space-y-1">
                   <p className="text-sm font-medium">{change.title}</p>
@@ -194,12 +192,14 @@ export function AIComplianceOverview({ className }: { className?: string }) {
             data-test="launch-pre-audit"
           >
             <Play className="mr-2 h-4 w-4" />
-            {auditStarted ? 'Relancer un pr\u00e9-audit' : 'Lancer un pr\u00e9-audit'}
+            {auditStarted
+              ? 'Relancer un pr\u00e9-audit'
+              : 'Lancer un pr\u00e9-audit'}
           </Button>
         )}
 
         {/* Blockchain link */}
-        <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+        <div className="text-muted-foreground flex items-center justify-center gap-1.5 text-xs">
           <Link2 className="h-3 w-3" />
           Preuves de conformit\u00e9 ancr\u00e9es sur blockchain
         </div>

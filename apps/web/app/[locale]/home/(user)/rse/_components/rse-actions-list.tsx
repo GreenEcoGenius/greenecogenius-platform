@@ -26,17 +26,20 @@ const PRIORITY_CONFIG: Record<
   { className: string; i18nKey: string; icon: React.ReactNode }
 > = {
   urgent: {
-    className: 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300 border-red-200',
+    className:
+      'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300 border-red-200',
     i18nKey: 'rse:urgent',
     icon: <Zap className="h-3 w-3" />,
   },
   important: {
-    className: 'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300 border-orange-200',
+    className:
+      'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300 border-orange-200',
     i18nKey: 'rse:important',
     icon: <Clock className="h-3 w-3" />,
   },
   quick_win: {
-    className: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border-blue-200',
+    className:
+      'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border-blue-200',
     i18nKey: 'rse:quickWin',
     icon: <CheckCircle2 className="h-3 w-3" />,
   },
@@ -73,7 +76,10 @@ export function RSEActionsList({ actions }: RSEActionsListProps) {
               >
                 <div className="flex-1 space-y-2">
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="outline" className={priorityConfig.className}>
+                    <Badge
+                      variant="outline"
+                      className={priorityConfig.className}
+                    >
                       {priorityConfig.icon}
                       <span className="ml-1">
                         <Trans i18nKey={priorityConfig.i18nKey} />
@@ -88,7 +94,7 @@ export function RSEActionsList({ actions }: RSEActionsListProps) {
                     </span>
                   </div>
                   <p className="text-sm font-medium">{action.title}</p>
-                  <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
+                  <div className="text-muted-foreground flex flex-wrap gap-3 text-xs">
                     <span>
                       <Trans i18nKey="rse:impact" /> +{action.impact}{' '}
                       <Trans i18nKey="rse:points" />
@@ -102,7 +108,7 @@ export function RSEActionsList({ actions }: RSEActionsListProps) {
                           <Badge
                             key={norm}
                             variant="outline"
-                            className="text-[10px] px-1.5 py-0"
+                            className="px-1.5 py-0 text-[10px]"
                           >
                             {norm}
                           </Badge>

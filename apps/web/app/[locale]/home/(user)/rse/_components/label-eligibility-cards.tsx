@@ -18,22 +18,29 @@ interface LabelEligibilityCardsProps {
 
 const STATUS_CONFIG: Record<
   string,
-  { variant: 'default' | 'secondary' | 'destructive' | 'outline'; i18nKey: string; className: string }
+  {
+    variant: 'default' | 'secondary' | 'destructive' | 'outline';
+    i18nKey: string;
+    className: string;
+  }
 > = {
   eligible: {
     variant: 'default',
     i18nKey: 'rse:eligible',
-    className: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300 border-green-200',
+    className:
+      'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300 border-green-200',
   },
   in_progress: {
     variant: 'secondary',
     i18nKey: 'rse:inProgress',
-    className: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300 border-yellow-200',
+    className:
+      'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300 border-yellow-200',
   },
   not_started: {
     variant: 'outline',
     i18nKey: 'rse:notStarted',
-    className: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 border-gray-200',
+    className:
+      'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 border-gray-200',
   },
 };
 
@@ -41,14 +48,17 @@ export function LabelEligibilityCards({ labels }: LabelEligibilityCardsProps) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {labels.map((label) => {
-        const config = STATUS_CONFIG[label.status] ?? STATUS_CONFIG['not_started']!;
+        const config =
+          STATUS_CONFIG[label.status] ?? STATUS_CONFIG['not_started']!;
         const percentage = Math.min((label.score / label.threshold) * 100, 100);
         const isEligible = label.score >= label.threshold;
 
         return (
           <Card key={label.name} className="relative overflow-hidden">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-semibold">{label.name}</CardTitle>
+              <CardTitle className="text-sm font-semibold">
+                {label.name}
+              </CardTitle>
               <Badge variant={config.variant} className={config.className}>
                 <Trans i18nKey={config.i18nKey} />
               </Badge>

@@ -31,16 +31,20 @@ const STATUS_ICONS: Record<ActionStatus, string> = {
 };
 
 const PILLAR_COLORS: Record<string, string> = {
-  governance: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300',
-  environment: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+  governance:
+    'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300',
+  environment:
+    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
   social: 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300',
-  ethics: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300',
+  ethics:
+    'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300',
   stakeholders: 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300',
 };
 
 const PRIORITY_STYLES: Record<ActionPriority, string> = {
   urgent: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
-  important: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300',
+  important:
+    'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300',
   quick_win: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
 };
 
@@ -93,7 +97,10 @@ export function RoadmapTimeline({
 
             <div className="space-y-3">
               {quarterActions.map((action) => (
-                <Card key={action.id} className="transition-shadow hover:shadow-md">
+                <Card
+                  key={action.id}
+                  className="transition-shadow hover:shadow-md"
+                >
                   <CardContent className="py-4">
                     <div className="flex items-start gap-3">
                       {/* Status toggle */}
@@ -118,19 +125,16 @@ export function RoadmapTimeline({
                         <div className="flex flex-wrap items-center gap-2">
                           <Badge
                             variant="outline"
-                            className={
-                              PILLAR_COLORS[action.pillar] ?? ''
-                            }
+                            className={PILLAR_COLORS[action.pillar] ?? ''}
                           >
                             {PILLAR_LABELS[action.pillar] ?? action.pillar}
                           </Badge>
                           <Badge
                             variant="outline"
-                            className={
-                              PRIORITY_STYLES[action.priority] ?? ''
-                            }
+                            className={PRIORITY_STYLES[action.priority] ?? ''}
                           >
-                            {PRIORITY_LABELS[action.priority] ?? action.priority}
+                            {PRIORITY_LABELS[action.priority] ??
+                              action.priority}
                           </Badge>
                           {action.norms.map((norm) => (
                             <Badge

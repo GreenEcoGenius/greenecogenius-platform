@@ -144,12 +144,8 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
               <Sparkles className="h-4 w-4 text-green-600 dark:text-green-400" />
             </div>
             <div>
-              <h2 className="text-sm font-semibold">
-                {AGENT_NAMES[section]}
-              </h2>
-              <p className="text-muted-foreground text-xs">
-                GreenEcoGenius IA
-              </p>
+              <h2 className="text-sm font-semibold">{AGENT_NAMES[section]}</h2>
+              <p className="text-muted-foreground text-xs">GreenEcoGenius IA</p>
             </div>
           </div>
 
@@ -207,8 +203,8 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
 
         {/* Disclaimer */}
         <div className="text-muted-foreground border-t px-4 py-1.5 text-center text-[10px]">
-          G\u00e9n\u00e9r\u00e9 par IA — les r\u00e9ponses peuvent contenir
-          des inexactitudes
+          G\u00e9n\u00e9r\u00e9 par IA — les r\u00e9ponses peuvent contenir des
+          inexactitudes
         </div>
 
         {/* Input area */}

@@ -19,8 +19,10 @@ interface AITrustScoreProps {
 }
 
 function getScoreColor(score: number) {
-  if (score > 80) return { stroke: '#22c55e', text: 'text-green-600', label: 'Excellent' };
-  if (score >= 50) return { stroke: '#eab308', text: 'text-yellow-600', label: 'Moyen' };
+  if (score > 80)
+    return { stroke: '#22c55e', text: 'text-green-600', label: 'Excellent' };
+  if (score >= 50)
+    return { stroke: '#eab308', text: 'text-yellow-600', label: 'Moyen' };
   return { stroke: '#ef4444', text: 'text-red-600', label: 'Critique' };
 }
 

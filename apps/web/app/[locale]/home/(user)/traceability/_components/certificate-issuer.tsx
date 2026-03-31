@@ -26,7 +26,37 @@ interface IssuedCertificate {
   certNumber: string;
   hash: string;
   txHash: string | null;
-  downloadUrl: string;
+  pdfBase64: string;
+}
+
+function downloadPdf(base64: string, filename: string) {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function viewPdf(base64: string) {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
 }
 
 export function CertificateIssuer({
@@ -80,16 +110,14 @@ export function CertificateIssuer({
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error ?? 'Erreur lors de l\'emission');
+        throw new Error(data.error ?? "Erreur lors de l'emission");
       }
 
       const data = await res.json();
       setIssued(data.certificates);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : 'Erreur inconnue';
+      const message = err instanceof Error ? err.message : 'Erreur inconnue';
       setError(message);
-      alert(`Erreur: ${message}`);
     } finally {
       setIsLoading(false);
     }
@@ -137,7 +165,10 @@ export function CertificateIssuer({
                   className="h-7 text-xs"
                   data-test="certificate-download"
                   onClick={() => {
-                    window.open(cert.downloadUrl, '_blank');
+                    downloadPdf(
+                      cert.pdfBase64,
+                      `Certificat-${cert.certNumber}-${cert.lotId}.pdf`,
+                    );
                   }}
                 >
                   <Download className="mr-1 h-3 w-3" />
@@ -149,7 +180,7 @@ export function CertificateIssuer({
                   className="h-7 text-xs"
                   data-test="certificate-view"
                   onClick={() => {
-                    window.open(cert.downloadUrl, '_blank');
+                    viewPdf(cert.pdfBase64);
                   }}
                 >
                   <ExternalLink className="mr-1 h-3 w-3" />
@@ -208,7 +239,7 @@ export function CertificateIssuer({
             />
             <div className="flex flex-1 items-center justify-between">
               <div>
-                <span className="text-sm font-medium font-mono">
+                <span className="font-mono text-sm font-medium">
                   {lot.lotId}
                 </span>
                 <span className="text-muted-foreground ml-2 text-xs capitalize">
@@ -223,9 +254,7 @@ export function CertificateIssuer({
         ))}
       </div>
 
-      {error && (
-        <p className="text-destructive text-sm">{error}</p>
-      )}
+      {error && <p className="text-destructive text-sm">{error}</p>}
 
       <div className="flex justify-end gap-2 pt-2">
         {onClose && (

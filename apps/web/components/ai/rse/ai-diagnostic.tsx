@@ -57,18 +57,24 @@ interface LabelEligibility {
 }
 
 const defaultLabels: LabelEligibility[] = [
-  { name: 'B Corp', status: 'en_cours', detail: 'Score estime: 72/200 (seuil: 80)' },
+  {
+    name: 'B Corp',
+    status: 'en_cours',
+    detail: 'Score estime: 72/200 (seuil: 80)',
+  },
   { name: 'GreenTech', status: 'eligible', detail: 'Criteres remplis' },
   { name: 'Label NR', status: 'en_cours', detail: 'Niveau NR1 atteignable' },
 ];
 
 const statusConfig = {
   eligible: {
-    badge: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+    badge:
+      'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
     label: 'Eligible',
   },
   en_cours: {
-    badge: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
+    badge:
+      'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
     label: 'En cours',
   },
   non_eligible: {
@@ -157,7 +163,7 @@ export function AIDiagnostic() {
           </div>
         )}
 
-        {(hasDiagnosed && !loading && !error) && (
+        {hasDiagnosed && !loading && !error && (
           <div className="space-y-6">
             {/* Domain scores */}
             <div className="space-y-3">
@@ -238,7 +244,9 @@ export function AIDiagnostic() {
                       className="flex items-center justify-between rounded-md border p-2.5"
                     >
                       <div>
-                        <span className="text-sm font-medium">{label.name}</span>
+                        <span className="text-sm font-medium">
+                          {label.name}
+                        </span>
                         <p className="text-muted-foreground text-xs">
                           {label.detail}
                         </p>
@@ -255,7 +263,8 @@ export function AIDiagnostic() {
             {/* Disclaimer + reset */}
             <div className="flex items-center justify-between border-t pt-3">
               <span className="text-muted-foreground text-[10px]">
-                Genere par IA -- les resultats peuvent contenir des inexactitudes
+                Genere par IA -- les resultats peuvent contenir des
+                inexactitudes
               </span>
               <Button
                 variant="ghost"

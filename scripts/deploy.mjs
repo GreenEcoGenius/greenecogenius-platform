@@ -1,5 +1,6 @@
 import { ethers } from 'ethers';
 import solc from 'solc';
+
 import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -36,7 +37,10 @@ const output = JSON.parse(solc.compile(input));
 if (output.errors) {
   const errors = output.errors.filter((e) => e.severity === 'error');
   if (errors.length > 0) {
-    console.error('Compilation errors:', errors.map((e) => e.message).join('\n'));
+    console.error(
+      'Compilation errors:',
+      errors.map((e) => e.message).join('\n'),
+    );
     process.exit(1);
   }
 }
@@ -58,7 +62,12 @@ async function deploy() {
 
   console.log('');
   console.log('Deployer:', wallet.address);
-  console.log('Network:', network.name, '(Chain ID:', network.chainId.toString() + ')');
+  console.log(
+    'Network:',
+    network.name,
+    '(Chain ID:',
+    network.chainId.toString() + ')',
+  );
   console.log('Balance:', ethers.formatEther(balance), 'MATIC');
   console.log('');
   console.log('Deploying GEGTraceability...');

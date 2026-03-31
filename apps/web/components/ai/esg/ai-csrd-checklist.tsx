@@ -21,8 +21,8 @@ import {
 } from '@kit/ui/card';
 import { cn } from '@kit/ui/utils';
 
-import { AIPoweredBadge } from '~/components/ai/shared/ai-powered-badge';
 import { AILoadingState } from '~/components/ai/shared/ai-loading-state';
+import { AIPoweredBadge } from '~/components/ai/shared/ai-powered-badge';
 import { UpgradePrompt } from '~/home/_components/upgrade-prompt';
 import { useComplianceAI } from '~/lib/hooks/use-ai';
 import { useSubscription } from '~/lib/hooks/use-subscription';
@@ -199,7 +199,8 @@ export function AICSRDChecklist({ className }: { className?: string }) {
           <AILoadingState lines={6} />
         ) : error ? (
           <div className="text-muted-foreground py-4 text-center text-sm">
-            Impossible d&apos;\u00e9valuer la conformit\u00e9 CSRD. Veuillez r\u00e9essayer.
+            Impossible d&apos;\u00e9valuer la conformit\u00e9 CSRD. Veuillez
+            r\u00e9essayer.
           </div>
         ) : (
           <div className="space-y-2">

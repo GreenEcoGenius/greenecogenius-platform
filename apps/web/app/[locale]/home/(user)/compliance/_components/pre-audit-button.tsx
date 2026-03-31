@@ -8,7 +8,9 @@ import { Trans } from '@kit/ui/trans';
 
 export function PreAuditButton() {
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<
+    'idle' | 'loading' | 'success' | 'error'
+  >('idle');
 
   const handleClick = async () => {
     setLoading(true);
@@ -33,7 +35,8 @@ export function PreAuditButton() {
       // Extract filename from Content-Disposition header
       const disposition = response.headers.get('Content-Disposition');
       const filenameMatch = disposition?.match(/filename="(.+)"/);
-      a.download = filenameMatch?.[1] ?? 'pre-audit-conformite.html';
+      a.download =
+        filenameMatch?.[1] ?? 'PreAudit-Conformite-GreenEcoGenius.pdf';
 
       document.body.appendChild(a);
       a.click();
@@ -56,7 +59,7 @@ export function PreAuditButton() {
     <button
       onClick={handleClick}
       disabled={loading}
-      className="inline-flex items-center rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-60 disabled:cursor-not-allowed"
+      className="inline-flex items-center rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
     >
       {loading ? (
         <Loader2 className="mr-1 inline-block h-4 w-4 animate-spin" />

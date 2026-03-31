@@ -62,7 +62,7 @@ export function EcosystemBanner({
     <div className="rounded-xl border border-emerald-200 bg-gradient-to-r from-emerald-50/80 to-teal-50/80 px-6 py-4 dark:border-emerald-800/40 dark:from-emerald-950/30 dark:to-teal-950/30">
       <div className="mb-2 flex items-center gap-2">
         <ArrowRightLeft className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-        <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+        <span className="text-xs font-semibold tracking-wider text-emerald-700 uppercase dark:text-emerald-400">
           <Trans i18nKey="blockchain:ecosystemBanner" />
         </span>
       </div>

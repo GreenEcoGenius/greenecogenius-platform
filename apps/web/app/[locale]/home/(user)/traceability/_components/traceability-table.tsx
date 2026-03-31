@@ -11,10 +11,8 @@ import type { MockLot } from '~/lib/mock/traceability-mock-data';
 const CONTRACT_ADDRESS = '0x9EB83c7Acd57E228Cc3f9316eC4f27ce1fE94cF6';
 
 const STATUS_BADGE_STYLES: Record<string, string> = {
-  created:
-    'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-  qualified:
-    'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
+  created: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+  qualified: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
   listed:
     'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',
   sold: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',
@@ -41,8 +39,7 @@ const SOURCE_BADGE_STYLES: Record<string, string> = {
     'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
   collecte:
     'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',
-  import:
-    'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
+  import: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
 };
 
 const SOURCE_I18N: Record<string, string> = {
@@ -105,7 +102,7 @@ export function TraceabilityTable({ lots }: TraceabilityTableProps) {
       <CardContent className="overflow-x-auto p-0">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-b text-xs font-medium text-muted-foreground">
+            <tr className="text-muted-foreground border-b text-xs font-medium">
               <th className="px-4 py-3">
                 <Trans i18nKey="blockchain:lotId" />
               </th>
@@ -140,10 +137,7 @@ export function TraceabilityTable({ lots }: TraceabilityTableProps) {
           </thead>
           <tbody className="divide-y">
             {lots.map((lot) => (
-              <tr
-                key={lot.id}
-                className="hover:bg-muted/30 transition-colors"
-              >
+              <tr key={lot.id} className="hover:bg-muted/30 transition-colors">
                 <td className="px-4 py-3 font-mono text-xs font-semibold">
                   {lot.lotId}
                 </td>
@@ -153,7 +147,9 @@ export function TraceabilityTable({ lots }: TraceabilityTableProps) {
                     className={`text-[10px] font-medium ${SOURCE_BADGE_STYLES[lot.source] ?? ''}`}
                   >
                     <Trans
-                      i18nKey={SOURCE_I18N[lot.source] ?? 'blockchain:sourceImport'}
+                      i18nKey={
+                        SOURCE_I18N[lot.source] ?? 'blockchain:sourceImport'
+                      }
                     />
                   </Badge>
                 </td>
@@ -163,9 +159,7 @@ export function TraceabilityTable({ lots }: TraceabilityTableProps) {
                 <td className="px-4 py-3 text-right font-mono text-xs">
                   {formatWeight(lot.weightKg)}
                 </td>
-                <td className="px-4 py-3 text-xs">
-                  {lot.sellerName}
-                </td>
+                <td className="px-4 py-3 text-xs">{lot.sellerName}</td>
                 <td className="px-4 py-3 text-xs">
                   {lot.buyerName ?? '\u2014'}
                 </td>

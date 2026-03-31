@@ -4,12 +4,12 @@ import {
   TOKEN_LIMITS,
   type AgentType,
 } from './client';
-import { COMPTOIR_AGENT_PROMPT } from './prompts/comptoir-agent';
 import { CARBON_AGENT_PROMPT } from './prompts/carbon-agent';
-import { ESG_AGENT_PROMPT } from './prompts/esg-reporting-agent';
-import { TRACEABILITY_AGENT_PROMPT } from './prompts/traceability-agent';
-import { RSE_AGENT_PROMPT } from './prompts/rse-labels-agent';
 import { COMPLIANCE_AGENT_PROMPT } from './prompts/compliance-agent';
+import { COMPTOIR_AGENT_PROMPT } from './prompts/comptoir-agent';
+import { ESG_AGENT_PROMPT } from './prompts/esg-reporting-agent';
+import { RSE_AGENT_PROMPT } from './prompts/rse-labels-agent';
+import { TRACEABILITY_AGENT_PROMPT } from './prompts/traceability-agent';
 import type { AIContext, AIResponse } from './types';
 
 const AGENT_PROMPTS: Record<AgentType, string> = {
@@ -70,10 +70,7 @@ export async function routeRequest(message: string): Promise<AgentType> {
 /**
  * Builds a context-enriched system prompt.
  */
-function buildSystemPrompt(
-  basePrompt: string,
-  context?: AIContext,
-): string {
+function buildSystemPrompt(basePrompt: string, context?: AIContext): string {
   if (!context) return basePrompt;
 
   const parts = [basePrompt];
@@ -117,8 +114,7 @@ export async function execute(
 
   const systemPrompt = buildSystemPrompt(basePrompt, context);
 
-  const messages: Array<{ role: 'user' | 'assistant'; content: string }> =
-    [];
+  const messages: Array<{ role: 'user' | 'assistant'; content: string }> = [];
 
   if (context?.previousMessages) {
     messages.push(...context.previousMessages);
