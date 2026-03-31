@@ -22,9 +22,9 @@ const links = {
     label: 'marketing.pricing',
     path: '/home/billing',
   },
-  Blog: {
-    label: 'marketing.blog',
-    path: '/blog',
+  Normes: {
+    label: 'marketing.normes',
+    path: '/normes',
   },
   FAQ: {
     label: 'marketing.faq',
