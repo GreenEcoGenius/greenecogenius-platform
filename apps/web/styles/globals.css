@@ -53,18 +53,22 @@
   }
 }
 
-/* === GreenEcoGenius Brand Palette === */
+/* === GreenEcoGenius — Alchemy-inspired Design System === */
 :root {
-  --brand-primary: #009c6e;
-  --brand-primary-hover: #007a52;
-  --brand-primary-light: #e8f5ee;
-  --brand-accent: #64cc04;
-  --brand-accent-hover: #4fa600;
-  --brand-accent-light: #eefbe5;
-  --text-primary: #1a2e1a;
-  --text-secondary: #5c6e5c;
-  --text-muted: #8a9e8a;
-  --bg-page: #f5faf5;
+  --brand-primary: #059669;
+  --brand-primary-hover: #047857;
+  --brand-primary-light: #ecfdf5;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --bg-page: #ffffff;
+  --bg-secondary: #f9fafb;
   --bg-card: #ffffff;
-  --border: #d4ddd4;
+  --bg-hover: #f3f4f6;
+  --border-default: #e5e7eb;
+  --border-light: #f3f4f6;
+  --indicator-success: #10b981;
+  --indicator-warning: #f59e0b;
+  --indicator-error: #ef4444;
+  --indicator-info: #3b82f6;
 }

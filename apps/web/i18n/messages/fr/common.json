@@ -74,7 +74,9 @@
     "esg": "Reporting ESG",
     "traceability": "Traçabilité",
     "rse": "RSE & Labels",
-    "compliance": "Conformité"
+    "compliance": "Conformité",
+    "platform": "Plateforme",
+    "myAccount": "Mon Compte"
   },
   "roles": {
     "owner": {
