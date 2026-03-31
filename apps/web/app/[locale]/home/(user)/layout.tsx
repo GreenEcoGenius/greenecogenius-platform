@@ -58,9 +58,10 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
           </PageMobileNavigation>
 
           {children}
-          <GlobalAIAssistant />
         </Page>
       </SidebarProvider>
+
+      <GlobalAIAssistant />
     </UserWorkspaceContextProvider>
   );
 }
@@ -82,8 +83,9 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
         </PageMobileNavigation>
 
         {children}
-        <GlobalAIAssistant />
       </Page>
+
+      <GlobalAIAssistant />
     </UserWorkspaceContextProvider>
   );
 }
