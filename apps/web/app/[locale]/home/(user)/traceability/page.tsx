@@ -12,6 +12,9 @@ import {
   getTotalStats,
 } from '~/lib/mock/traceability-mock-data';
 
+import { AIAssistant } from '~/components/ai/ai-assistant';
+import { AITraceabilityAlerts } from '~/components/ai/traceability/ai-traceability-alerts';
+
 import { EcosystemBanner } from './_components/ecosystem-banner';
 import { TraceabilityActivityFeed } from './_components/traceability-activity-feed';
 import { TraceabilityEquivalences } from './_components/traceability-equivalences';
@@ -102,6 +105,9 @@ async function TraceabilityPage() {
           blockchainHashes={blockchainHashes}
         />
 
+        {/* AI Smart Alerts */}
+        <AITraceabilityAlerts />
+
         {/* KPI Cards */}
         <TraceabilityKpiCards
           totalLots={stats.totalLots}
@@ -135,6 +141,9 @@ async function TraceabilityPage() {
         {/* Activity feed */}
         <TraceabilityActivityFeed activities={activities} />
       </div>
+
+      {/* AI Assistant floating button */}
+      <AIAssistant section="traceability" />
     </PageBody>
   );
 }
