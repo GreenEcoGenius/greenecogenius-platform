@@ -60,8 +60,8 @@ export function ComplianceAlerts() {
               key={alert.id}
               className={`rounded-lg border-l-4 p-4 ${
                 alert.urgency === 'urgent'
-                  ? 'border-l-red-500 bg-slate-50 dark:bg-slate-950/20'
-                  : 'border-l-amber-500 bg-teal-50 dark:bg-teal-950/20'
+                  ? 'border-l-slate-500 bg-slate-50 dark:bg-slate-950/20'
+                  : 'border-l-teal-500 bg-teal-50 dark:bg-teal-950/20'
               }`}
             >
               <div className="flex items-start justify-between gap-3">

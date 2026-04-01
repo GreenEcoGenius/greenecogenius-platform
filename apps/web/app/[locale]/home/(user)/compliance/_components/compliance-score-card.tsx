@@ -31,8 +31,8 @@ export function ComplianceScoreCard({
     score >= 80
       ? 'stroke-emerald-500'
       : score >= 60
-        ? 'stroke-amber-500'
-        : 'stroke-red-500';
+        ? 'stroke-teal-500'
+        : 'stroke-slate-400';
 
   const circumference = 2 * Math.PI * 54;
   const offset = circumference - (score / 100) * circumference;

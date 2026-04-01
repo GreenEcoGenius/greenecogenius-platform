@@ -351,7 +351,7 @@ function RadioField({
               value="no"
               checked={value === 'no'}
               onChange={() => onChange('no')}
-              className="accent-red-500"
+              className="accent-slate-500"
             />
             Non
           </label>
