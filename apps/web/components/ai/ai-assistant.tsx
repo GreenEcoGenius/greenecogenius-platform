@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
-  ChevronDown,
+  ArrowRight,
   Paperclip,
   Send,
   Sparkles,
@@ -31,7 +31,6 @@ interface Attachment {
   name: string;
   type: string;
   size: number;
-  previewUrl?: string;
 }
 
 interface Message {
@@ -57,30 +56,19 @@ function formatFileSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-// Simulate streaming by revealing text progressively
 function useStreamingText(text: string, active: boolean) {
   const [displayed, setDisplayed] = useState('');
   const indexRef = useRef(0);
 
   useEffect(() => {
-    if (!active || !text) {
-      setDisplayed(text);
-      return;
-    }
-
+    if (!active || !text) { setDisplayed(text); return; }
     indexRef.current = 0;
     setDisplayed('');
-
     const interval = setInterval(() => {
-      indexRef.current += 3; // 3 chars at a time
-      if (indexRef.current >= text.length) {
-        setDisplayed(text);
-        clearInterval(interval);
-      } else {
-        setDisplayed(text.slice(0, indexRef.current));
-      }
+      indexRef.current += 3;
+      if (indexRef.current >= text.length) { setDisplayed(text); clearInterval(interval); }
+      else { setDisplayed(text.slice(0, indexRef.current)); }
     }, 15);
-
     return () => clearInterval(interval);
   }, [text, active]);
 
@@ -89,9 +77,8 @@ function useStreamingText(text: string, active: boolean) {
 
 function StreamingMessage({ content }: { content: string }) {
   const displayed = useStreamingText(content, true);
-
   return (
-    <div className="max-w-[85%] rounded-2xl bg-gray-100 px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap dark:bg-gray-800 dark:text-gray-100">
+    <div className="text-sm leading-relaxed whitespace-pre-wrap">
       {displayed}
       {displayed.length < content.length && (
         <span className="ml-0.5 inline-block h-3 w-0.5 animate-pulse bg-gray-400" />
@@ -122,23 +109,12 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
 
   const handleFileSelect = useCallback((files: FileList | null) => {
     if (!files) return;
-    const newAttachments: Attachment[] = Array.from(files).map((file) => ({
-      id: crypto.randomUUID(),
-      file,
-      name: file.name,
-      type: file.type,
-      size: file.size,
-      previewUrl: file.type.startsWith('image/') ? URL.createObjectURL(file) : undefined,
-    }));
-    setAttachments((prev) => [...prev, ...newAttachments]);
-  }, []);
-
-  const removeAttachment = useCallback((id: string) => {
-    setAttachments((prev) => {
-      const removed = prev.find((a) => a.id === id);
-      if (removed?.previewUrl) URL.revokeObjectURL(removed.previewUrl);
-      return prev.filter((a) => a.id !== id);
-    });
+    setAttachments((prev) => [
+      ...prev,
+      ...Array.from(files).map((file) => ({
+        id: crypto.randomUUID(), file, name: file.name, type: file.type, size: file.size,
+      })),
+    ]);
   }, []);
 
   const handleSend = useCallback(async (text?: string) => {
@@ -146,7 +122,6 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
     if ((!trimmed && attachments.length === 0) || loading) return;
 
     const msgAttachments = attachments.length > 0 ? [...attachments] : undefined;
-
     setMessages((prev) => [
       ...prev,
       { id: crypto.randomUUID(), role: 'user', content: trimmed || `[${msgAttachments?.length} fichier(s)]`, attachments: msgAttachments },
@@ -158,9 +133,8 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
     const attachmentInfo = msgAttachments
       ? msgAttachments.map((a) => `Fichier: ${a.name} (${a.type}, ${formatFileSize(a.size)})`).join('\n')
       : '';
-    const fullMessage = attachmentInfo ? `${trimmed}\n\n[Pieces jointes]\n${attachmentInfo}` : trimmed;
 
-    const result = await ask(fullMessage, { context });
+    const result = await ask(attachmentInfo ? `${trimmed}\n\n[Pieces jointes]\n${attachmentInfo}` : trimmed, { context });
     if (result) {
       setMessages((prev) => [
         ...prev,
@@ -177,105 +151,103 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
 
   return (
     <>
-      {/* Trigger */}
+      {/* Trigger button - top bar style like Hostinger "Demander" */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed right-4 bottom-4 z-50 flex items-center gap-2 rounded-full bg-emerald-600 px-4 py-2.5 text-xs font-medium text-white shadow-lg transition-all hover:bg-emerald-700 sm:right-6 sm:bottom-6 sm:px-5 sm:py-3 sm:text-sm"
-          style={{ animation: 'ai-pulse 2s ease-in-out infinite' }}
+          className="fixed right-4 top-20 z-50 flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-medium text-emerald-700 shadow-md transition-all hover:shadow-lg sm:right-6 dark:border-emerald-800 dark:bg-gray-950 dark:text-emerald-400"
         >
           <Sparkles className="h-4 w-4" />
-          <span className="hidden sm:inline">Discuter avec Kodee</span>
-          <span className="sm:hidden">Kodee</span>
+          Kodee
         </button>
       )}
 
-      {/* Backdrop */}
-      {open && <div className="fixed inset-0 z-50 bg-black/10" onClick={() => setOpen(false)} />}
-
-      {/* Chat panel */}
+      {/* Full screen chat */}
       {open && (
-        <div className="fixed bottom-0 right-0 left-0 z-50 flex h-[60vh] flex-col rounded-t-2xl bg-white shadow-2xl sm:bottom-6 sm:left-auto sm:right-6 sm:h-[520px] sm:w-[380px] sm:rounded-2xl dark:bg-gray-950">
+        <div
+          style={{ position: 'fixed', inset: 0, zIndex: 9999, backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column' }}
+        >
           {/* Header */}
-          <div className="flex shrink-0 items-center justify-between border-b px-4 py-2.5">
-            <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
-                <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
-              </div>
-              <span className="text-sm font-semibold">Kodee</span>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', borderBottom: '1px solid #e5e7eb', flexShrink: 0 }}>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <span style={{ backgroundColor: '#f3f4f6', borderRadius: 9999, padding: '6px 16px', fontSize: 13, fontWeight: 600, color: '#111827' }}>
+                Discussion
+              </span>
             </div>
-            <button
-              onClick={() => setOpen(false)}
-              className="flex h-7 w-7 items-center justify-center rounded-full transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-            >
-              <ChevronDown className="h-4 w-4 text-gray-500" />
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Sparkles style={{ width: 16, height: 16, color: '#059669' }} />
+              <button
+                onClick={() => setOpen(false)}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, borderRadius: 9999, border: 'none', background: 'transparent', cursor: 'pointer' }}
+              >
+                <ArrowRight style={{ width: 18, height: 18, color: '#6b7280', transform: 'rotate(90deg)' }} />
+              </button>
+            </div>
           </div>
 
-          {/* Messages */}
-          <div className="min-h-0 flex-1 overflow-y-auto px-3 py-3">
+          {/* Messages area */}
+          <div style={{ flex: 1, overflowY: 'auto', padding: 16, minHeight: 0 }}>
             {!hasMessages && !loading ? (
-              <div className="flex flex-col items-center py-6">
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 dark:bg-emerald-900/40">
-                  <Sparkles className="h-6 w-6 text-emerald-600" />
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center' }}>
+                <div style={{ width: 56, height: 56, borderRadius: 16, backgroundColor: '#ecfdf5', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
+                  <Sparkles style={{ width: 28, height: 28, color: '#059669' }} />
                 </div>
-                <p className="text-sm font-semibold">Bonjour !</p>
-                <p className="text-muted-foreground mt-0.5 text-xs">Comment puis-je vous aider ?</p>
+                <p style={{ fontSize: 18, fontWeight: 600, color: '#111827', margin: 0 }}>Bonjour !</p>
+                <p style={{ fontSize: 14, color: '#6b7280', marginTop: 4 }}>Comment puis-je vous aider ?</p>
 
-                <div className="mt-5 w-full space-y-1.5">
+                <div style={{ marginTop: 32, width: '100%', maxWidth: 320, display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {QUICK_ACTIONS[section]?.map((action) => (
                     <button
                       key={action}
                       type="button"
                       onClick={() => handleSend(action)}
-                      className="flex w-full items-center gap-2 rounded-lg border px-3 py-2.5 text-left text-xs transition-colors hover:bg-gray-50 dark:hover:bg-gray-900"
+                      style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', borderRadius: 12, border: '1px solid #e5e7eb', background: '#fff', fontSize: 13, textAlign: 'left', cursor: 'pointer', transition: 'background 0.15s' }}
+                      onMouseOver={(e) => (e.currentTarget.style.background = '#f9fafb')}
+                      onMouseOut={(e) => (e.currentTarget.style.background = '#fff')}
                     >
-                      <span className="text-emerald-500">&#8599;</span>
+                      <span style={{ color: '#059669' }}>&#8599;</span>
                       {action}
                     </button>
                   ))}
                 </div>
               </div>
             ) : (
-              <div className="space-y-2.5">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 {messages.map((msg) => (
-                  <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    {msg.role === 'assistant' && (
-                      <div className="mr-1.5 mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
-                        <Sparkles className="h-3 w-3 text-emerald-600" />
-                      </div>
-                    )}
-                    <div className="max-w-[85%]">
-                      {msg.attachments && msg.attachments.length > 0 && (
-                        <div className="mb-1 flex flex-wrap justify-end gap-1">
-                          {msg.attachments.map((att) => (
-                            <span key={att.id} className="rounded bg-emerald-500/20 px-1.5 py-0.5 text-[10px] text-emerald-700">
-                              {att.name}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      {msg.role === 'assistant' && msg.streaming ? (
-                        <StreamingMessage content={msg.content} />
-                      ) : (
-                        <div className={`rounded-2xl px-3 py-2 text-xs leading-relaxed whitespace-pre-wrap ${
-                          msg.role === 'user'
-                            ? 'bg-emerald-600 text-white'
-                            : 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
-                        }`}>
+                  <div key={msg.id}>
+                    {msg.role === 'user' ? (
+                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <div style={{ maxWidth: '80%', backgroundColor: '#f3f4f6', borderRadius: 16, padding: '10px 16px', fontSize: 14, color: '#111827' }}>
                           {msg.content}
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                          <Sparkles style={{ width: 16, height: 16, color: '#059669' }} />
+                          <span style={{ fontSize: 14, fontWeight: 600, color: '#111827' }}>Kodee</span>
+                        </div>
+                        <div style={{ paddingLeft: 24 }}>
+                          {msg.streaming ? (
+                            <StreamingMessage content={msg.content} />
+                          ) : (
+                            <p style={{ fontSize: 14, lineHeight: 1.6, color: '#374151', margin: 0, whiteSpace: 'pre-wrap' }}>
+                              {msg.content}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
 
                 {loading && (
-                  <div className="flex items-start">
-                    <div className="mr-1.5 mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
-                      <Sparkles className="h-3 w-3 text-emerald-600" />
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                      <Sparkles style={{ width: 16, height: 16, color: '#059669' }} />
+                      <span style={{ fontSize: 14, fontWeight: 600, color: '#111827' }}>Kodee</span>
                     </div>
-                    <div className="rounded-2xl bg-gray-100 px-3 py-2 dark:bg-gray-800">
+                    <div style={{ paddingLeft: 24 }}>
                       <AILoadingState lines={1} />
                     </div>
                   </div>
@@ -286,36 +258,34 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
             )}
           </div>
 
-          {/* Attachments preview */}
+          {/* Attachments */}
           {attachments.length > 0 && (
-            <div className="shrink-0 border-t px-3 pt-2">
-              <div className="flex flex-wrap gap-1.5">
-                {attachments.map((att) => (
-                  <span key={att.id} className="inline-flex items-center gap-1 rounded-md border bg-gray-50 px-2 py-1 text-[10px] dark:bg-gray-800">
-                    {att.name.length > 15 ? att.name.slice(0, 15) + '...' : att.name}
-                    <button type="button" onClick={() => removeAttachment(att.id)} className="text-gray-400 hover:text-gray-600">
-                      <X className="h-3 w-3" />
-                    </button>
-                  </span>
-                ))}
-              </div>
+            <div style={{ padding: '8px 16px', borderTop: '1px solid #f3f4f6', display: 'flex', flexWrap: 'wrap', gap: 6, flexShrink: 0 }}>
+              {attachments.map((att) => (
+                <span key={att.id} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, borderRadius: 6, border: '1px solid #e5e7eb', backgroundColor: '#f9fafb', padding: '4px 8px', fontSize: 11 }}>
+                  {att.name.length > 20 ? att.name.slice(0, 20) + '...' : att.name}
+                  <button type="button" onClick={() => setAttachments((p) => p.filter((a) => a.id !== att.id))} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex' }}>
+                    <X style={{ width: 12, height: 12, color: '#9ca3af' }} />
+                  </button>
+                </span>
+              ))}
             </div>
           )}
 
           {/* Disclaimer */}
-          <div className="text-muted-foreground shrink-0 px-3 pt-1 text-center text-[8px]">
+          <div style={{ textAlign: 'center', fontSize: 10, color: '#9ca3af', padding: '4px 0', flexShrink: 0 }}>
             L&apos;IA peut generer des informations inexactes
           </div>
 
           {/* Input */}
-          <div className="shrink-0 p-2">
-            <div className="flex items-end gap-1.5 rounded-xl border bg-gray-50 px-2 py-1.5 focus-within:ring-1 focus-within:ring-emerald-500 dark:bg-gray-900">
+          <div style={{ padding: '8px 12px 12px', flexShrink: 0, borderTop: '1px solid #f3f4f6' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, borderRadius: 16, border: '1px solid #e5e7eb', backgroundColor: '#f9fafb', padding: '8px 12px' }}>
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-gray-400 hover:text-gray-600"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, borderRadius: 9999, border: 'none', background: 'transparent', cursor: 'pointer', flexShrink: 0 }}
               >
-                <Paperclip className="h-3.5 w-3.5" />
+                <Paperclip style={{ width: 16, height: 16, color: '#9ca3af' }} />
               </button>
 
               <input
@@ -324,17 +294,17 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
                 multiple
                 accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt"
                 onChange={(e) => { handleFileSelect(e.target.files); e.target.value = ''; }}
-                className="hidden"
+                style={{ display: 'none' }}
               />
 
               <textarea
                 ref={inputRef}
                 value={input}
-                onChange={(e) => { setInput(e.target.value); const el = e.target; el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 80) + 'px'; }}
+                onChange={(e) => { setInput(e.target.value); const el = e.target; el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }}
                 onKeyDown={handleKeyDown}
                 placeholder="Posez votre question"
                 rows={1}
-                className="min-h-[22px] max-h-[80px] min-w-0 flex-1 resize-none bg-transparent text-xs leading-5 focus:outline-none"
+                style={{ flex: 1, minHeight: 24, maxHeight: 100, resize: 'none', border: 'none', background: 'transparent', fontSize: 14, lineHeight: '22px', outline: 'none', fontFamily: 'inherit' }}
                 disabled={loading}
               />
 
@@ -342,21 +312,14 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
                 type="button"
                 onClick={() => handleSend()}
                 disabled={loading || (!input.trim() && attachments.length === 0)}
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white transition-colors hover:bg-emerald-700 disabled:opacity-30"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 36, height: 36, borderRadius: 9999, border: 'none', backgroundColor: '#059669', color: '#fff', cursor: 'pointer', flexShrink: 0, opacity: (loading || (!input.trim() && attachments.length === 0)) ? 0.3 : 1 }}
               >
-                <Send className="h-3 w-3" />
+                <Send style={{ width: 16, height: 16 }} />
               </button>
             </div>
           </div>
         </div>
       )}
-
-      <style>{`
-        @keyframes ai-pulse {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); }
-          50% { box-shadow: 0 0 0 12px rgba(5, 150, 105, 0); }
-        }
-      `}</style>
     </>
   );
 }
