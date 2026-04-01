@@ -82,41 +82,39 @@ function LocaleToggle() {
 function AuthButtons() {
   return (
     <div
-      className={'animate-in fade-in flex items-center gap-x-2 duration-500'}
+      className={
+        'animate-in fade-in hidden items-center gap-x-2 duration-500 md:flex'
+      }
     >
       <LocaleToggle />
 
-      <div className={'hidden md:flex'}>
-        <If condition={features.enableThemeToggle}>
-          <ModeToggle />
-        </If>
-      </div>
+      <If condition={features.enableThemeToggle}>
+        <ModeToggle />
+      </If>
 
-      <div className={'flex items-center gap-x-2'}>
-        <Button
-          nativeButton={false}
-          className={'hidden md:flex md:text-sm'}
-          render={
-            <Link href={pathsConfig.auth.signIn}>
-              <Trans i18nKey={'auth.signIn'} />
-            </Link>
-          }
-          variant={'outline'}
-          size={'sm'}
-        />
+      <Button
+        nativeButton={false}
+        className={'text-sm'}
+        render={
+          <Link href={pathsConfig.auth.signIn}>
+            <Trans i18nKey={'auth.signIn'} />
+          </Link>
+        }
+        variant={'outline'}
+        size={'sm'}
+      />
 
-        <Button
-          nativeButton={false}
-          render={
-            <Link href={pathsConfig.auth.signUp}>
-              <Trans i18nKey={'auth.signUp'} />
-            </Link>
-          }
-          className="text-xs md:text-sm"
-          variant={'default'}
-          size={'sm'}
-        />
-      </div>
+      <Button
+        nativeButton={false}
+        render={
+          <Link href={pathsConfig.auth.signUp}>
+            <Trans i18nKey={'auth.signUp'} />
+          </Link>
+        }
+        className="text-sm"
+        variant={'default'}
+        size={'sm'}
+      />
     </div>
   );
 }

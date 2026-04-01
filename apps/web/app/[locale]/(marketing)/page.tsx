@@ -38,7 +38,7 @@ export default async function Home() {
   const t = await getTranslations('marketing');
 
   return (
-    <div className="-mt-24 flex flex-col md:-mt-36">
+    <div className="-mt-16 flex flex-col md:-mt-36">
       {/* ───── HERO ───── */}
       <HeroScrollEffect>
         <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
@@ -65,13 +65,13 @@ export default async function Home() {
             </AnimateOnScroll>
 
             <AnimateOnScroll animation="fade-up" delay={100}>
-              <h1 className="mt-6 bg-gradient-to-b from-white to-[#8DC63F] bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl lg:text-7xl">
+              <h1 className="mt-6 bg-gradient-to-b from-white to-[#8DC63F] bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-5xl lg:text-7xl">
                 {t('heroHeadline')}
               </h1>
             </AnimateOnScroll>
 
             <AnimateOnScroll animation="fade-up" delay={200}>
-              <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80 sm:text-xl">
+              <p className="mx-auto mt-6 hidden max-w-2xl text-lg text-white/80 sm:block sm:text-xl">
                 {t('heroSubtitle')}
               </p>
             </AnimateOnScroll>
