@@ -42,11 +42,6 @@ interface TabDef {
 
 const TABS: TabDef[] = [
   {
-    id: 'overview',
-    label: "Vue d'ensemble",
-    icon: <FileText className="h-4 w-4" />,
-  },
-  {
     id: 'circular_economy',
     label: 'Economie circulaire',
     count: 11,
@@ -174,9 +169,8 @@ function NormCard({ norm, index }: { norm: Norm; index: number }) {
   );
 }
 
-// ── Overview tab ──
-
-function OverviewContent() {
+// Pillar tabs only (overview removed)
+function _unused() {
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState<NormType | 'all'>('all');
 
@@ -381,7 +375,7 @@ function PillarContent({ pillar }: { pillar: NormPillar }) {
 // ── Main component ──
 
 export function NormsTabbedContent() {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('circular_economy');
   const tabBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -394,7 +388,7 @@ export function NormsTabbedContent() {
 
   const handleTabChange = useCallback((tabId: string) => {
     setActiveTab(tabId);
-    const newHash = tabId === 'overview' ? '' : `#${tabId}`;
+    const newHash = `#${tabId}`;
     window.history.replaceState(null, '', newHash || window.location.pathname);
     if (tabBarRef.current) {
       const top =
@@ -447,7 +441,6 @@ export function NormsTabbedContent() {
 
       {/* Content */}
       <div className="min-h-[60vh]">
-        {activeTab === 'overview' && <OverviewContent />}
         {activeTabDef?.pillar && <PillarContent pillar={activeTabDef.pillar} />}
       </div>
     </>

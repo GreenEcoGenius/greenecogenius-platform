@@ -10,7 +10,7 @@ export function SiteHeader(props: { user?: JWTUserData | null }) {
   return (
     <Header
       logo={<AppLogo href="/" />}
-      navigation={<SiteNavigation />}
+      navigation={<SiteNavigation user={props.user ?? null} />}
       actions={<SiteHeaderAccountSection user={props.user ?? null} />}
     />
   );

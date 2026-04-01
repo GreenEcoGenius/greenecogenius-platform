@@ -9,6 +9,7 @@ import { Menu, X } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
 import { usePathname, useRouter } from '@kit/i18n/navigation';
+import { JWTUserData } from '@kit/supabase/types';
 import { NavigationMenu, NavigationMenuList } from '@kit/ui/navigation-menu';
 import { Trans } from '@kit/ui/trans';
 
@@ -24,7 +25,7 @@ const links = {
   Contact: { label: 'marketing.contact', path: '/contact' },
 };
 
-export function SiteNavigation() {
+export function SiteNavigation({ user }: { user: JWTUserData | null }) {
   return (
     <>
       <div className="hidden items-center justify-center md:flex">
@@ -40,13 +41,13 @@ export function SiteNavigation() {
       </div>
 
       <div className="flex justify-start sm:items-center md:hidden">
-        <MobileMenu />
+        <MobileMenu user={user} />
       </div>
     </>
   );
 }
 
-function MobileMenu() {
+function MobileMenu({ user }: { user: JWTUserData | null }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const locale = useLocale();
@@ -73,6 +74,8 @@ function MobileMenu() {
     router.replace(pathname, { locale: next });
     setOpen(false);
   };
+
+  const isLoggedIn = !!user;
 
   const menuContent = open ? (
     <div
@@ -111,6 +114,24 @@ function MobileMenu() {
           backgroundColor: '#ffffff',
         }}
       >
+        {/* Dashboard link when logged in */}
+        {isLoggedIn && (
+          <Link
+            href={pathsConfig.app.home}
+            onClick={() => setOpen(false)}
+            style={{
+              padding: '16px 0',
+              borderBottom: '1px solid #f3f4f6',
+              fontSize: 16,
+              fontWeight: 600,
+              color: '#059669',
+              textDecoration: 'none',
+            }}
+          >
+            Dashboard
+          </Link>
+        )}
+
         {Object.values(links).map((item) => (
           <Link
             key={item.path}
@@ -153,36 +174,40 @@ function MobileMenu() {
             {locale === 'fr' ? 'English' : 'Francais'}
           </button>
 
-          <Link
-            href={pathsConfig.auth.signIn}
-            onClick={() => setOpen(false)}
-            style={{
-              textAlign: 'center',
-              fontSize: 14,
-              fontWeight: 500,
-              color: '#111827',
-              textDecoration: 'none',
-            }}
-          >
-            <Trans i18nKey="auth.signIn" />
-          </Link>
+          {!isLoggedIn && (
+            <>
+              <Link
+                href={pathsConfig.auth.signIn}
+                onClick={() => setOpen(false)}
+                style={{
+                  textAlign: 'center',
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: '#111827',
+                  textDecoration: 'none',
+                }}
+              >
+                <Trans i18nKey="auth.signIn" />
+              </Link>
 
-          <Link
-            href={pathsConfig.auth.signUp}
-            onClick={() => setOpen(false)}
-            style={{
-              backgroundColor: '#059669',
-              color: '#ffffff',
-              borderRadius: 8,
-              padding: '12px 16px',
-              textAlign: 'center',
-              fontSize: 14,
-              fontWeight: 500,
-              textDecoration: 'none',
-            }}
-          >
-            <Trans i18nKey="auth.signUp" />
-          </Link>
+              <Link
+                href={pathsConfig.auth.signUp}
+                onClick={() => setOpen(false)}
+                style={{
+                  backgroundColor: '#059669',
+                  color: '#ffffff',
+                  borderRadius: 8,
+                  padding: '12px 16px',
+                  textAlign: 'center',
+                  fontSize: 14,
+                  fontWeight: 500,
+                  textDecoration: 'none',
+                }}
+              >
+                <Trans i18nKey="auth.signUp" />
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </div>

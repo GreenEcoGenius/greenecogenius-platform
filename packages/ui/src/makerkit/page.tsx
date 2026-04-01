@@ -108,7 +108,7 @@ export function PageBody(
   }>,
 ) {
   const className = cn(
-    'flex min-w-0 flex-1 flex-col pb-20 lg:px-4 lg:pb-4',
+    'flex min-w-0 flex-1 flex-col pt-4 pb-20 lg:px-4 lg:pt-6 lg:pb-4',
     props.className,
   );
 

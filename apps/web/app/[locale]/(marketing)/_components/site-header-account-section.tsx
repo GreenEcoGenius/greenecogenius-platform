@@ -1,13 +1,10 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
 import { useLocale } from 'next-intl';
 
-import { PersonalAccountDropdown } from '@kit/accounts/personal-account-dropdown';
 import { usePathname, useRouter } from '@kit/i18n/navigation';
-import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
 import { JWTUserData } from '@kit/supabase/types';
 import { Button } from '@kit/ui/button';
 import { If } from '@kit/ui/if';
@@ -15,19 +12,6 @@ import { Trans } from '@kit/ui/trans';
 
 import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
-
-const ModeToggle = dynamic(
-  () =>
-    import('@kit/ui/mode-toggle').then((mod) => ({
-      default: mod.ModeToggle,
-    })),
-  { ssr: false },
-);
-
-const paths = {
-  home: pathsConfig.app.home,
-  profileSettings: pathsConfig.app.personalAccountSettings,
-};
 
 const features = {
   enableThemeToggle: featuresFlagConfig.enableThemeToggle,
@@ -38,18 +22,18 @@ export function SiteHeaderAccountSection({
 }: {
   user: JWTUserData | null;
 }) {
-  const signOut = useSignOut();
-
   if (user) {
+    // Logged in: show only locale toggle + Dashboard link on desktop
+    // The small dropdown is removed per user request
     return (
-      <div className="flex items-center gap-x-2">
+      <div className="hidden items-center gap-x-2 md:flex">
         <LocaleToggle />
-        <PersonalAccountDropdown
-          showProfileName={false}
-          paths={paths}
-          features={features}
-          user={user}
-          signOutRequested={() => signOut.mutateAsync()}
+        <Button
+          nativeButton={false}
+          render={<Link href={pathsConfig.app.home}>Dashboard</Link>}
+          variant="default"
+          size="sm"
+          className="text-sm"
         />
       </div>
     );
@@ -81,39 +65,31 @@ function LocaleToggle() {
 
 function AuthButtons() {
   return (
-    <div
-      className={
-        'animate-in fade-in hidden items-center gap-x-2 duration-500 md:flex'
-      }
-    >
+    <div className="animate-in fade-in hidden items-center gap-x-2 duration-500 md:flex">
       <LocaleToggle />
-
-      <If condition={features.enableThemeToggle}>
-        <ModeToggle />
-      </If>
 
       <Button
         nativeButton={false}
-        className={'text-sm'}
+        className="text-sm"
         render={
           <Link href={pathsConfig.auth.signIn}>
-            <Trans i18nKey={'auth.signIn'} />
+            <Trans i18nKey="auth.signIn" />
           </Link>
         }
-        variant={'outline'}
-        size={'sm'}
+        variant="outline"
+        size="sm"
       />
 
       <Button
         nativeButton={false}
         render={
           <Link href={pathsConfig.auth.signUp}>
-            <Trans i18nKey={'auth.signUp'} />
+            <Trans i18nKey="auth.signUp" />
           </Link>
         }
         className="text-sm"
-        variant={'default'}
-        size={'sm'}
+        variant="default"
+        size="sm"
       />
     </div>
   );
