@@ -152,8 +152,15 @@ export default async function Home() {
       </section>
 
       {/* ───── NEWSLETTER ───── */}
-      <section className="bg-primary py-20 sm:py-28">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <Image
+          src="/images/normes/circular-infinity-aerial.png"
+          alt=""
+          fill
+          className="object-cover"
+        />
+        <div className="bg-primary/85 absolute inset-0" />
+        <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
             <h2 className="text-primary-foreground text-3xl font-bold tracking-tight sm:text-4xl">
               {t('newsletterHeading')}

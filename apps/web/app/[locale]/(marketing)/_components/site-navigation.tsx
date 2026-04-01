@@ -18,10 +18,10 @@ import pathsConfig from '~/config/paths.config';
 import { SiteNavigationItem } from './site-navigation-item';
 
 const links = {
-  About: { label: 'marketing.about', path: '/about' },
+  Solutions: { label: 'marketing.solutions', path: '/solutions' },
   Pricing: { label: 'marketing.pricing', path: '/home/billing' },
   Normes: { label: 'marketing.normes', path: '/normes' },
-  FAQ: { label: 'marketing.faq', path: '/faq' },
+  About: { label: 'marketing.about', path: '/about' },
   Contact: { label: 'marketing.contact', path: '/contact' },
 };
 
