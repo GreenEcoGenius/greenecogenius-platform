@@ -77,7 +77,7 @@ export const Header: React.FC<HeaderProps> = function ({
           {logo}
 
           <If condition={navigation}>
-            <div className="order-first md:order-none">{navigation}</div>
+            <div className="order-last md:order-none">{navigation}</div>
           </If>
 
           <If condition={actions}>
