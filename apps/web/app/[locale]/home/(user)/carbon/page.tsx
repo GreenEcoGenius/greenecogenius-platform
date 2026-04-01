@@ -16,8 +16,7 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
+import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { CarbonAvoidedChart } from './_components/carbon-avoided-chart';
@@ -222,15 +221,6 @@ async function CarbonPage() {
 
   return (
     <PageBody>
-      <PageHeader description="">
-        <div className="flex items-center justify-between">
-          <Heading level={3}>
-            <Trans i18nKey="carbon:heroTitle" />
-          </Heading>
-          <CarbonExportButton />
-        </div>
-      </PageHeader>
-
       <div className="space-y-8">
         {/* Section 1 - Banner */}
         <Card className="overflow-hidden border-0 bg-gradient-to-r from-emerald-600 to-teal-700 text-white">

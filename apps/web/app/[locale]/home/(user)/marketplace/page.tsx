@@ -13,8 +13,7 @@ import { getTranslations } from 'next-intl/server';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
+import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { ListingCard } from '~/home/_components/listing-card';
@@ -40,14 +39,6 @@ async function MarketplacePage() {
 
   return (
     <PageBody>
-      <PageHeader
-        description={<Trans i18nKey={'marketplace.listingsAvailable'} />}
-      >
-        <Heading level={3}>
-          <Trans i18nKey={'common.routes.marketplace'} />
-        </Heading>
-      </PageHeader>
-
       {/* Section 1 -- Marketplace Banner */}
       <div className="from-primary/10 via-primary/5 relative overflow-hidden rounded-2xl border bg-gradient-to-br to-transparent p-8">
         <div className="relative z-10">

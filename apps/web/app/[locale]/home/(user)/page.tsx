@@ -76,15 +76,9 @@ async function UserHomePage() {
   return (
     <PageBody>
       <div className="space-y-8">
-        {/* Page title */}
-        <div className="flex items-center gap-3">
-          <SidebarTrigger className="text-foreground hover:text-primary h-8 w-8 cursor-pointer lg:h-7 lg:w-7" />
-          <div>
-            <h1 className="text-2xl font-bold">Tableau de bord</h1>
-            <p className="text-muted-foreground mt-1 text-sm">
-              Vue d&apos;ensemble de votre ecosysteme GreenEcoGenius
-            </p>
-          </div>
+        {/* Mobile sidebar toggle */}
+        <div className="lg:hidden">
+          <SidebarTrigger className="text-foreground hover:text-primary h-8 w-8 cursor-pointer" />
         </div>
 
         {/* 3 KPI Cards */}

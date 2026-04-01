@@ -7,14 +7,13 @@ import {
   LinkIcon,
   Recycle,
   Shield,
-  Sparkles,
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { Button } from '@kit/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
+import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { AIAssistant } from '~/components/ai/ai-assistant';
@@ -146,23 +145,6 @@ function getEcosystemIcon(icon: string) {
 async function RSEPage() {
   return (
     <PageBody>
-      <PageHeader description="">
-        <div className="flex items-center justify-between">
-          <Heading level={3}>
-            <Trans i18nKey="rse:title" />
-          </Heading>
-          <Button
-            variant="outline"
-            size="sm"
-            render={<Link href="/home/rse/diagnostic" />}
-            nativeButton={false}
-          >
-            <Sparkles className="mr-2 h-4 w-4" />
-            <Trans i18nKey="rse:newDiagnostic" />
-          </Button>
-        </div>
-      </PageHeader>
-
       <div className="space-y-8">
         {/* Score + subtitle */}
         <Card>

@@ -1,7 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
+import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { AIAssistant } from '~/components/ai/ai-assistant';
@@ -108,15 +107,6 @@ const MOCK_PILLARS = [
 async function CompliancePage() {
   return (
     <PageBody>
-      <PageHeader description="">
-        <Heading level={3}>
-          <Trans i18nKey="compliance:title" />
-        </Heading>
-        <p className="text-muted-foreground text-sm">
-          <Trans i18nKey="compliance:subtitle" />
-        </p>
-      </PageHeader>
-
       <div className="space-y-8">
         {/* Global score card */}
         <ComplianceScoreCard

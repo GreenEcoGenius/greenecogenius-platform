@@ -1,8 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
+import { PageBody } from '@kit/ui/page';
 
 import { AIAssistant } from '~/components/ai/ai-assistant';
 import { AITraceabilityAlerts } from '~/components/ai/traceability/ai-traceability-alerts';
@@ -87,12 +85,6 @@ async function TraceabilityPage() {
 
   return (
     <PageBody>
-      <PageHeader description={<Trans i18nKey="blockchain:subtitle" />}>
-        <Heading level={3}>
-          <Trans i18nKey="blockchain:title" />
-        </Heading>
-      </PageHeader>
-
       <div className="space-y-6">
         {/* Ecosystem Banner */}
         <EcosystemBanner

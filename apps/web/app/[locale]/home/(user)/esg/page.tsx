@@ -2,9 +2,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
+import { PageBody } from '@kit/ui/page';
 
 import { AiInsightsPanel } from './_components/ai-insights-panel';
 import { BenchmarkCard } from './_components/benchmark-card';
@@ -45,15 +43,6 @@ async function ESGPage() {
 
   return (
     <PageBody>
-      <PageHeader description="">
-        <Heading level={3}>
-          <Trans i18nKey="esg:title" />
-        </Heading>
-        <p className="text-muted-foreground text-sm">
-          <Trans i18nKey="esg:subtitle" />
-        </p>
-      </PageHeader>
-
       <div className="space-y-6">
         {/* Header with progress */}
         <EsgStatusHeader
