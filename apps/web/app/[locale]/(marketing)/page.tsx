@@ -159,7 +159,7 @@ export default async function Home() {
           fill
           className="object-cover"
         />
-        <div className="bg-primary/85 absolute inset-0" />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
             <h2 className="text-primary-foreground text-3xl font-bold tracking-tight sm:text-4xl">
