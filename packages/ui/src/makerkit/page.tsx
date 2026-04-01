@@ -28,7 +28,7 @@ export function Page(props: PageProps) {
 }
 
 function PageWithSidebar(props: PageProps) {
-  const { Navigation, Children } = getSlotsFromPage(props);
+  const { Navigation, Children, MobileNavigation } = getSlotsFromPage(props);
 
   return (
     <div
@@ -42,6 +42,8 @@ function PageWithSidebar(props: PageProps) {
           'mx-auto flex min-h-screen w-full min-w-0 flex-1 flex-col bg-inherit lg:h-screen'
         }
       >
+        {MobileNavigation}
+
         <div
           className={'bg-background flex min-w-0 flex-1 flex-col px-4 lg:px-0'}
         >
