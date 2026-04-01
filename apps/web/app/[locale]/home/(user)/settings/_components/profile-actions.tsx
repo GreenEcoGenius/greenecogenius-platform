@@ -1,13 +1,14 @@
 'use client';
 
-import { LogOut, Moon, Sun } from 'lucide-react';
+import { Globe, LogOut, Moon, Sun } from 'lucide-react';
+import { useLocale } from 'next-intl';
 import { useTheme } from 'next-themes';
 
+import { usePathname, useRouter } from '@kit/i18n/navigation';
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { If } from '@kit/ui/if';
-import { Trans } from '@kit/ui/trans';
 
 export function ProfileActions({
   enableThemeToggle,
@@ -16,6 +17,13 @@ export function ProfileActions({
 }) {
   const signOut = useSignOut();
   const { theme, setTheme } = useTheme();
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const switchLocale = (next: string) => {
+    router.replace(pathname, { locale: next });
+  };
 
   return (
     <Card className="mt-6">
@@ -23,6 +31,44 @@ export function ProfileActions({
         <CardTitle className="text-base">Preferences</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
+        {/* Language */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Globe className="h-4 w-4 text-teal-500" strokeWidth={1.5} />
+            <div>
+              <p className="text-sm font-medium">Langue / Language</p>
+              <p className="text-muted-foreground text-xs">
+                {locale === 'fr' ? 'Francais' : 'English'}
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-1">
+            <button
+              type="button"
+              onClick={() => switchLocale('fr')}
+              className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                locale === 'fr'
+                  ? 'bg-primary text-white'
+                  : 'bg-muted text-muted-foreground hover:bg-gray-200'
+              }`}
+            >
+              FR
+            </button>
+            <button
+              type="button"
+              onClick={() => switchLocale('en')}
+              className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                locale === 'en'
+                  ? 'bg-primary text-white'
+                  : 'bg-muted text-muted-foreground hover:bg-gray-200'
+              }`}
+            >
+              EN
+            </button>
+          </div>
+        </div>
+
+        {/* Theme */}
         <If condition={enableThemeToggle}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -32,14 +78,12 @@ export function ProfileActions({
                 <Sun className="h-4 w-4 text-teal-500" strokeWidth={1.5} />
               )}
               <div>
-                <p className="text-sm font-medium">
-                  <Trans i18nKey="common.theme" defaults="Theme" />
-                </p>
+                <p className="text-sm font-medium">Theme</p>
                 <p className="text-muted-foreground text-xs">
                   {theme === 'dark'
-                    ? 'Mode sombre'
+                    ? 'Sombre'
                     : theme === 'light'
-                      ? 'Mode clair'
+                      ? 'Clair'
                       : 'Systeme'}
                 </p>
               </div>
@@ -82,6 +126,7 @@ export function ProfileActions({
           </div>
         </If>
 
+        {/* Sign out */}
         <div className="border-t pt-4">
           <Button
             variant="destructive"

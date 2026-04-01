@@ -63,7 +63,6 @@ function LocaleToggle() {
 function AuthButtons() {
   return (
     <div className="animate-in fade-in hidden items-center gap-x-2 duration-500 md:flex">
-
       <Button
         nativeButton={false}
         className="text-sm"

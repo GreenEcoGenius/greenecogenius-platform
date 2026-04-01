@@ -491,8 +491,14 @@ export function PricingContent({
       </section>
 
       {/* FOOTER CTA */}
-      <section className="bg-primary py-16 text-white">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative overflow-hidden py-16 text-white">
+        <img
+          src="/images/normes/saas-carbon-dark.png"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="relative container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold">
             <Trans i18nKey="pricingPage.ctaTitle" />
           </h2>

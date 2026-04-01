@@ -33,7 +33,7 @@ export default async function AboutPage() {
       {/* ───── HERO ───── */}
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <Image
-          src="/images/greentech-energy.png"
+          src="/images/normes/reporting-esg-presentation.png"
           alt=""
           fill
           className="object-cover"

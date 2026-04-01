@@ -35,10 +35,16 @@ const AGENT_NAMES: Record<AIAssistantProps['section'], string> = {
 };
 
 const QUICK_ACTIONS: Record<AIAssistantProps['section'], string[]> = {
-  comptoir: ['Comment publier une annonce ?', 'Quels materiaux sont acceptes ?'],
+  comptoir: [
+    'Comment publier une annonce ?',
+    'Quels materiaux sont acceptes ?',
+  ],
   carbon: ['Comment reduire mes emissions ?', 'Expliquer les Scopes 1/2/3'],
   esg: ['Generer un rapport ESG', 'Quelles normes CSRD ?'],
-  traceability: ['Comment emettre un certificat ?', 'Verifier un lot blockchain'],
+  traceability: [
+    'Comment emettre un certificat ?',
+    'Verifier un lot blockchain',
+  ],
   rse: ['Lancer un diagnostic RSE', 'Labels disponibles ?'],
   compliance: ['Lancer un pre-audit', 'Quelles normes pour mon secteur ?'],
 };
@@ -54,7 +60,9 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
   useEffect(() => {
     if (open) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = '';
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [open]);
 
   useEffect(() => {
@@ -67,24 +75,40 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
     }
   }, [open, messages.length]);
 
-  const handleSend = useCallback(async (text?: string) => {
-    const trimmed = (text ?? input).trim();
-    if (!trimmed || loading) return;
+  const handleSend = useCallback(
+    async (text?: string) => {
+      const trimmed = (text ?? input).trim();
+      if (!trimmed || loading) return;
 
-    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'user', content: trimmed }]);
-    setInput('');
+      setMessages((prev) => [
+        ...prev,
+        { id: crypto.randomUUID(), role: 'user', content: trimmed },
+      ]);
+      setInput('');
 
-    if (inputRef.current) inputRef.current.style.height = 'auto';
+      if (inputRef.current) inputRef.current.style.height = 'auto';
 
-    const result = await ask(trimmed, { context });
-    if (result) {
-      setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: result.content }]);
-    }
-  }, [input, loading, ask, context]);
+      const result = await ask(trimmed, { context });
+      if (result) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: crypto.randomUUID(),
+            role: 'assistant',
+            content: result.content,
+          },
+        ]);
+      }
+    },
+    [input, loading, ask, context],
+  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
     },
     [handleSend],
   );
@@ -114,13 +138,15 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
 
       {/* Backdrop */}
       {open && (
-        <div className="fixed inset-0 z-50 bg-black/10" onClick={() => setOpen(false)} />
+        <div
+          className="fixed inset-0 z-50 bg-black/10"
+          onClick={() => setOpen(false)}
+        />
       )}
 
       {/* Chat panel */}
       {open && (
-        <div className="fixed bottom-0 right-0 left-0 z-50 flex max-h-[90vh] flex-col rounded-t-3xl bg-white shadow-2xl sm:bottom-6 sm:left-auto sm:right-6 sm:max-h-[600px] sm:w-[400px] sm:rounded-2xl dark:bg-gray-950">
-
+        <div className="fixed right-0 bottom-0 left-0 z-50 flex max-h-[90vh] flex-col rounded-t-3xl bg-white shadow-2xl sm:right-6 sm:bottom-6 sm:left-auto sm:max-h-[600px] sm:w-[400px] sm:rounded-2xl dark:bg-gray-950">
           {/* Header tabs */}
           <div className="flex shrink-0 items-center justify-between px-4 pt-4 pb-2">
             <div className="flex gap-1">
@@ -171,17 +197,22 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
             ) : (
               <div className="space-y-3 py-4">
                 {messages.map((msg) => (
-                  <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div
+                    key={msg.id}
+                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
                     {msg.role === 'assistant' && (
-                      <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
+                      <div className="mt-1 mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
                         <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
                       </div>
                     )}
-                    <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
-                      msg.role === 'user'
-                        ? 'bg-emerald-600 text-white'
-                        : 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
-                    }`}>
+                    <div
+                      className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
+                        msg.role === 'user'
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
+                      }`}
+                    >
                       {msg.content}
                     </div>
                   </div>
@@ -189,7 +220,7 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
 
                 {loading && (
                   <div className="flex items-start">
-                    <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
+                    <div className="mt-1 mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
                       <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
                     </div>
                     <div className="max-w-[80%] rounded-2xl bg-gray-100 px-4 py-2.5 dark:bg-gray-800">
@@ -214,11 +245,14 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
               <textarea
                 ref={inputRef}
                 value={input}
-                onChange={(e) => { setInput(e.target.value); handleTextareaInput(); }}
+                onChange={(e) => {
+                  setInput(e.target.value);
+                  handleTextareaInput();
+                }}
                 onKeyDown={handleKeyDown}
                 placeholder="Posez votre question"
                 rows={1}
-                className="min-h-[24px] max-h-[120px] min-w-0 flex-1 resize-none bg-transparent text-sm leading-6 focus:outline-none"
+                className="max-h-[120px] min-h-[24px] min-w-0 flex-1 resize-none bg-transparent text-sm leading-6 focus:outline-none"
                 disabled={loading}
               />
               <button
