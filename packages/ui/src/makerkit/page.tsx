@@ -1,8 +1,10 @@
 import * as React from 'react';
 
+import { Menu } from 'lucide-react';
+
 import { cn } from '../lib/utils';
 import { Separator } from '../shadcn/separator';
-import { SidebarTrigger } from '../shadcn/sidebar';
+import { SidebarTrigger, useSidebar } from '../shadcn/sidebar';
 import { If } from './if';
 
 export type PageLayoutStyle = 'sidebar' | 'header' | 'custom';
@@ -114,10 +116,25 @@ export function PageBody(
 
   return (
     <div className={bodyClassName}>
-      <div className="flex justify-end px-4 pb-2 lg:hidden">
-        <SidebarTrigger className="text-foreground hover:text-primary h-8 w-8 cursor-pointer" />
-      </div>
+      <MobileMenuToggle />
       {props.children}
+    </div>
+  );
+}
+
+function MobileMenuToggle() {
+  const { toggleSidebar } = useSidebar();
+
+  return (
+    <div className="px-4 pb-2 lg:hidden">
+      <button
+        type="button"
+        onClick={toggleSidebar}
+        className="text-foreground hover:text-primary h-8 w-8 cursor-pointer"
+        aria-label="Menu"
+      >
+        <Menu className="h-6 w-6" strokeWidth={1.5} />
+      </button>
     </div>
   );
 }
