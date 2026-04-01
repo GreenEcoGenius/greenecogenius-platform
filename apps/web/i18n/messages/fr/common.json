@@ -59,7 +59,7 @@
   "newVersionSubmitButton": "Recharger et mettre à jour",
   "back": "Retour",
   "routes": {
-    "home": "Accueil",
+    "home": "Dashboard",
     "account": "Compte",
     "members": "Membres",
     "billing": "Facturation",

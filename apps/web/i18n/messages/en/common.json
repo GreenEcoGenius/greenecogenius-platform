@@ -59,7 +59,7 @@
   "newVersionSubmitButton": "Reload and Update",
   "back": "Back",
   "routes": {
-    "home": "Home",
+    "home": "Dashboard",
     "account": "Account",
     "members": "Members",
     "billing": "Billing",

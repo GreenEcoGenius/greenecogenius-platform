@@ -56,7 +56,7 @@ export function HomeSidebar(props: HomeSidebarProps) {
         >
           <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} />
           <span className="group-data-[collapsible=icon]:hidden">
-            Site vitrine
+            Accueil
           </span>
         </Link>
       </SidebarFooter>
