@@ -1,10 +1,8 @@
 import * as React from 'react';
 
-import { Menu } from 'lucide-react';
-
 import { cn } from '../lib/utils';
 import { Separator } from '../shadcn/separator';
-import { SidebarContext, SidebarTrigger } from '../shadcn/sidebar';
+import { SidebarTrigger } from '../shadcn/sidebar';
 import { If } from './if';
 
 export type PageLayoutStyle = 'sidebar' | 'header' | 'custom';
@@ -114,33 +112,7 @@ export function PageBody(
     props.className,
   );
 
-  return (
-    <div className={bodyClassName}>
-      <MobileMenuToggle />
-      {props.children}
-    </div>
-  );
-}
-
-function MobileMenuToggle() {
-  const ctx = React.useContext(SidebarContext);
-
-  if (!ctx) {
-    return null;
-  }
-
-  return (
-    <div className="px-4 pb-2 lg:hidden">
-      <button
-        type="button"
-        onClick={ctx.toggleSidebar}
-        className="text-foreground hover:text-primary h-8 w-8 cursor-pointer"
-        aria-label="Menu"
-      >
-        <Menu className="h-6 w-6" strokeWidth={1.5} />
-      </button>
-    </div>
-  );
+  return <div className={bodyClassName}>{props.children}</div>;
 }
 
 export function PageNavigation(props: React.PropsWithChildren) {
