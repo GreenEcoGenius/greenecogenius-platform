@@ -172,7 +172,8 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
       {open && (
         <div
           ref={panelRef}
-          className="fixed inset-0 z-50 flex flex-col bg-white shadow-xl dark:bg-gray-950 sm:inset-auto sm:top-0 sm:right-0 sm:h-full sm:w-[400px] sm:border-l"
+          className="fixed left-0 top-0 z-50 flex w-full flex-col bg-white shadow-xl dark:bg-gray-950 sm:left-auto sm:right-0 sm:w-[400px] sm:border-l"
+          style={{ height: '100dvh' }}
           role="dialog"
           aria-label={AGENT_NAMES[section]}
         >
