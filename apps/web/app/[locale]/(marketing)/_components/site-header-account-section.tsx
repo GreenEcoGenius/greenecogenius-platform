@@ -23,11 +23,8 @@ export function SiteHeaderAccountSection({
   user: JWTUserData | null;
 }) {
   if (user) {
-    // Logged in: show only locale toggle + Dashboard link on desktop
-    // The small dropdown is removed per user request
     return (
       <div className="hidden items-center gap-x-2 md:flex">
-        <LocaleToggle />
         <Button
           nativeButton={false}
           render={<Link href={pathsConfig.app.home}>Dashboard</Link>}
