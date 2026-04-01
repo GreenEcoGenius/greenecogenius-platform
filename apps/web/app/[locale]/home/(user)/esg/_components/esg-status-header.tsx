@@ -68,7 +68,7 @@ export function EsgStatusHeader({
               render={
                 <Link href="/home/esg/wizard">
                   <Bot className="mr-2 h-4 w-4" />
-                  Completer avec l&apos;IA
+                  Completer les champs
                 </Link>
               }
               nativeButton={false}

@@ -238,7 +238,7 @@ export function ESGReportAccordion({
                               href={`/home/esg/wizard?step=${section.wizardStep}`}
                             >
                               <Bot className="mr-1 h-3 w-3" />
-                              Completer avec l&apos;IA
+                              Completer les champs
                               {section.estimatedMinutes &&
                                 ` (~${section.estimatedMinutes} min)`}
                             </Link>
