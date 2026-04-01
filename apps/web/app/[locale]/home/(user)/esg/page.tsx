@@ -12,6 +12,7 @@ import { ESGReportAccordion } from './_components/esg-report-accordion';
 import { EsgStatusHeader } from './_components/esg-status-header';
 import { FormatSelectorWrapper } from './_components/format-selector-wrapper';
 import { ReportHistoryTable } from './_components/report-history-table';
+import { SectionFooterImage } from '../_components/section-footer-image';
 import {
   MOCK_AI_INSIGHTS,
   MOCK_CSRD_INDICATORS,
@@ -76,6 +77,11 @@ async function ESGPage() {
 
         {/* Benchmark */}
         <BenchmarkCard />
+
+        <SectionFooterImage
+          src="/images/normes/reporting-esg-presentation.png"
+          alt="Reporting ESG"
+        />
       </div>
     </PageBody>
   );

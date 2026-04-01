@@ -12,6 +12,7 @@ import {
   getTotalStats,
 } from '~/lib/mock/traceability-mock-data';
 
+import { SectionFooterImage } from '../_components/section-footer-image';
 import { EcosystemBanner } from './_components/ecosystem-banner';
 import { TraceabilityActivityFeed } from './_components/traceability-activity-feed';
 import { TraceabilityEquivalences } from './_components/traceability-equivalences';
@@ -129,6 +130,11 @@ async function TraceabilityPage() {
 
         {/* Activity feed */}
         <TraceabilityActivityFeed activities={activities} />
+
+        <SectionFooterImage
+          src="/images/normes/traceability-supply-chain.png"
+          alt="Tracabilite"
+        />
       </div>
 
       {/* AI Assistant floating button */}

@@ -27,6 +27,7 @@ import { CarbonHeroMetrics } from './_components/carbon-hero-metrics';
 import { CarbonScoreCard } from './_components/carbon-score-card';
 import { CarbonTransactionsTable } from './_components/carbon-transactions-table';
 import { CertificatesList } from './_components/certificates-list';
+import { SectionFooterImage } from '../_components/section-footer-image';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('carbon');
@@ -454,6 +455,11 @@ async function CarbonPage() {
 
         {/* Section 6 - Certificates */}
         <CertificatesList certificates={certs} />
+
+        <SectionFooterImage
+          src="/images/normes/carbon-footprint-flowers.png"
+          alt="Impact Carbone"
+        />
       </div>
     </PageBody>
   );

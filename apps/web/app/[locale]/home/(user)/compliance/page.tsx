@@ -5,6 +5,7 @@ import { Trans } from '@kit/ui/trans';
 
 import { AIAssistant } from '~/components/ai/ai-assistant';
 
+import { SectionFooterImage } from '../_components/section-footer-image';
 import { ComplianceAlerts } from './_components/compliance-alerts';
 import { CompliancePillarCards } from './_components/compliance-pillar-cards';
 import { ComplianceScoreCard } from './_components/compliance-score-card';
@@ -127,6 +128,11 @@ async function CompliancePage() {
 
         {/* Regulatory watch */}
         <RegulatoryWatch />
+
+        <SectionFooterImage
+          src="/images/normes/reporting-hologram-data.png"
+          alt="Conformite"
+        />
       </div>
 
       {/* AI Assistant */}

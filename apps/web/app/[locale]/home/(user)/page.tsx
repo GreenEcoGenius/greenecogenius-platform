@@ -23,6 +23,7 @@ import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
 
 import { KpiCard, KpiCardGrid } from './_components/kpi-card';
+import { SectionFooterImage } from './_components/section-footer-image';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('marketplace');
@@ -277,6 +278,11 @@ async function UserHomePage() {
             </CardContent>
           </Card>
         )}
+
+        <SectionFooterImage
+          src="/images/normes/circular-infinity-aerial.png"
+          alt="Economie circulaire"
+        />
       </div>
     </PageBody>
   );
