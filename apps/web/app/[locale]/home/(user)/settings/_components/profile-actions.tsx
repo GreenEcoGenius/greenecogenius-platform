@@ -4,7 +4,6 @@ import { Globe, LogOut, Moon, Sun } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { useTheme } from 'next-themes';
 
-import { usePathname, useRouter } from '@kit/i18n/navigation';
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
@@ -18,11 +17,24 @@ export function ProfileActions({
   const signOut = useSignOut();
   const { theme, setTheme } = useTheme();
   const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
 
   const switchLocale = (next: string) => {
-    router.replace(pathname, { locale: next });
+    if (next === locale) return;
+
+    // Direct URL navigation to ensure full locale switch
+    const currentPath = window.location.pathname;
+
+    if (next === 'fr') {
+      // Add /fr prefix
+      if (!currentPath.startsWith('/fr')) {
+        window.location.href = `/fr${currentPath}`;
+      }
+    } else {
+      // Remove /fr prefix (en is default, no prefix)
+      if (currentPath.startsWith('/fr')) {
+        window.location.href = currentPath.replace(/^\/fr/, '') || '/';
+      }
+    }
   };
 
   return (
@@ -30,72 +42,60 @@ export function ProfileActions({
       <CardHeader>
         <CardTitle className="text-base">Preferences</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         {/* Language */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div>
+          <div className="mb-3 flex items-center gap-2">
             <Globe className="h-4 w-4 text-teal-500" strokeWidth={1.5} />
-            <div>
-              <p className="text-sm font-medium">Langue / Language</p>
-              <p className="text-muted-foreground text-xs">
-                {locale === 'fr' ? 'Francais' : 'English'}
-              </p>
-            </div>
+            <p className="text-sm font-medium">Langue / Language</p>
           </div>
-          <div className="flex gap-1">
+          <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={() => switchLocale('fr')}
-              className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+              className={`flex items-center justify-center gap-2 rounded-lg border-2 px-4 py-3 text-sm font-medium transition-all ${
                 locale === 'fr'
-                  ? 'bg-primary text-white'
-                  : 'bg-muted text-muted-foreground hover:bg-gray-200'
+                  ? 'border-primary bg-primary/5 text-primary'
+                  : 'border-transparent bg-muted text-muted-foreground hover:border-gray-300'
               }`}
             >
-              FR
+              <span className="text-lg">🇫🇷</span>
+              Francais
             </button>
             <button
               type="button"
               onClick={() => switchLocale('en')}
-              className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+              className={`flex items-center justify-center gap-2 rounded-lg border-2 px-4 py-3 text-sm font-medium transition-all ${
                 locale === 'en'
-                  ? 'bg-primary text-white'
-                  : 'bg-muted text-muted-foreground hover:bg-gray-200'
+                  ? 'border-primary bg-primary/5 text-primary'
+                  : 'border-transparent bg-muted text-muted-foreground hover:border-gray-300'
               }`}
             >
-              EN
+              <span className="text-lg">🇬🇧</span>
+              English
             </button>
           </div>
         </div>
 
         {/* Theme */}
         <If condition={enableThemeToggle}>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div>
+            <div className="mb-3 flex items-center gap-2">
               {theme === 'dark' ? (
                 <Moon className="h-4 w-4 text-slate-500" strokeWidth={1.5} />
               ) : (
                 <Sun className="h-4 w-4 text-teal-500" strokeWidth={1.5} />
               )}
-              <div>
-                <p className="text-sm font-medium">Theme</p>
-                <p className="text-muted-foreground text-xs">
-                  {theme === 'dark'
-                    ? 'Sombre'
-                    : theme === 'light'
-                      ? 'Clair'
-                      : 'Systeme'}
-                </p>
-              </div>
+              <p className="text-sm font-medium">Theme</p>
             </div>
-            <div className="flex gap-1">
+            <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
                 onClick={() => setTheme('light')}
-                className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-lg border-2 px-3 py-2.5 text-xs font-medium transition-all ${
                   theme === 'light'
-                    ? 'bg-primary text-white'
-                    : 'bg-muted text-muted-foreground hover:bg-gray-200'
+                    ? 'border-primary bg-primary/5 text-primary'
+                    : 'border-transparent bg-muted text-muted-foreground hover:border-gray-300'
                 }`}
               >
                 Clair
@@ -103,10 +103,10 @@ export function ProfileActions({
               <button
                 type="button"
                 onClick={() => setTheme('dark')}
-                className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-lg border-2 px-3 py-2.5 text-xs font-medium transition-all ${
                   theme === 'dark'
-                    ? 'bg-primary text-white'
-                    : 'bg-muted text-muted-foreground hover:bg-gray-200'
+                    ? 'border-primary bg-primary/5 text-primary'
+                    : 'border-transparent bg-muted text-muted-foreground hover:border-gray-300'
                 }`}
               >
                 Sombre
@@ -114,10 +114,10 @@ export function ProfileActions({
               <button
                 type="button"
                 onClick={() => setTheme('system')}
-                className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-lg border-2 px-3 py-2.5 text-xs font-medium transition-all ${
                   theme === 'system'
-                    ? 'bg-primary text-white'
-                    : 'bg-muted text-muted-foreground hover:bg-gray-200'
+                    ? 'border-primary bg-primary/5 text-primary'
+                    : 'border-transparent bg-muted text-muted-foreground hover:border-gray-300'
                 }`}
               >
                 Auto
