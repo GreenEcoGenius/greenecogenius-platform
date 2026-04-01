@@ -61,22 +61,32 @@ function MobileMenu() {
     <>
       <button
         type="button"
-        onClick={() => setOpen(!open)}
-        className="relative z-[70] p-1"
-        aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+        onClick={() => setOpen(true)}
+        className="p-1"
+        aria-label="Ouvrir le menu"
       >
-        {open ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+        <Menu className="h-7 w-7" />
       </button>
 
       {open && (
-        <div className="fixed inset-0 top-16 z-[60] bg-white dark:bg-gray-950">
-          <nav className="flex flex-col px-6 pt-4">
+        <div className="fixed inset-0 z-[200] bg-white dark:bg-gray-950">
+          <div className="flex h-16 items-center justify-between border-b border-gray-200 px-4">
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Fermer le menu"
+            >
+              <X className="h-7 w-7 text-gray-900 dark:text-white" />
+            </button>
+          </div>
+
+          <nav className="flex flex-col px-6 pt-2">
             {Object.values(links).map((item) => (
               <Link
                 key={item.path}
                 href={item.path}
                 onClick={() => setOpen(false)}
-                className="border-b py-4 text-base font-medium"
+                className="border-b border-gray-100 py-4 text-base font-medium text-gray-900 dark:text-white"
               >
                 <Trans i18nKey={item.label} />
               </Link>
@@ -85,7 +95,7 @@ function MobileMenu() {
             <div className="flex flex-col gap-4 pt-8">
               <button
                 onClick={toggleLocale}
-                className="text-muted-foreground self-start text-sm font-semibold uppercase"
+                className="self-start text-sm font-semibold text-emerald-600 uppercase"
               >
                 {locale === 'fr' ? 'English' : 'Francais'}
               </button>
@@ -93,7 +103,7 @@ function MobileMenu() {
               <Link
                 href={pathsConfig.auth.signIn}
                 onClick={() => setOpen(false)}
-                className="text-center text-sm font-medium"
+                className="text-center text-sm font-medium text-gray-900 dark:text-white"
               >
                 <Trans i18nKey="auth.signIn" />
               </Link>
