@@ -20,7 +20,7 @@ import { SiteNavigationItem } from './site-navigation-item';
 const links = {
   About: { label: 'marketing.about', path: '/about' },
   Solutions: { label: 'marketing.solutions', path: '/solutions' },
-  Pricing: { label: 'marketing.pricing', path: '/home/billing' },
+  Pricing: { label: 'marketing.pricing', path: '/pricing' },
   Normes: { label: 'marketing.normes', path: '/normes' },
   Contact: { label: 'marketing.contact', path: '/contact' },
 };

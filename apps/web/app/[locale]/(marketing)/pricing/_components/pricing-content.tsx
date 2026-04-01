@@ -245,7 +245,7 @@ export function PricingContent({
                 variant="outline"
                 className="mt-6 w-full"
                 render={
-                  <Link href="/auth/sign-up">
+                  <Link href="/home/billing">
                     <Trans i18nKey="pricingPage.startTrial" />
                   </Link>
                 }
@@ -302,7 +302,7 @@ export function PricingContent({
                 ))}
               </ul>
               <Button className="mt-6 w-full bg-green-600 hover:bg-green-700">
-                <Link href="/auth/sign-up" className="flex items-center gap-2">
+                <Link href="/home/billing" className="flex items-center gap-2">
                   <Trans i18nKey="pricingPage.startTrial" />
                   <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -504,7 +504,7 @@ export function PricingContent({
             variant="secondary"
             className="mt-8"
             render={
-              <Link href="/auth/sign-up">
+              <Link href="/home/billing">
                 <Trans i18nKey="pricingPage.ctaButton" />
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
