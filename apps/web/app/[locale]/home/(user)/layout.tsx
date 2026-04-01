@@ -17,7 +17,6 @@ import { personalAccountNavigationConfig } from '~/config/personal-account-navig
 
 // home imports
 import { HomeMenuNavigation } from './_components/home-menu-navigation';
-import { HomeMobileNavigation } from './_components/home-mobile-navigation';
 import { HomeSidebar } from './_components/home-sidebar';
 import { MobileSidebarToggle } from './_components/mobile-sidebar-toggle';
 import { loadUserWorkspace } from './_lib/server/load-user-workspace';
@@ -55,7 +54,7 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
           </PageNavigation>
 
           <PageMobileNavigation className={'flex items-center justify-between'}>
-            <MobileNavigation workspace={workspace} />
+            <MobileNavigation />
           </PageMobileNavigation>
 
           {children}
@@ -80,7 +79,7 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
         </PageNavigation>
 
         <PageMobileNavigation className={'flex items-center justify-between'}>
-          <MobileNavigation workspace={workspace} />
+          <MobileNavigation />
         </PageMobileNavigation>
 
         {children}
@@ -91,11 +90,7 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
   );
 }
 
-function MobileNavigation({
-  workspace,
-}: {
-  workspace: Awaited<ReturnType<typeof loadUserWorkspace>>;
-}) {
+function MobileNavigation() {
   return (
     <>
       <MobileSidebarToggle />
@@ -104,7 +99,7 @@ function MobileNavigation({
         <AppLogo className="h-10" />
       </div>
 
-      <HomeMobileNavigation workspace={workspace} />
+      <div className="w-8" />
     </>
   );
 }
