@@ -29,7 +29,7 @@ export function ProfileActions({
               {theme === 'dark' ? (
                 <Moon className="h-4 w-4 text-slate-500" strokeWidth={1.5} />
               ) : (
-                <Sun className="h-4 w-4 text-amber-500" strokeWidth={1.5} />
+                <Sun className="h-4 w-4 text-teal-500" strokeWidth={1.5} />
               )}
               <div>
                 <p className="text-sm font-medium">

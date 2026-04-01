@@ -75,7 +75,7 @@ const MOCK_LABELS = [
     score: 74,
     threshold: 80,
     status: 'in_progress',
-    color: '#F59E0B',
+    color: '#0D9488',
   },
 ];
 
@@ -134,7 +134,7 @@ function getEcosystemIcon(icon: string) {
     case 'blockchain':
       return <Shield className="h-5 w-5 text-indigo-500" />;
     case 'recycled':
-      return <LinkIcon className="h-5 w-5 text-amber-500" />;
+      return <LinkIcon className="h-5 w-5 text-teal-500" />;
     case 'esg':
       return <FileCheck className="h-5 w-5 text-blue-500" />;
     default:

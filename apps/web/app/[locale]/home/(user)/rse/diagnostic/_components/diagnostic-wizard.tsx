@@ -814,11 +814,11 @@ function ResultsStep({
   function getLevelColor(levelKey: string) {
     switch (levelKey) {
       case 'beginner':
-        return 'bg-red-500';
+        return 'bg-slate-500';
       case 'intermediate':
-        return 'bg-orange-500';
+        return 'bg-teal-500';
       case 'advanced':
-        return 'bg-yellow-500';
+        return 'bg-teal-500';
       case 'expert':
         return 'bg-green-500';
       default:

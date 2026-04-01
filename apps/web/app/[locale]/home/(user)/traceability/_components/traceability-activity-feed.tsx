@@ -17,8 +17,8 @@ import type { MockActivity } from '~/lib/mock/traceability-mock-data';
 
 const ACTIVITY_ICONS: Record<string, React.ReactNode> = {
   lot_created: <Package className="h-4 w-4 text-blue-500" />,
-  lot_sold: <Package className="h-4 w-4 text-amber-500" />,
-  lot_in_transit: <Truck className="h-4 w-4 text-orange-500" />,
+  lot_sold: <Package className="h-4 w-4 text-teal-500" />,
+  lot_in_transit: <Truck className="h-4 w-4 text-teal-500" />,
   lot_delivered: <Truck className="h-4 w-4 text-emerald-500" />,
   certificate_issued: <Award className="h-4 w-4 text-green-600" />,
   blockchain_recorded: <Blocks className="h-4 w-4 text-purple-500" />,
@@ -33,9 +33,9 @@ const SECTION_COLORS: Record<string, string> = {
   inventaire:
     'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
   transport:
-    'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',
+    'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
   suivi:
-    'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300',
+    'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
   certification:
     'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
   blockchain:

@@ -64,7 +64,7 @@ const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
     icon: <Package className="h-3 w-3" />,
   },
   in_transit: {
-    color: 'bg-yellow-100 text-yellow-800',
+    color: 'bg-teal-100 text-teal-800',
     icon: <Package className="h-3 w-3" />,
   },
   completed: {
@@ -72,11 +72,11 @@ const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
     icon: <CheckCircle className="h-3 w-3" />,
   },
   refunded: {
-    color: 'bg-red-100 text-red-800',
+    color: 'bg-slate-100 text-slate-800',
     icon: <XCircle className="h-3 w-3" />,
   },
   cancelled: {
-    color: 'bg-red-100 text-red-800',
+    color: 'bg-slate-100 text-slate-800',
     icon: <XCircle className="h-3 w-3" />,
   },
 };

@@ -35,7 +35,7 @@ const SOURCE_STYLES: Record<
   manual: {
     variant: 'outline',
     className:
-      'border-amber-300 text-amber-700 dark:border-amber-700 dark:text-amber-300',
+      'border-teal-300 text-teal-700 dark:border-teal-700 dark:text-teal-300',
   },
   blockchain: {
     variant: 'secondary',
@@ -60,8 +60,8 @@ function getStatusIcon(status: SectionStatus, pct: number) {
     return <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-500" />;
   }
   return (
-    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-amber-400">
-      <span className="text-[10px] font-bold text-amber-500">!</span>
+    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-teal-400">
+      <span className="text-[10px] font-bold text-teal-500">!</span>
     </div>
   );
 }
@@ -133,7 +133,7 @@ export function ESGReportAccordion({
                     </div>
                     <span
                       className={`min-w-[3rem] text-right text-sm font-semibold ${
-                        isComplete ? 'text-emerald-600' : 'text-amber-600'
+                        isComplete ? 'text-emerald-600' : 'text-teal-600'
                       }`}
                     >
                       {section.completionPct}%
@@ -168,7 +168,7 @@ export function ESGReportAccordion({
                               {field.complete ? (
                                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
                               ) : (
-                                <div className="h-3.5 w-3.5 rounded-full border-2 border-amber-300" />
+                                <div className="h-3.5 w-3.5 rounded-full border-2 border-teal-300" />
                               )}
                               <span
                                 className={
@@ -220,7 +220,7 @@ export function ESGReportAccordion({
                     <div className="bg-muted h-1.5 w-full max-w-md overflow-hidden rounded-full">
                       <div
                         className={`h-full rounded-full transition-all duration-500 ${
-                          isComplete ? 'bg-emerald-500' : 'bg-amber-500'
+                          isComplete ? 'bg-emerald-500' : 'bg-teal-500'
                         }`}
                         style={{ width: `${section.completionPct}%` }}
                       />

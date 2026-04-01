@@ -407,7 +407,7 @@ export function NormStatusTable() {
                           norm.status === 'compliant'
                             ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400'
                             : norm.status === 'partial'
-                              ? 'border-amber-300 bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-400'
+                              ? 'border-teal-300 bg-teal-50 text-teal-700 dark:bg-teal-950/50 dark:text-teal-400'
                               : norm.status === 'not_evaluated'
                                 ? 'border-gray-300 bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
                                 : ''

@@ -141,7 +141,7 @@ async function UserHomePage() {
                     description="4 categories manquantes dans votre bilan carbone"
                     href="/home/esg/wizard?step=3"
                     badge="Impact eleve"
-                    badgeColor="bg-red-100 text-red-700"
+                    badgeColor="bg-slate-100 text-slate-700"
                   />
                   <ActionCard
                     icon={<Recycle className="h-5 w-5 text-emerald-600" />}
@@ -157,7 +157,7 @@ async function UserHomePage() {
                     description="3 actions prioritaires identifiees par l'IA"
                     href="/home/rse/roadmap"
                     badge="+8 pts"
-                    badgeColor="bg-amber-100 text-amber-700"
+                    badgeColor="bg-teal-100 text-teal-700"
                   />
                   <ActionCard
                     icon={<Link2 className="h-5 w-5 text-indigo-600" />}
@@ -342,7 +342,7 @@ function TypeBadge({ type }: { type: string }) {
     sell: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400',
     buy: 'bg-teal-100 text-teal-700 dark:bg-teal-950/30 dark:text-teal-400',
     collect:
-      'bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400',
+      'bg-teal-100 text-teal-700 dark:bg-teal-950/30 dark:text-teal-400',
   };
   const labels: Record<string, string> = {
     sell: 'Vente',
@@ -365,7 +365,7 @@ function StatusBadge({ status }: { status: string }) {
       'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400',
     draft: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
     sold: 'bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400',
-    expired: 'bg-red-100 text-red-600 dark:bg-red-950/30 dark:text-red-400',
+    expired: 'bg-slate-100 text-slate-600 dark:bg-slate-950/30 dark:text-slate-400',
   };
   const labels: Record<string, string> = {
     active: 'Actif',

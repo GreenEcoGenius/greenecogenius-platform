@@ -31,7 +31,7 @@ const STATUS_ICONS: Record<ActionStatus, React.ReactNode> = {
     <CheckCircle2 size={16} strokeWidth={1.5} className="text-emerald-500" />
   ),
   in_progress: (
-    <Loader2 size={16} strokeWidth={1.5} className="text-amber-500" />
+    <Loader2 size={16} strokeWidth={1.5} className="text-teal-500" />
   ),
   todo: <Square size={16} strokeWidth={1.5} className="text-slate-400" />,
 };
@@ -46,9 +46,9 @@ const PILLAR_COLORS: Record<string, string> = {
 };
 
 const PRIORITY_STYLES: Record<ActionPriority, string> = {
-  urgent: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
+  urgent: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
   important:
-    'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300',
+    'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300',
   quick_win: 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300',
 };
 

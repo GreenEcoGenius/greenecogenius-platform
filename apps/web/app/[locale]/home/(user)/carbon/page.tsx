@@ -527,7 +527,7 @@ function ScopeProgressSection() {
                   ) : (
                     <Badge
                       variant="outline"
-                      className="border-amber-300 text-xs text-amber-600"
+                      className="border-teal-300 text-xs text-teal-600"
                     >
                       <Trans i18nKey="carbon:toComplete" />
                     </Badge>

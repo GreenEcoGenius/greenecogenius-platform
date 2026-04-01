@@ -24,8 +24,8 @@ export function ComplianceScoreCard({
     score >= 80
       ? 'text-emerald-600'
       : score >= 60
-        ? 'text-amber-600'
-        : 'text-red-600';
+        ? 'text-teal-600'
+        : 'text-slate-600';
 
   const ringColor =
     score >= 80
@@ -97,13 +97,13 @@ export function ComplianceScoreCard({
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 rounded-lg bg-red-50 p-3 dark:bg-red-950/30">
-                <AlertTriangle className="h-5 w-5 text-red-600" />
+              <div className="flex items-center gap-3 rounded-lg bg-slate-50 p-3 dark:bg-slate-950/30">
+                <AlertTriangle className="h-5 w-5 text-slate-600" />
                 <div>
-                  <p className="text-lg font-bold text-red-700 dark:text-red-400">
+                  <p className="text-lg font-bold text-slate-700 dark:text-slate-400">
                     {alerts}
                   </p>
-                  <p className="text-xs text-red-600 dark:text-red-400">
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     <Trans i18nKey="compliance:activeAlerts" />
                   </p>
                 </div>

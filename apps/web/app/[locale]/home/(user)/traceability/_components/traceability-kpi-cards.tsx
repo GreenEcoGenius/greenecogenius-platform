@@ -65,7 +65,7 @@ function KpiCard({
             className={`inline-flex items-center gap-0.5 text-xs font-semibold ${
               isPositive
                 ? 'text-emerald-600 dark:text-emerald-400'
-                : 'text-red-600 dark:text-red-400'
+                : 'text-slate-600 dark:text-slate-400'
             }`}
           >
             {isPositive ? (
@@ -169,7 +169,7 @@ export function TraceabilityKpiCards({
       />
 
       <KpiCard
-        icon={<Award className="h-5 w-5 text-amber-600 dark:text-amber-400" />}
+        icon={<Award className="h-5 w-5 text-teal-600 dark:text-teal-400" />}
         value={certificates.toLocaleString('fr-FR')}
         label={<Trans i18nKey="blockchain:certificatesCard" />}
         subtitle={
@@ -187,7 +187,7 @@ export function TraceabilityKpiCards({
             <Trans i18nKey="blockchain:onChain" />
           </Badge>
         }
-        accentColor="bg-amber-500"
+        accentColor="bg-teal-500"
       />
     </div>
   );

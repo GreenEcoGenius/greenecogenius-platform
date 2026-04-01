@@ -133,7 +133,7 @@ export function BenchmarkCard() {
             </div>
             <div className="bg-muted h-3 overflow-hidden rounded-full">
               <div
-                className="h-full rounded-full bg-orange-400 transition-all duration-700"
+                className="h-full rounded-full bg-teal-400 transition-all duration-700"
                 style={{ width: `${sectorPct}%` }}
               />
             </div>
@@ -142,7 +142,7 @@ export function BenchmarkCard() {
           {/* Comparison text */}
           <div className="border-t pt-3 text-center">
             <span
-              className={`text-lg font-bold ${isBelow ? 'text-emerald-600' : 'text-red-600'}`}
+              className={`text-lg font-bold ${isBelow ? 'text-emerald-600' : 'text-slate-600'}`}
             >
               {Math.abs(data.comparison_pct)}%
             </span>{' '}

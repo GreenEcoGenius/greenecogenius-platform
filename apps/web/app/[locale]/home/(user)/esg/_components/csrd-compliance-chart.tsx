@@ -11,14 +11,14 @@ import type { CsrdIndicator } from '../_lib/esg-mock-data';
 
 function getBarColor(pct: number): string {
   if (pct >= 80) return 'bg-emerald-500';
-  if (pct >= 50) return 'bg-amber-500';
-  return 'bg-red-400';
+  if (pct >= 50) return 'bg-teal-500';
+  return 'bg-slate-400';
 }
 
 function getTextColor(pct: number): string {
   if (pct >= 80) return 'text-emerald-600';
-  if (pct >= 50) return 'text-amber-600';
-  return 'text-red-500';
+  if (pct >= 50) return 'text-teal-600';
+  return 'text-slate-500';
 }
 
 function getCategoryLabel(cat: string): string {

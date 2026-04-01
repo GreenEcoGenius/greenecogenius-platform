@@ -34,22 +34,22 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 
 function getScoreColor(pct: number) {
   if (pct >= 80) return 'text-emerald-600 dark:text-emerald-400';
-  if (pct >= 60) return 'text-amber-600 dark:text-amber-400';
-  return 'text-red-600 dark:text-red-400';
+  if (pct >= 60) return 'text-teal-600 dark:text-teal-400';
+  return 'text-slate-600 dark:text-slate-400';
 }
 
 function getBarColor(pct: number) {
   if (pct >= 80) return 'bg-emerald-500';
-  if (pct >= 60) return 'bg-amber-500';
-  return 'bg-red-500';
+  if (pct >= 60) return 'bg-teal-500';
+  return 'bg-slate-500';
 }
 
 function getBgColor(pct: number) {
   if (pct >= 80)
     return 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400';
   if (pct >= 60)
-    return 'bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400';
-  return 'bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400';
+    return 'bg-teal-50 dark:bg-teal-950/30 text-teal-600 dark:text-teal-400';
+  return 'bg-slate-50 dark:bg-slate-950/30 text-slate-600 dark:text-slate-400';
 }
 
 export function CompliancePillarCards({ pillars }: CompliancePillarCardsProps) {

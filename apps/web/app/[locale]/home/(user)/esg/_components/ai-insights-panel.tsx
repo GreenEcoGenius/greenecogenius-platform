@@ -20,7 +20,7 @@ function getIcon(type: AiInsight['type']) {
     case 'strength':
       return <Trophy className="h-4 w-4 text-emerald-500" />;
     case 'warning':
-      return <TriangleAlert className="h-4 w-4 text-amber-500" />;
+      return <TriangleAlert className="h-4 w-4 text-teal-500" />;
     case 'trend':
       return <TrendingUp className="h-4 w-4 text-blue-500" />;
     case 'tip':

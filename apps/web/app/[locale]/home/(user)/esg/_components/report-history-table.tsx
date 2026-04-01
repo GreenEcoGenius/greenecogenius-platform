@@ -24,7 +24,7 @@ function StatusBadge({ status }: { status: 'draft' | 'finalized' }) {
   return (
     <Badge
       variant="outline"
-      className="border-amber-200 bg-amber-50 text-[10px] text-amber-700 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-300"
+      className="border-teal-200 bg-teal-50 text-[10px] text-teal-700 dark:border-teal-800 dark:bg-teal-950/30 dark:text-teal-300"
     >
       Brouillon
     </Badge>

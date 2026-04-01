@@ -47,7 +47,7 @@ export function ComplianceAlerts() {
     <Card>
       <CardContent className="p-6">
         <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
-          <ShieldAlert className="h-5 w-5 text-red-500" />
+          <ShieldAlert className="h-5 w-5 text-slate-500" />
           <Trans i18nKey="compliance:alertsTitle" />
           <Badge variant="destructive" className="ml-1">
             {MOCK_ALERTS.length}
@@ -60,8 +60,8 @@ export function ComplianceAlerts() {
               key={alert.id}
               className={`rounded-lg border-l-4 p-4 ${
                 alert.urgency === 'urgent'
-                  ? 'border-l-red-500 bg-red-50 dark:bg-red-950/20'
-                  : 'border-l-amber-500 bg-amber-50 dark:bg-amber-950/20'
+                  ? 'border-l-red-500 bg-slate-50 dark:bg-slate-950/20'
+                  : 'border-l-amber-500 bg-teal-50 dark:bg-teal-950/20'
               }`}
             >
               <div className="flex items-start justify-between gap-3">
@@ -70,8 +70,8 @@ export function ComplianceAlerts() {
                     <AlertTriangle
                       className={`h-4 w-4 ${
                         alert.urgency === 'urgent'
-                          ? 'text-red-600'
-                          : 'text-amber-600'
+                          ? 'text-slate-600'
+                          : 'text-teal-600'
                       }`}
                     />
                     <span className="font-semibold">{alert.title}</span>
@@ -81,7 +81,7 @@ export function ComplianceAlerts() {
                       }
                       className={
                         alert.urgency === 'warning'
-                          ? 'border-amber-300 bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-400'
+                          ? 'border-teal-300 bg-teal-100 text-teal-700 dark:bg-teal-950/50 dark:text-teal-400'
                           : ''
                       }
                     >
@@ -96,8 +96,8 @@ export function ComplianceAlerts() {
                   <p
                     className={`text-xs font-medium ${
                       alert.urgency === 'urgent'
-                        ? 'text-red-600 dark:text-red-400'
-                        : 'text-amber-600 dark:text-amber-400'
+                        ? 'text-slate-600 dark:text-slate-400'
+                        : 'text-teal-600 dark:text-teal-400'
                     }`}
                   >
                     {alert.risk}

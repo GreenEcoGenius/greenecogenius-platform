@@ -897,8 +897,8 @@ function StepSummary({
           label="Scope 1"
           value={scope1}
           max={maxScope}
-          color="bg-orange-500"
-          textColor="text-orange-600"
+          color="bg-teal-500"
+          textColor="text-teal-600"
         />
         <ScopeSummaryBar
           label="Scope 2"
