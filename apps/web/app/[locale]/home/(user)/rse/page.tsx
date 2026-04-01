@@ -40,12 +40,12 @@ const MOCK_PILLARS = [
     name: 'governance',
     score: 68,
     norm: 'ISO 26000 \u00a76',
-    color: '#6366F1',
+    color: '#0D9488',
   },
-  { name: 'environment', score: 89, norm: 'ISO 14001', color: '#10B981' },
-  { name: 'social', score: 52, norm: 'SA8000', color: '#F59E0B' },
-  { name: 'ethics', score: 76, norm: 'ISO 37001', color: '#8B5CF6' },
-  { name: 'stakeholders', score: 48, norm: 'AA1000', color: '#EC4899' },
+  { name: 'environment', score: 89, norm: 'ISO 14001', color: '#059669' },
+  { name: 'social', score: 52, norm: 'SA8000', color: '#D97706' },
+  { name: 'ethics', score: 76, norm: 'ISO 37001', color: '#16A34A' },
+  { name: 'stakeholders', score: 48, norm: 'AA1000', color: '#0F766E' },
 ];
 
 const MOCK_LABELS = [

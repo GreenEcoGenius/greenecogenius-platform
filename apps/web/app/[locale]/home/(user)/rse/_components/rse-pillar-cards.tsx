@@ -19,11 +19,6 @@ export function RSEPillarCards({ pillars }: RSEPillarCardsProps) {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
       {pillars.map((pillar) => (
         <Card key={pillar.name} className="relative overflow-hidden">
-          {/* Top color accent */}
-          <div
-            className="h-1.5 w-full"
-            style={{ backgroundColor: pillar.color }}
-          />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">
               <Trans i18nKey={`rse:${pillar.name}`} />

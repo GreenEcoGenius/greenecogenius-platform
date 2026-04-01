@@ -21,7 +21,6 @@ import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
-import { SidebarTrigger } from '@kit/ui/sidebar';
 
 import { KpiCard, KpiCardGrid } from './_components/kpi-card';
 
@@ -76,11 +75,6 @@ async function UserHomePage() {
   return (
     <PageBody>
       <div className="space-y-8">
-        {/* Mobile sidebar toggle */}
-        <div className="lg:hidden">
-          <SidebarTrigger className="text-foreground hover:text-primary h-8 w-8 cursor-pointer" />
-        </div>
-
         {/* 3 KPI Cards */}
         <KpiCardGrid>
           <KpiCard

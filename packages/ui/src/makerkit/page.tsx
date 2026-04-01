@@ -107,12 +107,19 @@ export function PageBody(
     className?: string;
   }>,
 ) {
-  const className = cn(
+  const bodyClassName = cn(
     'flex min-w-0 flex-1 flex-col pt-4 pb-20 lg:px-4 lg:pt-6 lg:pb-4',
     props.className,
   );
 
-  return <div className={className}>{props.children}</div>;
+  return (
+    <div className={bodyClassName}>
+      <div className="px-4 pb-2 lg:hidden">
+        <SidebarTrigger className="text-foreground hover:text-primary h-8 w-8 cursor-pointer" />
+      </div>
+      {props.children}
+    </div>
+  );
 }
 
 export function PageNavigation(props: React.PropsWithChildren) {
