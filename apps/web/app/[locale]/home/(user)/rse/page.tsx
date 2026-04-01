@@ -43,7 +43,7 @@ const MOCK_PILLARS = [
     color: '#0D9488',
   },
   { name: 'environment', score: 89, norm: 'ISO 14001', color: '#059669' },
-  { name: 'social', score: 52, norm: 'SA8000', color: '#D97706' },
+  { name: 'social', score: 52, norm: 'SA8000', color: '#94A3B8' },
   { name: 'ethics', score: 76, norm: 'ISO 37001', color: '#16A34A' },
   { name: 'stakeholders', score: 48, norm: 'AA1000', color: '#0F766E' },
 ];
@@ -132,7 +132,7 @@ function getEcosystemIcon(icon: string) {
     case 'carbon':
       return <Recycle className="h-5 w-5 text-green-500" />;
     case 'blockchain':
-      return <Shield className="h-5 w-5 text-indigo-500" />;
+      return <Shield className="h-5 w-5 text-teal-500" />;
     case 'recycled':
       return <LinkIcon className="h-5 w-5 text-teal-500" />;
     case 'esg':
@@ -205,7 +205,7 @@ async function RSEPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
-              <Database className="h-5 w-5 text-indigo-500" />
+              <Database className="h-5 w-5 text-teal-500" />
               <Trans i18nKey="rse:ecosystemTitle" />
             </CardTitle>
           </CardHeader>

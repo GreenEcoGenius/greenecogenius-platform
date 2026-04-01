@@ -76,12 +76,12 @@ export function EsgKpiCards({ data }: { data: EsgKpiData }) {
         iconBgClass="bg-blue-50 dark:bg-blue-950/30"
       />
       <KpiCard
-        icon={<LinkIcon className="h-5 w-5 text-indigo-600" />}
+        icon={<LinkIcon className="h-5 w-5 text-teal-600" />}
         label="Preuves blockchain"
         value={`${data.blockchainProofs} hash`}
         sub="Verifies on-chain"
         href="https://polygonscan.com"
-        iconBgClass="bg-indigo-50 dark:bg-indigo-950/30"
+        iconBgClass="bg-teal-50 dark:bg-teal-950/30"
       />
     </div>
   );

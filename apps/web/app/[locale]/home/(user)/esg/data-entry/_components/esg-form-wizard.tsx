@@ -911,8 +911,8 @@ function StepSummary({
           label="Scope 3"
           value={scope3}
           max={maxScope}
-          color="bg-purple-500"
-          textColor="text-purple-600"
+          color="bg-teal-500"
+          textColor="text-teal-600"
         />
       </div>
 

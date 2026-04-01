@@ -40,7 +40,7 @@ const SOURCE_STYLES: Record<
   blockchain: {
     variant: 'secondary',
     className:
-      'bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-300 dark:border-indigo-800',
+      'bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-950/40 dark:text-teal-300 dark:border-teal-800',
   },
 };
 
@@ -108,7 +108,7 @@ export function ESGReportAccordion({
                     {section.id === 'methodology' && (
                       <Badge
                         variant="outline"
-                        className="border-purple-300 text-[10px] text-purple-600"
+                        className="border-teal-300 text-[10px] text-teal-600"
                       >
                         <Sparkles className="mr-1 h-3 w-3" />
                         Auto

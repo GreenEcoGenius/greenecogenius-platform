@@ -109,7 +109,7 @@ export function StripeConnectSetup({
   // Onboarding incomplete
   if (!connectedAccount.onboardingComplete) {
     return (
-      <Card className="border-yellow-200 bg-teal-50 dark:border-yellow-900 dark:bg-teal-950">
+      <Card className="border-teal-200 bg-teal-50 dark:border-teal-900 dark:bg-teal-950">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <ShieldAlert className="h-5 w-5 text-teal-600" />

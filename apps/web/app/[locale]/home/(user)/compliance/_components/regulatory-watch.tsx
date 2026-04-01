@@ -71,7 +71,7 @@ const IMPACT_STYLES: Record<
   },
   strategic: {
     className:
-      'bg-purple-100 text-purple-700 dark:bg-purple-950/50 dark:text-purple-400',
+      'bg-teal-100 text-teal-700 dark:bg-teal-950/50 dark:text-teal-400',
     i18nKey: 'compliance:impactStrategic',
   },
 };

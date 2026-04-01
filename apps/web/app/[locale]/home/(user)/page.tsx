@@ -160,12 +160,12 @@ async function UserHomePage() {
                     badgeColor="bg-teal-100 text-teal-700"
                   />
                   <ActionCard
-                    icon={<Link2 className="h-5 w-5 text-indigo-600" />}
+                    icon={<Link2 className="h-5 w-5 text-teal-600" />}
                     title="Emettre des certificats"
                     description="5 lots prets pour la certification blockchain"
                     href="/home/traceability"
                     badge="5 lots"
-                    badgeColor="bg-indigo-100 text-indigo-700"
+                    badgeColor="bg-teal-100 text-teal-700"
                   />
                 </div>
               </CardContent>

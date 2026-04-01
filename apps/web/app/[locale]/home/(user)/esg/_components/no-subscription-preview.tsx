@@ -140,7 +140,7 @@ export function NoSubscriptionPreview() {
                 <Lightbulb className="h-4 w-4" />
                 IA Recommendations
               </div>
-              <div className="flex items-center gap-2 rounded-full bg-purple-50 px-4 py-2 text-sm text-purple-700 dark:bg-purple-950/30 dark:text-purple-300">
+              <div className="flex items-center gap-2 rounded-full bg-teal-50 px-4 py-2 text-sm text-teal-700 dark:bg-teal-950/30 dark:text-teal-300">
                 <Shield className="h-4 w-4" />
                 Blockchain
               </div>

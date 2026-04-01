@@ -322,7 +322,7 @@ async function CarbonPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-purple-200 dark:border-purple-800">
+          <Card className="border-teal-200 dark:border-teal-800">
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
                 <div className="rounded-lg bg-green-50 p-2 dark:bg-green-950/30">
@@ -344,7 +344,7 @@ async function CarbonPage() {
                     </p>
                     <Badge
                       variant="outline"
-                      className="border-purple-300 text-[10px] text-green-600"
+                      className="border-teal-300 text-[10px] text-green-600"
                     >
                       73% <Trans i18nKey="carbon:scope3Auto" />
                     </Badge>

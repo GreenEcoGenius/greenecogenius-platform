@@ -14,7 +14,7 @@ const STATUS_BADGE_STYLES: Record<string, string> = {
   created: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
   qualified: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
   listed:
-    'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',
+    'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
   sold: 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
   in_transit:
     'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',

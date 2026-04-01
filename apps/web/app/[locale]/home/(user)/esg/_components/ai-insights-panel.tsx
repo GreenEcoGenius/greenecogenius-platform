@@ -24,7 +24,7 @@ function getIcon(type: AiInsight['type']) {
     case 'trend':
       return <TrendingUp className="h-4 w-4 text-blue-500" />;
     case 'tip':
-      return <Lightbulb className="h-4 w-4 text-purple-500" />;
+      return <Lightbulb className="h-4 w-4 text-teal-500" />;
   }
 }
 

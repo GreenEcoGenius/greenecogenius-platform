@@ -54,7 +54,7 @@ export function EcosystemBanner({
       value: blockchainHashes,
       labelKey: 'blockchain:ecosystemBlockchain' as const,
       href: '/home/traceability',
-      color: 'text-purple-700 dark:text-purple-400',
+      color: 'text-teal-700 dark:text-teal-400',
     },
   ];
 
