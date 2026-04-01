@@ -430,56 +430,50 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ───── FAQ ───── */}
-      <section className="py-20 sm:py-32">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* ───── FAQ (compact) ───── */}
+      <section className="py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <div className="mx-auto max-w-2xl lg:mx-0">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                {t('faq')}
-              </h2>
-              <p className="text-muted-foreground mt-4 text-lg">
-                {t('contactFaq')}
-              </p>
-            </div>
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+              {t('faq')}
+            </h2>
           </AnimateOnScroll>
 
-          <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
-            {(
-              [
+          <AnimateOnScroll animation="fade-up" delay={100}>
+            <div className="mt-8 divide-y rounded-2xl border">
+              {(
                 [
                   ['faq1Question', 'faq1Answer'],
                   ['faq2Question', 'faq2Answer'],
                   ['faq3Question', 'faq3Answer'],
-                ],
-                [
                   ['faq4Question', 'faq4Answer'],
-                  ['faq5Question', 'faq5Answer'],
-                  ['faq6Question', 'faq6Answer'],
-                ],
-                [
-                  ['faq7Question', 'faq7Answer'],
-                  ['faq8Question', 'faq8Answer'],
-                  ['faq9Question', 'faq9Answer'],
-                ],
-              ] as [string, string][][]
-            ).map((col, ci) => (
-              <AnimateOnScroll key={ci} animation="fade-up" delay={ci * 150}>
-                <ul role="list" className="flex flex-col gap-y-8">
-                  {col.map(([q, a]) => (
-                    <li key={q}>
-                      <h3 className="text-lg leading-7 font-semibold">
-                        {t(q)}
-                      </h3>
-                      <p className="text-muted-foreground mt-4 text-sm">
-                        {t(a)}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </AnimateOnScroll>
-            ))}
-          </div>
+                ] as [string, string][]
+              ).map(([q, a]) => (
+                <details key={q} className="group">
+                  <summary className="flex cursor-pointer items-center justify-between px-5 py-4 text-sm font-medium">
+                    {t(q)}
+                    <span className="text-muted-foreground ml-4 shrink-0 transition-transform group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="text-muted-foreground px-5 pb-4 text-sm">
+                    {t(a)}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </AnimateOnScroll>
+
+          <AnimateOnScroll animation="fade-up" delay={200}>
+            <div className="mt-6 text-center">
+              <Link
+                href="/faq"
+                className="text-primary text-sm font-medium hover:underline"
+              >
+                Voir toutes les questions →
+              </Link>
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
     </div>

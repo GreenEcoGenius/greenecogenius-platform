@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import Link from 'next/link';
 
@@ -47,15 +48,145 @@ export function SiteNavigation() {
 
 function MobileMenu() {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
 
   const toggleLocale = () => {
     const next = locale === 'fr' ? 'en' : 'fr';
     router.replace(pathname, { locale: next });
     setOpen(false);
   };
+
+  const menuContent = open ? (
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        backgroundColor: '#ffffff',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: 64,
+          borderBottom: '1px solid #e5e7eb',
+          padding: '0 16px',
+          backgroundColor: '#ffffff',
+        }}
+      >
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          aria-label="Fermer"
+        >
+          <X className="h-7 w-7 text-gray-900" />
+        </button>
+      </div>
+
+      <nav
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '8px 24px',
+          backgroundColor: '#ffffff',
+        }}
+      >
+        {Object.values(links).map((item) => (
+          <Link
+            key={item.path}
+            href={item.path}
+            onClick={() => setOpen(false)}
+            style={{
+              padding: '16px 0',
+              borderBottom: '1px solid #f3f4f6',
+              fontSize: 16,
+              fontWeight: 500,
+              color: '#111827',
+              textDecoration: 'none',
+            }}
+          >
+            <Trans i18nKey={item.label} />
+          </Link>
+        ))}
+
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 16,
+            paddingTop: 32,
+          }}
+        >
+          <button
+            onClick={toggleLocale}
+            style={{
+              alignSelf: 'flex-start',
+              fontSize: 14,
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              color: '#059669',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            {locale === 'fr' ? 'English' : 'Francais'}
+          </button>
+
+          <Link
+            href={pathsConfig.auth.signIn}
+            onClick={() => setOpen(false)}
+            style={{
+              textAlign: 'center',
+              fontSize: 14,
+              fontWeight: 500,
+              color: '#111827',
+              textDecoration: 'none',
+            }}
+          >
+            <Trans i18nKey="auth.signIn" />
+          </Link>
+
+          <Link
+            href={pathsConfig.auth.signUp}
+            onClick={() => setOpen(false)}
+            style={{
+              backgroundColor: '#059669',
+              color: '#ffffff',
+              borderRadius: 8,
+              padding: '12px 16px',
+              textAlign: 'center',
+              fontSize: 14,
+              fontWeight: 500,
+              textDecoration: 'none',
+            }}
+          >
+            <Trans i18nKey="auth.signUp" />
+          </Link>
+        </div>
+      </nav>
+    </div>
+  ) : null;
 
   return (
     <>
@@ -68,57 +199,7 @@ function MobileMenu() {
         <Menu className="h-7 w-7" />
       </button>
 
-      {open && (
-        <div className="fixed inset-0 z-[200] bg-white dark:bg-gray-950">
-          <div className="flex h-16 items-center justify-between border-b border-gray-200 px-4">
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Fermer le menu"
-            >
-              <X className="h-7 w-7 text-gray-900 dark:text-white" />
-            </button>
-          </div>
-
-          <nav className="flex flex-col px-6 pt-2">
-            {Object.values(links).map((item) => (
-              <Link
-                key={item.path}
-                href={item.path}
-                onClick={() => setOpen(false)}
-                className="border-b border-gray-100 py-4 text-base font-medium text-gray-900 dark:text-white"
-              >
-                <Trans i18nKey={item.label} />
-              </Link>
-            ))}
-
-            <div className="flex flex-col gap-4 pt-8">
-              <button
-                onClick={toggleLocale}
-                className="self-start text-sm font-semibold text-emerald-600 uppercase"
-              >
-                {locale === 'fr' ? 'English' : 'Francais'}
-              </button>
-
-              <Link
-                href={pathsConfig.auth.signIn}
-                onClick={() => setOpen(false)}
-                className="text-center text-sm font-medium text-gray-900 dark:text-white"
-              >
-                <Trans i18nKey="auth.signIn" />
-              </Link>
-
-              <Link
-                href={pathsConfig.auth.signUp}
-                onClick={() => setOpen(false)}
-                className="bg-primary text-primary-foreground rounded-lg px-4 py-3 text-center text-sm font-medium"
-              >
-                <Trans i18nKey="auth.signUp" />
-              </Link>
-            </div>
-          </nav>
-        </div>
-      )}
+      {mounted && menuContent && createPortal(menuContent, document.body)}
     </>
   );
 }
