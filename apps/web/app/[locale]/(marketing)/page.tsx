@@ -44,7 +44,7 @@ export default async function Home() {
         <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
           {/* Background image */}
           <Image
-            src="/images/hero-aerial.png"
+            src="/images/hero-circular-economy.png"
             alt=""
             fill
             className="object-cover object-center"
