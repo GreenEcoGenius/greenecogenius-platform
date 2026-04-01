@@ -32,10 +32,8 @@ const SECTION_COLORS: Record<string, string> = {
     'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
   inventaire:
     'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  transport:
-    'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
-  suivi:
-    'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
+  transport: 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
+  suivi: 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
   certification:
     'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
   blockchain:

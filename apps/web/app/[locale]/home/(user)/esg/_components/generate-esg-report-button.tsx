@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { FileText, Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@kit/ui/button';
 
@@ -11,6 +12,7 @@ export function GenerateEsgReportButton({
 }: {
   format?: 'ghg_protocol' | 'csrd' | 'gri';
 }) {
+  const t = useTranslations('esg');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
@@ -71,12 +73,12 @@ export function GenerateEsgReportButton({
         <FileText className="mr-1.5 h-4 w-4" />
       )}
       {status === 'loading'
-        ? 'Generation en cours...'
+        ? t('generatingReport')
         : status === 'success'
-          ? 'Rapport telecharge !'
+          ? t('reportDownloaded')
           : status === 'error'
-            ? 'Erreur, reessayez'
-            : 'Generer le rapport PDF'}
+            ? t('errorRetry')
+            : t('generateReportPdf')}
     </Button>
   );
 }

@@ -2,6 +2,29 @@ import 'server-only';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
+const PDF_SERVICE_LABELS = {
+  en: {
+    company: 'Organization',
+    date: 'Date',
+    confidential: 'CONFIDENTIAL',
+    footerEntity: 'GreenEcoGenius OU -- greenecogenius.tech',
+    footerSlogan: 'Building Today to Preserve Tomorrow.',
+    footerGenerated:
+      'AI-generated document -- Blockchain data verified on-chain',
+  },
+  fr: {
+    company: 'Entreprise',
+    date: 'Date',
+    confidential: 'CONFIDENTIEL',
+    footerEntity: 'GreenEcoGenius OU -- greenecogenius.tech',
+    footerSlogan: "Batir Aujourd'hui Pour Preserver Demain.",
+    footerGenerated:
+      'Document genere par IA -- Les donnees blockchain sont verifiees on-chain',
+  },
+} as const;
+
+type PdfLocale = keyof typeof PDF_SERVICE_LABELS;
+
 const COLORS = {
   primary: [5, 150, 105] as [number, number, number],
   black: [17, 24, 39] as [number, number, number],
@@ -49,6 +72,7 @@ class GEGPDFService {
       confidential?: boolean;
       score?: string;
       accentColor?: [number, number, number];
+      locale?: string;
     },
   ) {
     const {
@@ -59,7 +83,11 @@ class GEGPDFService {
       confidential,
       score,
       accentColor,
+      locale,
     } = options;
+    const labels =
+      PDF_SERVICE_LABELS[(locale ?? 'fr') as PdfLocale] ??
+      PDF_SERVICE_LABELS.fr;
     const pw = this.pageWidth;
     const ph = this.pageHeight;
     const color = accentColor ?? COLORS.primary;
@@ -112,24 +140,26 @@ class GEGPDFService {
     doc.setFontSize(FONTS.body);
     doc.setTextColor(...COLORS.gray);
     doc.setFont('helvetica', 'normal');
-    doc.text(`Entreprise : ${organization}`, pw / 2, bottomY, {
+    doc.text(`${labels.company} : ${organization}`, pw / 2, bottomY, {
       align: 'center',
     });
-    doc.text(`Date : ${date}`, pw / 2, bottomY + 8, { align: 'center' });
+    doc.text(`${labels.date} : ${date}`, pw / 2, bottomY + 8, {
+      align: 'center',
+    });
 
     if (confidential) {
       doc.setFontSize(FONTS.small);
       doc.setTextColor(...COLORS.red);
-      doc.text('CONFIDENTIEL', pw / 2, bottomY + 20, { align: 'center' });
+      doc.text(labels.confidential, pw / 2, bottomY + 20, { align: 'center' });
     }
 
     // Footer
     doc.setFontSize(FONTS.tiny);
     doc.setTextColor(...COLORS.gray);
-    doc.text('GreenEcoGenius OU -- greenecogenius.tech', pw / 2, ph - 15, {
+    doc.text(labels.footerEntity, pw / 2, ph - 15, {
       align: 'center',
     });
-    doc.text("Batir Aujourd'hui Pour Preserver Demain.", pw / 2, ph - 10, {
+    doc.text(labels.footerSlogan, pw / 2, ph - 10, {
       align: 'center',
     });
 
@@ -161,7 +191,15 @@ class GEGPDFService {
     return 22;
   }
 
-  addFooter(doc: jsPDF, pageNumber: number, totalPages?: number) {
+  addFooter(
+    doc: jsPDF,
+    pageNumber: number,
+    totalPages?: number,
+    locale?: string,
+  ) {
+    const labels =
+      PDF_SERVICE_LABELS[(locale ?? 'fr') as PdfLocale] ??
+      PDF_SERVICE_LABELS.fr;
     const pw = this.pageWidth;
     const ph = this.pageHeight;
 
@@ -171,7 +209,7 @@ class GEGPDFService {
 
     doc.setFontSize(FONTS.tiny);
     doc.setTextColor(...COLORS.gray);
-    doc.text('GreenEcoGenius OU -- greenecogenius.tech', 15, ph - 12);
+    doc.text(labels.footerEntity, 15, ph - 12);
 
     const pageText = totalPages
       ? `${pageNumber}/${totalPages}`
@@ -179,11 +217,7 @@ class GEGPDFService {
     doc.text(pageText, pw - 15, ph - 12, { align: 'right' });
 
     doc.setFontSize(6);
-    doc.text(
-      'Document genere par IA -- Les donnees blockchain sont verifiees on-chain',
-      15,
-      ph - 7,
-    );
+    doc.text(labels.footerGenerated, 15, ph - 7);
   }
 
   addTable(
@@ -334,3 +368,4 @@ class GEGPDFService {
 
 export const pdfService = new GEGPDFService();
 export { COLORS, FONTS };
+export type { PdfLocale };

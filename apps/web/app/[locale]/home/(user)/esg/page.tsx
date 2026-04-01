@@ -4,6 +4,7 @@ import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { PageBody } from '@kit/ui/page';
 
+import { SectionFooterImage } from '../_components/section-footer-image';
 import { AiInsightsPanel } from './_components/ai-insights-panel';
 import { BenchmarkCard } from './_components/benchmark-card';
 import { CsrdComplianceChart } from './_components/csrd-compliance-chart';
@@ -12,7 +13,6 @@ import { ESGReportAccordion } from './_components/esg-report-accordion';
 import { EsgStatusHeader } from './_components/esg-status-header';
 import { FormatSelectorWrapper } from './_components/format-selector-wrapper';
 import { ReportHistoryTable } from './_components/report-history-table';
-import { SectionFooterImage } from '../_components/section-footer-image';
 import {
   MOCK_AI_INSIGHTS,
   MOCK_CSRD_INDICATORS,

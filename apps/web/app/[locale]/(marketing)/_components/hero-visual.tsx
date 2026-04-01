@@ -3,13 +3,14 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { BarChart3, Globe, Leaf, Recycle, Shield, Zap } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { SERVICES, ServiceOverlay } from './service-overlay';
 
-const orbitNodes = [
+const orbitNodesDef = [
   {
     icon: Recycle,
-    label: 'Recycler',
+    labelKey: 'orbitRecycler',
     color: '#3BB54A',
     angle: 0,
     speed: 1.8,
@@ -17,7 +18,7 @@ const orbitNodes = [
   },
   {
     icon: Shield,
-    label: 'Tracer',
+    labelKey: 'orbitTracer',
     color: '#8DC63F',
     angle: 60,
     speed: 1.4,
@@ -25,7 +26,7 @@ const orbitNodes = [
   },
   {
     icon: BarChart3,
-    label: 'Mesurer',
+    labelKey: 'orbitMesurer',
     color: '#87CEEB',
     angle: 120,
     speed: 2.0,
@@ -33,7 +34,7 @@ const orbitNodes = [
   },
   {
     icon: Leaf,
-    label: 'Réduire',
+    labelKey: 'orbitReduire',
     color: '#1B9E77',
     angle: 180,
     speed: 1.6,
@@ -41,7 +42,7 @@ const orbitNodes = [
   },
   {
     icon: Zap,
-    label: 'Optimiser',
+    labelKey: 'orbitOptimiser',
     color: '#F4A261',
     angle: 240,
     speed: 1.3,
@@ -49,7 +50,7 @@ const orbitNodes = [
   },
   {
     icon: Globe,
-    label: 'Connecter',
+    labelKey: 'orbitConnecter',
     color: '#87CEEB',
     angle: 300,
     speed: 1.7,
@@ -71,8 +72,10 @@ function dirFromAngle(angleDeg: number) {
 }
 
 export function HeroVisual() {
+  const t = useTranslations('marketing');
   const containerRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const orbitNodes = orbitNodesDef.map((n) => ({ ...n, label: t(n.labelKey) }));
   const [activeService, setActiveService] = useState<string | null>(null);
 
   useEffect(() => {

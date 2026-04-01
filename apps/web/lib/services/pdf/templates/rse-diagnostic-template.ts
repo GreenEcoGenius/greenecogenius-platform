@@ -24,25 +24,84 @@ export interface RSEDiagnosticData {
   }>;
 }
 
-export function generateRSEDiagnosticPDF(data: RSEDiagnosticData): ArrayBuffer {
+const LABELS = {
+  en: {
+    coverTitle: 'CSR DIAGNOSTIC & LABELS',
+    coverSubtitle: 'Corporate social responsibility assessment',
+    headerTitle: 'CSR Diagnostic & Labels',
+    globalAndPillars: 'Global score and CSR pillars',
+    globalScoreLabel: 'Global CSR Score',
+    strengths: 'Strengths',
+    improvements: 'Areas for improvement',
+    labelEligibility: 'Label eligibility',
+    thLabel: 'Label',
+    thCurrentScore: 'Current score',
+    thRequiredThreshold: 'Required threshold',
+    thStatus: 'Status',
+    eligible: 'Eligible',
+    notEligible: 'Not eligible',
+    roadmap: 'CSR Roadmap',
+    thHash: '#',
+    thAction: 'Action',
+    thPriority: 'Priority',
+    thDeadline: 'Deadline',
+  },
+  fr: {
+    coverTitle: 'DIAGNOSTIC RSE & LABELS',
+    coverSubtitle: 'Evaluation de la responsabilite societale',
+    headerTitle: 'Diagnostic RSE & Labels',
+    globalAndPillars: 'Score global et piliers RSE',
+    globalScoreLabel: 'Score global RSE',
+    strengths: 'Points forts',
+    improvements: "Axes d'amelioration",
+    labelEligibility: 'Eligibilite aux labels',
+    thLabel: 'Label',
+    thCurrentScore: 'Score actuel',
+    thRequiredThreshold: 'Seuil requis',
+    thStatus: 'Statut',
+    eligible: 'Eligible',
+    notEligible: 'Non eligible',
+    roadmap: 'Feuille de route RSE',
+    thHash: '#',
+    thAction: 'Action',
+    thPriority: 'Priorite',
+    thDeadline: 'Echeance',
+  },
+} as const;
+
+type Locale = keyof typeof LABELS;
+
+export function generateRSEDiagnosticPDF(
+  data: RSEDiagnosticData,
+  locale: string = 'fr',
+): ArrayBuffer {
+  const labels =
+    LABELS[(locale as Locale) in LABELS ? (locale as Locale) : 'fr'];
   const doc = pdfService.createDocument();
-  const headerTitle = 'Diagnostic RSE & Labels';
+  const headerTitle = labels.headerTitle;
 
   // Cover page
   pdfService.addCoverPage(doc, {
-    title: 'DIAGNOSTIC RSE & LABELS',
-    subtitle: 'Evaluation de la responsabilite societale',
+    title: labels.coverTitle,
+    subtitle: labels.coverSubtitle,
     organization: data.companyName,
     date: data.date,
     score: `${data.globalScore}/100`,
+    locale,
   });
 
   // Page 2: Score overview
   let y = pdfService.addNewPageWithHeader(doc, headerTitle);
-  y = pdfService.addSectionTitle(doc, 'Score global et piliers RSE', y);
+  y = pdfService.addSectionTitle(doc, labels.globalAndPillars, y);
 
   // Global score gauge
-  pdfService.addScoreGauge(doc, data.globalScore, 15, y, 'Score global RSE');
+  pdfService.addScoreGauge(
+    doc,
+    data.globalScore,
+    15,
+    y,
+    labels.globalScoreLabel,
+  );
   y += 18;
 
   // Pillar scores
@@ -59,11 +118,11 @@ export function generateRSEDiagnosticPDF(data: RSEDiagnosticData): ArrayBuffer {
     }
   }
 
-  pdfService.addFooter(doc, 2);
+  pdfService.addFooter(doc, 2, undefined, locale);
 
   // Page 3: Strengths & improvements
   y = pdfService.addNewPageWithHeader(doc, headerTitle);
-  y = pdfService.addSectionTitle(doc, 'Points forts', y);
+  y = pdfService.addSectionTitle(doc, labels.strengths, y);
 
   for (const strength of data.strengths) {
     y = pdfService.checkPageBreak(doc, y, 8, headerTitle);
@@ -79,7 +138,7 @@ export function generateRSEDiagnosticPDF(data: RSEDiagnosticData): ArrayBuffer {
   }
 
   y += 5;
-  y = pdfService.addSectionTitle(doc, "Axes d'amelioration", y);
+  y = pdfService.addSectionTitle(doc, labels.improvements, y);
 
   for (const improvement of data.improvements) {
     y = pdfService.checkPageBreak(doc, y, 8, headerTitle);
@@ -94,23 +153,28 @@ export function generateRSEDiagnosticPDF(data: RSEDiagnosticData): ArrayBuffer {
     y += lines.length * 5 + 3;
   }
 
-  pdfService.addFooter(doc, 3);
+  pdfService.addFooter(doc, 3, undefined, locale);
 
   // Page 4: Label eligibility
   y = pdfService.addNewPageWithHeader(doc, headerTitle);
-  y = pdfService.addSectionTitle(doc, 'Eligibilite aux labels', y);
+  y = pdfService.addSectionTitle(doc, labels.labelEligibility, y);
 
   const labelRows = data.labelEligibility.map((l) => [
     l.name,
     `${l.score}/100`,
     `${l.threshold}/100`,
-    l.eligible ? 'Eligible' : 'Non eligible',
+    l.eligible ? labels.eligible : labels.notEligible,
   ]);
 
   y = pdfService.addTable(
     doc,
     y,
-    ['Label', 'Score actuel', 'Seuil requis', 'Statut'],
+    [
+      labels.thLabel,
+      labels.thCurrentScore,
+      labels.thRequiredThreshold,
+      labels.thStatus,
+    ],
     labelRows,
   );
 
@@ -121,12 +185,12 @@ export function generateRSEDiagnosticPDF(data: RSEDiagnosticData): ArrayBuffer {
     y += 15;
   }
 
-  pdfService.addFooter(doc, 4);
+  pdfService.addFooter(doc, 4, undefined, locale);
 
   // Page 5: Roadmap
   if (data.roadmapActions.length > 0) {
     y = pdfService.addNewPageWithHeader(doc, headerTitle);
-    y = pdfService.addSectionTitle(doc, 'Feuille de route RSE', y);
+    y = pdfService.addSectionTitle(doc, labels.roadmap, y);
 
     const roadmapRows = data.roadmapActions.map((a, i) => [
       `${i + 1}`,
@@ -138,7 +202,7 @@ export function generateRSEDiagnosticPDF(data: RSEDiagnosticData): ArrayBuffer {
     y = pdfService.addTable(
       doc,
       y,
-      ['#', 'Action', 'Priorite', 'Echeance'],
+      [labels.thHash, labels.thAction, labels.thPriority, labels.thDeadline],
       roadmapRows,
       {
         columnStyles: {
@@ -150,7 +214,7 @@ export function generateRSEDiagnosticPDF(data: RSEDiagnosticData): ArrayBuffer {
       },
     );
 
-    pdfService.addFooter(doc, 5);
+    pdfService.addFooter(doc, 5, undefined, locale);
   }
 
   return pdfService.toArrayBuffer(doc);

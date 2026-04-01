@@ -80,44 +80,50 @@ async function UserHomePage() {
         <KpiCardGrid>
           <KpiCard
             variant="teal"
-            title="Marketplace"
+            title={t('dashboard.marketplace')}
             value={`${totalActive ?? 0}`}
-            subtitle="annonces actives"
+            subtitle={t('dashboard.activeListings')}
             icon={<Store className="h-6 w-6 text-white" />}
             metrics={[
-              { label: 'Mes ventes', value: `${mySellCount ?? 0}` },
-              { label: 'Mes achats', value: `${myBuyCount ?? 0}` },
-              { label: 'Collectes', value: `${myCollectCount ?? 0}` },
+              { label: t('dashboard.mySales'), value: `${mySellCount ?? 0}` },
+              {
+                label: t('dashboard.myPurchases'),
+                value: `${myBuyCount ?? 0}`,
+              },
+              {
+                label: t('dashboard.collections'),
+                value: `${myCollectCount ?? 0}`,
+              },
             ]}
-            actionLabel="Le Comptoir"
+            actionLabel={t('dashboard.leComptoir')}
             actionHref="/home/marketplace"
           />
           <KpiCard
             variant="emerald"
-            title="Impact Environnemental"
+            title={t('dashboard.environmentalImpact')}
             value="545.5 t"
-            subtitle="CO2 evite"
+            subtitle={t('dashboard.co2Avoided')}
             icon={<Leaf className="h-6 w-6 text-white" />}
             metrics={[
-              { label: 'Tonnes recyclees', value: '306.6 t' },
-              { label: 'Lots traces', value: '30' },
-              { label: 'Score circularite', value: '67%' },
+              { label: t('dashboard.tonsRecycled'), value: '306.6 t' },
+              { label: t('dashboard.tracedLots'), value: '30' },
+              { label: t('dashboard.circularityScore'), value: '67%' },
             ]}
-            actionLabel="Impact Carbone"
+            actionLabel={t('dashboard.carbonImpact')}
             actionHref="/home/carbon"
           />
           <KpiCard
             variant="green"
-            title="Conformite"
+            title={t('dashboard.compliance')}
             value="78%"
-            subtitle="score global"
+            subtitle={t('dashboard.globalScore')}
             icon={<Shield className="h-6 w-6 text-white" />}
             metrics={[
-              { label: 'Normes conformes', value: '28/42' },
-              { label: 'Score RSE', value: '62/100' },
-              { label: 'Reporting ESG', value: '72%' },
+              { label: t('dashboard.compliantStandards'), value: '28/42' },
+              { label: t('dashboard.rseScore'), value: '62/100' },
+              { label: t('dashboard.esgReporting'), value: '72%' },
             ]}
-            actionLabel="Conformite"
+            actionLabel={t('dashboard.complianceAction')}
             actionHref="/home/compliance"
           />
         </KpiCardGrid>
@@ -131,41 +137,41 @@ async function UserHomePage() {
                 <div className="mb-4 flex items-center justify-between">
                   <h2 className="text-base font-semibold">
                     <Sparkles className="mr-2 inline h-4 w-4 text-emerald-500" />
-                    Actions recommandees
+                    {t('dashboard.recommendedActions')}
                   </h2>
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <ActionCard
                     icon={<BarChart3 className="h-5 w-5 text-teal-600" />}
-                    title="Completer le Scope 3"
-                    description="4 categories manquantes dans votre bilan carbone"
+                    title={t('dashboard.completeScope3')}
+                    description={t('dashboard.completeScope3Desc')}
                     href="/home/esg/wizard?step=3"
-                    badge="Impact eleve"
+                    badge={t('dashboard.highImpact')}
                     badgeColor="bg-slate-100 text-slate-700"
                   />
                   <ActionCard
                     icon={<Recycle className="h-5 w-5 text-emerald-600" />}
-                    title="Publier une annonce"
-                    description="Valorisez vos dechets sur Le Comptoir"
+                    title={t('dashboard.publishListing')}
+                    description={t('dashboard.publishListingDesc')}
                     href="/home/marketplace/new"
-                    badge="Recommande"
+                    badge={t('dashboard.recommended')}
                     badgeColor="bg-emerald-100 text-emerald-700"
                   />
                   <ActionCard
                     icon={<TrendingUp className="h-5 w-5 text-green-600" />}
-                    title="Ameliorer le score RSE"
-                    description="3 actions prioritaires identifiees par l'IA"
+                    title={t('dashboard.improveRseScore')}
+                    description={t('dashboard.improveRseScoreDesc')}
                     href="/home/rse/roadmap"
                     badge="+8 pts"
                     badgeColor="bg-teal-100 text-teal-700"
                   />
                   <ActionCard
                     icon={<Link2 className="h-5 w-5 text-teal-600" />}
-                    title="Emettre des certificats"
-                    description="5 lots prets pour la certification blockchain"
+                    title={t('dashboard.issueCertificates')}
+                    description={t('dashboard.issueCertificatesDesc')}
                     href="/home/traceability"
-                    badge="5 lots"
+                    badge={t('dashboard.fiveLots')}
                     badgeColor="bg-teal-100 text-teal-700"
                   />
                 </div>
@@ -180,35 +186,35 @@ async function UserHomePage() {
                 <div className="mb-4 flex items-center justify-between">
                   <h2 className="text-base font-semibold">
                     <Bell className="mr-2 inline h-4 w-4 text-slate-400" />
-                    Activite recente
+                    {t('dashboard.recentActivity')}
                   </h2>
                 </div>
 
                 <div className="space-y-0 divide-y">
                   <ActivityItem
                     icon={<CheckCircle className="h-4 w-4 text-emerald-500" />}
-                    text="Lot #2847 certifie blockchain"
-                    time="2h"
+                    text={t('dashboard.activityLotCertified')}
+                    time={t('dashboard.time2h')}
                   />
                   <ActivityItem
                     icon={<ShoppingCart className="h-4 w-4 text-teal-500" />}
-                    text="Offre recue : 50t carton ondule"
-                    time="5h"
+                    text={t('dashboard.activityOfferReceived')}
+                    time={t('dashboard.time5h')}
                   />
                   <ActivityItem
                     icon={<TrendingUp className="h-4 w-4 text-green-500" />}
-                    text="Score RSE : 62/100 (+3 pts)"
-                    time="Hier"
+                    text={t('dashboard.activityRseScore')}
+                    time={t('dashboard.timeYesterday')}
                   />
                   <ActivityItem
                     icon={<Leaf className="h-4 w-4 text-emerald-500" />}
-                    text="Credit carbone : 12.4t CO2eq"
-                    time="Hier"
+                    text={t('dashboard.activityCarbonCredit')}
+                    time={t('dashboard.timeYesterday')}
                   />
                   <ActivityItem
                     icon={<Users className="h-4 w-4 text-teal-500" />}
-                    text="EcoRecycle SAS a rejoint le reseau"
-                    time="3j"
+                    text={t('dashboard.activityNetworkJoin')}
+                    time={t('dashboard.time3d')}
                   />
                 </div>
               </CardContent>
@@ -260,14 +266,35 @@ async function UserHomePage() {
                             </p>
                           </td>
                           <td className="py-3">
-                            <TypeBadge type={listing.listing_type as string} />
+                            <TypeBadge
+                              type={listing.listing_type as string}
+                              label={
+                                {
+                                  sell: t('dashboard.typeSell'),
+                                  buy: t('dashboard.typeBuy'),
+                                  collect: t('dashboard.typeCollect'),
+                                }[listing.listing_type as string] ??
+                                (listing.listing_type as string)
+                              }
+                            />
                           </td>
                           <td className="py-3 text-xs">
                             {listing.quantity as number}{' '}
                             {listing.unit as string}
                           </td>
                           <td className="py-3">
-                            <StatusBadge status={listing.status as string} />
+                            <StatusBadge
+                              status={listing.status as string}
+                              label={
+                                {
+                                  active: t('dashboard.statusActive'),
+                                  draft: t('dashboard.statusDraft'),
+                                  sold: t('dashboard.statusSold'),
+                                  expired: t('dashboard.statusExpired'),
+                                }[listing.status as string] ??
+                                (listing.status as string)
+                              }
+                            />
                           </td>
                         </tr>
                       );
@@ -281,7 +308,7 @@ async function UserHomePage() {
 
         <SectionFooterImage
           src="/images/normes/circular-infinity-aerial.png"
-          alt="Economie circulaire"
+          alt={t('dashboard.circularEconomy')}
         />
       </div>
     </PageBody>
@@ -343,48 +370,37 @@ function ActivityItem({
   );
 }
 
-function TypeBadge({ type }: { type: string }) {
+function TypeBadge({ type, label }: { type: string; label: string }) {
   const styles: Record<string, string> = {
     sell: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400',
     buy: 'bg-teal-100 text-teal-700 dark:bg-teal-950/30 dark:text-teal-400',
-    collect:
-      'bg-teal-100 text-teal-700 dark:bg-teal-950/30 dark:text-teal-400',
-  };
-  const labels: Record<string, string> = {
-    sell: 'Vente',
-    buy: 'Achat',
-    collect: 'Collecte',
+    collect: 'bg-teal-100 text-teal-700 dark:bg-teal-950/30 dark:text-teal-400',
   };
 
   return (
     <span
       className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles[type] ?? ''}`}
     >
-      {labels[type] ?? type}
+      {label}
     </span>
   );
 }
 
-function StatusBadge({ status }: { status: string }) {
+function StatusBadge({ status, label }: { status: string; label: string }) {
   const styles: Record<string, string> = {
     active:
       'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400',
     draft: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
     sold: 'bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400',
-    expired: 'bg-slate-100 text-slate-600 dark:bg-slate-950/30 dark:text-slate-400',
-  };
-  const labels: Record<string, string> = {
-    active: 'Actif',
-    draft: 'Brouillon',
-    sold: 'Vendu',
-    expired: 'Expire',
+    expired:
+      'bg-slate-100 text-slate-600 dark:bg-slate-950/30 dark:text-slate-400',
   };
 
   return (
     <span
       className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles[status] ?? ''}`}
     >
-      {labels[status] ?? status}
+      {label}
     </span>
   );
 }

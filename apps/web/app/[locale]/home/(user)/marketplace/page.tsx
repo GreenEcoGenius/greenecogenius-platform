@@ -17,6 +17,7 @@ import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { ListingCard } from '~/home/_components/listing-card';
+
 import { SectionFooterImage } from '../_components/section-footer-image';
 
 export const generateMetadata = async () => {

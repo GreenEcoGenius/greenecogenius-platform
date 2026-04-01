@@ -20,9 +20,83 @@ export interface CertificateData {
   contractAddress?: string;
 }
 
+const LABELS = {
+  en: {
+    title: 'TRACEABILITY CERTIFICATE',
+    lot: 'Lot',
+    material: 'Material',
+    grade: 'Grade',
+    weight: 'Weight',
+    seller: 'Seller',
+    buyer: 'Buyer',
+    origin: 'Origin',
+    destination: 'Destination',
+    date: 'Date',
+    environmentalImpact: 'ENVIRONMENTAL IMPACT',
+    co2Avoided: (t: string) => `${t} t CO2 avoided`,
+    equivalentText: (km: string, trees: string) =>
+      `Equivalent to ${km} km of car travel avoided or ${trees} trees planted for 1 year`,
+    methodologyNote: 'Methodology: GHG Protocol + ADEME Base Carbone v2026',
+    blockchainProof: 'BLOCKCHAIN PROOF',
+    network: 'Network: Polygon Mainnet (Chain ID: 137)',
+    contract: (addr: string) => `Contract: ${addr}`,
+    transaction: (hash: string) => `Transaction: ${hash}`,
+    hashSHA: (hash: string) => `SHA-256 Hash: ${hash}`,
+    offChain: 'Off-chain certificate. Blockchain registration pending.',
+    verification: (url: string) => `Verification: ${url}`,
+    scanToVerify: 'Scan to verify',
+    footerLine1:
+      'This certificate attests that the above lot has been traced end-to-end.',
+    footerLine2: 'Data is immutable and publicly verifiable.',
+    footerCompliance:
+      'Compliant: ISO 59014:2024 | Traceability decree no. 2021-321',
+    issuedBy: (dateStr: string) =>
+      `Issued on ${dateStr} by GreenEcoGenius OU -- greenecogenius.tech`,
+    dateLocale: 'en-GB',
+  },
+  fr: {
+    title: 'CERTIFICAT DE TRACABILITE',
+    lot: 'Lot',
+    material: 'Matiere',
+    grade: 'Grade',
+    weight: 'Poids',
+    seller: 'Vendeur',
+    buyer: 'Acheteur',
+    origin: 'Origine',
+    destination: 'Destination',
+    date: 'Date',
+    environmentalImpact: 'IMPACT ENVIRONNEMENTAL',
+    co2Avoided: (t: string) => `${t} t CO2 evite`,
+    equivalentText: (km: string, trees: string) =>
+      `Equivalent a ${km} km en voiture evites ou ${trees} arbres plantes pendant 1 an`,
+    methodologyNote: 'Methodologie : GHG Protocol + ADEME Base Carbone v2026',
+    blockchainProof: 'PREUVE BLOCKCHAIN',
+    network: 'Reseau : Polygon Mainnet (Chain ID: 137)',
+    contract: (addr: string) => `Contrat : ${addr}`,
+    transaction: (hash: string) => `Transaction : ${hash}`,
+    hashSHA: (hash: string) => `Hash SHA-256 : ${hash}`,
+    offChain: 'Certificat hors-chaine. Enregistrement blockchain en attente.',
+    verification: (url: string) => `Verification : ${url}`,
+    scanToVerify: 'Scanner pour verifier',
+    footerLine1:
+      'Ce certificat atteste que le lot ci-dessus a ete trace de bout en bout.',
+    footerLine2: 'Les donnees sont immuables et verifiables publiquement.',
+    footerCompliance:
+      'Conforme : ISO 59014:2024 | Decret tracabilite n. 2021-321',
+    issuedBy: (dateStr: string) =>
+      `Emis le ${dateStr} par GreenEcoGenius OU -- greenecogenius.tech`,
+    dateLocale: 'fr-FR',
+  },
+} as const;
+
+type Locale = keyof typeof LABELS;
+
 export async function generateCertificatePDF(
   data: CertificateData,
+  locale: string = 'fr',
 ): Promise<ArrayBuffer> {
+  const labels =
+    LABELS[(locale as Locale) in LABELS ? (locale as Locale) : 'fr'];
   const doc = pdfService.createDocument();
   const pw = pdfService.pageWidth;
   const ph = pdfService.pageHeight;
@@ -40,7 +114,7 @@ export async function generateCertificatePDF(
   // Title
   doc.setFontSize(18);
   doc.setTextColor(17, 24, 39);
-  doc.text('CERTIFICAT DE TRACABILITE', pw / 2, 38, { align: 'center' });
+  doc.text(labels.title, pw / 2, 38, { align: 'center' });
 
   // Cert number
   doc.setFontSize(12);
@@ -53,31 +127,37 @@ export async function generateCertificatePDF(
 
   // Lot details
   let y = 62;
-  y = pdfService.addKeyValue(doc, 'Lot', data.lotId, 20, y);
+  y = pdfService.addKeyValue(doc, labels.lot, data.lotId, 20, y);
   y = pdfService.addKeyValue(
     doc,
-    'Matiere',
-    `${data.material}${data.qualityGrade ? ` -- Grade ${data.qualityGrade}` : ''}`,
+    labels.material,
+    `${data.material}${data.qualityGrade ? ` -- ${labels.grade} ${data.qualityGrade}` : ''}`,
     20,
     y,
   );
   y = pdfService.addKeyValue(
     doc,
-    'Poids',
-    `${(data.weightKg / 1000).toFixed(2)} tonnes (${data.weightKg.toLocaleString('fr-FR')} kg)`,
+    labels.weight,
+    `${(data.weightKg / 1000).toFixed(2)} tonnes (${data.weightKg.toLocaleString(labels.dateLocale)} kg)`,
     20,
     y,
   );
-  y = pdfService.addKeyValue(doc, 'Vendeur', data.seller, 20, y);
-  y = pdfService.addKeyValue(doc, 'Acheteur', data.buyer ?? 'N/A', 20, y);
-  y = pdfService.addKeyValue(doc, 'Origine', data.origin, 20, y);
+  y = pdfService.addKeyValue(doc, labels.seller, data.seller, 20, y);
+  y = pdfService.addKeyValue(doc, labels.buyer, data.buyer ?? 'N/A', 20, y);
+  y = pdfService.addKeyValue(doc, labels.origin, data.origin, 20, y);
   if (data.destination) {
-    y = pdfService.addKeyValue(doc, 'Destination', data.destination, 20, y);
+    y = pdfService.addKeyValue(
+      doc,
+      labels.destination,
+      data.destination,
+      20,
+      y,
+    );
   }
   y = pdfService.addKeyValue(
     doc,
-    'Date',
-    new Date(data.issuedAt).toLocaleDateString('fr-FR', {
+    labels.date,
+    new Date(data.issuedAt).toLocaleDateString(labels.dateLocale, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -96,13 +176,13 @@ export async function generateCertificatePDF(
   doc.setFontSize(12);
   doc.setTextColor(17, 24, 39);
   doc.setFont('helvetica', 'bold');
-  doc.text('IMPACT ENVIRONNEMENTAL', 20, y);
+  doc.text(labels.environmentalImpact, 20, y);
 
   y += 12;
   doc.setFontSize(28);
   doc.setTextColor(...COLORS.primary);
   doc.setFont('helvetica', 'bold');
-  doc.text(`${(data.co2AvoidedKg / 1000).toFixed(2)} t CO2 evite`, 20, y);
+  doc.text(labels.co2Avoided((data.co2AvoidedKg / 1000).toFixed(2)), 20, y);
 
   y += 8;
   doc.setFontSize(9);
@@ -111,13 +191,13 @@ export async function generateCertificatePDF(
   const kmEquiv = Math.round((data.co2AvoidedKg / 1000) * 4230);
   const treesEquiv = Math.round((data.co2AvoidedKg / 1000) * 50);
   doc.text(
-    `Equivalent a ${kmEquiv.toLocaleString()} km en voiture evites ou ${treesEquiv} arbres plantes pendant 1 an`,
+    labels.equivalentText(kmEquiv.toLocaleString(), `${treesEquiv}`),
     20,
     y,
   );
 
   y += 5;
-  doc.text('Methodologie : GHG Protocol + ADEME Base Carbone v2026', 20, y);
+  doc.text(labels.methodologyNote, 20, y);
 
   // Blockchain proof
   y += 15;
@@ -128,7 +208,7 @@ export async function generateCertificatePDF(
   doc.setFontSize(10);
   doc.setTextColor(17, 24, 39);
   doc.setFont('helvetica', 'bold');
-  doc.text('PREUVE BLOCKCHAIN', 20, y);
+  doc.text(labels.blockchainProof, 20, y);
 
   y += 7;
   doc.setFontSize(8);
@@ -136,29 +216,25 @@ export async function generateCertificatePDF(
   doc.setTextColor(107, 114, 128);
 
   if (data.txHash) {
-    doc.text('Reseau : Polygon Mainnet (Chain ID: 137)', 20, y);
+    doc.text(labels.network, 20, y);
     y += 5;
     if (data.contractAddress) {
-      doc.text(`Contrat : ${data.contractAddress}`, 20, y);
+      doc.text(labels.contract(data.contractAddress), 20, y);
       y += 5;
     }
-    doc.text(`Transaction : ${data.txHash}`, 20, y);
+    doc.text(labels.transaction(data.txHash), 20, y);
     y += 5;
   } else {
-    doc.text(`Hash SHA-256 : ${data.hash.substring(0, 64)}`, 20, y);
+    doc.text(labels.hashSHA(data.hash.substring(0, 64)), 20, y);
     y += 5;
-    doc.text(
-      'Certificat hors-chaine. Enregistrement blockchain en attente.',
-      20,
-      y,
-    );
+    doc.text(labels.offChain, 20, y);
     y += 5;
   }
 
   const verificationUrl =
     data.verificationUrl ??
     `https://greenecogenius.tech/verify/${data.hash.substring(0, 16)}`;
-  doc.text(`Verification : ${verificationUrl}`, 20, y);
+  doc.text(labels.verification(verificationUrl), 20, y);
 
   // QR Code
   try {
@@ -169,7 +245,7 @@ export async function generateCertificatePDF(
     });
     doc.addImage(qrDataUrl, 'PNG', pw - 55, y - 18, 35, 35);
     doc.setFontSize(7);
-    doc.text('Scanner pour verifier', pw - 50, y + 20);
+    doc.text(labels.scanToVerify, pw - 50, y + 20);
   } catch {
     // QR generation failed, skip
   }
@@ -182,23 +258,15 @@ export async function generateCertificatePDF(
   let fy = footerY + 7;
   doc.setFontSize(8);
   doc.setTextColor(107, 114, 128);
-  doc.text(
-    'Ce certificat atteste que le lot ci-dessus a ete trace de bout en bout.',
-    20,
-    fy,
-  );
+  doc.text(labels.footerLine1, 20, fy);
   fy += 4;
-  doc.text('Les donnees sont immuables et verifiables publiquement.', 20, fy);
+  doc.text(labels.footerLine2, 20, fy);
   fy += 6;
-  doc.text(
-    'Conforme : ISO 59014:2024 | Decret tracabilite n. 2021-321',
-    20,
-    fy,
-  );
+  doc.text(labels.footerCompliance, 20, fy);
   fy += 6;
   doc.setFontSize(7);
   doc.text(
-    `Emis le ${new Date().toLocaleDateString('fr-FR')} par GreenEcoGenius OU -- greenecogenius.tech`,
+    labels.issuedBy(new Date().toLocaleDateString(labels.dateLocale)),
     20,
     fy,
   );

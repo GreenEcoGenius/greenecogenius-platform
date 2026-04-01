@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 
 import { ArrowUpRight, Cloud, FileCheck, Leaf, LinkIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Card, CardContent } from '@kit/ui/card';
 
@@ -48,38 +51,39 @@ function KpiCard({ icon, label, value, sub, href, iconBgClass }: KpiCardProps) {
 }
 
 export function EsgKpiCards({ data }: { data: EsgKpiData }) {
+  const t = useTranslations('esg');
   const autoPct = Math.round((data.autoFilledFields / data.totalFields) * 100);
 
   return (
     <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
       <KpiCard
         icon={<Cloud className="h-5 w-5 text-slate-600" />}
-        label="Emissions totales"
+        label={t('totalEmissionsLabel')}
         value={`${data.totalEmissionsT} t`}
-        sub="CO2e Scopes 1+2+3"
+        sub={t('co2eScopesAll')}
         href="/home/carbon"
         iconBgClass="bg-slate-50 dark:bg-slate-950/30"
       />
       <KpiCard
         icon={<Leaf className="h-5 w-5 text-emerald-600" />}
-        label="CO2 evite"
+        label={t('co2Avoided')}
         value={`${data.co2AvoidedT} t`}
-        sub="Via recyclage"
+        sub={t('viaRecycling')}
         href="/home/traceability"
         iconBgClass="bg-emerald-50 dark:bg-emerald-950/30"
       />
       <KpiCard
         icon={<FileCheck className="h-5 w-5 text-blue-600" />}
-        label="Champs auto"
+        label={t('autoFieldsLabel')}
         value={`${data.autoFilledFields} / ${data.totalFields}`}
-        sub={`${autoPct}% auto-rempli`}
+        sub={`${autoPct}% ${t('autoFilled')}`}
         iconBgClass="bg-blue-50 dark:bg-blue-950/30"
       />
       <KpiCard
         icon={<LinkIcon className="h-5 w-5 text-teal-600" />}
-        label="Preuves blockchain"
+        label={t('blockchainProofs')}
         value={`${data.blockchainProofs} hash`}
-        sub="Verifies on-chain"
+        sub={t('verifiedOnChain')}
         href="https://polygonscan.com"
         iconBgClass="bg-teal-50 dark:bg-teal-950/30"
       />

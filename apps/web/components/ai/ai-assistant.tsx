@@ -58,7 +58,9 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
     } else {
       document.body.style.overflow = '';
     }
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [open]);
 
   useEffect(() => {
@@ -73,18 +75,27 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
     const trimmed = input.trim();
     if (!trimmed || loading) return;
 
-    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'user', content: trimmed }]);
+    setMessages((prev) => [
+      ...prev,
+      { id: crypto.randomUUID(), role: 'user', content: trimmed },
+    ]);
     setInput('');
 
     const result = await ask(trimmed, { context });
     if (result) {
-      setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: result.content }]);
+      setMessages((prev) => [
+        ...prev,
+        { id: crypto.randomUUID(), role: 'assistant', content: result.content },
+      ]);
     }
   }, [input, loading, ask, context]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
     },
     [handleSend],
   );
@@ -114,7 +125,7 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
       {/* Panel */}
       {open && (
         <div
-          className="fixed bottom-0 left-0 right-0 z-50 flex max-h-[85vh] flex-col rounded-t-2xl bg-white shadow-2xl dark:bg-gray-950 sm:inset-y-0 sm:left-auto sm:right-0 sm:max-h-none sm:w-[400px] sm:rounded-none sm:border-l"
+          className="fixed right-0 bottom-0 left-0 z-50 flex max-h-[85vh] flex-col rounded-t-2xl bg-white shadow-2xl sm:inset-y-0 sm:right-0 sm:left-auto sm:max-h-none sm:w-[400px] sm:rounded-none sm:border-l dark:bg-gray-950"
           role="dialog"
           aria-label={AGENT_NAMES[section]}
         >
@@ -130,11 +141,20 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
                 <Sparkles className="h-4 w-4 text-emerald-600" />
               </div>
               <div>
-                <h2 className="text-sm font-semibold">{AGENT_NAMES[section]}</h2>
-                <p className="text-muted-foreground text-[11px]">GreenEcoGenius IA</p>
+                <h2 className="text-sm font-semibold">
+                  {AGENT_NAMES[section]}
+                </h2>
+                <p className="text-muted-foreground text-[11px]">
+                  GreenEcoGenius IA
+                </p>
               </div>
             </div>
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => setOpen(false)}>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 w-8 p-0"
+              onClick={() => setOpen(false)}
+            >
               <X className="h-4 w-4" />
             </Button>
           </div>
@@ -144,17 +164,26 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
             {messages.length === 0 && !loading && (
               <div className="text-muted-foreground flex flex-col items-center justify-center py-8 text-center text-sm">
                 <Sparkles className="mb-3 h-8 w-8 text-emerald-500 opacity-50" />
-                <p>Posez une question a votre<br />{AGENT_NAMES[section]}</p>
+                <p>
+                  Posez une question a votre
+                  <br />
+                  {AGENT_NAMES[section]}
+                </p>
               </div>
             )}
 
             {messages.map((msg) => (
-              <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap ${
-                  msg.role === 'user'
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
-                }`}>
+              <div
+                key={msg.id}
+                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap ${
+                    msg.role === 'user'
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
+                  }`}
+                >
                   {msg.content}
                 </div>
               </div>
@@ -174,7 +203,8 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
           {/* Input */}
           <div className="shrink-0 border-t p-3">
             <div className="text-muted-foreground mb-1.5 text-center text-[9px]">
-              IA GreenEcoGenius — les reponses peuvent contenir des inexactitudes
+              IA GreenEcoGenius — les reponses peuvent contenir des
+              inexactitudes
             </div>
             <div className="flex items-center gap-2">
               <input

@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 
 import { Bot, CheckCircle2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -19,32 +22,35 @@ export function EsgStatusHeader({
   totalFields: number;
   remaining: number;
 }) {
+  const t = useTranslations('esg');
+
   return (
     <Card>
       <CardContent className="p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex-1">
             <div className="flex items-center gap-3">
-              <h2 className="text-xl font-semibold">Reporting ESG</h2>
+              <h2 className="text-xl font-semibold">{t('reportingEsg')}</h2>
               <Badge variant="outline" className="text-xs">
                 T1 2026
               </Badge>
             </div>
 
             <p className="text-muted-foreground mt-1 text-sm">
-              Bilan carbone et conformite reglementaire
+              {t('carbonFootprintCompliance')}
             </p>
 
             <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                <span className="font-medium">{completionPct}%</span> complete
+                <span className="font-medium">{completionPct}%</span>{' '}
+                {t('complete')}
               </span>
               <span className="text-muted-foreground">
-                {autoFilled} champs auto-remplis
+                {autoFilled} {t('autoFilledFieldsCount')}
               </span>
               <span className="text-muted-foreground">
-                {remaining} restants
+                {remaining} {t('remaining')}
               </span>
             </div>
 
@@ -56,7 +62,7 @@ export function EsgStatusHeader({
                 />
               </div>
               <p className="text-muted-foreground mt-1 text-xs">
-                {autoFilled}/{totalFields} champs remplis automatiquement
+                {autoFilled}/{totalFields} {t('fieldsAutoFilled')}
               </p>
             </div>
           </div>
@@ -68,7 +74,7 @@ export function EsgStatusHeader({
               render={
                 <Link href="/home/esg/wizard">
                   <Bot className="mr-2 h-4 w-4" />
-                  Completer les champs
+                  {t('completeFieldsButton')}
                 </Link>
               }
               nativeButton={false}

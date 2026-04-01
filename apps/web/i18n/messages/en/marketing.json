@@ -159,5 +159,42 @@
   "altCsrReporting": "CSR reporting team",
   "altSortedMaterials": "Sorted recyclable materials warehouse",
   "altGreentechEnergy": "Green technology and renewable energy",
-  "altRecyclingFacility": "Recycling facility"
+  "altRecyclingFacility": "Recycling facility",
+
+  "orbitRecycler": "Recycle",
+  "orbitTracer": "Trace",
+  "orbitMesurer": "Measure",
+  "orbitReduire": "Reduce",
+  "orbitOptimiser": "Optimize",
+  "orbitConnecter": "Connect",
+
+  "serviceRecyclerBadge": "Marketplace",
+  "serviceRecyclerTitle": "The Circular Marketplace",
+  "serviceRecyclerDesc": "Buy and sell recyclable materials between professionals on our B2B marketplace. Our Smart Matching algorithm connects sellers and buyers by material type, location and volume.",
+  "serviceRecyclerCta": "Access the marketplace",
+
+  "serviceTracerBadge": "Blockchain",
+  "serviceTracerTitle": "Blockchain Traceability",
+  "serviceTracerDesc": "Track every material end-to-end with the Polygon blockchain. Total transparency and immutable records for your entire supply chain.",
+  "serviceTracerCta": "Discover traceability",
+
+  "serviceMesurerBadge": "AI & Data",
+  "serviceMesurerTitle": "AI Carbon & CSR",
+  "serviceMesurerDesc": "Calculate your carbon footprint and generate CSR reports automatically. Our AI analyzes your data in real time for CSRD-compliant and green taxonomy reports.",
+  "serviceMesurerCta": "Calculate my impact",
+
+  "serviceReduireBadge": "Optimization",
+  "serviceReduireTitle": "Waste Reduction",
+  "serviceReduireDesc": "Identify hidden value in your material flows. Our platform provides a concrete action plan to reduce your waste by up to 45%.",
+  "serviceReduireCta": "Reduce my waste",
+
+  "serviceOptimiserBadge": "Logistics",
+  "serviceOptimiserTitle": "Optimized Logistics",
+  "serviceOptimiserDesc": "Reduce your logistics costs by up to 30% with our shared collection and transport network. AI-powered route optimization and real-time tracking.",
+  "serviceOptimiserCta": "Optimize my logistics",
+
+  "serviceConnecterBadge": "Integration",
+  "serviceConnecterTitle": "Connected Ecosystem",
+  "serviceConnecterDesc": "Integrate GreenEcoGenius into your existing ERP via our REST APIs and webhooks. Compatible with SAP, Oracle, Microsoft Dynamics and other popular systems.",
+  "serviceConnecterCta": "See integrations"
 }

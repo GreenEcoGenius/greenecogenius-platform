@@ -19,6 +19,7 @@ import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
+import { SectionFooterImage } from '../_components/section-footer-image';
 import { CarbonAvoidedChart } from './_components/carbon-avoided-chart';
 import { CarbonByMaterialChart } from './_components/carbon-by-material-chart';
 import { CarbonEquivalences } from './_components/carbon-equivalences';
@@ -27,7 +28,6 @@ import { CarbonHeroMetrics } from './_components/carbon-hero-metrics';
 import { CarbonScoreCard } from './_components/carbon-score-card';
 import { CarbonTransactionsTable } from './_components/carbon-transactions-table';
 import { CertificatesList } from './_components/certificates-list';
-import { SectionFooterImage } from '../_components/section-footer-image';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('carbon');

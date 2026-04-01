@@ -47,8 +47,7 @@ const PILLAR_COLORS: Record<string, string> = {
 
 const PRIORITY_STYLES: Record<ActionPriority, string> = {
   urgent: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
-  important:
-    'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300',
+  important: 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300',
   quick_win: 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300',
 };
 

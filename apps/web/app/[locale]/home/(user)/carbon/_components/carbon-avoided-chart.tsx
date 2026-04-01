@@ -78,9 +78,7 @@ function CustomTooltip({
       <p className="mb-2 text-sm font-semibold">{label}</p>
       <div className="space-y-1 text-sm">
         <p className="text-teal-600">CO₂ évité: {fmtKg(avoidedVal)} kg</p>
-        <p className="text-teal-500">
-          CO₂ transport: {fmtKg(transportVal)} kg
-        </p>
+        <p className="text-teal-500">CO₂ transport: {fmtKg(transportVal)} kg</p>
         <p className="font-semibold text-emerald-700">
           Bilan net: {fmtKg(net)} kg
         </p>

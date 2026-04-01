@@ -159,5 +159,42 @@
   "altCsrReporting": "Équipe de reporting RSE",
   "altSortedMaterials": "Entrepôt de matières recyclables triées",
   "altGreentechEnergy": "Technologies vertes et énergie renouvelable",
-  "altRecyclingFacility": "Centre de recyclage"
+  "altRecyclingFacility": "Centre de recyclage",
+
+  "orbitRecycler": "Recycler",
+  "orbitTracer": "Tracer",
+  "orbitMesurer": "Mesurer",
+  "orbitReduire": "Réduire",
+  "orbitOptimiser": "Optimiser",
+  "orbitConnecter": "Connecter",
+
+  "serviceRecyclerBadge": "Marketplace",
+  "serviceRecyclerTitle": "Le Comptoir Circulaire",
+  "serviceRecyclerDesc": "Achetez et vendez des matières recyclables entre professionnels sur notre marketplace B2B. Notre algorithme de Smart Matching connecte vendeurs et acheteurs selon le type de matériau, la localisation et le volume.",
+  "serviceRecyclerCta": "Accéder à la marketplace",
+
+  "serviceTracerBadge": "Blockchain",
+  "serviceTracerTitle": "Traçabilité Blockchain",
+  "serviceTracerDesc": "Suivez chaque matériau de bout en bout grâce à la blockchain Polygon. Transparence totale et registres immuables pour l'ensemble de votre chaîne d'approvisionnement.",
+  "serviceTracerCta": "Découvrir la traçabilité",
+
+  "serviceMesurerBadge": "IA & Data",
+  "serviceMesurerTitle": "IA Carbon & RSE",
+  "serviceMesurerDesc": "Calculez votre empreinte carbone et générez des rapports RSE automatiquement. Notre IA analyse vos données en temps réel pour des rapports conformes CSRD et taxonomie verte.",
+  "serviceMesurerCta": "Calculer mon impact",
+
+  "serviceReduireBadge": "Optimisation",
+  "serviceReduireTitle": "Réduction des déchets",
+  "serviceReduireDesc": "Identifiez les gisements de valeur cachés dans vos flux de matières. Notre plateforme vous fournit un plan d'action concret pour réduire vos déchets jusqu'à 45%.",
+  "serviceReduireCta": "Réduire mes déchets",
+
+  "serviceOptimiserBadge": "Logistique",
+  "serviceOptimiserTitle": "Logistique optimisée",
+  "serviceOptimiserDesc": "Réduisez vos coûts logistiques jusqu'à 30% grâce à notre réseau de collecte et transport mutualisé. Optimisation des tournées par IA et suivi en temps réel.",
+  "serviceOptimiserCta": "Optimiser ma logistique",
+
+  "serviceConnecterBadge": "Intégration",
+  "serviceConnecterTitle": "Écosystème connecté",
+  "serviceConnecterDesc": "Intégrez GreenEcoGenius à votre ERP existant via nos APIs REST et webhooks. Compatible SAP, Oracle, Microsoft Dynamics et autres systèmes populaires.",
+  "serviceConnecterCta": "Voir les intégrations"
 }

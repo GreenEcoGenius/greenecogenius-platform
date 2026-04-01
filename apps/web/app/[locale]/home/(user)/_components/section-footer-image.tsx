@@ -1,12 +1,6 @@
 import Image from 'next/image';
 
-export function SectionFooterImage({
-  src,
-  alt,
-}: {
-  src: string;
-  alt: string;
-}) {
+export function SectionFooterImage({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="mt-8 overflow-hidden rounded-2xl">
       <Image

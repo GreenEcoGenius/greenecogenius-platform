@@ -76,7 +76,8 @@
     "rse": "CSR & Labels",
     "compliance": "Compliance",
     "platform": "Platform",
-    "myAccount": "My Account"
+    "myAccount": "My Account",
+    "landingPage": "Home"
   },
   "roles": {
     "owner": {

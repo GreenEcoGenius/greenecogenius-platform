@@ -76,7 +76,8 @@
     "rse": "RSE & Labels",
     "compliance": "Conformité",
     "platform": "Plateforme",
-    "myAccount": "Mon Compte"
+    "myAccount": "Mon Compte",
+    "landingPage": "Accueil"
   },
   "roles": {
     "owner": {

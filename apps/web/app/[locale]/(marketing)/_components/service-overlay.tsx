@@ -5,91 +5,86 @@ import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import { ArrowRight, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export interface ServiceData {
   id: string;
-  label: string;
-  badge: string;
-  badgeColor: string;
-  headline: string;
-  description: string;
+  labelKey: string;
+  badgeKey: string;
+  headlineKey: string;
+  descriptionKey: string;
   heroImage: string;
-  ctaLabel: string;
+  ctaLabelKey: string;
   ctaHref: string;
+  badgeColor: string;
 }
 
 export const SERVICES: ServiceData[] = [
   {
     id: 'recycler',
-    label: 'Recycler',
-    badge: 'Marketplace',
-    badgeColor: '#1D9E75',
-    headline: 'Le Comptoir Circulaire',
-    description:
-      'Achetez et vendez des matieres recyclables entre professionnels sur notre marketplace B2B. Notre algorithme de Smart Matching connecte vendeurs et acheteurs selon le type de materiau, la localisation et le volume.',
+    labelKey: 'orbitRecycler',
+    badgeKey: 'serviceRecyclerBadge',
+    headlineKey: 'serviceRecyclerTitle',
+    descriptionKey: 'serviceRecyclerDesc',
     heroImage: '/images/normes/circular-zero-waste.png',
-    ctaLabel: 'Acceder a la marketplace',
+    ctaLabelKey: 'serviceRecyclerCta',
     ctaHref: '/auth/sign-up',
+    badgeColor: '#1D9E75',
   },
   {
     id: 'tracer',
-    label: 'Tracer',
-    badge: 'Blockchain',
-    badgeColor: '#534AB7',
-    headline: 'Tracabilite Blockchain',
-    description:
-      "Suivez chaque materiau de bout en bout grace a la blockchain Polygon. Transparence totale et registres immuables pour l'ensemble de votre chaine d'approvisionnement.",
+    labelKey: 'orbitTracer',
+    badgeKey: 'serviceTracerBadge',
+    headlineKey: 'serviceTracerTitle',
+    descriptionKey: 'serviceTracerDesc',
     heroImage: '/images/normes/traceability-blockchain-chain.png',
-    ctaLabel: 'Decouvrir la tracabilite',
+    ctaLabelKey: 'serviceTracerCta',
     ctaHref: '/auth/sign-up',
+    badgeColor: '#534AB7',
   },
   {
     id: 'mesurer',
-    label: 'Mesurer',
-    badge: 'IA & Data',
-    badgeColor: '#185FA5',
-    headline: 'AI Carbon & CSR',
-    description:
-      'Calculez votre empreinte carbone et generez des rapports RSE automatiquement. Notre IA analyse vos donnees en temps reel pour des rapports conformes CSRD et taxonomie verte.',
+    labelKey: 'orbitMesurer',
+    badgeKey: 'serviceMesurerBadge',
+    headlineKey: 'serviceMesurerTitle',
+    descriptionKey: 'serviceMesurerDesc',
     heroImage: '/images/normes/reporting-esg-meeting.png',
-    ctaLabel: 'Calculer mon impact',
+    ctaLabelKey: 'serviceMesurerCta',
     ctaHref: '/auth/sign-up',
+    badgeColor: '#185FA5',
   },
   {
     id: 'reduire',
-    label: 'Reduire',
-    badge: 'Optimisation',
-    badgeColor: '#BA7517',
-    headline: 'Reduction des dechets',
-    description:
-      "Identifiez les gisements de valeur caches dans vos flux de matieres. Notre plateforme vous fournit un plan d'action concret pour reduire vos dechets jusqu'a 45%.",
+    labelKey: 'orbitReduire',
+    badgeKey: 'serviceReduireBadge',
+    headlineKey: 'serviceReduireTitle',
+    descriptionKey: 'serviceReduireDesc',
     heroImage: '/images/normes/carbon-footprint-green.png',
-    ctaLabel: 'Reduire mes dechets',
+    ctaLabelKey: 'serviceReduireCta',
     ctaHref: '/auth/sign-up',
+    badgeColor: '#BA7517',
   },
   {
     id: 'optimiser',
-    label: 'Optimiser',
-    badge: 'Logistique',
-    badgeColor: '#0F6E56',
-    headline: 'Logistique optimisee',
-    description:
-      "Reduisez vos couts logistiques jusqu'a 30% grace a notre reseau de collecte et transport mutualise. Optimisation des tournees par IA et suivi en temps reel.",
+    labelKey: 'orbitOptimiser',
+    badgeKey: 'serviceOptimiserBadge',
+    headlineKey: 'serviceOptimiserTitle',
+    descriptionKey: 'serviceOptimiserDesc',
     heroImage: '/images/normes/saas-multi-device.png',
-    ctaLabel: 'Optimiser ma logistique',
+    ctaLabelKey: 'serviceOptimiserCta',
     ctaHref: '/auth/sign-up',
+    badgeColor: '#0F6E56',
   },
   {
     id: 'connecter',
-    label: 'Connecter',
-    badge: 'Integration',
-    badgeColor: '#993C1D',
-    headline: 'Ecosysteme connecte',
-    description:
-      'Integrez GreenEcoGenius a votre ERP existant via nos APIs REST et webhooks. Compatible SAP, Oracle, Microsoft Dynamics et autres systemes populaires.',
+    labelKey: 'orbitConnecter',
+    badgeKey: 'serviceConnecterBadge',
+    headlineKey: 'serviceConnecterTitle',
+    descriptionKey: 'serviceConnecterDesc',
     heroImage: '/images/normes/labels-globe-recycle.png',
-    ctaLabel: 'Voir les integrations',
+    ctaLabelKey: 'serviceConnecterCta',
     ctaHref: '/auth/sign-up',
+    badgeColor: '#993C1D',
   },
 ];
 
@@ -100,6 +95,7 @@ export function ServiceOverlay({
   service: ServiceData;
   onClose: () => void;
 }) {
+  const t = useTranslations('marketing');
   const [show, setShow] = useState(false);
 
   const handleEscape = useCallback(
@@ -112,7 +108,6 @@ export function ServiceOverlay({
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleEscape);
-    // Trigger staggered animations
     requestAnimationFrame(() => setShow(true));
     return () => {
       document.body.style.overflow = '';
@@ -127,13 +122,11 @@ export function ServiceOverlay({
       aria-modal="true"
       onClick={onClose}
     >
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-400"
         style={{ opacity: show ? 1 : 0 }}
       />
 
-      {/* Modal */}
       <div
         className="relative z-10 mx-0 w-full max-w-[600px] transition-all duration-500 ease-out sm:mx-4"
         style={{
@@ -144,17 +137,15 @@ export function ServiceOverlay({
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white/80 backdrop-blur transition-colors hover:bg-gray-100"
-          aria-label="Fermer"
+          aria-label="Close"
         >
           <X className="h-4 w-4 text-gray-600" />
         </button>
 
         <div className="max-h-[90svh] overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:rounded-2xl">
-          {/* Image bandeau ~40% */}
           <div className="relative h-[200px] overflow-hidden sm:h-[240px]">
             <img
               src={service.heroImage}
@@ -164,9 +155,7 @@ export function ServiceOverlay({
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
           </div>
 
-          {/* Content */}
           <div className="relative -mt-6 px-6 pb-8 sm:px-8">
-            {/* Badge */}
             <div
               className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium text-white transition-all duration-500"
               style={{
@@ -176,10 +165,9 @@ export function ServiceOverlay({
                 transitionDelay: '150ms',
               }}
             >
-              {service.badge}
+              {t(service.badgeKey)}
             </div>
 
-            {/* Title */}
             <h2
               className="mt-3 text-2xl font-semibold text-gray-900 transition-all duration-500"
               style={{
@@ -188,10 +176,9 @@ export function ServiceOverlay({
                 transitionDelay: '250ms',
               }}
             >
-              {service.headline}
+              {t(service.headlineKey)}
             </h2>
 
-            {/* Description */}
             <p
               className="mt-3 text-base leading-relaxed text-gray-600 transition-all duration-500"
               style={{
@@ -200,10 +187,9 @@ export function ServiceOverlay({
                 transitionDelay: '350ms',
               }}
             >
-              {service.description}
+              {t(service.descriptionKey)}
             </p>
 
-            {/* CTA */}
             <div
               className="mt-6 transition-all duration-500"
               style={{
@@ -216,7 +202,7 @@ export function ServiceOverlay({
                 href={service.ctaHref}
                 className="inline-flex items-center rounded-xl bg-[#1D9E75] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#0F6E56]"
               >
-                {service.ctaLabel}
+                {t(service.ctaLabelKey)}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </div>

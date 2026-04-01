@@ -11,6 +11,7 @@ import {
   SidebarTrigger,
 } from '@kit/ui/sidebar';
 import { SidebarNavigation } from '@kit/ui/sidebar-navigation';
+import { Trans } from '@kit/ui/trans';
 
 import featuresFlagConfig from '~/config/feature-flags.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
@@ -31,11 +32,11 @@ export function HomeSidebar(props: HomeSidebarProps) {
       <SidebarHeader className="justify-center px-3 pt-4 pb-2">
         <Link
           href="/"
-          className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-100 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 dark:hover:bg-gray-800"
+          className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 hover:bg-gray-100 dark:hover:bg-gray-800"
         >
           <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} />
           <span className="group-data-[collapsible=icon]:hidden">
-            Accueil
+            <Trans i18nKey="common.routes.landingPage" />
           </span>
         </Link>
 
