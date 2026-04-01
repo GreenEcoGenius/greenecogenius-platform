@@ -4,7 +4,7 @@ import { Menu } from 'lucide-react';
 
 import { cn } from '../lib/utils';
 import { Separator } from '../shadcn/separator';
-import { SidebarTrigger, useSidebar } from '../shadcn/sidebar';
+import { SidebarContext, SidebarTrigger } from '../shadcn/sidebar';
 import { If } from './if';
 
 export type PageLayoutStyle = 'sidebar' | 'header' | 'custom';
@@ -123,13 +123,17 @@ export function PageBody(
 }
 
 function MobileMenuToggle() {
-  const { toggleSidebar } = useSidebar();
+  const ctx = React.useContext(SidebarContext);
+
+  if (!ctx) {
+    return null;
+  }
 
   return (
     <div className="px-4 pb-2 lg:hidden">
       <button
         type="button"
-        onClick={toggleSidebar}
+        onClick={ctx.toggleSidebar}
         className="text-foreground hover:text-primary h-8 w-8 cursor-pointer"
         aria-label="Menu"
       >
