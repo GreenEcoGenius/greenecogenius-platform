@@ -114,7 +114,7 @@ export function PageBody(
 
   return (
     <div className={bodyClassName}>
-      <div className="px-4 pb-2 lg:hidden">
+      <div className="flex justify-end px-4 pb-2 lg:hidden">
         <SidebarTrigger className="text-foreground hover:text-primary h-8 w-8 cursor-pointer" />
       </div>
       {props.children}

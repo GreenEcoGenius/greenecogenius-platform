@@ -8,17 +8,16 @@ import Link from 'next/link';
 import {
   Award,
   ChevronRight,
+  Download,
   FileText,
   Globe,
   Link as LinkIcon,
   Recycle,
-  Search,
   Shield,
 } from 'lucide-react';
 
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
-import { Input } from '@kit/ui/input';
 import { cn } from '@kit/ui/utils';
 
 import {
@@ -27,7 +26,6 @@ import {
   PRIORITY_COLORS,
   type Norm,
   type NormPillar,
-  type NormType,
 } from '~/lib/data/norms-database';
 
 // ── Tab definitions ──
@@ -85,8 +83,6 @@ const TABS: TabDef[] = [
   },
 ];
 
-// ── Pillar hero images ──
-
 const PILLAR_HERO: Record<NormPillar, string> = {
   circular_economy: '/images/normes/circular-infinity-aerial.png',
   carbon: '/images/normes/carbon-counter-1000t.png',
@@ -96,7 +92,7 @@ const PILLAR_HERO: Record<NormPillar, string> = {
   labels: '/images/normes/labels-globe-recycle.png',
 };
 
-// ── Animated norm card ──
+// ── Animated norm card with PDF download ──
 
 function NormCard({ norm, index }: { norm: Norm; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -160,170 +156,24 @@ function NormCard({ norm, index }: { norm: Norm; index: number }) {
         )}
       </div>
 
-      <div className="mt-3 border-t pt-3">
+      <div className="mt-3 flex items-end justify-between border-t pt-3">
         <p className="text-[11px] leading-relaxed text-emerald-700 dark:text-emerald-400">
           {norm.gegApplication}
         </p>
+        <button
+          type="button"
+          onClick={() => window.open(`/api/normes/pdf?id=${norm.id}`, '_blank')}
+          className="ml-2 shrink-0 rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-emerald-600 dark:hover:bg-gray-800"
+          title="Telecharger le PDF"
+        >
+          <Download className="h-4 w-4" strokeWidth={1.5} />
+        </button>
       </div>
     </div>
   );
 }
 
-// Pillar tabs only (overview removed)
-function _unused() {
-  const [search, setSearch] = useState('');
-  const [typeFilter, setTypeFilter] = useState<NormType | 'all'>('all');
-
-  const filtered = NORMS_DATABASE.filter((n) => {
-    if (typeFilter !== 'all' && n.type !== typeFilter) return false;
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      return (
-        n.reference.toLowerCase().includes(q) ||
-        n.title.toLowerCase().includes(q)
-      );
-    }
-    return true;
-  });
-
-  const TYPE_FILTERS: Array<{ value: NormType | 'all'; label: string }> = [
-    { value: 'all', label: 'Tous' },
-    { value: 'iso', label: 'ISO' },
-    { value: 'regulation_eu', label: 'UE' },
-    { value: 'law_fr', label: 'France' },
-    { value: 'framework', label: 'Frameworks' },
-    { value: 'label', label: 'Labels' },
-  ];
-
-  return (
-    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-      {/* Stats strip */}
-      <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {[
-          { value: '42', label: 'Normes integrees', color: 'text-emerald-600' },
-          { value: '6', label: 'Piliers couverts', color: 'text-teal-600' },
-          { value: '15', label: 'Normes ISO', color: 'text-green-600' },
-          {
-            value: '100%',
-            label: 'Conformite auto',
-            color: 'text-emerald-600',
-          },
-        ].map((s) => (
-          <div
-            key={s.label}
-            className="rounded-xl border bg-white p-4 text-center dark:bg-gray-900"
-          >
-            <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
-            <p className="text-muted-foreground mt-1 text-xs">{s.label}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* How it works - visual cards */}
-      <div className="mb-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        {[
-          {
-            title: 'Automatique',
-            desc: "Les normes s'appliquent dans chaque fonctionnalite. Zero configuration.",
-            gradient: 'from-teal-500 to-teal-700',
-          },
-          {
-            title: 'Verifiable',
-            desc: "Chaque donnee est tracable jusqu'a sa preuve blockchain sur Polygon.",
-            gradient: 'from-emerald-500 to-emerald-700',
-          },
-          {
-            title: 'Evolutif',
-            desc: 'Quand une norme evolue, la plateforme se met a jour automatiquement.',
-            gradient: 'from-green-500 to-green-700',
-          },
-        ].map((card) => (
-          <div
-            key={card.title}
-            className={`rounded-2xl bg-gradient-to-br ${card.gradient} p-6 text-white`}
-          >
-            <p className="text-2xl font-bold">{card.title}</p>
-            <p className="mt-2 text-sm leading-relaxed text-white/80">
-              {card.desc}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      {/* Search + filter */}
-      <div className="mb-6 flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 sm:max-w-xs">
-          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
-          <Input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Chercher une norme..."
-            className="h-9 pl-9 text-sm"
-          />
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          {TYPE_FILTERS.map((f) => (
-            <button
-              key={f.value}
-              type="button"
-              onClick={() => setTypeFilter(f.value)}
-              className={cn(
-                'rounded-full px-3 py-1.5 text-xs font-medium transition-all',
-                typeFilter === f.value
-                  ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'bg-white text-gray-600 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300',
-              )}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Norm cards grid */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((norm, i) => (
-          <NormCard key={norm.id} norm={norm} index={i} />
-        ))}
-      </div>
-
-      {filtered.length === 0 && (
-        <p className="text-muted-foreground py-12 text-center">
-          Aucune norme trouvee
-        </p>
-      )}
-
-      {/* CTA */}
-      <div className="mt-16 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 text-center text-white sm:p-12">
-        <h2 className="text-2xl font-bold sm:text-3xl">42 normes, 0 effort</h2>
-        <p className="mx-auto mt-3 max-w-lg text-sm text-white/80">
-          GreenEcoGenius applique automatiquement ces normes dans chaque
-          transaction, chaque calcul, chaque rapport.
-        </p>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-          <Button
-            className="bg-white text-emerald-700 hover:bg-white/90"
-            render={
-              <Link href="/home">
-                Demarrer gratuitement
-                <ChevronRight className="ml-1 h-4 w-4" />
-              </Link>
-            }
-            nativeButton={false}
-          />
-          <Button
-            variant="ghost"
-            className="text-white hover:bg-white/10"
-            render={<Link href="/contact">Nous contacter</Link>}
-            nativeButton={false}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Pillar tab ──
+// ── Pillar tab content ──
 
 function PillarContent({ pillar }: { pillar: NormPillar }) {
   const info = PILLAR_INFO[pillar];
@@ -332,7 +182,6 @@ function PillarContent({ pillar }: { pillar: NormPillar }) {
 
   return (
     <div>
-      {/* Immersive hero */}
       <div className="relative h-64 overflow-hidden sm:h-80">
         <Image src={heroImage} alt={info.label} fill className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
@@ -349,7 +198,6 @@ function PillarContent({ pillar }: { pillar: NormPillar }) {
         </div>
       </div>
 
-      {/* Norm cards */}
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {norms.map((norm, i) => (
@@ -372,7 +220,7 @@ function PillarContent({ pillar }: { pillar: NormPillar }) {
   );
 }
 
-// ── Main component ──
+// ── Main tabbed component ──
 
 export function NormsTabbedContent() {
   const [activeTab, setActiveTab] = useState('circular_economy');
@@ -388,8 +236,7 @@ export function NormsTabbedContent() {
 
   const handleTabChange = useCallback((tabId: string) => {
     setActiveTab(tabId);
-    const newHash = `#${tabId}`;
-    window.history.replaceState(null, '', newHash || window.location.pathname);
+    window.history.replaceState(null, '', `#${tabId}`);
     if (tabBarRef.current) {
       const top =
         tabBarRef.current.getBoundingClientRect().top + window.scrollY - 80;
@@ -401,7 +248,6 @@ export function NormsTabbedContent() {
 
   return (
     <>
-      {/* Sticky tabs */}
       <div
         ref={tabBarRef}
         className="sticky top-[64px] z-30 border-b bg-white/95 backdrop-blur-sm dark:bg-gray-950/95"
@@ -439,7 +285,6 @@ export function NormsTabbedContent() {
         </div>
       </div>
 
-      {/* Content */}
       <div className="min-h-[60vh]">
         {activeTabDef?.pillar && <PillarContent pillar={activeTabDef.pillar} />}
       </div>
