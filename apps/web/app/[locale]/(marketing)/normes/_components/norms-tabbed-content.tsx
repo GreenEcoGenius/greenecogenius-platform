@@ -148,6 +148,50 @@ function NormCard({ norm }: { norm: Norm }) {
 function OverviewContent() {
   return (
     <>
+      {/* Visual showcase */}
+      <section className="py-12">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <AnimateOnScroll animation="fade-up" delay={0}>
+              <div className="overflow-hidden rounded-xl">
+                <img
+                  src="/images/normes/circular-infinity-aerial.png"
+                  alt="Economie circulaire"
+                  className="h-32 w-full object-cover transition-transform duration-500 hover:scale-105 sm:h-40"
+                />
+              </div>
+            </AnimateOnScroll>
+            <AnimateOnScroll animation="fade-up" delay={100}>
+              <div className="overflow-hidden rounded-xl">
+                <img
+                  src="/images/normes/traceability-blockchain-chain.png"
+                  alt="Tracabilite blockchain"
+                  className="h-32 w-full object-cover transition-transform duration-500 hover:scale-105 sm:h-40"
+                />
+              </div>
+            </AnimateOnScroll>
+            <AnimateOnScroll animation="fade-up" delay={200}>
+              <div className="overflow-hidden rounded-xl">
+                <img
+                  src="/images/normes/reporting-esg-meeting.png"
+                  alt="Reporting ESG"
+                  className="h-32 w-full object-cover transition-transform duration-500 hover:scale-105 sm:h-40"
+                />
+              </div>
+            </AnimateOnScroll>
+            <AnimateOnScroll animation="fade-up" delay={300}>
+              <div className="overflow-hidden rounded-xl">
+                <img
+                  src="/images/normes/carbon-counter-1000t.png"
+                  alt="Bilan carbone"
+                  className="h-32 w-full object-cover transition-transform duration-500 hover:scale-105 sm:h-40"
+                />
+              </div>
+            </AnimateOnScroll>
+          </div>
+        </div>
+      </section>
+
       {/* Recap table */}
       <NormsRecapTable />
 
@@ -241,24 +285,91 @@ function OverviewContent() {
 
 // ── Pillar tab content ──
 
+const PILLAR_IMAGES: Record<NormPillar, { hero: string; gallery: string[] }> = {
+  circular_economy: {
+    hero: '/images/normes/circular-infinity-aerial.png',
+    gallery: [
+      '/images/normes/circular-linear-vs-circular.png',
+      '/images/normes/circular-zero-waste.png',
+      '/images/normes/circular-recycling-process.png',
+    ],
+  },
+  carbon: {
+    hero: '/images/normes/carbon-counter-1000t.png',
+    gallery: [
+      '/images/normes/carbon-footprint-green.png',
+      '/images/normes/carbon-dashboard-dark.png',
+      '/images/normes/carbon-footprint-flowers.png',
+    ],
+  },
+  reporting: {
+    hero: '/images/normes/reporting-esg-meeting.png',
+    gallery: [
+      '/images/normes/reporting-co2-dashboard.png',
+      '/images/normes/reporting-esg-presentation.png',
+      '/images/normes/reporting-hologram-data.png',
+    ],
+  },
+  traceability: {
+    hero: '/images/normes/traceability-blockchain-chain.png',
+    gallery: [
+      '/images/normes/traceability-blockchain-cubes.png',
+      '/images/normes/traceability-blockchain-dark.png',
+      '/images/normes/traceability-supply-chain.png',
+    ],
+  },
+  data: {
+    hero: '/images/normes/saas-multi-device.png',
+    gallery: [
+      '/images/normes/saas-carbon-dashboard.png',
+      '/images/normes/saas-carbon-dark.png',
+    ],
+  },
+  labels: {
+    hero: '/images/normes/labels-globe-recycle.png',
+    gallery: [
+      '/images/normes/labels-csrd-mobile.png',
+      '/images/normes/labels-csrd-mobile-v2.png',
+    ],
+  },
+};
+
 function PillarContent({ pillar }: { pillar: NormPillar }) {
   const info = PILLAR_INFO[pillar];
   const norms = NORMS_DATABASE.filter((n) => n.pillar === pillar);
+  const images = PILLAR_IMAGES[pillar];
 
   return (
     <section className="py-12 sm:py-16">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        {/* Hero banner */}
         <AnimateOnScroll animation="fade-up">
-          <h2 className="text-xl font-bold sm:text-2xl">{info.label}</h2>
-          <p className="text-muted-foreground mt-1 text-sm">
-            {norms.length} normes integrees
-          </p>
-          <p className="text-muted-foreground mt-2 max-w-3xl text-sm">
+          <div className="relative mb-8 overflow-hidden rounded-2xl">
+            <img
+              src={images.hero}
+              alt={info.label}
+              className="h-48 w-full object-cover sm:h-64 lg:h-72"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+              <h2 className="text-2xl font-bold text-white sm:text-3xl">
+                {info.label}
+              </h2>
+              <p className="mt-1 text-sm text-white/80">
+                {norms.length} normes integrees
+              </p>
+            </div>
+          </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll animation="fade-up" delay={100}>
+          <p className="text-muted-foreground mb-8 max-w-3xl text-sm">
             {info.description}
           </p>
         </AnimateOnScroll>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {/* Norm cards */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {norms.map((norm, i) => (
             <AnimateOnScroll key={norm.id} animation="fade-up" delay={i * 50}>
               <NormCard norm={norm} />
@@ -266,8 +377,28 @@ function PillarContent({ pillar }: { pillar: NormPillar }) {
           ))}
         </div>
 
-        {pillar === 'labels' && (
+        {/* Image gallery */}
+        {images.gallery.length > 0 && (
           <AnimateOnScroll animation="fade-up" delay={200}>
+            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {images.gallery.map((src) => (
+                <div
+                  key={src}
+                  className="overflow-hidden rounded-xl shadow-sm transition-shadow hover:shadow-md"
+                >
+                  <img
+                    src={src}
+                    alt=""
+                    className="h-44 w-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                </div>
+              ))}
+            </div>
+          </AnimateOnScroll>
+        )}
+
+        {pillar === 'labels' && (
+          <AnimateOnScroll animation="fade-up" delay={300}>
             <div className="mt-8 rounded-xl border bg-emerald-50 p-6 dark:bg-emerald-950/20">
               <h3 className="font-semibold text-emerald-800 dark:text-emerald-300">
                 Label GreenEcoGenius
