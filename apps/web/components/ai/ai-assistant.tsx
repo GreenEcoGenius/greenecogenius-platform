@@ -268,22 +268,30 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
           onDrop={handleDrop}
           onDragOver={handleDragOver}
         >
+          {/* Mobile handle bar */}
+          <div className="flex justify-center pt-2 sm:hidden">
+            <button
+              onClick={() => setOpen(false)}
+              className="flex h-6 w-12 items-center justify-center"
+            >
+              <div className="h-1 w-8 rounded-full bg-gray-300" />
+            </button>
+          </div>
+
           {/* Header */}
-          <div className="flex shrink-0 items-center justify-between px-4 pt-4 pb-2">
-            <div className="flex gap-1">
-              <span className="rounded-full bg-gray-100 px-4 py-1.5 text-xs font-semibold text-gray-900 dark:bg-gray-800 dark:text-white">
-                Discussion
-              </span>
-            </div>
+          <div className="flex shrink-0 items-center justify-between px-4 pt-2 pb-2 sm:pt-4">
             <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-emerald-500" />
-              <button
-                onClick={() => setOpen(false)}
-                className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-              >
-                <ChevronDown className="h-5 w-5 text-gray-500" />
-              </button>
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
+                <Sparkles className="h-4 w-4 text-emerald-600" />
+              </div>
+              <span className="text-sm font-semibold">Kodee</span>
             </div>
+            <button
+              onClick={() => setOpen(false)}
+              className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+            >
+              <ChevronDown className="h-5 w-5 text-gray-500" />
+            </button>
           </div>
 
           {/* Messages / Welcome */}
