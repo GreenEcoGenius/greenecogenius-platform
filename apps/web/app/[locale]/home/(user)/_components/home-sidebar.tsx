@@ -8,6 +8,7 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
+  SidebarTrigger,
 } from '@kit/ui/sidebar';
 import { SidebarNavigation } from '@kit/ui/sidebar-navigation';
 
@@ -50,15 +51,19 @@ export function HomeSidebar(props: HomeSidebarProps) {
       </SidebarContent>
 
       <SidebarFooter className="p-3">
-        <Link
-          href="/"
-          className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2"
-        >
-          <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} />
-          <span className="group-data-[collapsible=icon]:hidden">
-            Accueil
-          </span>
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link
+            href="/"
+            className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2"
+          >
+            <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} />
+            <span className="group-data-[collapsible=icon]:hidden">
+              Accueil
+            </span>
+          </Link>
+
+          <SidebarTrigger className="text-muted-foreground hover:text-foreground h-8 w-8 cursor-pointer" />
+        </div>
       </SidebarFooter>
     </Sidebar>
   );

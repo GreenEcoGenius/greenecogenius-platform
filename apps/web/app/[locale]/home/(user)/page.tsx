@@ -75,22 +75,12 @@ async function UserHomePage() {
   return (
     <PageBody>
       <div className="space-y-8">
-        {/* Hero banner */}
-        <div className="relative overflow-hidden rounded-2xl">
-          <img
-            src="/images/hero-circular-economy.png"
-            alt="Economie circulaire - GreenEcoGenius"
-            className="h-48 w-full object-cover sm:h-56 lg:h-64"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/70 to-slate-900/30" />
-          <div className="absolute inset-0 flex flex-col justify-center px-8">
-            <h1 className="text-2xl font-bold text-white sm:text-3xl">
-              Tableau de bord
-            </h1>
-            <p className="mt-1 text-sm text-white/80">
-              Vue d&apos;ensemble de votre ecosysteme GreenEcoGenius
-            </p>
-          </div>
+        {/* Page title */}
+        <div>
+          <h1 className="text-2xl font-bold">Tableau de bord</h1>
+          <p className="text-muted-foreground mt-1 text-sm">
+            Vue d&apos;ensemble de votre ecosysteme GreenEcoGenius
+          </p>
         </div>
 
         {/* 3 KPI Cards */}
