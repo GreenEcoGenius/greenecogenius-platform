@@ -65,6 +65,11 @@ const routes = [
     label: 'common.routes.myAccount',
     children: [
       {
+        label: 'common.routes.profile',
+        path: pathsConfig.app.personalAccountSettings,
+        Icon: <User className={iconClasses} />,
+      },
+      {
         label: 'common.routes.myListings',
         path: '/home/my-listings',
         Icon: <PackageSearch className={iconClasses} />,
@@ -73,11 +78,6 @@ const routes = [
         label: 'common.routes.wallet',
         path: '/home/wallet',
         Icon: <Wallet className={iconClasses} />,
-      },
-      {
-        label: 'common.routes.profile',
-        path: pathsConfig.app.personalAccountSettings,
-        Icon: <User className={iconClasses} />,
       },
       {
         label: 'common.routes.billing',

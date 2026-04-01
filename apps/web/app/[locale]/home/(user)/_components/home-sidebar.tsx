@@ -12,7 +12,7 @@ import {
 } from '@kit/ui/sidebar';
 import { SidebarNavigation } from '@kit/ui/sidebar-navigation';
 
-import { WorkspaceDropdown } from '~/components/workspace-dropdown';
+import { AppLogo } from '~/components/app-logo';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
 import { UserNotifications } from '~/home/(user)/_components/user-notifications';
@@ -25,22 +25,17 @@ interface HomeSidebarProps {
 }
 
 export function HomeSidebar(props: HomeSidebarProps) {
-  const { workspace, user, accounts } = props.workspace;
   const collapsible = personalAccountNavigationConfig.sidebarCollapsedStyle;
 
   return (
     <Sidebar variant="floating" collapsible={collapsible}>
-      <SidebarHeader className={'h-16 justify-center'}>
-        <div className={'flex items-center justify-between gap-x-1'}>
-          <WorkspaceDropdown
-            user={user}
-            accounts={accounts}
-            workspace={workspace}
-          />
+      <SidebarHeader className="h-16 justify-center">
+        <div className="flex items-center justify-between gap-x-1 px-2">
+          <AppLogo href="/home" />
 
           <If condition={featuresFlagConfig.enableNotifications}>
-            <div className={'group-data-[collapsible=icon]:hidden'}>
-              <UserNotifications userId={user.id} />
+            <div className="group-data-[collapsible=icon]:hidden">
+              <UserNotifications userId={props.workspace.user.id} />
             </div>
           </If>
         </div>
@@ -54,7 +49,7 @@ export function HomeSidebar(props: HomeSidebarProps) {
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-100 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 dark:hover:bg-gray-800"
           >
             <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} />
             <span className="group-data-[collapsible=icon]:hidden">
