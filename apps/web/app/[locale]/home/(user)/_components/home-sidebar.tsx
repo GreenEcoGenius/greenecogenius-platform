@@ -1,5 +1,14 @@
+import Link from 'next/link';
+
+import { ExternalLink } from 'lucide-react';
+
 import { If } from '@kit/ui/if';
-import { Sidebar, SidebarContent, SidebarHeader } from '@kit/ui/sidebar';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+} from '@kit/ui/sidebar';
 import { SidebarNavigation } from '@kit/ui/sidebar-navigation';
 
 import { WorkspaceDropdown } from '~/components/workspace-dropdown';
@@ -39,6 +48,18 @@ export function HomeSidebar(props: HomeSidebarProps) {
       <SidebarContent>
         <SidebarNavigation config={personalAccountNavigationConfig} />
       </SidebarContent>
+
+      <SidebarFooter className="p-3">
+        <Link
+          href="/"
+          className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2"
+        >
+          <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} />
+          <span className="group-data-[collapsible=icon]:hidden">
+            Site vitrine
+          </span>
+        </Link>
+      </SidebarFooter>
     </Sidebar>
   );
 }
