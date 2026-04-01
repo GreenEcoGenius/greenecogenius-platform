@@ -12,7 +12,6 @@ import {
 } from '@kit/ui/sidebar';
 import { SidebarNavigation } from '@kit/ui/sidebar-navigation';
 
-import { AppLogo } from '~/components/app-logo';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
 import { UserNotifications } from '~/home/(user)/_components/user-notifications';
@@ -29,14 +28,22 @@ export function HomeSidebar(props: HomeSidebarProps) {
 
   return (
     <Sidebar variant="floating" collapsible={collapsible}>
-      <SidebarHeader className="h-12 justify-center">
-        <div className="flex items-center justify-end gap-x-1 px-2">
-          <If condition={featuresFlagConfig.enableNotifications}>
-            <div className="group-data-[collapsible=icon]:hidden">
-              <UserNotifications userId={props.workspace.user.id} />
-            </div>
-          </If>
-        </div>
+      <SidebarHeader className="justify-center px-3 pt-4 pb-2">
+        <Link
+          href="/"
+          className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-100 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 dark:hover:bg-gray-800"
+        >
+          <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} />
+          <span className="group-data-[collapsible=icon]:hidden">
+            Accueil
+          </span>
+        </Link>
+
+        <If condition={featuresFlagConfig.enableNotifications}>
+          <div className="flex justify-end px-2 group-data-[collapsible=icon]:hidden">
+            <UserNotifications userId={props.workspace.user.id} />
+          </div>
+        </If>
       </SidebarHeader>
 
       <SidebarContent>
@@ -44,17 +51,7 @@ export function HomeSidebar(props: HomeSidebarProps) {
       </SidebarContent>
 
       <SidebarFooter className="p-3">
-        <div className="flex items-center justify-between">
-          <Link
-            href="/"
-            className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 hover:bg-gray-100 dark:hover:bg-gray-800"
-          >
-            <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} />
-            <span className="group-data-[collapsible=icon]:hidden">
-              Accueil
-            </span>
-          </Link>
-
+        <div className="flex justify-end">
           <SidebarTrigger className="text-muted-foreground hover:text-foreground h-8 w-8 cursor-pointer" />
         </div>
       </SidebarFooter>
