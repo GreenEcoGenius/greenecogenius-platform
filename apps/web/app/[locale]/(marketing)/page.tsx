@@ -7,7 +7,6 @@ import {
   Bot,
   Factory,
   Globe,
-  Quote,
   Recycle,
   Shield,
   Sparkles,
@@ -310,64 +309,6 @@ export default async function Home() {
         </AnimateOnScroll>
       </section>
 
-      {/* ───── STUDY CASE ───── */}
-      <section className="bg-secondary/30 py-20 sm:py-32">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <p className="text-primary mb-4 text-center text-sm font-semibold tracking-wider uppercase">
-              {t('studyCaseLabel')}
-            </p>
-            <h2 className="mx-auto max-w-3xl text-center text-3xl font-bold tracking-tight sm:text-4xl">
-              {t('studyCaseHeading')}
-            </h2>
-          </AnimateOnScroll>
-
-          <div className="mt-16 grid items-center gap-12 lg:grid-cols-5">
-            <AnimateOnScroll animation="fade-right" className="lg:col-span-3">
-              <div className="bg-card rounded-2xl border p-8 shadow-lg sm:p-10">
-                <Quote className="text-primary/30 mb-6 h-10 w-10" />
-                <blockquote className="text-lg leading-relaxed italic">
-                  &ldquo;{t('studyCaseQuote')}&rdquo;
-                </blockquote>
-                <div className="mt-8 flex items-center gap-4">
-                  <div className="bg-primary text-primary-foreground flex h-12 w-12 items-center justify-center rounded-full font-bold">
-                    HR
-                  </div>
-                  <div>
-                    <p className="font-semibold">{t('studyCaseAuthor')}</p>
-                    <p className="text-muted-foreground text-sm">
-                      {t('studyCaseRole')}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </AnimateOnScroll>
-
-            <AnimateOnScroll animation="fade-left" className="lg:col-span-2">
-              <div className="space-y-6">
-                <StudyCaseStat
-                  value={45}
-                  suffix="%"
-                  label={t('studyCaseStat1Label')}
-                />
-                <StudyCaseStat
-                  value={120}
-                  suffix="k€"
-                  label={t('studyCaseStat2Label')}
-                />
-                <StudyCaseStat value={6} label={t('studyCaseStat3Label')} />
-              </div>
-            </AnimateOnScroll>
-          </div>
-
-          <AnimateOnScroll animation="fade-up" delay={200}>
-            <p className="text-muted-foreground mx-auto mt-12 max-w-3xl text-center text-lg">
-              {t('studyCaseDescription')}
-            </p>
-          </AnimateOnScroll>
-        </div>
-      </section>
-
       {/* ───── CTA ───── */}
       <section className="relative overflow-hidden py-32">
         <Image
@@ -426,53 +367,6 @@ export default async function Home() {
             <p className="text-primary-foreground/50 mt-4 text-xs">
               {t('newsletterDisclaimer')}
             </p>
-          </AnimateOnScroll>
-        </div>
-      </section>
-
-      {/* ───── FAQ (compact) ───── */}
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              {t('faq')}
-            </h2>
-          </AnimateOnScroll>
-
-          <AnimateOnScroll animation="fade-up" delay={100}>
-            <div className="mt-8 divide-y rounded-2xl border">
-              {(
-                [
-                  ['faq1Question', 'faq1Answer'],
-                  ['faq2Question', 'faq2Answer'],
-                  ['faq3Question', 'faq3Answer'],
-                  ['faq4Question', 'faq4Answer'],
-                ] as [string, string][]
-              ).map(([q, a]) => (
-                <details key={q} className="group">
-                  <summary className="flex cursor-pointer items-center justify-between px-5 py-4 text-sm font-medium">
-                    {t(q)}
-                    <span className="text-muted-foreground ml-4 shrink-0 transition-transform group-open:rotate-45">
-                      +
-                    </span>
-                  </summary>
-                  <p className="text-muted-foreground px-5 pb-4 text-sm">
-                    {t(a)}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </AnimateOnScroll>
-
-          <AnimateOnScroll animation="fade-up" delay={200}>
-            <div className="mt-6 text-center">
-              <Link
-                href="/faq"
-                className="text-primary text-sm font-medium hover:underline"
-              >
-                Voir toutes les questions →
-              </Link>
-            </div>
           </AnimateOnScroll>
         </div>
       </section>
@@ -566,25 +460,5 @@ function StepList({
         </li>
       ))}
     </ul>
-  );
-}
-
-function StudyCaseStat({
-  value,
-  suffix,
-  label,
-}: {
-  value: number;
-  suffix?: string;
-  label: string;
-}) {
-  return (
-    <div className="bg-card rounded-xl border p-6 text-center shadow-sm">
-      <div className="text-primary text-3xl font-bold tracking-tight">
-        <AnimatedCounter target={value} />
-        {suffix}
-      </div>
-      <p className="text-muted-foreground mt-1 text-sm">{label}</p>
-    </div>
   );
 }

@@ -19,6 +19,7 @@ import { personalAccountNavigationConfig } from '~/config/personal-account-navig
 import { HomeMenuNavigation } from './_components/home-menu-navigation';
 import { HomeMobileNavigation } from './_components/home-mobile-navigation';
 import { HomeSidebar } from './_components/home-sidebar';
+import { MobileSidebarToggle } from './_components/mobile-sidebar-toggle';
 import { loadUserWorkspace } from './_lib/server/load-user-workspace';
 
 function UserHomeLayout({ children }: React.PropsWithChildren) {
@@ -97,13 +98,13 @@ function MobileNavigation({
 }) {
   return (
     <>
-      <div className="flex-1" />
+      <MobileSidebarToggle />
 
-      <AppLogo className="h-12" />
-
-      <div className="flex flex-1 justify-end">
-        <HomeMobileNavigation workspace={workspace} />
+      <div className="flex flex-1 justify-center">
+        <AppLogo className="h-10" />
       </div>
+
+      <HomeMobileNavigation workspace={workspace} />
     </>
   );
 }

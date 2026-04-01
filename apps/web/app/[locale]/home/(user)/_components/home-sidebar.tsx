@@ -29,10 +29,8 @@ export function HomeSidebar(props: HomeSidebarProps) {
 
   return (
     <Sidebar variant="floating" collapsible={collapsible}>
-      <SidebarHeader className="h-16 justify-center">
-        <div className="flex items-center justify-between gap-x-1 px-2">
-          <AppLogo href="/home" />
-
+      <SidebarHeader className="h-12 justify-center">
+        <div className="flex items-center justify-end gap-x-1 px-2">
           <If condition={featuresFlagConfig.enableNotifications}>
             <div className="group-data-[collapsible=icon]:hidden">
               <UserNotifications userId={props.workspace.user.id} />
