@@ -125,7 +125,7 @@ export function HeroVisual() {
     <>
       <div
         ref={containerRef}
-        className="pointer-events-none absolute inset-0 flex items-center justify-center"
+        className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center"
       >
         {/* Central glow */}
         <div className="absolute h-[220px] w-[220px] rounded-full bg-[#1B9E77]/15 blur-[80px] sm:h-[300px] sm:w-[300px]" />
@@ -153,9 +153,9 @@ export function HeroVisual() {
                   onClick={() => setActiveService(node.serviceId)}
                   className="animate-counter-orbit pointer-events-auto flex cursor-pointer flex-col items-center gap-1.5 transition-transform hover:scale-110"
                 >
-                  <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-white/15 bg-white/10 shadow-lg backdrop-blur-md sm:h-16 sm:w-16 lg:h-18 lg:w-18">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-white/15 bg-white/10 shadow-lg backdrop-blur-md sm:h-16 sm:w-16 lg:h-20 lg:w-20">
                     <node.icon
-                      className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8"
+                      className="h-6 w-6 sm:h-7 sm:w-7 lg:h-9 lg:w-9"
                       style={{ color: node.color }}
                     />
                   </div>

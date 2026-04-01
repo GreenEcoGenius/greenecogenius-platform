@@ -79,7 +79,7 @@ function MobileMenu() {
         <X className="hidden h-7 w-7 group-open:block" />
       </summary>
 
-      <div className="fixed inset-0 top-16 z-50 bg-white dark:bg-gray-950">
+      <div className="fixed inset-0 top-16 z-[60] overflow-y-auto bg-white dark:bg-gray-950">
         <nav className="flex flex-col divide-y px-6">
           {Object.values(links).map((item) => (
             <Link

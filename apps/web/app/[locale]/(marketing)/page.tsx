@@ -5,10 +5,8 @@ import {
   ArrowRight,
   BarChart3,
   Bot,
-  ChevronRight,
   Factory,
   Globe,
-  Leaf,
   Quote,
   Recycle,
   Shield,
@@ -56,43 +54,16 @@ export default async function Home() {
           {/* Orbital visualization */}
           <HeroVisual />
 
-          <div className="relative z-10 mx-auto max-w-5xl px-4 py-32 text-center sm:px-6 lg:px-8">
-            <AnimateOnScroll animation="fade-up">
-              <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#8DC63F]/30 bg-white/10 px-5 py-2 text-sm font-medium text-[#8DC63F] backdrop-blur-md">
-                <Leaf className="h-4 w-4" />
-                {t('heroPill')}
-              </span>
-            </AnimateOnScroll>
-
-            <AnimateOnScroll animation="fade-up" delay={100}>
-              <h1 className="mt-6 bg-gradient-to-b from-white to-[#8DC63F] bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-5xl lg:text-7xl">
-                {t('heroHeadline')}
-              </h1>
-            </AnimateOnScroll>
-
-            <AnimateOnScroll animation="fade-up" delay={200}>
-              <p className="mx-auto mt-6 hidden max-w-2xl text-lg text-white/80 sm:block sm:text-xl">
-                {t('heroSubtitle')}
-              </p>
-            </AnimateOnScroll>
-
+          {/* Single CTA button centered in the orbit */}
+          <div className="relative z-10">
             <AnimateOnScroll animation="fade-up" delay={300}>
-              <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Link
-                  href="/auth/sign-up"
-                  className="group inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold text-[#1A1A2E] shadow-lg transition-all hover:shadow-xl hover:shadow-white/15"
-                >
-                  {t('heroCta1')}
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-                <Link
-                  href="#features"
-                  className="group inline-flex items-center gap-2 rounded-full border border-[#8DC63F]/30 px-8 py-4 text-sm font-medium text-white backdrop-blur-sm transition-all hover:border-[#8DC63F]/60 hover:bg-white/5"
-                >
-                  {t('heroCta2')}
-                  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </div>
+              <Link
+                href="/auth/sign-up"
+                className="group inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-xs font-semibold text-[#1A1A2E] shadow-lg transition-all hover:shadow-xl hover:shadow-white/15 sm:px-8 sm:py-4 sm:text-sm"
+              >
+                {t('heroCta1')}
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
             </AnimateOnScroll>
           </div>
 

@@ -21,6 +21,7 @@ import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
+import { SidebarTrigger } from '@kit/ui/sidebar';
 
 import { KpiCard, KpiCardGrid } from './_components/kpi-card';
 
@@ -76,11 +77,14 @@ async function UserHomePage() {
     <PageBody>
       <div className="space-y-8">
         {/* Page title */}
-        <div>
-          <h1 className="text-2xl font-bold">Tableau de bord</h1>
-          <p className="text-muted-foreground mt-1 text-sm">
-            Vue d&apos;ensemble de votre ecosysteme GreenEcoGenius
-          </p>
+        <div className="flex items-center gap-3">
+          <SidebarTrigger className="text-foreground hover:text-primary h-8 w-8 cursor-pointer lg:h-7 lg:w-7" />
+          <div>
+            <h1 className="text-2xl font-bold">Tableau de bord</h1>
+            <p className="text-muted-foreground mt-1 text-sm">
+              Vue d&apos;ensemble de votre ecosysteme GreenEcoGenius
+            </p>
+          </div>
         </div>
 
         {/* 3 KPI Cards */}
