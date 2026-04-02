@@ -39,7 +39,7 @@ function PageWithSidebar(props: PageProps) {
       <div
         className={
           props.contentContainerClassName ??
-          'mx-auto flex min-h-screen w-full min-w-0 flex-1 flex-col bg-inherit lg:h-screen'
+          'mx-auto flex min-h-screen w-full min-w-0 flex-1 flex-col bg-inherit'
         }
       >
         {MobileNavigation}

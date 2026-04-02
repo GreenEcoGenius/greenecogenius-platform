@@ -18,7 +18,6 @@ import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
 
-import { ChatAwareContent } from './_components/chat-aware-content';
 // home imports
 import { HomeMenuNavigation } from './_components/home-menu-navigation';
 import { HomeSidebar } from './_components/home-sidebar';
@@ -61,7 +60,7 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
                 <HomeSidebar workspace={workspace} />
               </PageNavigation>
 
-              <ChatAwareContent>{children}</ChatAwareContent>
+              {children}
             </Page>
           </div>
         </SidebarProvider>
@@ -89,7 +88,7 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
               <HomeMenuNavigation workspace={workspace} />
             </PageNavigation>
 
-            <ChatAwareContent>{children}</ChatAwareContent>
+            {children}
           </Page>
         </div>
 

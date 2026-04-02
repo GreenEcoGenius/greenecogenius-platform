@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import * as z from 'zod';
 
 import { TeamAccountWorkspaceContextProvider } from '@kit/team-accounts/components';
-import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
+import { Page, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/sidebar';
 
 import { ChatProvider } from '~/components/ai/chat-context';
@@ -17,10 +17,8 @@ import { GlobalSearch } from '~/components/layout/global-search';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
 
 // local imports
-import { TeamAccountLayoutMobileNavigation } from './_components/team-account-layout-mobile-navigation';
 import { TeamAccountLayoutSidebar } from './_components/team-account-layout-sidebar';
 import { TeamAccountNavigationMenu } from './_components/team-account-navigation-menu';
-import { TeamChatAwareContent } from './_components/team-chat-aware-content';
 import { loadTeamWorkspace } from './_lib/server/team-account-workspace.loader';
 
 type TeamWorkspaceLayoutProps = React.PropsWithChildren<{
@@ -62,12 +60,11 @@ async function SidebarLayout({
   return (
     <TeamAccountWorkspaceContextProvider value={data}>
       <ChatProvider>
-        <AppHeader />
+        <SidebarProvider defaultOpen={state.open}>
+          <SidebarChatBridge />
+          <AppHeader />
 
-        <div className="pt-14">
-          <SidebarProvider defaultOpen={state.open}>
-            <SidebarChatBridge />
-
+          <div className="pt-14">
             <Page style={'sidebar'}>
               <PageNavigation>
                 <TeamAccountLayoutSidebar
@@ -78,24 +75,10 @@ async function SidebarLayout({
                 />
               </PageNavigation>
 
-              <PageMobileNavigation
-                className={'flex items-center justify-between'}
-              >
-                <TeamAccountLayoutMobileNavigation
-                  userId={data.user.id}
-                  accounts={accounts}
-                  account={account}
-                />
-
-                <div className="flex-1" />
-
-                <div id="mobile-header-right" />
-              </PageMobileNavigation>
-
-              <TeamChatAwareContent>{children}</TeamChatAwareContent>
+              {children}
             </Page>
-          </SidebarProvider>
-        </div>
+          </div>
+        </SidebarProvider>
 
         <GlobalAIAssistant />
         <GlobalSearch />
@@ -123,7 +106,7 @@ function HeaderLayout({
               <TeamAccountNavigationMenu workspace={data} />
             </PageNavigation>
 
-            <TeamChatAwareContent>{children}</TeamChatAwareContent>
+            {children}
           </Page>
         </div>
 
