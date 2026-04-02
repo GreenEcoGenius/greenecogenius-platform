@@ -70,7 +70,7 @@ export const Header: React.FC<HeaderProps> = function ({
       >
         <div
           className={cn(
-            'flex h-16 items-center justify-between gap-x-2 px-4 md:grid md:h-24 md:gap-x-4 md:px-0',
+            'flex h-16 items-center justify-between gap-x-2 px-2 md:grid md:h-24 md:gap-x-4 md:px-0',
             gridClassName,
           )}
         >
