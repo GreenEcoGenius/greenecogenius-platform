@@ -71,8 +71,9 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
 
   const toggleLocale = () => {
     const next = locale === 'fr' ? 'en' : 'fr';
-    router.replace(pathname, { locale: next });
     setOpen(false);
+    // Use router.push for reliable locale switching with next-intl
+    router.push(pathname, { locale: next });
   };
 
   const isLoggedIn = !!user;

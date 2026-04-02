@@ -13,10 +13,6 @@ import { Trans } from '@kit/ui/trans';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 
-const features = {
-  enableThemeToggle: featuresFlagConfig.enableThemeToggle,
-};
-
 export function SiteHeaderAccountSection({
   user,
 }: {
@@ -25,6 +21,8 @@ export function SiteHeaderAccountSection({
   if (user) {
     return (
       <div className="hidden items-center gap-x-2 md:flex">
+        <LocaleToggle />
+
         <Button
           nativeButton={false}
           render={<Link href={pathsConfig.app.home}>Dashboard</Link>}
@@ -46,13 +44,13 @@ function LocaleToggle() {
 
   const toggle = () => {
     const next = locale === 'fr' ? 'en' : 'fr';
-    router.replace(pathname, { locale: next });
+    router.push(pathname, { locale: next });
   };
 
   return (
     <button
       onClick={toggle}
-      className="text-muted-foreground hover:text-foreground rounded-md px-2.5 py-1.5 text-sm font-semibold tracking-wider uppercase transition-colors"
+      className="text-metal-600 hover:bg-metal-frost hover:text-primary rounded-xl px-2.5 py-1.5 text-sm font-semibold tracking-wider uppercase transition-colors"
       aria-label="Change language"
     >
       {locale === 'fr' ? 'EN' : 'FR'}
@@ -63,6 +61,8 @@ function LocaleToggle() {
 function AuthButtons() {
   return (
     <div className="animate-in fade-in hidden items-center gap-x-2 duration-500 md:flex">
+      <LocaleToggle />
+
       <Button
         nativeButton={false}
         className="text-sm"
