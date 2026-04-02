@@ -1,7 +1,7 @@
 'use client';
 
-import { AIAssistant } from './ai-assistant';
+import { AIChatPanel } from './ai-chat-panel';
 
 export function GlobalAIAssistant() {
-  return <AIAssistant />;
+  return <AIChatPanel />;
 }

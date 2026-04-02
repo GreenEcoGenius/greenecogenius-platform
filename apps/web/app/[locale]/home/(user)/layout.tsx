@@ -9,11 +9,14 @@ import { UserWorkspaceContextProvider } from '@kit/accounts/components';
 import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/sidebar';
 
+import { ChatProvider } from '~/components/ai/chat-context';
 import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
+import { AppHeader } from '~/components/layout/app-header';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
 
+import { ChatAwareContent } from './_components/chat-aware-content';
 // home imports
 import { HomeMenuNavigation } from './_components/home-menu-navigation';
 import { HomeSidebar } from './_components/home-sidebar';
@@ -46,21 +49,30 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
 
   return (
     <UserWorkspaceContextProvider value={workspace}>
-      <SidebarProvider defaultOpen={state.open}>
-        <Page style={'sidebar'}>
-          <PageNavigation>
-            <HomeSidebar workspace={workspace} />
-          </PageNavigation>
+      <ChatProvider>
+        {/* Fixed header */}
+        <AppHeader />
 
-          <PageMobileNavigation className={'flex items-center justify-between'}>
-            <MobileNavigation />
-          </PageMobileNavigation>
+        <div className="pt-14">
+          <SidebarProvider defaultOpen={state.open}>
+            <Page style={'sidebar'}>
+              <PageNavigation>
+                <HomeSidebar workspace={workspace} />
+              </PageNavigation>
 
-          {children}
-        </Page>
-      </SidebarProvider>
+              <PageMobileNavigation
+                className={'flex items-center justify-between'}
+              >
+                <MobileNavigation />
+              </PageMobileNavigation>
 
-      <GlobalAIAssistant />
+              <ChatAwareContent>{children}</ChatAwareContent>
+            </Page>
+          </SidebarProvider>
+        </div>
+
+        <GlobalAIAssistant />
+      </ChatProvider>
     </UserWorkspaceContextProvider>
   );
 }
@@ -72,19 +84,27 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
 
   return (
     <UserWorkspaceContextProvider value={workspace}>
-      <Page style={'header'}>
-        <PageNavigation>
-          <HomeMenuNavigation workspace={workspace} />
-        </PageNavigation>
+      <ChatProvider>
+        <AppHeader />
 
-        <PageMobileNavigation className={'flex items-center justify-between'}>
-          <MobileNavigation />
-        </PageMobileNavigation>
+        <div className="pt-14">
+          <Page style={'header'}>
+            <PageNavigation>
+              <HomeMenuNavigation workspace={workspace} />
+            </PageNavigation>
 
-        {children}
-      </Page>
+            <PageMobileNavigation
+              className={'flex items-center justify-between'}
+            >
+              <MobileNavigation />
+            </PageMobileNavigation>
 
-      <GlobalAIAssistant />
+            <ChatAwareContent>{children}</ChatAwareContent>
+          </Page>
+        </div>
+
+        <GlobalAIAssistant />
+      </ChatProvider>
     </UserWorkspaceContextProvider>
   );
 }
