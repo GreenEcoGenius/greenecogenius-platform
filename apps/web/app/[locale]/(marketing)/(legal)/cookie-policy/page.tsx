@@ -119,10 +119,10 @@ async function CookiePolicyPage() {
             Pour toute question concernant notre utilisation des cookies,
             contactez-nous à{' '}
             <a
-              href="mailto:contact@greenecogenius.fr"
+              href="mailto:contact@greenecogenius.tech"
               className="text-primary hover:text-primary/80 underline underline-offset-4"
             >
-              contact@greenecogenius.fr
+              contact@greenecogenius.tech
             </a>
             .
           </p>

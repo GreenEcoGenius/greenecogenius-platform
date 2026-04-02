@@ -349,7 +349,7 @@ export function PricingContent({
                 variant="secondary"
                 className="border-metal-silver bg-metal-frost text-metal-700 hover:bg-metal-chrome mt-6 w-full rounded-xl border"
                 render={
-                  <Link href="mailto:contact@greenecogenius.fr">
+                  <Link href="mailto:contact@greenecogenius.tech">
                     <Users className="mr-2 h-4 w-4" />
                     <Trans i18nKey="pricingPage.contactSales" />
                   </Link>
@@ -533,7 +533,7 @@ export function PricingContent({
           <div className="text-metal-steel mt-6 flex items-center justify-center gap-6 text-sm">
             <span className="flex items-center gap-1">
               <Mail className="h-4 w-4" />
-              contact@greenecogenius.fr
+              contact@greenecogenius.tech
             </span>
             <span className="flex items-center gap-1">
               <Phone className="h-4 w-4" />

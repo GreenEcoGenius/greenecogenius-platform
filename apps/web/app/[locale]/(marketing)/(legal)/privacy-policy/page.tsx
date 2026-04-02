@@ -35,10 +35,10 @@ async function PrivacyPolicyPage() {
           <p>
             <strong className="text-foreground">Contact DPO :</strong>{' '}
             <a
-              href="mailto:contact@greenecogenius.fr"
+              href="mailto:contact@greenecogenius.tech"
               className="text-primary hover:text-primary/80 underline underline-offset-4"
             >
-              contact@greenecogenius.fr
+              contact@greenecogenius.tech
             </a>
           </p>
         </Section>
@@ -181,10 +181,10 @@ async function PrivacyPolicyPage() {
           <p className="mt-4">
             Pour exercer vos droits, contactez-nous à{' '}
             <a
-              href="mailto:contact@greenecogenius.fr"
+              href="mailto:contact@greenecogenius.tech"
               className="text-primary hover:text-primary/80 underline underline-offset-4"
             >
-              contact@greenecogenius.fr
+              contact@greenecogenius.tech
             </a>
             . Nous répondrons dans un délai de 30 jours.
           </p>
@@ -203,10 +203,10 @@ async function PrivacyPolicyPage() {
           <p>
             Pour toute question concernant cette politique, contactez-nous à{' '}
             <a
-              href="mailto:contact@greenecogenius.fr"
+              href="mailto:contact@greenecogenius.tech"
               className="text-primary hover:text-primary/80 underline underline-offset-4"
             >
-              contact@greenecogenius.fr
+              contact@greenecogenius.tech
             </a>
             .
           </p>

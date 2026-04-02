@@ -40,7 +40,7 @@ async function TermsOfServicePage() {
               ],
               ['Capital social', '10 000,00 €'],
               ['Directeur', 'Ervis Ago'],
-              ['Email', 'contact@greenecogenius.fr'],
+              ['Email', 'contact@greenecogenius.tech'],
               ['Code EMTAK', "70221 — Conseil en gestion d'entreprise"],
             ]}
           />
@@ -142,10 +142,10 @@ async function TermsOfServicePage() {
             Pour toute question relative aux présentes CGU, contactez-nous à
             {"l'adresse"}{' '}
             <a
-              href="mailto:contact@greenecogenius.fr"
+              href="mailto:contact@greenecogenius.tech"
               className="text-primary hover:text-primary/80 underline underline-offset-4"
             >
-              contact@greenecogenius.fr
+              contact@greenecogenius.tech
             </a>
             .
           </p>

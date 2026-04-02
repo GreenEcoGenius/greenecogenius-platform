@@ -117,10 +117,10 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
             Si vous pensez qu&apos;il s&apos;agit d&apos;une erreur,
             contactez-nous :{' '}
             <a
-              href="mailto:support@greenecogenius.com"
+              href="mailto:contact@greenecogenius.tech"
               className="text-primary underline"
             >
-              support@greenecogenius.com
+              contact@greenecogenius.tech
             </a>
           </p>
         </div>
@@ -524,7 +524,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
         {/* Section 6 - Actions */}
         <div className="flex flex-wrap justify-center gap-3">
           <CopyButton
-            text={`${typeof window !== 'undefined' ? window.location.origin : 'https://greenecogenius.com'}${verifyUrl}`}
+            text={`${typeof window !== 'undefined' ? window.location.origin : 'https://greenecogenius.tech'}${verifyUrl}`}
             label="Copier le lien de vérification"
             asButton
           />

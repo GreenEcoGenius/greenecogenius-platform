@@ -253,7 +253,7 @@ async function PersonalAccountBillingPage() {
               variant="secondary"
               className="mt-6 w-full"
               render={
-                <Link href="mailto:contact@greenecogenius.fr">
+                <Link href="mailto:contact@greenecogenius.tech">
                   <Trans i18nKey="pricingPage.contactSales" />
                 </Link>
               }
