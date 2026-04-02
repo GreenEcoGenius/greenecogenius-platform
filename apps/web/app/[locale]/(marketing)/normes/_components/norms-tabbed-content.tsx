@@ -15,6 +15,7 @@ import {
   Recycle,
   Shield,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -38,49 +39,19 @@ interface TabDef {
   pillar?: NormPillar;
 }
 
-const TABS: TabDef[] = [
-  {
-    id: 'circular_economy',
-    label: 'Economie circulaire',
-    count: 11,
-    icon: <Recycle className="h-4 w-4" />,
-    pillar: 'circular_economy',
-  },
-  {
-    id: 'carbon',
-    label: 'Bilan carbone',
-    count: 7,
-    icon: <Globe className="h-4 w-4" />,
-    pillar: 'carbon',
-  },
-  {
-    id: 'reporting',
-    label: 'Reporting ESG',
-    count: 9,
-    icon: <FileText className="h-4 w-4" />,
-    pillar: 'reporting',
-  },
-  {
-    id: 'traceability',
-    label: 'Tracabilite',
-    count: 6,
-    icon: <LinkIcon className="h-4 w-4" />,
-    pillar: 'traceability',
-  },
-  {
-    id: 'data',
-    label: 'Donnees & SaaS',
-    count: 5,
-    icon: <Shield className="h-4 w-4" />,
-    pillar: 'data',
-  },
-  {
-    id: 'labels',
-    label: 'Labels',
-    count: 4,
-    icon: <Award className="h-4 w-4" />,
-    pillar: 'labels',
-  },
+const TAB_DEFS: Array<{
+  id: string;
+  labelKey: string;
+  count: number;
+  icon: React.ReactNode;
+  pillar: NormPillar;
+}> = [
+  { id: 'circular_economy', labelKey: 'normesTabCircular', count: 11, icon: <Recycle className="h-4 w-4" />, pillar: 'circular_economy' },
+  { id: 'carbon', labelKey: 'normesTabCarbon', count: 7, icon: <Globe className="h-4 w-4" />, pillar: 'carbon' },
+  { id: 'reporting', labelKey: 'normesTabReporting', count: 9, icon: <FileText className="h-4 w-4" />, pillar: 'reporting' },
+  { id: 'traceability', labelKey: 'normesTabTraceability', count: 6, icon: <LinkIcon className="h-4 w-4" />, pillar: 'traceability' },
+  { id: 'data', labelKey: 'normesTabData', count: 5, icon: <Shield className="h-4 w-4" />, pillar: 'data' },
+  { id: 'labels', labelKey: 'normesTabLabels', count: 4, icon: <Award className="h-4 w-4" />, pillar: 'labels' },
 ];
 
 const PILLAR_HERO: Record<NormPillar, string> = {
@@ -223,15 +194,25 @@ function PillarContent({ pillar }: { pillar: NormPillar }) {
 // ── Main tabbed component ──
 
 export function NormsTabbedContent() {
+  const t = useTranslations('marketing');
   const [activeTab, setActiveTab] = useState('circular_economy');
   const tabBarRef = useRef<HTMLDivElement>(null);
+
+  const TABS: TabDef[] = TAB_DEFS.map((td) => ({
+    id: td.id,
+    label: t(td.labelKey),
+    count: td.count,
+    icon: td.icon,
+    pillar: td.pillar,
+  }));
 
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     if (hash) {
-      const matched = TABS.find((t) => t.id === hash || t.pillar === hash);
+      const matched = TABS.find((tab) => tab.id === hash || tab.pillar === hash);
       if (matched) setActiveTab(matched.id);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleTabChange = useCallback((tabId: string) => {
@@ -244,7 +225,7 @@ export function NormsTabbedContent() {
     }
   }, []);
 
-  const activeTabDef = TABS.find((t) => t.id === activeTab);
+  const activeTabDef = TABS.find((tab) => tab.id === activeTab);
 
   return (
     <>

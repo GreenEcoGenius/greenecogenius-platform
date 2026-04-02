@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { ChevronRight } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
 import { Button } from '@kit/ui/button';
 
@@ -9,63 +10,44 @@ import { AnimatedCounter } from '../_components/animated-counter';
 import { NormsTabbedContent } from './_components/norms-tabbed-content';
 
 export async function generateMetadata() {
+  const t = await getTranslations('marketing');
+
   return {
-    title: 'Normes & Standards -- 42 normes integrees | GreenEcoGenius',
-    description:
-      'GreenEcoGenius integre 42 normes ISO, reglementations europeennes et francaises, et frameworks ESG pour garantir votre conformite. CSRD, GHG Protocol, ISO 14064, Loi AGEC, RGPD.',
+    title: `${t('normesTitle')} -- 42 ${t('normesIntegrated')} | GreenEcoGenius`,
+    description: t('normesSubDesc'),
   };
 }
 
-export default function NormesPage() {
-  const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: 'Normes & Standards -- GreenEcoGenius',
-    description: '42 normes, reglementations et frameworks integres',
-    publisher: {
-      '@type': 'Organization',
-      name: 'GreenEcoGenius OU',
-      url: 'https://greenecogenius.tech',
-    },
-  };
+export default async function NormesPage() {
+  const t = await getTranslations('marketing');
+
+  const counters = [
+    { target: 42, label: t('normesIntegrated') },
+    { target: 6, label: t('normesPillars') },
+    { target: 15, label: t('normesISO') },
+    { target: 12, label: t('normesRegulations') },
+    { target: 4, label: t('normesLabels') },
+  ];
 
   return (
     <>
-      <script
-        key="ld:json"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-
-      {/* Hero */}
       <section className="bg-metal-50 relative overflow-hidden py-20 sm:py-28">
         <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
             <h1 className="text-metal-900 text-4xl font-bold tracking-tight sm:text-5xl">
-              Normes & Standards
+              {t('normesTitle')}
             </h1>
             <p className="text-metal-600 mx-auto mt-4 max-w-2xl text-lg">
-              42 normes, reglementations et frameworks integres a notre
-              plateforme pour garantir votre conformite.
+              {t('normesDesc')}
             </p>
             <p className="text-metal-500 mx-auto mt-3 max-w-3xl text-sm">
-              GreenEcoGenius est la seule plateforme B2B d&apos;economie
-              circulaire qui integre nativement les normes ISO, les
-              reglementations europeennes et francaises, et les frameworks de
-              reporting ESG dans chaque fonctionnalite.
+              {t('normesSubDesc')}
             </p>
           </AnimateOnScroll>
 
-          {/* Counters */}
           <AnimateOnScroll animation="fade-up" delay={200}>
             <div className="mx-auto mt-12 grid max-w-3xl grid-cols-2 gap-6 sm:grid-cols-5">
-              {[
-                { target: 42, label: 'normes integrees' },
-                { target: 6, label: 'piliers couverts' },
-                { target: 15, label: 'normes ISO' },
-                { target: 12, label: 'reglementations' },
-                { target: 4, label: 'labels vises' },
-              ].map((item) => (
+              {counters.map((item) => (
                 <div key={item.label} className="text-center">
                   <div className="text-primary text-3xl font-bold">
                     <AnimatedCounter target={item.target} />
@@ -76,13 +58,12 @@ export default function NormesPage() {
             </div>
           </AnimateOnScroll>
 
-          {/* CTAs */}
           <AnimateOnScroll animation="fade-up" delay={400}>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Button
                 render={
                   <Link href="/home">
-                    Decouvrir la plateforme
+                    {t('normesCtaDiscover')}
                     <ChevronRight className="ml-1 h-4 w-4" />
                   </Link>
                 }
@@ -90,7 +71,7 @@ export default function NormesPage() {
               />
               <Button
                 variant="outline"
-                render={<Link href="/home/billing">Voir les tarifs</Link>}
+                render={<Link href="/home/billing">{t('normesCtaPricing')}</Link>}
                 nativeButton={false}
               />
             </div>
@@ -98,7 +79,6 @@ export default function NormesPage() {
         </div>
       </section>
 
-      {/* Tabbed content */}
       <NormsTabbedContent />
     </>
   );
