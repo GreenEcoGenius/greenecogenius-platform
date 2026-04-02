@@ -84,12 +84,12 @@ const TABS: TabDef[] = [
 ];
 
 const PILLAR_HERO: Record<NormPillar, string> = {
-  circular_economy: '/images/normes/circular-infinity-aerial.png',
-  carbon: '/images/normes/carbon-counter-1000t.png',
-  reporting: '/images/normes/reporting-esg-meeting.png',
-  traceability: '/images/normes/traceability-blockchain-chain.png',
-  data: '/images/normes/saas-multi-device.png',
-  labels: '/images/normes/labels-globe-recycle.png',
+  circular_economy: '/images/normes/circular-recycling-process.png',
+  carbon: '/images/normes/carbon-dashboard-dark.png',
+  reporting: '/images/normes/reporting-co2-dashboard.png',
+  traceability: '/images/normes/traceability-blockchain-dark.png',
+  data: '/images/normes/saas-carbon-dashboard.png',
+  labels: '/images/normes/labels-csrd-mobile-v2.png',
 };
 
 // ── Animated norm card with PDF download ──

@@ -235,7 +235,7 @@ async function RSEPage() {
         </Card>
 
         <SectionFooterImage
-          src="/images/normes/labels-globe-recycle.png"
+          src="/images/normes/labels-csrd-mobile.png"
           alt="RSE et Labels"
         />
       </div>

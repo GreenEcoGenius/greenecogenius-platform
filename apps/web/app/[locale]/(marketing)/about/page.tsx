@@ -153,7 +153,7 @@ export default async function AboutPage() {
             >
               <div className="overflow-hidden rounded-xl shadow-sm">
                 <Image
-                  src="/images/sorted-materials.png"
+                  src="/images/greentech-energy.png"
                   alt={t('altSortedMaterials')}
                   width={1024}
                   height={585}

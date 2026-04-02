@@ -79,7 +79,7 @@ async function ESGPage() {
         <BenchmarkCard />
 
         <SectionFooterImage
-          src="/images/normes/reporting-esg-presentation.png"
+          src="/images/normes/reporting-co2-dashboard.png"
           alt="Reporting ESG"
         />
       </div>
