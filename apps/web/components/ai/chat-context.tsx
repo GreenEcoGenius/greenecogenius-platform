@@ -7,6 +7,7 @@ interface ChatContextValue {
   openChat: () => void;
   closeChat: () => void;
   toggleChat: () => void;
+  setSidebarControl: (control: { setOpen: (open: boolean) => void }) => void;
 }
 
 const ChatContext = createContext<ChatContextValue>({
@@ -14,17 +15,48 @@ const ChatContext = createContext<ChatContextValue>({
   openChat: () => {},
   closeChat: () => {},
   toggleChat: () => {},
+  setSidebarControl: () => {},
 });
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [chatOpen, setChatOpen] = useState(false);
+  const [sidebarControl, setSidebarControlState] = useState<{
+    setOpen: (open: boolean) => void;
+  } | null>(null);
 
-  const openChat = useCallback(() => setChatOpen(true), []);
-  const closeChat = useCallback(() => setChatOpen(false), []);
-  const toggleChat = useCallback(() => setChatOpen((prev) => !prev), []);
+  const openChat = useCallback(() => {
+    setChatOpen(true);
+    sidebarControl?.setOpen(false);
+  }, [sidebarControl]);
+
+  const closeChat = useCallback(() => {
+    setChatOpen(false);
+    sidebarControl?.setOpen(true);
+  }, [sidebarControl]);
+
+  const toggleChat = useCallback(() => {
+    setChatOpen((prev) => {
+      const next = !prev;
+      if (next) {
+        sidebarControl?.setOpen(false);
+      } else {
+        sidebarControl?.setOpen(true);
+      }
+      return next;
+    });
+  }, [sidebarControl]);
+
+  const setSidebarControl = useCallback(
+    (control: { setOpen: (open: boolean) => void }) => {
+      setSidebarControlState(control);
+    },
+    [],
+  );
 
   return (
-    <ChatContext.Provider value={{ chatOpen, openChat, closeChat, toggleChat }}>
+    <ChatContext.Provider
+      value={{ chatOpen, openChat, closeChat, toggleChat, setSidebarControl }}
+    >
       {children}
     </ChatContext.Provider>
   );

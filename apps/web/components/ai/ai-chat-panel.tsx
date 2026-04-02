@@ -12,6 +12,7 @@ import {
   Leaf,
   Link2,
   PackageSearch,
+  Paperclip,
   PenLine,
   Send,
   Shield,
@@ -303,6 +304,7 @@ export function AIChatPanel() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Reset on section change
   useEffect(() => {
@@ -408,7 +410,7 @@ export function AIChatPanel() {
             <Sparkles className="text-primary h-3.5 w-3.5" />
           </span>
           <div>
-            <p className="text-metal-900 text-sm font-semibold">Assistant IA</p>
+            <p className="text-metal-900 text-sm font-semibold">Genius</p>
             <div className="text-metal-500 flex items-center gap-1 text-[11px]">
               {section.icon}
               {section.name}
@@ -416,6 +418,14 @@ export function AIChatPanel() {
           </div>
         </div>
         <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
+            title="Importer un document"
+          >
+            <Paperclip className="h-3.5 w-3.5" />
+          </button>
           <button
             type="button"
             onClick={() => setMessages([])}
@@ -512,9 +522,32 @@ export function AIChatPanel() {
         L&apos;IA peut generer des informations inexactes
       </div>
 
+      {/* Hidden file input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".pdf,.csv,.xlsx,.xls,.docx,.doc,.png,.jpg,.jpeg"
+        className="hidden"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) {
+            handleSend(`[Document importe : ${file.name}]`);
+          }
+          e.target.value = '';
+        }}
+      />
+
       {/* Input */}
       <div className="border-metal-chrome border-t p-3">
         <div className="border-metal-silver bg-metal-50 flex items-end gap-2 rounded-xl border px-3 py-2">
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="text-metal-steel hover:text-metal-600 flex h-8 w-8 shrink-0 items-center justify-center transition-colors"
+            title="Joindre un fichier"
+          >
+            <Paperclip className="h-4 w-4" />
+          </button>
           <textarea
             ref={inputRef}
             value={input}

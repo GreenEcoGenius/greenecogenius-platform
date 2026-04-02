@@ -11,6 +11,7 @@ import { SidebarProvider } from '@kit/ui/sidebar';
 
 import { ChatProvider } from '~/components/ai/chat-context';
 import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
+import { SidebarChatBridge } from '~/components/ai/sidebar-chat-bridge';
 import { AppHeader } from '~/components/layout/app-header';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
@@ -55,6 +56,8 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
 
         <div className="pt-14">
           <SidebarProvider defaultOpen={state.open}>
+            <SidebarChatBridge />
+
             <Page style={'sidebar'}>
               <PageNavigation>
                 <HomeSidebar workspace={workspace} />

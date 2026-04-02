@@ -11,6 +11,7 @@ import { SidebarProvider } from '@kit/ui/sidebar';
 
 import { ChatProvider } from '~/components/ai/chat-context';
 import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
+import { SidebarChatBridge } from '~/components/ai/sidebar-chat-bridge';
 import { AppHeader } from '~/components/layout/app-header';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
 
@@ -64,6 +65,8 @@ async function SidebarLayout({
 
         <div className="pt-14">
           <SidebarProvider defaultOpen={state.open}>
+            <SidebarChatBridge />
+
             <Page style={'sidebar'}>
               <PageNavigation>
                 <TeamAccountLayoutSidebar
