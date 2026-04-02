@@ -7,19 +7,21 @@ const PDF_SERVICE_LABELS = {
     company: 'Organization',
     date: 'Date',
     confidential: 'CONFIDENTIAL',
-    footerEntity: 'GreenEcoGenius OU -- greenecogenius.tech',
+    footerEntity:
+      'GreenEcoGenius, Inc. (Delaware, USA) · GreenEcoGenius OU (Estonia) -- greenecogenius.tech',
     footerSlogan: 'Building Today to Preserve Tomorrow.',
     footerGenerated:
-      'AI-generated document -- Blockchain data verified on-chain',
+      'AI-generated document -- Blockchain data verified on-chain on Polygon',
   },
   fr: {
     company: 'Entreprise',
     date: 'Date',
     confidential: 'CONFIDENTIEL',
-    footerEntity: 'GreenEcoGenius OU -- greenecogenius.tech',
+    footerEntity:
+      'GreenEcoGenius OU (Estonie) · GreenEcoGenius, Inc. (Delaware, USA) -- greenecogenius.tech',
     footerSlogan: "Batir Aujourd'hui Pour Preserver Demain.",
     footerGenerated:
-      'Document genere par IA -- Les donnees blockchain sont verifiees on-chain',
+      'Document genere par IA -- Les donnees blockchain sont verifiees on-chain sur Polygon',
   },
 } as const;
 

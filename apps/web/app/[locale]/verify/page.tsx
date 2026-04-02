@@ -181,7 +181,8 @@ export default async function VerifyLandingPage({
 
       {/* Footer */}
       <footer className="text-muted-foreground border-t px-4 py-6 text-center text-xs">
-        <p>GreenEcoGenius — Plateforme de traçabilité et économie circulaire</p>
+        <p>GreenEcoGenius OÜ (Estonia) · GreenEcoGenius, Inc. (Delaware, USA)</p>
+        <p className="text-xs opacity-60">Blockchain: Polygon Mainnet · greenecogenius.tech</p>
       </footer>
 
       {/* Client-side script for form redirect */}

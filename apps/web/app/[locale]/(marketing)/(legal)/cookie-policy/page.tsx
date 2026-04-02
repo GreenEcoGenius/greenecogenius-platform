@@ -127,12 +127,15 @@ async function CookiePolicyPage() {
             .
           </p>
           <div className="bg-card mt-4 rounded-lg border p-5 text-sm">
-            <p className="text-foreground font-semibold">GreenEcoGenius OÜ</p>
+            <p className="text-foreground font-semibold">GreenEcoGenius OÜ (Estonie) · GreenEcoGenius, Inc. (Delaware, USA)</p>
             <p className="text-muted-foreground mt-1">
-              Tornimäe tn 5, 10145 Tallinn, Estonie
+              Europe : Tornimäe tn 5, 10145 Tallinn, Estonie — Registre 16917315
             </p>
             <p className="text-muted-foreground">
-              Registre du commerce : 16917315
+              USA : 131 Continental Dr, Suite 305, Newark, DE 19713
+            </p>
+            <p className="text-muted-foreground">
+              Contact : privacy@greenecogenius.tech
             </p>
           </div>
         </Section>

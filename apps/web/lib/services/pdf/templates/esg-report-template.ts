@@ -90,7 +90,7 @@ const LABELS = {
     scopes:
       'Scopes:\n- Scope 1: Direct emissions (on-site combustion, vehicles)\n- Scope 2: Indirect emissions from purchased energy\n- Scope 3: Other indirect emissions (value chain)',
     dataSources:
-      'Data sources:\n- Organizational data entered by the user\n- Recycling data tracked via the GreenEcoGenius platform\n- Emission factors: ADEME Base Carbone 2024',
+      'Data sources:\n- Organizational data entered by the user\n- Recycling data tracked via the GreenEcoGenius platform\n- Emission factors: ADEME Base Carbone 2024\n\nPublisher: GreenEcoGenius, Inc. (Delaware, USA) · GreenEcoGenius OU (Estonia)\ngreenecogenius.tech · contact@greenecogenius.tech',
     warning:
       'Disclaimer: This report is automatically generated from user-provided data. It is for informational purposes only and does not constitute a certified audit. For official CSRD/GRI reporting, we recommend verification by an independent third-party body.',
     employees: 'empl.',
@@ -160,7 +160,7 @@ const LABELS = {
     scopes:
       "Perimetres :\n- Scope 1 : Emissions directes (combustion sur site, vehicules)\n- Scope 2 : Emissions indirectes liees a l'energie achetee\n- Scope 3 : Autres emissions indirectes (chaine de valeur)",
     dataSources:
-      "Sources de donnees :\n- Donnees organisationnelles saisies par l'utilisateur\n- Donnees de recyclage tracees via la plateforme GreenEcoGenius\n- Facteurs d'emission : Base Carbone ADEME 2024",
+      "Sources de donnees :\n- Donnees organisationnelles saisies par l'utilisateur\n- Donnees de recyclage tracees via la plateforme GreenEcoGenius\n- Facteurs d'emission : Base Carbone ADEME 2024\n\nEditeur : GreenEcoGenius OU (Estonie) · GreenEcoGenius, Inc. (Delaware, USA)\ngreenecogenius.tech · contact@greenecogenius.tech",
     warning:
       "Avertissement : Ce rapport est genere automatiquement a partir des donnees fournies par l'utilisateur. Il est fourni a titre indicatif et ne constitue pas un audit certifie. Pour un reporting officiel CSRD/GRI, nous recommandons une verification par un organisme tiers independant (OTI).",
     employees: 'empl.',

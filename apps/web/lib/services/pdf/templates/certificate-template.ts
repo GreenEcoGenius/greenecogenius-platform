@@ -51,7 +51,7 @@ const LABELS = {
     footerCompliance:
       'Compliant: ISO 59014:2024 | Traceability decree no. 2021-321',
     issuedBy: (dateStr: string) =>
-      `Issued on ${dateStr} by GreenEcoGenius OU -- greenecogenius.tech`,
+      `Issued on ${dateStr} by GreenEcoGenius, Inc. (Delaware, USA) · GreenEcoGenius OU (Estonia) -- greenecogenius.tech`,
     dateLocale: 'en-GB',
   },
   fr: {
@@ -84,7 +84,7 @@ const LABELS = {
     footerCompliance:
       'Conforme : ISO 59014:2024 | Decret tracabilite n. 2021-321',
     issuedBy: (dateStr: string) =>
-      `Emis le ${dateStr} par GreenEcoGenius OU -- greenecogenius.tech`,
+      `Emis le ${dateStr} par GreenEcoGenius OU (Estonie) · GreenEcoGenius, Inc. (Delaware, USA) -- greenecogenius.tech`,
     dateLocale: 'fr-FR',
   },
 } as const;

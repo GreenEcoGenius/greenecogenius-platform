@@ -88,6 +88,11 @@
   "aboutCsrHeading": "Engagement RSE",
   "aboutCsrText": "La Responsabilité Sociétale des Entreprises est au cœur de notre ADN. Nous aidons nos clients à respecter la directive CSRD, à générer leurs rapports extra-financiers et à démontrer leur engagement environnemental auprès de leurs parties prenantes.",
   "aboutCarbonHeading": "Empreinte Carbone",
+  "aboutStructureHeading": "Notre structure",
+  "aboutStructureP1": "GreenEcoGenius opère à travers deux entités complémentaires :",
+  "aboutStructureEU": "GreenEcoGenius OÜ, immatriculée en Estonie, opère la plateforme pour le marché européen. L'Estonie est un leader mondial de la gouvernance numérique et offre un cadre juridique moderne pour les entreprises tech.",
+  "aboutStructureUS": "GreenEcoGenius, Inc., incorporée dans le Delaware (USA), développe la présence de GreenEcoGenius sur le marché nord-américain. Le Delaware est le standard pour les startups technologiques aux États-Unis.",
+  "aboutStructureFounder": "Les deux entités sont fondées et dirigées par Ervis Ago depuis Montpellier, France.",
   "aboutCarbonText": "Chaque transaction sur GreenEcoGenius est accompagnée d'un calcul précis de son impact carbone. Notre IA mesure les émissions évitées grâce au recyclage et à l'optimisation logistique, permettant à nos clients de quantifier concrètement leur contribution à la lutte contre le changement climatique.",
 
   "faq": "FAQ",
@@ -158,7 +163,7 @@
   "contactSuccessDescription": "Nous avons bien reçu votre message et vous répondrons dans les plus brefs délais",
   "contactErrorDescription": "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer plus tard",
   "footerDescription": "Plateforme B2B d'économie circulaire. Vendez, collectez et tracez vos matières recyclables avec traçabilité blockchain et reporting RSE par IA.",
-  "copyright": "© {year} {product} OÜ — Plateforme d'Économie Circulaire. Tous droits réservés.",
+  "copyright": "© {year} GreenEcoGenius OÜ (Estonie) · GreenEcoGenius, Inc. (Delaware, USA) — Plateforme B2B d'économie circulaire",
 
   "altBlockchainTablet": "Traçabilité blockchain sur tablette",
   "altCsrReporting": "Équipe de reporting RSE",

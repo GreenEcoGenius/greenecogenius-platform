@@ -200,6 +200,50 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      {/* ───── STRUCTURE ───── */}
+      <section className="bg-metal-50 py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AnimateOnScroll animation="fade-up">
+            <div className="mx-auto max-w-2xl text-center">
+              <Globe2 className="text-primary mx-auto h-10 w-10" />
+              <h2 className="text-metal-900 mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
+                {t('aboutStructureHeading')}
+              </h2>
+              <p className="text-metal-600 mt-4 text-lg">
+                {t('aboutStructureP1')}
+              </p>
+            </div>
+          </AnimateOnScroll>
+
+          <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-2">
+            <AnimateOnScroll animation="fade-right">
+              <div className="rounded-2xl border bg-white p-8">
+                <h3 className="text-metal-900 text-xl font-bold">GreenEcoGenius OÜ</h3>
+                <p className="text-primary mt-1 text-sm font-semibold">Estonia — Europe</p>
+                <p className="text-metal-600 mt-4 leading-relaxed">
+                  {t('aboutStructureEU')}
+                </p>
+              </div>
+            </AnimateOnScroll>
+            <AnimateOnScroll animation="fade-left">
+              <div className="rounded-2xl border bg-white p-8">
+                <h3 className="text-metal-900 text-xl font-bold">GreenEcoGenius, Inc.</h3>
+                <p className="text-primary mt-1 text-sm font-semibold">Delaware, USA</p>
+                <p className="text-metal-600 mt-4 leading-relaxed">
+                  {t('aboutStructureUS')}
+                </p>
+              </div>
+            </AnimateOnScroll>
+          </div>
+
+          <AnimateOnScroll animation="fade-up" delay={200}>
+            <p className="text-metal-500 mx-auto mt-8 max-w-2xl text-center">
+              {t('aboutStructureFounder')}
+            </p>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
       {/* ───── CTA ───── */}
       <section className="from-metal-900 via-metal-800 to-metal-900 bg-gradient-to-r py-20 sm:py-28">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
