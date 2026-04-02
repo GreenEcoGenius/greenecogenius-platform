@@ -51,13 +51,11 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
   return (
     <UserWorkspaceContextProvider value={workspace}>
       <ChatProvider>
-        {/* Fixed header */}
-        <AppHeader />
+        <SidebarProvider defaultOpen={state.open}>
+          <SidebarChatBridge />
+          <AppHeader />
 
-        <div className="pt-14">
-          <SidebarProvider defaultOpen={state.open}>
-            <SidebarChatBridge />
-
+          <div className="pt-14">
             <Page style={'sidebar'}>
               <PageNavigation>
                 <HomeSidebar workspace={workspace} />
@@ -65,8 +63,8 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
 
               <ChatAwareContent>{children}</ChatAwareContent>
             </Page>
-          </SidebarProvider>
-        </div>
+          </div>
+        </SidebarProvider>
 
         <GlobalAIAssistant />
         <GlobalSearch />
