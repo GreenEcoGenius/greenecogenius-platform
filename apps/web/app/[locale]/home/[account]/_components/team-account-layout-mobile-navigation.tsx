@@ -71,7 +71,7 @@ export const TeamAccountLayoutMobileNavigation = (
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Menu className={'h-9'} />
+        <Menu className={'h-7 w-7'} strokeWidth={1.5} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent sideOffset={10} className={'w-screen rounded-none'}>

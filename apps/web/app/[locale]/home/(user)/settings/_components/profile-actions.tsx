@@ -56,7 +56,7 @@ export function ProfileActions({
               className={`flex items-center justify-center gap-2 rounded-lg border-2 px-4 py-3 text-sm font-medium transition-all ${
                 locale === 'fr'
                   ? 'border-primary bg-primary/5 text-primary'
-                  : 'border-transparent bg-muted text-muted-foreground hover:border-gray-300'
+                  : 'bg-muted text-muted-foreground border-transparent hover:border-gray-300'
               }`}
             >
               <span className="text-lg">🇫🇷</span>
@@ -68,7 +68,7 @@ export function ProfileActions({
               className={`flex items-center justify-center gap-2 rounded-lg border-2 px-4 py-3 text-sm font-medium transition-all ${
                 locale === 'en'
                   ? 'border-primary bg-primary/5 text-primary'
-                  : 'border-transparent bg-muted text-muted-foreground hover:border-gray-300'
+                  : 'bg-muted text-muted-foreground border-transparent hover:border-gray-300'
               }`}
             >
               <span className="text-lg">🇬🇧</span>
@@ -95,7 +95,7 @@ export function ProfileActions({
                 className={`rounded-lg border-2 px-3 py-2.5 text-xs font-medium transition-all ${
                   theme === 'light'
                     ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-transparent bg-muted text-muted-foreground hover:border-gray-300'
+                    : 'bg-muted text-muted-foreground border-transparent hover:border-gray-300'
                 }`}
               >
                 Clair
@@ -106,7 +106,7 @@ export function ProfileActions({
                 className={`rounded-lg border-2 px-3 py-2.5 text-xs font-medium transition-all ${
                   theme === 'dark'
                     ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-transparent bg-muted text-muted-foreground hover:border-gray-300'
+                    : 'bg-muted text-muted-foreground border-transparent hover:border-gray-300'
                 }`}
               >
                 Sombre
@@ -117,7 +117,7 @@ export function ProfileActions({
                 className={`rounded-lg border-2 px-3 py-2.5 text-xs font-medium transition-all ${
                   theme === 'system'
                     ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-transparent bg-muted text-muted-foreground hover:border-gray-300'
+                    : 'bg-muted text-muted-foreground border-transparent hover:border-gray-300'
                 }`}
               >
                 Auto

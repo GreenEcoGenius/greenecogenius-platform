@@ -11,10 +11,10 @@ export function MobileSidebarToggle() {
     <button
       type="button"
       onClick={toggleSidebar}
-      className="text-foreground hover:text-primary h-8 w-8 cursor-pointer"
+      className="text-foreground hover:text-primary flex h-10 w-10 cursor-pointer items-center justify-center"
       aria-label="Menu"
     >
-      <Menu className="h-6 w-6" strokeWidth={1.5} />
+      <Menu className="h-7 w-7" strokeWidth={1.5} />
     </button>
   );
 }

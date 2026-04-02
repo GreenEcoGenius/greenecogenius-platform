@@ -10,7 +10,6 @@ import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/sidebar';
 
 import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
-import { AppLogo } from '~/components/app-logo';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
@@ -95,11 +94,9 @@ function MobileNavigation() {
     <>
       <MobileSidebarToggle />
 
-      <div className="flex flex-1 justify-center">
-        <AppLogo className="h-10" />
-      </div>
+      <div className="flex-1" />
 
-      <div className="w-8" />
+      <div id="mobile-header-right" />
     </>
   );
 }

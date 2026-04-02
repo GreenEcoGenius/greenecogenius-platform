@@ -9,7 +9,7 @@ import { TeamAccountWorkspaceContextProvider } from '@kit/team-accounts/componen
 import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/sidebar';
 
-import { AppLogo } from '~/components/app-logo';
+import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
 
 // local imports
@@ -68,20 +68,22 @@ async function SidebarLayout({
           </PageNavigation>
 
           <PageMobileNavigation className={'flex items-center justify-between'}>
-            <AppLogo />
+            <TeamAccountLayoutMobileNavigation
+              userId={data.user.id}
+              accounts={accounts}
+              account={account}
+            />
 
-            <div className={'flex space-x-4'}>
-              <TeamAccountLayoutMobileNavigation
-                userId={data.user.id}
-                accounts={accounts}
-                account={account}
-              />
-            </div>
+            <div className="flex-1" />
+
+            <div id="mobile-header-right" />
           </PageMobileNavigation>
 
           {children}
         </Page>
       </SidebarProvider>
+
+      <GlobalAIAssistant />
     </TeamAccountWorkspaceContextProvider>
   );
 }
