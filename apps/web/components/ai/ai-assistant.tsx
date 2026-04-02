@@ -238,7 +238,7 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
   const triggerButton = !open ? (
     <button
       onClick={() => setOpen(true)}
-      className="flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-medium text-emerald-700 transition-all hover:shadow-md dark:border-emerald-800 dark:bg-gray-950 dark:text-emerald-400"
+      className="border-primary-light text-primary flex items-center gap-2 rounded-full border bg-white px-4 py-2 text-sm font-medium transition-all hover:shadow-md"
     >
       <Sparkles className="h-4 w-4" />
       Kodee
@@ -247,14 +247,12 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
 
   return (
     <>
-      {/* Trigger button - rendered in header portal if available, otherwise fixed */}
-      {triggerButton && headerPortal
-        ? createPortal(triggerButton, headerPortal)
-        : triggerButton && (
-            <div className="fixed top-20 right-4 z-50 sm:right-6">
-              {triggerButton}
-            </div>
-          )}
+      {/* Trigger button - always fixed on desktop */}
+      {triggerButton && (
+        <div className="fixed top-20 right-4 z-50 sm:right-6">
+          {triggerButton}
+        </div>
+      )}
 
       {/* Full screen chat - uses visualViewport height to stay stable with mobile keyboard */}
       {open && (
