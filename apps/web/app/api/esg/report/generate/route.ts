@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers';
+
 import { NextRequest, NextResponse } from 'next/server';
 
 import { requireUser } from '@kit/supabase/require-user';
@@ -87,7 +89,9 @@ export async function POST(req: NextRequest) {
     .eq('id', user.id)
     .single();
 
-  const companyName = account?.name ?? 'Mon entreprise';
+  const locale = (await cookies()).get('NEXT_LOCALE')?.value ?? 'en';
+  const isFr = locale === 'fr';
+  const companyName = account?.name ?? (isFr ? 'Mon entreprise' : 'My company');
 
   const scope1Kg = report?.scope1_kg ?? 0;
   const scope2Kg = report?.scope2_kg ?? 0;
@@ -113,22 +117,31 @@ export async function POST(req: NextRequest) {
 
   const fmt = (v: number) => v.toFixed(1);
   const fmtT = (v: number) => (v / 1000).toFixed(2);
-  const generatedAt = new Date().toLocaleDateString('fr-FR', {
+  const generatedAt = new Date().toLocaleDateString(isFr ? 'fr-FR' : 'en-GB', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
 
-  const aiSummary = `Pour l'annee ${year}, ${companyName} a emis un total de ${fmt(totalKg)} kg CO2e (${fmtT(totalKg)} tonnes), repartis en Scope 1 (${fmt(scope1Kg)} kg), Scope 2 (${fmt(scope2Kg)} kg) et Scope 3 (${fmt(scope3Kg)} kg). Grace aux actions de recyclage et d'economie circulaire via la plateforme GreenEcoGenius, ${fmt(avoidedKg)} kg de CO2 ont ete evites, ramenant les emissions nettes a ${fmt(netKg)} kg CO2e.
+  const aiSummary = isFr
+    ? `Pour l'annee ${year}, ${companyName} a emis un total de ${fmt(totalKg)} kg CO2e (${fmtT(totalKg)} tonnes), repartis en Scope 1 (${fmt(scope1Kg)} kg), Scope 2 (${fmt(scope2Kg)} kg) et Scope 3 (${fmt(scope3Kg)} kg). Grace aux actions de recyclage et d'economie circulaire via la plateforme GreenEcoGenius, ${fmt(avoidedKg)} kg de CO2 ont ete evites, ramenant les emissions nettes a ${fmt(netKg)} kg CO2e.
 
 ${platformTransactionCount > 0 ? `Au total, ${platformTransactionCount} operations de recyclage ont ete tracees sur la plateforme, representant ${platformTonnesRecycled.toFixed(1)} tonnes de materiaux recycles.` : "Aucune transaction de recyclage n'a encore ete enregistree sur la plateforme pour cette periode."}
 
 ${perEmployeeKg > 0 ? `L'intensite carbone par collaborateur s'eleve a ${fmt(perEmployeeKg)} kg CO2e.` : ''}
 
-Ce rapport suit les standards du GHG Protocol et s'appuie sur les facteurs d'emission de la Base Carbone ADEME 2024.`;
+Ce rapport suit les standards du GHG Protocol et s'appuie sur les facteurs d'emission de la Base Carbone ADEME 2024.`
+    : `For the year ${year}, ${companyName} emitted a total of ${fmt(totalKg)} kg CO2e (${fmtT(totalKg)} tonnes), split across Scope 1 (${fmt(scope1Kg)} kg), Scope 2 (${fmt(scope2Kg)} kg) and Scope 3 (${fmt(scope3Kg)} kg). Through recycling and circular economy actions via the GreenEcoGenius platform, ${fmt(avoidedKg)} kg of CO2 were avoided, bringing net emissions to ${fmt(netKg)} kg CO2e.
+
+${platformTransactionCount > 0 ? `A total of ${platformTransactionCount} recycling operations were tracked on the platform, representing ${platformTonnesRecycled.toFixed(1)} tonnes of recycled materials.` : 'No recycling transactions have been recorded on the platform for this period.'}
+
+${perEmployeeKg > 0 ? `The carbon intensity per employee stands at ${fmt(perEmployeeKg)} kg CO2e.` : ''}
+
+This report follows GHG Protocol standards and relies on ADEME Base Carbone 2024 emission factors.`;
 
   // Generate PDF
-  const pdfBuffer = generateESGReportPDF({
+  const pdfBuffer = generateESGReportPDF(
+    {
     companyName,
     year,
     date: generatedAt,
@@ -152,7 +165,9 @@ Ce rapport suit les standards du GHG Protocol et s'appuie sur les facteurs d'emi
     aiSummary,
     nbEmployees: esg.nb_employees,
     industrySector: esg.industry_sector,
-  });
+    },
+    locale,
+  );
 
   const safeCompanyName = companyName.replace(/[^a-zA-Z0-9]/g, '_');
 
@@ -160,7 +175,7 @@ Ce rapport suit les standards du GHG Protocol et s'appuie sur les facteurs d'emi
     status: 200,
     headers: {
       'Content-Type': 'application/pdf',
-      'Content-Disposition': `attachment; filename="Rapport-ESG-${year}-${safeCompanyName}.pdf"`,
+      'Content-Disposition': `attachment; filename="${isFr ? 'Rapport-ESG' : 'ESG-Report'}-${year}-${safeCompanyName}.pdf"`,
     },
   });
 }

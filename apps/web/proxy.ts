@@ -12,6 +12,7 @@ import { createMiddlewareClient } from '@kit/supabase/middleware-client';
 import pathsConfig from '~/config/paths.config';
 
 const NEXT_ACTION_HEADER = 'next-action';
+const LOCALE_COOKIE = 'NEXT_LOCALE';
 
 export const config = {
   matcher: ['/((?!_next/static|_next/image|images|locales|assets|api/*).*)'],
@@ -26,9 +27,34 @@ const getUser = (request: NextRequest, response: NextResponse) => {
   return supabase.auth.getClaims();
 };
 
+/**
+ * Detect preferred locale from Vercel geo header.
+ * France = fr, everywhere else = en.
+ */
+function detectLocaleFromGeo(request: NextRequest): string {
+  const country = request.headers.get('x-vercel-ip-country');
+  return country === 'FR' ? 'fr' : 'en';
+}
+
 export default async function proxy(request: NextRequest) {
-  // run next-intl middleware first to get the i18n-aware response
+  const hasLocaleCookie = request.cookies.has(LOCALE_COOKIE);
+
+  if (!hasLocaleCookie) {
+    const geoLocale = detectLocaleFromGeo(request);
+    request.cookies.set(LOCALE_COOKIE, geoLocale);
+  }
+
+  // run next-intl middleware to get the i18n-aware response
   const response = handleI18nRouting(request);
+
+  if (!hasLocaleCookie) {
+    const geoLocale = detectLocaleFromGeo(request);
+    response.cookies.set(LOCALE_COOKIE, geoLocale, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: 'lax',
+    });
+  }
 
   // apply secure headers on top of the i18n response
   const secureHeadersResponse = await createResponseWithSecureHeaders(response);

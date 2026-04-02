@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers';
+
 import { NextRequest, NextResponse } from 'next/server';
 
 import * as z from 'zod';
@@ -36,6 +38,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const locale = (await cookies()).get('NEXT_LOCALE')?.value ?? 'en';
   const { lotIds } = parsed.data;
   const issuedAt = new Date().toISOString();
   const blockchainConfigured = Boolean(
@@ -93,7 +96,8 @@ export async function POST(req: NextRequest) {
     }
 
     // Generate real PDF
-    const pdfBuffer = await generateCertificatePDF({
+    const pdfBuffer = await generateCertificatePDF(
+      {
       certNumber,
       lotId: lot.lotId,
       material: lot.materialType,
@@ -108,7 +112,9 @@ export async function POST(req: NextRequest) {
       txHash,
       issuedAt,
       contractAddress: process.env.CONTRACT_ADDRESS ?? undefined,
-    });
+      },
+      locale,
+    );
 
     const pdfBase64 = Buffer.from(pdfBuffer).toString('base64');
 

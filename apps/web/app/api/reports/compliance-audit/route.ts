@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers';
+
 import { NextResponse } from 'next/server';
 
 import * as z from 'zod';
@@ -268,7 +270,9 @@ export async function POST() {
     .eq('id', user.id)
     .single();
 
-  const companyName = account?.name ?? 'Mon entreprise';
+  const locale = (await cookies()).get('NEXT_LOCALE')?.value ?? 'en';
+  const isFr = locale === 'fr';
+  const companyName = account?.name ?? (isFr ? 'Mon entreprise' : 'My company');
 
   // Try parallel AI analysis per pillar, fallback to mock
   let auditResult: AuditResult;
@@ -326,7 +330,9 @@ export async function POST() {
           majorIssues,
           minorIssues,
           norms: allNorms,
-          executiveSummary: `L'analyse de pre-audit couvre les ${allNorms.length} normes du referentiel GreenEcoGenius reparties sur 6 piliers. Le score global de conformite est de ${score}%. ${normsCompliant} normes sont pleinement conformes, ${normsPartial} sont partiellement conformes, et ${normsNonCompliant} presentent des non-conformites. ${criticalIssues} points critiques et ${majorIssues} points majeurs necessitent une attention immediate.`,
+          executiveSummary: isFr
+            ? `L'analyse de pre-audit couvre les ${allNorms.length} normes du referentiel GreenEcoGenius reparties sur 6 piliers. Le score global de conformite est de ${score}%. ${normsCompliant} normes sont pleinement conformes, ${normsPartial} sont partiellement conformes, et ${normsNonCompliant} presentent des non-conformites. ${criticalIssues} points critiques et ${majorIssues} points majeurs necessitent une attention immediate.`
+            : `The pre-audit analysis covers ${allNorms.length} standards from the GreenEcoGenius framework across 6 pillars. The overall compliance score is ${score}%. ${normsCompliant} standards are fully compliant, ${normsPartial} are partially compliant, and ${normsNonCompliant} have non-compliances. ${criticalIssues} critical issues and ${majorIssues} major issues require immediate attention.`,
         };
       } else {
         auditResult = generateMockAnalysis();
@@ -356,14 +362,15 @@ export async function POST() {
     // Non-blocking: table may not exist yet
   }
 
-  const generatedAt = new Date().toLocaleDateString('fr-FR', {
+  const generatedAt = new Date().toLocaleDateString(isFr ? 'fr-FR' : 'en-GB', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
 
   // Generate PDF
-  const pdfBuffer = generateAuditReportPDF({
+  const pdfBuffer = generateAuditReportPDF(
+    {
     companyName,
     date: generatedAt,
     score: auditResult.score,
@@ -377,7 +384,9 @@ export async function POST() {
     executiveSummary: auditResult.executiveSummary,
     norms: auditResult.norms,
     pillars: PILLARS,
-  });
+    },
+    locale,
+  );
 
   const safeCompanyName = companyName.replace(/[^a-zA-Z0-9]/g, '_');
 
@@ -385,7 +394,7 @@ export async function POST() {
     status: 200,
     headers: {
       'Content-Type': 'application/pdf',
-      'Content-Disposition': `attachment; filename="PreAudit-Conformite-${safeCompanyName}-${new Date().toISOString().split('T')[0]}.pdf"`,
+      'Content-Disposition': `attachment; filename="${isFr ? 'PreAudit-Conformite' : 'Compliance-PreAudit'}-${safeCompanyName}-${new Date().toISOString().split('T')[0]}.pdf"`,
     },
   });
 }

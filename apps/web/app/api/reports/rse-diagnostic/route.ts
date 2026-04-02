@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers';
+
 import { NextRequest, NextResponse } from 'next/server';
 
 import * as z from 'zod';
@@ -76,20 +78,30 @@ export async function POST(req: NextRequest) {
     .eq('id', user.id)
     .single();
 
-  const companyName = account?.name ?? 'Mon entreprise';
-  const date = new Date().toLocaleDateString('fr-FR', {
+  const locale = (await cookies()).get('NEXT_LOCALE')?.value ?? 'en';
+  const isFr = locale === 'fr';
+  const companyName = account?.name ?? (isFr ? 'Mon entreprise' : 'My company');
+  const date = new Date().toLocaleDateString(isFr ? 'fr-FR' : 'en-GB', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
 
-  const pillarScores = [
-    { name: 'Gouvernance', score: scores.governance, max: 20 },
-    { name: 'Environnement', score: scores.environment, max: 30 },
-    { name: 'Social', score: scores.social, max: 20 },
-    { name: 'Ethique', score: scores.ethics, max: 20 },
-    { name: 'Parties prenantes', score: scores.stakeholders, max: 20 },
-  ];
+  const pillarScores = isFr
+    ? [
+        { name: 'Gouvernance', score: scores.governance, max: 20 },
+        { name: 'Environnement', score: scores.environment, max: 30 },
+        { name: 'Social', score: scores.social, max: 20 },
+        { name: 'Ethique', score: scores.ethics, max: 20 },
+        { name: 'Parties prenantes', score: scores.stakeholders, max: 20 },
+      ]
+    : [
+        { name: 'Governance', score: scores.governance, max: 20 },
+        { name: 'Environment', score: scores.environment, max: 30 },
+        { name: 'Social', score: scores.social, max: 20 },
+        { name: 'Ethics', score: scores.ethics, max: 20 },
+        { name: 'Stakeholders', score: scores.stakeholders, max: 20 },
+      ];
 
   const labelEligibility = labels.map((l) => ({
     name: l.name,
@@ -99,7 +111,9 @@ export async function POST(req: NextRequest) {
   }));
 
   const roadmapActions = improvements.map((imp) => ({
-    action: `Ameliorer le pilier ${imp.name} (score actuel: ${imp.score}/${imp.max})`,
+    action: isFr
+      ? `Ameliorer le pilier ${imp.name} (score actuel: ${imp.score}/${imp.max})`
+      : `Improve ${imp.name} pillar (current score: ${imp.score}/${imp.max})`,
     priority: (imp.score / imp.max < 0.4
       ? 'haute'
       : imp.score / imp.max < 0.7
@@ -107,13 +121,14 @@ export async function POST(req: NextRequest) {
         : 'basse') as 'haute' | 'moyenne' | 'basse',
     timeline:
       imp.score / imp.max < 0.4
-        ? '3 mois'
+        ? (isFr ? '3 mois' : '3 months')
         : imp.score / imp.max < 0.7
-          ? '6 mois'
-          : '12 mois',
+          ? (isFr ? '6 mois' : '6 months')
+          : (isFr ? '12 mois' : '12 months'),
   }));
 
-  const pdfBuffer = generateRSEDiagnosticPDF({
+  const pdfBuffer = generateRSEDiagnosticPDF(
+    {
     companyName,
     date,
     globalScore: scores.total,
@@ -132,7 +147,9 @@ export async function POST(req: NextRequest) {
     ),
     labelEligibility,
     roadmapActions,
-  });
+    },
+    locale,
+  );
 
   const safeCompanyName = companyName.replace(/[^a-zA-Z0-9]/g, '_');
 
