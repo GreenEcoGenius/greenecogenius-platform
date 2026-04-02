@@ -37,11 +37,12 @@ export default async function Home() {
         <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
           {/* Background image */}
           <Image
-            src="/images/hero-circular-economy.png"
+            src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Aerial_drone_photograph_202604022348.png"
             alt=""
             fill
             className="object-cover object-center"
             priority
+            unoptimized
           />
           {/* Dark overlay for text readability */}
           <div className="from-metal-900/60 via-metal-900/40 to-metal-900/70 absolute inset-0 bg-gradient-to-b" />
