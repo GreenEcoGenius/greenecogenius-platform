@@ -13,6 +13,7 @@ import { ChatProvider } from '~/components/ai/chat-context';
 import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
 import { SidebarChatBridge } from '~/components/ai/sidebar-chat-bridge';
 import { AppHeader } from '~/components/layout/app-header';
+import { GlobalSearch } from '~/components/layout/global-search';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
@@ -68,6 +69,7 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
         </div>
 
         <GlobalAIAssistant />
+        <GlobalSearch />
       </ChatProvider>
     </UserWorkspaceContextProvider>
   );
@@ -94,6 +96,7 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
         </div>
 
         <GlobalAIAssistant />
+        <GlobalSearch />
       </ChatProvider>
     </UserWorkspaceContextProvider>
   );

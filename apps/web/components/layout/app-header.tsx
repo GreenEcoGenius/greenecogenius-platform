@@ -10,9 +10,11 @@ import { cn } from '@kit/ui/utils';
 import { AppLogo } from '~/components/app-logo';
 
 import { useChat } from '../ai/chat-context';
+import { useGlobalSearch } from './global-search';
 
 export function AppHeader() {
   const { chatOpen, toggleChat } = useChat();
+  const { openSearch } = useGlobalSearch();
 
   return (
     <header className="border-metal-chrome fixed top-0 right-0 left-0 z-40 flex h-14 items-center justify-between border-b bg-white px-3 lg:px-5">
@@ -23,9 +25,10 @@ export function AppHeader() {
 
       {/* Right: all actions grouped */}
       <div className="flex items-center gap-1">
-        {/* Search */}
+        {/* Search (mobile icon) */}
         <button
           type="button"
+          onClick={openSearch}
           className="text-metal-600 hover:bg-metal-frost flex h-9 w-9 items-center justify-center rounded-xl transition-colors md:hidden"
           aria-label="Rechercher"
         >
@@ -35,6 +38,7 @@ export function AppHeader() {
         {/* Search (desktop expanded) */}
         <button
           type="button"
+          onClick={openSearch}
           className="border-metal-silver bg-metal-50 text-metal-steel hover:border-metal-400 hidden items-center gap-2 rounded-xl border px-3 py-1.5 text-sm transition-colors md:flex"
         >
           <Search className="h-4 w-4" />

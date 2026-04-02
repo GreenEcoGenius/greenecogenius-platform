@@ -13,6 +13,7 @@ import { ChatProvider } from '~/components/ai/chat-context';
 import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
 import { SidebarChatBridge } from '~/components/ai/sidebar-chat-bridge';
 import { AppHeader } from '~/components/layout/app-header';
+import { GlobalSearch } from '~/components/layout/global-search';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
 
 // local imports
@@ -97,6 +98,7 @@ async function SidebarLayout({
         </div>
 
         <GlobalAIAssistant />
+        <GlobalSearch />
       </ChatProvider>
     </TeamAccountWorkspaceContextProvider>
   );
@@ -126,6 +128,7 @@ function HeaderLayout({
         </div>
 
         <GlobalAIAssistant />
+        <GlobalSearch />
       </ChatProvider>
     </TeamAccountWorkspaceContextProvider>
   );
