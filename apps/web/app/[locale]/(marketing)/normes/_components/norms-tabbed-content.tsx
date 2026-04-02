@@ -66,7 +66,7 @@ const PILLAR_HERO: Record<NormPillar, string> = {
 
 // ── Animated norm card with PDF download ──
 
-function NormCard({ norm, index }: { norm: Norm; index: number }) {
+function NormCard({ norm, index, locale }: { norm: Norm; index: number; locale: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -134,7 +134,7 @@ function NormCard({ norm, index }: { norm: Norm; index: number }) {
         </p>
         <button
           type="button"
-          onClick={() => window.open(`/api/normes/pdf?id=${norm.id}`, '_blank')}
+          onClick={() => window.open(`/api/normes/pdf?id=${norm.id}&locale=${locale}`, '_blank')}
           className="text-metal-steel hover:bg-metal-frost hover:text-primary ml-2 shrink-0 rounded-xl p-1.5 transition-colors"
           title="Telecharger le PDF"
         >
@@ -175,7 +175,7 @@ function PillarContent({ pillar, locale }: { pillar: NormPillar; locale: string 
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {norms.map((norm, i) => (
-            <NormCard key={norm.id} norm={norm} index={i} />
+            <NormCard key={norm.id} norm={norm} index={i} locale={locale} />
           ))}
         </div>
 
