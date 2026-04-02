@@ -140,14 +140,14 @@
 
   --radius: 0.75rem;
 
-  /* Sidebar — Dark (metal-900) */
-  --sidebar: #1a2332;
-  --sidebar-foreground: #c8d0d8;
+  /* Sidebar — Light */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1a2332;
   --sidebar-primary: #1d9e75;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #2a3444;
-  --sidebar-accent-foreground: #e4e8ec;
-  --sidebar-border: #2a3444;
+  --sidebar-accent: #f4f6f8;
+  --sidebar-accent-foreground: #1a2332;
+  --sidebar-border: #e4e8ec;
   --sidebar-ring: #1d9e75;
 }
 

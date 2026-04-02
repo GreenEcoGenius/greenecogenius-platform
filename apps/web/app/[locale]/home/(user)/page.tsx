@@ -309,7 +309,7 @@ async function UserHomePage() {
         )}
 
         <SectionFooterImage
-          src="/images/hero-circular-hub.png"
+          src="/images/hero-aerial.png"
           alt={t('dashboard.circularEconomy')}
         />
       </div>

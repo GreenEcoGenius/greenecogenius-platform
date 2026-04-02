@@ -1,7 +1,9 @@
 'use client';
 
-import { Bell, Menu, Search, Sparkles } from 'lucide-react';
+import { Bell, Globe, Menu, Search, Sparkles } from 'lucide-react';
+import { useLocale } from 'next-intl';
 
+import { usePathname, useRouter } from '@kit/i18n/navigation';
 import { useSidebar } from '@kit/ui/sidebar';
 import { cn } from '@kit/ui/utils';
 
@@ -22,7 +24,7 @@ export function AppHeader() {
         <AppLogo href="/" className="h-14 w-auto lg:h-12" />
       </div>
 
-      {/* Right: search + genius + notifications */}
+      {/* Right: search + genius + locale + notifications */}
       <div className="flex items-center gap-1.5">
         {/* Search (desktop only) */}
         <button
@@ -52,6 +54,9 @@ export function AppHeader() {
           <Sparkles className="h-4 w-4" />
         </button>
 
+        {/* Language toggle */}
+        <LocaleToggle />
+
         {/* Notifications */}
         <button
           type="button"
@@ -62,6 +67,30 @@ export function AppHeader() {
         </button>
       </div>
     </header>
+  );
+}
+
+function LocaleToggle() {
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const toggle = () => {
+    const next = locale === 'fr' ? 'en' : 'fr';
+    router.push(pathname, { locale: next });
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      className="text-metal-600 hover:bg-metal-frost flex h-9 items-center gap-1 rounded-xl px-2 text-xs font-semibold uppercase transition-colors"
+      aria-label="Changer de langue"
+      title="Changer de langue"
+    >
+      <Globe className="h-3.5 w-3.5" />
+      {locale === 'fr' ? 'EN' : 'FR'}
+    </button>
   );
 }
 
