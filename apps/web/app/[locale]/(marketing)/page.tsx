@@ -37,7 +37,7 @@ export default async function Home() {
         <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
           {/* Background image */}
           <Image
-            src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Aerial_drone_photograph_202604022348.png"
+            src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-e4ead825-db44-49ce-97a4-7c6463762133.png"
             alt=""
             fill
             className="object-cover object-center"
