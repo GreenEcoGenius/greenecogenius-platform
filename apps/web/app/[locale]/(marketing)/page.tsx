@@ -35,7 +35,7 @@ export default async function Home() {
   const t = await getTranslations('marketing');
 
   return (
-    <div className="-mt-16 flex flex-col md:-mt-36">
+    <div className="-mt-16 flex flex-col overflow-x-hidden md:-mt-36">
       {/* ───── HERO ───── */}
       <HeroScrollEffect>
         <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">

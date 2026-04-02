@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from 'react';
 import { cn } from '@kit/ui/utils';
 
 const animations = {
-  'fade-up': 'translate-y-16 opacity-0',
-  'fade-down': '-translate-y-16 opacity-0',
-  'fade-left': 'translate-x-16 opacity-0',
-  'fade-right': '-translate-x-16 opacity-0',
-  'zoom-in': 'scale-90 opacity-0',
+  'fade-up': 'translate-y-8 opacity-0',
+  'fade-down': '-translate-y-8 opacity-0',
+  'fade-left': 'translate-x-6 opacity-0',
+  'fade-right': '-translate-x-6 opacity-0',
+  'zoom-in': 'scale-95 opacity-0',
 };
 
 interface AnimateOnScrollProps {
