@@ -89,6 +89,8 @@ function StreamingMessage({ content }: { content: string }) {
   );
 }
 
+const MOBILE_BREAKPOINT = 768;
+
 export function AIAssistant({ section, context }: AIAssistantProps) {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -99,10 +101,19 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
     height: number;
     offsetTop: number;
   } | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { ask, loading } = useAI(section);
+
+  // Hide chat on mobile — not yet stable enough for production
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   // Find the header portal target
   useEffect(() => {
@@ -219,6 +230,8 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
     },
     [handleSend],
   );
+
+  if (isMobile) return null;
 
   const hasMessages = messages.length > 0;
 
