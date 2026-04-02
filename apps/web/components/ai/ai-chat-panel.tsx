@@ -396,13 +396,10 @@ export function AIChatPanel() {
 
   const hasMessages = messages.length > 0;
 
+  if (!chatOpen) return null;
+
   return (
-    <div
-      className={cn(
-        'border-metal-chrome fixed top-14 right-0 bottom-0 z-30 flex w-[380px] flex-col border-l bg-white transition-transform duration-300 ease-out',
-        chatOpen ? 'translate-x-0' : 'translate-x-full',
-      )}
-    >
+    <div className="border-metal-chrome fixed top-14 right-0 bottom-0 z-30 flex w-[380px] flex-col border-l bg-white">
       {/* Header */}
       <div className="border-metal-chrome flex items-center justify-between border-b px-4 py-3">
         <div className="flex items-center gap-2">
