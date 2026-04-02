@@ -57,7 +57,7 @@ export const Header: React.FC<HeaderProps> = function ({
   return (
     <div
       className={cn(
-        'site-header border-metal-chrome dark:border-border/30 dark:bg-background fixed top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md transition-transform duration-300',
+        'site-header border-metal-chrome dark:border-border/30 dark:bg-background fixed top-0 z-50 w-full border-b bg-white transition-transform duration-300',
         visible ? 'translate-y-0' : '-translate-y-full',
         className,
       )}
@@ -70,7 +70,7 @@ export const Header: React.FC<HeaderProps> = function ({
       >
         <div
           className={cn(
-            'flex h-16 items-center justify-between gap-x-2 px-2 md:grid md:h-24 md:gap-x-4 md:px-0',
+            'flex h-14 items-center justify-between gap-x-2 px-2 md:grid md:h-16 md:gap-x-4 md:px-0',
             gridClassName,
           )}
         >
