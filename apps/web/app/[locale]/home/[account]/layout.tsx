@@ -64,7 +64,7 @@ async function SidebarLayout({
           <SidebarChatBridge />
           <AppHeader />
 
-          <div className="pt-14">
+          <div className="min-w-0 flex-1 pt-14">
             <Page style={'sidebar'}>
               <PageNavigation>
                 <TeamAccountLayoutSidebar
@@ -100,7 +100,7 @@ function HeaderLayout({
       <ChatProvider>
         <AppHeader />
 
-        <div className="pt-14">
+        <div className="min-w-0 flex-1 pt-14">
           <Page style={'header'}>
             <PageNavigation>
               <TeamAccountNavigationMenu workspace={data} />
