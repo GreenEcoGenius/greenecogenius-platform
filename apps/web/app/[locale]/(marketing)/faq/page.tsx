@@ -22,9 +22,7 @@ async function FAQPage() {
   // replace this content with translations
   const faqItems = [
     {
-      // or: t('faq.question1')
       question: `Do you offer a free trial?`,
-      // or: t('faq.answer1')
       answer: `Yes, we offer a 14-day free trial. You can cancel at any time during the trial period and you won't be charged.`,
     },
     {
@@ -76,7 +74,7 @@ async function FAQPage() {
         <SitePageHeader title={t('faq')} subtitle={t('faqSubtitle')} />
 
         <div className={'container flex flex-col items-center space-y-8 pb-16'}>
-          <div className="divide-border flex w-full max-w-xl flex-col divide-y divide-dashed rounded-md border">
+          <div className="divide-metal-chrome border-metal-chrome flex w-full max-w-xl flex-col divide-y divide-dashed rounded-xl border">
             {faqItems.map((item, index) => {
               return <FaqItem key={index} item={item} />;
             })}
@@ -87,6 +85,7 @@ async function FAQPage() {
               nativeButton={false}
               render={<Link href={'/contact'} />}
               variant={'link'}
+              className="text-primary hover:text-primary-hover"
             >
               <span>
                 <Trans i18nKey={'marketing.contactFaq'} />
@@ -114,24 +113,30 @@ function FaqItem({
   return (
     <details
       className={
-        'hover:bg-muted/70 [&:open]:bg-muted/70 [&:open]:hover:bg-muted transition-all'
+        'hover:bg-metal-frost/50 [&:open]:bg-metal-frost/50 transition-all'
       }
     >
       <summary
         className={'flex items-center justify-between p-4 hover:cursor-pointer'}
       >
-        <h2 className={'cursor-pointer font-sans text-base'}>
+        <h2
+          className={
+            'text-metal-900 cursor-pointer font-sans text-base font-medium'
+          }
+        >
           <Trans i18nKey={item.question} defaults={item.question} />
         </h2>
 
         <div>
           <ChevronDown
-            className={'h-5 transition duration-300 group-open:-rotate-180'}
+            className={
+              'text-circuit-blue h-5 transition duration-300 group-open:-rotate-180'
+            }
           />
         </div>
       </summary>
 
-      <div className={'text-muted-foreground flex flex-col gap-y-2 px-4 pb-2'}>
+      <div className={'text-metal-600 flex flex-col gap-y-2 px-4 pb-2'}>
         <Trans i18nKey={item.answer} defaults={item.answer} />
       </div>
     </details>

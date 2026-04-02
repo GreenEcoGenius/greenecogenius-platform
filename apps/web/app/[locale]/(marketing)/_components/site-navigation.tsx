@@ -92,7 +92,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
           alignItems: 'center',
           justifyContent: 'space-between',
           height: 64,
-          borderBottom: '1px solid #e5e7eb',
+          borderBottom: '1px solid #C8D0D8',
           padding: '0 16px',
           backgroundColor: '#ffffff',
         }}
@@ -102,7 +102,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
           onClick={() => setOpen(false)}
           aria-label="Fermer"
         >
-          <X className="h-7 w-7 text-gray-900" />
+          <X className="text-metal-900 h-7 w-7" />
         </button>
       </div>
 
@@ -121,10 +121,10 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
             onClick={() => setOpen(false)}
             style={{
               padding: '16px 0',
-              borderBottom: '1px solid #f3f4f6',
+              borderBottom: '1px solid #E4E8EC',
               fontSize: 16,
               fontWeight: 600,
-              color: '#059669',
+              color: '#1D9E75',
               textDecoration: 'none',
             }}
           >
@@ -139,10 +139,10 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
             onClick={() => setOpen(false)}
             style={{
               padding: '16px 0',
-              borderBottom: '1px solid #f3f4f6',
+              borderBottom: '1px solid #E4E8EC',
               fontSize: 16,
               fontWeight: 500,
-              color: '#111827',
+              color: '#1A2332',
               textDecoration: 'none',
             }}
           >
@@ -165,7 +165,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
               fontSize: 14,
               fontWeight: 600,
               textTransform: 'uppercase',
-              color: '#059669',
+              color: '#1D9E75',
               background: 'none',
               border: 'none',
               cursor: 'pointer',
@@ -183,7 +183,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
                   textAlign: 'center',
                   fontSize: 14,
                   fontWeight: 500,
-                  color: '#111827',
+                  color: '#1A2332',
                   textDecoration: 'none',
                 }}
               >
@@ -194,7 +194,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
                 href={pathsConfig.auth.signUp}
                 onClick={() => setOpen(false)}
                 style={{
-                  backgroundColor: '#059669',
+                  backgroundColor: '#1D9E75',
                   color: '#ffffff',
                   borderRadius: 8,
                   padding: '12px 16px',

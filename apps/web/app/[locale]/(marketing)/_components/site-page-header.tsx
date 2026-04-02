@@ -16,7 +16,7 @@ export function SitePageHeader({
   return (
     <div
       className={cn(
-        'border-border/40 border-b py-6 xl:py-8 2xl:py-10',
+        'border-metal-chrome border-b py-6 xl:py-8 2xl:py-10',
         className,
       )}
     >
@@ -28,17 +28,13 @@ export function SitePageHeader({
       >
         <h1
           className={
-            'font-heading text-3xl tracking-tighter xl:text-5xl dark:text-white'
+            'font-heading text-metal-900 text-3xl tracking-tighter xl:text-5xl dark:text-white'
           }
         >
           {title}
         </h1>
 
-        <h2
-          className={
-            'text-muted-foreground text-lg tracking-tight 2xl:text-2xl'
-          }
-        >
+        <h2 className={'text-metal-600 text-lg tracking-tight 2xl:text-2xl'}>
           {subtitle}
         </h2>
       </div>

@@ -3,14 +3,11 @@ import Link from 'next/link';
 
 import {
   ArrowRight,
-  BarChart3,
   Bot,
   Factory,
   Globe,
   Recycle,
   Shield,
-  Sparkles,
-  TrendingUp,
   Users,
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
@@ -19,7 +16,6 @@ import { AnimateOnScroll } from './_components/animate-on-scroll';
 import { AnimatedCounter } from './_components/animated-counter';
 import { HeroScrollEffect } from './_components/hero-scroll-effect';
 import { HeroVisual } from './_components/hero-visual';
-import { LogoCarousel } from './_components/logo-carousel';
 import { NewsletterForm } from './_components/newsletter-form';
 
 export async function generateMetadata() {
@@ -48,7 +44,7 @@ export default async function Home() {
             priority
           />
           {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/60 via-[#0a1628]/40 to-[#0a1628]/70" />
+          <div className="from-metal-900/60 via-metal-900/40 to-metal-900/70 absolute inset-0 bg-gradient-to-b" />
 
           {/* Orbital visualization */}
           <HeroVisual />
@@ -58,7 +54,7 @@ export default async function Home() {
             <AnimateOnScroll animation="fade-up" delay={300}>
               <Link
                 href="/auth/sign-up"
-                className="group inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-xs font-semibold text-[#1A1A2E] shadow-lg transition-all hover:shadow-xl hover:shadow-white/15 sm:px-8 sm:py-4 sm:text-sm"
+                className="group text-metal-900 inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-xs font-semibold shadow-lg transition-all hover:shadow-xl hover:shadow-white/15 sm:px-8 sm:py-4 sm:text-sm"
               >
                 {t('heroCta1')}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -66,7 +62,7 @@ export default async function Home() {
             </AnimateOnScroll>
           </div>
 
-          <div className="from-background absolute right-0 bottom-0 left-0 h-32 bg-gradient-to-t to-transparent" />
+          <div className="from-metal-50 absolute right-0 bottom-0 left-0 h-32 bg-gradient-to-t to-transparent" />
         </section>
       </HeroScrollEffect>
 
@@ -74,7 +70,7 @@ export default async function Home() {
       <section className="relative z-10 -mt-16 pb-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <div className="bg-card grid grid-cols-2 gap-6 rounded-2xl border p-8 shadow-xl md:grid-cols-4 md:gap-8">
+            <div className="border-metal-chrome grid grid-cols-2 gap-6 rounded-2xl border bg-white p-8 shadow-xl md:grid-cols-4 md:gap-8">
               <StatItem
                 icon={<Factory className="h-5 w-5" />}
                 value={32}
@@ -110,10 +106,10 @@ export default async function Home() {
               <p className="text-primary mb-4 text-sm font-semibold tracking-wider uppercase">
                 {t('featuresBadge')}
               </p>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              <h2 className="text-metal-900 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
                 {t('featuresHeading')}
               </h2>
-              <p className="text-muted-foreground mt-4 text-lg">
+              <p className="text-metal-600 mt-4 text-lg">
                 {t('featuresSubheading')}
               </p>
             </div>
@@ -159,13 +155,13 @@ export default async function Home() {
           fill
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="bg-metal-900/60 absolute inset-0" />
         <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <h2 className="text-primary-foreground text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               {t('newsletterHeading')}
             </h2>
-            <p className="text-primary-foreground/80 mt-4 text-lg">
+            <p className="text-metal-silver mt-4 text-lg">
               {t('newsletterSubheading')}
             </p>
           </AnimateOnScroll>
@@ -174,7 +170,7 @@ export default async function Home() {
             <div className="mt-10 flex justify-center">
               <NewsletterForm />
             </div>
-            <p className="text-primary-foreground/50 mt-4 text-xs">
+            <p className="text-metal-steel mt-4 text-xs">
               {t('newsletterDisclaimer')}
             </p>
           </AnimateOnScroll>
@@ -198,8 +194,8 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="group bg-card h-full overflow-hidden rounded-2xl border transition-all hover:-translate-y-1 hover:shadow-xl">
-      <div className="aspect-[16/10] overflow-hidden">
+    <div className="group border-metal-silver/50 hover:border-circuit-turquoise hover:shadow-circuit-ice/30 h-full overflow-hidden rounded-2xl border bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
+      <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={image}
           alt={imageAlt}
@@ -207,13 +203,14 @@ function FeatureCard({
           height={500}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
+        <div className="from-circuit-ice/10 absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t to-transparent" />
       </div>
       <div className="p-8">
-        <div className="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-lg">
+        <div className="bg-circuit-ice/30 text-circuit-blue flex h-10 w-10 items-center justify-center rounded-xl">
           {icon}
         </div>
-        <h3 className="mt-4 text-lg font-semibold">{title}</h3>
-        <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+        <h3 className="text-metal-900 mt-4 text-lg font-semibold">{title}</h3>
+        <p className="text-metal-600 mt-2 text-sm leading-relaxed">
           {description}
         </p>
       </div>
@@ -234,41 +231,14 @@ function StatItem({
 }) {
   return (
     <div className="text-center">
-      <div className="bg-primary/10 text-primary mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full">
+      <div className="bg-circuit-ice/30 text-circuit-blue mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full">
         {icon}
       </div>
-      <div className="text-3xl font-bold tracking-tight">
+      <div className="text-primary text-3xl font-bold tracking-tight">
         <AnimatedCounter target={value} />
         {suffix}
       </div>
-      <p className="text-muted-foreground mt-1 text-sm">{label}</p>
+      <p className="text-metal-500 mt-1 text-sm">{label}</p>
     </div>
-  );
-}
-
-function StepList({
-  steps,
-  t,
-}: {
-  steps: string[];
-  t: (key: string) => string;
-}) {
-  return (
-    <ul className="mt-8 space-y-4">
-      {steps.map((key) => (
-        <li key={key} className="flex items-start gap-3">
-          <span className="bg-primary text-primary-foreground mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full">
-            <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </span>
-          <span className="text-muted-foreground">{t(key)}</span>
-        </li>
-      ))}
-    </ul>
   );
 }

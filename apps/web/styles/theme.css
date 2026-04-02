@@ -1,38 +1,89 @@
 /*
  * theme.css
  *
- * GreenEcoGenius — Sustainability SaaS Design System
- * Light sidebar, teal/emerald/green accent palette
- * Page background #F8FAFC, cards white
+ * GreenEcoGenius — "Blockchain Frost" Design System
+ * Tech-futuristic palette: cyan circuits, neon green, metallic silver
+ * Primary anchor #1D9E75, page background metal-50, cards white
  */
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-brand: #059669;
-  --color-brand-hover: #047857;
-  --color-brand-light: #ecfdf5;
+  --color-brand: #1d9e75;
+  --color-brand-hover: #0f6e56;
+  --color-brand-light: #e1f5ee;
+
+  /* ── Primary ── */
+  --color-primary-50: #e1f5ee;
+  --color-primary-100: #b8f0d4;
+  --color-primary-500: #1d9e75;
+  --color-primary-600: #0f6e56;
+  --color-primary-700: #085041;
+  --color-primary-900: #04342c;
+  --color-primary-light: #e1f5ee;
+  --color-primary-hover: #0f6e56;
+
+  /* ── Circuit — Blues tech ── */
+  --color-circuit-cyan: #00d4ff;
+  --color-circuit-blue: #2eafcf;
+  --color-circuit-turquoise: #5bc4d6;
+  --color-circuit-ice: #a8e4f0;
+  --color-circuit-50: #e6f8ff;
+  --color-circuit-100: #a8e4f0;
+  --color-circuit-300: #5bc4d6;
+  --color-circuit-500: #2eafcf;
+  --color-circuit-700: #00d4ff;
+
+  /* ── Tech — Verts lumineux ── */
+  --color-tech-neon: #3ddc84;
+  --color-tech-emerald: #28b870;
+  --color-tech-mint: #b8f0d4;
+
+  /* ── Metal — Gris bleutes ── */
+  --color-metal-frost: #dde5e8;
+  --color-metal-chrome: #e4e8ec;
+  --color-metal-silver: #c8d0d8;
+  --color-metal-steel: #a0aab4;
+  --color-metal-50: #f4f6f8;
+  --color-metal-100: #e4e8ec;
+  --color-metal-200: #dde5e8;
+  --color-metal-300: #c8d0d8;
+  --color-metal-400: #a0aab4;
+  --color-metal-500: #8e99a8;
+  --color-metal-600: #5a6578;
+  --color-metal-700: #3d4a5c;
+  --color-metal-800: #2a3444;
+  --color-metal-900: #1a2332;
 
   /* KPI card gradients */
   --color-kpi-teal: #0d9488;
   --color-kpi-teal-dark: #0f766e;
-  --color-kpi-emerald: #059669;
-  --color-kpi-emerald-dark: #047857;
-  --color-kpi-green: #16a34a;
-  --color-kpi-green-dark: #15803d;
+  --color-kpi-emerald: #1d9e75;
+  --color-kpi-emerald-dark: #0f6e56;
+  --color-kpi-green: #3ddc84;
+  --color-kpi-green-dark: #28b870;
 
   /* Indicators */
-  --color-indicator-success: #10b981;
-  --color-indicator-warning: #d97706;
-  --color-indicator-error: #ef4444;
-  --color-indicator-info: #0d9488;
-  --color-indicator-purple: #8b5cf6;
+  --color-indicator-success: #3ddc84;
+  --color-indicator-warning: #ef9f27;
+  --color-indicator-error: #e24b4a;
+  --color-indicator-info: #2eafcf;
+  --color-indicator-purple: #534ab7;
 
-  /* Chart palette — teal/emerald/green/slate only */
-  --color-chart-teal: #0d9488;
-  --color-chart-emerald: #059669;
-  --color-chart-green: #16a34a;
-  --color-chart-slate: #94a3b8;
-  --color-chart-amber: #d97706;
+  /* ── Semantic badge colors ── */
+  --color-badge-amber-bg: #faeeda;
+  --color-badge-amber-text: #854f0b;
+  --color-badge-purple-bg: #eeedfe;
+  --color-badge-purple-text: #534ab7;
+
+  /* ── Circuit dark (for KPI gradients) ── */
+  --color-circuit-dark: #1a8ab0;
+
+  /* Chart palette */
+  --color-chart-primary: #1d9e75;
+  --color-chart-circuit: #2eafcf;
+  --color-chart-neon: #3ddc84;
+  --color-chart-turquoise: #5bc4d6;
+  --color-chart-amber: #ef9f27;
 }
 
 @utility container {
@@ -57,47 +108,47 @@
 }
 
 /*
- * Light Mode — Light sidebar, slate-50 page background
+ * Light Mode — Blockchain Frost palette
  */
 :root {
-  /* Page background = slate-50 */
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  /* Page background = metal-50 */
+  --background: #f4f6f8;
+  --foreground: #1a2332;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #1a2332;
   --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #059669;
+  --popover-foreground: #1a2332;
+  --primary: #1d9e75;
   --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #f1f5f9;
-  --accent-foreground: #0f172a;
-  --destructive: #dc2626;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #059669;
+  --secondary: #f4f6f8;
+  --secondary-foreground: #1a2332;
+  --muted: #f4f6f8;
+  --muted-foreground: #5a6578;
+  --accent: #e6f8ff;
+  --accent-foreground: #1a2332;
+  --destructive: #e24b4a;
+  --border: #c8d0d8;
+  --input: #c8d0d8;
+  --ring: #1d9e75;
 
-  /* Charts — teal/emerald/green/slate */
-  --chart-1: #0d9488;
-  --chart-2: #059669;
-  --chart-3: #16a34a;
-  --chart-4: #94a3b8;
-  --chart-5: #cbd5e1;
+  /* Charts */
+  --chart-1: #1d9e75;
+  --chart-2: #2eafcf;
+  --chart-3: #3ddc84;
+  --chart-4: #5bc4d6;
+  --chart-5: #a0aab4;
 
   --radius: 0.75rem;
 
-  /* Sidebar — LIGHT (keep current style) */
-  --sidebar: #f9fafb;
-  --sidebar-foreground: #111827;
-  --sidebar-primary: #059669;
+  /* Sidebar — Dark (metal-900) */
+  --sidebar: #1a2332;
+  --sidebar-foreground: #c8d0d8;
+  --sidebar-primary: #1d9e75;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f3f4f6;
-  --sidebar-accent-foreground: #111827;
-  --sidebar-border: #e5e7eb;
-  --sidebar-ring: #059669;
+  --sidebar-accent: #2a3444;
+  --sidebar-accent-foreground: #e4e8ec;
+  --sidebar-border: #2a3444;
+  --sidebar-ring: #1d9e75;
 }
 
 /*
@@ -110,7 +161,7 @@
   --card-foreground: #f8fafc;
   --popover: #1e293b;
   --popover-foreground: #f8fafc;
-  --primary: #10b981;
+  --primary: #1d9e75;
   --primary-foreground: #ffffff;
   --secondary: #334155;
   --secondary-foreground: #f8fafc;
@@ -118,23 +169,23 @@
   --muted-foreground: #94a3b8;
   --accent: #334155;
   --accent-foreground: #f8fafc;
-  --destructive: #ef4444;
+  --destructive: #e24b4a;
   --border: #334155;
   --input: #334155;
-  --ring: #10b981;
+  --ring: #1d9e75;
 
-  --chart-1: #0d9488;
-  --chart-2: #10b981;
-  --chart-3: #16a34a;
-  --chart-4: #64748b;
+  --chart-1: #1d9e75;
+  --chart-2: #2eafcf;
+  --chart-3: #3ddc84;
+  --chart-4: #5bc4d6;
   --chart-5: #475569;
 
   --sidebar: #1e293b;
   --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #10b981;
+  --sidebar-primary: #1d9e75;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #334155;
   --sidebar-accent-foreground: #f8fafc;
   --sidebar-border: #334155;
-  --sidebar-ring: #10b981;
+  --sidebar-ring: #1d9e75;
 }

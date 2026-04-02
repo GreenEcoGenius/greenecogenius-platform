@@ -29,7 +29,7 @@ export const SERVICES: ServiceData[] = [
     heroImage: '/images/normes/circular-zero-waste.png',
     ctaLabelKey: 'serviceRecyclerCta',
     ctaHref: '/auth/sign-up',
-    badgeColor: '#1D9E75',
+    badgeColor: 'bg-primary-light text-primary-500',
   },
   {
     id: 'tracer',
@@ -40,7 +40,7 @@ export const SERVICES: ServiceData[] = [
     heroImage: '/images/normes/traceability-blockchain-chain.png',
     ctaLabelKey: 'serviceTracerCta',
     ctaHref: '/auth/sign-up',
-    badgeColor: '#534AB7',
+    badgeColor: 'bg-circuit-ice text-circuit-blue',
   },
   {
     id: 'mesurer',
@@ -51,7 +51,7 @@ export const SERVICES: ServiceData[] = [
     heroImage: '/images/normes/reporting-esg-meeting.png',
     ctaLabelKey: 'serviceMesurerCta',
     ctaHref: '/auth/sign-up',
-    badgeColor: '#185FA5',
+    badgeColor: 'bg-tech-mint text-tech-emerald',
   },
   {
     id: 'reduire',
@@ -62,7 +62,7 @@ export const SERVICES: ServiceData[] = [
     heroImage: '/images/normes/carbon-footprint-green.png',
     ctaLabelKey: 'serviceReduireCta',
     ctaHref: '/auth/sign-up',
-    badgeColor: '#BA7517',
+    badgeColor: 'bg-badge-amber-bg text-badge-amber-text',
   },
   {
     id: 'optimiser',
@@ -73,7 +73,7 @@ export const SERVICES: ServiceData[] = [
     heroImage: '/images/normes/saas-multi-device.png',
     ctaLabelKey: 'serviceOptimiserCta',
     ctaHref: '/auth/sign-up',
-    badgeColor: '#0F6E56',
+    badgeColor: 'bg-badge-purple-bg text-badge-purple-text',
   },
   {
     id: 'connecter',
@@ -84,7 +84,7 @@ export const SERVICES: ServiceData[] = [
     heroImage: '/images/normes/labels-globe-recycle.png',
     ctaLabelKey: 'serviceConnecterCta',
     ctaHref: '/auth/sign-up',
-    badgeColor: '#993C1D',
+    badgeColor: 'bg-red-50 text-red-600',
   },
 ];
 
@@ -123,7 +123,7 @@ export function ServiceOverlay({
       onClick={onClose}
     >
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-400"
+        className="bg-metal-900/40 absolute inset-0 backdrop-blur-sm transition-opacity duration-400"
         style={{ opacity: show ? 1 : 0 }}
       />
 
@@ -139,10 +139,10 @@ export function ServiceOverlay({
       >
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white/80 backdrop-blur transition-colors hover:bg-gray-100"
+          className="border-metal-silver hover:bg-metal-chrome absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full border bg-white/80 backdrop-blur transition-colors"
           aria-label="Close"
         >
-          <X className="h-4 w-4 text-gray-600" />
+          <X className="text-metal-600 h-4 w-4" />
         </button>
 
         <div className="max-h-[90svh] overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:rounded-2xl">
@@ -157,9 +157,8 @@ export function ServiceOverlay({
 
           <div className="relative -mt-6 px-6 pb-8 sm:px-8">
             <div
-              className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium text-white transition-all duration-500"
+              className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium transition-all duration-500 ${service.badgeColor}`}
               style={{
-                backgroundColor: service.badgeColor,
                 opacity: show ? 1 : 0,
                 transform: show ? 'translateY(0)' : 'translateY(12px)',
                 transitionDelay: '150ms',
@@ -169,7 +168,7 @@ export function ServiceOverlay({
             </div>
 
             <h2
-              className="mt-3 text-2xl font-semibold text-gray-900 transition-all duration-500"
+              className="text-metal-900 mt-3 text-2xl font-semibold transition-all duration-500"
               style={{
                 opacity: show ? 1 : 0,
                 transform: show ? 'translateY(0)' : 'translateY(16px)',
@@ -180,7 +179,7 @@ export function ServiceOverlay({
             </h2>
 
             <p
-              className="mt-3 text-base leading-relaxed text-gray-600 transition-all duration-500"
+              className="text-metal-600 mt-3 text-base leading-relaxed transition-all duration-500"
               style={{
                 opacity: show ? 1 : 0,
                 transform: show ? 'translateY(0)' : 'translateY(16px)',
@@ -200,7 +199,7 @@ export function ServiceOverlay({
             >
               <Link
                 href={service.ctaHref}
-                className="inline-flex items-center rounded-xl bg-[#1D9E75] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#0F6E56]"
+                className="bg-primary hover:bg-primary-hover inline-flex items-center rounded-xl px-6 py-3 text-sm font-medium text-white transition-colors"
               >
                 {t(service.ctaLabelKey)}
                 <ArrowRight className="ml-2 h-4 w-4" />

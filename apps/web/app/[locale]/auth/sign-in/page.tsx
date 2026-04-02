@@ -41,7 +41,7 @@ async function SignInPage({ searchParams }: SignInPageProps) {
           <Trans i18nKey={'auth.signInHeading'} />
         </Heading>
 
-        <p className={'text-muted-foreground text-sm'}>
+        <p className={'text-metal-600 text-sm'}>
           <Trans i18nKey={'auth.signInSubheading'} />
         </p>
       </div>

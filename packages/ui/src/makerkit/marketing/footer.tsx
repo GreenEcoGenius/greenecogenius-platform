@@ -26,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({
   return (
     <footer
       className={cn(
-        'site-footer bg-muted/20 relative mt-auto w-full py-8 xl:py-16 2xl:py-20',
+        'site-footer border-metal-800 bg-metal-900 relative mt-auto w-full border-t py-8 xl:py-16 2xl:py-20',
         className,
       )}
       {...props}
@@ -39,10 +39,10 @@ export const Footer: React.FC<FooterProps> = ({
 
               <div className="flex flex-col gap-y-4">
                 <div>
-                  <p className="text-muted-foreground text-sm">{description}</p>
+                  <p className="text-metal-steel text-sm">{description}</p>
                 </div>
 
-                <div className="text-muted-foreground flex text-xs">
+                <div className="text-metal-steel flex text-xs">
                   <p>{copyright}</p>
                 </div>
               </div>
@@ -74,7 +74,7 @@ export const Footer: React.FC<FooterProps> = ({
 
 function FooterSectionHeading(props: React.PropsWithChildren) {
   return (
-    <span className="font-heading text-secondary-foreground/90 text-sm font-medium">
+    <span className="font-heading text-metal-chrome text-sm font-medium">
       {props.children}
     </span>
   );
@@ -89,7 +89,7 @@ function FooterLink({
   children,
 }: React.PropsWithChildren<{ href: string }>) {
   return (
-    <li className="text-muted-foreground text-sm font-medium hover:underline [&>a]:transition-colors">
+    <li className="text-metal-steel hover:text-circuit-cyan text-sm font-medium transition-colors [&>a]:transition-colors">
       <a href={href}>{children}</a>
     </li>
   );

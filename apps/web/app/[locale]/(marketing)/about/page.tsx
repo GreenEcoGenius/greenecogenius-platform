@@ -40,7 +40,7 @@ export default async function AboutPage() {
           priority
           quality={90}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40" />
+        <div className="from-metal-900/80 via-metal-900/60 to-metal-900/40 absolute inset-0 bg-gradient-to-t" />
 
         <div className="relative z-10 mx-auto max-w-4xl px-4 py-32 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
@@ -57,13 +57,13 @@ export default async function AboutPage() {
           </AnimateOnScroll>
 
           <AnimateOnScroll animation="fade-up" delay={200}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">
+            <p className="text-metal-silver mx-auto mt-6 max-w-2xl text-lg">
               {t('aboutPageSubtitle')}
             </p>
           </AnimateOnScroll>
         </div>
 
-        <div className="from-background absolute right-0 bottom-0 left-0 h-24 bg-gradient-to-t to-transparent" />
+        <div className="from-metal-50 absolute right-0 bottom-0 left-0 h-24 bg-gradient-to-t to-transparent" />
       </section>
 
       {/* ───── MISSION ───── */}
@@ -71,25 +71,25 @@ export default async function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-start gap-12 lg:grid-cols-2">
             <AnimateOnScroll animation="fade-right">
-              <div className="bg-primary/10 text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
+              <div className="bg-primary-light text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
                 <Target className="h-8 w-8" />
               </div>
-              <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
+              <h2 className="text-metal-900 mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
                 {t('aboutMissionHeading')}
               </h2>
-              <p className="text-muted-foreground mt-6 text-lg leading-relaxed">
+              <p className="text-metal-600 mt-6 text-lg leading-relaxed">
                 {t('aboutMissionText')}
               </p>
             </AnimateOnScroll>
 
             <AnimateOnScroll animation="fade-left">
-              <div className="bg-primary/10 text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
+              <div className="bg-circuit-ice text-circuit-blue flex h-16 w-16 items-center justify-center rounded-2xl">
                 <Lightbulb className="h-8 w-8" />
               </div>
-              <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
+              <h2 className="text-metal-900 mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
                 {t('aboutVisionHeading')}
               </h2>
-              <p className="text-muted-foreground mt-6 text-lg leading-relaxed">
+              <p className="text-metal-600 mt-6 text-lg leading-relaxed">
                 {t('aboutVisionText')}
               </p>
             </AnimateOnScroll>
@@ -98,11 +98,11 @@ export default async function AboutPage() {
       </section>
 
       {/* ───── CLIMATE ───── */}
-      <section className="bg-secondary/30 py-20 sm:py-28">
+      <section className="bg-metal-frost py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <AnimateOnScroll animation="fade-right">
-              <div className="overflow-hidden rounded-2xl shadow-2xl">
+              <div className="overflow-hidden rounded-xl shadow-sm">
                 <Image
                   src="/images/hero-recycling-facility.png"
                   alt={t('altRecyclingFacility')}
@@ -114,13 +114,13 @@ export default async function AboutPage() {
             </AnimateOnScroll>
 
             <AnimateOnScroll animation="fade-left">
-              <div className="bg-primary/10 text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
+              <div className="bg-tech-mint text-tech-emerald flex h-16 w-16 items-center justify-center rounded-2xl">
                 <Globe2 className="h-8 w-8" />
               </div>
-              <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
+              <h2 className="text-metal-900 mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
                 {t('aboutClimateHeading')}
               </h2>
-              <p className="text-muted-foreground mt-6 text-lg leading-relaxed">
+              <p className="text-metal-600 mt-6 text-lg leading-relaxed">
                 {t('aboutClimateText')}
               </p>
             </AnimateOnScroll>
@@ -136,13 +136,13 @@ export default async function AboutPage() {
               animation="fade-right"
               className="order-2 lg:order-1"
             >
-              <div className="bg-primary/10 text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
+              <div className="bg-primary-light text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
                 <Recycle className="h-8 w-8" />
               </div>
-              <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
+              <h2 className="text-metal-900 mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
                 {t('aboutGreentechHeading')}
               </h2>
-              <p className="text-muted-foreground mt-6 text-lg leading-relaxed">
+              <p className="text-metal-600 mt-6 text-lg leading-relaxed">
                 {t('aboutGreentechText')}
               </p>
             </AnimateOnScroll>
@@ -151,7 +151,7 @@ export default async function AboutPage() {
               animation="fade-left"
               className="order-1 lg:order-2"
             >
-              <div className="overflow-hidden rounded-2xl shadow-2xl">
+              <div className="overflow-hidden rounded-xl shadow-sm">
                 <Image
                   src="/images/sorted-materials.png"
                   alt={t('altSortedMaterials')}
@@ -166,32 +166,32 @@ export default async function AboutPage() {
       </section>
 
       {/* ───── CSR & CARBON ───── */}
-      <section className="bg-secondary/30 py-20 sm:py-28">
+      <section className="bg-metal-frost py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2">
             <AnimateOnScroll animation="fade-up">
-              <div className="bg-card rounded-2xl border p-8 sm:p-10">
-                <div className="bg-primary/10 text-primary flex h-12 w-12 items-center justify-center rounded-xl">
+              <div className="border-metal-chrome rounded-2xl border bg-white p-8 sm:p-10">
+                <div className="bg-primary-light text-primary flex h-12 w-12 items-center justify-center rounded-xl">
                   <BarChart3 className="h-6 w-6" />
                 </div>
-                <h3 className="mt-6 text-2xl font-bold tracking-tight">
+                <h3 className="text-metal-900 mt-6 text-2xl font-bold tracking-tight">
                   {t('aboutCsrHeading')}
                 </h3>
-                <p className="text-muted-foreground mt-4 text-lg leading-relaxed">
+                <p className="text-metal-600 mt-4 text-lg leading-relaxed">
                   {t('aboutCsrText')}
                 </p>
               </div>
             </AnimateOnScroll>
 
             <AnimateOnScroll animation="fade-up" delay={150}>
-              <div className="bg-card rounded-2xl border p-8 sm:p-10">
-                <div className="bg-primary/10 text-primary flex h-12 w-12 items-center justify-center rounded-xl">
+              <div className="border-metal-chrome rounded-2xl border bg-white p-8 sm:p-10">
+                <div className="bg-tech-mint text-tech-emerald flex h-12 w-12 items-center justify-center rounded-xl">
                   <Leaf className="h-6 w-6" />
                 </div>
-                <h3 className="mt-6 text-2xl font-bold tracking-tight">
+                <h3 className="text-metal-900 mt-6 text-2xl font-bold tracking-tight">
                   {t('aboutCarbonHeading')}
                 </h3>
-                <p className="text-muted-foreground mt-4 text-lg leading-relaxed">
+                <p className="text-metal-600 mt-4 text-lg leading-relaxed">
                   {t('aboutCarbonText')}
                 </p>
               </div>
@@ -201,18 +201,18 @@ export default async function AboutPage() {
       </section>
 
       {/* ───── CTA ───── */}
-      <section className="bg-primary py-20 sm:py-28">
+      <section className="from-metal-900 via-metal-800 to-metal-900 bg-gradient-to-r py-20 sm:py-28">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <h2 className="text-primary-foreground text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               {t('ctaHeading')}
             </h2>
-            <p className="text-primary-foreground/80 mt-4 text-lg">
+            <p className="text-metal-silver mt-4 text-lg">
               {t('ctaSubheading')}
             </p>
             <Link
               href="/auth/sign-up"
-              className="group text-primary mt-10 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold transition-all hover:bg-white/90 hover:shadow-xl"
+              className="group bg-primary hover:bg-primary-hover mt-10 inline-flex items-center justify-center rounded-xl px-8 py-4 text-sm font-semibold text-white transition-all duration-200 hover:shadow-xl"
             >
               {t('joinPlatform')}
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />

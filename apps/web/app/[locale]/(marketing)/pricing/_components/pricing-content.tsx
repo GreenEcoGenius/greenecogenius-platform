@@ -15,7 +15,6 @@ import {
   Globe,
   Leaf,
   Link2,
-  Lock,
   Mail,
   Phone,
   Recycle,
@@ -122,38 +121,44 @@ export function PricingContent({
     <div className="flex flex-col">
       {/* HERO */}
       <section className="container mx-auto px-4 py-12 text-center lg:py-20">
-        <h1 className="font-heading mx-auto max-w-3xl text-4xl font-bold tracking-tight lg:text-5xl">
+        <h1 className="font-heading text-metal-900 mx-auto max-w-3xl text-4xl font-bold tracking-tight lg:text-5xl">
           <Trans i18nKey="pricingPage.heroTitle" />
         </h1>
-        <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
+        <p className="text-metal-600 mx-auto mt-4 max-w-2xl text-lg">
           <Trans i18nKey="pricingPage.heroSubtitle" />
         </p>
-        <p className="mt-3 text-sm text-green-600">
+        <p className="text-primary mt-3 text-sm">
           <Trans i18nKey="pricingPage.heroNote" />
         </p>
 
         {/* TOGGLE */}
         <div className="mt-8 flex items-center justify-center gap-3">
           <span
-            className={`text-sm font-medium ${!annual ? 'text-foreground' : 'text-muted-foreground'}`}
+            className={`text-sm font-medium ${!annual ? 'text-metal-900' : 'text-metal-500'}`}
           >
             <Trans i18nKey="pricingPage.monthly" />
           </span>
           <button
+            role="switch"
+            aria-checked={annual}
+            aria-label="Facturation annuelle"
             onClick={() => setAnnual(!annual)}
-            className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${annual ? 'bg-primary' : 'bg-muted'}`}
+            className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${annual ? 'bg-primary' : 'bg-metal-frost'}`}
           >
             <span
               className={`inline-block h-5 w-5 rounded-full bg-white shadow-sm transition-transform ${annual ? 'translate-x-6' : 'translate-x-1'}`}
             />
           </button>
           <span
-            className={`text-sm font-medium ${annual ? 'text-foreground' : 'text-muted-foreground'}`}
+            className={`text-sm font-medium ${annual ? 'text-metal-900' : 'text-metal-500'}`}
           >
             <Trans i18nKey="pricingPage.annual" />
           </span>
           {annual && (
-            <Badge variant="secondary" className="bg-green-100 text-green-700">
+            <Badge
+              variant="secondary"
+              className="bg-tech-mint text-tech-emerald"
+            >
               -17%
             </Badge>
           )}
@@ -161,9 +166,9 @@ export function PricingContent({
       </section>
 
       {/* INCLUDED BANNER */}
-      <section className="border-y bg-green-50/50 py-8 dark:bg-green-950/20">
+      <section className="border-metal-chrome bg-circuit-ice/20 border-y py-8">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="mb-4 text-lg font-semibold">
+          <h2 className="text-metal-900 mb-4 text-lg font-semibold">
             <Trans i18nKey="pricingPage.includedTitle" />
           </h2>
           <div className="flex flex-wrap justify-center gap-3">
@@ -188,7 +193,7 @@ export function PricingContent({
             ].map((tag, i) => (
               <span
                 key={i}
-                className="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-white px-3 py-1.5 text-sm text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300"
+                className="border-circuit-turquoise/30 text-circuit-blue inline-flex items-center gap-1.5 rounded-full border bg-white px-3 py-1.5 text-sm"
               >
                 {tag.icon}
                 <Trans i18nKey={tag.key} />
@@ -202,17 +207,17 @@ export function PricingContent({
       <section className="container mx-auto px-4 py-16">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 pt-4 md:grid-cols-3">
           {/* ESSENTIEL */}
-          <Card className="flex flex-col transition-all hover:-translate-y-1 hover:shadow-lg">
+          <Card className="border-metal-silver flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
             <CardHeader className="text-center">
               <div className="mb-2 flex items-center justify-center gap-2">
-                <Zap className="h-5 w-5 text-green-600" />
+                <Zap className="text-primary h-5 w-5" />
                 <CardTitle>{essentiel?.display_name ?? 'Essentiel'}</CardTitle>
               </div>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-metal-600 text-sm">
                 <Trans i18nKey="pricingPage.essentielTarget" />
               </p>
               <div className="mt-4">
-                <span className="text-4xl font-bold">
+                <span className="text-metal-900 text-4xl font-bold">
                   {essentiel
                     ? formatPrice(
                         annual
@@ -222,9 +227,9 @@ export function PricingContent({
                     : '149'}
                   €
                 </span>
-                <span className="text-muted-foreground">/mois</span>
+                <span className="text-metal-500">/mois</span>
                 {annual && essentiel?.annual_price && (
-                  <p className="text-muted-foreground mt-1 text-sm">
+                  <p className="text-metal-500 mt-1 text-sm">
                     {formatPrice(essentiel.annual_price)}€/an
                   </p>
                 )}
@@ -234,8 +239,8 @@ export function PricingContent({
               <ul className="flex-1 space-y-3">
                 {essentielFeatures.map((feat) => (
                   <li key={feat} className="flex items-start gap-2">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
-                    <span className="text-sm">
+                    <Check className="text-tech-neon mt-0.5 h-4 w-4 shrink-0" />
+                    <span className="text-metal-700 text-sm">
                       <Trans i18nKey={feat} />
                     </span>
                   </li>
@@ -243,7 +248,7 @@ export function PricingContent({
               </ul>
               <Button
                 variant="outline"
-                className="mt-6 w-full"
+                className="border-metal-silver text-metal-700 hover:bg-metal-chrome mt-6 w-full rounded-xl"
                 render={
                   <Link href="/home/billing">
                     <Trans i18nKey="pricingPage.startTrial" />
@@ -254,22 +259,22 @@ export function PricingContent({
             </CardContent>
           </Card>
 
-          {/* AVANCÉ */}
-          <Card className="border-primary flex scale-[1.02] flex-col shadow-lg shadow-green-100 transition-all hover:-translate-y-1 hover:shadow-xl dark:shadow-green-900/20">
+          {/* AVANCE */}
+          <Card className="border-circuit-cyan shadow-circuit-ice/30 flex scale-[1.02] flex-col border-2 shadow-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
             <CardHeader className="text-center">
               <div className="mb-2 flex items-center justify-center gap-2">
                 <BarChart3 className="text-primary h-5 w-5" />
-                <CardTitle>{avance?.display_name ?? 'Avancé'}</CardTitle>
-                <Badge className="animate-pulse bg-green-600 text-white">
+                <CardTitle>{avance?.display_name ?? 'Avance'}</CardTitle>
+                <Badge className="bg-circuit-cyan text-metal-900 font-semibold">
                   <Sparkles className="mr-1 h-3 w-3" />
                   <Trans i18nKey="pricingPage.popular" />
                 </Badge>
               </div>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-metal-600 text-sm">
                 <Trans i18nKey="pricingPage.avanceTarget" />
               </p>
               <div className="mt-4">
-                <span className="text-4xl font-bold">
+                <span className="text-metal-900 text-4xl font-bold">
                   {avance
                     ? formatPrice(
                         annual
@@ -279,29 +284,29 @@ export function PricingContent({
                     : '449'}
                   €
                 </span>
-                <span className="text-muted-foreground">/mois</span>
+                <span className="text-metal-500">/mois</span>
                 {annual && avance?.annual_price && (
-                  <p className="text-muted-foreground mt-1 text-sm">
+                  <p className="text-metal-500 mt-1 text-sm">
                     {formatPrice(avance.annual_price)}€/an
                   </p>
                 )}
               </div>
             </CardHeader>
             <CardContent className="flex flex-1 flex-col">
-              <p className="text-muted-foreground mb-3 text-xs italic">
+              <p className="text-metal-500 mb-3 text-xs italic">
                 <Trans i18nKey="pricingPage.everythingEssentiel" />
               </p>
               <ul className="flex-1 space-y-3">
                 {avanceFeatures.map((feat) => (
                   <li key={feat} className="flex items-start gap-2">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
-                    <span className="text-sm">
+                    <Check className="text-tech-neon mt-0.5 h-4 w-4 shrink-0" />
+                    <span className="text-metal-700 text-sm">
                       <Trans i18nKey={feat} />
                     </span>
                   </li>
                 ))}
               </ul>
-              <Button className="mt-6 w-full bg-green-600 hover:bg-green-700">
+              <Button className="bg-primary hover:bg-primary-hover mt-6 w-full rounded-xl">
                 <Link href="/home/billing" className="flex items-center gap-2">
                   <Trans i18nKey="pricingPage.startTrial" />
                   <ArrowRight className="h-4 w-4" />
@@ -311,30 +316,30 @@ export function PricingContent({
           </Card>
 
           {/* ENTERPRISE */}
-          <Card className="flex flex-col transition-all hover:-translate-y-1 hover:shadow-lg">
+          <Card className="border-metal-silver bg-metal-frost flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
             <CardHeader className="text-center">
               <div className="mb-2 flex items-center justify-center gap-2">
-                <Building2 className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                <Building2 className="text-metal-700 h-5 w-5" />
                 <CardTitle>Enterprise</CardTitle>
               </div>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-metal-600 text-sm">
                 <Trans i18nKey="pricingPage.enterpriseTarget" />
               </p>
               <div className="mt-4">
-                <span className="text-3xl font-bold">
+                <span className="text-metal-900 text-3xl font-bold">
                   <Trans i18nKey="pricingPage.onQuote" />
                 </span>
               </div>
             </CardHeader>
             <CardContent className="flex flex-1 flex-col">
-              <p className="text-muted-foreground mb-3 text-xs italic">
+              <p className="text-metal-500 mb-3 text-xs italic">
                 <Trans i18nKey="pricingPage.everythingAvance" />
               </p>
               <ul className="flex-1 space-y-3">
                 {enterpriseFeatures.map((feat) => (
                   <li key={feat} className="flex items-start gap-2">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
-                    <span className="text-sm">
+                    <Check className="text-tech-neon mt-0.5 h-4 w-4 shrink-0" />
+                    <span className="text-metal-700 text-sm">
                       <Trans i18nKey={feat} />
                     </span>
                   </li>
@@ -342,7 +347,7 @@ export function PricingContent({
               </ul>
               <Button
                 variant="secondary"
-                className="mt-6 w-full"
+                className="border-metal-silver bg-metal-frost text-metal-700 hover:bg-metal-chrome mt-6 w-full rounded-xl border"
                 render={
                   <Link href="mailto:contact@greenecogenius.fr">
                     <Users className="mr-2 h-4 w-4" />
@@ -357,12 +362,12 @@ export function PricingContent({
       </section>
 
       {/* COMMISSION MARKETPLACE */}
-      <section className="bg-muted/50 py-16">
+      <section className="bg-metal-frost py-16">
         <div className="container mx-auto px-4">
-          <h2 className="mb-2 text-center text-2xl font-bold">
+          <h2 className="text-metal-900 mb-2 text-center text-2xl font-bold">
             <Trans i18nKey="pricingPage.commissionTitle" />
           </h2>
-          <p className="text-muted-foreground mb-8 text-center">
+          <p className="text-metal-600 mb-8 text-center">
             <Trans i18nKey="pricingPage.commissionSubtitle" />
           </p>
 
@@ -384,11 +389,15 @@ export function PricingContent({
                 icon: <Globe className="h-6 w-6" />,
               },
             ].map((tier, i) => (
-              <Card key={i} className="text-center">
+              <Card key={i} className="border-metal-silver text-center">
                 <CardContent className="pt-6">
-                  <div className="text-primary mx-auto mb-3">{tier.icon}</div>
-                  <p className="text-primary text-3xl font-bold">{tier.rate}</p>
-                  <p className="text-muted-foreground mt-1 text-sm">
+                  <div className="text-circuit-blue mx-auto mb-3">
+                    {tier.icon}
+                  </div>
+                  <p className="text-circuit-cyan text-3xl font-bold">
+                    {tier.rate}
+                  </p>
+                  <p className="text-metal-500 mt-1 text-sm">
                     <Trans i18nKey={tier.range} />
                   </p>
                 </CardContent>
@@ -397,8 +406,8 @@ export function PricingContent({
           </div>
 
           {activePromo && (
-            <div className="mt-6 rounded-xl border border-green-200 bg-green-50 p-4 text-center dark:border-green-800 dark:bg-green-950">
-              <p className="font-semibold text-green-700 dark:text-green-300">
+            <div className="border-tech-neon/30 bg-tech-neon/10 mt-6 rounded-xl border p-4 text-center">
+              <p className="text-tech-emerald font-semibold">
                 <Sparkles className="mr-1 inline h-4 w-4" />
                 <Trans i18nKey="pricingPage.promoLaunch" />
               </p>
@@ -409,10 +418,10 @@ export function PricingContent({
 
       {/* SERVICES PREMIUM */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="mb-2 text-center text-2xl font-bold">
+        <h2 className="text-metal-900 mb-2 text-center text-2xl font-bold">
           <Trans i18nKey="pricingPage.servicesTitle" />
         </h2>
-        <p className="text-muted-foreground mb-8 text-center">
+        <p className="text-metal-600 mb-8 text-center">
           <Trans i18nKey="pricingPage.servicesSubtitle" />
         </p>
 
@@ -437,16 +446,21 @@ export function PricingContent({
               descKey: 'pricingPage.service3Desc',
             },
           ].map((service, i) => (
-            <Card key={i} className="text-center">
+            <Card
+              key={i}
+              className="border-metal-silver border text-center transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+            >
               <CardContent className="pt-6">
-                <div className="text-primary mx-auto mb-3">{service.icon}</div>
-                <h3 className="font-semibold">
+                <div className="text-circuit-blue mx-auto mb-3">
+                  {service.icon}
+                </div>
+                <h3 className="text-metal-900 font-semibold">
                   <Trans i18nKey={service.titleKey} />
                 </h3>
-                <p className="text-primary mt-2 text-lg font-bold">
+                <p className="text-circuit-blue mt-2 text-lg font-bold">
                   <Trans i18nKey={service.priceKey} />
                 </p>
-                <p className="text-muted-foreground mt-2 text-sm">
+                <p className="text-metal-600 mt-2 text-sm">
                   <Trans i18nKey={service.descKey} />
                 </p>
               </CardContent>
@@ -456,9 +470,9 @@ export function PricingContent({
       </section>
 
       {/* FAQ */}
-      <section className="bg-muted/50 py-16">
+      <section className="bg-metal-50 py-16">
         <div className="container mx-auto max-w-3xl px-4">
-          <h2 className="mb-8 text-center text-2xl font-bold">
+          <h2 className="text-metal-900 mb-8 text-center text-2xl font-bold">
             <Trans i18nKey="pricingPage.faqTitle" />
           </h2>
 
@@ -466,21 +480,21 @@ export function PricingContent({
             {faqKeys.map((key, i) => (
               <div
                 key={i}
-                className="rounded-lg border bg-white dark:bg-gray-950"
+                className="border-metal-chrome rounded-xl border bg-white"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="flex w-full items-center justify-between p-4 text-left"
                 >
-                  <span className="pr-4 font-medium">
+                  <span className="text-metal-900 pr-4 font-medium">
                     <Trans i18nKey={`${key}Q`} />
                   </span>
                   <ChevronDown
-                    className={`h-5 w-5 shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`}
+                    className={`text-circuit-blue h-5 w-5 shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`}
                   />
                 </button>
                 {openFaq === i && (
-                  <div className="text-muted-foreground border-t px-4 pt-3 pb-4 text-sm">
+                  <div className="border-metal-chrome text-metal-600 border-t px-4 pt-3 pb-4 text-sm">
                     <Trans i18nKey={`${key}A`} />
                   </div>
                 )}
@@ -497,18 +511,17 @@ export function PricingContent({
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="from-metal-900/70 via-metal-800/60 to-metal-900/80 absolute inset-0 bg-gradient-to-b" />
         <div className="relative container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold">
+          <h2 className="text-3xl font-bold text-white">
             <Trans i18nKey="pricingPage.ctaTitle" />
           </h2>
-          <p className="mx-auto mt-4 max-w-xl opacity-90">
+          <p className="text-metal-silver mx-auto mt-4 max-w-xl">
             <Trans i18nKey="pricingPage.ctaSubtitle" />
           </p>
           <Button
             size="lg"
-            variant="secondary"
-            className="mt-8"
+            className="bg-primary hover:bg-primary-hover mt-8 rounded-xl font-semibold text-white"
             render={
               <Link href="/home/billing">
                 <Trans i18nKey="pricingPage.ctaButton" />
@@ -517,7 +530,7 @@ export function PricingContent({
             }
             nativeButton={false}
           />
-          <div className="mt-6 flex items-center justify-center gap-6 text-sm opacity-80">
+          <div className="text-metal-steel mt-6 flex items-center justify-center gap-6 text-sm">
             <span className="flex items-center gap-1">
               <Mail className="h-4 w-4" />
               contact@greenecogenius.fr

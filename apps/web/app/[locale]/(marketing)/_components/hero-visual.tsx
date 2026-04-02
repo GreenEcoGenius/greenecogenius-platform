@@ -11,7 +11,7 @@ const orbitNodesDef = [
   {
     icon: Recycle,
     labelKey: 'orbitRecycler',
-    color: '#3BB54A',
+    color: '#1D9E75',
     angle: 0,
     speed: 1.8,
     serviceId: 'recycler',
@@ -19,7 +19,7 @@ const orbitNodesDef = [
   {
     icon: Shield,
     labelKey: 'orbitTracer',
-    color: '#8DC63F',
+    color: '#2EAFCF',
     angle: 60,
     speed: 1.4,
     serviceId: 'tracer',
@@ -27,7 +27,7 @@ const orbitNodesDef = [
   {
     icon: BarChart3,
     labelKey: 'orbitMesurer',
-    color: '#87CEEB',
+    color: '#3DDC84',
     angle: 120,
     speed: 2.0,
     serviceId: 'mesurer',
@@ -35,7 +35,7 @@ const orbitNodesDef = [
   {
     icon: Leaf,
     labelKey: 'orbitReduire',
-    color: '#1B9E77',
+    color: '#00D4FF',
     angle: 180,
     speed: 1.6,
     serviceId: 'reduire',
@@ -43,7 +43,7 @@ const orbitNodesDef = [
   {
     icon: Zap,
     labelKey: 'orbitOptimiser',
-    color: '#F4A261',
+    color: '#5BC4D6',
     angle: 240,
     speed: 1.3,
     serviceId: 'optimiser',
@@ -51,7 +51,7 @@ const orbitNodesDef = [
   {
     icon: Globe,
     labelKey: 'orbitConnecter',
-    color: '#87CEEB',
+    color: '#A8E4F0',
     angle: 300,
     speed: 1.7,
     serviceId: 'connecter',
@@ -131,7 +131,7 @@ export function HeroVisual() {
         className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center"
       >
         {/* Central glow */}
-        <div className="absolute h-[220px] w-[220px] rounded-full bg-[#1B9E77]/15 blur-[80px] sm:h-[300px] sm:w-[300px]" />
+        <div className="absolute h-[220px] w-[220px] rounded-full bg-[#1D9E75]/15 blur-[80px] sm:h-[300px] sm:w-[300px]" />
 
         {/* Outer orbit */}
         <div
@@ -228,12 +228,12 @@ export function HeroVisual() {
           />
           <defs>
             <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#1B9E77" />
-              <stop offset="100%" stopColor="#3BB54A" />
+              <stop offset="0%" stopColor="#1D9E75" />
+              <stop offset="100%" stopColor="#00D4FF" />
             </linearGradient>
             <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#8DC63F" />
-              <stop offset="100%" stopColor="#87CEEB" />
+              <stop offset="0%" stopColor="#2EAFCF" />
+              <stop offset="100%" stopColor="#3DDC84" />
             </linearGradient>
           </defs>
         </svg>

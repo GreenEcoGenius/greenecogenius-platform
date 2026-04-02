@@ -90,12 +90,12 @@ export const PILLAR_INFO: Record<
 };
 
 export const PRIORITY_COLORS: Record<NormPriority, string> = {
-  fundamental: 'bg-gray-700 text-white',
-  strategic: 'bg-emerald-600 text-white',
-  mandatory: 'bg-red-600 text-white',
-  essential: 'bg-blue-600 text-white',
-  upcoming: 'bg-amber-500 text-white',
-  framework: 'bg-violet-600 text-white',
+  fundamental: 'bg-circuit-ice text-circuit-blue',
+  strategic: 'bg-tech-mint text-tech-emerald',
+  mandatory: 'bg-red-50 text-red-600',
+  essential: 'bg-badge-amber-bg text-badge-amber-text',
+  upcoming: 'bg-badge-purple-bg text-badge-purple-text',
+  framework: 'bg-circuit-ice text-circuit-blue',
 };
 
 export const NORMS_DATABASE: Norm[] = [

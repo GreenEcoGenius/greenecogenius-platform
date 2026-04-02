@@ -9,9 +9,9 @@ import { cn } from '@kit/ui/utils';
 export type KpiVariant = 'teal' | 'emerald' | 'green';
 
 const VARIANT_CLASSES: Record<KpiVariant, string> = {
-  teal: 'from-teal-600 to-teal-700',
-  emerald: 'from-emerald-600 to-emerald-700',
-  green: 'from-green-600 to-green-700',
+  teal: 'from-circuit-blue to-circuit-dark',
+  emerald: 'from-primary-500 to-primary-600',
+  green: 'from-tech-emerald to-primary-700',
 };
 
 interface KpiMetric {
@@ -77,7 +77,7 @@ export function KpiCard({
       {actionLabel && actionHref && (
         <Link
           href={actionHref}
-          className="mt-auto inline-flex w-fit items-center gap-1.5 rounded-lg border border-white/20 bg-white/15 px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-white/25"
+          className="mt-auto inline-flex w-fit items-center gap-1.5 rounded-xl border border-white/20 bg-white/15 px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-white/25"
         >
           {actionLabel}
           <ChevronRight className="h-3.5 w-3.5" />

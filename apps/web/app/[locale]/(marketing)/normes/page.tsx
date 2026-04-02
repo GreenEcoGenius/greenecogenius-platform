@@ -38,17 +38,17 @@ export default function NormesPage() {
       />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gray-50 py-20 sm:py-28 dark:bg-gray-950">
+      <section className="bg-metal-50 relative overflow-hidden py-20 sm:py-28">
         <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            <h1 className="text-metal-900 text-4xl font-bold tracking-tight sm:text-5xl">
               Normes & Standards
             </h1>
-            <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
+            <p className="text-metal-600 mx-auto mt-4 max-w-2xl text-lg">
               42 normes, reglementations et frameworks integres a notre
               plateforme pour garantir votre conformite.
             </p>
-            <p className="text-muted-foreground mx-auto mt-3 max-w-3xl text-sm">
+            <p className="text-metal-500 mx-auto mt-3 max-w-3xl text-sm">
               GreenEcoGenius est la seule plateforme B2B d&apos;economie
               circulaire qui integre nativement les normes ISO, les
               reglementations europeennes et francaises, et les frameworks de
@@ -67,12 +67,10 @@ export default function NormesPage() {
                 { target: 4, label: 'labels vises' },
               ].map((item) => (
                 <div key={item.label} className="text-center">
-                  <div className="text-3xl font-bold text-emerald-600">
+                  <div className="text-primary text-3xl font-bold">
                     <AnimatedCounter target={item.target} />
                   </div>
-                  <p className="text-muted-foreground mt-1 text-xs">
-                    {item.label}
-                  </p>
+                  <p className="text-metal-500 mt-1 text-xs">{item.label}</p>
                 </div>
               ))}
             </div>

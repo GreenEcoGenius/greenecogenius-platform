@@ -136,43 +136,43 @@ async function UserHomePage() {
               <CardContent className="p-6">
                 <div className="mb-4 flex items-center justify-between">
                   <h2 className="text-base font-semibold">
-                    <Sparkles className="mr-2 inline h-4 w-4 text-emerald-500" />
+                    <Sparkles className="text-circuit-cyan mr-2 inline h-4 w-4" />
                     {t('dashboard.recommendedActions')}
                   </h2>
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <ActionCard
-                    icon={<BarChart3 className="h-5 w-5 text-teal-600" />}
+                    icon={<BarChart3 className="text-circuit-blue h-5 w-5" />}
                     title={t('dashboard.completeScope3')}
                     description={t('dashboard.completeScope3Desc')}
                     href="/home/esg/wizard?step=3"
                     badge={t('dashboard.highImpact')}
-                    badgeColor="bg-slate-100 text-slate-700"
+                    badgeColor="bg-metal-frost text-metal-700"
                   />
                   <ActionCard
-                    icon={<Recycle className="h-5 w-5 text-emerald-600" />}
+                    icon={<Recycle className="text-primary h-5 w-5" />}
                     title={t('dashboard.publishListing')}
                     description={t('dashboard.publishListingDesc')}
                     href="/home/marketplace/new"
                     badge={t('dashboard.recommended')}
-                    badgeColor="bg-emerald-100 text-emerald-700"
+                    badgeColor="bg-tech-mint text-tech-emerald"
                   />
                   <ActionCard
-                    icon={<TrendingUp className="h-5 w-5 text-green-600" />}
+                    icon={<TrendingUp className="text-tech-neon h-5 w-5" />}
                     title={t('dashboard.improveRseScore')}
                     description={t('dashboard.improveRseScoreDesc')}
                     href="/home/rse/roadmap"
                     badge="+8 pts"
-                    badgeColor="bg-teal-100 text-teal-700"
+                    badgeColor="bg-circuit-ice text-circuit-blue"
                   />
                   <ActionCard
-                    icon={<Link2 className="h-5 w-5 text-teal-600" />}
+                    icon={<Link2 className="text-circuit-blue h-5 w-5" />}
                     title={t('dashboard.issueCertificates')}
                     description={t('dashboard.issueCertificatesDesc')}
                     href="/home/traceability"
                     badge={t('dashboard.fiveLots')}
-                    badgeColor="bg-teal-100 text-teal-700"
+                    badgeColor="bg-circuit-ice text-circuit-blue"
                   />
                 </div>
               </CardContent>
@@ -185,34 +185,36 @@ async function UserHomePage() {
               <CardContent className="p-6">
                 <div className="mb-4 flex items-center justify-between">
                   <h2 className="text-base font-semibold">
-                    <Bell className="mr-2 inline h-4 w-4 text-slate-400" />
+                    <Bell className="text-metal-steel mr-2 inline h-4 w-4" />
                     {t('dashboard.recentActivity')}
                   </h2>
                 </div>
 
                 <div className="space-y-0 divide-y">
                   <ActivityItem
-                    icon={<CheckCircle className="h-4 w-4 text-emerald-500" />}
+                    icon={<CheckCircle className="text-tech-neon h-4 w-4" />}
                     text={t('dashboard.activityLotCertified')}
                     time={t('dashboard.time2h')}
                   />
                   <ActivityItem
-                    icon={<ShoppingCart className="h-4 w-4 text-teal-500" />}
+                    icon={
+                      <ShoppingCart className="text-circuit-blue h-4 w-4" />
+                    }
                     text={t('dashboard.activityOfferReceived')}
                     time={t('dashboard.time5h')}
                   />
                   <ActivityItem
-                    icon={<TrendingUp className="h-4 w-4 text-green-500" />}
+                    icon={<TrendingUp className="text-tech-neon h-4 w-4" />}
                     text={t('dashboard.activityRseScore')}
                     time={t('dashboard.timeYesterday')}
                   />
                   <ActivityItem
-                    icon={<Leaf className="h-4 w-4 text-emerald-500" />}
+                    icon={<Leaf className="text-primary h-4 w-4" />}
                     text={t('dashboard.activityCarbonCredit')}
                     time={t('dashboard.timeYesterday')}
                   />
                   <ActivityItem
-                    icon={<Users className="h-4 w-4 text-teal-500" />}
+                    icon={<Users className="text-circuit-blue h-4 w-4" />}
                     text={t('dashboard.activityNetworkJoin')}
                     time={t('dashboard.time3d')}
                   />
@@ -239,7 +241,7 @@ async function UserHomePage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-muted-foreground border-b text-left text-xs font-semibold tracking-wider uppercase">
+                    <tr className="border-metal-chrome text-metal-700 border-b text-left text-xs font-semibold tracking-wider uppercase">
                       <th className="pb-3">{t('materialLabel')}</th>
                       <th className="pb-3">{t('typeLabel')}</th>
                       <th className="pb-3">{t('quantityLabel')}</th>
@@ -255,13 +257,13 @@ async function UserHomePage() {
                       return (
                         <tr
                           key={listing.id as string}
-                          className="hover:bg-muted/50"
+                          className="hover:bg-metal-50"
                         >
                           <td className="py-3">
                             <p className="font-medium">
                               {listing.title as string}
                             </p>
-                            <p className="text-muted-foreground text-xs">
+                            <p className="text-metal-500 text-xs">
                               {cat?.name_fr ?? cat?.name}
                             </p>
                           </td>
@@ -333,7 +335,7 @@ function ActionCard({
   return (
     <Link
       href={href}
-      className="group flex gap-3 rounded-lg border p-4 transition-all hover:shadow-sm"
+      className="group border-metal-chrome flex gap-3 rounded-xl border p-4 transition-all duration-200 hover:shadow-sm"
     >
       <div className="mt-0.5 shrink-0">{icon}</div>
       <div className="min-w-0 flex-1">
@@ -345,9 +347,9 @@ function ActionCard({
             {badge}
           </span>
         </div>
-        <p className="text-muted-foreground mt-0.5 text-xs">{description}</p>
+        <p className="text-metal-500 mt-0.5 text-xs">{description}</p>
       </div>
-      <ArrowRight className="text-muted-foreground h-4 w-4 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
+      <ArrowRight className="text-metal-steel h-4 w-4 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
     </Link>
   );
 }
@@ -365,16 +367,16 @@ function ActivityItem({
     <div className="flex items-center gap-3 py-3">
       <div className="shrink-0">{icon}</div>
       <p className="flex-1 text-sm">{text}</p>
-      <span className="text-muted-foreground shrink-0 text-xs">{time}</span>
+      <span className="text-metal-steel shrink-0 text-xs">{time}</span>
     </div>
   );
 }
 
 function TypeBadge({ type, label }: { type: string; label: string }) {
   const styles: Record<string, string> = {
-    sell: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400',
-    buy: 'bg-teal-100 text-teal-700 dark:bg-teal-950/30 dark:text-teal-400',
-    collect: 'bg-teal-100 text-teal-700 dark:bg-teal-950/30 dark:text-teal-400',
+    sell: 'bg-tech-mint text-tech-emerald',
+    buy: 'bg-circuit-ice text-circuit-blue',
+    collect: 'bg-badge-amber-bg text-badge-amber-text',
   };
 
   return (
@@ -388,12 +390,10 @@ function TypeBadge({ type, label }: { type: string; label: string }) {
 
 function StatusBadge({ status, label }: { status: string; label: string }) {
   const styles: Record<string, string> = {
-    active:
-      'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400',
-    draft: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
-    sold: 'bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400',
-    expired:
-      'bg-slate-100 text-slate-600 dark:bg-slate-950/30 dark:text-slate-400',
+    active: 'bg-tech-mint text-tech-emerald',
+    draft: 'bg-metal-frost text-metal-steel',
+    sold: 'bg-circuit-ice text-circuit-blue',
+    expired: 'bg-metal-frost text-metal-steel',
   };
 
   return (

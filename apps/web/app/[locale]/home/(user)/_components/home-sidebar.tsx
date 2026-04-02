@@ -32,7 +32,7 @@ export function HomeSidebar(props: HomeSidebarProps) {
       <SidebarHeader className="justify-center px-3 pt-4 pb-2">
         <Link
           href="/"
-          className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+          className="text-metal-silver hover:bg-metal-800 flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 hover:text-white"
         >
           <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} />
           <span className="group-data-[collapsible=icon]:hidden">
@@ -53,7 +53,7 @@ export function HomeSidebar(props: HomeSidebarProps) {
 
       <SidebarFooter className="p-3">
         <div className="flex justify-end">
-          <SidebarTrigger className="text-muted-foreground hover:text-foreground h-8 w-8 cursor-pointer" />
+          <SidebarTrigger className="text-metal-steel h-8 w-8 cursor-pointer hover:text-white" />
         </div>
       </SidebarFooter>
     </Sidebar>
