@@ -16,14 +16,23 @@ export function AppHeader() {
 
   return (
     <header className="border-metal-chrome fixed top-0 right-0 left-0 z-40 flex h-14 items-center justify-between border-b bg-white px-3 lg:px-5">
-      {/* Left: logo */}
+      {/* Left: logo only */}
       <div className="flex items-center">
-        <AppLogo href="/" className="h-16 w-auto lg:h-12" />
+        <AppLogo href="/" className="h-[4.5rem] w-auto lg:h-12" />
       </div>
 
-      {/* Right: all actions */}
-      <div className="flex items-center gap-1.5">
-        {/* Search (desktop only) */}
+      {/* Right: all actions grouped */}
+      <div className="flex items-center gap-1">
+        {/* Search */}
+        <button
+          type="button"
+          className="text-metal-600 hover:bg-metal-frost flex h-9 w-9 items-center justify-center rounded-xl transition-colors md:hidden"
+          aria-label="Rechercher"
+        >
+          <Search className="h-4 w-4" />
+        </button>
+
+        {/* Search (desktop expanded) */}
         <button
           type="button"
           className="border-metal-silver bg-metal-50 text-metal-steel hover:border-metal-400 hidden items-center gap-2 rounded-xl border px-3 py-1.5 text-sm transition-colors md:flex"
@@ -51,10 +60,8 @@ export function AppHeader() {
           <Sparkles className="h-4 w-4" />
         </button>
 
-        {/* Language toggle (desktop only) */}
-        <div className="hidden sm:block">
-          <LocaleToggle />
-        </div>
+        {/* Language toggle */}
+        <LocaleToggle />
 
         {/* Notifications */}
         <button
@@ -65,7 +72,7 @@ export function AppHeader() {
           <Bell className="h-4 w-4" />
         </button>
 
-        {/* Sidebar hamburger (mobile only, at the far right) */}
+        {/* Sidebar hamburger (mobile only, last position) */}
         <MobileMenuButton />
       </div>
     </header>
@@ -91,7 +98,7 @@ function LocaleToggle() {
       title="Changer de langue"
     >
       <Globe className="h-3.5 w-3.5" />
-      {locale === 'fr' ? 'EN' : 'FR'}
+      <span className="hidden sm:inline">{locale === 'fr' ? 'EN' : 'FR'}</span>
     </button>
   );
 }

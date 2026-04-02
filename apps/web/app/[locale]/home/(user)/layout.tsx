@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import * as z from 'zod';
 
 import { UserWorkspaceContextProvider } from '@kit/accounts/components';
-import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
+import { Page, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/sidebar';
 
 import { ChatProvider } from '~/components/ai/chat-context';
@@ -21,7 +21,6 @@ import { ChatAwareContent } from './_components/chat-aware-content';
 // home imports
 import { HomeMenuNavigation } from './_components/home-menu-navigation';
 import { HomeSidebar } from './_components/home-sidebar';
-import { MobileSidebarToggle } from './_components/mobile-sidebar-toggle';
 import { loadUserWorkspace } from './_lib/server/load-user-workspace';
 
 function UserHomeLayout({ children }: React.PropsWithChildren) {
@@ -63,12 +62,6 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
                 <HomeSidebar workspace={workspace} />
               </PageNavigation>
 
-              <PageMobileNavigation
-                className={'flex items-center justify-between'}
-              >
-                <MobileNavigation />
-              </PageMobileNavigation>
-
               <ChatAwareContent>{children}</ChatAwareContent>
             </Page>
           </SidebarProvider>
@@ -96,12 +89,6 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
               <HomeMenuNavigation workspace={workspace} />
             </PageNavigation>
 
-            <PageMobileNavigation
-              className={'flex items-center justify-between'}
-            >
-              <MobileNavigation />
-            </PageMobileNavigation>
-
             <ChatAwareContent>{children}</ChatAwareContent>
           </Page>
         </div>
@@ -109,18 +96,6 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
         <GlobalAIAssistant />
       </ChatProvider>
     </UserWorkspaceContextProvider>
-  );
-}
-
-function MobileNavigation() {
-  return (
-    <>
-      <MobileSidebarToggle />
-
-      <div className="flex-1" />
-
-      <div id="mobile-header-right" />
-    </>
   );
 }
 
