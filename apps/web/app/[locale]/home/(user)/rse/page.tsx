@@ -16,8 +16,6 @@ import { Heading } from '@kit/ui/heading';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
-import { AIAssistant } from '~/components/ai/ai-assistant';
-
 import { SectionFooterImage } from '../_components/section-footer-image';
 import { LabelEligibilityCards } from './_components/label-eligibility-cards';
 import { RSEActionsList } from './_components/rse-actions-list';
@@ -241,9 +239,6 @@ async function RSEPage() {
           alt="RSE et Labels"
         />
       </div>
-
-      {/* AI Assistant */}
-      <AIAssistant section="rse" />
     </PageBody>
   );
 }

@@ -1,55 +1,238 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 
-import { ArrowRight, Paperclip, Send, Sparkles, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
-import { useAI } from '~/lib/hooks/use-ai';
+import {
+  Award,
+  BarChart3,
+  CreditCard,
+  Home,
+  Leaf,
+  Link2,
+  Minimize2,
+  PackageSearch,
+  Send,
+  Shield,
+  Sparkles,
+  Store,
+  User,
+  Wallet,
+  X,
+} from 'lucide-react';
 
 import { AILoadingState } from './shared/ai-loading-state';
 
-interface AIAssistantProps {
-  section:
-    | 'comptoir'
-    | 'carbon'
-    | 'esg'
-    | 'traceability'
-    | 'rse'
-    | 'compliance';
-  context?: Record<string, unknown>;
-}
+/* ─── Types ─── */
 
-interface Attachment {
-  id: string;
-  file: File;
+type AgentType =
+  | 'comptoir'
+  | 'carbon'
+  | 'esg'
+  | 'traceability'
+  | 'rse'
+  | 'compliance'
+  | 'general';
+
+interface SectionContext {
+  agent: AgentType;
   name: string;
-  type: string;
-  size: number;
+  icon: React.ReactNode;
+  welcome: string;
+  suggestions: string[];
 }
 
 interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
-  attachments?: Attachment[];
   streaming?: boolean;
 }
 
-const QUICK_ACTIONS: Record<AIAssistantProps['section'], string[]> = {
-  comptoir: ['Comment publier une annonce ?', 'Quels materiaux acceptes ?'],
-  carbon: ['Reduire mes emissions', 'Expliquer Scopes 1/2/3'],
-  esg: ['Generer un rapport ESG', 'Normes CSRD ?'],
-  traceability: ['Emettre un certificat', 'Verifier un lot'],
-  rse: ['Diagnostic RSE', 'Labels disponibles ?'],
-  compliance: ['Lancer un pre-audit', 'Normes pour mon secteur ?'],
-};
+/* ─── Section detection ─── */
 
-function formatFileSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+function detectSection(pathname: string): SectionContext {
+  if (pathname.includes('/marketplace') || pathname.includes('/comptoir')) {
+    return {
+      agent: 'comptoir',
+      name: 'Le Comptoir Circulaire',
+      icon: <Store className="h-4 w-4" />,
+      welcome:
+        'Je suis votre assistant Comptoir Circulaire. Je peux analyser vos annonces, estimer des prix, trouver des acheteurs, et vous guider pour publier un lot.',
+      suggestions: [
+        'Analyser mes annonces actives',
+        'Estimer le prix de ma matiere',
+        'Creer une nouvelle annonce',
+        'Trouver des acheteurs',
+      ],
+    };
+  }
+
+  if (pathname.includes('/my-listings') || pathname.includes('/annonces')) {
+    return {
+      agent: 'comptoir',
+      name: 'Mes Annonces',
+      icon: <PackageSearch className="h-4 w-4" />,
+      welcome:
+        'Je suis votre assistant Annonces. Je peux analyser la performance de vos annonces et suggerer des ameliorations.',
+      suggestions: [
+        'Performance de mes annonces',
+        'Pourquoi pas de vues ?',
+        'Ameliorer mes annonces',
+        'Publier un nouveau lot',
+      ],
+    };
+  }
+
+  if (pathname.includes('/carbon') || pathname.includes('/impact')) {
+    return {
+      agent: 'carbon',
+      name: 'Impact Carbone',
+      icon: <Leaf className="h-4 w-4" />,
+      welcome:
+        'Je suis votre assistant Impact Carbone. Je peux vous guider pour completer votre bilan, expliquer vos emissions, et generer des recommandations de reduction.',
+      suggestions: [
+        'Completer mon bilan carbone',
+        'Expliquer mes emissions Scope 3',
+        'Recommandations pour reduire',
+        'Generer le rapport carbone',
+      ],
+    };
+  }
+
+  if (pathname.includes('/esg') || pathname.includes('/reporting')) {
+    return {
+      agent: 'esg',
+      name: 'Reporting ESG',
+      icon: <BarChart3 className="h-4 w-4" />,
+      welcome:
+        'Je suis votre assistant Reporting ESG. Je peux vous aider a completer les champs manquants, expliquer les indicateurs ESRS, et generer vos rapports CSRD/GRI.',
+      suggestions: [
+        'Completer les champs manquants',
+        'Generer mon rapport CSRD',
+        'Expliquer ma conformite ESRS',
+        'Comparer avec le trimestre precedent',
+      ],
+    };
+  }
+
+  if (pathname.includes('/traceability') || pathname.includes('/tracabilite')) {
+    return {
+      agent: 'traceability',
+      name: 'Tracabilite',
+      icon: <Link2 className="h-4 w-4" />,
+      welcome:
+        'Je suis votre assistant Tracabilite. Je peux emettre des certificats, verifier des lots on-chain, et analyser vos alertes actives.',
+      suggestions: [
+        'Emettre les certificats en attente',
+        'Verifier un lot sur la blockchain',
+        'Resume de mes alertes',
+        "Historique d'un lot",
+      ],
+    };
+  }
+
+  if (pathname.includes('/rse') || pathname.includes('/labels')) {
+    return {
+      agent: 'rse',
+      name: 'RSE & Labels',
+      icon: <Award className="h-4 w-4" />,
+      welcome:
+        'Je suis votre assistant RSE & Labels, propulse par Claude Opus. Je peux lancer un diagnostic complet, evaluer votre eligibilite aux labels, et generer votre feuille de route.',
+      suggestions: [
+        'Lancer un diagnostic complet',
+        'Comment obtenir B Corp ?',
+        'Que dois-je ameliorer en priorite ?',
+        'Generer ma feuille de route',
+      ],
+    };
+  }
+
+  if (pathname.includes('/compliance') || pathname.includes('/conformite')) {
+    return {
+      agent: 'compliance',
+      name: 'Conformite',
+      icon: <Shield className="h-4 w-4" />,
+      welcome:
+        'Je suis votre assistant Conformite. Je peux lancer un pre-audit, expliquer vos non-conformites, et verifier les 42 normes integrees.',
+      suggestions: [
+        'Lancer un pre-audit',
+        'Expliquer mes non-conformites',
+        'Veille reglementaire',
+        'Comment me conformer au RGPD ?',
+      ],
+    };
+  }
+
+  if (pathname.includes('/wallet') || pathname.includes('/portefeuille')) {
+    return {
+      agent: 'comptoir',
+      name: 'Portefeuille',
+      icon: <Wallet className="h-4 w-4" />,
+      welcome:
+        'Je suis votre assistant Portefeuille. Je peux vous aider avec vos transactions, commissions, et solde.',
+      suggestions: [
+        'Resume de mes transactions',
+        'Combien ai-je gagne ce mois ?',
+        'Detail des commissions',
+        'Expliquer le systeme de commissions',
+      ],
+    };
+  }
+
+  if (pathname.includes('/billing') || pathname.includes('/facturation')) {
+    return {
+      agent: 'general',
+      name: 'Facturation',
+      icon: <CreditCard className="h-4 w-4" />,
+      welcome:
+        'Je suis votre assistant Facturation. Je peux comparer les plans, expliquer les fonctionnalites, et vous guider.',
+      suggestions: [
+        'Comparer les plans',
+        'Que debloque le Plan Avance ?',
+        'Expliquer mon plan actuel',
+        'Comment changer de plan ?',
+      ],
+    };
+  }
+
+  if (
+    pathname.includes('/settings') ||
+    pathname.includes('/profil') ||
+    pathname.includes('/profile')
+  ) {
+    return {
+      agent: 'general',
+      name: 'Profil',
+      icon: <User className="h-4 w-4" />,
+      welcome:
+        'Je suis votre assistant Profil. Comment puis-je vous aider avec votre compte ?',
+      suggestions: [
+        'Comment modifier mes informations ?',
+        'Quel est mon plan actuel ?',
+        'Configurer mes notifications',
+        'Inviter un collaborateur',
+      ],
+    };
+  }
+
+  return {
+    agent: 'general',
+    name: 'Accueil',
+    icon: <Home className="h-4 w-4" />,
+    welcome:
+      'Bonjour ! Je suis votre assistant GreenEcoGenius. Je peux vous orienter vers la bonne section, resumer votre activite, ou repondre a vos questions sur la plateforme.',
+    suggestions: [
+      'Resume de mon activite',
+      'Que dois-je faire en priorite ?',
+      'Guide-moi vers la bonne section',
+      'Comment fonctionne la plateforme ?',
+    ],
+  };
 }
+
+/* ─── Streaming text hook ─── */
 
 function useStreamingText(text: string, active: boolean) {
   const [displayed, setDisplayed] = useState('');
@@ -83,31 +266,31 @@ function StreamingMessage({ content }: { content: string }) {
     <div className="text-sm leading-relaxed whitespace-pre-wrap">
       {displayed}
       {displayed.length < content.length && (
-        <span className="ml-0.5 inline-block h-3 w-0.5 animate-pulse bg-gray-400" />
+        <span className="bg-metal-400 ml-0.5 inline-block h-3 w-0.5 animate-pulse" />
       )}
     </div>
   );
 }
 
+/* ─── Main component ─── */
+
 const MOBILE_BREAKPOINT = 768;
 
-export function AIAssistant({ section, context }: AIAssistantProps) {
+export function AIAssistant() {
+  const pathname = usePathname();
+  const section = detectSection(pathname ?? '');
+
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
-  const [attachments, setAttachments] = useState<Attachment[]>([]);
-  const [headerPortal, setHeaderPortal] = useState<HTMLElement | null>(null);
-  const [viewport, setViewport] = useState<{
-    height: number;
-    offsetTop: number;
-  } | null>(null);
+  const [loading, setLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [lastAgent, setLastAgent] = useState<AgentType>(section.agent);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const { ask, loading } = useAI(section);
 
-  // Hide chat on mobile — not yet stable enough for production
+  // Hide on mobile
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
     check();
@@ -115,110 +298,88 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Find the header portal target
+  // Reset conversation when section changes
   useEffect(() => {
-    const el = document.getElementById('mobile-header-right');
-    if (el) setHeaderPortal(el);
-  }, []);
-
-  // Track visual viewport to handle mobile keyboard correctly
-  // This prevents the chat from resizing/expanding when keyboard opens/closes
-  useEffect(() => {
-    if (!open) {
-      setViewport(null);
-      return;
+    if (section.agent !== lastAgent) {
+      setMessages([]);
+      setLastAgent(section.agent);
     }
+  }, [section.agent, lastAgent]);
 
-    const vv = window.visualViewport;
-    if (!vv) return;
-
-    const update = () => {
-      setViewport({ height: vv.height, offsetTop: vv.offsetTop });
-    };
-
-    update();
-    vv.addEventListener('resize', update);
-    vv.addEventListener('scroll', update);
-    return () => {
-      vv.removeEventListener('resize', update);
-      vv.removeEventListener('scroll', update);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (open) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [open]);
-
+  // Scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
-  const handleFileSelect = useCallback((files: FileList | null) => {
-    if (!files) return;
-    setAttachments((prev) => [
-      ...prev,
-      ...Array.from(files).map((file) => ({
-        id: crypto.randomUUID(),
-        file,
-        name: file.name,
-        type: file.type,
-        size: file.size,
-      })),
-    ]);
-  }, []);
+  // Focus input when opened
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => inputRef.current?.focus(), 200);
+    }
+  }, [open]);
 
   const handleSend = useCallback(
     async (text?: string) => {
       const trimmed = (text ?? input).trim();
-      if ((!trimmed && attachments.length === 0) || loading) return;
+      if (!trimmed || loading) return;
 
-      const msgAttachments =
-        attachments.length > 0 ? [...attachments] : undefined;
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: crypto.randomUUID(),
-          role: 'user',
-          content: trimmed || `[${msgAttachments?.length} fichier(s)]`,
-          attachments: msgAttachments,
-        },
-      ]);
+      const userMsg: Message = {
+        id: crypto.randomUUID(),
+        role: 'user',
+        content: trimmed,
+      };
+      setMessages((prev) => [...prev, userMsg]);
       setInput('');
-      setAttachments([]);
       if (inputRef.current) inputRef.current.style.height = 'auto';
+      setLoading(true);
 
-      const attachmentInfo = msgAttachments
-        ? msgAttachments
-            .map(
-              (a) =>
-                `Fichier: ${a.name} (${a.type}, ${formatFileSize(a.size)})`,
-            )
-            .join('\n')
-        : '';
+      try {
+        // Build conversation history for context
+        const previousMessages = messages.map((m) => ({
+          role: m.role,
+          content: m.content,
+        }));
 
-      const result = await ask(
-        attachmentInfo
-          ? `${trimmed}\n\n[Pieces jointes]\n${attachmentInfo}`
-          : trimmed,
-        { context },
-      );
-      if (result) {
+        const res = await fetch('/api/ai/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: trimmed,
+            agentType: section.agent === 'general' ? undefined : section.agent,
+            context: { previousMessages },
+          }),
+        });
+
+        if (!res.ok) {
+          throw new Error('Erreur serveur');
+        }
+
+        const data = await res.json();
+
         setMessages((prev) => [
           ...prev,
           {
             id: crypto.randomUUID(),
             role: 'assistant',
-            content: result.content,
+            content: data.content || data.message || 'Pas de reponse.',
             streaming: true,
           },
         ]);
+      } catch {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: crypto.randomUUID(),
+            role: 'assistant',
+            content:
+              'Desole, je rencontre une difficulte technique. Veuillez reessayer dans quelques instants.',
+          },
+        ]);
+      } finally {
+        setLoading(false);
       }
     },
-    [input, attachments, loading, ask, context],
+    [input, loading, messages, section.agent],
   );
 
   const handleKeyDown = useCallback(
@@ -235,242 +396,103 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
 
   const hasMessages = messages.length > 0;
 
-  const triggerButton = !open ? (
-    <button
-      onClick={() => setOpen(true)}
-      className="border-primary-light text-primary flex items-center gap-2 rounded-full border bg-white px-4 py-2 text-sm font-medium transition-all hover:shadow-md"
-    >
-      <Sparkles className="h-4 w-4" />
-      Kodee
-    </button>
-  ) : null;
-
   return (
     <>
-      {/* Trigger button - always fixed on desktop */}
-      {triggerButton && (
-        <div className="fixed top-20 right-4 z-50 sm:right-6">
-          {triggerButton}
-        </div>
+      {/* ─── Floating trigger button ─── */}
+      {!open && (
+        <button
+          onClick={() => setOpen(true)}
+          className="from-primary to-primary-hover shadow-primary/30 hover:shadow-primary/40 fixed right-6 bottom-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl"
+          aria-label="Ouvrir l'assistant IA"
+        >
+          <Sparkles className="h-5 w-5" />
+        </button>
       )}
 
-      {/* Full screen chat - uses visualViewport height to stay stable with mobile keyboard */}
+      {/* ─── Chat panel ─── */}
       {open && (
-        <div
-          style={{
-            position: 'fixed',
-            top: viewport?.offsetTop ?? 0,
-            left: 0,
-            right: 0,
-            height: viewport ? `${viewport.height}px` : '100dvh',
-            zIndex: 9999,
-            backgroundColor: '#ffffff',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-          }}
-        >
+        <div className="border-metal-chrome shadow-metal-900/12 fixed right-6 bottom-6 z-50 flex w-[400px] flex-col overflow-hidden rounded-2xl border bg-white shadow-2xl">
           {/* Header */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '12px 16px',
-              borderBottom: '1px solid #e5e7eb',
-              flexShrink: 0,
-            }}
-          >
-            <div style={{ display: 'flex', gap: 8 }}>
-              <span
-                style={{
-                  backgroundColor: '#f3f4f6',
-                  borderRadius: 9999,
-                  padding: '6px 16px',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  color: '#111827',
-                }}
-              >
-                Discussion
-              </span>
+          <div className="from-primary to-primary-hover flex items-center justify-between bg-gradient-to-r px-5 py-4">
+            <div>
+              <div className="flex items-center gap-2 text-sm font-semibold text-white">
+                <Sparkles className="h-4 w-4" />
+                Assistant GreenEcoGenius
+              </div>
+              <div className="mt-0.5 flex items-center gap-1.5 text-xs text-white/80">
+                {section.icon}
+                {section.name}
+              </div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Sparkles style={{ width: 16, height: 16, color: '#059669' }} />
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => {
+                  setMessages([]);
+                }}
+                className="flex h-7 w-7 items-center justify-center rounded-lg text-white/70 transition-colors hover:bg-white/15 hover:text-white"
+                aria-label="Nouvelle conversation"
+                title="Nouvelle conversation"
+              >
+                <Minimize2 className="h-3.5 w-3.5" />
+              </button>
               <button
                 onClick={() => setOpen(false)}
+                className="flex h-7 w-7 items-center justify-center rounded-lg text-white/70 transition-colors hover:bg-white/15 hover:text-white"
                 aria-label="Fermer"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: 32,
-                  height: 32,
-                  borderRadius: 9999,
-                  border: 'none',
-                  background: 'transparent',
-                  cursor: 'pointer',
-                }}
               >
-                <ArrowRight
-                  style={{
-                    width: 18,
-                    height: 18,
-                    color: '#6b7280',
-                    transform: 'rotate(90deg)',
-                  }}
-                />
+                <X className="h-4 w-4" />
               </button>
             </div>
           </div>
 
           {/* Messages area */}
-          <div
-            style={{ flex: 1, overflowY: 'auto', padding: 16, minHeight: 0 }}
-          >
+          <div className="flex max-h-[400px] min-h-[300px] flex-1 flex-col gap-3 overflow-y-auto p-4">
             {!hasMessages && !loading ? (
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: '100%',
-                  textAlign: 'center',
-                }}
-              >
-                <div
-                  style={{
-                    width: 56,
-                    height: 56,
-                    borderRadius: 16,
-                    backgroundColor: '#ecfdf5',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: 16,
-                  }}
-                >
-                  <Sparkles
-                    style={{ width: 28, height: 28, color: '#059669' }}
-                  />
+              /* Welcome screen */
+              <div className="flex flex-1 flex-col">
+                {/* Welcome message */}
+                <div className="bg-metal-50 text-metal-700 mb-4 rounded-xl rounded-bl-sm px-4 py-3 text-sm leading-relaxed">
+                  {section.welcome}
                 </div>
-                <p
-                  style={{
-                    fontSize: 18,
-                    fontWeight: 600,
-                    color: '#111827',
-                    margin: 0,
-                  }}
-                >
-                  Bonjour !
-                </p>
-                <p style={{ fontSize: 14, color: '#6b7280', marginTop: 4 }}>
-                  Comment puis-je vous aider ?
-                </p>
 
-                <div
-                  style={{
-                    marginTop: 32,
-                    width: '100%',
-                    maxWidth: 320,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 8,
-                  }}
-                >
-                  {QUICK_ACTIONS[section]?.map((action) => (
+                {/* Quick suggestions */}
+                <div className="mt-auto flex flex-col gap-2">
+                  {section.suggestions.map((suggestion) => (
                     <button
-                      key={action}
+                      key={suggestion}
                       type="button"
-                      onClick={() => handleSend(action)}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 10,
-                        padding: '12px 16px',
-                        borderRadius: 12,
-                        border: '1px solid #e5e7eb',
-                        background: '#fff',
-                        fontSize: 13,
-                        textAlign: 'left',
-                        cursor: 'pointer',
-                        transition: 'background 0.15s',
-                      }}
-                      onMouseOver={(e) =>
-                        (e.currentTarget.style.background = '#f9fafb')
-                      }
-                      onMouseOut={(e) =>
-                        (e.currentTarget.style.background = '#fff')
-                      }
+                      onClick={() => handleSend(suggestion)}
+                      className="border-metal-chrome text-metal-700 hover:border-primary/30 hover:bg-primary-light/50 hover:text-primary flex items-center gap-2.5 rounded-xl border px-4 py-3 text-left text-[13px] transition-all duration-150"
                     >
-                      <span style={{ color: '#059669' }}>&#8599;</span>
-                      {action}
+                      <span className="text-primary">&#8599;</span>
+                      {suggestion}
                     </button>
                   ))}
                 </div>
               </div>
             ) : (
-              <div
-                style={{ display: 'flex', flexDirection: 'column', gap: 16 }}
-              >
+              /* Conversation */
+              <>
                 {messages.map((msg) => (
                   <div key={msg.id}>
                     {msg.role === 'user' ? (
-                      <div
-                        style={{ display: 'flex', justifyContent: 'flex-end' }}
-                      >
-                        <div
-                          style={{
-                            maxWidth: '80%',
-                            backgroundColor: '#f3f4f6',
-                            borderRadius: 16,
-                            padding: '10px 16px',
-                            fontSize: 14,
-                            color: '#111827',
-                          }}
-                        >
+                      <div className="flex justify-end">
+                        <div className="bg-primary max-w-[85%] rounded-xl rounded-br-sm px-4 py-2.5 text-sm text-white">
                           {msg.content}
                         </div>
                       </div>
                     ) : (
-                      <div>
-                        <div
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 8,
-                            marginBottom: 6,
-                          }}
-                        >
-                          <Sparkles
-                            style={{ width: 16, height: 16, color: '#059669' }}
-                          />
-                          <span
-                            style={{
-                              fontSize: 14,
-                              fontWeight: 600,
-                              color: '#111827',
-                            }}
-                          >
-                            Kodee
-                          </span>
+                      <div className="flex gap-2">
+                        <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                          <Sparkles className="text-primary h-3 w-3" />
                         </div>
-                        <div style={{ paddingLeft: 24 }}>
+                        <div className="bg-metal-50 text-metal-800 max-w-[85%] rounded-xl rounded-tl-sm px-4 py-2.5 text-sm leading-relaxed">
                           {msg.streaming ? (
                             <StreamingMessage content={msg.content} />
                           ) : (
-                            <p
-                              style={{
-                                fontSize: 14,
-                                lineHeight: 1.6,
-                                color: '#374151',
-                                margin: 0,
-                                whiteSpace: 'pre-wrap',
-                              }}
-                            >
+                            <div className="whitespace-pre-wrap">
                               {msg.content}
-                            </p>
+                            </div>
                           )}
                         </div>
                       </div>
@@ -479,153 +501,29 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
                 ))}
 
                 {loading && (
-                  <div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 8,
-                        marginBottom: 6,
-                      }}
-                    >
-                      <Sparkles
-                        style={{ width: 16, height: 16, color: '#059669' }}
-                      />
-                      <span
-                        style={{
-                          fontSize: 14,
-                          fontWeight: 600,
-                          color: '#111827',
-                        }}
-                      >
-                        Kodee
-                      </span>
+                  <div className="flex gap-2">
+                    <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                      <Sparkles className="text-primary h-3 w-3" />
                     </div>
-                    <div style={{ paddingLeft: 24 }}>
+                    <div className="bg-metal-50 rounded-xl rounded-tl-sm px-4 py-3">
                       <AILoadingState lines={1} />
                     </div>
                   </div>
                 )}
 
                 <div ref={messagesEndRef} />
-              </div>
+              </>
             )}
           </div>
 
-          {/* Attachments */}
-          {attachments.length > 0 && (
-            <div
-              style={{
-                padding: '8px 16px',
-                borderTop: '1px solid #f3f4f6',
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: 6,
-                flexShrink: 0,
-              }}
-            >
-              {attachments.map((att) => (
-                <span
-                  key={att.id}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 4,
-                    borderRadius: 6,
-                    border: '1px solid #e5e7eb',
-                    backgroundColor: '#f9fafb',
-                    padding: '4px 8px',
-                    fontSize: 11,
-                  }}
-                >
-                  {att.name.length > 20
-                    ? att.name.slice(0, 20) + '...'
-                    : att.name}
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setAttachments((p) => p.filter((a) => a.id !== att.id))
-                    }
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: 0,
-                      display: 'flex',
-                    }}
-                  >
-                    <X style={{ width: 12, height: 12, color: '#9ca3af' }} />
-                  </button>
-                </span>
-              ))}
-            </div>
-          )}
-
           {/* Disclaimer */}
-          <div
-            style={{
-              textAlign: 'center',
-              fontSize: 10,
-              color: '#9ca3af',
-              padding: '4px 0',
-              flexShrink: 0,
-            }}
-          >
+          <div className="text-metal-steel px-4 text-center text-[10px]">
             L&apos;IA peut generer des informations inexactes
           </div>
 
           {/* Input */}
-          <div
-            style={{
-              padding: '8px 12px 12px',
-              flexShrink: 0,
-              borderTop: '1px solid #f3f4f6',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'flex-end',
-                gap: 8,
-                borderRadius: 16,
-                border: '1px solid #e5e7eb',
-                backgroundColor: '#f9fafb',
-                padding: '8px 12px',
-              }}
-            >
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: 32,
-                  height: 32,
-                  borderRadius: 9999,
-                  border: 'none',
-                  background: 'transparent',
-                  cursor: 'pointer',
-                  flexShrink: 0,
-                }}
-              >
-                <Paperclip
-                  style={{ width: 16, height: 16, color: '#9ca3af' }}
-                />
-              </button>
-
-              <input
-                ref={fileInputRef}
-                type="file"
-                multiple
-                accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt"
-                onChange={(e) => {
-                  handleFileSelect(e.target.files);
-                  e.target.value = '';
-                }}
-                style={{ display: 'none' }}
-              />
-
+          <div className="border-metal-chrome border-t p-3">
+            <div className="border-metal-silver bg-metal-50 flex items-end gap-2 rounded-xl border px-3 py-2">
               <textarea
                 ref={inputRef}
                 value={input}
@@ -636,48 +534,18 @@ export function AIAssistant({ section, context }: AIAssistantProps) {
                   el.style.height = Math.min(el.scrollHeight, 100) + 'px';
                 }}
                 onKeyDown={handleKeyDown}
-                placeholder="Posez votre question"
+                placeholder="Posez votre question..."
                 rows={1}
-                style={{
-                  flex: 1,
-                  minHeight: 24,
-                  maxHeight: 100,
-                  resize: 'none',
-                  border: 'none',
-                  background: 'transparent',
-                  fontSize: 14,
-                  lineHeight: '22px',
-                  outline: 'none',
-                  fontFamily: 'inherit',
-                }}
+                className="text-metal-900 placeholder:text-metal-steel max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-sm leading-relaxed outline-none"
                 disabled={loading}
               />
-
               <button
                 type="button"
                 onClick={() => handleSend()}
-                disabled={
-                  loading || (!input.trim() && attachments.length === 0)
-                }
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: 36,
-                  height: 36,
-                  borderRadius: 9999,
-                  border: 'none',
-                  backgroundColor: '#059669',
-                  color: '#fff',
-                  cursor: 'pointer',
-                  flexShrink: 0,
-                  opacity:
-                    loading || (!input.trim() && attachments.length === 0)
-                      ? 0.3
-                      : 1,
-                }}
+                disabled={loading || !input.trim()}
+                className="bg-primary hover:bg-primary-hover flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-white transition-all duration-150 disabled:opacity-30"
               >
-                <Send style={{ width: 16, height: 16 }} />
+                <Send className="h-4 w-4" />
               </button>
             </div>
           </div>

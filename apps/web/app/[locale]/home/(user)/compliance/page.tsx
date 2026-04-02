@@ -3,8 +3,6 @@ import { getTranslations } from 'next-intl/server';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
-import { AIAssistant } from '~/components/ai/ai-assistant';
-
 import { SectionFooterImage } from '../_components/section-footer-image';
 import { ComplianceAlerts } from './_components/compliance-alerts';
 import { CompliancePillarCards } from './_components/compliance-pillar-cards';
@@ -134,9 +132,6 @@ async function CompliancePage() {
           alt="Conformite"
         />
       </div>
-
-      {/* AI Assistant */}
-      <AIAssistant section="compliance" />
     </PageBody>
   );
 }

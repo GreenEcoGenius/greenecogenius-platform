@@ -2,7 +2,6 @@ import { getTranslations } from 'next-intl/server';
 
 import { PageBody } from '@kit/ui/page';
 
-import { AIAssistant } from '~/components/ai/ai-assistant';
 import { AITraceabilityAlerts } from '~/components/ai/traceability/ai-traceability-alerts';
 import {
   getAllLots,
@@ -136,9 +135,6 @@ async function TraceabilityPage() {
           alt="Tracabilite"
         />
       </div>
-
-      {/* AI Assistant floating button */}
-      <AIAssistant section="traceability" />
     </PageBody>
   );
 }

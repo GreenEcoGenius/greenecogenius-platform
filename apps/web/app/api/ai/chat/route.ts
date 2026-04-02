@@ -27,7 +27,13 @@ export async function POST(req: NextRequest) {
     }: {
       message: string;
       agentType?: string;
-      context?: object;
+      context?: {
+        previousMessages?: Array<{
+          role: 'user' | 'assistant';
+          content: string;
+        }>;
+        [key: string]: unknown;
+      };
     } = body;
 
     if (!message || typeof message !== 'string') {
