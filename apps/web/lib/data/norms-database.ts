@@ -49,50 +49,109 @@ export interface Norm {
 
 export const PILLAR_INFO: Record<
   NormPillar,
-  { label: string; icon: string; description: string }
+  { label: string; label_en: string; icon: string; description: string; description_en: string }
 > = {
   circular_economy: {
     label: 'Economie circulaire & Gestion des dechets',
+    label_en: 'Circular Economy & Waste Management',
     icon: 'recycle',
-    description:
-      'Ces normes encadrent la transition vers un modele circulaire. GreenEcoGenius les applique automatiquement dans Le Comptoir Circulaire, la tracabilite et le reporting.',
+    description: 'Ces normes encadrent la transition vers un modele circulaire. GreenEcoGenius les applique automatiquement dans Le Comptoir Circulaire, la tracabilite et le reporting.',
+    description_en: 'These standards govern the transition to a circular model. GreenEcoGenius applies them automatically in The Circular Marketplace, traceability and reporting.',
   },
   carbon: {
     label: 'Bilan carbone & Environnement',
+    label_en: 'Carbon Footprint & Environment',
     icon: 'globe',
-    description:
-      'Standards de mesure, reporting et reduction des emissions de gaz a effet de serre. Integres dans le module Impact Carbone.',
+    description: 'Standards de mesure, reporting et reduction des emissions de gaz a effet de serre. Integres dans le module Impact Carbone.',
+    description_en: 'Standards for measuring, reporting and reducing greenhouse gas emissions. Integrated into the Carbon Impact module.',
   },
   reporting: {
     label: 'Reporting ESG & Durabilite',
+    label_en: 'ESG & Sustainability Reporting',
     icon: 'file-text',
-    description:
-      'Directives et frameworks de reporting extra-financier. Alimentent automatiquement le module Reporting ESG.',
+    description: 'Directives et frameworks de reporting extra-financier. Alimentent automatiquement le module Reporting ESG.',
+    description_en: 'Non-financial reporting directives and frameworks. Automatically feed the ESG Reporting module.',
   },
   traceability: {
     label: 'Tracabilite & Chaine de valeur',
+    label_en: 'Traceability & Value Chain',
     icon: 'link',
-    description:
-      'Exigences de tracabilite, devoir de vigilance et passeport numerique. Verifiees on-chain via Polygon.',
+    description: 'Exigences de tracabilite, devoir de vigilance et passeport numerique. Verifiees on-chain via Polygon.',
+    description_en: 'Traceability requirements, due diligence and digital passport. Verified on-chain via Polygon.',
   },
   data: {
     label: 'Donnees, IA & SaaS',
+    label_en: 'Data, AI & SaaS',
     icon: 'shield',
-    description:
-      "Protection des donnees, securite et conformite IA. Appliquees a l'infrastructure technique de la plateforme.",
+    description: "Protection des donnees, securite et conformite IA. Appliquees a l'infrastructure technique de la plateforme.",
+    description_en: 'Data protection, security and AI compliance. Applied to the platform technical infrastructure.',
   },
   labels: {
     label: 'Labels & Certifications RSE',
+    label_en: 'CSR Labels & Certifications',
     icon: 'award',
-    description:
-      'Referentiels de labellisation RSE. Le module RSE & Labels evalue votre eligibilite et vous guide vers la certification.',
+    description: 'Referentiels de labellisation RSE. Le module RSE & Labels evalue votre eligibilite et vous guide vers la certification.',
+    description_en: 'CSR labeling frameworks. The CSR & Labels module evaluates your eligibility and guides you to certification.',
   },
 };
+
+const LABEL_EN: Record<string, string> = {
+  'Norme ISO': 'ISO Standard', 'Loi francaise': 'French Law', 'Decret francais': 'French Decree',
+  'Directive UE': 'EU Directive', 'Reglement UE': 'EU Regulation', 'Standards UE': 'EU Standards',
+  'Framework mondial': 'Global Framework', 'Framework': 'Framework', 'Methode': 'Method', 'Label': 'Label',
+  'Fondamentale': 'Fundamental', 'Strategique': 'Strategic', 'Obligatoire': 'Mandatory',
+  'Incontournable': 'Essential', 'A suivre': 'Upcoming',
+  'Economie circulaire': 'Circular Economy', 'Bilan carbone': 'Carbon Footprint',
+  'Reporting ESG': 'ESG Reporting', 'Tracabilite': 'Traceability',
+  'Donnees & SaaS': 'Data & SaaS', 'Labels RSE': 'CSR Labels',
+  'Publiee 2024': 'Published 2024', 'Publiee 2015': 'Published 2015', 'Publiee 2018': 'Published 2018',
+  'Publiee 2020': 'Published 2020', 'Publiee 2022': 'Published 2022', 'Publiee oct. 2024': 'Published Oct. 2024',
+  'En vigueur': 'In force', 'En vigueur depuis 2020': 'In force since 2020',
+  'En vigueur depuis 2021': 'In force since 2021', 'En vigueur depuis 2017': 'In force since 2017',
+  'En vigueur depuis 2018': 'In force since 2018', 'En vigueur 2024+': 'In force 2024+',
+  'En vigueur 2025': 'In force 2025', 'En vigueur 2027': 'In force 2027',
+  'En vigueur oct. 2024': 'In force Oct. 2024', 'En vigueur (transition CSRD)': 'In force (CSRD transition)',
+  'Actif': 'Active', 'Operationnel': 'Operational', 'Application 2030': 'Applies 2030',
+  'En developpement': 'In development', 'Adoption prevue 2026': 'Expected adoption 2026',
+  'Phase transitoire 2023-2026': 'Transition phase 2023-2026',
+  'Toutes les sections': 'All sections', 'Le Comptoir Circulaire': 'The Circular Marketplace',
+  'Tracabilite blockchain': 'Blockchain Traceability', 'Impact Carbone + Reporting ESG': 'Carbon Impact + ESG Reporting',
+  'Conformite + RSE & Labels': 'Compliance + CSR & Labels', 'Le Comptoir + Conformite': 'Marketplace + Compliance',
+  'Tracabilite + Conformite': 'Traceability + Compliance', 'Reporting ESG + Conformite': 'ESG Reporting + Compliance',
+  'Impact Carbone + Conformite': 'Carbon Impact + Compliance', 'Impact Carbone': 'Carbon Impact',
+  'RSE & Labels + Reporting ESG': 'CSR & Labels + ESG Reporting', 'RSE & Labels': 'CSR & Labels',
+  'Infrastructure plateforme': 'Platform Infrastructure', 'IA GreenEcoGenius': 'GreenEcoGenius AI',
+  'Conformite': 'Compliance',
+};
+
+export function localizeNorm(norm: Norm, locale: string): Norm {
+  if (locale === 'fr') return norm;
+  return {
+    ...norm,
+    pillarLabel: LABEL_EN[norm.pillarLabel] ?? norm.pillarLabel,
+    typeLabel: LABEL_EN[norm.typeLabel] ?? norm.typeLabel,
+    priorityLabel: LABEL_EN[norm.priorityLabel] ?? norm.priorityLabel,
+    statusLabel: LABEL_EN[norm.statusLabel] ?? norm.statusLabel,
+    platformSection: LABEL_EN[norm.platformSection] ?? norm.platformSection,
+  };
+}
+
+export function getLocalizedPillarInfo(locale: string) {
+  const result: Record<string, { label: string; icon: string; description: string }> = {};
+  for (const [key, val] of Object.entries(PILLAR_INFO)) {
+    result[key] = {
+      label: locale === 'fr' ? val.label : val.label_en,
+      icon: val.icon,
+      description: locale === 'fr' ? val.description : val.description_en,
+    };
+  }
+  return result as Record<NormPillar, { label: string; icon: string; description: string }>;
+}
 
 export const PRIORITY_COLORS: Record<NormPriority, string> = {
   fundamental: 'bg-circuit-ice text-circuit-blue',
   strategic: 'bg-tech-mint text-tech-emerald',
-  mandatory: 'bg-red-50 text-red-600',
+  mandatory: 'bg-emerald-50 text-emerald-700',
   essential: 'bg-badge-amber-bg text-badge-amber-text',
   upcoming: 'bg-badge-purple-bg text-badge-purple-text',
   framework: 'bg-circuit-ice text-circuit-blue',

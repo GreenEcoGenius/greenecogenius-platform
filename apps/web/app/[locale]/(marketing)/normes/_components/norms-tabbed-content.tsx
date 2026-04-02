@@ -15,7 +15,7 @@ import {
   Recycle,
   Shield,
 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -23,8 +23,9 @@ import { cn } from '@kit/ui/utils';
 
 import {
   NORMS_DATABASE,
-  PILLAR_INFO,
   PRIORITY_COLORS,
+  getLocalizedPillarInfo,
+  localizeNorm,
   type Norm,
   type NormPillar,
 } from '~/lib/data/norms-database';
@@ -146,10 +147,12 @@ function NormCard({ norm, index }: { norm: Norm; index: number }) {
 
 // ── Pillar tab content ──
 
-function PillarContent({ pillar }: { pillar: NormPillar }) {
-  const info = PILLAR_INFO[pillar];
-  const norms = NORMS_DATABASE.filter((n) => n.pillar === pillar);
+function PillarContent({ pillar, locale }: { pillar: NormPillar; locale: string }) {
+  const pillarInfo = getLocalizedPillarInfo(locale);
+  const info = pillarInfo[pillar];
+  const norms = NORMS_DATABASE.filter((n) => n.pillar === pillar).map((n) => localizeNorm(n, locale));
   const heroImage = PILLAR_HERO[pillar];
+  const isFr = locale === 'fr';
 
   return (
     <div>
@@ -158,7 +161,7 @@ function PillarContent({ pillar }: { pillar: NormPillar }) {
         <div className="from-metal-900/80 via-metal-900/30 absolute inset-0 bg-gradient-to-t to-transparent" />
         <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
           <p className="text-circuit-cyan text-xs font-semibold tracking-widest uppercase">
-            {norms.length} normes integrees
+            {norms.length} {isFr ? 'normes integrees' : 'integrated standards'}
           </p>
           <h2 className="mt-2 text-3xl font-bold text-white sm:text-4xl">
             {info.label}
@@ -195,6 +198,7 @@ function PillarContent({ pillar }: { pillar: NormPillar }) {
 
 export function NormsTabbedContent() {
   const t = useTranslations('marketing');
+  const locale = useLocale();
   const [activeTab, setActiveTab] = useState('circular_economy');
   const tabBarRef = useRef<HTMLDivElement>(null);
 
@@ -265,7 +269,7 @@ export function NormsTabbedContent() {
       </div>
 
       <div className="min-h-[60vh]">
-        {activeTabDef?.pillar && <PillarContent pillar={activeTabDef.pillar} />}
+        {activeTabDef?.pillar && <PillarContent pillar={activeTabDef.pillar} locale={locale} />}
       </div>
     </>
   );
