@@ -3,7 +3,7 @@
 import { Bell, Globe, Menu, Search, Sparkles } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
-import { usePathname, useRouter } from '@kit/i18n/navigation';
+import { usePathname } from '@kit/i18n/navigation';
 import { useSidebar } from '@kit/ui/sidebar';
 import { cn } from '@kit/ui/utils';
 
@@ -86,11 +86,17 @@ export function AppHeader() {
 function LocaleToggle() {
   const locale = useLocale();
   const pathname = usePathname();
-  const router = useRouter();
 
   const toggle = () => {
     const next = locale === 'fr' ? 'en' : 'fr';
-    router.push(pathname, { locale: next });
+
+    document.cookie = `NEXT_LOCALE=${next}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+
+    const currentPath = window.location.pathname;
+    const stripped = currentPath.replace(/^\/(fr|en)(\/|$)/, '/');
+    const newPath = next === 'en' ? stripped : `/${next}${stripped === '/' ? '' : stripped}`;
+
+    window.location.href = newPath || '/';
   };
 
   return (
@@ -98,8 +104,8 @@ function LocaleToggle() {
       type="button"
       onClick={toggle}
       className="text-metal-600 hover:bg-metal-frost flex h-9 items-center gap-1 rounded-xl px-2 text-xs font-semibold uppercase transition-colors"
-      aria-label="Changer de langue"
-      title="Changer de langue"
+      aria-label={locale === 'fr' ? 'Switch to English' : 'Passer en français'}
+      title={locale === 'fr' ? 'Switch to English' : 'Passer en français'}
     >
       <Globe className="h-3.5 w-3.5" />
       {locale === 'fr' ? 'EN' : 'FR'}
