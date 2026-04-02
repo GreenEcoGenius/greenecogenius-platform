@@ -16,15 +16,12 @@ export function AppHeader() {
 
   return (
     <header className="border-metal-chrome fixed top-0 right-0 left-0 z-40 flex h-14 items-center justify-between border-b bg-white px-3 lg:px-5">
-      {/* Left: hamburger (mobile) + logo */}
-      <div className="flex items-center gap-2">
-        <div className="lg:hidden">
-          <MobileMenuButton />
-        </div>
-        <AppLogo href="/" className="h-14 w-auto lg:h-12" />
+      {/* Left: logo */}
+      <div className="flex items-center">
+        <AppLogo href="/" className="h-16 w-auto lg:h-12" />
       </div>
 
-      {/* Right: search + genius + locale + notifications */}
+      {/* Right: all actions */}
       <div className="flex items-center gap-1.5">
         {/* Search (desktop only) */}
         <button
@@ -54,8 +51,10 @@ export function AppHeader() {
           <Sparkles className="h-4 w-4" />
         </button>
 
-        {/* Language toggle */}
-        <LocaleToggle />
+        {/* Language toggle (desktop only) */}
+        <div className="hidden sm:block">
+          <LocaleToggle />
+        </div>
 
         {/* Notifications */}
         <button
@@ -65,6 +64,9 @@ export function AppHeader() {
         >
           <Bell className="h-4 w-4" />
         </button>
+
+        {/* Sidebar hamburger (mobile only, at the far right) */}
+        <MobileMenuButton />
       </div>
     </header>
   );
@@ -110,7 +112,7 @@ function MobileMenuButton() {
     <button
       type="button"
       onClick={toggleSidebar}
-      className="text-metal-700 hover:bg-metal-frost flex h-9 w-9 items-center justify-center rounded-xl transition-colors"
+      className="text-metal-700 hover:bg-metal-frost flex h-9 w-9 items-center justify-center rounded-xl transition-colors lg:hidden"
       aria-label="Menu"
     >
       <Menu className="h-5 w-5" />
