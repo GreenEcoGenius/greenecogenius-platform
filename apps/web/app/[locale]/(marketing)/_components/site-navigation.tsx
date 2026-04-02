@@ -5,10 +5,8 @@ import { createPortal } from 'react-dom';
 
 import Link from 'next/link';
 
-import { Menu, X } from 'lucide-react';
+import { Globe, Menu, X } from 'lucide-react';
 import { useLocale } from 'next-intl';
-
-import { usePathname, useRouter } from '@kit/i18n/navigation';
 import { JWTUserData } from '@kit/supabase/types';
 import { NavigationMenu, NavigationMenuList } from '@kit/ui/navigation-menu';
 import { Trans } from '@kit/ui/trans';
@@ -51,8 +49,6 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -72,8 +68,11 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
   const toggleLocale = () => {
     const next = locale === 'fr' ? 'en' : 'fr';
     setOpen(false);
-    // Use router.push for reliable locale switching with next-intl
-    router.push(pathname, { locale: next });
+    document.cookie = `NEXT_LOCALE=${next}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+    const currentPath = window.location.pathname;
+    const stripped = currentPath.replace(/^\/(fr|en)(\/|$)/, '/');
+    const newPath = next === 'en' ? stripped : `/${next}${stripped === '/' ? '' : stripped}`;
+    window.location.href = newPath || '/';
   };
 
   const isLoggedIn = !!user;
@@ -163,16 +162,21 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
             onClick={toggleLocale}
             style={{
               alignSelf: 'flex-start',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
               fontSize: 14,
               fontWeight: 600,
-              textTransform: 'uppercase',
               color: '#1D9E75',
               background: 'none',
-              border: 'none',
+              border: '1.5px solid #1D9E75',
+              borderRadius: 12,
+              padding: '10px 18px',
               cursor: 'pointer',
             }}
           >
-            {locale === 'fr' ? 'English' : 'Francais'}
+            <Globe size={18} />
+            {locale === 'fr' ? 'English' : 'Français'}
           </button>
 
           {!isLoggedIn && (

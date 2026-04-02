@@ -2,15 +2,13 @@
 
 import Link from 'next/link';
 
+import { Globe } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
-import { usePathname, useRouter } from '@kit/i18n/navigation';
 import { JWTUserData } from '@kit/supabase/types';
 import { Button } from '@kit/ui/button';
-import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
 
-import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 
 export function SiteHeaderAccountSection({
@@ -39,20 +37,23 @@ export function SiteHeaderAccountSection({
 
 function LocaleToggle() {
   const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
 
   const toggle = () => {
     const next = locale === 'fr' ? 'en' : 'fr';
-    router.push(pathname, { locale: next });
+    document.cookie = `NEXT_LOCALE=${next}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+    const currentPath = window.location.pathname;
+    const stripped = currentPath.replace(/^\/(fr|en)(\/|$)/, '/');
+    const newPath = next === 'en' ? stripped : `/${next}${stripped === '/' ? '' : stripped}`;
+    window.location.href = newPath || '/';
   };
 
   return (
     <button
       onClick={toggle}
-      className="text-metal-600 hover:bg-metal-frost hover:text-primary rounded-xl px-2.5 py-1.5 text-sm font-semibold tracking-wider uppercase transition-colors"
-      aria-label="Change language"
+      className="text-metal-600 hover:bg-metal-frost hover:text-primary flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-semibold transition-colors"
+      aria-label={locale === 'fr' ? 'Switch to English' : 'Passer en français'}
     >
+      <Globe className="h-4 w-4" />
       {locale === 'fr' ? 'EN' : 'FR'}
     </button>
   );
