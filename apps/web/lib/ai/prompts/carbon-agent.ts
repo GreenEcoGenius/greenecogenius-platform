@@ -1,9 +1,6 @@
 import { NORMS_KNOWLEDGE } from './norms-knowledge';
-import { SYSTEM_BASE } from './system-base';
 
-export const CARBON_AGENT_PROMPT = `${SYSTEM_BASE}
-
-${NORMS_KNOWLEDGE}
+export const CARBON_AGENT_PROMPT = `${NORMS_KNOWLEDGE}
 
 ## ROLE SPECIFIQUE : AGENT BILAN CARBONE
 

@@ -9,6 +9,7 @@ import { COMPLIANCE_AGENT_PROMPT } from './prompts/compliance-agent';
 import { COMPTOIR_AGENT_PROMPT } from './prompts/comptoir-agent';
 import { ESG_AGENT_PROMPT } from './prompts/esg-reporting-agent';
 import { RSE_AGENT_PROMPT } from './prompts/rse-labels-agent';
+import { getSystemBase } from './prompts/system-base';
 import { TRACEABILITY_AGENT_PROMPT } from './prompts/traceability-agent';
 import type { AIContext, AIResponse } from './types';
 
@@ -71,23 +72,22 @@ export async function routeRequest(message: string): Promise<AgentType> {
  * Builds a context-enriched system prompt.
  */
 function buildSystemPrompt(basePrompt: string, context?: AIContext): string {
-  if (!context) return basePrompt;
+  const locale = context?.locale ?? 'fr';
+  const parts = [getSystemBase(locale), '\n\n', basePrompt];
 
-  const parts = [basePrompt];
-
-  if (context.orgData) {
+  if (context?.orgData) {
     parts.push(
       `\n\n--- Organisation Data ---\n${JSON.stringify(context.orgData, null, 2)}`,
     );
   }
 
-  if (context.lotData) {
+  if (context?.lotData) {
     parts.push(
       `\n\n--- Lot / Material Data ---\n${JSON.stringify(context.lotData, null, 2)}`,
     );
   }
 
-  if (context.carbonData) {
+  if (context?.carbonData) {
     parts.push(
       `\n\n--- Carbon / Emissions Data ---\n${JSON.stringify(context.carbonData, null, 2)}`,
     );

@@ -7,6 +7,7 @@ export interface AIResponse {
 }
 
 export interface AIContext {
+  locale?: string;
   orgId?: string;
   orgData?: Record<string, unknown>;
   lotData?: Record<string, unknown>;

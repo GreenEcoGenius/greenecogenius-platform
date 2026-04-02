@@ -23,10 +23,12 @@ export async function POST(req: NextRequest) {
     const {
       message,
       agentType,
+      locale,
       context,
     }: {
       message: string;
       agentType?: string;
+      locale?: string;
       context?: {
         previousMessages?: Array<{
           role: 'user' | 'assistant';
@@ -47,7 +49,10 @@ export async function POST(req: NextRequest) {
       ? (agentType as AgentType)
       : await routeRequest(message);
 
-    const response = await execute(resolvedAgent, message, context);
+    const response = await execute(resolvedAgent, message, {
+      ...context,
+      locale: locale ?? 'fr',
+    });
 
     return NextResponse.json(response);
   } catch (error) {
