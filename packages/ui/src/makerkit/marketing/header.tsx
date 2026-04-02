@@ -57,7 +57,7 @@ export const Header: React.FC<HeaderProps> = function ({
   return (
     <div
       className={cn(
-        'site-header border-metal-chrome dark:border-border/30 dark:bg-background fixed top-0 z-50 w-full overflow-hidden border-b bg-white transition-transform duration-300',
+        'site-header border-metal-chrome dark:border-border/30 dark:bg-background fixed top-0 z-50 w-full border-b bg-white transition-transform duration-300',
         visible ? 'translate-y-0' : '-translate-y-full',
         className,
       )}
