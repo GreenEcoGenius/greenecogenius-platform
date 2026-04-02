@@ -35,7 +35,7 @@ const defaultDomains: DomainScore[] = [
   { name: 'Environnement', score: 85, icon: Leaf, color: 'bg-green-500' },
   { name: 'Social', score: 68, icon: Heart, color: 'bg-pink-500' },
   { name: 'Ethique', score: 76, icon: Scale, color: 'bg-purple-500' },
-  { name: 'Parties prenantes', score: 61, icon: Users, color: 'bg-orange-500' },
+  { name: 'Parties prenantes', score: 61, icon: Users, color: 'bg-teal-500' },
 ];
 
 const defaultStrengths = [
@@ -74,11 +74,11 @@ const statusConfig = {
   },
   en_cours: {
     badge:
-      'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
+      'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400',
     label: 'En cours',
   },
   non_eligible: {
-    badge: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+    badge: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400',
     label: 'Non eligible',
   },
 };
@@ -147,8 +147,8 @@ export function AIDiagnostic() {
         )}
 
         {error && (
-          <div className="rounded-md border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950/20">
-            <p className="text-sm text-red-600">{error}</p>
+          <div className="rounded-md border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-950/20">
+            <p className="text-sm text-emerald-700">{error}</p>
             <Button
               variant="outline"
               size="sm"
@@ -216,13 +216,13 @@ export function AIDiagnostic() {
 
             {/* Improvements */}
             <div>
-              <h4 className="mb-2 text-sm font-semibold text-orange-700 dark:text-orange-400">
+              <h4 className="mb-2 text-sm font-semibold text-teal-700 dark:text-teal-400">
                 Axes d&apos;amelioration
               </h4>
               <ul className="space-y-1.5">
                 {defaultImprovements.map((s, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm">
-                    <span className="mt-1 text-orange-500">-</span>
+                    <span className="mt-1 text-teal-500">-</span>
                     {s}
                   </li>
                 ))}

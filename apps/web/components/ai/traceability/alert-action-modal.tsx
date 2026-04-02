@@ -312,22 +312,22 @@ const modalConfig: Record<
   corriger: {
     title: 'Corriger le poids',
     description: 'Modifier le poids enregistre pour ce lot.',
-    icon: <Pencil className="h-5 w-5 text-red-500" />,
+    icon: <Pencil className="h-5 w-5 text-emerald-700" />,
   },
   signaler: {
     title: 'Signaler un ecart',
     description: 'Envoyer un signalement au vendeur concernant cet ecart.',
-    icon: <AlertTriangle className="h-5 w-5 text-red-500" />,
+    icon: <AlertTriangle className="h-5 w-5 text-emerald-700" />,
   },
   contacter_transporteur: {
     title: 'Contacter le transporteur',
     description: 'Envoyer un message au transporteur pour obtenir un suivi.',
-    icon: <Truck className="h-5 w-5 text-yellow-500" />,
+    icon: <Truck className="h-5 w-5 text-teal-600" />,
   },
   marquer_retarde: {
     title: 'Marquer comme retarde',
     description: 'Le lot sera marque comme retarde dans le systeme.',
-    icon: <AlertTriangle className="h-5 w-5 text-yellow-500" />,
+    icon: <AlertTriangle className="h-5 w-5 text-teal-600" />,
   },
   emettre_certificats: {
     title: 'Emettre des certificats',

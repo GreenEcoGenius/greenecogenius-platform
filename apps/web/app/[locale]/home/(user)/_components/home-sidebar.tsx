@@ -20,7 +20,7 @@ export function HomeSidebar(props: HomeSidebarProps) {
 
   return (
     <Sidebar variant="floating" collapsible={collapsible}>
-      <SidebarContent className="pt-2">
+      <SidebarContent className="pt-4">
         <SidebarNavigation config={personalAccountNavigationConfig} />
       </SidebarContent>
 

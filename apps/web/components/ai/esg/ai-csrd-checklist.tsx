@@ -137,22 +137,22 @@ function StatusIcon({ status }: { status: ItemStatus }) {
     case 'complete':
       return <CheckCircle2 className="h-4 w-4 text-emerald-500" />;
     case 'partial':
-      return <AlertTriangle className="h-4 w-4 text-amber-500" />;
+      return <AlertTriangle className="h-4 w-4 text-teal-500" />;
     case 'missing':
-      return <XCircle className="h-4 w-4 text-red-500" />;
+      return <XCircle className="h-4 w-4 text-emerald-800" />;
   }
 }
 
 function percentColor(percent: number): string {
   if (percent >= 80) return 'text-emerald-600';
-  if (percent >= 50) return 'text-amber-600';
-  return 'text-red-600';
+  if (percent >= 50) return 'text-teal-600';
+  return 'text-emerald-800';
 }
 
 function barColor(percent: number): string {
   if (percent >= 80) return 'bg-emerald-500';
-  if (percent >= 50) return 'bg-amber-500';
-  return 'bg-red-500';
+  if (percent >= 50) return 'bg-teal-500';
+  return 'bg-emerald-800';
 }
 
 export function AICSRDChecklist({ className }: { className?: string }) {

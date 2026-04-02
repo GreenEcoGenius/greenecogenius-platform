@@ -55,18 +55,18 @@ const mockAlerts: Alert[] = [
 
 const alertConfig = {
   error: {
-    border: 'border-l-4 border-l-red-500',
-    bg: 'bg-red-50 dark:bg-red-950/20',
+    border: 'border-l-4 border-l-emerald-800',
+    bg: 'bg-emerald-50/80 dark:bg-emerald-950/20',
     icon: XCircle,
-    iconColor: 'text-red-500',
-    badgeVariant: 'destructive' as const,
+    iconColor: 'text-emerald-800 dark:text-emerald-400',
+    badgeVariant: 'outline' as const,
     label: 'Critique',
   },
   warning: {
-    border: 'border-l-4 border-l-yellow-500',
-    bg: 'bg-yellow-50 dark:bg-yellow-950/20',
+    border: 'border-l-4 border-l-teal-500',
+    bg: 'bg-teal-50 dark:bg-teal-950/20',
     icon: AlertTriangle,
-    iconColor: 'text-yellow-500',
+    iconColor: 'text-teal-600 dark:text-teal-400',
     badgeVariant: 'outline' as const,
     label: 'Attention',
   },

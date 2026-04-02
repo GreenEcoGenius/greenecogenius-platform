@@ -64,14 +64,14 @@
 
   /* Indicators */
   --color-indicator-success: #3ddc84;
-  --color-indicator-warning: #ef9f27;
-  --color-indicator-error: #e24b4a;
+  --color-indicator-warning: #5bc4d6;
+  --color-indicator-error: #085041;
   --color-indicator-info: #2eafcf;
   --color-indicator-purple: #534ab7;
 
   /* ── Semantic badge colors ── */
-  --color-badge-amber-bg: #faeeda;
-  --color-badge-amber-text: #854f0b;
+  --color-badge-amber-bg: #e1f5ee;
+  --color-badge-amber-text: #085041;
   --color-badge-purple-bg: #eeedfe;
   --color-badge-purple-text: #534ab7;
 
@@ -83,7 +83,7 @@
   --color-chart-circuit: #2eafcf;
   --color-chart-neon: #3ddc84;
   --color-chart-turquoise: #5bc4d6;
-  --color-chart-amber: #ef9f27;
+  --color-chart-amber: #5bc4d6;
 }
 
 @utility container {
@@ -126,7 +126,7 @@
   --muted-foreground: #5a6578;
   --accent: #e6f8ff;
   --accent-foreground: #1a2332;
-  --destructive: #e24b4a;
+  --destructive: #085041;
   --border: #c8d0d8;
   --input: #c8d0d8;
   --ring: #1d9e75;
@@ -169,7 +169,7 @@
   --muted-foreground: #94a3b8;
   --accent: #334155;
   --accent-foreground: #f8fafc;
-  --destructive: #e24b4a;
+  --destructive: #6ee7b7;
   --border: #334155;
   --input: #334155;
   --ring: #1d9e75;

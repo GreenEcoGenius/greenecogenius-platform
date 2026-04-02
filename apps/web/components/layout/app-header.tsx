@@ -20,7 +20,7 @@ export function AppHeader() {
     <header className="border-metal-chrome fixed top-0 right-0 left-0 z-40 flex h-14 items-center justify-between border-b bg-white px-3 lg:px-5">
       {/* Left: logo only */}
       <div className="flex items-center">
-        <AppLogo href="/" className="h-20 w-auto lg:h-16" />
+        <AppLogo href="/" className="h-28 w-auto lg:h-24" />
       </div>
 
       {/* Right: all actions grouped */}

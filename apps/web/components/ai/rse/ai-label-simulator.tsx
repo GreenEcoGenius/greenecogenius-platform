@@ -103,7 +103,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   className={
                     label.score >= label.threshold
                       ? 'border-green-200 text-green-700 dark:border-green-800 dark:text-green-400'
-                      : 'border-yellow-200 text-yellow-700 dark:border-yellow-800 dark:text-yellow-400'
+                      : 'border-teal-200 text-teal-700 dark:border-teal-800 dark:text-teal-400'
                   }
                 >
                   {label.score}/{label.threshold * 2.5}
@@ -125,7 +125,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   />
                   {/* Threshold marker */}
                   <div
-                    className="absolute top-0 h-full w-0.5 bg-red-400"
+                    className="absolute top-0 h-full w-0.5 bg-emerald-700"
                     style={{
                       left: `${(label.threshold / (label.threshold * 2.5)) * 100}%`,
                     }}
@@ -135,7 +135,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   <span className="text-muted-foreground">
                     Score: {label.score}
                   </span>
-                  <span className="text-red-500">Seuil: {label.threshold}</span>
+                  <span className="text-emerald-700">Seuil: {label.threshold}</span>
                 </div>
               </div>
             )}
@@ -168,8 +168,8 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
             )}
 
             {expanded && error && (
-              <div className="mt-3 rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-950/20">
-                <p className="text-xs text-red-600">{error}</p>
+              <div className="mt-3 rounded-md border border-emerald-200 bg-emerald-50 p-3 dark:border-emerald-800 dark:bg-emerald-950/20">
+                <p className="text-xs text-emerald-700">{error}</p>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -229,7 +229,7 @@ export function AILabelSimulator({ className }: { className?: string }) {
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-base">
-              <Award className="h-5 w-5 text-amber-600" />
+              <Award className="h-5 w-5 text-teal-600" />
               Simulateur de labels
             </CardTitle>
             <AIPoweredBadge methodology="Multi-referentiel" />
