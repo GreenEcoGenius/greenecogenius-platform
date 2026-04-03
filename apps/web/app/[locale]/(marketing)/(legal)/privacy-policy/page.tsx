@@ -33,7 +33,7 @@ async function PrivacyPolicyPage() {
             Responsable du traitement : <strong className="text-foreground">GreenEcoGenius OÜ</strong><br />
             Adresse : Tornimäe tn 5, 10145 Tallinn, Estonie<br />
             Registre : 16917315<br />
-            Email DPO : <a href="mailto:privacy@greenecogenius.tech" className="text-primary hover:text-primary/80 underline underline-offset-4">privacy@greenecogenius.tech</a><br />
+            Email DPO : <a href="mailto:contact@greenecogenius.tech" className="text-primary hover:text-primary/80 underline underline-offset-4">contact@greenecogenius.tech</a><br />
             Base légale : RGPD (UE) 2016/679
           </p>
           <p>

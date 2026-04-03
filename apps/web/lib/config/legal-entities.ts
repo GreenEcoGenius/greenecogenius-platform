@@ -35,7 +35,7 @@ export const LEGAL_ENTITIES = {
   common: {
     founder: 'Ervis Ago',
     email: 'contact@greenecogenius.tech',
-    privacyEmail: 'privacy@greenecogenius.tech',
+    privacyEmail: 'contact@greenecogenius.tech',
     phone: '+33 7 83 32 42 74',
     website: 'greenecogenius.tech',
     blockchain: {

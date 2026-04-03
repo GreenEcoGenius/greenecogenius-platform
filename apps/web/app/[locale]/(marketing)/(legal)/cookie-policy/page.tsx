@@ -135,7 +135,7 @@ async function CookiePolicyPage() {
               USA : 131 Continental Dr, Suite 305, Newark, DE 19713
             </p>
             <p className="text-muted-foreground">
-              Contact : privacy@greenecogenius.tech
+              Contact : contact@greenecogenius.tech
             </p>
           </div>
         </Section>
