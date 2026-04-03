@@ -29,16 +29,23 @@ export default async function ExplorerPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const client = getSupabaseServerClient() as any;
 
-  const [{ data: nationalRows }, { data: regionRows }, { data: countryRows }] =
-    await Promise.all([
-      client
-        .from('material_stats_national')
-        .select('*')
-        .eq('country_code', 'FR')
-        .order('annual_volume_tonnes', { ascending: false }),
-      client.from('material_stats_by_region').select('*').eq('country', 'FR'),
-      client.from('material_stats_by_country').select('*'),
-    ]);
+  const [natResult, regionResult, countryResult] = await Promise.all([
+    client
+      .from('material_stats_national')
+      .select('*')
+      .eq('country_code', 'FR')
+      .order('annual_volume_tonnes', { ascending: false }),
+    client.from('material_stats_by_region').select('*').eq('country', 'FR'),
+    client.from('material_stats_by_country').select('*'),
+  ]);
+
+  if (natResult.error) console.error('[Explorer] national error:', natResult.error);
+  if (regionResult.error) console.error('[Explorer] region error:', regionResult.error);
+  if (countryResult.error) console.error('[Explorer] country error:', countryResult.error);
+
+  const nationalRows = natResult.data;
+  const regionRows = regionResult.data;
+  const countryRows = countryResult.data;
 
   const franceStats: NationalStat[] = (nationalRows ?? []).map(
     (s: Record<string, unknown>) => ({
