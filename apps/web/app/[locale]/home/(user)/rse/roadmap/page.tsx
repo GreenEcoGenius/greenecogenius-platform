@@ -1,53 +1,48 @@
-import { Badge } from '@kit/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
+import Link from 'next/link';
+
+import { ArrowRight, ClipboardCheck, Map } from 'lucide-react';
+
+import { Button } from '@kit/ui/button';
+import { Card, CardContent } from '@kit/ui/card';
+import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
-
-import { DEMO_DATA } from '~/lib/demo/demo-data';
-
-import { RoadmapTimeline } from './_components/roadmap-timeline';
 
 export const generateMetadata = async () => {
   return { title: 'Feuille de route RSE' };
 };
 
-const mockActions = DEMO_DATA.rse.roadmapActions;
-
 async function RoadmapPage() {
-  const totalImpact = mockActions.reduce((sum, a) => sum + a.impact, 0);
-
   return (
     <PageBody>
-      <PageHeader description="">
-        <Heading level={3}>
-          <Trans i18nKey="rse:roadmapTitle" />
-        </Heading>
-      </PageHeader>
-
       <div className="space-y-6">
-        {/* Score projection */}
         <Card>
-          <CardContent className="flex flex-col items-center gap-2 py-6 sm:flex-row sm:justify-between">
-            <div>
-              <h2 className="text-lg font-bold">
-                Feuille de route RSE — 12 mois
-              </h2>
-              <p className="text-muted-foreground text-sm">
-                {mockActions.length} actions prioritaires identifiees
-              </p>
+          <CardContent className="flex flex-col items-center px-6 py-16 text-center">
+            <div className="bg-primary-light mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
+              <Map className="text-primary h-8 w-8" />
             </div>
-            <div className="text-center">
-              <p className="text-muted-foreground text-xs">
-                <Trans i18nKey="rse:projectedScore" />
-              </p>
-              <p className="text-3xl font-bold text-green-600">88/100</p>
+            <h2 className="text-metal-900 text-2xl font-bold">
+              <Trans i18nKey="rse:roadmapTitle" defaults="Feuille de route RSE" />
+            </h2>
+            <p className="text-metal-500 mx-auto mt-3 max-w-md text-sm leading-relaxed">
+              <Trans
+                i18nKey="rse:roadmapEmptyDesc"
+                defaults="Lancez votre premier diagnostic RSE pour générer une feuille de route personnalisée avec des actions prioritaires, un calendrier et un score projeté."
+              />
+            </p>
+            <div className="mt-8">
+              <Button
+                variant="default"
+                size="sm"
+                render={<Link href="/home/rse/diagnostic" />}
+                nativeButton={false}
+              >
+                <ClipboardCheck className="mr-2 h-4 w-4" />
+                <Trans i18nKey="rse:startDiagnostic" defaults="Lancer un diagnostic" />
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
             </div>
           </CardContent>
         </Card>
-
-        {/* Timeline */}
-        <RoadmapTimeline actions={mockActions} />
       </div>
     </PageBody>
   );
