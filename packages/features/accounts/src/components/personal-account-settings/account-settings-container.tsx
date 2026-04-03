@@ -88,23 +88,7 @@ export function PersonalAccountSettingsContainer(
         </CardContent>
       </Card>
 
-      <If condition={supportsLanguageSelection}>
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              <Trans i18nKey={'account.language'} />
-            </CardTitle>
-
-            <CardDescription>
-              <Trans i18nKey={'account.languageDescription'} />
-            </CardDescription>
-          </CardHeader>
-
-          <CardContent>
-            <LanguageSelector locales={routing.locales} />
-          </CardContent>
-        </Card>
-      </If>
+      {/* Language selection handled by the app header toggle */}
 
       <Card>
         <CardHeader>
