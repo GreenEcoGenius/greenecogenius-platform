@@ -21,23 +21,48 @@ const emailFrom = z
   })
   .parse(process.env.EMAIL_SENDER);
 
+function escapeHtml(str: string) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 export const sendContactEmail = publicActionClient
   .inputSchema(ContactEmailSchema)
   .action(async ({ parsedInput: data }) => {
     const mailer = await getMailer();
 
+    const name = escapeHtml(data.name);
+    const email = escapeHtml(data.email);
+    const message = escapeHtml(data.message).replace(/\n/g, '<br/>');
+
     await mailer.sendEmail({
       to: contactEmail,
       from: emailFrom,
-      subject: 'Contact Form Submission',
+      subject: `[GreenEcoGenius] Message de ${data.name}`,
       html: `
-        <p>
-          You have received a new contact form submission.
-        </p>
-
-        <p>Name: ${data.name}</p>
-        <p>Email: ${data.email}</p>
-        <p>Message: ${data.message}</p>
+        <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+          <h2 style="color:#065F46">Nouveau message — Formulaire de contact</h2>
+          <table style="width:100%;border-collapse:collapse">
+            <tr>
+              <td style="padding:8px 12px;font-weight:600;vertical-align:top;width:100px">Nom</td>
+              <td style="padding:8px 12px">${name}</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-weight:600;vertical-align:top">Email</td>
+              <td style="padding:8px 12px"><a href="mailto:${email}">${email}</a></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-weight:600;vertical-align:top">Message</td>
+              <td style="padding:8px 12px">${message}</td>
+            </tr>
+          </table>
+          <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0"/>
+          <p style="color:#6b7280;font-size:12px">
+            Envoyé depuis le formulaire de contact — greenecogenius.tech
+          </p>
+        </div>
       `,
     });
 
