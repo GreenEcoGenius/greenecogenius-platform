@@ -114,7 +114,12 @@ export function LinkAccountsList(props: LinkAccountsListProps) {
     toast.promise(promise, {
       loading: <Trans i18nKey={'account.unlinkingAccount'} />,
       success: <Trans i18nKey={'account.accountUnlinked'} />,
-      error: <Trans i18nKey={'account.unlinkAccountError'} />,
+      error: (err: unknown) => {
+        const message =
+          err instanceof Error ? err.message : String(err ?? '');
+
+        return message || <Trans i18nKey={'account.unlinkAccountError'} />;
+      },
     });
   };
 

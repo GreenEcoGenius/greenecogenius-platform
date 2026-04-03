@@ -6,6 +6,8 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import pathsConfig from '~/config/paths.config';
 
+const LOCALE_COOKIE = 'NEXT_LOCALE';
+
 export async function GET(request: NextRequest) {
   const service = createAuthCallbackService(getSupabaseServerClient());
 
@@ -14,7 +16,13 @@ export async function GET(request: NextRequest) {
     redirectPath: pathsConfig.app.home,
   });
 
-  const url = new URL(nextPath, request.url);
+  const locale = request.cookies.get(LOCALE_COOKIE)?.value ?? 'en';
+
+  const localeAwarePath = nextPath.startsWith(`/${locale}`)
+    ? nextPath
+    : `/${locale}${nextPath}`;
+
+  const url = new URL(localeAwarePath, request.url);
 
   return NextResponse.redirect(url);
 }

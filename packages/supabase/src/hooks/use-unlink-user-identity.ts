@@ -11,17 +11,16 @@ export function useUnlinkUserIdentity() {
 
   return useMutation({
     mutationFn: async (identity: UserIdentity) => {
-      // Unlink the identity
-      const { error } = await supabase.auth.unlinkIdentity(identity);
+      const { data, error } = await supabase.auth.unlinkIdentity(identity);
 
       if (error) {
-        throw error;
+        console.error('[unlink-identity]', error.message, error);
+        throw new Error(error.message);
       }
 
-      return identity;
+      return data;
     },
     onSuccess: () => {
-      // Invalidate and refetch user identities
       return queryClient.invalidateQueries({
         queryKey: USER_IDENTITIES_QUERY_KEY,
       });
