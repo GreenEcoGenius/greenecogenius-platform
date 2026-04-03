@@ -48,7 +48,30 @@ export default async function proxy(request: NextRequest) {
   }
 
   // run next-intl middleware to get the i18n-aware response
-  const response = handleI18nRouting(request);
+  let response = handleI18nRouting(request);
+
+  // Auth callback/confirm paths must never be visibly redirected — the extra
+  // round-trip can cause mobile browsers to drop the PKCE code-verifier cookie
+  // or session cookies.  Convert the redirect to an internal rewrite so the
+  // route handler runs in the same request cycle (identical to default-locale).
+  const isAuthExchange =
+    strippedPath.startsWith('/auth/callback') ||
+    strippedPath.startsWith('/auth/confirm');
+
+  if (isAuthExchange && response.status >= 300 && response.status < 400) {
+    const location = response.headers.get('location');
+
+    if (location) {
+      const target = new URL(location, request.url);
+      const rewrite = NextResponse.rewrite(target);
+
+      for (const cookie of response.cookies.getAll()) {
+        rewrite.cookies.set(cookie);
+      }
+
+      response = rewrite;
+    }
+  }
 
   if (!hasLocaleCookie) {
     const geoLocale = detectLocaleFromGeo(request);
