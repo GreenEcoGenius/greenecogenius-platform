@@ -2,9 +2,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
+import { PageBody } from '@kit/ui/page';
 
 import { CommissionInfo } from './_components/commission-info';
 import { StripeConnectSetup } from './_components/stripe-connect-setup';
@@ -62,12 +60,6 @@ async function WalletPage() {
 
   return (
     <PageBody>
-      <PageHeader description="">
-        <Heading level={3}>
-          <Trans i18nKey="wallet.title" />
-        </Heading>
-      </PageHeader>
-
       <div className="space-y-8">
         <StripeConnectSetup
           connectedAccount={

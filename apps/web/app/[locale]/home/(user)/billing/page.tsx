@@ -16,7 +16,6 @@ import {
 import { getTranslations } from 'next-intl/server';
 
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
-import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
@@ -25,7 +24,6 @@ import { Trans } from '@kit/ui/trans';
 
 import { requireUserInServerComponent } from '~/lib/server/require-user-in-server-component';
 
-import { HomeLayoutPageHeader } from '../_components/home-page-header';
 import {
   ManageClientButton,
   SubscribeClientButton,
@@ -100,11 +98,6 @@ async function PersonalAccountBillingPage() {
 
   return (
     <PageBody>
-      <HomeLayoutPageHeader
-        title={<Trans i18nKey={'common.routes.billing'} />}
-        description={<AppBreadcrumbs />}
-      />
-
       {/* Current subscription banner */}
       {currentSub && (
         <Card className="mb-6 border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950">
