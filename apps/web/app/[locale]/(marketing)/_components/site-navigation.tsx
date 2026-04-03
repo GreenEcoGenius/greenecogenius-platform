@@ -5,8 +5,10 @@ import { createPortal } from 'react-dom';
 
 import Link from 'next/link';
 
-import { Globe, Menu, X } from 'lucide-react';
+import { Globe, LogOut, Menu, X } from 'lucide-react';
 import { useLocale } from 'next-intl';
+
+import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
 import { JWTUserData } from '@kit/supabase/types';
 import { NavigationMenu, NavigationMenuList } from '@kit/ui/navigation-menu';
 import { Trans } from '@kit/ui/trans';
@@ -179,7 +181,9 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
             {locale === 'fr' ? 'English' : 'Français'}
           </button>
 
-          {!isLoggedIn && (
+          {isLoggedIn ? (
+            <SignOutButton onDone={() => setOpen(false)} />
+          ) : (
             <>
               <Link
                 href={pathsConfig.auth.signIn}
@@ -231,5 +235,40 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
 
       {mounted && menuContent && createPortal(menuContent, document.body)}
     </>
+  );
+}
+
+function SignOutButton({ onDone }: { onDone: () => void }) {
+  const signOut = useSignOut();
+  const locale = useLocale();
+
+  return (
+    <button
+      onClick={async () => {
+        await signOut.mutateAsync();
+        onDone();
+      }}
+      disabled={signOut.isPending}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+        fontSize: 14,
+        fontWeight: 500,
+        color: '#085041',
+        background: 'none',
+        border: '1.5px solid #085041',
+        borderRadius: 8,
+        padding: '12px 16px',
+        cursor: 'pointer',
+        opacity: signOut.isPending ? 0.5 : 1,
+      }}
+    >
+      <LogOut size={16} />
+      {signOut.isPending
+        ? (locale === 'fr' ? 'Déconnexion...' : 'Signing out...')
+        : (locale === 'fr' ? 'Se déconnecter' : 'Sign Out')}
+    </button>
   );
 }
