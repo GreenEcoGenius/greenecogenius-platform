@@ -4,8 +4,13 @@ import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-import type { CountryStat, NationalStat, RegionStat, Zone } from './explorer-data';
 import { EuropeMap } from './europe-map';
+import type {
+  CountryStat,
+  NationalStat,
+  RegionStat,
+  Zone,
+} from './explorer-data';
 import { MarketTrends } from './market-trends';
 import { MaterialCategoryCard } from './material-category-card';
 import { MaterialsMap } from './materials-map';
@@ -38,7 +43,7 @@ export function ExplorerContent({
   return (
     <>
       {/* Zone selector */}
-      <section className="pb-8 pt-12">
+      <section className="pt-12 pb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <ZoneSelector active={zone} onChange={setZone} />
         </div>
@@ -56,7 +61,11 @@ export function ExplorerContent({
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {stats.map((stat) => (
-              <MaterialCategoryCard key={stat.category} stat={stat} zone={zone} />
+              <MaterialCategoryCard
+                key={stat.category}
+                stat={stat}
+                zone={zone}
+              />
             ))}
           </div>
         </div>
@@ -72,12 +81,8 @@ export function ExplorerContent({
             {t(`explorer.${zone}MapSubtitle`)}
           </p>
 
-          {zone === 'france' && (
-            <MaterialsMap regionStats={franceRegionRows} />
-          )}
-          {zone === 'europe' && (
-            <EuropeMap countryStats={europeCountryRows} />
-          )}
+          {zone === 'france' && <MaterialsMap regionStats={franceRegionRows} />}
+          {zone === 'europe' && <EuropeMap countryStats={europeCountryRows} />}
           {zone === 'usa' && <UsaMap stats={usaStats} />}
         </div>
       </section>

@@ -1,6 +1,6 @@
 'use client';
 
-import { Recycle, TrendingUp } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { formatRate, formatVolume, type NationalStat } from './explorer-data';
@@ -9,7 +9,7 @@ export function MarketTrends({ stats }: { stats: NationalStat[] }) {
   const t = useTranslations('marketing');
 
   const top = [...stats]
-    .sort((a, b) => b.annual_volume_tonnes - a.annual_volume_tonnes)
+    .sort((a, b) => b.total_volume_tonnes - a.total_volume_tonnes)
     .slice(0, 4);
 
   return (
@@ -29,9 +29,11 @@ export function MarketTrends({ stats }: { stats: NationalStat[] }) {
           >
             <span className="text-metal-400 text-sm font-bold">{i + 1}.</span>
             <div>
-              <p className="text-metal-900 text-sm font-semibold">{stat.category}</p>
+              <p className="text-metal-900 text-sm font-semibold">
+                {stat.category}
+              </p>
               <p className="text-metal-500 flex items-center gap-1 text-xs">
-                {formatVolume(stat.annual_volume_tonnes)}/an
+                {formatVolume(stat.total_volume_tonnes)}/an
                 {stat.recycling_rate > 0 && (
                   <span className="text-emerald-600">
                     · {formatRate(stat.recycling_rate)} recyclé

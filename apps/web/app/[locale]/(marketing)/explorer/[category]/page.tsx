@@ -1,18 +1,19 @@
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
-import { notFound } from 'next/navigation';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { AnimateOnScroll } from '../../_components/animate-on-scroll';
-
 import { CategoryKpis } from '../_components/category-kpis';
 import { DataSourceBadge } from '../_components/data-source-badge';
 import {
   CATEGORY_META,
   categoryFromSlug,
+  dbCategory,
+  displayCategory,
   formatVolume,
   type NationalStat,
   type RegionStat,
@@ -53,45 +54,46 @@ export default async function CategoryDetailPage({ params }: PageProps) {
   if (!meta) notFound();
   const Icon = meta.icon;
 
+  const dbCat = dbCategory(categoryName);
+
   const [{ data: natRow }, { data: regionRows }] = await Promise.all([
     client
       .from('material_stats_national')
       .select('*')
-      .eq('country_code', 'FR')
-      .eq('category', categoryName)
+      .eq('category', dbCat)
       .single(),
     client
       .from('material_stats_by_region')
       .select('*')
-      .eq('country', 'FR')
-      .eq('category', categoryName)
-      .order('annual_volume_tonnes', { ascending: false }),
+      .eq('category', dbCat)
+      .order('total_volume_tonnes', { ascending: false }),
   ]);
 
   if (!natRow) notFound();
 
   const stat: NationalStat = {
-    category: natRow.category,
-    annual_volume_tonnes: Number(natRow.annual_volume_tonnes),
+    category: categoryName,
+    total_volume_tonnes: Number(natRow.total_volume_tonnes ?? 0),
+    nb_regions: Number(natRow.nb_regions ?? 0),
+    nb_sources: Number(natRow.nb_sources ?? 0),
+    avg_price_min: Number(natRow.avg_price_min ?? 0),
+    avg_price_max: Number(natRow.avg_price_max ?? 0),
+    co2_potential_tonnes: Number(natRow.co2_potential_tonnes ?? 0),
     recycling_rate: Number(natRow.recycling_rate ?? 0),
-    recovery_rate: Number(natRow.recovery_rate ?? 0),
-    avg_price_per_tonne: Number(natRow.avg_price_per_tonne ?? 0),
-    data_source: natRow.data_source ?? 'ADEME',
-    year: natRow.year ?? 2024,
-    country_code: 'FR',
+    trend_12m: Number(natRow.trend_12m ?? 0),
   };
 
-  const regionStats: RegionStat[] = (regionRows ?? []).map((r: Record<string, unknown>) => ({
-    region: r.region as string,
-    category: r.category as string,
-    annual_volume_tonnes: Number(r.annual_volume_tonnes),
-    recycling_rate: Number(r.recycling_rate ?? 0),
-    recovery_rate: Number(r.recovery_rate ?? 0),
-    avg_price_per_tonne: Number(r.avg_price_per_tonne ?? 0),
-    data_source: (r.data_source as string) ?? 'ADEME',
-    year: (r.year as number) ?? 2024,
-    country: 'FR',
-  }));
+  const regionStats: RegionStat[] = (regionRows ?? []).map(
+    (r: Record<string, unknown>) => ({
+      region: r.region as string,
+      category: displayCategory(r.category as string),
+      total_volume_tonnes: Number(r.total_volume_tonnes ?? 0),
+      nb_sources: Number(r.nb_sources ?? 0),
+      avg_price_per_tonne: Number(r.avg_price_per_tonne ?? 0),
+      co2_potential_tonnes: Number(r.co2_potential_tonnes ?? 0),
+      year: (r.year as number) ?? 2024,
+    }),
+  );
 
   return (
     <div>
@@ -120,7 +122,7 @@ export default async function CategoryDetailPage({ params }: PageProps) {
                 </span>
               </h1>
               <p className="text-metal-500 mt-1 text-sm">
-                {formatVolume(stat.annual_volume_tonnes)}/an · {stat.data_source} {stat.year}
+                {formatVolume(stat.total_volume_tonnes)}/an · ADEME 2024
               </p>
             </div>
           </div>
@@ -148,7 +150,10 @@ export default async function CategoryDetailPage({ params }: PageProps) {
 
           <AnimateOnScroll animation="fade-up" delay={100}>
             <div className="mx-auto mt-12 max-w-2xl">
-              <MaterialsMap regionStats={regionStats} singleCategory={categoryName} />
+              <MaterialsMap
+                regionStats={regionStats}
+                singleCategory={categoryName}
+              />
             </div>
           </AnimateOnScroll>
         </div>
@@ -169,7 +174,8 @@ export default async function CategoryDetailPage({ params }: PageProps) {
           <div className="flex flex-wrap items-center gap-3">
             <BookOpen className="text-metal-400 h-4 w-4" />
             <span className="text-metal-500 text-xs">
-              {t('explorer.normsApplicable')}: Loi AGEC · Décret 5/9 flux · REP · CSRD
+              {t('explorer.normsApplicable')}: Loi AGEC · Décret 5/9 flux · REP
+              · CSRD
             </span>
             <span className="text-metal-300">|</span>
             <DataSourceBadge />

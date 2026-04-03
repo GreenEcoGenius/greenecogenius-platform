@@ -1,15 +1,15 @@
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import { ArrowLeft, MapPin } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
-import { notFound } from 'next/navigation';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { AnimateOnScroll } from '../../../_components/animate-on-scroll';
-
 import { DataSourceBadge } from '../../_components/data-source-badge';
 import {
+  displayCategory,
   formatVolume,
   regionFromSlug,
   type NationalStat,
@@ -50,22 +50,21 @@ export default async function RegionDetailPage({ params }: PageProps) {
     .from('material_stats_by_region')
     .select('*')
     .eq('region', regionName)
-    .eq('country', 'FR')
-    .order('annual_volume_tonnes', { ascending: false });
+    .order('total_volume_tonnes', { ascending: false });
 
-  const stats: RegionStat[] = (regionRows ?? []).map((r: Record<string, unknown>) => ({
-    region: r.region as string,
-    category: r.category as string,
-    annual_volume_tonnes: Number(r.annual_volume_tonnes),
-    recycling_rate: Number(r.recycling_rate ?? 0),
-    recovery_rate: Number(r.recovery_rate ?? 0),
-    avg_price_per_tonne: Number(r.avg_price_per_tonne ?? 0),
-    data_source: (r.data_source as string) ?? 'ADEME',
-    year: (r.year as number) ?? 2024,
-    country: 'FR',
-  }));
+  const stats: RegionStat[] = (regionRows ?? []).map(
+    (r: Record<string, unknown>) => ({
+      region: r.region as string,
+      category: displayCategory(r.category as string),
+      total_volume_tonnes: Number(r.total_volume_tonnes ?? 0),
+      nb_sources: Number(r.nb_sources ?? 0),
+      avg_price_per_tonne: Number(r.avg_price_per_tonne ?? 0),
+      co2_potential_tonnes: Number(r.co2_potential_tonnes ?? 0),
+      year: (r.year as number) ?? 2024,
+    }),
+  );
 
-  const totalVolume = stats.reduce((s, r) => s + r.annual_volume_tonnes, 0);
+  const totalVolume = stats.reduce((s, r) => s + r.total_volume_tonnes, 0);
 
   return (
     <div>
@@ -89,7 +88,8 @@ export default async function RegionDetailPage({ params }: PageProps) {
                 {regionName}
               </h1>
               <p className="text-metal-500 mt-1 text-sm">
-                {formatVolume(totalVolume)}/an · {stats.length} {t('explorer.categoriesAvailable')}
+                {formatVolume(totalVolume)}/an · {stats.length}{' '}
+                {t('explorer.categoriesAvailable')}
               </p>
             </div>
           </div>
@@ -112,13 +112,14 @@ export default async function RegionDetailPage({ params }: PageProps) {
             {stats.map((row) => {
               const stat: NationalStat = {
                 category: row.category,
-                annual_volume_tonnes: row.annual_volume_tonnes,
-                recycling_rate: row.recycling_rate,
-                recovery_rate: row.recovery_rate,
-                avg_price_per_tonne: row.avg_price_per_tonne,
-                data_source: row.data_source,
-                year: row.year,
-                country_code: 'FR',
+                total_volume_tonnes: row.total_volume_tonnes,
+                nb_regions: 1,
+                nb_sources: row.nb_sources,
+                avg_price_min: row.avg_price_per_tonne,
+                avg_price_max: row.avg_price_per_tonne,
+                co2_potential_tonnes: row.co2_potential_tonnes,
+                recycling_rate: 0,
+                trend_12m: 0,
               };
 
               return (

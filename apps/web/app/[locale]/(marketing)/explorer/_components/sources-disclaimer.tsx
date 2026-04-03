@@ -12,10 +12,12 @@ export async function SourcesDisclaimer() {
           </p>
           <ul className="space-y-1 text-xs">
             <li>
-              <strong>France</strong> : ADEME/SINOE, FEDEREC — {t('explorer.sourcesFranceDesc')}
+              <strong>France</strong> : ADEME/SINOE, FEDEREC —{' '}
+              {t('explorer.sourcesFranceDesc')}
             </li>
             <li>
-              <strong>Europe</strong> : Eurostat — {t('explorer.sourcesEuropeDesc')}
+              <strong>Europe</strong> : Eurostat —{' '}
+              {t('explorer.sourcesEuropeDesc')}
             </li>
             <li>
               <strong>USA</strong> : US EPA — {t('explorer.sourcesUsaDesc')}
