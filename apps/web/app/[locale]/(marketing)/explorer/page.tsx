@@ -3,9 +3,9 @@ export const dynamic = 'force-dynamic';
 import { Sparkles } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
-
 import { AnimateOnScroll } from '../_components/animate-on-scroll';
+
+import { getPublicSupabaseClient } from './_lib/public-client';
 import { DataSourceBadge } from './_components/data-source-badge';
 import { ExplorerContent } from './_components/explorer-content';
 import {
@@ -28,8 +28,7 @@ export async function generateMetadata() {
 
 export default async function ExplorerPage() {
   const t = await getTranslations('marketing');
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const client = getSupabaseServerClient() as any;
+  const client = getPublicSupabaseClient();
 
   const [natResult, regionResult, countryResult] = await Promise.all([
     client

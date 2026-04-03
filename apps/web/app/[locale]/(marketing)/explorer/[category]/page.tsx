@@ -6,9 +6,9 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
-
 import { AnimateOnScroll } from '../../_components/animate-on-scroll';
+
+import { getPublicSupabaseClient } from '../_lib/public-client';
 import { CategoryKpis } from '../_components/category-kpis';
 import { DataSourceBadge } from '../_components/data-source-badge';
 import {
@@ -47,8 +47,7 @@ export default async function CategoryDetailPage({ params }: PageProps) {
   if (!categoryName) notFound();
 
   const t = await getTranslations('marketing');
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const client = getSupabaseServerClient() as any;
+  const client = getPublicSupabaseClient();
   const meta = CATEGORY_META[categoryName];
 
   if (!meta) notFound();
