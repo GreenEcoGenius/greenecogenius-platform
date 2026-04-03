@@ -39,7 +39,7 @@ function LogoItem({ name, logo }: { name: string; logo: string }) {
         alt={name}
         width={120}
         height={48}
-        className="h-10 w-auto object-contain grayscale transition-all duration-300 hover:grayscale-0"
+        className="h-14 w-auto object-contain transition-transform duration-300 hover:scale-110 sm:h-16"
         unoptimized
       />
     </div>
