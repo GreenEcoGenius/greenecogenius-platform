@@ -16,7 +16,6 @@ import { HowItWorks } from './_components/landing/how-it-works';
 import { ImpactSimulator } from './_components/landing/impact-simulator';
 import { PricingPreview } from './_components/landing/pricing-preview';
 import { RegulatoryTimeline } from './_components/landing/regulatory-timeline';
-import { SocialProof } from './_components/landing/social-proof';
 import { StatsSection } from './_components/landing/stats-section';
 import { NewsletterForm } from './_components/newsletter-form';
 
@@ -158,9 +157,6 @@ export default async function Home() {
       <Suspense fallback={<div className="py-28" />}>
         <ImpactSimulator />
       </Suspense>
-
-      {/* ───── SECTION 7 — SOCIAL PROOF ───── */}
-      <SocialProof />
 
       {/* ───── SECTION 7.5 — COMPARATIF CONCURRENTIEL ───── */}
       <ComparisonTable />
