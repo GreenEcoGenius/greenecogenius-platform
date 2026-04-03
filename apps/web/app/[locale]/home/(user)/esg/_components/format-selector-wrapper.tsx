@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 
-import type { ReportFormatId } from '../_lib/esg-mock-data';
+import type { DemoData } from '~/lib/demo/demo-data';
+
+type ReportFormatId = DemoData['esg']['reportFormats'][number]['id'];
 import { FormatSelector } from './format-selector';
 
 export function FormatSelectorWrapper() {

@@ -100,6 +100,7 @@ interface TraceabilityKpiCardsProps {
   lotsThisMonth: number;
   lotsTrend: number;
   co2AvoidedTonnes: number;
+  co2AvoidedTrend: number;
   totalTonnes: number;
   tonnesThisMonth: number;
   tonnesTrend: number;
@@ -113,6 +114,7 @@ export function TraceabilityKpiCards({
   lotsThisMonth,
   lotsTrend,
   co2AvoidedTonnes,
+  co2AvoidedTrend,
   totalTonnes,
   tonnesThisMonth,
   tonnesTrend,
@@ -145,7 +147,7 @@ export function TraceabilityKpiCards({
             <Trans i18nKey="blockchain:lotsThisMonth" />
           </>
         }
-        trend={12.4}
+        trend={co2AvoidedTrend}
         trendLabel={<Trans i18nKey="blockchain:vsLastMonth" />}
         linkHref="/home/carbon"
         linkLabel={<Trans i18nKey="blockchain:co2AvoidedCard" />}

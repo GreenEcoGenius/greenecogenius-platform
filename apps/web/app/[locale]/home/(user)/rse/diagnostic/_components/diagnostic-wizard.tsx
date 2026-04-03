@@ -10,6 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Heading } from '@kit/ui/heading';
 import { Trans } from '@kit/ui/trans';
 
+import { DEMO_DATA } from '~/lib/demo/demo-data';
+
 // --- Types ---
 
 interface WizardAnswers {
@@ -80,12 +82,7 @@ const STEP_LABELS = [
 
 const TOTAL_STEPS = 7;
 
-// Mock platform data for environment step
-const PLATFORM_ENV_DATA = {
-  co2Avoided: '545.5 t CO2',
-  recycled: '306 t',
-  lots: 30,
-};
+const PLATFORM_ENV_DATA = DEMO_DATA.rse.platformEnvData;
 
 // Scoring yes/no questions per pillar
 const GOVERNANCE_KEYS: (keyof WizardAnswers)[] = [

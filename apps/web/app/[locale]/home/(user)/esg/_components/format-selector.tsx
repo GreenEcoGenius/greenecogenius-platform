@@ -9,7 +9,9 @@ import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
 import { Checkbox } from '@kit/ui/checkbox';
 
-import { REPORT_FORMATS, type ReportFormatId } from '../_lib/esg-mock-data';
+import { DEMO_DATA } from '~/lib/demo/demo-data';
+
+type ReportFormatId = (typeof DEMO_DATA.esg.reportFormats)[number]['id'];
 
 export function FormatSelector({
   onGenerate,
@@ -38,7 +40,7 @@ export function FormatSelector({
         </p>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {REPORT_FORMATS.map((fmt) => {
+          {DEMO_DATA.esg.reportFormats.map((fmt) => {
             const isSelected = selectedFormat === fmt.id;
             const isLocked = !fmt.available;
 

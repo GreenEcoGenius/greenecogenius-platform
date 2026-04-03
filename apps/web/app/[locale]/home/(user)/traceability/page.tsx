@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { PageBody } from '@kit/ui/page';
 
 import { AITraceabilityAlerts } from '~/components/ai/traceability/ai-traceability-alerts';
+import { getDemoMode } from '~/lib/demo/use-demo-mode';
 import {
   getAllLots,
   getMaterialBreakdown,
@@ -27,6 +28,7 @@ export const generateMetadata = async () => {
 };
 
 async function TraceabilityPage() {
+  const { demoData } = getDemoMode();
   const stats = getTotalStats();
   const monthlyData = getMonthlyData();
   const materialBreakdown = getMaterialBreakdown();
@@ -69,11 +71,11 @@ async function TraceabilityPage() {
 
   const certifiedCount = stats.certifiedLots;
   const certificatesThisMonth = Math.round(certifiedCount * 0.13);
-  const certificatesTrend = 12.0;
+  const certificatesTrend = demoData.traceability.certificatesTrend;
 
   const transactionsThisMonth = lotsThisMonth;
   const blockchainHashes = stats.blockchainRecorded;
-  const esgAutoPercent = 78;
+  const esgAutoPercent = demoData.traceability.esgAutoPercent;
 
   // Sort lots by date descending, take 10
   const recentLots = [...lots]
@@ -103,6 +105,7 @@ async function TraceabilityPage() {
           lotsThisMonth={lotsThisMonth}
           lotsTrend={lotsTrend}
           co2AvoidedTonnes={co2AvoidedTonnes}
+          co2AvoidedTrend={demoData.traceability.co2AvoidedTrend}
           totalTonnes={totalTonnes}
           tonnesThisMonth={tonnesThisMonth}
           tonnesTrend={tonnesTrend}

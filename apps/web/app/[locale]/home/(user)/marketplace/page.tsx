@@ -8,7 +8,7 @@ import {
   Search,
   TrendingUp,
 } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Badge } from '@kit/ui/badge';
@@ -29,6 +29,7 @@ export const generateMetadata = async () => {
 async function MarketplacePage() {
   const client = getSupabaseServerClient();
   const t = await getTranslations('marketplace');
+  const locale = await getLocale();
 
   const { data: listings } = await client
     .from('listings')
@@ -37,7 +38,23 @@ async function MarketplacePage() {
     .order('created_at', { ascending: false })
     .limit(50);
 
-  const listingCount = listings?.length ?? 0;
+  const listingRows = listings ?? [];
+  const listingCount = listingRows.length;
+  const sellerCount = new Set(listingRows.map((l) => l.account_id)).size;
+  const volumeEur = listingRows.reduce((sum, l) => {
+    const qty = Number(l.quantity ?? 0);
+    const price =
+      l.price_per_unit != null ? Number(l.price_per_unit) : 0;
+    return sum + qty * price;
+  }, 0);
+  const volumeLabel =
+    volumeEur > 0
+      ? new Intl.NumberFormat(locale, {
+          style: 'currency',
+          currency: 'EUR',
+          maximumFractionDigits: 0,
+        }).format(volumeEur)
+      : '—';
 
   return (
     <PageBody>
@@ -56,20 +73,21 @@ async function MarketplacePage() {
               className="gap-1.5 rounded-full px-3 py-1"
             >
               <Package className="h-3.5 w-3.5" />
-              {listingCount > 0 ? listingCount : 12} {t('kpiComptoir')}
+              {listingCount} {t('kpiComptoir')}
             </Badge>
             <Badge
               variant="secondary"
               className="gap-1.5 rounded-full px-3 py-1"
             >
-              <Activity className="h-3.5 w-3.5" />8 entreprises
+              <Activity className="h-3.5 w-3.5" />
+              {sellerCount} {t('totalSellers')}
             </Badge>
             <Badge
               variant="secondary"
               className="gap-1.5 rounded-full px-3 py-1"
             >
               <TrendingUp className="h-3.5 w-3.5" />
-              48 000 EUR de volume
+              {volumeLabel}
             </Badge>
           </div>
         </div>
@@ -79,22 +97,22 @@ async function MarketplacePage() {
       <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <MarketKpiCard
           icon={<Package className="h-5 w-5 text-[#1b9e77]" />}
-          value={listingCount > 0 ? `${listingCount}` : '12'}
+          value={`${listingCount}`}
           label={t('kpiComptoir')}
         />
         <MarketKpiCard
           icon={<TrendingUp className="h-5 w-5 text-[#457b9d]" />}
-          value="48 200 EUR"
+          value={volumeLabel}
           label={t('kpiVolume')}
         />
         <MarketKpiCard
           icon={<Activity className="h-5 w-5 text-[#e8943a]" />}
-          value="7"
+          value="—"
           label={t('kpiTransactions')}
         />
         <MarketKpiCard
           icon={<Leaf className="h-5 w-5 text-[#2e8b6e]" />}
-          value="8.3t"
+          value="—"
           label={t('kpiCO2Market')}
         />
       </div>
@@ -111,9 +129,9 @@ async function MarketplacePage() {
         />
       </div>
 
-      {listings && listings.length > 0 ? (
+      {listingRows.length > 0 ? (
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {listings.map((listing) => (
+          {listingRows.map((listing) => (
             <div key={listing.id} className="flex flex-col">
               <ListingCard listing={listing} account="" />
               <div className="bg-card -mt-1 flex items-center gap-1.5 rounded-b-lg border border-t-0 px-5 py-2 text-xs text-[#2e8b6e]">

@@ -8,7 +8,7 @@ import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
 
-import type { ReportHistoryItem } from '../_lib/esg-mock-data';
+import type { DemoData } from '~/lib/demo/demo-data';
 
 function StatusBadge({ status }: { status: 'draft' | 'finalized' }) {
   if (status === 'finalized') {
@@ -34,7 +34,7 @@ function StatusBadge({ status }: { status: 'draft' | 'finalized' }) {
 export function ReportHistoryTable({
   reports,
 }: {
-  reports: ReportHistoryItem[];
+  reports: DemoData['esg']['reportHistory'][number][];
 }) {
   return (
     <Card>

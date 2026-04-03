@@ -16,6 +16,8 @@ import { Heading } from '@kit/ui/heading';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
+import { getDemoMode } from '~/lib/demo/use-demo-mode';
+
 import { SectionFooterImage } from '../_components/section-footer-image';
 import { LabelEligibilityCards } from './_components/label-eligibility-cards';
 import { RSEActionsList } from './_components/rse-actions-list';
@@ -28,103 +30,8 @@ export const generateMetadata = async () => {
   return { title: t('title') };
 };
 
-// --- Mock Data ---
-
-const MOCK_SCORE = 62;
-const MOCK_LEVEL = 'Interm\u00e9diaire';
-const MOCK_LAST_EVAL = '2026-03-15';
-
-const MOCK_PILLARS = [
-  {
-    name: 'governance',
-    score: 68,
-    norm: 'ISO 26000 \u00a76',
-    color: '#0D9488',
-  },
-  { name: 'environment', score: 89, norm: 'ISO 14001', color: '#059669' },
-  { name: 'social', score: 52, norm: 'SA8000', color: '#94A3B8' },
-  { name: 'ethics', score: 76, norm: 'ISO 37001', color: '#16A34A' },
-  { name: 'stakeholders', score: 48, norm: 'AA1000', color: '#0F766E' },
-];
-
-const MOCK_LABELS = [
-  {
-    name: 'GreenTech',
-    score: 85,
-    threshold: 70,
-    status: 'eligible',
-    color: '#10B981',
-  },
-  {
-    name: 'B Corp',
-    score: 62,
-    threshold: 80,
-    status: 'in_progress',
-    color: '#3B82F6',
-  },
-  {
-    name: 'Label NR',
-    score: 71,
-    threshold: 75,
-    status: 'in_progress',
-    color: '#8B5CF6',
-  },
-  {
-    name: 'GEG Label',
-    score: 74,
-    threshold: 80,
-    status: 'in_progress',
-    color: '#0D9488',
-  },
-];
-
-const MOCK_ACTIONS = [
-  {
-    title:
-      'Mettre en place une charte \u00e9thique fournisseurs avec audit annuel',
-    impact: 12,
-    effort: '15 jours',
-    priority: 'urgent',
-    pillar: 'ethics',
-    norms: ['ISO 37001', 'B Corp'],
-    status: 'todo',
-  },
-  {
-    title:
-      'D\u00e9ployer un plan de formation RSE pour tous les collaborateurs',
-    impact: 8,
-    effort: '10 jours',
-    priority: 'important',
-    pillar: 'social',
-    norms: ['SA8000', 'GRI 404'],
-    status: 'todo',
-  },
-  {
-    title: 'Cartographier et consulter les parties prenantes cl\u00e9s',
-    impact: 15,
-    effort: '20 jours',
-    priority: 'urgent',
-    pillar: 'stakeholders',
-    norms: ['AA1000', 'ISO 26000'],
-    status: 'todo',
-  },
-  {
-    title: 'Int\u00e9grer les crit\u00e8res ESG dans le reporting trimestriel',
-    impact: 6,
-    effort: '5 jours',
-    priority: 'quick_win',
-    pillar: 'governance',
-    norms: ['CSRD', 'GRI'],
-    status: 'todo',
-  },
-];
-
-const MOCK_ECOSYSTEM = [
-  { icon: 'carbon', value: '12.4 tCO\u2082', i18nKey: 'rse:ecosystemCarbon' },
-  { icon: 'blockchain', value: '47', i18nKey: 'rse:ecosystemBlockchain' },
-  { icon: 'recycled', value: '2.8 tonnes', i18nKey: 'rse:ecosystemRecycled' },
-  { icon: 'esg', value: '1', i18nKey: 'rse:ecosystemESG' },
-];
+const { demoData } = getDemoMode();
+const DEMO_RSE = demoData.rse;
 
 function getEcosystemIcon(icon: string) {
   switch (icon) {
@@ -148,7 +55,7 @@ async function RSEPage() {
         {/* Score + subtitle */}
         <Card>
           <CardContent className="flex flex-col items-center gap-6 py-8 sm:flex-row sm:items-center sm:justify-around">
-            <RSEScoreGauge score={MOCK_SCORE} level={MOCK_LEVEL} />
+            <RSEScoreGauge score={DEMO_RSE.score} level={DEMO_RSE.level} />
             <div className="space-y-3 text-center sm:text-left">
               <h2 className="text-xl font-bold">
                 <Trans i18nKey="rse:scoreTitle" />
@@ -157,7 +64,7 @@ async function RSEPage() {
                 <Trans i18nKey="rse:subtitle" />
               </p>
               <p className="text-muted-foreground text-xs">
-                <Trans i18nKey="rse:lastEval" /> : {MOCK_LAST_EVAL}
+                <Trans i18nKey="rse:lastEval" /> : {DEMO_RSE.lastEval}
               </p>
               <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
                 <Button
@@ -186,7 +93,7 @@ async function RSEPage() {
           <Heading level={4}>
             <Trans i18nKey="rse:pillarsTitle" />
           </Heading>
-          <RSEPillarCards pillars={MOCK_PILLARS} />
+          <RSEPillarCards pillars={DEMO_RSE.pillars} />
         </div>
 
         {/* Label Eligibility */}
@@ -194,11 +101,11 @@ async function RSEPage() {
           <Heading level={4}>
             <Trans i18nKey="rse:labelsTitle" />
           </Heading>
-          <LabelEligibilityCards labels={MOCK_LABELS} />
+          <LabelEligibilityCards labels={DEMO_RSE.labels} />
         </div>
 
         {/* Priority Actions */}
-        <RSEActionsList actions={MOCK_ACTIONS} />
+        <RSEActionsList actions={DEMO_RSE.actions} />
 
         {/* Ecosystem Data Interconnection */}
         <Card>
@@ -210,7 +117,7 @@ async function RSEPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {MOCK_ECOSYSTEM.map((item) => (
+              {DEMO_RSE.ecosystem.map((item) => (
                 <div
                   key={item.icon}
                   className="flex items-center gap-3 rounded-lg border p-4"

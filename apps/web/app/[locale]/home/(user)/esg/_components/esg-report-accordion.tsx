@@ -18,10 +18,10 @@ import { Card, CardContent } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
 
 import type {
-  ReportSection,
+  DemoReportSection,
   SectionStatus,
   SourceType,
-} from '../_lib/esg-mock-data';
+} from '~/lib/demo/demo-data';
 
 const SOURCE_STYLES: Record<
   SourceType,
@@ -69,7 +69,7 @@ function getStatusIcon(status: SectionStatus, pct: number) {
 export function ESGReportAccordion({
   sections,
 }: {
-  sections: ReportSection[];
+  sections: DemoReportSection[];
 }) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 

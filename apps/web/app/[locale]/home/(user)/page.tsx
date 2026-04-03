@@ -22,6 +22,9 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
 
+import { DemoBadge } from '~/components/demo-badge';
+import { getDemoMode } from '~/lib/demo/use-demo-mode';
+
 import { KpiCard, KpiCardGrid } from './_components/kpi-card';
 import { SectionFooterImage } from './_components/section-footer-image';
 
@@ -38,6 +41,8 @@ async function UserHomePage() {
   if (!userId) return null;
 
   const t = await getTranslations('marketplace');
+  const { isDemoMode, demoData } = getDemoMode();
+  const demo = demoData.dashboard;
 
   const [
     { count: totalActive },
@@ -101,13 +106,13 @@ async function UserHomePage() {
           <KpiCard
             variant="emerald"
             title={t('dashboard.environmentalImpact')}
-            value="545.5 t"
-            subtitle={t('dashboard.co2Avoided')}
+            value={demo.co2Avoided}
+            subtitle={<>{t('dashboard.co2Avoided')} {isDemoMode && <DemoBadge />}</>}
             icon={<Leaf className="h-6 w-6 text-white" />}
             metrics={[
-              { label: t('dashboard.tonsRecycled'), value: '306.6 t' },
-              { label: t('dashboard.tracedLots'), value: '30' },
-              { label: t('dashboard.circularityScore'), value: '67%' },
+              { label: t('dashboard.tonsRecycled'), value: demo.tonsRecycled },
+              { label: t('dashboard.tracedLots'), value: demo.tracedLots },
+              { label: t('dashboard.circularityScore'), value: demo.circularityScore },
             ]}
             actionLabel={t('dashboard.carbonImpact')}
             actionHref="/home/carbon"
@@ -115,13 +120,13 @@ async function UserHomePage() {
           <KpiCard
             variant="green"
             title={t('dashboard.compliance')}
-            value="78%"
-            subtitle={t('dashboard.globalScore')}
+            value={demo.complianceScore}
+            subtitle={<>{t('dashboard.globalScore')} {isDemoMode && <DemoBadge />}</>}
             icon={<Shield className="h-6 w-6 text-white" />}
             metrics={[
-              { label: t('dashboard.compliantStandards'), value: '28/42' },
-              { label: t('dashboard.rseScore'), value: '62/100' },
-              { label: t('dashboard.esgReporting'), value: '72%' },
+              { label: t('dashboard.compliantStandards'), value: demo.compliantStandards },
+              { label: t('dashboard.rseScore'), value: demo.rseScore },
+              { label: t('dashboard.esgReporting'), value: demo.esgReporting },
             ]}
             actionLabel={t('dashboard.complianceAction')}
             actionHref="/home/compliance"
@@ -163,7 +168,7 @@ async function UserHomePage() {
                     title={t('dashboard.improveRseScore')}
                     description={t('dashboard.improveRseScoreDesc')}
                     href="/home/rse/roadmap"
-                    badge="+8 pts"
+                    badge={demo.rseBadge}
                     badgeColor="bg-circuit-ice text-circuit-blue"
                   />
                   <ActionCard

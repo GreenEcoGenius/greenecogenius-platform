@@ -13,6 +13,8 @@ import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+
+import { getDemoMode } from '~/lib/demo/use-demo-mode';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
@@ -47,23 +49,8 @@ interface CarbonRecord {
   blockchain_hash?: string;
 }
 
-// Mock monthly data for when no real data exists
-const MOCK_MONTHLY_DATA = [
-  { month: '2025-10', co2_avoided: 8200, co2_transport: 420, co2_net: 7780 },
-  { month: '2025-11', co2_avoided: 12500, co2_transport: 680, co2_net: 11820 },
-  { month: '2025-12', co2_avoided: 15800, co2_transport: 890, co2_net: 14910 },
-  { month: '2026-01', co2_avoided: 18200, co2_transport: 950, co2_net: 17250 },
-  { month: '2026-02', co2_avoided: 22400, co2_transport: 1100, co2_net: 21300 },
-  { month: '2026-03', co2_avoided: 28000, co2_transport: 1350, co2_net: 26650 },
-];
-
-const MOCK_MATERIAL_DATA = [
-  { category: 'Plastique', co2_avoided: 18500, weight: 4200 },
-  { category: 'Métal', co2_avoided: 15200, weight: 3800 },
-  { category: 'Bois', co2_avoided: 8700, weight: 5100 },
-  { category: 'Papier', co2_avoided: 6200, weight: 2900 },
-  { category: 'Textile', co2_avoided: 4800, weight: 1600 },
-];
+const { demoData } = getDemoMode();
+const DEMO_CARBON = demoData.carbon;
 
 async function CarbonPage() {
   const client = getSupabaseServerClient();
@@ -107,16 +94,16 @@ async function CarbonPage() {
   // Aggregate totals (use real data or mock fallbacks)
   const totalAvoided = hasCarbonData
     ? records.reduce((sum, r) => sum + (r.co2_avoided ?? 0), 0)
-    : 545500;
+    : DEMO_CARBON.totalAvoided;
   const totalTransport = hasCarbonData
     ? records.reduce((sum, r) => sum + (r.co2_transport ?? 0), 0)
-    : 3200;
+    : DEMO_CARBON.totalTransport;
   const totalNet = hasCarbonData
     ? records.reduce((sum, r) => sum + (r.co2_net ?? 0), 0)
-    : 542300;
+    : DEMO_CARBON.totalNet;
   const totalWeightKg = hasCarbonData
     ? records.reduce((sum, r) => sum + (r.weight_kg ?? 0), 0)
-    : 17600;
+    : DEMO_CARBON.totalWeightKg;
   const totalWeightTonnes = totalWeightKg / 1000;
 
   // Aggregate by month for chart
@@ -150,7 +137,7 @@ async function CarbonPage() {
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([month, data]) => ({ month, ...data }));
   } else {
-    monthlyData = MOCK_MONTHLY_DATA;
+    monthlyData = DEMO_CARBON.monthlyData;
   }
 
   // Aggregate by material for donut chart
@@ -180,7 +167,7 @@ async function CarbonPage() {
       }),
     );
   } else {
-    materialData = MOCK_MATERIAL_DATA;
+    materialData = DEMO_CARBON.materialData;
   }
 
   // Recent transactions for table (last 20)
@@ -215,9 +202,9 @@ async function CarbonPage() {
     : null;
 
   // Mock scope data (will be real when ESG data entry is connected)
-  const mockScope1 = 12.4;
-  const mockScope2 = 8.7;
-  const mockScope3 = 45.2;
+  const mockScope1 = DEMO_CARBON.scopes.scope1;
+  const mockScope2 = DEMO_CARBON.scopes.scope2;
+  const mockScope3 = DEMO_CARBON.scopes.scope3;
   const mockTotal = mockScope1 + mockScope2 + mockScope3;
 
   return (
@@ -470,7 +457,7 @@ function ScopeProgressSection() {
     {
       name: 'Scope 1',
       labelKey: 'carbon:scope1Desc',
-      progress: 65,
+      progress: DEMO_CARBON.scopeProgress.scope1,
       status: 'partial' as const,
       color: 'bg-teal-500',
       bgColor: 'bg-teal-100 dark:bg-teal-950/30',
@@ -478,7 +465,7 @@ function ScopeProgressSection() {
     {
       name: 'Scope 2',
       labelKey: 'carbon:scope2Desc',
-      progress: 80,
+      progress: DEMO_CARBON.scopeProgress.scope2,
       status: 'partial' as const,
       color: 'bg-emerald-500',
       bgColor: 'bg-emerald-100 dark:bg-emerald-950/30',
@@ -486,7 +473,7 @@ function ScopeProgressSection() {
     {
       name: 'Scope 3',
       labelKey: 'carbon:scope3Desc',
-      progress: 73,
+      progress: DEMO_CARBON.scopeProgress.scope3,
       status: 'auto' as const,
       color: 'bg-green-500',
       bgColor: 'bg-green-100 dark:bg-green-950/30',

@@ -8,6 +8,7 @@ import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
+import { DEMO_DATA } from '~/lib/demo/demo-data';
 import { generateAuditReportPDF } from '~/lib/services/pdf/templates/audit-report-template';
 
 interface NormAnalysis {
@@ -32,70 +33,12 @@ interface AuditResult {
   executiveSummary: string;
 }
 
-const PILLARS = [
-  {
-    name: 'Economie circulaire',
-    norms: [
-      'Loi AGEC',
-      'REP',
-      'Indice reparabilite',
-      'Eco-conception',
-      'Affichage environnemental',
-      'Tri 5 flux',
-      'Decret tertiaire',
-      'AFNOR zero dechet',
-      'PPWR',
-      'Taxonomie UE (circulaire)',
-      'DPP',
-    ],
-  },
-  {
-    name: 'Carbone & Environnement',
-    norms: [
-      'Bilan GES',
-      'ISO 14064',
-      'SBTi',
-      'CDP Climate',
-      'EU ETS',
-      'CBAM',
-      'Plan transition',
-    ],
-  },
-  {
-    name: 'Reporting ESG',
-    norms: [
-      'CSRD',
-      'ESRS',
-      'GRI',
-      'Taxonomie verte',
-      'SFDR',
-      'Devoir vigilance',
-      'DPEF',
-      'Art. 29 LEC',
-      'CS3D',
-    ],
-  },
-  {
-    name: 'Tracabilite',
-    norms: [
-      'Blockchain',
-      'Vigilance chaine',
-      'ISO 22095',
-      'EUDR',
-      '3TG',
-      'Passeport batterie',
-    ],
-  },
-  {
-    name: 'Donnees & SaaS',
-    norms: ['RGPD', 'ISO 27001', 'SOC 2', 'HDS', 'NIS2'],
-  },
-  {
-    name: 'Labels',
-    norms: ['B Corp', 'Numerique Responsable', 'Lucie 26000', 'Engage RSE'],
-  },
-];
+const PILLARS = DEMO_DATA.compliance.pillars.map(({ name, norms }) => ({
+  name,
+  norms,
+}));
 
+// TODO: replace with real audit data — generic finding templates not in centralized demo-data
 const MOCK_FINDINGS: Record<string, string[]> = {
   conforme: [
     'Les exigences sont respectees. Documentation a jour et processus en place.',
@@ -114,6 +57,7 @@ const MOCK_FINDINGS: Record<string, string[]> = {
   ],
 };
 
+// TODO: replace with real audit data
 const MOCK_RECOMMENDATIONS: Record<string, string[]> = {
   conforme: [
     'Maintenir les bonnes pratiques et planifier la prochaine revue.',
@@ -138,37 +82,40 @@ function pick<T>(arr: T[]): T {
 
 function generateMockAnalysis(): AuditResult {
   const norms: NormAnalysis[] = [];
-  const statuses: Array<'conforme' | 'partiel' | 'non_conforme'> = [
-    'conforme',
-    'conforme',
-    'conforme',
-    'conforme',
-    'partiel',
-    'partiel',
-    'non_conforme',
-  ];
 
-  for (const pillar of PILLARS) {
-    for (const normName of pillar.norms) {
-      const status = pick(statuses);
-      const severity: NormAnalysis['severity'] =
-        status === 'non_conforme'
-          ? Math.random() > 0.5
-            ? 'critique'
-            : 'majeur'
-          : status === 'partiel'
-            ? 'mineur'
-            : 'info';
+  for (const pillar of DEMO_DATA.compliance.pillars) {
+    const { name: pillarName, norms: normList, compliant } = pillar;
+    const total = normList.length;
+    const nonCompliantCount = total - compliant;
+    const partialCount = Math.ceil(nonCompliantCount / 2);
+
+    normList.forEach((normName, idx) => {
+      let status: 'conforme' | 'partiel' | 'non_conforme';
+      let severity: NormAnalysis['severity'];
+
+      if (idx < compliant) {
+        status = 'conforme';
+        severity = 'info';
+      } else {
+        const r = idx - compliant;
+        if (r < partialCount) {
+          status = 'partiel';
+          severity = 'mineur';
+        } else {
+          status = 'non_conforme';
+          severity = r % 2 === 0 ? 'critique' : 'majeur';
+        }
+      }
 
       norms.push({
         name: normName,
-        pillar: pillar.name,
+        pillar: pillarName,
         status,
         severity,
         finding: pick(MOCK_FINDINGS[status]!),
         recommendation: pick(MOCK_RECOMMENDATIONS[status]!),
       });
-    }
+    });
   }
 
   const normsCompliant = norms.filter((n) => n.status === 'conforme').length;

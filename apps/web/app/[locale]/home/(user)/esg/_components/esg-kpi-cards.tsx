@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 
 import { Card, CardContent } from '@kit/ui/card';
 
-import type { EsgKpiData } from '../_lib/esg-mock-data';
+import type { DemoData } from '~/lib/demo/demo-data';
 
 interface KpiCardProps {
   icon: React.ReactNode;
@@ -50,7 +50,7 @@ function KpiCard({ icon, label, value, sub, href, iconBgClass }: KpiCardProps) {
   return content;
 }
 
-export function EsgKpiCards({ data }: { data: EsgKpiData }) {
+export function EsgKpiCards({ data }: { data: DemoData['esg']['kpi'] }) {
   const t = useTranslations('esg');
   const autoPct = Math.round((data.autoFilledFields / data.totalFields) * 100);
 

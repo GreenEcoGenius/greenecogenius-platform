@@ -13,9 +13,9 @@ import {
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
 
-import type { AiInsight } from '../_lib/esg-mock-data';
+import type { DemoData } from '~/lib/demo/demo-data';
 
-function getIcon(type: AiInsight['type']) {
+function getIcon(type: DemoData['esg']['aiInsights'][number]['type']) {
   switch (type) {
     case 'strength':
       return <Trophy className="h-4 w-4 text-emerald-500" />;
@@ -28,7 +28,11 @@ function getIcon(type: AiInsight['type']) {
   }
 }
 
-export function AiInsightsPanel({ insights }: { insights: AiInsight[] }) {
+export function AiInsightsPanel({
+  insights,
+}: {
+  insights: DemoData['esg']['aiInsights'][number][];
+}) {
   return (
     <Card>
       <CardContent className="p-5">

@@ -7,7 +7,7 @@ import { ChevronRight } from 'lucide-react';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
 
-import type { CsrdIndicator } from '../_lib/esg-mock-data';
+import type { DemoData } from '~/lib/demo/demo-data';
 
 function getBarColor(pct: number): string {
   if (pct >= 80) return 'bg-emerald-500';
@@ -37,7 +37,7 @@ function getCategoryLabel(cat: string): string {
 export function CsrdComplianceChart({
   indicators,
 }: {
-  indicators: CsrdIndicator[];
+  indicators: DemoData['esg']['csrdIndicators'][number][];
 }) {
   let lastCategory = '';
 
