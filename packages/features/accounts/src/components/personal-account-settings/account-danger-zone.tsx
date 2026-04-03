@@ -78,7 +78,9 @@ function DeleteAccountModal() {
 }
 
 function DeleteAccountForm(props: { email: string }) {
-  const { execute, isPending } = useAction(deletePersonalAccountAction);
+  const { execute, isPending, hasErrored, result } = useAction(
+    deletePersonalAccountAction,
+  );
 
   const form = useForm({
     resolver: zodResolver(DeletePersonalAccountSchema),
@@ -115,6 +117,20 @@ function DeleteAccountForm(props: { email: string }) {
         className={'flex flex-col space-y-4'}
       >
         <div className={'flex flex-col space-y-6'}>
+          {hasErrored && (
+            <Alert variant={'destructive'}>
+              <TriangleAlert className={'h-4'} />
+              <AlertTitle>
+                <Trans i18nKey={'account.deleteAccountErrorHeading'} defaults="Erreur" />
+              </AlertTitle>
+              <AlertDescription>
+                {result?.serverError ?? (
+                  <Trans i18nKey={'common.genericError'} defaults="Le code OTP est invalide ou a expiré. Veuillez réessayer." />
+                )}
+              </AlertDescription>
+            </Alert>
+          )}
+
           <div
             className={
               'border-destructive text-destructive rounded-md border p-4 text-sm'

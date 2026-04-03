@@ -47,9 +47,9 @@ export const deletePersonalAccountAction = authActionClient
 
     logger.info(ctx, `Deleting account...`);
 
-    // verify the OTP
-    const client = getSupabaseServerClient();
-    const otpApi = createOtpApi(client);
+    // verify the OTP (needs admin/service_role to call verify_nonce RPC)
+    const adminClient = getSupabaseServerAdminClient();
+    const otpApi = createOtpApi(adminClient);
 
     const otpResult = await otpApi.verifyToken({
       token: otp,
@@ -84,7 +84,8 @@ export const deletePersonalAccountAction = authActionClient
     });
 
     // sign out the user after deleting their account
-    await client.auth.signOut();
+    const userClient = getSupabaseServerClient();
+    await userClient.auth.signOut();
 
     logger.info(ctx, `Account request successfully sent`);
 
