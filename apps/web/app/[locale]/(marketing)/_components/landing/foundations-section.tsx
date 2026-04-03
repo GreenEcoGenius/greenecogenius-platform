@@ -52,24 +52,24 @@ function LogoRow({ logos }: { logos: LogoItem[] }) {
           rel="noopener noreferrer"
           className="group flex flex-col items-center gap-2"
         >
-          <div className="flex h-12 items-center transition-all duration-300 group-hover:scale-110">
+          <div className="flex h-20 items-center transition-all duration-300 group-hover:scale-110">
             {logo.src ? (
               <Image
                 src={logo.src}
                 alt={logo.name}
-                width={140}
-                height={48}
-                className="h-10 w-auto object-contain sm:h-12"
+                width={200}
+                height={80}
+                className="h-16 w-auto object-contain sm:h-20"
                 unoptimized
               />
             ) : (
-              <span className="text-metal-400 group-hover:text-metal-800 rounded-lg border border-current/20 px-3 py-1.5 text-sm font-bold transition-colors">
+              <span className="text-metal-400 group-hover:text-metal-800 rounded-lg border border-current/20 px-4 py-2 text-base font-bold transition-colors">
                 {logo.name}
               </span>
             )}
           </div>
           {logo.src && (
-            <span className="text-metal-400 group-hover:text-metal-600 text-[11px] transition-colors">
+            <span className="text-metal-400 group-hover:text-metal-600 text-xs transition-colors">
               {logo.name}
             </span>
           )}
