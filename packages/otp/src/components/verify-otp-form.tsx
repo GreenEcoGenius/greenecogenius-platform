@@ -217,13 +217,14 @@ export function VerifyOtpForm({
                 )}
               />
 
-              <div className="flex w-full justify-between gap-2">
-                {CancelButton}
+              <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="order-2 sm:order-1">{CancelButton}</div>
 
-                <div className="flex justify-end gap-2">
+                <div className="order-1 flex flex-col gap-2 sm:order-2 sm:flex-row">
                   <Button
                     type="button"
                     variant="ghost"
+                    size="sm"
                     disabled={isPending}
                     onClick={() => setStep('email')}
                   >
@@ -232,6 +233,7 @@ export function VerifyOtpForm({
 
                   <Button
                     type="submit"
+                    size="sm"
                     disabled={isPending}
                     data-test="otp-verify-button"
                   >
