@@ -258,6 +258,12 @@
   "solComplianceF1": "42-standard compliance pre-audit in < 10 seconds",
   "solComplianceF2": "CSR diagnostic with score and roadmap",
   "solComplianceF3": "Label eligibility: B Corp, Lucie 26000, GreenTech",
+  "solLabelsTitle": "Labels & Certifications",
+  "solLabelsSub": "Automated eligibility",
+  "solLabelsDesc": "Instantly assess your eligibility for major environmental labels and CSR certifications. Our AI analyzes your profile and generates a personalized action plan for each targeted label.",
+  "solLabelsF1": "B Corp, Lucie 26000, GreenTech, Label NR eligibility",
+  "solLabelsF2": "Personalized action plan per label",
+  "solLabelsF3": "Progress tracking and automated pre-audit",
   "solStartFree": "Get started for free",
   "solLearnMore": "Learn more"
 }
