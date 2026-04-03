@@ -1,40 +1,47 @@
 'use client';
 
+import Image from 'next/image';
+
 import { cn } from '@kit/ui/utils';
 
 const partners = [
-  { name: 'EcoMetal', accent: '#1B9E77' },
-  { name: 'VeoliaGreen', accent: '#3BB54A' },
-  { name: 'CircuLoop', accent: '#40916C' },
-  { name: 'ReNova', accent: '#1B9E77' },
-  { name: 'GreenTrace', accent: '#3BB54A' },
-  { name: 'BioRecycle', accent: '#40916C' },
-  { name: 'TraceWaste', accent: '#1B9E77' },
-  { name: 'NeoCircular', accent: '#3BB54A' },
+  {
+    name: 'Supabase',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/supabase.svg',
+  },
+  {
+    name: 'Polygon',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Polygon_blockchain_logo.svg.png',
+  },
+  {
+    name: 'Vercel',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/png-transparent-vercel-hd-logo.png',
+  },
+  {
+    name: 'GHG Protocol',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/ghg_protocol_logo_clear_1_2.png',
+  },
+  {
+    name: 'ESRS',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/esrsicon1.png',
+  },
+  {
+    name: 'ADEME',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/logo-ademe-removebg-preview.png.webp',
+  },
 ];
 
-function LogoItem({ name, accent }: { name: string; accent: string }) {
+function LogoItem({ name, logo }: { name: string; logo: string }) {
   return (
-    <div className="flex shrink-0 items-center gap-3 px-8">
-      <svg
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
-        fill="none"
-        className="shrink-0"
-      >
-        <rect width="32" height="32" rx="8" fill={accent} fillOpacity="0.12" />
-        <path
-          d="M16 8C11.58 8 8 11.58 8 16s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm-1 13l-4-4 1.41-1.41L15 18.17l4.59-4.58L21 15l-6 6z"
-          fill={accent}
-        />
-      </svg>
-      <span
-        className="text-lg font-semibold tracking-tight whitespace-nowrap"
-        style={{ color: accent }}
-      >
-        {name}
-      </span>
+    <div className="flex shrink-0 items-center gap-3 px-10">
+      <Image
+        src={logo}
+        alt={name}
+        width={120}
+        height={48}
+        className="h-10 w-auto object-contain grayscale transition-all duration-300 hover:grayscale-0"
+        unoptimized
+      />
     </div>
   );
 }
@@ -52,7 +59,7 @@ export function LogoCarousel({ className }: { className?: string }) {
 
       <div className="animate-marquee flex w-max items-center gap-0 py-4">
         {items.map((p, i) => (
-          <LogoItem key={`${p.name}-${i}`} name={p.name} accent={p.accent} />
+          <LogoItem key={`${p.name}-${i}`} name={p.name} logo={p.logo} />
         ))}
       </div>
     </div>
