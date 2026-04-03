@@ -438,16 +438,12 @@
     "regionMetaDesc": "Recyclable materials available in {region}: volumes, prices, trends by category. Public data from GEREP/ADEME.",
     "catMetaDesc": "Recyclable {category} in France — {volume} t/year. Volumes by region, market prices, CO₂ savings potential.",
     "materialsAvailable": "Available materials",
-    "regionCategoriesSub": "Estimated volumes for this region. Sign up to access department-level details.",
-    "cat": {
-      "plastique": "Plastics",
-      "metal": "Metals",
-      "papier": "Paper & Cardboard",
-      "verre": "Glass",
-      "bois": "Wood",
-      "textile": "Textile",
-      "organique": "Bio-waste",
-      "mineral": "Minerals"
-    }
+    "categoriesAvailable": "material categories",
+    "regionCategoriesSub": "Volumes based on official data from ADEME and FEDEREC.",
+    "sourcesTitle": "Data sources",
+    "sourcesFranceDesc": "Official French data on waste and recycling",
+    "sourcesEuropeDesc": "European waste statistics (Regulation EC 2150/2002)",
+    "sourcesUsaDesc": "Facts and Figures about Materials, Waste and Recycling",
+    "sourcesLastUpdate": "Data updated annually. Last update: 2024."
   }
 }

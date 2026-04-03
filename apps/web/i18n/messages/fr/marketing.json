@@ -438,16 +438,12 @@
     "regionMetaDesc": "Matières recyclables disponibles en {region} : volumes, prix, tendances par catégorie. Données publiques GEREP/ADEME.",
     "catMetaDesc": "{category} recyclables en France — {volume} t/an. Volumes par région, prix du marché, CO₂ évitable.",
     "materialsAvailable": "Matières disponibles",
-    "regionCategoriesSub": "Volumes estimés pour cette région. Inscrivez-vous pour accéder aux détails par département.",
-    "cat": {
-      "plastique": "Plastiques",
-      "metal": "Métaux",
-      "papier": "Papier & Carton",
-      "verre": "Verre",
-      "bois": "Bois",
-      "textile": "Textile",
-      "organique": "Biodéchets",
-      "mineral": "Minéraux"
-    }
+    "categoriesAvailable": "catégories de matières",
+    "regionCategoriesSub": "Volumes basés sur les données officielles de l'ADEME et FEDEREC.",
+    "sourcesTitle": "Sources des données",
+    "sourcesFranceDesc": "Données officielles françaises sur les déchets et le recyclage",
+    "sourcesEuropeDesc": "Statistiques européennes sur les déchets (règlement CE n°2150/2002)",
+    "sourcesUsaDesc": "Facts and Figures about Materials, Waste and Recycling",
+    "sourcesLastUpdate": "Données actualisées annuellement. Dernière mise à jour : 2024."
   }
 }

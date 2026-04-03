@@ -4,19 +4,13 @@ import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-import type { CountryStat, NationalStat, Zone } from './explorer-data';
+import type { CountryStat, NationalStat, RegionStat, Zone } from './explorer-data';
 import { EuropeMap } from './europe-map';
 import { MarketTrends } from './market-trends';
 import { MaterialCategoryCard } from './material-category-card';
 import { MaterialsMap } from './materials-map';
 import { UsaMap } from './usa-map';
 import { ZoneSelector } from './zone-selector';
-
-interface RegionRow {
-  region: string;
-  category?: string;
-  total_volume_tonnes: number | string;
-}
 
 export function ExplorerContent({
   franceStats,
@@ -28,7 +22,7 @@ export function ExplorerContent({
   franceStats: NationalStat[];
   europeStats: NationalStat[];
   usaStats: NationalStat[];
-  franceRegionRows: RegionRow[];
+  franceRegionRows: RegionStat[];
   europeCountryRows: CountryStat[];
 }) {
   const [zone, setZone] = useState<Zone>('france');
@@ -60,7 +54,7 @@ export function ExplorerContent({
             {t('explorer.categoriesSub')}
           </p>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {stats.map((stat) => (
               <MaterialCategoryCard key={stat.category} stat={stat} zone={zone} />
             ))}
@@ -89,7 +83,7 @@ export function ExplorerContent({
       </section>
 
       {/* Market trends */}
-      {franceStats.some((s) => s.trend_12m !== 0) && (
+      {franceStats.length > 0 && (
         <section className="py-16 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <MarketTrends stats={franceStats} />

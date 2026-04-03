@@ -2,6 +2,7 @@ import {
   BarChart3,
   Beaker,
   Boxes,
+  Cpu,
   Factory,
   Leaf,
   Recycle,
@@ -12,62 +13,42 @@ import {
 export type Zone = 'france' | 'europe' | 'usa';
 
 export type CategorySlug =
-  | 'plastique'
-  | 'metal'
-  | 'papier'
-  | 'verre'
-  | 'bois'
-  | 'textile'
-  | 'organique'
-  | 'mineral';
+  | 'Plastiques'
+  | 'Métaux'
+  | 'Papier-Carton'
+  | 'Verre'
+  | 'Bois'
+  | 'DEEE'
+  | 'Textiles'
+  | 'Biodéchets'
+  | 'BTP';
 
 export const CATEGORY_META: Record<
-  CategorySlug,
-  { icon: typeof Recycle; color: string; bgColor: string }
+  string,
+  { icon: typeof Recycle; color: string; bgColor: string; slug: string }
 > = {
-  plastique: {
-    icon: Boxes,
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-50',
-  },
-  metal: {
-    icon: Factory,
-    color: 'text-slate-600',
-    bgColor: 'bg-slate-50',
-  },
-  papier: {
-    icon: BarChart3,
-    color: 'text-amber-700',
-    bgColor: 'bg-amber-50',
-  },
-  verre: {
-    icon: Wine,
-    color: 'text-emerald-600',
-    bgColor: 'bg-emerald-50',
-  },
-  bois: {
-    icon: Leaf,
-    color: 'text-orange-700',
-    bgColor: 'bg-orange-50',
-  },
-  textile: {
-    icon: Shirt,
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-50',
-  },
-  organique: {
-    icon: Recycle,
-    color: 'text-green-700',
-    bgColor: 'bg-green-50',
-  },
-  mineral: {
-    icon: Beaker,
-    color: 'text-stone-600',
-    bgColor: 'bg-stone-50',
-  },
+  'Plastiques': { icon: Boxes, color: 'text-blue-600', bgColor: 'bg-blue-50', slug: 'plastiques' },
+  'Métaux': { icon: Factory, color: 'text-slate-600', bgColor: 'bg-slate-50', slug: 'metaux' },
+  'Papier-Carton': { icon: BarChart3, color: 'text-amber-700', bgColor: 'bg-amber-50', slug: 'papier-carton' },
+  'Verre': { icon: Wine, color: 'text-emerald-600', bgColor: 'bg-emerald-50', slug: 'verre' },
+  'Bois': { icon: Leaf, color: 'text-orange-700', bgColor: 'bg-orange-50', slug: 'bois' },
+  'DEEE': { icon: Cpu, color: 'text-indigo-600', bgColor: 'bg-indigo-50', slug: 'deee' },
+  'Textiles': { icon: Shirt, color: 'text-purple-600', bgColor: 'bg-purple-50', slug: 'textiles' },
+  'Biodéchets': { icon: Recycle, color: 'text-green-700', bgColor: 'bg-green-50', slug: 'biodechets' },
+  'BTP': { icon: Beaker, color: 'text-stone-600', bgColor: 'bg-stone-50', slug: 'btp' },
 };
 
-export const VALID_CATEGORIES = Object.keys(CATEGORY_META) as CategorySlug[];
+export const VALID_CATEGORIES = Object.keys(CATEGORY_META);
+
+export function categoryFromSlug(slug: string): string | undefined {
+  return Object.entries(CATEGORY_META).find(
+    ([, meta]) => meta.slug === slug,
+  )?.[0];
+}
+
+export function slugFromCategory(category: string): string {
+  return CATEGORY_META[category]?.slug ?? category.toLowerCase();
+}
 
 export const REGIONS = [
   'Île-de-France',
@@ -94,42 +75,55 @@ export function regionToSlug(region: string): string {
     .toLowerCase();
 }
 
+export function regionFromSlug(slug: string): string | undefined {
+  return REGIONS.find((r) => regionToSlug(r) === slug);
+}
+
 export function formatVolume(tonnes: number): string {
   if (tonnes >= 1_000_000) {
     const m = tonnes / 1_000_000;
-    return `${m % 1 === 0 ? m.toFixed(0) : m.toFixed(1)} M`;
+    return `${m % 1 === 0 ? m.toFixed(0) : m.toFixed(1)} Mt`;
   }
   if (tonnes >= 1_000) {
     const k = tonnes / 1_000;
-    return `${k % 1 === 0 ? k.toFixed(0) : k.toFixed(1)} K`;
+    return `${k % 1 === 0 ? k.toFixed(0) : k.toFixed(0)} kt`;
   }
-  return tonnes.toFixed(0);
+  return `${Math.round(tonnes)} t`;
 }
 
-export function formatPrice(min: number, max: number): string {
-  return `${min.toLocaleString('fr-FR')}–${max.toLocaleString('fr-FR')} €/t`;
+export function formatPrice(value: number | null): string {
+  if (!value) return '—';
+  return `${value.toLocaleString('fr-FR')} €/t`;
 }
+
+export function formatRate(value: number | null): string {
+  if (value === null || value === undefined) return '—';
+  return `${Number(value).toFixed(1)}%`;
+}
+
+// ── DB types matching actual Supabase schema ─────────────────────
 
 export interface NationalStat {
   category: string;
-  total_volume_tonnes: number;
-  nb_regions: number;
-  nb_sources: number;
-  avg_price_min: number;
-  avg_price_max: number;
-  co2_potential_tonnes: number;
+  annual_volume_tonnes: number;
   recycling_rate: number;
-  trend_12m: number;
+  recovery_rate: number;
+  avg_price_per_tonne: number;
+  data_source: string;
+  year: number;
+  country_code: string;
 }
 
 export interface RegionStat {
   region: string;
   category: string;
-  total_volume_tonnes: number;
-  nb_sources: number;
+  annual_volume_tonnes: number;
+  recycling_rate: number;
+  recovery_rate: number;
   avg_price_per_tonne: number;
-  co2_potential_tonnes: number;
+  data_source: string;
   year: number;
+  country: string;
 }
 
 export interface CountryStat {
@@ -139,6 +133,24 @@ export interface CountryStat {
   tonnage_tonnes: number;
   percentage: number;
   data_year: number;
+}
+
+export interface MaterialSource {
+  id: string;
+  name: string;
+  category: string;
+  subcategory: string;
+  region: string;
+  department: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+  annual_volume_tonnes: number;
+  price_per_tonne: number;
+  price_currency: string;
+  price_trend: string;
+  source_type: string;
+  data_source: string;
 }
 
 export function aggregateCountryStats(
@@ -162,49 +174,13 @@ export function aggregateCountryStats(
   return Array.from(byCategory.entries())
     .map(([category, agg]) => ({
       category,
-      total_volume_tonnes: agg.volume,
-      nb_regions: agg.countries.size,
-      nb_sources: 0,
-      avg_price_min: 0,
-      avg_price_max: 0,
-      co2_potential_tonnes: 0,
+      annual_volume_tonnes: agg.volume,
       recycling_rate: 0,
-      trend_12m: 0,
+      recovery_rate: 0,
+      avg_price_per_tonne: 0,
+      data_source: 'Eurostat',
+      year: 2022,
+      country_code: 'EU',
     }))
-    .sort((a, b) => b.total_volume_tonnes - a.total_volume_tonnes);
+    .sort((a, b) => b.annual_volume_tonnes - a.annual_volume_tonnes);
 }
-
-export const CATEGORY_SUBTYPES: Partial<
-  Record<CategorySlug, { name: string; volume: string; price: string; trend: string }[]>
-> = {
-  plastique: [
-    { name: 'PET (bouteilles)', volume: '850 Kt/an', price: '350–600 €/t', trend: '+12%' },
-    { name: 'PEHD (flacons)', volume: '420 Kt/an', price: '300–500 €/t', trend: '+5%' },
-    { name: 'PP (emballages)', volume: '380 Kt/an', price: '200–400 €/t', trend: 'stable' },
-    { name: 'PS (polystyrène)', volume: '210 Kt/an', price: '150–300 €/t', trend: '-3%' },
-    { name: 'ABS (technique)', volume: '95 Kt/an', price: '400–800 €/t', trend: '+8%' },
-  ],
-  metal: [
-    { name: 'Fer et acier', volume: '3.8 Mt/an', price: '200–400 €/t', trend: '+1%' },
-    { name: 'Aluminium', volume: '780 Kt/an', price: '800–2 000 €/t', trend: '+3%' },
-    { name: 'Cuivre', volume: '320 Kt/an', price: '4 000–8 000 €/t', trend: '+2%' },
-    { name: 'Inox', volume: '210 Kt/an', price: '600–1 200 €/t', trend: '+4%' },
-  ],
-  papier: [
-    { name: 'Carton ondulé', volume: '3.2 Mt/an', price: '50–100 €/t', trend: '-1%' },
-    { name: 'Papier bureau', volume: '1.4 Mt/an', price: '80–120 €/t', trend: '-2%' },
-    { name: 'Journaux/magazines', volume: '1.1 Mt/an', price: '30–60 €/t', trend: '-5%' },
-    { name: 'Emballages mixtes', volume: '1.4 Mt/an', price: '40–80 €/t', trend: '+1%' },
-  ],
-  verre: [
-    { name: 'Verre creux (bouteilles)', volume: '2.5 Mt/an', price: '25–50 €/t', trend: '+1%' },
-    { name: 'Verre plat (vitrage)', volume: '600 Kt/an', price: '30–60 €/t', trend: '+2%' },
-    { name: 'Verre technique', volume: '300 Kt/an', price: '40–80 €/t', trend: 'stable' },
-  ],
-  textile: [
-    { name: 'Vêtements', volume: '400 Kt/an', price: '150–400 €/t', trend: '+10%' },
-    { name: 'Linge de maison', volume: '120 Kt/an', price: '100–300 €/t', trend: '+6%' },
-    { name: 'Textiles industriels', volume: '180 Kt/an', price: '80–250 €/t', trend: '+8%' },
-    { name: 'Chaussures', volume: '100 Kt/an', price: '50–150 €/t', trend: '+5%' },
-  ],
-};

@@ -2,78 +2,58 @@
 
 import Link from 'next/link';
 
-import { ArrowDown, ArrowUp, Minus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import {
   CATEGORY_META,
   formatPrice,
+  formatRate,
   formatVolume,
-  type CategorySlug,
+  slugFromCategory,
   type NationalStat,
   type Zone,
 } from './explorer-data';
+import { SourceBadge } from './source-badge';
 
 export function MaterialCategoryCard({
   stat,
-  regionOverride,
   zone = 'france',
 }: {
   stat: NationalStat;
-  regionOverride?: { volume: number; sources: number; price: number };
   zone?: Zone;
 }) {
   const t = useTranslations('marketing');
-  const slug = stat.category as CategorySlug;
-  const meta = CATEGORY_META[slug];
+  const meta = CATEGORY_META[stat.category];
 
   if (!meta) return null;
 
   const Icon = meta.icon;
-  const volume = regionOverride?.volume ?? stat.total_volume_tonnes;
-  const sources = regionOverride?.sources ?? stat.nb_sources;
-  const trend = stat.trend_12m;
+  const catSlug = slugFromCategory(stat.category);
 
-  const TrendIcon =
-    trend > 0 ? ArrowUp : trend < 0 ? ArrowDown : Minus;
-
-  const trendColor =
-    trend > 0
-      ? 'text-emerald-600'
-      : trend < 0
-        ? 'text-red-500'
-        : 'text-gray-500';
-
-  const cardContent = (
+  const content = (
     <>
-      <div className="mb-4 flex items-center gap-3">
-        <div
-          className={`flex h-10 w-10 items-center justify-center rounded-xl ${meta.bgColor} ${meta.color}`}
-        >
-          <Icon className="h-5 w-5" />
+      <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${meta.bgColor} ${meta.color}`}>
+            <Icon className="h-5 w-5" />
+          </div>
+          <h3 className="text-metal-900 text-base font-semibold">{stat.category}</h3>
         </div>
-        <h3 className="text-metal-900 text-lg font-semibold">
-          {t(`explorer.cat.${slug}`)}
-        </h3>
+        {stat.data_source && <SourceBadge source={stat.data_source} />}
       </div>
 
       <div className="text-metal-900 mb-1 text-2xl font-bold">
-        {formatVolume(volume)} <span className="text-sm font-normal">t/an</span>
+        {formatVolume(stat.annual_volume_tonnes)}
+        <span className="text-metal-400 text-sm font-normal">/an</span>
       </div>
 
-      <p className="text-metal-500 mb-3 text-sm">
-        {sources.toLocaleString('fr-FR')} {t('explorer.sources')}
-      </p>
-
-      <div className="border-metal-chrome mt-auto flex items-center justify-between border-t pt-3">
-        <span className="text-metal-600 text-xs">
-          {formatPrice(stat.avg_price_min, stat.avg_price_max)}
-        </span>
-        <span className={`flex items-center gap-1 text-xs font-medium ${trendColor}`}>
-          <TrendIcon className="h-3 w-3" />
-          {trend > 0 ? '+' : ''}
-          {trend}%
-        </span>
+      <div className="text-metal-500 mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+        {stat.recycling_rate > 0 && (
+          <span>Recyclage : {formatRate(stat.recycling_rate)}</span>
+        )}
+        {stat.avg_price_per_tonne > 0 && (
+          <span>{formatPrice(stat.avg_price_per_tonne)}</span>
+        )}
       </div>
     </>
   );
@@ -83,11 +63,11 @@ export function MaterialCategoryCard({
 
   if (zone === 'france') {
     return (
-      <Link href={`/explorer/${slug}`} className={className}>
-        {cardContent}
+      <Link href={`/explorer/${catSlug}`} className={className}>
+        {content}
       </Link>
     );
   }
 
-  return <div className={className}>{cardContent}</div>;
+  return <div className={className}>{content}</div>;
 }

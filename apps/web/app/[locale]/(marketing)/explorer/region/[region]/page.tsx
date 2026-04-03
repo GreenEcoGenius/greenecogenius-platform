@@ -10,30 +10,26 @@ import { AnimateOnScroll } from '../../../_components/animate-on-scroll';
 
 import { DataSourceBadge } from '../../_components/data-source-badge';
 import {
-  REGIONS,
   formatVolume,
-  regionToSlug,
+  regionFromSlug,
   type NationalStat,
+  type RegionStat,
 } from '../../_components/explorer-data';
 import { MaterialCategoryCard } from '../../_components/material-category-card';
 import { PublicCTA } from '../../_components/public-cta';
+import { SourcesDisclaimer } from '../../_components/sources-disclaimer';
 
 interface PageProps {
   params: Promise<{ region: string }>;
 }
 
-function findRegionBySlug(slug: string): string | undefined {
-  return REGIONS.find((r) => regionToSlug(r) === slug);
-}
-
 export async function generateMetadata({ params }: PageProps) {
   const { region: regionSlug } = await params;
-  const regionName = findRegionBySlug(regionSlug);
+  const regionName = regionFromSlug(regionSlug);
 
   if (!regionName) return { title: '404' };
 
   const t = await getTranslations('marketing');
-
   return {
     title: `${t('explorer.materialsIn')} ${regionName} | GreenEcoGenius`,
     description: t('explorer.regionMetaDesc', { region: regionName }),
@@ -42,35 +38,34 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function RegionDetailPage({ params }: PageProps) {
   const { region: regionSlug } = await params;
-  const regionName = findRegionBySlug(regionSlug);
+  const regionName = regionFromSlug(regionSlug);
 
   if (!regionName) notFound();
 
   const t = await getTranslations('marketing');
-  const client = getSupabaseServerClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const client = getSupabaseServerClient() as any;
 
-  const [{ data: regionRows }, { data: nationalRows }] = await Promise.all([
-    client
-      .from('material_stats_by_region')
-      .select('*')
-      .eq('region', regionName)
-      .order('total_volume_tonnes', { ascending: false }),
-    client.from('material_stats_national').select('*'),
-  ]);
+  const { data: regionRows } = await client
+    .from('material_stats_by_region')
+    .select('*')
+    .eq('region', regionName)
+    .eq('country', 'FR')
+    .order('annual_volume_tonnes', { ascending: false });
 
-  const totalVolume = (regionRows ?? []).reduce(
-    (sum, r) => sum + Number(r.total_volume_tonnes),
-    0,
-  );
+  const stats: RegionStat[] = (regionRows ?? []).map((r: Record<string, unknown>) => ({
+    region: r.region as string,
+    category: r.category as string,
+    annual_volume_tonnes: Number(r.annual_volume_tonnes),
+    recycling_rate: Number(r.recycling_rate ?? 0),
+    recovery_rate: Number(r.recovery_rate ?? 0),
+    avg_price_per_tonne: Number(r.avg_price_per_tonne ?? 0),
+    data_source: (r.data_source as string) ?? 'ADEME',
+    year: (r.year as number) ?? 2024,
+    country: 'FR',
+  }));
 
-  const totalSources = (regionRows ?? []).reduce(
-    (sum, r) => sum + (r.nb_sources ?? 0),
-    0,
-  );
-
-  const nationalMap = new Map(
-    (nationalRows ?? []).map((n) => [n.category, n]),
-  );
+  const totalVolume = stats.reduce((s, r) => s + r.annual_volume_tonnes, 0);
 
   return (
     <div>
@@ -94,8 +89,7 @@ export default async function RegionDetailPage({ params }: PageProps) {
                 {regionName}
               </h1>
               <p className="text-metal-500 mt-1 text-sm">
-                {formatVolume(totalVolume)} t/an ·{' '}
-                {totalSources.toLocaleString('fr-FR')} {t('explorer.sourcesIdentified')}
+                {formatVolume(totalVolume)}/an · {stats.length} {t('explorer.categoriesAvailable')}
               </p>
             </div>
           </div>
@@ -114,33 +108,22 @@ export default async function RegionDetailPage({ params }: PageProps) {
             </p>
           </AnimateOnScroll>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {(regionRows ?? []).map((row) => {
-              const nat = nationalMap.get(row.category);
-              if (!nat) return null;
-
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {stats.map((row) => {
               const stat: NationalStat = {
-                category: nat.category,
-                total_volume_tonnes: Number(nat.total_volume_tonnes),
-                nb_regions: nat.nb_regions ?? 0,
-                nb_sources: nat.nb_sources ?? 0,
-                avg_price_min: Number(nat.avg_price_min),
-                avg_price_max: Number(nat.avg_price_max),
-                co2_potential_tonnes: Number(nat.co2_potential_tonnes),
-                recycling_rate: Number(nat.recycling_rate),
-                trend_12m: Number(nat.trend_12m),
+                category: row.category,
+                annual_volume_tonnes: row.annual_volume_tonnes,
+                recycling_rate: row.recycling_rate,
+                recovery_rate: row.recovery_rate,
+                avg_price_per_tonne: row.avg_price_per_tonne,
+                data_source: row.data_source,
+                year: row.year,
+                country_code: 'FR',
               };
 
               return (
                 <AnimateOnScroll key={row.category} animation="fade-up">
-                  <MaterialCategoryCard
-                    stat={stat}
-                    regionOverride={{
-                      volume: Number(row.total_volume_tonnes),
-                      sources: row.nb_sources ?? 0,
-                      price: Number(row.avg_price_per_tonne),
-                    }}
-                  />
+                  <MaterialCategoryCard stat={stat} zone="france" />
                 </AnimateOnScroll>
               );
             })}
@@ -163,6 +146,8 @@ export default async function RegionDetailPage({ params }: PageProps) {
           <DataSourceBadge />
         </div>
       </section>
+
+      <SourcesDisclaimer />
     </div>
   );
 }
