@@ -41,7 +41,15 @@ const PARTNERS = [
   },
 ];
 
-function LogoItem({ name, logo, size }: { name: string; logo: string; size: string }) {
+function LogoItem({
+  name,
+  logo,
+  size,
+}: {
+  name: string;
+  logo: string;
+  size: string;
+}) {
   return (
     <div className="flex shrink-0 items-center px-8 sm:px-12">
       <Image
@@ -75,7 +83,12 @@ export function SocialProof({ className }: { className?: string }) {
 
           <div className="animate-marquee flex w-max items-center gap-0 py-4">
             {items.map((p, i) => (
-              <LogoItem key={`${p.name}-${i}`} name={p.name} logo={p.logo} size={p.size} />
+              <LogoItem
+                key={`${p.name}-${i}`}
+                name={p.name}
+                logo={p.logo}
+                size={p.size}
+              />
             ))}
           </div>
         </div>
