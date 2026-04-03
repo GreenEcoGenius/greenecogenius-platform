@@ -11,6 +11,7 @@ import { HeroScrollEffect } from './_components/hero-scroll-effect';
 import { HeroVisual } from './_components/hero-visual';
 import { ComparisonTable } from './_components/landing/comparison-table';
 import { FaqSection } from './_components/landing/faq-section';
+import { FoundationsSection } from './_components/landing/foundations-section';
 import { HowItWorks } from './_components/landing/how-it-works';
 import { ImpactSimulator } from './_components/landing/impact-simulator';
 import { PricingPreview } from './_components/landing/pricing-preview';
@@ -169,6 +170,9 @@ export default async function Home() {
 
       {/* ───── SECTION 9 — FAQ ───── */}
       <FaqSection />
+
+      {/* ───── SECTION 9.5 — FONDATIONS ───── */}
+      <FoundationsSection />
 
       {/* ───── SECTION 10 — NEWSLETTER ───── */}
       <section className="relative overflow-hidden py-20 sm:py-28">

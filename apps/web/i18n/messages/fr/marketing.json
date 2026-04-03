@@ -375,7 +375,14 @@
     "compLegendNo": "Non disponible",
     "compCallout": "GreenEcoGenius est la seule solution qui connecte la valorisation physique de vos déchets (Le Comptoir Circulaire) à votre reporting ESG/CSRD — avec preuve blockchain immuable à chaque étape.",
     "compPriceDisclaimer": "*Prix indicatifs basés sur les tarifs publics au T1 2026. Sous réserve de modifications.",
-    "compCta": "Comparer en détail →"
+    "compCta": "Comparer en détail →",
+
+    "foundationsTitle": "Une plateforme construite sur des fondations solides",
+    "foundationsSub": "Technologies de pointe, données institutionnelles et référentiels internationaux",
+    "foundationsTech": "Technologies",
+    "foundationsSources": "Sources officielles",
+    "foundationsFrameworks": "Référentiels intégrés",
+    "foundationsFrameworksSub": "Notre plateforme structure vos données selon ces cadres reconnus"
   },
 
   "explorerNav": "Explorateur",
