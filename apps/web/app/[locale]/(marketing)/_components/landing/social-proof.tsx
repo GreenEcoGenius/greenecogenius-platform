@@ -12,38 +12,44 @@ const PARTNERS = [
   {
     name: 'Supabase',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/supabase.svg',
+    size: 'h-20 sm:h-24 max-w-[220px]',
   },
   {
     name: 'Polygon',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Polygon_blockchain_logo.svg.png',
+    size: 'h-16 sm:h-20 max-w-[200px]',
   },
   {
     name: 'Vercel',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/png-transparent-vercel-hd-logo.png',
+    size: 'h-16 sm:h-20 max-w-[200px]',
   },
   {
     name: 'GHG Protocol',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/ghg_protocol_logo_clear_1_2.png',
+    size: 'h-20 sm:h-24 max-w-[220px]',
   },
   {
     name: 'ESRS',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/esrsicon1.png',
+    size: 'h-16 sm:h-20 max-w-[200px]',
   },
   {
     name: 'ADEME',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/logo-ademe-removebg-preview.png.webp',
+    size: 'h-16 sm:h-20 max-w-[200px]',
   },
 ];
 
-function LogoItem({ name, logo }: { name: string; logo: string }) {
+function LogoItem({ name, logo, size }: { name: string; logo: string; size: string }) {
   return (
     <div className="flex shrink-0 items-center px-8 sm:px-12">
       <Image
         src={logo}
         alt={name}
-        width={140}
-        height={56}
-        className="h-14 w-auto max-w-[180px] object-contain transition-transform duration-300 hover:scale-110 sm:h-16"
+        width={220}
+        height={96}
+        className={`w-auto object-contain transition-transform duration-300 hover:scale-110 ${size}`}
         unoptimized
       />
     </div>
@@ -69,7 +75,7 @@ export function SocialProof({ className }: { className?: string }) {
 
           <div className="animate-marquee flex w-max items-center gap-0 py-4">
             {items.map((p, i) => (
-              <LogoItem key={`${p.name}-${i}`} name={p.name} logo={p.logo} />
+              <LogoItem key={`${p.name}-${i}`} name={p.name} logo={p.logo} size={p.size} />
             ))}
           </div>
         </div>
