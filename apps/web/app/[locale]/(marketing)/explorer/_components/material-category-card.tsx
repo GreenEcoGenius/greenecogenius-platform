@@ -11,14 +11,17 @@ import {
   formatVolume,
   type CategorySlug,
   type NationalStat,
+  type Zone,
 } from './explorer-data';
 
 export function MaterialCategoryCard({
   stat,
   regionOverride,
+  zone = 'france',
 }: {
   stat: NationalStat;
   regionOverride?: { volume: number; sources: number; price: number };
+  zone?: Zone;
 }) {
   const t = useTranslations('marketing');
   const slug = stat.category as CategorySlug;
@@ -41,11 +44,8 @@ export function MaterialCategoryCard({
         ? 'text-red-500'
         : 'text-gray-500';
 
-  return (
-    <Link
-      href={`/explorer/${slug}`}
-      className="group border-metal-silver/50 hover:border-primary/40 hover:shadow-primary/10 flex flex-col rounded-2xl border bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
-    >
+  const cardContent = (
+    <>
       <div className="mb-4 flex items-center gap-3">
         <div
           className={`flex h-10 w-10 items-center justify-center rounded-xl ${meta.bgColor} ${meta.color}`}
@@ -75,6 +75,19 @@ export function MaterialCategoryCard({
           {trend}%
         </span>
       </div>
-    </Link>
+    </>
   );
+
+  const className =
+    'group border-metal-silver/50 hover:border-primary/40 hover:shadow-primary/10 flex flex-col rounded-2xl border bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg';
+
+  if (zone === 'france') {
+    return (
+      <Link href={`/explorer/${slug}`} className={className}>
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return <div className={className}>{cardContent}</div>;
 }

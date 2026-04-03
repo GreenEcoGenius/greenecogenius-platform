@@ -62,7 +62,7 @@ export function ExplorerContent({
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => (
-              <MaterialCategoryCard key={stat.category} stat={stat} />
+              <MaterialCategoryCard key={stat.category} stat={stat} zone={zone} />
             ))}
           </div>
         </div>
