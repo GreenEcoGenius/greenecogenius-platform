@@ -88,8 +88,8 @@ export function ExplorerContent({
         </div>
       </section>
 
-      {/* Market trends (France only has trend data) */}
-      {zone === 'france' && franceStats.some((s) => s.trend_12m !== 0) && (
+      {/* Market trends */}
+      {franceStats.some((s) => s.trend_12m !== 0) && (
         <section className="py-16 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <MarketTrends stats={franceStats} />

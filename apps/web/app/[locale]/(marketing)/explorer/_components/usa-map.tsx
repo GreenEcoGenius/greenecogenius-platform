@@ -4,12 +4,7 @@ import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-import {
-  CATEGORY_META,
-  formatVolume,
-  type CategorySlug,
-  type NationalStat,
-} from './explorer-data';
+import { formatVolume, type NationalStat } from './explorer-data';
 
 const US_STATES: Array<{
   code: string;
@@ -177,39 +172,6 @@ export function UsaMap({ stats }: { stats: NationalStat[] }) {
         ))}
       </div>
 
-      {/* Top 4 categories */}
-      <div className="mx-auto mt-6 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
-        {[...stats]
-          .sort((a, b) => b.total_volume_tonnes - a.total_volume_tonnes)
-          .slice(0, 4)
-          .map((stat) => {
-            const slug = stat.category as CategorySlug;
-            const meta = CATEGORY_META[slug];
-            if (!meta) return null;
-            const Icon = meta.icon;
-
-            return (
-              <div
-                key={stat.category}
-                className="border-metal-chrome flex items-center gap-2 rounded-lg border bg-white p-3"
-              >
-                <div
-                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${meta.bgColor} ${meta.color}`}
-                >
-                  <Icon className="h-4 w-4" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-metal-900 truncate text-xs font-semibold">
-                    {t(`explorer.cat.${slug}`)}
-                  </p>
-                  <p className="text-metal-500 text-xs">
-                    {formatVolume(stat.total_volume_tonnes)} t
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-      </div>
     </div>
   );
 }
