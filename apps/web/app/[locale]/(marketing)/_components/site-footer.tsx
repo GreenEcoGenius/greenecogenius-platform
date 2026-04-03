@@ -36,7 +36,7 @@ export function SiteFooter() {
           links: [
             {
               href: '/explorer',
-              label: <Trans i18nKey="marketing.explorer" />,
+              label: <Trans i18nKey="marketing.explorerNav" />,
             },
             {
               href: '/pricing',
