@@ -16,11 +16,11 @@ const techLogos: LogoItem[] = [
   { name: 'Supabase', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/supabase.svg', url: 'https://supabase.com' },
   { name: 'Vercel', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/png-transparent-vercel-hd-logo.png', url: 'https://vercel.com' },
   { name: 'Polygon', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Polygon_blockchain_logo.svg.png', url: 'https://polygon.technology' },
-  { name: 'Stripe', src: null, url: 'https://stripe.com' },
-  { name: 'Anthropic', src: null, url: 'https://anthropic.com' },
+  { name: 'Stripe', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Stripe_Logo,_revised_2016.svg.png', url: 'https://stripe.com' },
+  { name: 'Anthropic', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Anthropic-Logo.wine.png', url: 'https://anthropic.com' },
   { name: 'GitHub', src: '/images/logos/github.svg', url: 'https://github.com' },
-  { name: 'Cursor', src: null, url: 'https://cursor.com' },
-  { name: 'Alchemy', src: null, url: 'https://www.alchemy.com' },
+  { name: 'Cursor', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Cursor_logo.svg.png', url: 'https://cursor.com' },
+  { name: 'Alchemy', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/6335e9e01347f76258e36be6c552de32.jpg', url: 'https://www.alchemy.com' },
 ];
 
 const sourceLogos: LogoItem[] = [
