@@ -79,7 +79,7 @@ async function ESGPage() {
         <BenchmarkCard />
 
         <SectionFooterImage
-          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-a5aace78-d0fe-4b7d-865b-181946fc2f34.png"
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-db261b47-d946-4d81-993d-cc45db4b6cb0.png"
           alt="Reporting ESG"
         />
       </div>
