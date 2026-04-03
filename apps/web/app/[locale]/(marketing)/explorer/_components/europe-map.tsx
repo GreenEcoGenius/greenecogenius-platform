@@ -2,140 +2,201 @@
 
 import { useState } from 'react';
 
-import type { CountryStat } from './explorer-data';
-import { formatVolume } from './explorer-data';
+import { useTranslations } from 'next-intl';
 
-const VOLUME_COLORS = [
-  { max: 5_000_000, fill: '#D1FAE5' },
-  { max: 20_000_000, fill: '#6EE7B7' },
-  { max: 50_000_000, fill: '#34D399' },
-  { max: 150_000_000, fill: '#059669' },
-  { max: Infinity, fill: '#064E3B' },
+import type { CountryStat } from './explorer-data';
+
+const COUNTRY_VOLUMES: Record<string, { nameFR: string; nameEN: string; volume: number }> = {
+  DE: { nameFR: 'Allemagne', nameEN: 'Germany', volume: 127.5 },
+  FR: { nameFR: 'France', nameEN: 'France', volume: 75.7 },
+  IT: { nameFR: 'Italie', nameEN: 'Italy', volume: 58.3 },
+  ES: { nameFR: 'Espagne', nameEN: 'Spain', volume: 48.2 },
+  PL: { nameFR: 'Pologne', nameEN: 'Poland', volume: 42.8 },
+  NL: { nameFR: 'Pays-Bas', nameEN: 'Netherlands', volume: 38.5 },
+  BE: { nameFR: 'Belgique', nameEN: 'Belgium', volume: 28.7 },
+  SE: { nameFR: 'Suède', nameEN: 'Sweden', volume: 24.1 },
+  AT: { nameFR: 'Autriche', nameEN: 'Austria', volume: 22.3 },
+  RO: { nameFR: 'Roumanie', nameEN: 'Romania', volume: 20.8 },
+  CZ: { nameFR: 'Tchéquie', nameEN: 'Czech Republic', volume: 18.5 },
+  FI: { nameFR: 'Finlande', nameEN: 'Finland', volume: 16.2 },
+  DK: { nameFR: 'Danemark', nameEN: 'Denmark', volume: 14.8 },
+  PT: { nameFR: 'Portugal', nameEN: 'Portugal', volume: 13.5 },
+  IE: { nameFR: 'Irlande', nameEN: 'Ireland', volume: 11.2 },
+  HU: { nameFR: 'Hongrie', nameEN: 'Hungary', volume: 10.8 },
+  BG: { nameFR: 'Bulgarie', nameEN: 'Bulgaria', volume: 10.2 },
+  SK: { nameFR: 'Slovaquie', nameEN: 'Slovakia', volume: 8.5 },
+  EL: { nameFR: 'Grèce', nameEN: 'Greece', volume: 8.2 },
+  HR: { nameFR: 'Croatie', nameEN: 'Croatia', volume: 5.8 },
+  LT: { nameFR: 'Lituanie', nameEN: 'Lithuania', volume: 4.5 },
+  SI: { nameFR: 'Slovénie', nameEN: 'Slovenia', volume: 4.2 },
+  LV: { nameFR: 'Lettonie', nameEN: 'Latvia', volume: 3.8 },
+  EE: { nameFR: 'Estonie', nameEN: 'Estonia', volume: 3.2 },
+  CY: { nameFR: 'Chypre', nameEN: 'Cyprus', volume: 1.8 },
+  LU: { nameFR: 'Luxembourg', nameEN: 'Luxembourg', volume: 1.5 },
+  MT: { nameFR: 'Malte', nameEN: 'Malta', volume: 0.8 },
+};
+
+const EU_COUNTRIES: Array<{ code: string; path: string }> = [
+  { code: 'DE', path: 'M420,220 L460,200 L480,210 L490,240 L500,270 L490,300 L470,310 L440,310 L420,300 L410,270 L415,245Z' },
+  { code: 'FR', path: 'M320,260 L370,240 L410,250 L420,280 L430,310 L420,340 L400,360 L370,370 L340,360 L310,340 L300,310 L305,280Z' },
+  { code: 'IT', path: 'M440,310 L470,310 L475,330 L460,370 L470,400 L460,430 L445,440 L435,420 L440,380 L430,350Z' },
+  { code: 'ES', path: 'M240,340 L310,330 L340,340 L340,360 L330,390 L310,410 L270,420 L240,410 L220,390 L225,360Z' },
+  { code: 'PL', path: 'M490,200 L550,195 L570,210 L565,250 L550,270 L520,275 L500,270 L490,240Z' },
+  { code: 'NL', path: 'M390,200 L410,195 L420,210 L415,225 L400,225 L388,215Z' },
+  { code: 'BE', path: 'M380,230 L410,225 L415,245 L400,250 L385,245Z' },
+  { code: 'SE', path: 'M460,60 L480,55 L500,80 L510,120 L500,170 L480,185 L465,165 L455,120 L450,85Z' },
+  { code: 'AT', path: 'M440,280 L490,275 L500,285 L490,300 L470,305 L445,300Z' },
+  { code: 'RO', path: 'M540,280 L590,270 L610,285 L605,310 L580,320 L550,315 L535,300Z' },
+  { code: 'CZ', path: 'M450,250 L490,240 L500,255 L490,270 L460,275 L445,265Z' },
+  { code: 'FI', path: 'M510,40 L540,35 L560,60 L555,110 L540,140 L520,150 L510,120 L505,80Z' },
+  { code: 'DK', path: 'M420,170 L440,160 L455,175 L445,195 L430,200 L418,190Z' },
+  { code: 'PT', path: 'M220,350 L240,340 L245,370 L240,400 L225,405 L215,385Z' },
+  { code: 'IE', path: 'M270,180 L300,175 L305,200 L295,215 L275,210 L265,195Z' },
+  { code: 'HU', path: 'M500,280 L540,275 L550,290 L540,310 L510,310 L498,295Z' },
+  { code: 'BG', path: 'M560,310 L600,305 L610,320 L595,340 L565,340 L555,325Z' },
+  { code: 'SK', path: 'M490,255 L530,250 L540,265 L530,278 L500,278Z' },
+  { code: 'EL', path: 'M520,350 L555,340 L570,355 L565,380 L555,400 L535,395 L520,380 L515,365Z' },
+  { code: 'HR', path: 'M470,305 L500,300 L510,315 L505,330 L485,335 L465,320Z' },
+  { code: 'LT', path: 'M530,175 L560,170 L565,190 L555,200 L535,200 L525,190Z' },
+  { code: 'SI', path: 'M455,300 L475,295 L480,310 L468,315 L455,308Z' },
+  { code: 'LV', path: 'M530,155 L565,150 L570,168 L560,178 L535,178 L525,168Z' },
+  { code: 'EE', path: 'M530,130 L560,125 L568,145 L558,155 L535,155 L525,145Z' },
+  { code: 'CY', path: 'M590,390 L610,385 L615,398 L600,402Z' },
+  { code: 'LU', path: 'M395,245 L405,242 L408,252 L400,255Z' },
+  { code: 'MT', path: 'M455,445 L465,442 L467,450 L458,452Z' },
 ];
 
-function getColor(volume: number): string {
-  for (const step of VOLUME_COLORS) {
-    if (volume <= step.max) return step.fill;
-  }
-  return VOLUME_COLORS[VOLUME_COLORS.length - 1]!.fill;
-}
+const NON_EU_COUNTRIES: Array<{ code: string; path: string }> = [
+  { code: 'GB', path: 'M300,160 L330,150 L345,170 L340,210 L325,230 L310,220 L295,195Z' },
+  { code: 'NO', path: 'M420,40 L450,30 L465,55 L460,100 L450,140 L435,155 L425,130 L420,80Z' },
+  { code: 'CH', path: 'M400,290 L430,285 L435,300 L420,305 L405,300Z' },
+  { code: 'UA', path: 'M570,210 L640,200 L660,230 L650,270 L610,280 L580,275 L565,250Z' },
+  { code: 'TR', path: 'M600,340 L680,330 L700,350 L690,375 L640,380 L610,370Z' },
+  { code: 'RS', path: 'M520,305 L545,300 L555,320 L545,335 L525,335 L515,320Z' },
+  { code: 'BA', path: 'M490,315 L515,310 L520,330 L505,340 L488,330Z' },
+  { code: 'AL', path: 'M510,340 L525,335 L530,360 L520,370 L508,360Z' },
+  { code: 'MK', path: 'M530,335 L550,330 L555,345 L545,355 L528,350Z' },
+  { code: 'ME', path: 'M498,330 L512,325 L515,342 L505,348 L495,340Z' },
+];
 
-const EU_PATHS: Record<string, { d: string; name: string }> = {
-  DE: { d: 'M 290 200 L 310 180 L 340 185 L 345 210 L 335 240 L 305 245 L 285 230 Z', name: 'Allemagne' },
-  FR: { d: 'M 220 240 L 260 220 L 290 240 L 285 280 L 260 300 L 225 290 L 210 265 Z', name: 'France' },
-  IT: { d: 'M 305 260 L 320 250 L 335 270 L 325 310 L 310 330 L 295 310 L 300 280 Z', name: 'Italie' },
-  ES: { d: 'M 160 290 L 210 275 L 225 295 L 215 330 L 175 340 L 150 320 Z', name: 'Espagne' },
-  PL: { d: 'M 345 185 L 390 175 L 400 200 L 395 225 L 365 230 L 345 215 Z', name: 'Pologne' },
-  NL: { d: 'M 270 180 L 285 175 L 290 190 L 280 195 L 268 192 Z', name: 'Pays-Bas' },
-  BE: { d: 'M 260 195 L 278 192 L 280 205 L 265 210 Z', name: 'Belgique' },
-  SE: { d: 'M 330 80 L 345 70 L 355 100 L 350 150 L 335 160 L 325 130 L 320 100 Z', name: 'Suède' },
-  AT: { d: 'M 310 235 L 340 228 L 355 240 L 340 250 L 310 248 Z', name: 'Autriche' },
-  RO: { d: 'M 390 245 L 420 235 L 435 255 L 420 270 L 395 265 Z', name: 'Roumanie' },
-  CZ: { d: 'M 320 215 L 345 210 L 355 225 L 340 232 L 318 228 Z', name: 'Tchéquie' },
-  PT: { d: 'M 140 300 L 155 290 L 160 315 L 148 325 L 138 318 Z', name: 'Portugal' },
-  HU: { d: 'M 355 240 L 385 232 L 392 252 L 375 260 L 355 255 Z', name: 'Hongrie' },
-  FI: { d: 'M 370 50 L 390 40 L 400 80 L 395 130 L 375 140 L 365 100 Z', name: 'Finlande' },
-  DK: { d: 'M 295 155 L 310 148 L 315 165 L 305 172 L 292 168 Z', name: 'Danemark' },
-  IE: { d: 'M 185 165 L 200 158 L 208 175 L 198 185 L 183 180 Z', name: 'Irlande' },
-  BG: { d: 'M 405 265 L 430 258 L 440 275 L 425 285 L 405 280 Z', name: 'Bulgarie' },
-  EL: { d: 'M 385 290 L 405 280 L 415 300 L 405 320 L 388 310 Z', name: 'Grèce' },
-  SK: { d: 'M 355 225 L 380 218 L 388 235 L 370 240 L 355 238 Z', name: 'Slovaquie' },
-  HR: { d: 'M 340 255 L 360 250 L 368 265 L 355 275 L 338 268 Z', name: 'Croatie' },
-  LT: { d: 'M 380 155 L 400 148 L 405 165 L 395 172 L 378 168 Z', name: 'Lituanie' },
-  SI: { d: 'M 322 248 L 338 245 L 342 255 L 332 260 L 320 256 Z', name: 'Slovénie' },
-  LV: { d: 'M 385 140 L 405 135 L 410 150 L 400 158 L 383 153 Z', name: 'Lettonie' },
-  EE: { d: 'M 388 120 L 405 115 L 410 132 L 400 138 L 386 133 Z', name: 'Estonie' },
-  LU: { d: 'M 264 208 L 272 205 L 275 215 L 268 218 Z', name: 'Luxembourg' },
-  CY: { d: 'M 450 310 L 462 306 L 466 315 L 456 320 Z', name: 'Chypre' },
-  MT: { d: 'M 318 340 L 324 337 L 326 343 L 320 346 Z', name: 'Malte' },
-};
+function getCountryColor(volumeMt: number): string {
+  if (volumeMt > 100) return '#064E3B';
+  if (volumeMt > 50) return '#065F46';
+  if (volumeMt > 30) return '#047857';
+  if (volumeMt > 15) return '#059669';
+  if (volumeMt > 8) return '#34D399';
+  if (volumeMt > 3) return '#6EE7B7';
+  if (volumeMt > 0) return '#A7F3D0';
+  return '#E2E8F0';
+}
 
 export function EuropeMap({
   countryStats,
 }: {
   countryStats: CountryStat[];
 }) {
-  const [tooltip, setTooltip] = useState<{
-    x: number;
-    y: number;
-    name: string;
-    volume: number;
-  } | null>(null);
+  const t = useTranslations('marketing');
+  const [hovered, setHovered] = useState<string | null>(null);
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
   const volumeByCountry = new Map<string, number>();
   for (const row of countryStats) {
-    const current = volumeByCountry.get(row.country_code) ?? 0;
-    volumeByCountry.set(row.country_code, current + row.tonnage_tonnes);
+    const cur = volumeByCountry.get(row.country_code) ?? 0;
+    volumeByCountry.set(row.country_code, cur + row.tonnage_tonnes);
   }
+
+  const hoveredInfo = hovered ? COUNTRY_VOLUMES[hovered] : null;
+  const hoveredVol = hovered
+    ? (volumeByCountry.get(hovered) ?? COUNTRY_VOLUMES[hovered]?.volume ?? 0)
+    : 0;
 
   return (
     <div className="relative">
-      <svg
-        viewBox="120 30 370 320"
-        className="mx-auto w-full max-w-2xl"
-        role="img"
-        aria-label="Carte des matières recyclables en Europe"
+      <div
+        className="relative mx-auto max-w-[800px]"
+        onMouseMove={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          setTooltipPos({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top - 55,
+          });
+        }}
       >
-        {Object.entries(EU_PATHS).map(([code, { d, name }]) => {
-          const vol = volumeByCountry.get(code) ?? 0;
-
-          return (
+        <svg viewBox="200 20 520 450" className="w-full" style={{ height: 'auto' }}>
+          {NON_EU_COUNTRIES.map((c) => (
             <path
-              key={code}
-              d={d}
-              fill={vol > 0 ? getColor(vol) : '#E5E7EB'}
-              stroke="#ffffff"
-              strokeWidth="1.5"
-              className="cursor-default transition-opacity hover:opacity-80"
-              onMouseEnter={(e) => {
-                const bbox = e.currentTarget.getBBox();
-                setTooltip({
-                  x: bbox.x + bbox.width / 2,
-                  y: bbox.y,
-                  name,
-                  volume: vol,
-                });
-              }}
-              onMouseLeave={() => setTooltip(null)}
+              key={c.code}
+              d={c.path}
+              fill="#E2E8F0"
+              stroke="#FFFFFF"
+              strokeWidth={0.8}
+              opacity={0.5}
             />
-          );
-        })}
+          ))}
 
-        {tooltip && (
-          <foreignObject
-            x={Math.max(120, Math.min(tooltip.x - 80, 410))}
-            y={Math.max(30, tooltip.y - 50)}
-            width="160"
-            height="44"
-            className="pointer-events-none"
+          {EU_COUNTRIES.map((c) => {
+            const vol = volumeByCountry.get(c.code)
+              ? Number(volumeByCountry.get(c.code)) / 1_000_000
+              : COUNTRY_VOLUMES[c.code]?.volume ?? 0;
+            const isHovered = hovered === c.code;
+
+            return (
+              <path
+                key={c.code}
+                d={c.path}
+                fill={getCountryColor(vol)}
+                stroke="#FFFFFF"
+                strokeWidth={isHovered ? 2 : 1}
+                opacity={hovered && !isHovered ? 0.6 : 1}
+                className="cursor-pointer transition-all duration-200"
+                style={{ filter: isHovered ? 'brightness(0.85)' : undefined }}
+                onMouseEnter={() => setHovered(c.code)}
+                onMouseLeave={() => setHovered(null)}
+              />
+            );
+          })}
+        </svg>
+
+        {hoveredInfo && (
+          <div
+            className="pointer-events-none absolute z-10 -translate-x-1/2 whitespace-nowrap rounded-lg border border-gray-200 bg-white px-3.5 py-2 shadow-lg"
+            style={{ left: tooltipPos.x, top: tooltipPos.y }}
           >
-            <div className="rounded-lg bg-white px-3 py-2 text-center shadow-lg">
-              <p className="text-metal-900 text-xs font-semibold">{tooltip.name}</p>
-              <p className="text-primary text-xs font-bold">
-                {tooltip.volume > 0 ? `${formatVolume(tooltip.volume)} t` : '—'}
-              </p>
-            </div>
-          </foreignObject>
+            <p className="text-metal-900 text-[13px] font-semibold">
+              {hoveredInfo.nameFR}
+            </p>
+            <p className="text-primary text-xs font-medium">
+              {hoveredVol > 1_000_000
+                ? `${(hoveredVol / 1_000_000).toFixed(1)} Mt/an`
+                : `${hoveredInfo.volume.toFixed(1)} Mt/an`}
+            </p>
+          </div>
         )}
-      </svg>
+      </div>
 
-      <div className="mt-4 flex items-center justify-center gap-2 text-xs">
+      {/* Legend */}
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs">
         <span className="text-metal-500">Volume :</span>
-        {VOLUME_COLORS.map((step, i) => (
+        {[
+          { color: '#A7F3D0', label: '< 5 Mt' },
+          { color: '#6EE7B7', label: '' },
+          { color: '#34D399', label: '' },
+          { color: '#059669', label: '' },
+          { color: '#065F46', label: '' },
+          { color: '#064E3B', label: '> 100 Mt' },
+        ].map((item, i) => (
           <div key={i} className="flex items-center gap-1">
             <div
-              className="h-3 w-3 rounded-sm"
-              style={{ backgroundColor: step.fill }}
+              className="h-3 w-3 rounded-full"
+              style={{ backgroundColor: item.color }}
             />
-            <span className="text-metal-400">
-              {i === 0
-                ? '< 5 Mt'
-                : i === VOLUME_COLORS.length - 1
-                  ? '> 150 Mt'
-                  : ''}
-            </span>
+            {item.label && <span className="text-metal-400">{item.label}</span>}
           </div>
         ))}
+        <span className="text-metal-400 ml-3 flex items-center gap-1">
+          <div className="h-3 w-3 rounded-full bg-[#E2E8F0]" />
+          Hors UE
+        </span>
       </div>
     </div>
   );
