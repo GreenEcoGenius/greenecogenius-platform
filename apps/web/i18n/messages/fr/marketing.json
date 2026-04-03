@@ -278,6 +278,17 @@
     "categoriesSub": "8 catégories de matières recyclables avec volumes, prix indicatifs et tendances du marché.",
     "sources": "sources identifiées",
     "sourcesIdentified": "sources identifiées",
+    "zone": {
+      "france": "France",
+      "europe": "Europe UE-27",
+      "usa": "États-Unis"
+    },
+    "franceMapTitle": "Carte des gisements en France",
+    "franceMapSubtitle": "Volumes de matières recyclables par région — cliquez sur une région pour voir le détail.",
+    "europeMapTitle": "Carte des matières en Europe",
+    "europeMapSubtitle": "Volumes de déchets recyclables par pays UE-27 — données Eurostat 2022.",
+    "usaMapTitle": "Matières recyclables aux États-Unis",
+    "usaMapSubtitle": "Volumes nationaux par catégorie — données EPA 2018.",
     "mapTitle": "Carte des gisements en France",
     "mapSubtitle": "Volumes de matières recyclables par région — cliquez sur une région pour voir le détail.",
     "trendsTitle": "Tendances du marché",

@@ -278,6 +278,17 @@
     "categoriesSub": "8 categories of recyclable materials with volumes, indicative prices and market trends.",
     "sources": "identified sources",
     "sourcesIdentified": "identified sources",
+    "zone": {
+      "france": "France",
+      "europe": "Europe EU-27",
+      "usa": "United States"
+    },
+    "franceMapTitle": "Material sources map in France",
+    "franceMapSubtitle": "Recyclable material volumes by region — click a region for details.",
+    "europeMapTitle": "Materials map in Europe",
+    "europeMapSubtitle": "Recyclable waste volumes by EU-27 country — Eurostat 2022 data.",
+    "usaMapTitle": "Recyclable materials in the United States",
+    "usaMapSubtitle": "National volumes by category — EPA 2018 data.",
     "mapTitle": "Material sources map in France",
     "mapSubtitle": "Recyclable material volumes by region — click a region for details.",
     "trendsTitle": "Market trends",

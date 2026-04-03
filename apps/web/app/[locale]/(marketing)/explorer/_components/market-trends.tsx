@@ -1,10 +1,12 @@
+'use client';
+
 import { Flame, TrendingUp } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 
 import type { NationalStat } from './explorer-data';
 
-export async function MarketTrends({ stats }: { stats: NationalStat[] }) {
-  const t = await getTranslations('marketing');
+export function MarketTrends({ stats }: { stats: NationalStat[] }) {
+  const t = useTranslations('marketing');
 
   const trending = [...stats]
     .sort((a, b) => b.trend_12m - a.trend_12m)

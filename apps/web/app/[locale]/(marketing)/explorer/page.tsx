@@ -6,10 +6,12 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { AnimateOnScroll } from '../_components/animate-on-scroll';
 
 import { DataSourceBadge } from './_components/data-source-badge';
-import type { NationalStat } from './_components/explorer-data';
-import { MarketTrends } from './_components/market-trends';
-import { MaterialCategoryCard } from './_components/material-category-card';
-import { MaterialsMap } from './_components/materials-map';
+import { ExplorerContent } from './_components/explorer-content';
+import {
+  aggregateCountryStats,
+  type CountryStat,
+  type NationalStat,
+} from './_components/explorer-data';
 import { PublicCTA } from './_components/public-cta';
 
 export async function generateMetadata() {
@@ -25,12 +27,20 @@ export default async function ExplorerPage() {
   const t = await getTranslations('marketing');
   const client = getSupabaseServerClient();
 
-  const { data: stats } = await client
-    .from('material_stats_national')
-    .select('*')
-    .order('total_volume_tonnes', { ascending: false });
+  const [
+    { data: nationalRows },
+    { data: regionRows },
+    { data: countryRows },
+  ] = await Promise.all([
+    client
+      .from('material_stats_national')
+      .select('*')
+      .order('total_volume_tonnes', { ascending: false }),
+    client.from('material_stats_by_region').select('*'),
+    client.from('material_stats_by_country').select('*'),
+  ]);
 
-  const nationalStats: NationalStat[] = (stats ?? []).map((s) => ({
+  const franceStats: NationalStat[] = (nationalRows ?? []).map((s) => ({
     category: s.category,
     total_volume_tonnes: Number(s.total_volume_tonnes),
     nb_regions: s.nb_regions ?? 0,
@@ -42,9 +52,36 @@ export default async function ExplorerPage() {
     trend_12m: Number(s.trend_12m),
   }));
 
-  const { data: regionStats } = await client
-    .from('material_stats_by_region')
-    .select('*');
+  const allCountries: CountryStat[] = (countryRows ?? []).map((r) => ({
+    country_code: r.country_code,
+    country_name: r.country_name,
+    category: r.category,
+    tonnage_tonnes: Number(r.tonnage_tonnes),
+    percentage: Number(r.percentage),
+    data_year: r.data_year,
+  }));
+
+  const euRows = allCountries.filter((r) => r.country_code !== 'US');
+  const usRows = allCountries.filter((r) => r.country_code === 'US');
+
+  const europeStats = aggregateCountryStats(euRows);
+  const usaStats: NationalStat[] = usRows.map((r) => ({
+    category: r.category,
+    total_volume_tonnes: r.tonnage_tonnes,
+    nb_regions: 1,
+    nb_sources: 0,
+    avg_price_min: 0,
+    avg_price_max: 0,
+    co2_potential_tonnes: 0,
+    recycling_rate: 0,
+    trend_12m: 0,
+  })).sort((a, b) => b.total_volume_tonnes - a.total_volume_tonnes);
+
+  const franceRegionRows = (regionRows ?? []).map((r) => ({
+    region: r.region as string,
+    category: r.category as string,
+    total_volume_tonnes: Number(r.total_volume_tonnes),
+  }));
 
   return (
     <div>
@@ -69,54 +106,14 @@ export default async function ExplorerPage() {
         </div>
       </section>
 
-      {/* Category cards grid */}
-      <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <h2 className="text-metal-900 mb-2 text-2xl font-bold">
-              {t('explorer.categoriesTitle')}
-            </h2>
-            <p className="text-metal-500 mb-10 text-sm">
-              {t('explorer.categoriesSub')}
-            </p>
-          </AnimateOnScroll>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {nationalStats.map((stat) => (
-              <AnimateOnScroll key={stat.category} animation="fade-up">
-                <MaterialCategoryCard stat={stat} />
-              </AnimateOnScroll>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive France map */}
-      <section className="bg-metal-50 py-16 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <h2 className="text-metal-900 mb-2 text-center text-2xl font-bold">
-              {t('explorer.mapTitle')}
-            </h2>
-            <p className="text-metal-500 mb-10 text-center text-sm">
-              {t('explorer.mapSubtitle')}
-            </p>
-          </AnimateOnScroll>
-
-          <AnimateOnScroll animation="fade-up" delay={100}>
-            <MaterialsMap regionStats={regionStats ?? []} />
-          </AnimateOnScroll>
-        </div>
-      </section>
-
-      {/* Market trends */}
-      <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <MarketTrends stats={nationalStats} />
-          </AnimateOnScroll>
-        </div>
-      </section>
+      {/* Dynamic zone content */}
+      <ExplorerContent
+        franceStats={franceStats}
+        europeStats={europeStats}
+        usaStats={usaStats}
+        franceRegionRows={franceRegionRows}
+        europeCountryRows={euRows}
+      />
 
       {/* CTA */}
       <section className="pb-20 sm:pb-28">

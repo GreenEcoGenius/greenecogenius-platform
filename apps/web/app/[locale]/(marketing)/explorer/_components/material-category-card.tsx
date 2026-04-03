@@ -1,7 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 
 import { ArrowDown, ArrowUp, Minus } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 
 import {
   CATEGORY_META,
@@ -11,14 +13,14 @@ import {
   type NationalStat,
 } from './explorer-data';
 
-export async function MaterialCategoryCard({
+export function MaterialCategoryCard({
   stat,
   regionOverride,
 }: {
   stat: NationalStat;
   regionOverride?: { volume: number; sources: number; price: number };
 }) {
-  const t = await getTranslations('marketing');
+  const t = useTranslations('marketing');
   const slug = stat.category as CategorySlug;
   const meta = CATEGORY_META[slug];
 

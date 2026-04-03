@@ -9,6 +9,8 @@ import {
   Wine,
 } from 'lucide-react';
 
+export type Zone = 'france' | 'europe' | 'usa';
+
 export type CategorySlug =
   | 'plastique'
   | 'metal'
@@ -128,6 +130,48 @@ export interface RegionStat {
   avg_price_per_tonne: number;
   co2_potential_tonnes: number;
   year: number;
+}
+
+export interface CountryStat {
+  country_code: string;
+  country_name: string;
+  category: string;
+  tonnage_tonnes: number;
+  percentage: number;
+  data_year: number;
+}
+
+export function aggregateCountryStats(
+  rows: CountryStat[],
+): NationalStat[] {
+  const byCategory = new Map<
+    string,
+    { volume: number; countries: Set<string> }
+  >();
+
+  for (const r of rows) {
+    const existing = byCategory.get(r.category) ?? {
+      volume: 0,
+      countries: new Set<string>(),
+    };
+    existing.volume += r.tonnage_tonnes;
+    existing.countries.add(r.country_code);
+    byCategory.set(r.category, existing);
+  }
+
+  return Array.from(byCategory.entries())
+    .map(([category, agg]) => ({
+      category,
+      total_volume_tonnes: agg.volume,
+      nb_regions: agg.countries.size,
+      nb_sources: 0,
+      avg_price_min: 0,
+      avg_price_max: 0,
+      co2_potential_tonnes: 0,
+      recycling_rate: 0,
+      trend_12m: 0,
+    }))
+    .sort((a, b) => b.total_volume_tonnes - a.total_volume_tonnes);
 }
 
 export const CATEGORY_SUBTYPES: Partial<
