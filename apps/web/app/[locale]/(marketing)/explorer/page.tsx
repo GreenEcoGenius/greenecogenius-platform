@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { Sparkles } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
