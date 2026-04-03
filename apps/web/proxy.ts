@@ -37,6 +37,13 @@ function detectLocaleFromGeo(request: NextRequest): string {
 }
 
 export default async function proxy(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  const strippedPath = pathname.replace(/^\/(fr|en)/, '');
+
+  if (strippedPath.startsWith('/auth/callback')) {
+    return NextResponse.next();
+  }
+
   const hasLocaleCookie = request.cookies.has(LOCALE_COOKIE);
 
   if (!hasLocaleCookie) {
