@@ -257,7 +257,7 @@
   "solComplianceDesc": "Pre-audit de conformite en 6 appels IA paralleles. Diagnostic RSE avec eligibilite aux labels B Corp, Lucie 26000, Label NR.",
   "solComplianceF1": "Pre-audit conformite 42 normes en < 10 secondes",
   "solComplianceF2": "Diagnostic RSE avec score et feuille de route",
-  "solComplianceF3": "Eligibilite labels : B Corp, Lucie 26000, GreenTech",
+  "solComplianceF3": "Veille réglementaire continue et alertes automatiques",
   "solLabelsTitle": "Labels & Certifications",
   "solLabelsSub": "Éligibilité automatisée",
   "solLabelsDesc": "Évaluez instantanément votre éligibilité aux principaux labels environnementaux et certifications RSE. Notre IA analyse votre profil et génère un plan d'action personnalisé pour chaque label visé.",
