@@ -219,7 +219,7 @@ export default async function AboutPage() {
             <AnimateOnScroll animation="fade-right">
               <div className="rounded-2xl border bg-white p-8">
                 <h3 className="text-metal-900 text-xl font-bold">GreenEcoGenius OÜ</h3>
-                <p className="text-primary mt-1 text-sm font-semibold">Estonia — Europe</p>
+                <p className="text-primary mt-1 text-sm font-semibold">Tallinn, Estonia</p>
                 <p className="text-metal-600 mt-4 leading-relaxed">
                   {t('aboutStructureEU')}
                 </p>

@@ -74,8 +74,8 @@ export default async function Home() {
             <div className="border-metal-chrome grid grid-cols-2 gap-6 rounded-2xl border bg-white p-8 shadow-xl md:grid-cols-4 md:gap-8">
               <StatItem
                 icon={<Factory className="h-5 w-5" />}
-                value={32}
-                suffix="M"
+                value={2.5}
+                suffix="B"
                 label={t('stat1Label')}
               />
               <StatItem
@@ -85,12 +85,13 @@ export default async function Home() {
               />
               <StatItem
                 icon={<Globe className="h-5 w-5" />}
-                value={27}
+                value={30}
+                suffix="+"
                 label={t('stat3Label')}
               />
               <StatItem
                 icon={<Users className="h-5 w-5" />}
-                value={30}
+                value={45}
                 suffix="%"
                 label={t('stat4Label')}
               />
