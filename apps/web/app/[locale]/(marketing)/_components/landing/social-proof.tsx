@@ -1,21 +1,60 @@
-import { getTranslations } from 'next-intl/server';
+'use client';
+
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+
+import { cn } from '@kit/ui/utils';
 
 import { AnimateOnScroll } from '../animate-on-scroll';
 
 const PARTNERS = [
-  { name: 'Polygon', label: 'Blockchain' },
-  { name: 'ADEME', label: 'Méthodologie' },
-  { name: 'Supabase', label: 'Infrastructure' },
-  { name: 'Vercel', label: 'Déploiement' },
-  { name: 'CSRD/ESRS', label: 'Conformité' },
-  { name: 'GHG Protocol', label: 'Bilan carbone' },
+  {
+    name: 'Supabase',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/supabase.svg',
+  },
+  {
+    name: 'Polygon',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Polygon_blockchain_logo.svg.png',
+  },
+  {
+    name: 'Vercel',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/png-transparent-vercel-hd-logo.png',
+  },
+  {
+    name: 'GHG Protocol',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/ghg_protocol_logo_clear_1_2.png',
+  },
+  {
+    name: 'ESRS',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/esrsicon1.png',
+  },
+  {
+    name: 'ADEME',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/logo-ademe-removebg-preview.png.webp',
+  },
 ];
 
-export async function SocialProof() {
-  const t = await getTranslations('marketing');
+function LogoItem({ name, logo }: { name: string; logo: string }) {
+  return (
+    <div className="flex shrink-0 items-center px-8 sm:px-12">
+      <Image
+        src={logo}
+        alt={name}
+        width={140}
+        height={56}
+        className="h-10 w-auto max-w-[140px] object-contain opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 sm:h-12"
+        unoptimized
+      />
+    </div>
+  );
+}
+
+export function SocialProof({ className }: { className?: string }) {
+  const t = useTranslations('marketing');
+  const items = [...PARTNERS, ...PARTNERS];
 
   return (
-    <section className="py-16 sm:py-20">
+    <section className={cn('py-16 sm:py-20', className)}>
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll animation="fade-up">
           <p className="text-metal-500 mb-10 text-center text-sm font-medium uppercase tracking-wider">
@@ -23,18 +62,15 @@ export async function SocialProof() {
           </p>
         </AnimateOnScroll>
 
-        <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
-          {PARTNERS.map((p) => (
-            <div
-              key={p.name}
-              className="group flex flex-col items-center gap-1 transition-all"
-            >
-              <span className="text-metal-300 group-hover:text-primary text-lg font-bold transition-colors sm:text-xl">
-                {p.name}
-              </span>
-              <span className="text-metal-400 text-[10px]">{p.label}</span>
-            </div>
-          ))}
+        <div className="relative overflow-hidden" aria-label="Trusted partners">
+          <div className="from-background pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r to-transparent sm:w-32" />
+          <div className="from-background pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l to-transparent sm:w-32" />
+
+          <div className="animate-marquee flex w-max items-center gap-0 py-4">
+            {items.map((p, i) => (
+              <LogoItem key={`${p.name}-${i}`} name={p.name} logo={p.logo} />
+            ))}
+          </div>
         </div>
 
         <p className="text-metal-400 mt-8 text-center text-xs">
