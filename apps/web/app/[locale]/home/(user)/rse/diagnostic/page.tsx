@@ -1,8 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
+import { PageBody } from '@kit/ui/page';
 
 import { DiagnosticWizard } from './_components/diagnostic-wizard';
 
@@ -15,12 +13,6 @@ export const generateMetadata = async () => {
 async function DiagnosticPage() {
   return (
     <PageBody>
-      <PageHeader description="">
-        <Heading level={3}>
-          <Trans i18nKey="rse:diagnosticTitle" />
-        </Heading>
-      </PageHeader>
-
       <DiagnosticWizard />
     </PageBody>
   );

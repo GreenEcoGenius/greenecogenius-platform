@@ -8,8 +8,7 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
+import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 export const generateMetadata = async () => {
@@ -48,23 +47,6 @@ async function ESGReportsPage() {
 
   return (
     <PageBody>
-      <PageHeader description="">
-        <div className="flex items-center justify-between">
-          <Heading level={3}>
-            <Trans i18nKey="esg:reportsTitle" />
-          </Heading>
-          <Button
-            variant="outline"
-            render={
-              <Link href="/home/esg/data-entry">
-                <Trans i18nKey="esg:dataEntry" />
-              </Link>
-            }
-            nativeButton={false}
-          />
-        </div>
-      </PageHeader>
-
       {reportList.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center gap-4 py-12 text-center">

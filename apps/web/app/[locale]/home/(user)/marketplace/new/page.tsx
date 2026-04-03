@@ -2,9 +2,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
+import { PageBody } from '@kit/ui/page';
 
 import { CreateListingForm } from '~/home/[account]/marketplace/new/_components/create-listing-form';
 
@@ -31,12 +29,6 @@ async function NewListingPage() {
 
   return (
     <PageBody>
-      <PageHeader description="">
-        <Heading level={3}>
-          <Trans i18nKey={'marketplace.createListing'} />
-        </Heading>
-      </PageHeader>
-
       <div className="mx-auto max-w-2xl">
         <CreateListingForm
           account=""

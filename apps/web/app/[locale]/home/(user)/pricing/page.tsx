@@ -20,8 +20,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@kit/ui/card';
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
+import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 export const generateMetadata = async () => {
@@ -83,12 +82,6 @@ async function BlockchainDashboardPage() {
 
   return (
     <PageBody>
-      <PageHeader description="">
-        <Heading level={3}>
-          <Trans i18nKey="blockchain:title" />
-        </Heading>
-      </PageHeader>
-
       <div className="mx-auto max-w-6xl space-y-8">
         {/* Subtitle */}
         <p className="text-muted-foreground text-center text-lg">

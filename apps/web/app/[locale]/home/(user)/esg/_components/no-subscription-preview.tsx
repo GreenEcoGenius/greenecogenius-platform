@@ -12,8 +12,7 @@ import {
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
+import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 const PREVIEW_SECTIONS = [
@@ -27,15 +26,6 @@ const PREVIEW_SECTIONS = [
 export function NoSubscriptionPreview() {
   return (
     <PageBody>
-      <PageHeader description="">
-        <Heading level={3}>
-          <Trans i18nKey="esg:title" />
-        </Heading>
-        <p className="text-muted-foreground text-sm">
-          <Trans i18nKey="esg:subtitle" />
-        </p>
-      </PageHeader>
-
       <div className="space-y-8">
         {/* Status preview */}
         <Card>
