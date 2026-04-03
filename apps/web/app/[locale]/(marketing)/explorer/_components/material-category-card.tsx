@@ -4,13 +4,14 @@ import Link from 'next/link';
 
 import {
   CATEGORY_META,
-  formatPriceRange,
+  formatPrice,
   formatRate,
   formatVolume,
   slugFromCategory,
   type NationalStat,
   type Zone,
 } from './explorer-data';
+import { SourceBadge } from './source-badge';
 
 export function MaterialCategoryCard({
   stat,
@@ -39,10 +40,11 @@ export function MaterialCategoryCard({
             {stat.category}
           </h3>
         </div>
+        {stat.data_source && <SourceBadge source={stat.data_source} />}
       </div>
 
       <div className="text-metal-900 mb-1 text-2xl font-bold">
-        {formatVolume(stat.total_volume_tonnes)}
+        {formatVolume(stat.annual_volume_tonnes)}
         <span className="text-metal-400 text-sm font-normal">/an</span>
       </div>
 
@@ -50,10 +52,8 @@ export function MaterialCategoryCard({
         {stat.recycling_rate > 0 && (
           <span>Recyclage : {formatRate(stat.recycling_rate)}</span>
         )}
-        {(stat.avg_price_min > 0 || stat.avg_price_max > 0) && (
-          <span>
-            {formatPriceRange(stat.avg_price_min, stat.avg_price_max)}
-          </span>
+        {stat.avg_price_per_tonne > 0 && (
+          <span>{formatPrice(stat.avg_price_per_tonne)}</span>
         )}
       </div>
     </>

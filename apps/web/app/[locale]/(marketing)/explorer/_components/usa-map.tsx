@@ -446,7 +446,7 @@ export function UsaMap({ stats }: { stats: NationalStat[] }) {
     : null;
   const hoveredVolume = hovered ? (STATE_VOLUMES[hovered] ?? 0) : 0;
 
-  const totalVolume = stats.reduce((s, r) => s + r.total_volume_tonnes, 0);
+  const totalVolume = stats.reduce((s, r) => s + r.annual_volume_tonnes, 0);
 
   return (
     <div className="relative">

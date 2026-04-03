@@ -69,7 +69,7 @@ export function MaterialsMap({
   for (const row of regionStats) {
     if (singleCategory && row.category !== singleCategory) continue;
     const current = volumeByRegion.get(row.region) ?? 0;
-    volumeByRegion.set(row.region, current + row.total_volume_tonnes);
+    volumeByRegion.set(row.region, current + row.annual_volume_tonnes);
   }
 
   return (

@@ -9,7 +9,7 @@ export function MarketTrends({ stats }: { stats: NationalStat[] }) {
   const t = useTranslations('marketing');
 
   const top = [...stats]
-    .sort((a, b) => b.total_volume_tonnes - a.total_volume_tonnes)
+    .sort((a, b) => b.annual_volume_tonnes - a.annual_volume_tonnes)
     .slice(0, 4);
 
   return (
@@ -33,7 +33,7 @@ export function MarketTrends({ stats }: { stats: NationalStat[] }) {
                 {stat.category}
               </p>
               <p className="text-metal-500 flex items-center gap-1 text-xs">
-                {formatVolume(stat.total_volume_tonnes)}/an
+                {formatVolume(stat.annual_volume_tonnes)}/an
                 {stat.recycling_rate > 0 && (
                   <span className="text-emerald-600">
                     · {formatRate(stat.recycling_rate)} recyclé

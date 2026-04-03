@@ -2,7 +2,7 @@ import { BarChart3, Factory, Leaf, Recycle, Scale } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import {
-  formatPriceRange,
+  formatPrice,
   formatRate,
   formatVolume,
   type NationalStat,
@@ -15,7 +15,7 @@ export async function CategoryKpis({ stat }: { stat: NationalStat }) {
     {
       icon: Scale,
       label: t('explorer.kpiVolume'),
-      value: `${formatVolume(stat.total_volume_tonnes)}/an`,
+      value: `${formatVolume(stat.annual_volume_tonnes)}/an`,
     },
     {
       icon: Recycle,
@@ -24,15 +24,15 @@ export async function CategoryKpis({ stat }: { stat: NationalStat }) {
     },
     {
       icon: Leaf,
-      label: 'CO₂ évité',
-      value: formatVolume(stat.co2_potential_tonnes),
+      label: 'Valorisation',
+      value: formatRate(stat.recovery_rate),
     },
     {
       icon: BarChart3,
       label: t('explorer.kpiPrice'),
-      value: formatPriceRange(stat.avg_price_min, stat.avg_price_max),
+      value: formatPrice(stat.avg_price_per_tonne),
     },
-    { icon: Factory, label: 'Sources', value: `${stat.nb_sources}` },
+    { icon: Factory, label: 'Source', value: stat.data_source },
   ];
 
   return (

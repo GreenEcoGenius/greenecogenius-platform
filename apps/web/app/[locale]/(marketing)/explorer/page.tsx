@@ -8,11 +8,9 @@ import { DataSourceBadge } from './_components/data-source-badge';
 import { ExplorerContent } from './_components/explorer-content';
 import {
   aggregateCountryStats,
-  displayCategory,
-  EUROPE_COUNTRY_DATA,
+  type CountryStat,
   type NationalStat,
   type RegionStat,
-  USA_STATS,
 } from './_components/explorer-data';
 import { PublicCTA } from './_components/public-cta';
 import { SourcesDisclaimer } from './_components/sources-disclaimer';
@@ -31,42 +29,71 @@ export default async function ExplorerPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const client = getSupabaseServerClient() as any;
 
-  const [{ data: nationalRows }, { data: regionRows }] = await Promise.all([
-    client
-      .from('material_stats_national')
-      .select('*')
-      .order('total_volume_tonnes', { ascending: false }),
-    client.from('material_stats_by_region').select('*'),
-  ]);
+  const [{ data: nationalRows }, { data: regionRows }, { data: countryRows }] =
+    await Promise.all([
+      client
+        .from('material_stats_national')
+        .select('*')
+        .eq('country_code', 'FR')
+        .order('annual_volume_tonnes', { ascending: false }),
+      client.from('material_stats_by_region').select('*').eq('country', 'FR'),
+      client.from('material_stats_by_country').select('*'),
+    ]);
 
   const franceStats: NationalStat[] = (nationalRows ?? []).map(
     (s: Record<string, unknown>) => ({
-      category: displayCategory(s.category as string),
-      total_volume_tonnes: Number(s.total_volume_tonnes ?? 0),
-      nb_regions: Number(s.nb_regions ?? 0),
-      nb_sources: Number(s.nb_sources ?? 0),
-      avg_price_min: Number(s.avg_price_min ?? 0),
-      avg_price_max: Number(s.avg_price_max ?? 0),
-      co2_potential_tonnes: Number(s.co2_potential_tonnes ?? 0),
+      category: s.category as string,
+      annual_volume_tonnes: Number(s.annual_volume_tonnes ?? 0),
       recycling_rate: Number(s.recycling_rate ?? 0),
-      trend_12m: Number(s.trend_12m ?? 0),
+      recovery_rate: Number(s.recovery_rate ?? 0),
+      avg_price_per_tonne: Number(s.avg_price_per_tonne ?? 0),
+      data_source: (s.data_source as string) ?? 'ADEME',
+      year: (s.year as number) ?? 2024,
+      country_code: 'FR',
     }),
   );
 
   const franceRegionRows: RegionStat[] = (regionRows ?? []).map(
     (r: Record<string, unknown>) => ({
       region: r.region as string,
-      category: displayCategory(r.category as string),
-      total_volume_tonnes: Number(r.total_volume_tonnes ?? 0),
-      nb_sources: Number(r.nb_sources ?? 0),
+      category: r.category as string,
+      annual_volume_tonnes: Number(r.annual_volume_tonnes ?? 0),
+      recycling_rate: Number(r.recycling_rate ?? 0),
+      recovery_rate: Number(r.recovery_rate ?? 0),
       avg_price_per_tonne: Number(r.avg_price_per_tonne ?? 0),
-      co2_potential_tonnes: Number(r.co2_potential_tonnes ?? 0),
+      data_source: (r.data_source as string) ?? 'ADEME',
       year: (r.year as number) ?? 2024,
+      country: 'FR',
     }),
   );
 
-  const europeStats = aggregateCountryStats(EUROPE_COUNTRY_DATA);
-  const usaStats = USA_STATS;
+  const allCountries: CountryStat[] = (countryRows ?? []).map(
+    (r: Record<string, unknown>) => ({
+      country_code: r.country_code as string,
+      country_name: r.country_name as string,
+      category: r.category as string,
+      tonnage_tonnes: Number(r.tonnage_tonnes ?? 0),
+      percentage: Number(r.percentage ?? 0),
+      data_year: (r.data_year as number) ?? 2022,
+    }),
+  );
+
+  const euRows = allCountries.filter((r) => r.country_code !== 'US');
+  const usRows = allCountries.filter((r) => r.country_code === 'US');
+
+  const europeStats = aggregateCountryStats(euRows);
+  const usaStats: NationalStat[] = usRows
+    .map((r) => ({
+      category: r.category,
+      annual_volume_tonnes: r.tonnage_tonnes,
+      recycling_rate: 0,
+      recovery_rate: 0,
+      avg_price_per_tonne: 0,
+      data_source: 'EPA',
+      year: r.data_year,
+      country_code: 'US',
+    }))
+    .sort((a, b) => b.annual_volume_tonnes - a.annual_volume_tonnes);
 
   return (
     <div>
@@ -97,7 +124,7 @@ export default async function ExplorerPage() {
         europeStats={europeStats}
         usaStats={usaStats}
         franceRegionRows={franceRegionRows}
-        europeCountryRows={EUROPE_COUNTRY_DATA}
+        europeCountryRows={euRows}
       />
 
       {/* CTA */}
