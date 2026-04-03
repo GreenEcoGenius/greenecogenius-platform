@@ -7,8 +7,6 @@ import { ArrowLeft, BookOpen } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { AnimateOnScroll } from '../../_components/animate-on-scroll';
-
-import { getPublicSupabaseClient } from '../_lib/public-client';
 import { CategoryKpis } from '../_components/category-kpis';
 import { DataSourceBadge } from '../_components/data-source-badge';
 import {
@@ -22,6 +20,7 @@ import { MaterialsMap } from '../_components/materials-map';
 import { DualCTA } from '../_components/public-cta';
 import { RegionTable } from '../_components/region-table';
 import { SourcesDisclaimer } from '../_components/sources-disclaimer';
+import { getPublicSupabaseClient } from '../_lib/public-client';
 
 interface PageProps {
   params: Promise<{ category: string }>;

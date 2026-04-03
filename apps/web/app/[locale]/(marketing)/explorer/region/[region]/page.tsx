@@ -7,8 +7,6 @@ import { ArrowLeft, MapPin } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { AnimateOnScroll } from '../../../_components/animate-on-scroll';
-
-import { getPublicSupabaseClient } from '../../_lib/public-client';
 import { DataSourceBadge } from '../../_components/data-source-badge';
 import {
   formatVolume,
@@ -19,6 +17,7 @@ import {
 import { MaterialCategoryCard } from '../../_components/material-category-card';
 import { PublicCTA } from '../../_components/public-cta';
 import { SourcesDisclaimer } from '../../_components/sources-disclaimer';
+import { getPublicSupabaseClient } from '../../_lib/public-client';
 
 interface PageProps {
   params: Promise<{ region: string }>;

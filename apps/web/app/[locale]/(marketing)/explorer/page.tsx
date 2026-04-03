@@ -4,8 +4,6 @@ import { Sparkles } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { AnimateOnScroll } from '../_components/animate-on-scroll';
-
-import { getPublicSupabaseClient } from './_lib/public-client';
 import { DataSourceBadge } from './_components/data-source-badge';
 import { ExplorerContent } from './_components/explorer-content';
 import {
@@ -16,6 +14,7 @@ import {
 } from './_components/explorer-data';
 import { PublicCTA } from './_components/public-cta';
 import { SourcesDisclaimer } from './_components/sources-disclaimer';
+import { getPublicSupabaseClient } from './_lib/public-client';
 
 export async function generateMetadata() {
   const t = await getTranslations('marketing');
@@ -40,9 +39,12 @@ export default async function ExplorerPage() {
     client.from('material_stats_by_country').select('*'),
   ]);
 
-  if (natResult.error) console.error('[Explorer] national error:', natResult.error);
-  if (regionResult.error) console.error('[Explorer] region error:', regionResult.error);
-  if (countryResult.error) console.error('[Explorer] country error:', countryResult.error);
+  if (natResult.error)
+    console.error('[Explorer] national error:', natResult.error);
+  if (regionResult.error)
+    console.error('[Explorer] region error:', regionResult.error);
+  if (countryResult.error)
+    console.error('[Explorer] country error:', countryResult.error);
 
   const nationalRows = natResult.data;
   const regionRows = regionResult.data;

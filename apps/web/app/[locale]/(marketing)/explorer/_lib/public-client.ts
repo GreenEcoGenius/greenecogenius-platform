@@ -1,5 +1,4 @@
 import 'server-only';
-
 import { createClient } from '@supabase/supabase-js';
 
 /**
@@ -11,7 +10,9 @@ export function getPublicSupabaseClient() {
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY;
 
   if (!url || !key) {
-    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_PUBLIC_KEY');
+    throw new Error(
+      'Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_PUBLIC_KEY',
+    );
   }
 
   return createClient(url, key);
