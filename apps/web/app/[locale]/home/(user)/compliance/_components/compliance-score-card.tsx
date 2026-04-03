@@ -5,8 +5,6 @@ import { AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
 
-import { DEMO_DATA } from '~/lib/demo/demo-data';
-
 import { PreAuditButton } from './pre-audit-button';
 
 interface ComplianceScoreCardProps {
@@ -14,6 +12,7 @@ interface ComplianceScoreCardProps {
   normsCompliant: number;
   normsTotal: number;
   alerts: number;
+  lastUpdate?: string;
 }
 
 export function ComplianceScoreCard({
@@ -21,6 +20,7 @@ export function ComplianceScoreCard({
   normsCompliant,
   normsTotal,
   alerts,
+  lastUpdate,
 }: ComplianceScoreCardProps) {
   const scoreColor =
     score >= 80
@@ -81,17 +81,11 @@ export function ComplianceScoreCard({
               <h3 className="text-lg font-semibold">
                 <Trans i18nKey="compliance:scoreTitle" />
               </h3>
-              <p className="text-muted-foreground text-sm">
-                <Trans i18nKey="compliance:lastUpdate" />:{' '}
-                {new Date(DEMO_DATA.compliance.lastUpdate).toLocaleDateString(
-                  'fr-FR',
-                  {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  },
-                )}
-              </p>
+              {lastUpdate && (
+                <p className="text-muted-foreground text-sm">
+                  <Trans i18nKey="compliance:lastUpdate" /> : {lastUpdate}
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-4">

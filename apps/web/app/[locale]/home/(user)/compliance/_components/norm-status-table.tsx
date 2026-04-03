@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { BarChart3, Eye, Hand, Link2, Sparkles } from 'lucide-react';
+import { CheckCircle, Clock, Eye, MinusCircle, XCircle } from 'lucide-react';
 
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -10,430 +10,150 @@ import { Card, CardContent } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
 
 type NormStatus = 'compliant' | 'partial' | 'non_compliant' | 'not_evaluated';
-type VerificationType = 'blockchain' | 'ai' | 'ecosystem' | 'manual';
 
-interface Norm {
+interface NormRow {
   name: string;
   pillar: string;
   status: NormStatus;
-  autoVerified: VerificationType;
+  autoVerified: string;
+  evidenceSummary: string;
 }
 
-const MOCK_NORMS: Norm[] = [
-  // Economie circulaire (11)
-  {
-    name: 'Loi AGEC',
-    pillar: 'circular',
-    status: 'compliant',
-    autoVerified: 'blockchain',
-  },
-  {
-    name: 'REP (filières)',
-    pillar: 'circular',
-    status: 'partial',
-    autoVerified: 'ecosystem',
-  },
-  {
-    name: 'Indice de réparabilité',
-    pillar: 'circular',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'Éco-conception (ISO 14006)',
-    pillar: 'circular',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'Affichage environnemental',
-    pillar: 'circular',
-    status: 'compliant',
-    autoVerified: 'ecosystem',
-  },
-  {
-    name: 'Tri 5 flux',
-    pillar: 'circular',
-    status: 'compliant',
-    autoVerified: 'blockchain',
-  },
-  {
-    name: 'Décret tertiaire',
-    pillar: 'circular',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'Zéro déchet (norme AFNOR)',
-    pillar: 'circular',
-    status: 'compliant',
-    autoVerified: 'blockchain',
-  },
-  {
-    name: 'Directive emballages (PPWR)',
-    pillar: 'circular',
-    status: 'compliant',
-    autoVerified: 'ecosystem',
-  },
-  {
-    name: 'Taxonomie UE — circulaire',
-    pillar: 'circular',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'Passeport numérique produit (DPP)',
-    pillar: 'circular',
-    status: 'non_compliant',
-    autoVerified: 'manual',
-  },
-  // Carbone & Env. (7)
-  {
-    name: 'Bilan GES (art. L229-25)',
-    pillar: 'carbon',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'ISO 14064',
-    pillar: 'carbon',
-    status: 'compliant',
-    autoVerified: 'blockchain',
-  },
-  {
-    name: 'SBTi (Science Based Targets)',
-    pillar: 'carbon',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'CDP Climate',
-    pillar: 'carbon',
-    status: 'compliant',
-    autoVerified: 'ecosystem',
-  },
-  {
-    name: 'EU ETS — quotas carbone',
-    pillar: 'carbon',
-    status: 'compliant',
-    autoVerified: 'blockchain',
-  },
-  {
-    name: 'CBAM (mécanisme ajustement)',
-    pillar: 'carbon',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'Plan de transition climatique',
-    pillar: 'carbon',
-    status: 'partial',
-    autoVerified: 'manual',
-  },
-  // Reporting ESG (9)
-  {
-    name: 'CSRD',
-    pillar: 'reporting',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'ESRS (normes EFRAG)',
-    pillar: 'reporting',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'GRI Standards',
-    pillar: 'reporting',
-    status: 'compliant',
-    autoVerified: 'ecosystem',
-  },
-  {
-    name: 'Taxonomie verte UE',
-    pillar: 'reporting',
-    status: 'partial',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'SFDR (finance durable)',
-    pillar: 'reporting',
-    status: 'compliant',
-    autoVerified: 'ecosystem',
-  },
-  {
-    name: 'Devoir de vigilance',
-    pillar: 'reporting',
-    status: 'non_compliant',
-    autoVerified: 'manual',
-  },
-  {
-    name: 'DPEF',
-    pillar: 'reporting',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'Article 29 LEC',
-    pillar: 'reporting',
-    status: 'partial',
-    autoVerified: 'manual',
-  },
-  {
-    name: 'Directive CS3D',
-    pillar: 'reporting',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  // Traçabilité (6)
-  {
-    name: 'Blockchain traçabilité',
-    pillar: 'traceability',
-    status: 'compliant',
-    autoVerified: 'blockchain',
-  },
-  {
-    name: 'Devoir de vigilance chaîne',
-    pillar: 'traceability',
-    status: 'compliant',
-    autoVerified: 'blockchain',
-  },
-  {
-    name: 'ISO 22095 (traçabilité matières)',
-    pillar: 'traceability',
-    status: 'compliant',
-    autoVerified: 'blockchain',
-  },
-  {
-    name: 'Règlement déforestation (EUDR)',
-    pillar: 'traceability',
-    status: 'compliant',
-    autoVerified: 'ecosystem',
-  },
-  {
-    name: 'Conflict minerals (3TG)',
-    pillar: 'traceability',
-    status: 'compliant',
-    autoVerified: 'blockchain',
-  },
-  {
-    name: 'Passeport batterie UE',
-    pillar: 'traceability',
-    status: 'not_evaluated',
-    autoVerified: 'manual',
-  },
-  // Données & SaaS (5)
-  {
-    name: 'RGPD',
-    pillar: 'data',
-    status: 'partial',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'ISO 27001',
-    pillar: 'data',
-    status: 'partial',
-    autoVerified: 'manual',
-  },
-  {
-    name: 'SOC 2 Type II',
-    pillar: 'data',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  {
-    name: 'HDS (Hébergeur Données Santé)',
-    pillar: 'data',
-    status: 'compliant',
-    autoVerified: 'ecosystem',
-  },
-  {
-    name: 'NIS2 (cybersécurité)',
-    pillar: 'data',
-    status: 'compliant',
-    autoVerified: 'ai',
-  },
-  // Labels (4)
-  {
-    name: 'B Corp',
-    pillar: 'labels',
-    status: 'non_compliant',
-    autoVerified: 'manual',
-  },
-  {
-    name: 'Label Numérique Responsable',
-    pillar: 'labels',
-    status: 'compliant',
-    autoVerified: 'ecosystem',
-  },
-  {
-    name: 'Lucie 26000',
-    pillar: 'labels',
-    status: 'not_evaluated',
-    autoVerified: 'manual',
-  },
-  {
-    name: 'Engagé RSE (AFNOR)',
-    pillar: 'labels',
-    status: 'not_evaluated',
-    autoVerified: 'manual',
-  },
-];
+const PILLAR_NAMES: Record<string, string> = {
+  circular_economy: 'Économie circulaire',
+  carbon: 'Carbone & Env.',
+  reporting: 'Reporting ESG',
+  traceability: 'Traçabilité',
+  data: 'Données & SaaS',
+  labels: 'Labels',
+};
 
 const STATUS_CONFIG: Record<
   NormStatus,
-  { variant: 'default' | 'outline' | 'destructive'; i18nKey: string }
+  { icon: typeof CheckCircle; className: string; i18nKey: string }
 > = {
-  compliant: { variant: 'default', i18nKey: 'compliance:compliant' },
-  partial: { variant: 'outline', i18nKey: 'compliance:partial' },
-  non_compliant: { variant: 'destructive', i18nKey: 'compliance:nonCompliant' },
-  not_evaluated: { variant: 'outline', i18nKey: 'compliance:notEvaluated' },
-};
-
-const VERIFICATION_CONFIG: Record<
-  VerificationType,
-  { icon: React.ReactNode; i18nKey: string }
-> = {
-  blockchain: {
-    icon: <Link2 size={14} strokeWidth={1.5} />,
-    i18nKey: 'compliance:viaBlockchain',
+  compliant: {
+    icon: CheckCircle,
+    className: 'bg-emerald-100 text-emerald-700',
+    i18nKey: 'compliance:statusCompliant',
   },
-  ai: {
-    icon: <Sparkles size={14} strokeWidth={1.5} />,
-    i18nKey: 'compliance:viaAI',
+  partial: {
+    icon: Clock,
+    className: 'bg-amber-100 text-amber-700',
+    i18nKey: 'compliance:statusPartial',
   },
-  ecosystem: {
-    icon: <BarChart3 size={14} strokeWidth={1.5} />,
-    i18nKey: 'compliance:viaEcosystem',
+  non_compliant: {
+    icon: XCircle,
+    className: 'bg-red-100 text-red-700',
+    i18nKey: 'compliance:statusNonCompliant',
   },
-  manual: {
-    icon: <Hand size={14} strokeWidth={1.5} />,
-    i18nKey: 'compliance:manual',
+  not_evaluated: {
+    icon: MinusCircle,
+    className: 'bg-gray-100 text-gray-500',
+    i18nKey: 'compliance:statusNotEvaluated',
   },
 };
 
-const PILLAR_NAMES: Record<string, string> = {
-  circular: 'compliance:pillarCircular',
-  carbon: 'compliance:pillarCarbon',
-  reporting: 'compliance:pillarReporting',
-  traceability: 'compliance:pillarTraceability',
-  data: 'compliance:pillarData',
-  labels: 'compliance:pillarLabels',
+const METHOD_LABELS: Record<string, { label: string; icon: string }> = {
+  auto_transaction: { label: 'Écosystème', icon: '🔄' },
+  auto_blockchain: { label: 'Blockchain', icon: '⛓️' },
+  auto_carbon: { label: 'IA', icon: '🤖' },
+  auto_esg: { label: 'ESG', icon: '📊' },
+  auto_platform: { label: 'Plateforme', icon: '🏗️' },
+  manual: { label: 'Manuel', icon: '✍️' },
+  pending: { label: 'En attente', icon: '⏳' },
 };
 
-type FilterType = 'all' | 'compliant' | 'partial' | 'non_compliant';
+type FilterType = 'all' | NormStatus;
 
-export function NormStatusTable() {
+export function NormStatusTable({ norms }: { norms: NormRow[] }) {
   const [filter, setFilter] = useState<FilterType>('all');
 
-  const filteredNorms =
-    filter === 'all'
-      ? MOCK_NORMS
-      : MOCK_NORMS.filter((n) => n.status === filter);
+  const filtered =
+    filter === 'all' ? norms : norms.filter((n) => n.status === filter);
+
+  const counts = {
+    all: norms.length,
+    compliant: norms.filter((n) => n.status === 'compliant').length,
+    partial: norms.filter((n) => n.status === 'partial').length,
+    non_compliant: norms.filter((n) => n.status === 'non_compliant').length,
+    not_evaluated: norms.filter((n) => n.status === 'not_evaluated').length,
+  };
+
+  const autoVerifiedCount = norms.filter(
+    (n) => n.autoVerified !== 'manual' && n.autoVerified !== 'pending',
+  ).length;
 
   return (
     <Card>
       <CardContent className="p-6">
-        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <h3 className="text-lg font-semibold">
-            <Trans i18nKey="compliance:normTable" />
+            <Trans i18nKey="compliance:normTableTitle" defaults="Statut par norme" />
           </h3>
-          <div className="flex gap-2">
+          <div className="flex gap-1.5">
             {(
               [
-                { key: 'all', i18n: 'compliance:filterAll' },
-                { key: 'compliant', i18n: 'compliance:filterCompliant' },
-                { key: 'partial', i18n: 'compliance:filterPartial' },
-                {
-                  key: 'non_compliant',
-                  i18n: 'compliance:filterNonCompliant',
-                },
+                { key: 'all' as const, label: 'Tous' },
+                { key: 'compliant' as const, label: 'Conformes' },
+                { key: 'partial' as const, label: 'Partiels' },
+                { key: 'non_compliant' as const, label: 'Non conformes' },
               ] as const
-            ).map(({ key, i18n }) => (
-              <button
+            ).map(({ key, label }) => (
+              <Button
                 key={key}
+                variant={filter === key ? 'default' : 'outline'}
+                size="sm"
+                className="text-xs"
                 onClick={() => setFilter(key)}
-                className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
-                  filter === key
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
-                }`}
               >
-                <Trans i18nKey={i18n} />
-              </button>
+                {label}
+                {counts[key] > 0 && (
+                  <span className="ml-1 opacity-70">({counts[key]})</span>
+                )}
+              </Button>
             ))}
           </div>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full text-left text-sm">
             <thead>
-              <tr className="text-muted-foreground border-b text-left text-xs">
-                <th className="pr-4 pb-2 font-medium">
-                  <Trans i18nKey="compliance:norm" />
-                </th>
-                <th className="pr-4 pb-2 font-medium">
-                  <Trans i18nKey="compliance:pillar" />
-                </th>
-                <th className="pr-4 pb-2 font-medium">
-                  <Trans i18nKey="compliance:status" />
-                </th>
-                <th className="pr-4 pb-2 font-medium">
-                  <Trans i18nKey="compliance:autoVerified" />
-                </th>
-                <th className="pb-2 font-medium">
-                  <Trans i18nKey="compliance:action" />
-                </th>
+              <tr className="border-b text-xs font-medium text-gray-500 uppercase">
+                <th className="px-3 py-2">Norme</th>
+                <th className="px-3 py-2">Pilier</th>
+                <th className="px-3 py-2">Statut</th>
+                <th className="px-3 py-2">Vérification</th>
+                <th className="px-3 py-2">Action</th>
               </tr>
             </thead>
-            <tbody>
-              {filteredNorms.map((norm) => {
+            <tbody className="divide-y">
+              {filtered.map((norm) => {
                 const statusCfg = STATUS_CONFIG[norm.status];
-                const verifCfg = VERIFICATION_CONFIG[norm.autoVerified];
+                const StatusIcon = statusCfg.icon;
+                const methodInfo = METHOD_LABELS[norm.autoVerified] ?? METHOD_LABELS.pending!;
 
                 return (
-                  <tr
-                    key={norm.name}
-                    className="border-b last:border-0 hover:bg-gray-50 dark:hover:bg-gray-900/50"
-                  >
-                    <td className="py-2.5 pr-4 font-medium">{norm.name}</td>
-                    <td className="text-muted-foreground py-2.5 pr-4">
-                      <Trans i18nKey={PILLAR_NAMES[norm.pillar] ?? ''} />
+                  <tr key={norm.name} className="hover:bg-gray-50/50">
+                    <td className="px-3 py-3 font-medium">{norm.name}</td>
+                    <td className="text-muted-foreground px-3 py-3 text-xs">
+                      {PILLAR_NAMES[norm.pillar] ?? norm.pillar}
                     </td>
-                    <td className="py-2.5 pr-4">
-                      <Badge
-                        variant={statusCfg.variant}
-                        className={
-                          norm.status === 'compliant'
-                            ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400'
-                            : norm.status === 'partial'
-                              ? 'border-teal-300 bg-teal-50 text-teal-700 dark:bg-teal-950/50 dark:text-teal-400'
-                              : norm.status === 'not_evaluated'
-                                ? 'border-gray-300 bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
-                                : ''
-                        }
-                      >
-                        <Trans i18nKey={statusCfg.i18nKey} />
+                    <td className="px-3 py-3">
+                      <Badge variant="outline" className={statusCfg.className}>
+                        <StatusIcon className="mr-1 h-3 w-3" />
+                        <Trans i18nKey={statusCfg.i18nKey} defaults={norm.status} />
                       </Badge>
                     </td>
-                    <td className="py-2.5 pr-4">
-                      {norm.autoVerified !== 'manual' ? (
-                        <Badge
-                          variant="outline"
-                          className="text-xs font-normal"
-                        >
-                          {verifCfg.icon} <Trans i18nKey={verifCfg.i18nKey} />
-                        </Badge>
-                      ) : (
-                        <span className="text-muted-foreground text-xs">
-                          <Trans i18nKey="compliance:manual" />
-                        </span>
-                      )}
+                    <td className="px-3 py-3">
+                      <span className="text-xs">
+                        {methodInfo.icon} {methodInfo.label}
+                      </span>
                     </td>
-                    <td className="py-2.5">
-                      <Button variant="ghost" size="sm" className="h-7 text-xs">
+                    <td className="px-3 py-3">
+                      <Button variant="ghost" size="sm" className="text-xs">
                         <Eye className="mr-1 h-3 w-3" />
-                        <Trans i18nKey="compliance:viewDetails" />
+                        <Trans i18nKey="compliance:viewDetails" defaults="Voir détails" />
                       </Button>
                     </td>
                   </tr>
@@ -443,9 +163,12 @@ export function NormStatusTable() {
           </table>
         </div>
 
-        <p className="text-muted-foreground mt-3 text-xs">
-          {MOCK_NORMS.filter((n) => n.autoVerified !== 'manual').length}/
-          {MOCK_NORMS.length} <Trans i18nKey="compliance:autoVerifiedNote" />
+        <p className="text-muted-foreground mt-4 text-xs">
+          {autoVerifiedCount}/{norms.length}{' '}
+          <Trans
+            i18nKey="compliance:autoVerifiedCount"
+            defaults="vérifiées automatiquement par la plateforme"
+          />
         </p>
       </CardContent>
     </Card>
