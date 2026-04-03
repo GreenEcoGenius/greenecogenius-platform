@@ -40,13 +40,6 @@ export default async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const strippedPath = pathname.replace(/^\/(fr|en)/, '');
 
-  if (strippedPath.startsWith('/auth/callback')) {
-    const locale = request.cookies.get(LOCALE_COOKIE)?.value ?? 'en';
-    const url = request.nextUrl.clone();
-    url.pathname = `/${locale}${strippedPath}`;
-    return NextResponse.rewrite(url);
-  }
-
   const hasLocaleCookie = request.cookies.has(LOCALE_COOKIE);
 
   if (!hasLocaleCookie) {
