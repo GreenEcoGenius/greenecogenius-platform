@@ -4,16 +4,13 @@ import {
   ArrowRight,
   BarChart3,
   Bell,
-  CheckCircle,
   Leaf,
   Link2,
   Recycle,
   Shield,
-  ShoppingCart,
   Sparkles,
   Store,
   TrendingUp,
-  Users,
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
@@ -195,34 +192,12 @@ async function UserHomePage() {
                   </h2>
                 </div>
 
-                <div className="space-y-0 divide-y">
-                  <ActivityItem
-                    icon={<CheckCircle className="text-tech-neon h-4 w-4" />}
-                    text={t('dashboard.activityLotCertified')}
-                    time={t('dashboard.time2h')}
-                  />
-                  <ActivityItem
-                    icon={
-                      <ShoppingCart className="text-circuit-blue h-4 w-4" />
-                    }
-                    text={t('dashboard.activityOfferReceived')}
-                    time={t('dashboard.time5h')}
-                  />
-                  <ActivityItem
-                    icon={<TrendingUp className="text-tech-neon h-4 w-4" />}
-                    text={t('dashboard.activityRseScore')}
-                    time={t('dashboard.timeYesterday')}
-                  />
-                  <ActivityItem
-                    icon={<Leaf className="text-primary h-4 w-4" />}
-                    text={t('dashboard.activityCarbonCredit')}
-                    time={t('dashboard.timeYesterday')}
-                  />
-                  <ActivityItem
-                    icon={<Users className="text-circuit-blue h-4 w-4" />}
-                    text={t('dashboard.activityNetworkJoin')}
-                    time={t('dashboard.time3d')}
-                  />
+                <div className="text-metal-500 flex flex-col items-center py-8 text-center text-sm">
+                  <Bell className="text-metal-300 mb-3 h-8 w-8" />
+                  <p>{t('dashboard.noActivityYet')}</p>
+                  <p className="text-metal-400 mt-1 text-xs">
+                    {t('dashboard.noActivityDesc')}
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -359,23 +334,6 @@ function ActionCard({
   );
 }
 
-function ActivityItem({
-  icon,
-  text,
-  time,
-}: {
-  icon: React.ReactNode;
-  text: string;
-  time: string;
-}) {
-  return (
-    <div className="flex items-center gap-3 py-3">
-      <div className="shrink-0">{icon}</div>
-      <p className="flex-1 text-sm">{text}</p>
-      <span className="text-metal-steel shrink-0 text-xs">{time}</span>
-    </div>
-  );
-}
 
 function TypeBadge({ type, label }: { type: string; label: string }) {
   const styles: Record<string, string> = {
