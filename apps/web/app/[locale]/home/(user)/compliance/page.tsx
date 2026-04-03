@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
-import { getDemoMode } from '~/lib/demo/use-demo-mode';
+import { DEMO_DATA } from '~/lib/demo/demo-data';
 
 import { SectionFooterImage } from '../_components/section-footer-image';
 import { ComplianceAlerts } from './_components/compliance-alerts';
@@ -18,8 +18,7 @@ export const generateMetadata = async () => {
   return { title: t('title') };
 };
 
-const { demoData } = getDemoMode();
-const DEMO_COMPLIANCE = demoData.compliance;
+const DEMO_COMPLIANCE = DEMO_DATA.compliance;
 
 async function CompliancePage() {
   return (

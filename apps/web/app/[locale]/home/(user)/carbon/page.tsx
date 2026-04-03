@@ -14,7 +14,6 @@ import { getTranslations } from 'next-intl/server';
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
-import { getDemoMode } from '~/lib/demo/use-demo-mode';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
@@ -49,8 +48,12 @@ interface CarbonRecord {
   blockchain_hash?: string;
 }
 
-const { demoData } = getDemoMode();
-const DEMO_CARBON = demoData.carbon;
+const EMPTY_MONTHLY = [
+  { month: '2026-01', co2_avoided: 0, co2_transport: 0, co2_net: 0 },
+  { month: '2026-02', co2_avoided: 0, co2_transport: 0, co2_net: 0 },
+  { month: '2026-03', co2_avoided: 0, co2_transport: 0, co2_net: 0 },
+];
+const EMPTY_MATERIAL: Array<{ category: string; co2_avoided: number; weight: number }> = [];
 
 async function CarbonPage() {
   const client = getSupabaseServerClient();
@@ -94,16 +97,16 @@ async function CarbonPage() {
   // Aggregate totals (use real data or mock fallbacks)
   const totalAvoided = hasCarbonData
     ? records.reduce((sum, r) => sum + (r.co2_avoided ?? 0), 0)
-    : DEMO_CARBON.totalAvoided;
+    : 0;
   const totalTransport = hasCarbonData
     ? records.reduce((sum, r) => sum + (r.co2_transport ?? 0), 0)
-    : DEMO_CARBON.totalTransport;
+    : 0;
   const totalNet = hasCarbonData
     ? records.reduce((sum, r) => sum + (r.co2_net ?? 0), 0)
-    : DEMO_CARBON.totalNet;
+    : 0;
   const totalWeightKg = hasCarbonData
     ? records.reduce((sum, r) => sum + (r.weight_kg ?? 0), 0)
-    : DEMO_CARBON.totalWeightKg;
+    : 0;
   const totalWeightTonnes = totalWeightKg / 1000;
 
   // Aggregate by month for chart
@@ -137,7 +140,7 @@ async function CarbonPage() {
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([month, data]) => ({ month, ...data }));
   } else {
-    monthlyData = DEMO_CARBON.monthlyData;
+    monthlyData = EMPTY_MONTHLY;
   }
 
   // Aggregate by material for donut chart
@@ -167,7 +170,7 @@ async function CarbonPage() {
       }),
     );
   } else {
-    materialData = DEMO_CARBON.materialData;
+    materialData = EMPTY_MATERIAL;
   }
 
   // Recent transactions for table (last 20)
@@ -202,9 +205,9 @@ async function CarbonPage() {
     : null;
 
   // Mock scope data (will be real when ESG data entry is connected)
-  const mockScope1 = DEMO_CARBON.scopes.scope1;
-  const mockScope2 = DEMO_CARBON.scopes.scope2;
-  const mockScope3 = DEMO_CARBON.scopes.scope3;
+  const mockScope1 = 0;
+  const mockScope2 = 0;
+  const mockScope3 = 0;
   const mockTotal = mockScope1 + mockScope2 + mockScope3;
 
   return (
@@ -457,7 +460,7 @@ function ScopeProgressSection() {
     {
       name: 'Scope 1',
       labelKey: 'carbon:scope1Desc',
-      progress: DEMO_CARBON.scopeProgress.scope1,
+      progress: 0,
       status: 'partial' as const,
       color: 'bg-teal-500',
       bgColor: 'bg-teal-100 dark:bg-teal-950/30',
@@ -465,7 +468,7 @@ function ScopeProgressSection() {
     {
       name: 'Scope 2',
       labelKey: 'carbon:scope2Desc',
-      progress: DEMO_CARBON.scopeProgress.scope2,
+      progress: 0,
       status: 'partial' as const,
       color: 'bg-emerald-500',
       bgColor: 'bg-emerald-100 dark:bg-emerald-950/30',
@@ -473,7 +476,7 @@ function ScopeProgressSection() {
     {
       name: 'Scope 3',
       labelKey: 'carbon:scope3Desc',
-      progress: DEMO_CARBON.scopeProgress.scope3,
+      progress: 0,
       status: 'auto' as const,
       color: 'bg-green-500',
       bgColor: 'bg-green-100 dark:bg-green-950/30',

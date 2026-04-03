@@ -4,7 +4,7 @@ import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { PageBody } from '@kit/ui/page';
 
-import { getDemoMode } from '~/lib/demo/use-demo-mode';
+import { DEMO_DATA } from '~/lib/demo/demo-data';
 
 import { SectionFooterImage } from '../_components/section-footer-image';
 import { AiInsightsPanel } from './_components/ai-insights-panel';
@@ -31,8 +31,7 @@ async function ESGPage() {
     return null;
   }
 
-  const { demoData } = getDemoMode();
-  const kpi = demoData.esg.kpi;
+  const kpi = { totalEmissionsT: 0, co2AvoidedT: 0, autoFilledFields: 0, totalFields: 48, csrdCompliancePct: 0, blockchainProofs: 0 };
   const remaining = kpi.totalFields - kpi.autoFilledFields;
   const completionPct = Math.round(
     (kpi.autoFilledFields / kpi.totalFields) * 100,
@@ -55,10 +54,10 @@ async function ESGPage() {
         {/* Accordion + CSRD chart */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <ESGReportAccordion sections={demoData.esg.sections} />
+            <ESGReportAccordion sections={DEMO_DATA.esg.sections} />
           </div>
           <div>
-            <CsrdComplianceChart indicators={demoData.esg.csrdIndicators} />
+            <CsrdComplianceChart indicators={DEMO_DATA.esg.csrdIndicators} />
           </div>
         </div>
 
@@ -67,8 +66,8 @@ async function ESGPage() {
 
         {/* Report history + AI insights */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <ReportHistoryTable reports={demoData.esg.reportHistory} />
-          <AiInsightsPanel insights={demoData.esg.aiInsights} />
+          <ReportHistoryTable reports={DEMO_DATA.esg.reportHistory} />
+          <AiInsightsPanel insights={DEMO_DATA.esg.aiInsights} />
         </div>
 
         {/* Benchmark */}

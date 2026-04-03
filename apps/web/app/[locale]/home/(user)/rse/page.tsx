@@ -16,7 +16,7 @@ import { Heading } from '@kit/ui/heading';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
-import { getDemoMode } from '~/lib/demo/use-demo-mode';
+import { DEMO_DATA } from '~/lib/demo/demo-data';
 
 import { SectionFooterImage } from '../_components/section-footer-image';
 import { LabelEligibilityCards } from './_components/label-eligibility-cards';
@@ -30,8 +30,7 @@ export const generateMetadata = async () => {
   return { title: t('title') };
 };
 
-const { demoData } = getDemoMode();
-const DEMO_RSE = demoData.rse;
+const DEMO_RSE = DEMO_DATA.rse;
 
 function getEcosystemIcon(icon: string) {
   switch (icon) {
