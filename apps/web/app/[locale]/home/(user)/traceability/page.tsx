@@ -1,25 +1,14 @@
+import Link from 'next/link';
+
+import { ArrowRight, Link2, PackageSearch, Shield } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
+import { Button } from '@kit/ui/button';
+import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
-
-import { AITraceabilityAlerts } from '~/components/ai/traceability/ai-traceability-alerts';
-import { DEMO_DATA } from '~/lib/demo/demo-data';
-import {
-  getAllLots,
-  getMaterialBreakdown,
-  getMonthlyData,
-  getRecentActivity,
-  getTotalStats,
-} from '~/lib/mock/traceability-mock-data';
+import { Trans } from '@kit/ui/trans';
 
 import { SectionFooterImage } from '../_components/section-footer-image';
-import { EcosystemBanner } from './_components/ecosystem-banner';
-import { TraceabilityActivityFeed } from './_components/traceability-activity-feed';
-import { TraceabilityEquivalences } from './_components/traceability-equivalences';
-import { TraceabilityEvolutionChart } from './_components/traceability-evolution-chart';
-import { TraceabilityKpiCards } from './_components/traceability-kpi-cards';
-import { TraceabilityMaterialChart } from './_components/traceability-material-chart';
-import { TraceabilityTable } from './_components/traceability-table';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('blockchain');
@@ -28,110 +17,69 @@ export const generateMetadata = async () => {
 };
 
 async function TraceabilityPage() {
-  const demoTraceability = DEMO_DATA.traceability;
-  const stats = getTotalStats();
-  const monthlyData = getMonthlyData();
-  const materialBreakdown = getMaterialBreakdown();
-  const lots = getAllLots();
-  const activities = getRecentActivity(5);
-
-  // Derive KPI values from real mock stats
-  const lotsThisMonth =
-    monthlyData.length > 0
-      ? monthlyData[monthlyData.length - 1]!.lotsTracked
-      : 0;
-  const prevMonthLots =
-    monthlyData.length > 1
-      ? monthlyData[monthlyData.length - 2]!.lotsTracked
-      : lotsThisMonth;
-  const lotsTrend =
-    prevMonthLots > 0
-      ? Math.round(((lotsThisMonth - prevMonthLots) / prevMonthLots) * 1000) /
-        10
-      : 0;
-
-  const tonnesThisMonth =
-    monthlyData.length > 0
-      ? monthlyData[monthlyData.length - 1]!.tonnesRecycled
-      : 0;
-  const prevMonthTonnes =
-    monthlyData.length > 1
-      ? monthlyData[monthlyData.length - 2]!.tonnesRecycled
-      : tonnesThisMonth;
-  const tonnesTrend =
-    prevMonthTonnes > 0
-      ? Math.round(
-          ((tonnesThisMonth - prevMonthTonnes) / prevMonthTonnes) * 1000,
-        ) / 10
-      : 0;
-
-  const co2AvoidedTonnes =
-    Math.round((stats.totalCo2AvoidedKg / 1000) * 10) / 10;
-  const totalTonnes = Math.round((stats.totalWeightKg / 1000) * 10) / 10;
-
-  const certifiedCount = stats.certifiedLots;
-  const certificatesThisMonth = Math.round(certifiedCount * 0.13);
-  const certificatesTrend = demoTraceability.certificatesTrend;
-
-  const transactionsThisMonth = lotsThisMonth;
-  const blockchainHashes = stats.blockchainRecorded;
-  const esgAutoPercent = demoTraceability.esgAutoPercent;
-
-  // Sort lots by date descending, take 10
-  const recentLots = [...lots]
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    )
-    .slice(0, 10);
-
   return (
     <PageBody>
       <div className="space-y-6">
-        {/* Ecosystem Banner */}
-        <EcosystemBanner
-          transactionsThisMonth={transactionsThisMonth}
-          co2AvoidedKg={stats.totalCo2AvoidedKg}
-          esgAutoPercent={esgAutoPercent}
-          blockchainHashes={blockchainHashes}
-        />
+        {/* Empty state */}
+        <Card>
+          <CardContent className="flex flex-col items-center px-6 py-16 text-center">
+            <div className="bg-primary-light mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
+              <Link2 className="text-primary h-8 w-8" />
+            </div>
+            <h2 className="text-metal-900 text-2xl font-bold">
+              <Trans i18nKey="blockchain:emptyTitle" defaults="Traçabilité blockchain" />
+            </h2>
+            <p className="text-metal-500 mx-auto mt-3 max-w-md text-sm leading-relaxed">
+              <Trans
+                i18nKey="blockchain:emptyDesc"
+                defaults="Vos transactions sur Le Comptoir Circulaire sont automatiquement tracées sur la blockchain. Publiez ou achetez un lot pour commencer à construire votre historique de traçabilité."
+              />
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button
+                variant="default"
+                size="sm"
+                render={<Link href="/home/marketplace/new" />}
+                nativeButton={false}
+              >
+                <PackageSearch className="mr-2 h-4 w-4" />
+                <Trans i18nKey="blockchain:publishLot" defaults="Publier un lot" />
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                render={<Link href="/home/marketplace" />}
+                nativeButton={false}
+              >
+                <Shield className="mr-2 h-4 w-4" />
+                <Trans i18nKey="blockchain:browseMarketplace" defaults="Le Comptoir Circulaire" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
-        {/* AI Smart Alerts */}
-        <AITraceabilityAlerts />
-
-        {/* KPI Cards */}
-        <TraceabilityKpiCards
-          totalLots={stats.totalLots}
-          lotsThisMonth={lotsThisMonth}
-          lotsTrend={lotsTrend}
-          co2AvoidedTonnes={co2AvoidedTonnes}
-          co2AvoidedTrend={demoTraceability.co2AvoidedTrend}
-          totalTonnes={totalTonnes}
-          tonnesThisMonth={tonnesThisMonth}
-          tonnesTrend={tonnesTrend}
-          certificates={certifiedCount}
-          certificatesThisMonth={certificatesThisMonth}
-          certificatesTrend={certificatesTrend}
-        />
-
-        {/* Charts row: evolution (2/3) + material donut (1/3) */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <TraceabilityEvolutionChart data={monthlyData} />
-          </div>
-          <div>
-            <TraceabilityMaterialChart data={materialBreakdown} />
-          </div>
+        {/* What you'll see */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { icon: '📦', titleKey: 'blockchain:featureLots', defaultTitle: 'Lots tracés', defaultDesc: 'Chaque transaction est enregistrée avec un hash blockchain unique' },
+            { icon: '🌱', titleKey: 'blockchain:featureCO2', defaultTitle: 'CO₂ évité', defaultDesc: 'Calcul automatique de l\'impact carbone de chaque lot recyclé' },
+            { icon: '♻️', titleKey: 'blockchain:featureTonnes', defaultTitle: 'Tonnes recyclées', defaultDesc: 'Suivi précis des volumes de matières recyclées' },
+            { icon: '📜', titleKey: 'blockchain:featureCerts', defaultTitle: 'Certificats', defaultDesc: 'Certificats de traçabilité générés automatiquement' },
+          ].map((feature) => (
+            <Card key={feature.titleKey}>
+              <CardContent className="p-5">
+                <span className="text-2xl">{feature.icon}</span>
+                <h3 className="text-metal-900 mt-2 text-sm font-semibold">
+                  <Trans i18nKey={feature.titleKey} defaults={feature.defaultTitle} />
+                </h3>
+                <p className="text-metal-500 mt-1 text-xs">
+                  <Trans i18nKey={`${feature.titleKey}Desc`} defaults={feature.defaultDesc} />
+                </p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-
-        {/* Equivalences */}
-        <TraceabilityEquivalences co2AvoidedKg={stats.totalCo2AvoidedKg} />
-
-        {/* Recent transactions table */}
-        <TraceabilityTable lots={recentLots} />
-
-        {/* Activity feed */}
-        <TraceabilityActivityFeed activities={activities} />
 
         <SectionFooterImage
           src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-a5aace78-d0fe-4b7d-865b-181946fc2f34.png"

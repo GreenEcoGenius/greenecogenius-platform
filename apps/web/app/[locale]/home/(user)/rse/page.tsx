@@ -1,28 +1,14 @@
 import Link from 'next/link';
 
-import {
-  ArrowRight,
-  Database,
-  FileCheck,
-  LinkIcon,
-  Recycle,
-  Shield,
-} from 'lucide-react';
+import { ArrowRight, Award, ClipboardCheck, Target } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { Button } from '@kit/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
-import { Heading } from '@kit/ui/heading';
+import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
-import { DEMO_DATA } from '~/lib/demo/demo-data';
-
 import { SectionFooterImage } from '../_components/section-footer-image';
-import { LabelEligibilityCards } from './_components/label-eligibility-cards';
-import { RSEActionsList } from './_components/rse-actions-list';
-import { RSEPillarCards } from './_components/rse-pillar-cards';
-import { RSEScoreGauge } from './_components/rse-score-gauge';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('rse');
@@ -30,115 +16,66 @@ export const generateMetadata = async () => {
   return { title: t('title') };
 };
 
-const DEMO_RSE = DEMO_DATA.rse;
-
-function getEcosystemIcon(icon: string) {
-  switch (icon) {
-    case 'carbon':
-      return <Recycle className="h-5 w-5 text-green-500" />;
-    case 'blockchain':
-      return <Shield className="h-5 w-5 text-teal-500" />;
-    case 'recycled':
-      return <LinkIcon className="h-5 w-5 text-teal-500" />;
-    case 'esg':
-      return <FileCheck className="h-5 w-5 text-blue-500" />;
-    default:
-      return <Database className="h-5 w-5 text-gray-500" />;
-  }
-}
-
 async function RSEPage() {
   return (
     <PageBody>
-      <div className="space-y-8">
-        {/* Score + subtitle */}
+      <div className="space-y-6">
+        {/* Empty state */}
         <Card>
-          <CardContent className="flex flex-col items-center gap-6 py-8 sm:flex-row sm:items-center sm:justify-around">
-            <RSEScoreGauge score={DEMO_RSE.score} level={DEMO_RSE.level} />
-            <div className="space-y-3 text-center sm:text-left">
-              <h2 className="text-xl font-bold">
-                <Trans i18nKey="rse:scoreTitle" />
-              </h2>
-              <p className="text-muted-foreground text-sm">
-                <Trans i18nKey="rse:subtitle" />
-              </p>
-              <p className="text-muted-foreground text-xs">
-                <Trans i18nKey="rse:lastEval" /> : {DEMO_RSE.lastEval}
-              </p>
-              <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
-                <Button
-                  size="sm"
-                  render={<Link href="/home/rse/diagnostic" />}
-                  nativeButton={false}
-                >
-                  <Trans i18nKey="rse:newDiagnostic" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  render={<Link href="/home/rse/roadmap" />}
-                  nativeButton={false}
-                >
-                  <ArrowRight className="mr-1.5 h-3.5 w-3.5" />
-                  <Trans i18nKey="rse:viewRoadmap" />
-                </Button>
-              </div>
+          <CardContent className="flex flex-col items-center px-6 py-16 text-center">
+            <div className="bg-primary-light mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
+              <Award className="text-primary h-8 w-8" />
+            </div>
+            <h2 className="text-metal-900 text-2xl font-bold">
+              <Trans i18nKey="rse:emptyTitle" defaults="RSE & Labels" />
+            </h2>
+            <p className="text-metal-500 mx-auto mt-3 max-w-md text-sm leading-relaxed">
+              <Trans
+                i18nKey="rse:emptyDesc"
+                defaults="Évaluez votre maturité RSE et votre éligibilité aux labels environnementaux. Lancez votre premier diagnostic pour obtenir un score personnalisé et un plan d'action."
+              />
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button
+                variant="default"
+                size="sm"
+                render={<Link href="/home/rse/diagnostic" />}
+                nativeButton={false}
+              >
+                <ClipboardCheck className="mr-2 h-4 w-4" />
+                <Trans i18nKey="rse:startDiagnostic" defaults="Lancer un diagnostic" />
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                render={<Link href="/home/rse/roadmap" />}
+                nativeButton={false}
+              >
+                <Target className="mr-2 h-4 w-4" />
+                <Trans i18nKey="rse:viewRoadmap" defaults="Voir la feuille de route" />
+              </Button>
             </div>
           </CardContent>
         </Card>
 
-        {/* Pillar Cards */}
-        <div className="space-y-4">
-          <Heading level={4}>
-            <Trans i18nKey="rse:pillarsTitle" />
-          </Heading>
-          <RSEPillarCards pillars={DEMO_RSE.pillars} />
+        {/* What you'll get */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { icon: '📊', title: 'Score RSE', desc: 'Score global sur 100 calculé depuis vos réponses au diagnostic' },
+            { icon: '🏆', title: 'Éligibilité labels', desc: 'B Corp, GreenTech, Label NR — votre éligibilité en temps réel' },
+            { icon: '📋', title: 'Plan d\'action', desc: 'Actions prioritaires recommandées par l\'IA pour améliorer votre score' },
+            { icon: '🔗', title: 'Écosystème', desc: 'Données croisées avec vos transactions, carbone et traçabilité' },
+          ].map((f) => (
+            <Card key={f.title}>
+              <CardContent className="p-5">
+                <span className="text-2xl">{f.icon}</span>
+                <h3 className="text-metal-900 mt-2 text-sm font-semibold">{f.title}</h3>
+                <p className="text-metal-500 mt-1 text-xs">{f.desc}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-
-        {/* Label Eligibility */}
-        <div className="space-y-4">
-          <Heading level={4}>
-            <Trans i18nKey="rse:labelsTitle" />
-          </Heading>
-          <LabelEligibilityCards labels={DEMO_RSE.labels} />
-        </div>
-
-        {/* Priority Actions */}
-        <RSEActionsList actions={DEMO_RSE.actions} />
-
-        {/* Ecosystem Data Interconnection */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <Database className="h-5 w-5 text-teal-500" />
-              <Trans i18nKey="rse:ecosystemTitle" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {DEMO_RSE.ecosystem.map((item) => (
-                <div
-                  key={item.icon}
-                  className="flex items-center gap-3 rounded-lg border p-4"
-                >
-                  <div className="rounded-full bg-gray-50 p-2.5 dark:bg-gray-800">
-                    {getEcosystemIcon(item.icon)}
-                  </div>
-                  <div>
-                    <p className="text-lg font-bold">{item.value}</p>
-                    <p className="text-muted-foreground text-xs">
-                      <Trans i18nKey={item.i18nKey} />
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 flex items-center gap-2 rounded-lg bg-green-50 px-4 py-2.5 text-xs text-green-800 dark:bg-green-950/30 dark:text-green-300">
-              <Shield className="h-4 w-4 shrink-0" />
-              <Trans i18nKey="rse:boostedByBlockchain" />
-            </div>
-          </CardContent>
-        </Card>
 
         <SectionFooterImage
           src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-f30939eb-48c4-46f7-ad85-99b7f3c11c45.png"
