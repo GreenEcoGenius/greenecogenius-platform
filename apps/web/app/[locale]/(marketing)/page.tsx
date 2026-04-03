@@ -52,19 +52,13 @@ export default async function Home() {
           {/* CTAs */}
           <div className="relative z-10 flex flex-col items-center gap-4">
             <AnimateOnScroll animation="fade-up" delay={300}>
-              <div className="flex flex-wrap items-center justify-center gap-3">
+              <div className="flex items-center justify-center">
                 <Link
                   href="/auth/sign-up"
-                  className="group text-metal-900 inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-xs font-semibold shadow-lg transition-all hover:shadow-xl sm:px-8 sm:py-4 sm:text-sm"
+                  className="group text-metal-900 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold shadow-lg transition-all hover:shadow-xl sm:px-10 sm:py-4"
                 >
                   {t('heroCta1')}
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-                <Link
-                  href="/solutions"
-                  className="inline-flex items-center justify-center rounded-full border border-white/40 px-6 py-3 text-xs font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 sm:px-8 sm:py-4 sm:text-sm"
-                >
-                  {t('landing.heroCtaDemo')}
                 </Link>
               </div>
             </AnimateOnScroll>
