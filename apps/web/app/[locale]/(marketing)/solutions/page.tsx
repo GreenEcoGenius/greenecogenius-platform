@@ -34,7 +34,11 @@ export default async function SolutionsPage() {
       subtitle: t('solMarketplaceSub'),
       badgeClass: 'bg-primary-light text-primary-500',
       description: t('solMarketplaceDesc'),
-      features: [t('solMarketplaceF1'), t('solMarketplaceF2'), t('solMarketplaceF3')],
+      features: [
+        t('solMarketplaceF1'),
+        t('solMarketplaceF2'),
+        t('solMarketplaceF3'),
+      ],
       image: '/images/normes/circular-zero-waste.png',
       href: '/auth/sign-up',
     },
@@ -78,7 +82,11 @@ export default async function SolutionsPage() {
       subtitle: t('solComplianceSub'),
       badgeClass: 'bg-badge-amber-bg text-badge-amber-text',
       description: t('solComplianceDesc'),
-      features: [t('solComplianceF1'), t('solComplianceF2'), t('solComplianceF3')],
+      features: [
+        t('solComplianceF1'),
+        t('solComplianceF2'),
+        t('solComplianceF3'),
+      ],
       image: '/images/normes/labels-globe-recycle.png',
       href: '/auth/sign-up',
     },
@@ -90,7 +98,8 @@ export default async function SolutionsPage() {
       badgeClass: 'bg-tech-mint text-tech-emerald',
       description: t('solLabelsDesc'),
       features: [t('solLabelsF1'), t('solLabelsF2'), t('solLabelsF3')],
-      image: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-f30939eb-48c4-46f7-ad85-99b7f3c11c45.png',
+      image:
+        'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-f30939eb-48c4-46f7-ad85-99b7f3c11c45.png',
       href: '/auth/sign-up',
     },
   ];
@@ -126,7 +135,9 @@ export default async function SolutionsPage() {
               <div
                 className={`grid items-center gap-12 lg:grid-cols-2 ${isEven ? '' : 'lg:[direction:rtl]'}`}
               >
-                <AnimateOnScroll animation={isEven ? 'fade-right' : 'fade-left'}>
+                <AnimateOnScroll
+                  animation={isEven ? 'fade-right' : 'fade-left'}
+                >
                   <div className="relative overflow-hidden rounded-xl shadow-sm lg:[direction:ltr]">
                     <Image
                       src={solution.image}
@@ -176,7 +187,10 @@ export default async function SolutionsPage() {
                   >
                     <ul className="mt-6 space-y-3">
                       {solution.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-3 text-sm">
+                        <li
+                          key={feature}
+                          className="flex items-start gap-3 text-sm"
+                        >
                           <div className="bg-tech-mint mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full">
                             <div className="bg-tech-neon h-1.5 w-1.5 rounded-full" />
                           </div>

@@ -115,8 +115,7 @@ export function LinkAccountsList(props: LinkAccountsListProps) {
       loading: <Trans i18nKey={'account.unlinkingAccount'} />,
       success: <Trans i18nKey={'account.accountUnlinked'} />,
       error: (err: unknown) => {
-        const message =
-          err instanceof Error ? err.message : String(err ?? '');
+        const message = err instanceof Error ? err.message : String(err ?? '');
 
         return message || <Trans i18nKey={'account.unlinkAccountError'} />;
       },

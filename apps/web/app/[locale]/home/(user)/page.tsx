@@ -50,30 +50,64 @@ async function UserHomePage() {
     { count: certCount },
     { data: complianceRows },
   ] = await Promise.all([
-    c.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'active'),
-    c.from('listings').select('*', { count: 'exact', head: true }).eq('account_id', userId).eq('listing_type', 'sell'),
-    c.from('listings').select('*', { count: 'exact', head: true }).eq('account_id', userId).eq('listing_type', 'buy'),
-    c.from('listings').select('*', { count: 'exact', head: true }).eq('account_id', userId).eq('listing_type', 'collect'),
-    c.from('listings').select('*, material_categories(name, name_fr, slug)').eq('account_id', userId).order('created_at', { ascending: false }).limit(5),
-    c.from('carbon_records').select('co2_avoided, weight_kg').eq('account_id', userId),
+    c
+      .from('listings')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'active'),
+    c
+      .from('listings')
+      .select('*', { count: 'exact', head: true })
+      .eq('account_id', userId)
+      .eq('listing_type', 'sell'),
+    c
+      .from('listings')
+      .select('*', { count: 'exact', head: true })
+      .eq('account_id', userId)
+      .eq('listing_type', 'buy'),
+    c
+      .from('listings')
+      .select('*', { count: 'exact', head: true })
+      .eq('account_id', userId)
+      .eq('listing_type', 'collect'),
+    c
+      .from('listings')
+      .select('*, material_categories(name, name_fr, slug)')
+      .eq('account_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(5),
+    c
+      .from('carbon_records')
+      .select('co2_avoided, weight_kg')
+      .eq('account_id', userId),
     c.from('blockchain_records').select('*', { count: 'exact', head: true }),
-    c.from('traceability_certificates').select('*', { count: 'exact', head: true }).eq('issued_to_account_id', userId),
+    c
+      .from('traceability_certificates')
+      .select('*', { count: 'exact', head: true })
+      .eq('issued_to_account_id', userId),
     c.from('account_norm_compliance').select('status').eq('account_id', userId),
   ]);
 
   const co2AvoidedKg = (carbonRows ?? []).reduce(
-    (sum: number, r: { co2_avoided?: number }) => sum + Number(r.co2_avoided ?? 0), 0,
+    (sum: number, r: { co2_avoided?: number }) =>
+      sum + Number(r.co2_avoided ?? 0),
+    0,
   );
-  const tonnesRecycled = (carbonRows ?? []).reduce(
-    (sum: number, r: { weight_kg?: number }) => sum + Number(r.weight_kg ?? 0), 0,
-  ) / 1000;
+  const tonnesRecycled =
+    (carbonRows ?? []).reduce(
+      (sum: number, r: { weight_kg?: number }) =>
+        sum + Number(r.weight_kg ?? 0),
+      0,
+    ) / 1000;
   const co2AvoidedT = Math.round((co2AvoidedKg / 1000) * 10) / 10;
   const tonnesRecycledT = Math.round(tonnesRecycled * 10) / 10;
 
   const complianceList = (complianceRows ?? []) as Array<{ status: string }>;
-  const normsCompliant = complianceList.filter((r) => r.status === 'compliant').length;
+  const normsCompliant = complianceList.filter(
+    (r) => r.status === 'compliant',
+  ).length;
   const normsTotal = complianceList.length;
-  const complianceScore = normsTotal > 0 ? Math.round((normsCompliant / normsTotal) * 100) : 0;
+  const complianceScore =
+    normsTotal > 0 ? Math.round((normsCompliant / normsTotal) * 100) : 0;
 
   return (
     <PageBody>
@@ -107,9 +141,18 @@ async function UserHomePage() {
             subtitle={t('dashboard.co2Avoided')}
             icon={<Leaf className="h-6 w-6 text-white" />}
             metrics={[
-              { label: t('dashboard.tonsRecycled'), value: `${tonnesRecycledT} t` },
-              { label: t('dashboard.tracedLots'), value: `${blockchainCount ?? 0}` },
-              { label: t('dashboard.circularityScore'), value: `${certCount ?? 0} cert.` },
+              {
+                label: t('dashboard.tonsRecycled'),
+                value: `${tonnesRecycledT} t`,
+              },
+              {
+                label: t('dashboard.tracedLots'),
+                value: `${blockchainCount ?? 0}`,
+              },
+              {
+                label: t('dashboard.circularityScore'),
+                value: `${certCount ?? 0} cert.`,
+              },
             ]}
             actionLabel={t('dashboard.carbonImpact')}
             actionHref="/home/carbon"
@@ -121,7 +164,10 @@ async function UserHomePage() {
             subtitle={t('dashboard.globalScore')}
             icon={<Shield className="h-6 w-6 text-white" />}
             metrics={[
-              { label: t('dashboard.compliantStandards'), value: normsTotal > 0 ? `${normsCompliant}/${normsTotal}` : '—' },
+              {
+                label: t('dashboard.compliantStandards'),
+                value: normsTotal > 0 ? `${normsCompliant}/${normsTotal}` : '—',
+              },
               { label: t('dashboard.rseScore'), value: '—' },
               { label: t('dashboard.esgReporting'), value: '—' },
             ]}
@@ -333,7 +379,6 @@ function ActionCard({
     </Link>
   );
 }
-
 
 function TypeBadge({ type, label }: { type: string; label: string }) {
   const styles: Record<string, string> = {

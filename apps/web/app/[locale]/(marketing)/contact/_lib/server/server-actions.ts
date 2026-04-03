@@ -22,10 +22,7 @@ const emailFrom = z
   .parse(process.env.EMAIL_SENDER);
 
 function escapeHtml(str: string) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 export const sendContactEmail = publicActionClient

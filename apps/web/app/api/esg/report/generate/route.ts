@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-
 import { NextRequest, NextResponse } from 'next/server';
 
 import { requireUser } from '@kit/supabase/require-user';
@@ -142,29 +141,29 @@ This report follows GHG Protocol standards and relies on ADEME Base Carbone 2024
   // Generate PDF
   const pdfBuffer = generateESGReportPDF(
     {
-    companyName,
-    year,
-    date: generatedAt,
-    format: 'ghg_protocol',
-    formatLabel: 'GHG Protocol',
-    scope1Kg,
-    scope2Kg,
-    scope3Kg,
-    totalKg,
-    avoidedKg,
-    netKg,
-    perEmployeeKg,
-    breakdown: breakdown as {
-      scope1: Record<string, number>;
-      scope2: Record<string, number>;
-      scope3: Record<string, number>;
-    },
-    esg,
-    platformTonnesRecycled,
-    platformTransactionCount,
-    aiSummary,
-    nbEmployees: esg.nb_employees,
-    industrySector: esg.industry_sector,
+      companyName,
+      year,
+      date: generatedAt,
+      format: 'ghg_protocol',
+      formatLabel: 'GHG Protocol',
+      scope1Kg,
+      scope2Kg,
+      scope3Kg,
+      totalKg,
+      avoidedKg,
+      netKg,
+      perEmployeeKg,
+      breakdown: breakdown as {
+        scope1: Record<string, number>;
+        scope2: Record<string, number>;
+        scope3: Record<string, number>;
+      },
+      esg,
+      platformTonnesRecycled,
+      platformTransactionCount,
+      aiSummary,
+      nbEmployees: esg.nb_employees,
+      industrySector: esg.industry_sector,
     },
     locale,
   );

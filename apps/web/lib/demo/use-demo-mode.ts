@@ -1,7 +1,6 @@
 import { DEMO_DATA, type DemoData } from './demo-data';
 
-const isDemoEnabled =
-  process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+const isDemoEnabled = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
 
 /**
  * Client-side hook for demo mode.

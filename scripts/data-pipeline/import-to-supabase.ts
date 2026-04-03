@@ -7,10 +7,10 @@
  * the material_sources table via the admin/service_role client.
  */
 
+import { createClient } from '@supabase/supabase-js';
+
 import fs from 'node:fs';
 import path from 'node:path';
-
-import { createClient } from '@supabase/supabase-js';
 
 const ROOT = path.resolve(__dirname, '../..');
 const DATA_PATH = path.join(ROOT, 'data/processed/aggregated-materials.json');
@@ -19,9 +19,7 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!SUPABASE_URL || !SUPABASE_KEY) {
-  console.error(
-    'Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env vars.',
-  );
+  console.error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env vars.');
   process.exit(1);
 }
 
@@ -77,15 +75,15 @@ async function main() {
   await recalculateStats(supabase);
 }
 
-async function recalculateStats(
-  supabase: ReturnType<typeof createClient>,
-) {
+async function recalculateStats(supabase: ReturnType<typeof createClient>) {
   console.log('Recalculating regional and national stats …');
 
   // Fetch all sources grouped manually (Supabase JS doesn't support GROUP BY)
   const { data: sources } = await supabase
     .from('material_sources')
-    .select('region, category, estimated_volume_tonnes, nb_sources, co2_total_potential');
+    .select(
+      'region, category, estimated_volume_tonnes, nb_sources, co2_total_potential',
+    );
 
   if (!sources || sources.length === 0) {
     console.log('No sources to aggregate.');

@@ -47,12 +47,48 @@ const TAB_DEFS: Array<{
   icon: React.ReactNode;
   pillar: NormPillar;
 }> = [
-  { id: 'circular_economy', labelKey: 'normesTabCircular', count: 11, icon: <Recycle className="h-4 w-4" />, pillar: 'circular_economy' },
-  { id: 'carbon', labelKey: 'normesTabCarbon', count: 7, icon: <Globe className="h-4 w-4" />, pillar: 'carbon' },
-  { id: 'reporting', labelKey: 'normesTabReporting', count: 9, icon: <FileText className="h-4 w-4" />, pillar: 'reporting' },
-  { id: 'traceability', labelKey: 'normesTabTraceability', count: 6, icon: <LinkIcon className="h-4 w-4" />, pillar: 'traceability' },
-  { id: 'data', labelKey: 'normesTabData', count: 5, icon: <Shield className="h-4 w-4" />, pillar: 'data' },
-  { id: 'labels', labelKey: 'normesTabLabels', count: 4, icon: <Award className="h-4 w-4" />, pillar: 'labels' },
+  {
+    id: 'circular_economy',
+    labelKey: 'normesTabCircular',
+    count: 11,
+    icon: <Recycle className="h-4 w-4" />,
+    pillar: 'circular_economy',
+  },
+  {
+    id: 'carbon',
+    labelKey: 'normesTabCarbon',
+    count: 7,
+    icon: <Globe className="h-4 w-4" />,
+    pillar: 'carbon',
+  },
+  {
+    id: 'reporting',
+    labelKey: 'normesTabReporting',
+    count: 9,
+    icon: <FileText className="h-4 w-4" />,
+    pillar: 'reporting',
+  },
+  {
+    id: 'traceability',
+    labelKey: 'normesTabTraceability',
+    count: 6,
+    icon: <LinkIcon className="h-4 w-4" />,
+    pillar: 'traceability',
+  },
+  {
+    id: 'data',
+    labelKey: 'normesTabData',
+    count: 5,
+    icon: <Shield className="h-4 w-4" />,
+    pillar: 'data',
+  },
+  {
+    id: 'labels',
+    labelKey: 'normesTabLabels',
+    count: 4,
+    icon: <Award className="h-4 w-4" />,
+    pillar: 'labels',
+  },
 ];
 
 const PILLAR_HERO: Record<NormPillar, string> = {
@@ -66,7 +102,15 @@ const PILLAR_HERO: Record<NormPillar, string> = {
 
 // ── Animated norm card with PDF download ──
 
-function NormCard({ norm, index, locale }: { norm: Norm; index: number; locale: string }) {
+function NormCard({
+  norm,
+  index,
+  locale,
+}: {
+  norm: Norm;
+  index: number;
+  locale: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -134,7 +178,12 @@ function NormCard({ norm, index, locale }: { norm: Norm; index: number; locale: 
         </p>
         <button
           type="button"
-          onClick={() => window.open(`/api/normes/pdf?id=${norm.id}&locale=${locale}`, '_blank')}
+          onClick={() =>
+            window.open(
+              `/api/normes/pdf?id=${norm.id}&locale=${locale}`,
+              '_blank',
+            )
+          }
           className="text-metal-steel hover:bg-metal-frost hover:text-primary ml-2 shrink-0 rounded-xl p-1.5 transition-colors"
           title="Telecharger le PDF"
         >
@@ -147,10 +196,18 @@ function NormCard({ norm, index, locale }: { norm: Norm; index: number; locale: 
 
 // ── Pillar tab content ──
 
-function PillarContent({ pillar, locale }: { pillar: NormPillar; locale: string }) {
+function PillarContent({
+  pillar,
+  locale,
+}: {
+  pillar: NormPillar;
+  locale: string;
+}) {
   const pillarInfo = getLocalizedPillarInfo(locale);
   const info = pillarInfo[pillar];
-  const norms = NORMS_DATABASE.filter((n) => n.pillar === pillar).map((n) => localizeNorm(n, locale));
+  const norms = NORMS_DATABASE.filter((n) => n.pillar === pillar).map((n) =>
+    localizeNorm(n, locale),
+  );
   const heroImage = PILLAR_HERO[pillar];
   const isFr = locale === 'fr';
 
@@ -213,10 +270,12 @@ export function NormsTabbedContent() {
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     if (hash) {
-      const matched = TABS.find((tab) => tab.id === hash || tab.pillar === hash);
+      const matched = TABS.find(
+        (tab) => tab.id === hash || tab.pillar === hash,
+      );
       if (matched) setActiveTab(matched.id);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleTabChange = useCallback((tabId: string) => {
@@ -269,7 +328,9 @@ export function NormsTabbedContent() {
       </div>
 
       <div className="min-h-[60vh]">
-        {activeTabDef?.pillar && <PillarContent pillar={activeTabDef.pillar} locale={locale} />}
+        {activeTabDef?.pillar && (
+          <PillarContent pillar={activeTabDef.pillar} locale={locale} />
+        )}
       </div>
     </>
   );

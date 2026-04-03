@@ -127,7 +127,9 @@ async function CookiePolicyPage() {
             .
           </p>
           <div className="bg-card mt-4 rounded-lg border p-5 text-sm">
-            <p className="text-foreground font-semibold">GreenEcoGenius OÜ (Estonie) · GreenEcoGenius, Inc. (Delaware, USA)</p>
+            <p className="text-foreground font-semibold">
+              GreenEcoGenius OÜ (Estonie) · GreenEcoGenius, Inc. (Delaware, USA)
+            </p>
             <p className="text-muted-foreground mt-1">
               Europe : Tornimäe tn 5, 10145 Tallinn, Estonie — Registre 16917315
             </p>

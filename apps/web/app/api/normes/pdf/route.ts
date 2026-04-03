@@ -1,6 +1,10 @@
 import { NextRequest } from 'next/server';
 
-import { NORMS_DATABASE, getLocalizedPillarInfo, localizeNorm } from '~/lib/data/norms-database';
+import {
+  NORMS_DATABASE,
+  getLocalizedPillarInfo,
+  localizeNorm,
+} from '~/lib/data/norms-database';
 import { pdfService, COLORS } from '~/lib/services/pdf/pdf-service';
 
 const NORM_PDF_LABELS = {
@@ -60,7 +64,8 @@ export async function GET(req: NextRequest) {
     return new Response('Norm not found', { status: 404 });
   }
 
-  const resolvedLocale = (locale as NormLocale) in NORM_PDF_LABELS ? (locale as NormLocale) : 'fr';
+  const resolvedLocale =
+    (locale as NormLocale) in NORM_PDF_LABELS ? (locale as NormLocale) : 'fr';
   const norm = localizeNorm(rawNorm, resolvedLocale);
   const labels = NORM_PDF_LABELS[resolvedLocale];
   const pillarInfo = getLocalizedPillarInfo(resolvedLocale)[norm.pillar];

@@ -49,124 +49,430 @@ export interface Norm {
 
 export const PILLAR_INFO: Record<
   NormPillar,
-  { label: string; label_en: string; icon: string; description: string; description_en: string }
+  {
+    label: string;
+    label_en: string;
+    icon: string;
+    description: string;
+    description_en: string;
+  }
 > = {
   circular_economy: {
     label: 'Economie circulaire & Gestion des dechets',
     label_en: 'Circular Economy & Waste Management',
     icon: 'recycle',
-    description: 'Ces normes encadrent la transition vers un modele circulaire. GreenEcoGenius les applique automatiquement dans Le Comptoir Circulaire, la tracabilite et le reporting.',
-    description_en: 'These standards govern the transition to a circular model. GreenEcoGenius applies them automatically in The Circular Marketplace, traceability and reporting.',
+    description:
+      'Ces normes encadrent la transition vers un modele circulaire. GreenEcoGenius les applique automatiquement dans Le Comptoir Circulaire, la tracabilite et le reporting.',
+    description_en:
+      'These standards govern the transition to a circular model. GreenEcoGenius applies them automatically in The Circular Marketplace, traceability and reporting.',
   },
   carbon: {
     label: 'Bilan carbone & Environnement',
     label_en: 'Carbon Footprint & Environment',
     icon: 'globe',
-    description: 'Standards de mesure, reporting et reduction des emissions de gaz a effet de serre. Integres dans le module Impact Carbone.',
-    description_en: 'Standards for measuring, reporting and reducing greenhouse gas emissions. Integrated into the Carbon Impact module.',
+    description:
+      'Standards de mesure, reporting et reduction des emissions de gaz a effet de serre. Integres dans le module Impact Carbone.',
+    description_en:
+      'Standards for measuring, reporting and reducing greenhouse gas emissions. Integrated into the Carbon Impact module.',
   },
   reporting: {
     label: 'Reporting ESG & Durabilite',
     label_en: 'ESG & Sustainability Reporting',
     icon: 'file-text',
-    description: 'Directives et frameworks de reporting extra-financier. Alimentent automatiquement le module Reporting ESG.',
-    description_en: 'Non-financial reporting directives and frameworks. Automatically feed the ESG Reporting module.',
+    description:
+      'Directives et frameworks de reporting extra-financier. Alimentent automatiquement le module Reporting ESG.',
+    description_en:
+      'Non-financial reporting directives and frameworks. Automatically feed the ESG Reporting module.',
   },
   traceability: {
     label: 'Tracabilite & Chaine de valeur',
     label_en: 'Traceability & Value Chain',
     icon: 'link',
-    description: 'Exigences de tracabilite, devoir de vigilance et passeport numerique. Verifiees on-chain via Polygon.',
-    description_en: 'Traceability requirements, due diligence and digital passport. Verified on-chain via Polygon.',
+    description:
+      'Exigences de tracabilite, devoir de vigilance et passeport numerique. Verifiees on-chain via Polygon.',
+    description_en:
+      'Traceability requirements, due diligence and digital passport. Verified on-chain via Polygon.',
   },
   data: {
     label: 'Donnees, IA & SaaS',
     label_en: 'Data, AI & SaaS',
     icon: 'shield',
-    description: "Protection des donnees, securite et conformite IA. Appliquees a l'infrastructure technique de la plateforme.",
-    description_en: 'Data protection, security and AI compliance. Applied to the platform technical infrastructure.',
+    description:
+      "Protection des donnees, securite et conformite IA. Appliquees a l'infrastructure technique de la plateforme.",
+    description_en:
+      'Data protection, security and AI compliance. Applied to the platform technical infrastructure.',
   },
   labels: {
     label: 'Labels & Certifications RSE',
     label_en: 'CSR Labels & Certifications',
     icon: 'award',
-    description: 'Referentiels de labellisation RSE. Le module RSE & Labels evalue votre eligibilite et vous guide vers la certification.',
-    description_en: 'CSR labeling frameworks. The CSR & Labels module evaluates your eligibility and guides you to certification.',
+    description:
+      'Referentiels de labellisation RSE. Le module RSE & Labels evalue votre eligibilite et vous guide vers la certification.',
+    description_en:
+      'CSR labeling frameworks. The CSR & Labels module evaluates your eligibility and guides you to certification.',
   },
 };
 
 const LABEL_EN: Record<string, string> = {
-  'Norme ISO': 'ISO Standard', 'Loi francaise': 'French Law', 'Decret francais': 'French Decree',
-  'Directive UE': 'EU Directive', 'Reglement UE': 'EU Regulation', 'Standards UE': 'EU Standards',
-  'Framework mondial': 'Global Framework', 'Framework': 'Framework', 'Methode': 'Method', 'Label': 'Label',
-  'Fondamentale': 'Fundamental', 'Strategique': 'Strategic', 'Obligatoire': 'Mandatory',
-  'Incontournable': 'Essential', 'A suivre': 'Upcoming',
-  'Economie circulaire': 'Circular Economy', 'Bilan carbone': 'Carbon Footprint',
-  'Reporting ESG': 'ESG Reporting', 'Tracabilite': 'Traceability',
-  'Donnees & SaaS': 'Data & SaaS', 'Labels RSE': 'CSR Labels',
-  'Publiee 2024': 'Published 2024', 'Publiee 2015': 'Published 2015', 'Publiee 2018': 'Published 2018',
-  'Publiee 2020': 'Published 2020', 'Publiee 2022': 'Published 2022', 'Publiee oct. 2024': 'Published Oct. 2024',
-  'En vigueur': 'In force', 'En vigueur depuis 2020': 'In force since 2020',
-  'En vigueur depuis 2021': 'In force since 2021', 'En vigueur depuis 2017': 'In force since 2017',
-  'En vigueur depuis 2018': 'In force since 2018', 'En vigueur 2024+': 'In force 2024+',
-  'En vigueur 2025': 'In force 2025', 'En vigueur 2027': 'In force 2027',
-  'En vigueur oct. 2024': 'In force Oct. 2024', 'En vigueur (transition CSRD)': 'In force (CSRD transition)',
-  'Actif': 'Active', 'Operationnel': 'Operational', 'Application 2030': 'Applies 2030',
-  'En developpement': 'In development', 'Adoption prevue 2026': 'Expected adoption 2026',
+  'Norme ISO': 'ISO Standard',
+  'Loi francaise': 'French Law',
+  'Decret francais': 'French Decree',
+  'Directive UE': 'EU Directive',
+  'Reglement UE': 'EU Regulation',
+  'Standards UE': 'EU Standards',
+  'Framework mondial': 'Global Framework',
+  Framework: 'Framework',
+  Methode: 'Method',
+  Label: 'Label',
+  Fondamentale: 'Fundamental',
+  Strategique: 'Strategic',
+  Obligatoire: 'Mandatory',
+  Incontournable: 'Essential',
+  'A suivre': 'Upcoming',
+  'Economie circulaire': 'Circular Economy',
+  'Bilan carbone': 'Carbon Footprint',
+  'Reporting ESG': 'ESG Reporting',
+  Tracabilite: 'Traceability',
+  'Donnees & SaaS': 'Data & SaaS',
+  'Labels RSE': 'CSR Labels',
+  'Publiee 2024': 'Published 2024',
+  'Publiee 2015': 'Published 2015',
+  'Publiee 2018': 'Published 2018',
+  'Publiee 2020': 'Published 2020',
+  'Publiee 2022': 'Published 2022',
+  'Publiee oct. 2024': 'Published Oct. 2024',
+  'En vigueur': 'In force',
+  'En vigueur depuis 2020': 'In force since 2020',
+  'En vigueur depuis 2021': 'In force since 2021',
+  'En vigueur depuis 2017': 'In force since 2017',
+  'En vigueur depuis 2018': 'In force since 2018',
+  'En vigueur 2024+': 'In force 2024+',
+  'En vigueur 2025': 'In force 2025',
+  'En vigueur 2027': 'In force 2027',
+  'En vigueur oct. 2024': 'In force Oct. 2024',
+  'En vigueur (transition CSRD)': 'In force (CSRD transition)',
+  Actif: 'Active',
+  Operationnel: 'Operational',
+  'Application 2030': 'Applies 2030',
+  'En developpement': 'In development',
+  'Adoption prevue 2026': 'Expected adoption 2026',
   'Phase transitoire 2023-2026': 'Transition phase 2023-2026',
-  'Toutes les sections': 'All sections', 'Le Comptoir Circulaire': 'The Circular Marketplace',
-  'Tracabilite blockchain': 'Blockchain Traceability', 'Impact Carbone + Reporting ESG': 'Carbon Impact + ESG Reporting',
-  'Conformite + RSE & Labels': 'Compliance + CSR & Labels', 'Le Comptoir + Conformite': 'Marketplace + Compliance',
-  'Tracabilite + Conformite': 'Traceability + Compliance', 'Reporting ESG + Conformite': 'ESG Reporting + Compliance',
-  'Impact Carbone + Conformite': 'Carbon Impact + Compliance', 'Impact Carbone': 'Carbon Impact',
-  'RSE & Labels + Reporting ESG': 'CSR & Labels + ESG Reporting', 'RSE & Labels': 'CSR & Labels',
-  'Infrastructure plateforme': 'Platform Infrastructure', 'IA GreenEcoGenius': 'GreenEcoGenius AI',
-  'Conformite': 'Compliance',
+  'Toutes les sections': 'All sections',
+  'Le Comptoir Circulaire': 'The Circular Marketplace',
+  'Tracabilite blockchain': 'Blockchain Traceability',
+  'Impact Carbone + Reporting ESG': 'Carbon Impact + ESG Reporting',
+  'Conformite + RSE & Labels': 'Compliance + CSR & Labels',
+  'Le Comptoir + Conformite': 'Marketplace + Compliance',
+  'Tracabilite + Conformite': 'Traceability + Compliance',
+  'Reporting ESG + Conformite': 'ESG Reporting + Compliance',
+  'Impact Carbone + Conformite': 'Carbon Impact + Compliance',
+  'Impact Carbone': 'Carbon Impact',
+  'RSE & Labels + Reporting ESG': 'CSR & Labels + ESG Reporting',
+  'RSE & Labels': 'CSR & Labels',
+  'Infrastructure plateforme': 'Platform Infrastructure',
+  'IA GreenEcoGenius': 'GreenEcoGenius AI',
+  Conformite: 'Compliance',
 };
 
-const NORM_EN: Record<string, { title: string; description: string; gegApplication: string }> = {
-  'iso-59004': { title: 'Circular economy -- Vocabulary, principles and recommendations', description: 'First international standard defining the common vocabulary of the circular economy. Establishes founding principles: circular resource flow, ecosystem resilience, systemic approach.', gegApplication: 'All GreenEcoGenius terminology is aligned with this standard. Every feature uses ISO 59004 vocabulary.' },
-  'iso-59010': { title: 'Circular economy -- Guidelines for business models and value chains', description: 'Guides organizations to transform their business model toward circularity. Covers eco-design, reuse, repair and recycling.', gegApplication: 'The Circular Marketplace materializes these guidelines: secondary materials marketplace, buyer-seller matching, functionality economy.' },
-  'iso-59014': { title: 'Traceability of secondary materials valorization', description: 'Principles, requirements and recommendations for the traceability of secondary materials from one company to another. This is exactly the GreenEcoGenius blockchain use case.', gegApplication: 'Each lot traced on Polygon meets this standard: SHA-256 recording, geolocation, timestamping, immutable chain of trust.' },
-  'iso-59020': { title: 'Circular economy -- Measurement and assessment of circularity', description: 'Framework for measuring circularity of organizations and products. Circular performance indicators, recycling rates, lifespan.', gegApplication: 'Circularity indicators (recycling rate, CO2 avoided, tonnes valorized) are calculated per this standard in the Carbon Impact dashboard.' },
-  'iso-14001': { title: 'Environmental management systems', description: 'The global reference for environmental management systems. PDCA framework (Plan-Do-Check-Act) for continuous improvement of environmental performance.', gegApplication: 'The platform follows the PDCA framework for environmental management. The Compliance module assesses ISO 14001 alignment.' },
-  'loi-agec': { title: 'Anti-Waste for a Circular Economy Act', description: 'French framework law for the transition to circular economy. End of single-use plastics by 2040, 3R decree, mandatory 9-stream sorting, extended EPR.', gegApplication: 'The Circular Marketplace integrates AGEC obligations: 9-stream classification, waste traceability, EPR facilitator for businesses.' },
-  'decret-9-flux': { title: 'Source sorting and separate collection of business waste', description: 'Mandatory sorting and separate collection of 9 waste streams for businesses. Extension to bio-waste and textiles in 2025.', gegApplication: 'The Marketplace automatically classifies each lot according to the 9 regulatory streams. Traceability proves source sorting compliance.' },
-  'rep-elargie': { title: 'Extended Producer Responsibility', description: 'Producers are responsible for the end of life of their products. Extension to industrial packaging, textiles, furniture, toys.', gegApplication: 'The platform facilitates EPR compliance: waste traceability, valorization certificates, mandatory reporting.' },
-  'ppwr': { title: 'Packaging and Packaging Waste Regulation', description: 'Target: 100% recyclable packaging by 2030. Mandatory recycled content rate, digital passport, over-packaging ban.', gegApplication: 'GreenEcoGenius anticipates PPWR: packaging traceability, recycled content rate calculation, digital passport preparation.' },
-  'taxonomie-circulaire': { title: 'Transition to a circular economy', description: 'Objective 4 of the EU Taxonomy defines alignment criteria for economic activities with the circular economy.', gegApplication: 'ESG reporting includes taxonomic alignment assessment for Objective 4. Marketplace data automatically feeds this assessment.' },
-  'dpp': { title: 'Digital Product Passport', description: 'Future unique identifier for each product containing its manufacturing history, composition, repairability and recyclability.', gegApplication: 'The GreenEcoGenius blockchain is already designed for DPP: each lot has a unique identifier, immutable history and complete metadata.' },
-  'ghg-protocol': { title: 'Greenhouse Gas Protocol -- Corporate Standard', description: 'The global standard for greenhouse gas emission accounting. Defines Scopes 1, 2 and 3. The foundation of all carbon assessments.', gegApplication: 'All emission calculations follow the GHG Protocol. ESG reports are structured by Scope 1/2/3 with ADEME factors.' },
-  'iso-14064': { title: 'Quantification and reporting of GHG emissions', description: 'ISO standard for quantification, monitoring and reporting of greenhouse gas emissions at the organizational level.', gegApplication: 'The Carbon Impact module follows ISO 14064 methodology for emission quantification. Compatible with certified audits.' },
-  'bilan-ges': { title: 'Mandatory greenhouse gas emissions assessment', description: 'Requirement for companies with 500+ employees to conduct a GHG assessment every 4 years (3 years for public bodies).', gegApplication: 'GreenEcoGenius generates the GHG assessment in regulatory format. Platform data automatically feeds Scopes 1, 2 and 3.' },
-  'sbti': { title: 'Science Based Targets initiative', description: 'Global initiative defining emission reduction targets aligned with climate science. 1.5 degree trajectory.', gegApplication: 'The CSR module evaluates SBTi alignment and reduction trajectory. Targets are integrated into the ESG report.' },
-  'cdp': { title: 'Carbon Disclosure Project -- Climate questionnaire', description: 'Global environmental disclosure system. Over 23,000 companies respond to the CDP questionnaire annually.', gegApplication: 'Platform data can be exported in CDP format. The ESG report covers CDP Climate Change indicators.' },
-  'eu-ets': { title: 'EU Emissions Trading System', description: 'European carbon market covering over 10,000 installations. Decreasing emission cap to achieve neutrality by 2050.', gegApplication: 'The Carbon Impact module tracks emissions against EU ETS quotas. The Compliance module verifies alignment.' },
-  'cbam': { title: 'Carbon Border Adjustment Mechanism', description: 'Carbon border tax to prevent carbon leakage. Covers steel, cement, aluminum, fertilizers, electricity.', gegApplication: 'GreenEcoGenius anticipates CBAM: carbon footprint calculation per material, origin traceability, import reporting.' },
-  'csrd': { title: 'Corporate Sustainability Reporting Directive', description: 'Major reform of non-financial reporting in Europe. Mandatory for 50,000 companies by 2028. Third-party audit required.', gegApplication: 'The ESG Reporting module is built for CSRD: ESRS structure, double materiality, interactive compliance table, compliant PDF export.' },
-  'esrs': { title: 'European Sustainability Reporting Standards', description: 'The 12 technical standards of the CSRD covering environment (E1-E5), social (S1-S4) and governance (G1). Plus cross-cutting ESRS 1 and ESRS 2.', gegApplication: 'The interactive CSRD table covers all 12 ESRS standards with compliance indicators, completeness and data sources for each indicator.' },
-  'gri': { title: 'Global Reporting Initiative -- Reporting Standards', description: 'The most widely used sustainability reporting framework. GRI 305 (emissions), GRI 306 (waste), GRI 302 (energy).', gegApplication: 'ESG reports can be generated in GRI format. GRI 302, 305 and 306 indicators are automatically populated.' },
-  'taxonomie-verte': { title: 'Classification of sustainable economic activities', description: 'European classification system defining which economic activities are considered "sustainable". 6 environmental objectives.', gegApplication: 'ESG reporting evaluates taxonomic alignment of your activities. All 6 environmental objectives are covered.' },
-  'sfdr': { title: 'Sustainability-related disclosures regulation', description: 'Transparency obligation for financial actors on sustainability risks and negative impacts of their investments.', gegApplication: 'Platform ESG data is compatible with SFDR requirements for investors and investment funds.' },
-  'devoir-vigilance': { title: 'Duty of Vigilance for parent and ordering companies', description: 'Obligation for large companies to establish a vigilance plan covering serious harm to human rights and the environment.', gegApplication: 'Blockchain traceability documents the value chain for the vigilance plan. Proof of origin and supplier compliance.' },
-  'dpef': { title: 'Non-Financial Performance Declaration', description: 'Non-financial reporting obligation for large French companies. CSRD predecessor, still in force during transition.', gegApplication: 'The ESG Reporting module covers DPEF indicators and ensures the transition to CSRD for affected companies.' },
-  'art-29-lec': { title: 'Climate reporting for institutional investors', description: 'Transparency obligation on climate risks for investors, banks and insurers. TCFD aligned.', gegApplication: 'Platform climate data (Scopes 1/2/3, trajectory) is compatible with Art. 29 LEC requirements.' },
-  'cs3d': { title: 'Corporate Sustainability Due Diligence Directive', description: 'EU directive extending due diligence to all large EU companies. Covers human rights and environment in the value chain.', gegApplication: 'The GreenEcoGenius blockchain already documents the value chain. CS3D extension will be integrated upon adoption.' },
-  'blockchain-polygon': { title: 'On-chain traceability on Polygon Mainnet', description: 'Immutable recording of every transaction on the Polygon blockchain. Publicly verifiable anti-greenwashing proof.', gegApplication: 'Each lot is recorded on Polygon with SHA-256 hash, timestamp and geolocation. Certificates verifiable via QR code.' },
-  'vigilance-chaine': { title: 'Supply chain due diligence', description: 'Traceability and supplier verification requirements to ensure compliance with environmental and social standards.', gegApplication: 'Blockchain traceability documents every step of the value chain: origin, transformation, transport, delivery. Immutable proof.' },
-  'iso-22095': { title: 'Chain of custody -- Terminology and models', description: 'Standard defining terminology and models for chain of custody systems. Applicable to recycling and valorization.', gegApplication: 'The GreenEcoGenius traceability system follows the ISO 22095 chain of custody model for secondary materials.' },
-  'eudr': { title: 'Deforestation Regulation', description: 'Due diligence obligation for deforestation-linked products: soy, palm oil, wood, cocoa, coffee, rubber, cattle.', gegApplication: 'The blockchain documents material origins for EUDR due diligence. Verifiable non-deforestation proof.' },
-  '3tg': { title: 'Conflict minerals -- Tin, Tantalum, Tungsten and Gold', description: 'Due diligence obligation for importers of minerals from conflict zones. Supply chain traceability.', gegApplication: 'Blockchain traceability documents the origin of metals and minerals for 3TG compliance.' },
-  'passeport-batterie': { title: 'Battery Regulation -- Digital passport', description: 'Digital passport obligation for industrial and electric vehicle batteries. Composition, origin, recyclability.', gegApplication: 'The GreenEcoGenius blockchain architecture is already compatible with the battery passport format: unique ID, immutable history.' },
-  'rgpd': { title: 'General Data Protection Regulation', description: 'The European reference regulation for personal data protection. Consent, right to erasure, portability, DPO.', gegApplication: 'GreenEcoGenius is GDPR compliant: consent, right to erasure, encryption, EU hosting, complete privacy policy.' },
-  'iso-27001': { title: 'Information security management', description: 'International reference standard for information security management systems (ISMS). Globally recognized certification.', gegApplication: 'GreenEcoGenius infrastructure follows ISO 27001 best practices: encryption, access control, logging, continuity plan.' },
-  'soc-2': { title: 'Service Organization Control -- Security and availability', description: 'American audit standard for cloud service providers. Covers security, availability, integrity, confidentiality and privacy.', gegApplication: 'GreenEcoGenius respects SOC 2 principles: security (AES-256 encryption), availability (99.9% SLA), data integrity.' },
-  'nis2': { title: 'Network and information systems security', description: 'EU directive strengthening cybersecurity for essential and important entities. Incident notification obligations.', gegApplication: 'GreenEcoGenius anticipates NIS2: incident response plan, continuous monitoring, cybersecurity governance.' },
-  'ai-act': { title: 'Artificial Intelligence Act', description: 'World\'s first legal framework for AI. Classifies AI systems by risk level and imposes transparency obligations.', gegApplication: 'GreenEcoGenius AI is classified as "limited risk". Full transparency: every AI recommendation is traceable and explainable.' },
-  'b-corp': { title: 'B Corporation Certification', description: 'International certification for companies meeting the highest standards of social and environmental performance, transparency and accountability.', gegApplication: 'The CSR diagnostic evaluates your potential B Corp score. The platform identifies actions to reach the certification threshold (80 points).' },
-  'numerique-responsable': { title: 'Responsible Digital Label -- INR', description: 'French label certifying organizational commitment to responsible digital practices. Eco-design, accessibility, ethics.', gegApplication: 'The CSR diagnostic evaluates your Label NR eligibility. GreenEcoGenius itself aims for this certification.' },
-  'lucie-26000': { title: 'CSR label aligned with ISO 26000', description: 'Leading French CSR label based on ISO 26000. Covers governance, human rights, environment, fair practices.', gegApplication: 'The CSR diagnostic covers the 7 core subjects of ISO 26000 and evaluates your Lucie 26000 eligibility.' },
-  'engage-rse': { title: 'Engage RSE Label -- AFNOR Assessment', description: 'CSR assessment by AFNOR (French standards body). 4 levels: Commitment, Progress, Maturity, Exemplary.', gegApplication: 'The CSR diagnostic positions your organization on the AFNOR Engage RSE scale and identifies actions to progress.' },
+const NORM_EN: Record<
+  string,
+  { title: string; description: string; gegApplication: string }
+> = {
+  'iso-59004': {
+    title: 'Circular economy -- Vocabulary, principles and recommendations',
+    description:
+      'First international standard defining the common vocabulary of the circular economy. Establishes founding principles: circular resource flow, ecosystem resilience, systemic approach.',
+    gegApplication:
+      'All GreenEcoGenius terminology is aligned with this standard. Every feature uses ISO 59004 vocabulary.',
+  },
+  'iso-59010': {
+    title:
+      'Circular economy -- Guidelines for business models and value chains',
+    description:
+      'Guides organizations to transform their business model toward circularity. Covers eco-design, reuse, repair and recycling.',
+    gegApplication:
+      'The Circular Marketplace materializes these guidelines: secondary materials marketplace, buyer-seller matching, functionality economy.',
+  },
+  'iso-59014': {
+    title: 'Traceability of secondary materials valorization',
+    description:
+      'Principles, requirements and recommendations for the traceability of secondary materials from one company to another. This is exactly the GreenEcoGenius blockchain use case.',
+    gegApplication:
+      'Each lot traced on Polygon meets this standard: SHA-256 recording, geolocation, timestamping, immutable chain of trust.',
+  },
+  'iso-59020': {
+    title: 'Circular economy -- Measurement and assessment of circularity',
+    description:
+      'Framework for measuring circularity of organizations and products. Circular performance indicators, recycling rates, lifespan.',
+    gegApplication:
+      'Circularity indicators (recycling rate, CO2 avoided, tonnes valorized) are calculated per this standard in the Carbon Impact dashboard.',
+  },
+  'iso-14001': {
+    title: 'Environmental management systems',
+    description:
+      'The global reference for environmental management systems. PDCA framework (Plan-Do-Check-Act) for continuous improvement of environmental performance.',
+    gegApplication:
+      'The platform follows the PDCA framework for environmental management. The Compliance module assesses ISO 14001 alignment.',
+  },
+  'loi-agec': {
+    title: 'Anti-Waste for a Circular Economy Act',
+    description:
+      'French framework law for the transition to circular economy. End of single-use plastics by 2040, 3R decree, mandatory 9-stream sorting, extended EPR.',
+    gegApplication:
+      'The Circular Marketplace integrates AGEC obligations: 9-stream classification, waste traceability, EPR facilitator for businesses.',
+  },
+  'decret-9-flux': {
+    title: 'Source sorting and separate collection of business waste',
+    description:
+      'Mandatory sorting and separate collection of 9 waste streams for businesses. Extension to bio-waste and textiles in 2025.',
+    gegApplication:
+      'The Marketplace automatically classifies each lot according to the 9 regulatory streams. Traceability proves source sorting compliance.',
+  },
+  'rep-elargie': {
+    title: 'Extended Producer Responsibility',
+    description:
+      'Producers are responsible for the end of life of their products. Extension to industrial packaging, textiles, furniture, toys.',
+    gegApplication:
+      'The platform facilitates EPR compliance: waste traceability, valorization certificates, mandatory reporting.',
+  },
+  ppwr: {
+    title: 'Packaging and Packaging Waste Regulation',
+    description:
+      'Target: 100% recyclable packaging by 2030. Mandatory recycled content rate, digital passport, over-packaging ban.',
+    gegApplication:
+      'GreenEcoGenius anticipates PPWR: packaging traceability, recycled content rate calculation, digital passport preparation.',
+  },
+  'taxonomie-circulaire': {
+    title: 'Transition to a circular economy',
+    description:
+      'Objective 4 of the EU Taxonomy defines alignment criteria for economic activities with the circular economy.',
+    gegApplication:
+      'ESG reporting includes taxonomic alignment assessment for Objective 4. Marketplace data automatically feeds this assessment.',
+  },
+  dpp: {
+    title: 'Digital Product Passport',
+    description:
+      'Future unique identifier for each product containing its manufacturing history, composition, repairability and recyclability.',
+    gegApplication:
+      'The GreenEcoGenius blockchain is already designed for DPP: each lot has a unique identifier, immutable history and complete metadata.',
+  },
+  'ghg-protocol': {
+    title: 'Greenhouse Gas Protocol -- Corporate Standard',
+    description:
+      'The global standard for greenhouse gas emission accounting. Defines Scopes 1, 2 and 3. The foundation of all carbon assessments.',
+    gegApplication:
+      'All emission calculations follow the GHG Protocol. ESG reports are structured by Scope 1/2/3 with ADEME factors.',
+  },
+  'iso-14064': {
+    title: 'Quantification and reporting of GHG emissions',
+    description:
+      'ISO standard for quantification, monitoring and reporting of greenhouse gas emissions at the organizational level.',
+    gegApplication:
+      'The Carbon Impact module follows ISO 14064 methodology for emission quantification. Compatible with certified audits.',
+  },
+  'bilan-ges': {
+    title: 'Mandatory greenhouse gas emissions assessment',
+    description:
+      'Requirement for companies with 500+ employees to conduct a GHG assessment every 4 years (3 years for public bodies).',
+    gegApplication:
+      'GreenEcoGenius generates the GHG assessment in regulatory format. Platform data automatically feeds Scopes 1, 2 and 3.',
+  },
+  sbti: {
+    title: 'Science Based Targets initiative',
+    description:
+      'Global initiative defining emission reduction targets aligned with climate science. 1.5 degree trajectory.',
+    gegApplication:
+      'The CSR module evaluates SBTi alignment and reduction trajectory. Targets are integrated into the ESG report.',
+  },
+  cdp: {
+    title: 'Carbon Disclosure Project -- Climate questionnaire',
+    description:
+      'Global environmental disclosure system. Over 23,000 companies respond to the CDP questionnaire annually.',
+    gegApplication:
+      'Platform data can be exported in CDP format. The ESG report covers CDP Climate Change indicators.',
+  },
+  'eu-ets': {
+    title: 'EU Emissions Trading System',
+    description:
+      'European carbon market covering over 10,000 installations. Decreasing emission cap to achieve neutrality by 2050.',
+    gegApplication:
+      'The Carbon Impact module tracks emissions against EU ETS quotas. The Compliance module verifies alignment.',
+  },
+  cbam: {
+    title: 'Carbon Border Adjustment Mechanism',
+    description:
+      'Carbon border tax to prevent carbon leakage. Covers steel, cement, aluminum, fertilizers, electricity.',
+    gegApplication:
+      'GreenEcoGenius anticipates CBAM: carbon footprint calculation per material, origin traceability, import reporting.',
+  },
+  csrd: {
+    title: 'Corporate Sustainability Reporting Directive',
+    description:
+      'Major reform of non-financial reporting in Europe. Mandatory for 50,000 companies by 2028. Third-party audit required.',
+    gegApplication:
+      'The ESG Reporting module is built for CSRD: ESRS structure, double materiality, interactive compliance table, compliant PDF export.',
+  },
+  esrs: {
+    title: 'European Sustainability Reporting Standards',
+    description:
+      'The 12 technical standards of the CSRD covering environment (E1-E5), social (S1-S4) and governance (G1). Plus cross-cutting ESRS 1 and ESRS 2.',
+    gegApplication:
+      'The interactive CSRD table covers all 12 ESRS standards with compliance indicators, completeness and data sources for each indicator.',
+  },
+  gri: {
+    title: 'Global Reporting Initiative -- Reporting Standards',
+    description:
+      'The most widely used sustainability reporting framework. GRI 305 (emissions), GRI 306 (waste), GRI 302 (energy).',
+    gegApplication:
+      'ESG reports can be generated in GRI format. GRI 302, 305 and 306 indicators are automatically populated.',
+  },
+  'taxonomie-verte': {
+    title: 'Classification of sustainable economic activities',
+    description:
+      'European classification system defining which economic activities are considered "sustainable". 6 environmental objectives.',
+    gegApplication:
+      'ESG reporting evaluates taxonomic alignment of your activities. All 6 environmental objectives are covered.',
+  },
+  sfdr: {
+    title: 'Sustainability-related disclosures regulation',
+    description:
+      'Transparency obligation for financial actors on sustainability risks and negative impacts of their investments.',
+    gegApplication:
+      'Platform ESG data is compatible with SFDR requirements for investors and investment funds.',
+  },
+  'devoir-vigilance': {
+    title: 'Duty of Vigilance for parent and ordering companies',
+    description:
+      'Obligation for large companies to establish a vigilance plan covering serious harm to human rights and the environment.',
+    gegApplication:
+      'Blockchain traceability documents the value chain for the vigilance plan. Proof of origin and supplier compliance.',
+  },
+  dpef: {
+    title: 'Non-Financial Performance Declaration',
+    description:
+      'Non-financial reporting obligation for large French companies. CSRD predecessor, still in force during transition.',
+    gegApplication:
+      'The ESG Reporting module covers DPEF indicators and ensures the transition to CSRD for affected companies.',
+  },
+  'art-29-lec': {
+    title: 'Climate reporting for institutional investors',
+    description:
+      'Transparency obligation on climate risks for investors, banks and insurers. TCFD aligned.',
+    gegApplication:
+      'Platform climate data (Scopes 1/2/3, trajectory) is compatible with Art. 29 LEC requirements.',
+  },
+  cs3d: {
+    title: 'Corporate Sustainability Due Diligence Directive',
+    description:
+      'EU directive extending due diligence to all large EU companies. Covers human rights and environment in the value chain.',
+    gegApplication:
+      'The GreenEcoGenius blockchain already documents the value chain. CS3D extension will be integrated upon adoption.',
+  },
+  'blockchain-polygon': {
+    title: 'On-chain traceability on Polygon Mainnet',
+    description:
+      'Immutable recording of every transaction on the Polygon blockchain. Publicly verifiable anti-greenwashing proof.',
+    gegApplication:
+      'Each lot is recorded on Polygon with SHA-256 hash, timestamp and geolocation. Certificates verifiable via QR code.',
+  },
+  'vigilance-chaine': {
+    title: 'Supply chain due diligence',
+    description:
+      'Traceability and supplier verification requirements to ensure compliance with environmental and social standards.',
+    gegApplication:
+      'Blockchain traceability documents every step of the value chain: origin, transformation, transport, delivery. Immutable proof.',
+  },
+  'iso-22095': {
+    title: 'Chain of custody -- Terminology and models',
+    description:
+      'Standard defining terminology and models for chain of custody systems. Applicable to recycling and valorization.',
+    gegApplication:
+      'The GreenEcoGenius traceability system follows the ISO 22095 chain of custody model for secondary materials.',
+  },
+  eudr: {
+    title: 'Deforestation Regulation',
+    description:
+      'Due diligence obligation for deforestation-linked products: soy, palm oil, wood, cocoa, coffee, rubber, cattle.',
+    gegApplication:
+      'The blockchain documents material origins for EUDR due diligence. Verifiable non-deforestation proof.',
+  },
+  '3tg': {
+    title: 'Conflict minerals -- Tin, Tantalum, Tungsten and Gold',
+    description:
+      'Due diligence obligation for importers of minerals from conflict zones. Supply chain traceability.',
+    gegApplication:
+      'Blockchain traceability documents the origin of metals and minerals for 3TG compliance.',
+  },
+  'passeport-batterie': {
+    title: 'Battery Regulation -- Digital passport',
+    description:
+      'Digital passport obligation for industrial and electric vehicle batteries. Composition, origin, recyclability.',
+    gegApplication:
+      'The GreenEcoGenius blockchain architecture is already compatible with the battery passport format: unique ID, immutable history.',
+  },
+  rgpd: {
+    title: 'General Data Protection Regulation',
+    description:
+      'The European reference regulation for personal data protection. Consent, right to erasure, portability, DPO.',
+    gegApplication:
+      'GreenEcoGenius is GDPR compliant: consent, right to erasure, encryption, EU hosting, complete privacy policy.',
+  },
+  'iso-27001': {
+    title: 'Information security management',
+    description:
+      'International reference standard for information security management systems (ISMS). Globally recognized certification.',
+    gegApplication:
+      'GreenEcoGenius infrastructure follows ISO 27001 best practices: encryption, access control, logging, continuity plan.',
+  },
+  'soc-2': {
+    title: 'Service Organization Control -- Security and availability',
+    description:
+      'American audit standard for cloud service providers. Covers security, availability, integrity, confidentiality and privacy.',
+    gegApplication:
+      'GreenEcoGenius respects SOC 2 principles: security (AES-256 encryption), availability (99.9% SLA), data integrity.',
+  },
+  nis2: {
+    title: 'Network and information systems security',
+    description:
+      'EU directive strengthening cybersecurity for essential and important entities. Incident notification obligations.',
+    gegApplication:
+      'GreenEcoGenius anticipates NIS2: incident response plan, continuous monitoring, cybersecurity governance.',
+  },
+  'ai-act': {
+    title: 'Artificial Intelligence Act',
+    description:
+      "World's first legal framework for AI. Classifies AI systems by risk level and imposes transparency obligations.",
+    gegApplication:
+      'GreenEcoGenius AI is classified as "limited risk". Full transparency: every AI recommendation is traceable and explainable.',
+  },
+  'b-corp': {
+    title: 'B Corporation Certification',
+    description:
+      'International certification for companies meeting the highest standards of social and environmental performance, transparency and accountability.',
+    gegApplication:
+      'The CSR diagnostic evaluates your potential B Corp score. The platform identifies actions to reach the certification threshold (80 points).',
+  },
+  'numerique-responsable': {
+    title: 'Responsible Digital Label -- INR',
+    description:
+      'French label certifying organizational commitment to responsible digital practices. Eco-design, accessibility, ethics.',
+    gegApplication:
+      'The CSR diagnostic evaluates your Label NR eligibility. GreenEcoGenius itself aims for this certification.',
+  },
+  'lucie-26000': {
+    title: 'CSR label aligned with ISO 26000',
+    description:
+      'Leading French CSR label based on ISO 26000. Covers governance, human rights, environment, fair practices.',
+    gegApplication:
+      'The CSR diagnostic covers the 7 core subjects of ISO 26000 and evaluates your Lucie 26000 eligibility.',
+  },
+  'engage-rse': {
+    title: 'Engage RSE Label -- AFNOR Assessment',
+    description:
+      'CSR assessment by AFNOR (French standards body). 4 levels: Commitment, Progress, Maturity, Exemplary.',
+    gegApplication:
+      'The CSR diagnostic positions your organization on the AFNOR Engage RSE scale and identifies actions to progress.',
+  },
 };
 
 export function localizeNorm(norm: Norm, locale: string): Norm {
@@ -186,7 +492,10 @@ export function localizeNorm(norm: Norm, locale: string): Norm {
 }
 
 export function getLocalizedPillarInfo(locale: string) {
-  const result: Record<string, { label: string; icon: string; description: string }> = {};
+  const result: Record<
+    string,
+    { label: string; icon: string; description: string }
+  > = {};
   for (const [key, val] of Object.entries(PILLAR_INFO)) {
     result[key] = {
       label: locale === 'fr' ? val.label : val.label_en,
@@ -194,7 +503,10 @@ export function getLocalizedPillarInfo(locale: string) {
       description: locale === 'fr' ? val.description : val.description_en,
     };
   }
-  return result as Record<NormPillar, { label: string; icon: string; description: string }>;
+  return result as Record<
+    NormPillar,
+    { label: string; icon: string; description: string }
+  >;
 }
 
 export const PRIORITY_COLORS: Record<NormPriority, string> = {

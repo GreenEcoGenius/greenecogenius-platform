@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-
 import { NextRequest, NextResponse } from 'next/server';
 
 import * as z from 'zod';
@@ -98,20 +97,20 @@ export async function POST(req: NextRequest) {
     // Generate real PDF
     const pdfBuffer = await generateCertificatePDF(
       {
-      certNumber,
-      lotId: lot.lotId,
-      material: lot.materialType,
-      qualityGrade: lot.qualityGrade,
-      weightKg: lot.weightKg,
-      seller: lot.sellerName,
-      buyer: lot.buyerName,
-      origin: lot.originCity,
-      destination: lot.destinationCity,
-      co2AvoidedKg: lot.co2AvoidedKg,
-      hash,
-      txHash,
-      issuedAt,
-      contractAddress: process.env.CONTRACT_ADDRESS ?? undefined,
+        certNumber,
+        lotId: lot.lotId,
+        material: lot.materialType,
+        qualityGrade: lot.qualityGrade,
+        weightKg: lot.weightKg,
+        seller: lot.sellerName,
+        buyer: lot.buyerName,
+        origin: lot.originCity,
+        destination: lot.destinationCity,
+        co2AvoidedKg: lot.co2AvoidedKg,
+        hash,
+        txHash,
+        issuedAt,
+        contractAddress: process.env.CONTRACT_ADDRESS ?? undefined,
       },
       locale,
     );

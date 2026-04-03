@@ -1,10 +1,13 @@
 import 'server-only';
-
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import { NORMS_DATABASE } from '~/lib/data/norms-database';
 
-type ComplianceStatus = 'compliant' | 'partial' | 'non_compliant' | 'not_evaluated';
+type ComplianceStatus =
+  | 'compliant'
+  | 'partial'
+  | 'non_compliant'
+  | 'not_evaluated';
 type VerificationMethod =
   | 'auto_transaction'
   | 'auto_blockchain'
@@ -85,9 +88,7 @@ async function fetchAccountData(
       .from('org_esg_data')
       .select('*', { count: 'exact', head: true })
       .eq('account_id', accountId),
-    client
-      .from('esg_reports')
-      .select('*', { count: 'exact', head: true }),
+    client.from('esg_reports').select('*', { count: 'exact', head: true }),
   ]);
 
   const { data: carbonAgg } = await client
@@ -100,10 +101,8 @@ async function fetchAccountData(
     0,
   );
   const totalTonnesRecycled =
-    (carbonAgg ?? []).reduce(
-      (sum, r) => sum + Number(r.weight_kg ?? 0),
-      0,
-    ) / 1000;
+    (carbonAgg ?? []).reduce((sum, r) => sum + Number(r.weight_kg ?? 0), 0) /
+    1000;
 
   const hasScopeData = (carbonRecordsCount ?? 0) > 0;
 
@@ -171,7 +170,8 @@ function carbonRule(d: AccountData): ReturnType<RuleFn> {
   return {
     status: 'not_evaluated',
     method: 'pending',
-    summary: 'Complétez une transaction pour générer votre premier bilan carbone',
+    summary:
+      'Complétez une transaction pour générer votre premier bilan carbone',
   };
 }
 
@@ -194,7 +194,8 @@ function reportingRule(d: AccountData): ReturnType<RuleFn> {
     return {
       status: 'partial',
       method: 'auto_platform',
-      summary: 'Données auto-collectées depuis vos transactions, complétez le formulaire ESG',
+      summary:
+        'Données auto-collectées depuis vos transactions, complétez le formulaire ESG',
     };
   }
   return {
@@ -237,7 +238,8 @@ function dataRule(_d: AccountData): ReturnType<RuleFn> {
   return {
     status: 'partial',
     method: 'auto_platform',
-    summary: 'Conformité plateforme assurée, audit externe recommandé pour certification complète',
+    summary:
+      'Conformité plateforme assurée, audit externe recommandé pour certification complète',
   };
 }
 
@@ -330,7 +332,10 @@ export async function evaluateAccountCompliance(
       status,
       verification_method: method,
       evidence_summary: summary,
-      evidence_data: { compliant_norms: compliantCount, total_norms: nonLabelNorms.length },
+      evidence_data: {
+        compliant_norms: compliantCount,
+        total_norms: nonLabelNorms.length,
+      },
     });
   }
 

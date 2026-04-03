@@ -59,7 +59,10 @@ async function CompliancePage() {
                 <Shield className="text-primary h-8 w-8" />
               </div>
               <h2 className="text-metal-900 text-2xl font-bold">
-                <Trans i18nKey="compliance:emptyTitle" defaults="Conformité réglementaire" />
+                <Trans
+                  i18nKey="compliance:emptyTitle"
+                  defaults="Conformité réglementaire"
+                />
               </h2>
               <p className="text-metal-500 mx-auto mt-3 max-w-md text-sm leading-relaxed">
                 <Trans
@@ -76,7 +79,10 @@ async function CompliancePage() {
                   nativeButton={false}
                 >
                   <Zap className="mr-2 h-4 w-4" />
-                  <Trans i18nKey="compliance:publishListing" defaults="Publier une annonce" />
+                  <Trans
+                    i18nKey="compliance:publishListing"
+                    defaults="Publier une annonce"
+                  />
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
@@ -97,16 +103,25 @@ async function CompliancePage() {
   // Aggregate stats
   const compliantCount = rows.filter((r) => r.status === 'compliant').length;
   const partialCount = rows.filter((r) => r.status === 'partial').length;
-  const nonCompliantCount = rows.filter((r) => r.status === 'non_compliant').length;
+  const nonCompliantCount = rows.filter(
+    (r) => r.status === 'non_compliant',
+  ).length;
   const score = Math.round((compliantCount / rows.length) * 100);
   const alertCount = nonCompliantCount + partialCount;
 
   // Build pillar aggregation from real data
-  const pillarMap = new Map<string, { compliant: number; total: number; norms: string[] }>();
+  const pillarMap = new Map<
+    string,
+    { compliant: number; total: number; norms: string[] }
+  >();
   for (const norm of NORMS_DATABASE) {
     const row = rows.find((r) => r.norm_id === norm.id);
     const pillarKey = norm.pillar;
-    const existing = pillarMap.get(pillarKey) ?? { compliant: 0, total: 0, norms: [] };
+    const existing = pillarMap.get(pillarKey) ?? {
+      compliant: 0,
+      total: 0,
+      norms: [],
+    };
     existing.total += 1;
     existing.norms.push(norm.title);
     if (row?.status === 'compliant') existing.compliant += 1;
@@ -136,7 +151,11 @@ async function CompliancePage() {
     return {
       name: norm.title,
       pillar: norm.pillar,
-      status: (row?.status ?? 'not_evaluated') as 'compliant' | 'partial' | 'non_compliant' | 'not_evaluated',
+      status: (row?.status ?? 'not_evaluated') as
+        | 'compliant'
+        | 'partial'
+        | 'non_compliant'
+        | 'not_evaluated',
       autoVerified: (row?.verification_method ?? 'pending') as string,
       evidenceSummary: row?.evidence_summary ?? '',
     };
@@ -151,7 +170,10 @@ async function CompliancePage() {
         id: r.norm_id,
         title: norm?.title ?? r.norm_id,
         description: r.evidence_summary ?? '',
-        urgency: r.status === 'non_compliant' ? ('urgent' as const) : ('warning' as const),
+        urgency:
+          r.status === 'non_compliant'
+            ? ('urgent' as const)
+            : ('warning' as const),
       };
     })
     .slice(0, 5);

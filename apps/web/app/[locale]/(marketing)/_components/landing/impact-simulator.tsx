@@ -32,11 +32,14 @@ export function ImpactSimulator() {
   const t = useTranslations('marketing');
   const [tonnage, setTonnage] = useState(100);
 
-  const computed = useMemo(() => ({
-    co2: Math.round(tonnage * CO2_FACTOR * 10) / 10,
-    savings: Math.round(tonnage * SAVINGS_FACTOR),
-    score: Math.min(100, Math.round(20 + (tonnage / 10000) * 80)),
-  }), [tonnage]);
+  const computed = useMemo(
+    () => ({
+      co2: Math.round(tonnage * CO2_FACTOR * 10) / 10,
+      savings: Math.round(tonnage * SAVINGS_FACTOR),
+      score: Math.min(100, Math.round(20 + (tonnage / 10000) * 80)),
+    }),
+    [tonnage],
+  );
 
   return (
     <section className="py-20 sm:py-28">
@@ -69,7 +72,9 @@ export function ImpactSimulator() {
             />
             <div className="text-metal-500 mb-8 flex justify-between text-xs">
               <span>10 t</span>
-              <span className="text-primary text-lg font-bold">{tonnage.toLocaleString('fr-FR')} t/an</span>
+              <span className="text-primary text-lg font-bold">
+                {tonnage.toLocaleString('fr-FR')} t/an
+              </span>
               <span>10 000 t</span>
             </div>
 
@@ -78,19 +83,25 @@ export function ImpactSimulator() {
                 <p className="text-2xl font-bold text-emerald-700">
                   {computed.co2.toLocaleString('fr-FR')}
                 </p>
-                <p className="text-xs text-emerald-600">tCO₂e {t('landing.avoided')}</p>
+                <p className="text-xs text-emerald-600">
+                  tCO₂e {t('landing.avoided')}
+                </p>
               </div>
               <div className="rounded-xl bg-blue-50 p-4 text-center">
                 <p className="text-2xl font-bold text-blue-700">
                   {computed.savings.toLocaleString('fr-FR')} €
                 </p>
-                <p className="text-xs text-blue-600">{t('landing.potentialSavings')}</p>
+                <p className="text-xs text-blue-600">
+                  {t('landing.potentialSavings')}
+                </p>
               </div>
               <div className="rounded-xl bg-purple-50 p-4 text-center">
                 <p className="text-2xl font-bold text-purple-700">
                   {computed.score}/100
                 </p>
-                <p className="text-xs text-purple-600">{t('landing.esgScore')}</p>
+                <p className="text-xs text-purple-600">
+                  {t('landing.esgScore')}
+                </p>
               </div>
             </div>
           </div>

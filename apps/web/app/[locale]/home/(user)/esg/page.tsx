@@ -53,7 +53,10 @@ async function ESGPage() {
                 nativeButton={false}
               >
                 <Sparkles className="mr-2 h-4 w-4" />
-                <Trans i18nKey="esg:startWizard" defaults="Commencer le rapport" />
+                <Trans
+                  i18nKey="esg:startWizard"
+                  defaults="Commencer le rapport"
+                />
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
@@ -63,7 +66,10 @@ async function ESGPage() {
                 nativeButton={false}
               >
                 <FileText className="mr-2 h-4 w-4" />
-                <Trans i18nKey="esg:viewCarbon" defaults="Voir l'impact carbone" />
+                <Trans
+                  i18nKey="esg:viewCarbon"
+                  defaults="Voir l'impact carbone"
+                />
               </Button>
             </div>
           </CardContent>
@@ -72,15 +78,33 @@ async function ESGPage() {
         {/* Features */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { icon: '📋', title: 'CSRD / ESRS', desc: 'Rapport conforme aux 12 normes ESRS de la directive européenne' },
-            { icon: '🌍', title: 'GHG Protocol', desc: 'Bilan carbone Scopes 1, 2 et 3 auto-calculé' },
-            { icon: '🤖', title: 'Auto-remplissage IA', desc: 'Champs remplis automatiquement depuis vos transactions' },
-            { icon: '⛓️', title: 'Preuves blockchain', desc: 'Données vérifiables on-chain pour vos auditeurs' },
+            {
+              icon: '📋',
+              title: 'CSRD / ESRS',
+              desc: 'Rapport conforme aux 12 normes ESRS de la directive européenne',
+            },
+            {
+              icon: '🌍',
+              title: 'GHG Protocol',
+              desc: 'Bilan carbone Scopes 1, 2 et 3 auto-calculé',
+            },
+            {
+              icon: '🤖',
+              title: 'Auto-remplissage IA',
+              desc: 'Champs remplis automatiquement depuis vos transactions',
+            },
+            {
+              icon: '⛓️',
+              title: 'Preuves blockchain',
+              desc: 'Données vérifiables on-chain pour vos auditeurs',
+            },
           ].map((f) => (
             <Card key={f.title}>
               <CardContent className="p-5">
                 <span className="text-2xl">{f.icon}</span>
-                <h3 className="text-metal-900 mt-2 text-sm font-semibold">{f.title}</h3>
+                <h3 className="text-metal-900 mt-2 text-sm font-semibold">
+                  {f.title}
+                </h3>
                 <p className="text-metal-500 mt-1 text-xs">{f.desc}</p>
               </CardContent>
             </Card>

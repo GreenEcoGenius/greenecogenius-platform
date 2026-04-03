@@ -569,8 +569,12 @@ function VerifyLayout({
       </header>
       <main className="flex-1 px-4">{children}</main>
       <footer className="text-muted-foreground border-t px-4 py-6 text-center text-xs">
-        <p>GreenEcoGenius OÜ (Estonia) · GreenEcoGenius, Inc. (Delaware, USA)</p>
-        <p className="text-xs opacity-60">Blockchain: Polygon Mainnet · greenecogenius.tech</p>
+        <p>
+          GreenEcoGenius OÜ (Estonia) · GreenEcoGenius, Inc. (Delaware, USA)
+        </p>
+        <p className="text-xs opacity-60">
+          Blockchain: Polygon Mainnet · greenecogenius.tech
+        </p>
       </footer>
     </div>
   );

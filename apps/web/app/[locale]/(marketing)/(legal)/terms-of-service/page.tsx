@@ -26,29 +26,40 @@ async function TermsOfServicePage() {
         </p>
 
         <Section title="1. Informations légales">
-          <p>
-            La plateforme GreenEcoGenius est éditée conjointement par :
-          </p>
-          <h4 className="text-foreground mt-4 mb-2 text-sm font-semibold">EUROPE</h4>
+          <p>La plateforme GreenEcoGenius est éditée conjointement par :</p>
+          <h4 className="text-foreground mt-4 mb-2 text-sm font-semibold">
+            EUROPE
+          </h4>
           <InfoGrid
             items={[
               ['Entité', 'GreenEcoGenius OÜ'],
-              ['Forme juridique', 'Société à responsabilité limitée de droit estonien'],
+              [
+                'Forme juridique',
+                'Société à responsabilité limitée de droit estonien',
+              ],
               ['Registre du commerce estonien', '16917315'],
-              ['Siège social', 'Tornimäe tn 5, 10145 Tallinn, Harju maakond, Estonie'],
+              [
+                'Siège social',
+                'Tornimäe tn 5, 10145 Tallinn, Harju maakond, Estonie',
+              ],
               ['Capital social', '10 000,00 €'],
               ['Directeur', 'Ervis Ago'],
               ['Code EMTAK', "70221 — Conseil en gestion d'entreprise"],
               ['Email', 'contact@greenecogenius.tech'],
             ]}
           />
-          <h4 className="text-foreground mt-4 mb-2 text-sm font-semibold">ÉTATS-UNIS</h4>
+          <h4 className="text-foreground mt-4 mb-2 text-sm font-semibold">
+            ÉTATS-UNIS
+          </h4>
           <InfoGrid
             items={[
               ['Entité', 'GreenEcoGenius, Inc.'],
               ['Forme juridique', 'C-Corporation de droit du Delaware'],
               ['Registered Agent', 'Legalinc Corporate Services Inc.'],
-              ['Siège social', '131 Continental Dr, Suite 305, Newark, Delaware 19713, USA'],
+              [
+                'Siège social',
+                '131 Continental Dr, Suite 305, Newark, Delaware 19713, USA',
+              ],
               ['Actions autorisées', '10 000 000 Common Stock'],
               ['Fondateur et Directeur', 'Ervis Ago'],
               ["Date d'incorporation", '4 novembre 2025'],
@@ -56,9 +67,10 @@ async function TermsOfServicePage() {
           />
           <p className="mt-4">
             La plateforme est opérée par GreenEcoGenius OÜ pour les utilisateurs
-            situés dans {"l'Union européenne et l'Espace économique européen"}, et par
-            GreenEcoGenius, Inc. pour les utilisateurs situés aux États-Unis et au
-            Canada. Les deux entités sont détenues et dirigées par Ervis Ago.
+            situés dans {"l'Union européenne et l'Espace économique européen"},
+            et par GreenEcoGenius, Inc. pour les utilisateurs situés aux
+            États-Unis et au Canada. Les deux entités sont détenues et dirigées
+            par Ervis Ago.
           </p>
         </Section>
 
@@ -168,15 +180,18 @@ async function TermsOfServicePage() {
 
         <Section title="11. Loi applicable et juridiction">
           <p>
-            Pour les utilisateurs résidant dans {"l'Union européenne ou l'Espace économique européen"},
-            les présentes CGU sont régies par le droit estonien. Tout litige sera soumis à la
-            compétence exclusive des tribunaux de Tallinn, Estonie, sans préjudice des droits du
-            consommateur de saisir les tribunaux de son lieu de résidence.
+            Pour les utilisateurs résidant dans{' '}
+            {"l'Union européenne ou l'Espace économique européen"}, les
+            présentes CGU sont régies par le droit estonien. Tout litige sera
+            soumis à la compétence exclusive des tribunaux de Tallinn, Estonie,
+            sans préjudice des droits du consommateur de saisir les tribunaux de
+            son lieu de résidence.
           </p>
           <p>
-            Pour les utilisateurs résidant aux États-Unis ou au Canada, les présentes CGU sont
-            régies par le droit de {"l'État"} du Delaware. Tout litige sera soumis à la compétence des
-            tribunaux fédéraux ou étatiques situés dans le comté de New Castle, Delaware.
+            Pour les utilisateurs résidant aux États-Unis ou au Canada, les
+            présentes CGU sont régies par le droit de {"l'État"} du Delaware.
+            Tout litige sera soumis à la compétence des tribunaux fédéraux ou
+            étatiques situés dans le comté de New Castle, Delaware.
           </p>
         </Section>
       </div>

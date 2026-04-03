@@ -94,7 +94,8 @@ function LocaleToggle() {
 
     const currentPath = window.location.pathname;
     const stripped = currentPath.replace(/^\/(fr|en)(\/|$)/, '/');
-    const newPath = next === 'en' ? stripped : `/${next}${stripped === '/' ? '' : stripped}`;
+    const newPath =
+      next === 'en' ? stripped : `/${next}${stripped === '/' ? '' : stripped}`;
 
     window.location.href = newPath || '/';
   };

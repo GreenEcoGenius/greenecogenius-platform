@@ -85,8 +85,12 @@ export function ProfileActions({
           >
             <LogOut className="mr-2 h-4 w-4" strokeWidth={1.5} />
             {signOut.isPending
-              ? (locale === 'fr' ? 'Déconnexion...' : 'Signing out...')
-              : (locale === 'fr' ? 'Se déconnecter' : 'Sign out')}
+              ? locale === 'fr'
+                ? 'Déconnexion...'
+                : 'Signing out...'
+              : locale === 'fr'
+                ? 'Se déconnecter'
+                : 'Sign out'}
           </Button>
         </div>
       </CardContent>

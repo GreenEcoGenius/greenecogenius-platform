@@ -3,21 +3,15 @@ import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {
-  ArrowRight,
-  Bot,
-  CheckCircle,
-  Recycle,
-  Shield,
-} from 'lucide-react';
+import { ArrowRight, Bot, CheckCircle, Recycle, Shield } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { AnimateOnScroll } from './_components/animate-on-scroll';
 import { HeroScrollEffect } from './_components/hero-scroll-effect';
 import { HeroVisual } from './_components/hero-visual';
+import { ComparisonTable } from './_components/landing/comparison-table';
 import { FaqSection } from './_components/landing/faq-section';
 import { HowItWorks } from './_components/landing/how-it-works';
-import { ComparisonTable } from './_components/landing/comparison-table';
 import { ImpactSimulator } from './_components/landing/impact-simulator';
 import { PricingPreview } from './_components/landing/pricing-preview';
 import { RegulatoryTimeline } from './_components/landing/regulatory-timeline';
@@ -29,7 +23,8 @@ export async function generateMetadata() {
   const t = await getTranslations('marketing');
 
   return {
-    title: 'GreenEcoGenius — Plateforme B2B Économie Circulaire | CSRD & Blockchain',
+    title:
+      'GreenEcoGenius — Plateforme B2B Économie Circulaire | CSRD & Blockchain',
     description: t('heroSubtitle'),
   };
 }
@@ -78,13 +73,16 @@ export default async function Home() {
             <AnimateOnScroll animation="fade-up" delay={500}>
               <div className="mt-2 flex flex-wrap items-center justify-center gap-3 text-[11px] text-white/80">
                 <span className="flex items-center gap-1">
-                  <CheckCircle className="h-3.5 w-3.5" /> {t('landing.badgeCsrd')}
+                  <CheckCircle className="h-3.5 w-3.5" />{' '}
+                  {t('landing.badgeCsrd')}
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle className="h-3.5 w-3.5" /> {t('landing.badgeBlockchain')}
+                  <CheckCircle className="h-3.5 w-3.5" />{' '}
+                  {t('landing.badgeBlockchain')}
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle className="h-3.5 w-3.5" /> {t('landing.badgeAdeme')}
+                  <CheckCircle className="h-3.5 w-3.5" />{' '}
+                  {t('landing.badgeAdeme')}
                 </span>
               </div>
             </AnimateOnScroll>

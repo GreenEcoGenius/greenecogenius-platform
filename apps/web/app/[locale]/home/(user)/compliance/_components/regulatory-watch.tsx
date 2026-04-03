@@ -14,26 +14,47 @@ const IMPACT_STYLES: Record<
   ImpactLevel,
   { className: string; i18nKey: string }
 > = {
-  low: { className: 'bg-gray-100 text-gray-700', i18nKey: 'compliance:impactLow' },
-  medium: { className: 'bg-blue-100 text-blue-700', i18nKey: 'compliance:impactMedium' },
-  high: { className: 'bg-teal-100 text-teal-700', i18nKey: 'compliance:impactHigh' },
-  strategic: { className: 'bg-teal-100 text-teal-700', i18nKey: 'compliance:impactStrategic' },
+  low: {
+    className: 'bg-gray-100 text-gray-700',
+    i18nKey: 'compliance:impactLow',
+  },
+  medium: {
+    className: 'bg-blue-100 text-blue-700',
+    i18nKey: 'compliance:impactMedium',
+  },
+  high: {
+    className: 'bg-teal-100 text-teal-700',
+    i18nKey: 'compliance:impactHigh',
+  },
+  strategic: {
+    className: 'bg-teal-100 text-teal-700',
+    i18nKey: 'compliance:impactStrategic',
+  },
 };
 
 function getImpactFromPriority(priority: string): ImpactLevel {
   switch (priority) {
-    case 'fundamental': return 'strategic';
-    case 'strategic': return 'strategic';
-    case 'mandatory': return 'high';
-    case 'essential': return 'high';
-    case 'upcoming': return 'medium';
-    default: return 'low';
+    case 'fundamental':
+      return 'strategic';
+    case 'strategic':
+      return 'strategic';
+    case 'mandatory':
+      return 'high';
+    case 'essential':
+      return 'high';
+    case 'upcoming':
+      return 'medium';
+    default:
+      return 'low';
   }
 }
 
 export function RegulatoryWatch() {
   const upcomingNorms = NORMS_DATABASE.filter(
-    (n) => n.status === 'in_development' || n.status === 'planned' || n.platformIntegration === 'anticipated',
+    (n) =>
+      n.status === 'in_development' ||
+      n.status === 'planned' ||
+      n.platformIntegration === 'anticipated',
   ).slice(0, 4);
 
   if (upcomingNorms.length === 0) return null;
@@ -43,7 +64,10 @@ export function RegulatoryWatch() {
       <CardContent className="p-6">
         <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
           <EyeIcon className="h-5 w-5 text-blue-500" />
-          <Trans i18nKey="compliance:watchTitle" defaults="Veille réglementaire" />
+          <Trans
+            i18nKey="compliance:watchTitle"
+            defaults="Veille réglementaire"
+          />
         </h3>
 
         <div className="space-y-4">

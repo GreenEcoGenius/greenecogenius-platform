@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-
 import { NextResponse } from 'next/server';
 
 import * as z from 'zod';
@@ -318,19 +317,19 @@ export async function POST() {
   // Generate PDF
   const pdfBuffer = generateAuditReportPDF(
     {
-    companyName,
-    date: generatedAt,
-    score: auditResult.score,
-    normsCompliant: auditResult.normsCompliant,
-    normsPartial: auditResult.normsPartial,
-    normsNonCompliant: auditResult.normsNonCompliant,
-    normsTotal: auditResult.normsTotal,
-    criticalIssues: auditResult.criticalIssues,
-    majorIssues: auditResult.majorIssues,
-    minorIssues: auditResult.minorIssues,
-    executiveSummary: auditResult.executiveSummary,
-    norms: auditResult.norms,
-    pillars: PILLARS,
+      companyName,
+      date: generatedAt,
+      score: auditResult.score,
+      normsCompliant: auditResult.normsCompliant,
+      normsPartial: auditResult.normsPartial,
+      normsNonCompliant: auditResult.normsNonCompliant,
+      normsTotal: auditResult.normsTotal,
+      criticalIssues: auditResult.criticalIssues,
+      majorIssues: auditResult.majorIssues,
+      minorIssues: auditResult.minorIssues,
+      executiveSummary: auditResult.executiveSummary,
+      norms: auditResult.norms,
+      pillars: PILLARS,
     },
     locale,
   );

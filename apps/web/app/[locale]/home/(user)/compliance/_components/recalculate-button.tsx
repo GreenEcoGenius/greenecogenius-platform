@@ -30,11 +30,19 @@ export function RecalculateButton() {
       disabled={isPending}
       onClick={() => execute()}
     >
-      <RefreshCw className={`mr-2 h-4 w-4 ${isPending ? 'animate-spin' : ''}`} />
+      <RefreshCw
+        className={`mr-2 h-4 w-4 ${isPending ? 'animate-spin' : ''}`}
+      />
       {isPending ? (
-        <Trans i18nKey="compliance:recalculating" defaults="Recalcul en cours..." />
+        <Trans
+          i18nKey="compliance:recalculating"
+          defaults="Recalcul en cours..."
+        />
       ) : (
-        <Trans i18nKey="compliance:recalculate" defaults="Recalculer la conformité" />
+        <Trans
+          i18nKey="compliance:recalculate"
+          defaults="Recalculer la conformité"
+        />
       )}
     </Button>
   );

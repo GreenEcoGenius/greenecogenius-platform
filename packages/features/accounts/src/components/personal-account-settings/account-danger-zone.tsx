@@ -121,11 +121,17 @@ function DeleteAccountForm(props: { email: string }) {
             <Alert variant={'destructive'}>
               <TriangleAlert className={'h-4'} />
               <AlertTitle>
-                <Trans i18nKey={'account.deleteAccountErrorHeading'} defaults="Erreur" />
+                <Trans
+                  i18nKey={'account.deleteAccountErrorHeading'}
+                  defaults="Erreur"
+                />
               </AlertTitle>
               <AlertDescription>
                 {result?.serverError ?? (
-                  <Trans i18nKey={'common.genericError'} defaults="Le code OTP est invalide ou a expiré. Veuillez réessayer." />
+                  <Trans
+                    i18nKey={'common.genericError'}
+                    defaults="Le code OTP est invalide ou a expiré. Veuillez réessayer."
+                  />
                 )}
               </AlertDescription>
             </Alert>

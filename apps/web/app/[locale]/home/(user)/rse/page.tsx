@@ -43,7 +43,10 @@ async function RSEPage() {
                 nativeButton={false}
               >
                 <ClipboardCheck className="mr-2 h-4 w-4" />
-                <Trans i18nKey="rse:startDiagnostic" defaults="Lancer un diagnostic" />
+                <Trans
+                  i18nKey="rse:startDiagnostic"
+                  defaults="Lancer un diagnostic"
+                />
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
@@ -53,7 +56,10 @@ async function RSEPage() {
                 nativeButton={false}
               >
                 <Target className="mr-2 h-4 w-4" />
-                <Trans i18nKey="rse:viewRoadmap" defaults="Voir la feuille de route" />
+                <Trans
+                  i18nKey="rse:viewRoadmap"
+                  defaults="Voir la feuille de route"
+                />
               </Button>
             </div>
           </CardContent>
@@ -62,15 +68,33 @@ async function RSEPage() {
         {/* What you'll get */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { icon: '📊', title: 'Score RSE', desc: 'Score global sur 100 calculé depuis vos réponses au diagnostic' },
-            { icon: '🏆', title: 'Éligibilité labels', desc: 'B Corp, GreenTech, Label NR — votre éligibilité en temps réel' },
-            { icon: '📋', title: 'Plan d\'action', desc: 'Actions prioritaires recommandées par l\'IA pour améliorer votre score' },
-            { icon: '🔗', title: 'Écosystème', desc: 'Données croisées avec vos transactions, carbone et traçabilité' },
+            {
+              icon: '📊',
+              title: 'Score RSE',
+              desc: 'Score global sur 100 calculé depuis vos réponses au diagnostic',
+            },
+            {
+              icon: '🏆',
+              title: 'Éligibilité labels',
+              desc: 'B Corp, GreenTech, Label NR — votre éligibilité en temps réel',
+            },
+            {
+              icon: '📋',
+              title: "Plan d'action",
+              desc: "Actions prioritaires recommandées par l'IA pour améliorer votre score",
+            },
+            {
+              icon: '🔗',
+              title: 'Écosystème',
+              desc: 'Données croisées avec vos transactions, carbone et traçabilité',
+            },
           ].map((f) => (
             <Card key={f.title}>
               <CardContent className="p-5">
                 <span className="text-2xl">{f.icon}</span>
-                <h3 className="text-metal-900 mt-2 text-sm font-semibold">{f.title}</h3>
+                <h3 className="text-metal-900 mt-2 text-sm font-semibold">
+                  {f.title}
+                </h3>
                 <p className="text-metal-500 mt-1 text-xs">{f.desc}</p>
               </CardContent>
             </Card>

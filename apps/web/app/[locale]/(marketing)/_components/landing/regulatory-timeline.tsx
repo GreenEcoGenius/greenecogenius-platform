@@ -14,9 +14,24 @@ const MILESTONES = [
 ];
 
 const URGENCY_STYLES = {
-  past: { bg: 'bg-gray-100', border: 'border-gray-300', text: 'text-gray-600', icon: CheckCircle },
-  urgent: { bg: 'bg-amber-50', border: 'border-amber-300', text: 'text-amber-700', icon: AlertTriangle },
-  future: { bg: 'bg-emerald-50', border: 'border-emerald-300', text: 'text-emerald-700', icon: Clock },
+  past: {
+    bg: 'bg-gray-100',
+    border: 'border-gray-300',
+    text: 'text-gray-600',
+    icon: CheckCircle,
+  },
+  urgent: {
+    bg: 'bg-amber-50',
+    border: 'border-amber-300',
+    text: 'text-amber-700',
+    icon: AlertTriangle,
+  },
+  future: {
+    bg: 'bg-emerald-50',
+    border: 'border-emerald-300',
+    text: 'text-emerald-700',
+    icon: Clock,
+  },
 };
 
 export function RegulatoryTimeline() {
@@ -44,7 +59,9 @@ export function RegulatoryTimeline() {
               >
                 <div className="mb-2 flex items-center gap-2">
                   <Icon className={`h-4 w-4 ${style.text}`} />
-                  <span className={`text-sm font-bold ${style.text}`}>{m.year}</span>
+                  <span className={`text-sm font-bold ${style.text}`}>
+                    {m.year}
+                  </span>
                   {m.urgency === 'urgent' && (
                     <span className="rounded-full bg-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-800">
                       Urgent
@@ -71,14 +88,18 @@ export function RegulatoryTimeline() {
               >
                 <div className="mb-1 flex items-center gap-2">
                   <Icon className={`h-4 w-4 ${style.text}`} />
-                  <span className={`text-sm font-bold ${style.text}`}>{m.year}</span>
+                  <span className={`text-sm font-bold ${style.text}`}>
+                    {m.year}
+                  </span>
                   {m.urgency === 'urgent' && (
                     <span className="rounded-full bg-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-800">
                       Urgent
                     </span>
                   )}
                 </div>
-                <p className="text-metal-800 text-sm">{t(`landing.${m.key}`)}</p>
+                <p className="text-metal-800 text-sm">
+                  {t(`landing.${m.key}`)}
+                </p>
               </div>
             );
           })}

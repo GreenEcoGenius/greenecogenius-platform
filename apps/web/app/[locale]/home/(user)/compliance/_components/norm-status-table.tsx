@@ -89,7 +89,10 @@ export function NormStatusTable({ norms }: { norms: NormRow[] }) {
       <CardContent className="p-6">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <h3 className="text-lg font-semibold">
-            <Trans i18nKey="compliance:normTableTitle" defaults="Statut par norme" />
+            <Trans
+              i18nKey="compliance:normTableTitle"
+              defaults="Statut par norme"
+            />
           </h3>
           <div className="flex gap-1.5">
             {(
@@ -131,7 +134,8 @@ export function NormStatusTable({ norms }: { norms: NormRow[] }) {
               {filtered.map((norm) => {
                 const statusCfg = STATUS_CONFIG[norm.status];
                 const StatusIcon = statusCfg.icon;
-                const methodInfo = METHOD_LABELS[norm.autoVerified] ?? METHOD_LABELS.pending!;
+                const methodInfo =
+                  METHOD_LABELS[norm.autoVerified] ?? METHOD_LABELS.pending!;
 
                 return (
                   <tr key={norm.name} className="hover:bg-gray-50/50">
@@ -142,7 +146,10 @@ export function NormStatusTable({ norms }: { norms: NormRow[] }) {
                     <td className="px-3 py-3">
                       <Badge variant="outline" className={statusCfg.className}>
                         <StatusIcon className="mr-1 h-3 w-3" />
-                        <Trans i18nKey={statusCfg.i18nKey} defaults={norm.status} />
+                        <Trans
+                          i18nKey={statusCfg.i18nKey}
+                          defaults={norm.status}
+                        />
                       </Badge>
                     </td>
                     <td className="px-3 py-3">
@@ -153,7 +160,10 @@ export function NormStatusTable({ norms }: { norms: NormRow[] }) {
                     <td className="px-3 py-3">
                       <Button variant="ghost" size="sm" className="text-xs">
                         <Eye className="mr-1 h-3 w-3" />
-                        <Trans i18nKey="compliance:viewDetails" defaults="Voir détails" />
+                        <Trans
+                          i18nKey="compliance:viewDetails"
+                          defaults="Voir détails"
+                        />
                       </Button>
                     </td>
                   </tr>

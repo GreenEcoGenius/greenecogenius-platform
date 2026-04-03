@@ -135,7 +135,9 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   <span className="text-muted-foreground">
                     Score: {label.score}
                   </span>
-                  <span className="text-emerald-700">Seuil: {label.threshold}</span>
+                  <span className="text-emerald-700">
+                    Seuil: {label.threshold}
+                  </span>
                 </div>
               </div>
             )}

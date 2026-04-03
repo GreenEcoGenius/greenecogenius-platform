@@ -6,16 +6,70 @@ import { ArrowRight, Lightbulb, Star } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 const FEATURES = [
-  { key: 'marketplace', geg: 'yes', greenly: 'no', sweep: 'no', internal: 'no' },
+  {
+    key: 'marketplace',
+    geg: 'yes',
+    greenly: 'no',
+    sweep: 'no',
+    internal: 'no',
+  },
   { key: 'blockchain', geg: 'yes', greenly: 'no', sweep: 'no', internal: 'no' },
-  { key: 'carbonScopes', geg: 'yes', greenly: 'yes', sweep: 'yes', internal: 'partial' },
-  { key: 'csrdReport', geg: 'yes', greenly: 'yes', sweep: 'yes', internal: 'no' },
-  { key: 'ademeBase', geg: 'yes', greenly: 'yes', sweep: 'partial', internal: 'no' },
-  { key: 'agecRep', geg: 'yes', greenly: 'partial', sweep: 'partial', internal: 'no' },
-  { key: 'blockchainCerts', geg: 'yes', greenly: 'no', sweep: 'no', internal: 'no' },
-  { key: 'csrLabels', geg: 'yes', greenly: 'no', sweep: 'partial', internal: 'no' },
-  { key: 'apiWebhooks', geg: 'yes', greenly: 'yes', sweep: 'yes', internal: 'na' },
-  { key: 'entryPrice', geg: 'price', greenly: 'price', sweep: 'price', internal: 'price' },
+  {
+    key: 'carbonScopes',
+    geg: 'yes',
+    greenly: 'yes',
+    sweep: 'yes',
+    internal: 'partial',
+  },
+  {
+    key: 'csrdReport',
+    geg: 'yes',
+    greenly: 'yes',
+    sweep: 'yes',
+    internal: 'no',
+  },
+  {
+    key: 'ademeBase',
+    geg: 'yes',
+    greenly: 'yes',
+    sweep: 'partial',
+    internal: 'no',
+  },
+  {
+    key: 'agecRep',
+    geg: 'yes',
+    greenly: 'partial',
+    sweep: 'partial',
+    internal: 'no',
+  },
+  {
+    key: 'blockchainCerts',
+    geg: 'yes',
+    greenly: 'no',
+    sweep: 'no',
+    internal: 'no',
+  },
+  {
+    key: 'csrLabels',
+    geg: 'yes',
+    greenly: 'no',
+    sweep: 'partial',
+    internal: 'no',
+  },
+  {
+    key: 'apiWebhooks',
+    geg: 'yes',
+    greenly: 'yes',
+    sweep: 'yes',
+    internal: 'na',
+  },
+  {
+    key: 'entryPrice',
+    geg: 'price',
+    greenly: 'price',
+    sweep: 'price',
+    internal: 'price',
+  },
 ] as const;
 
 const PRICES: Record<string, string> = {
@@ -30,7 +84,9 @@ type CellValue = 'yes' | 'no' | 'partial' | 'na' | 'price';
 function CellIcon({ value, col }: { value: CellValue; col: string }) {
   if (value === 'price') {
     return (
-      <span className={`text-xs font-semibold ${col === 'geg' ? 'text-[#065F46]' : 'text-metal-600'}`}>
+      <span
+        className={`text-xs font-semibold ${col === 'geg' ? 'text-[#065F46]' : 'text-metal-600'}`}
+      >
         {PRICES[col]}
       </span>
     );
@@ -67,13 +123,13 @@ export function ComparisonTable() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b bg-gray-50">
-                <th className="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                <th className="px-5 py-4 text-left text-xs font-semibold tracking-wider text-gray-500 uppercase">
                   {t('landing.compFeature')}
                 </th>
                 {columns.map((col) => (
                   <th
                     key={col}
-                    className={`px-4 py-4 text-center text-xs font-semibold uppercase tracking-wider ${
+                    className={`px-4 py-4 text-center text-xs font-semibold tracking-wider uppercase ${
                       col === 'geg'
                         ? 'bg-[#ECFDF5] text-[#065F46]'
                         : 'text-gray-500'
@@ -92,7 +148,10 @@ export function ComparisonTable() {
             </thead>
             <tbody className="divide-y">
               {FEATURES.map((row) => (
-                <tr key={row.key} className="hover:bg-gray-50/50 transition-colors">
+                <tr
+                  key={row.key}
+                  className="transition-colors hover:bg-gray-50/50"
+                >
                   <td className="text-metal-800 px-5 py-3.5 text-sm font-medium">
                     {t(`landing.comp_${row.key}`)}
                   </td>
@@ -120,8 +179,14 @@ export function ComparisonTable() {
               <div className="grid grid-cols-4 gap-2 text-center">
                 {columns.map((col) => (
                   <div key={col}>
-                    <p className={`text-[10px] font-medium ${col === 'geg' ? 'text-[#065F46]' : 'text-metal-400'}`}>
-                      {col === 'geg' ? 'GEG' : col === 'internal' ? 'Int.' : columnHeaders[col]}
+                    <p
+                      className={`text-[10px] font-medium ${col === 'geg' ? 'text-[#065F46]' : 'text-metal-400'}`}
+                    >
+                      {col === 'geg'
+                        ? 'GEG'
+                        : col === 'internal'
+                          ? 'Int.'
+                          : columnHeaders[col]}
                     </p>
                     <CellIcon value={row[col]} col={col} />
                   </div>

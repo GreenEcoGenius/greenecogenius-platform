@@ -71,7 +71,9 @@ export default async function NormesPage() {
               />
               <Button
                 variant="outline"
-                render={<Link href="/home/billing">{t('normesCtaPricing')}</Link>}
+                render={
+                  <Link href="/home/billing">{t('normesCtaPricing')}</Link>
+                }
                 nativeButton={false}
               />
             </div>

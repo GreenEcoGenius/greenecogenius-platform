@@ -33,8 +33,7 @@ function getDemoCarbonRecordsForCsv() {
         ? Math.round((m.weight / totalWeightKg) * totalTransport * 10) / 10
         : 0;
     const co2_avoided = m.co2_avoided;
-    const co2_net_benefit =
-      Math.round((co2_avoided - co2_transport) * 10) / 10;
+    const co2_net_benefit = Math.round((co2_avoided - co2_transport) * 10) / 10;
     const origin = origins[i % origins.length]!;
     return {
       created_at: createdAtStamps[i % createdAtStamps.length]!,

@@ -43,8 +43,7 @@ async function MarketplacePage() {
   const sellerCount = new Set(listingRows.map((l) => l.account_id)).size;
   const volumeEur = listingRows.reduce((sum, l) => {
     const qty = Number(l.quantity ?? 0);
-    const price =
-      l.price_per_unit != null ? Number(l.price_per_unit) : 0;
+    const price = l.price_per_unit != null ? Number(l.price_per_unit) : 0;
     return sum + qty * price;
   }, 0);
   const volumeLabel =

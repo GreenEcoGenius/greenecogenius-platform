@@ -13,7 +13,6 @@ import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
@@ -53,7 +52,11 @@ const EMPTY_MONTHLY = [
   { month: '2026-02', co2_avoided: 0, co2_transport: 0, co2_net: 0 },
   { month: '2026-03', co2_avoided: 0, co2_transport: 0, co2_net: 0 },
 ];
-const EMPTY_MATERIAL: Array<{ category: string; co2_avoided: number; weight: number }> = [];
+const EMPTY_MATERIAL: Array<{
+  category: string;
+  co2_avoided: number;
+  weight: number;
+}> = [];
 
 async function CarbonPage() {
   const client = getSupabaseServerClient();

@@ -73,12 +73,12 @@ const statusConfig = {
     label: 'Eligible',
   },
   en_cours: {
-    badge:
-      'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400',
+    badge: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400',
     label: 'En cours',
   },
   non_eligible: {
-    badge: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400',
+    badge:
+      'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400',
     label: 'Non eligible',
   },
 };

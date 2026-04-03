@@ -27,27 +27,45 @@ async function PrivacyPolicyPage() {
 
         <Section title="1. Responsables du traitement">
           <p>
-            <strong className="text-foreground">Pour les utilisateurs situés dans {"l'UE/EEE"} :</strong>
+            <strong className="text-foreground">
+              Pour les utilisateurs situés dans {"l'UE/EEE"} :
+            </strong>
           </p>
           <p>
-            Responsable du traitement : <strong className="text-foreground">GreenEcoGenius OÜ</strong><br />
-            Adresse : Tornimäe tn 5, 10145 Tallinn, Estonie<br />
-            Registre : 16917315<br />
-            Email DPO : <a href="mailto:contact@greenecogenius.tech" className="text-primary hover:text-primary/80 underline underline-offset-4">contact@greenecogenius.tech</a><br />
+            Responsable du traitement :{' '}
+            <strong className="text-foreground">GreenEcoGenius OÜ</strong>
+            <br />
+            Adresse : Tornimäe tn 5, 10145 Tallinn, Estonie
+            <br />
+            Registre : 16917315
+            <br />
+            Email DPO :{' '}
+            <a
+              href="mailto:contact@greenecogenius.tech"
+              className="text-primary hover:text-primary/80 underline underline-offset-4"
+            >
+              contact@greenecogenius.tech
+            </a>
+            <br />
             Base légale : RGPD (UE) 2016/679
           </p>
           <p>
-            <strong className="text-foreground">Pour les utilisateurs situés aux États-Unis :</strong>
+            <strong className="text-foreground">
+              Pour les utilisateurs situés aux États-Unis :
+            </strong>
           </p>
           <p>
-            Responsable du traitement : <strong className="text-foreground">GreenEcoGenius, Inc.</strong><br />
-            Adresse : 131 Continental Dr, Suite 305, Newark, DE 19713, USA<br />
+            Responsable du traitement :{' '}
+            <strong className="text-foreground">GreenEcoGenius, Inc.</strong>
+            <br />
+            Adresse : 131 Continental Dr, Suite 305, Newark, DE 19713, USA
+            <br />
             Lois applicables : CCPA (California), lois étatiques applicables
           </p>
           <p>
-            Les deux entités appliquent les mêmes standards de protection des données,
-            alignés sur le RGPD européen, considéré comme le niveau le plus élevé de
-            protection au niveau mondial.
+            Les deux entités appliquent les mêmes standards de protection des
+            données, alignés sur le RGPD européen, considéré comme le niveau le
+            plus élevé de protection au niveau mondial.
           </p>
         </Section>
 
@@ -236,24 +254,34 @@ async function PrivacyPolicyPage() {
 
         <Section title="9. Transferts internationaux de données">
           <p>
-            Les données des utilisateurs européens sont hébergées dans {"l'Union européenne"}
-            (Supabase — région Ireland eu-west-1). Aucun transfert de données personnelles
-            {"d'utilisateurs"} européens vers les États-Unis {"n'est"} effectué sauf si nécessaire
-            au fonctionnement du service, auquel cas le transfert est encadré par les
-            Clauses Contractuelles Types (CCT) de la Commission européenne.
+            Les données des utilisateurs européens sont hébergées dans{' '}
+            {"l'Union européenne"}
+            (Supabase — région Ireland eu-west-1). Aucun transfert de données
+            personnelles
+            {"d'utilisateurs"} européens vers les États-Unis {"n'est"} effectué
+            sauf si nécessaire au fonctionnement du service, auquel cas le
+            transfert est encadré par les Clauses Contractuelles Types (CCT) de
+            la Commission européenne.
           </p>
           <p>
-            Les données des utilisateurs américains sont traitées par GreenEcoGenius, Inc.
-            conformément aux lois fédérales et étatiques applicables.
+            Les données des utilisateurs américains sont traitées par
+            GreenEcoGenius, Inc. conformément aux lois fédérales et étatiques
+            applicables.
           </p>
-          <p><strong className="text-foreground">Sous-traitants techniques :</strong></p>
-          <DataTable rows={[
-            ['Supabase, Inc.', 'Hébergement base de données — EU region'],
-            ['Vercel, Inc.', 'Hébergement application — Edge network global'],
-            ['Anthropic, PBC', 'Intelligence artificielle — API Claude'],
-            ['Alchemy Insights, Inc.', 'Blockchain — Polygon Mainnet'],
-            ['Stripe, Inc.', 'Paiements — PCI DSS Level 1'],
-          ]} />
+          <p>
+            <strong className="text-foreground">
+              Sous-traitants techniques :
+            </strong>
+          </p>
+          <DataTable
+            rows={[
+              ['Supabase, Inc.', 'Hébergement base de données — EU region'],
+              ['Vercel, Inc.', 'Hébergement application — Edge network global'],
+              ['Anthropic, PBC', 'Intelligence artificielle — API Claude'],
+              ['Alchemy Insights, Inc.', 'Blockchain — Polygon Mainnet'],
+              ['Stripe, Inc.', 'Paiements — PCI DSS Level 1'],
+            ]}
+          />
         </Section>
       </div>
     </div>

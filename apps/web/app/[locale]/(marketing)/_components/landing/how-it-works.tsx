@@ -46,7 +46,7 @@ export function HowItWorks() {
               className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all ${
                 i === active
                   ? 'bg-[#065F46] text-white shadow-md'
-                  : 'bg-white text-gray-500 border border-gray-300'
+                  : 'border border-gray-300 bg-white text-gray-500'
               }`}
             >
               {i + 1}
@@ -57,10 +57,12 @@ export function HowItWorks() {
         {/* Active step content */}
         <div className="mx-auto max-w-2xl rounded-2xl border bg-white p-8 shadow-sm transition-all sm:p-10">
           <div className="flex flex-col items-center text-center">
-            <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${step.color}`}>
+            <div
+              className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${step.color}`}
+            >
               <Icon className="h-8 w-8" />
             </div>
-            <p className="text-primary mb-2 text-sm font-semibold uppercase tracking-wider">
+            <p className="text-primary mb-2 text-sm font-semibold tracking-wider uppercase">
               {t('landing.stepLabel', { n: active + 1 })}
             </p>
             <h3 className="text-metal-900 mb-3 text-xl font-bold sm:text-2xl">

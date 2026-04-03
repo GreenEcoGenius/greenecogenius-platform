@@ -218,8 +218,12 @@ export default async function AboutPage() {
           <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-2">
             <AnimateOnScroll animation="fade-right">
               <div className="rounded-2xl border bg-white p-8">
-                <h3 className="text-metal-900 text-xl font-bold">GreenEcoGenius OÜ</h3>
-                <p className="text-primary mt-1 text-sm font-semibold">Tallinn, Estonia</p>
+                <h3 className="text-metal-900 text-xl font-bold">
+                  GreenEcoGenius OÜ
+                </h3>
+                <p className="text-primary mt-1 text-sm font-semibold">
+                  Tallinn, Estonia
+                </p>
                 <p className="text-metal-600 mt-4 leading-relaxed">
                   {t('aboutStructureEU')}
                 </p>
@@ -227,8 +231,12 @@ export default async function AboutPage() {
             </AnimateOnScroll>
             <AnimateOnScroll animation="fade-left">
               <div className="rounded-2xl border bg-white p-8">
-                <h3 className="text-metal-900 text-xl font-bold">GreenEcoGenius, Inc.</h3>
-                <p className="text-primary mt-1 text-sm font-semibold">Delaware, USA</p>
+                <h3 className="text-metal-900 text-xl font-bold">
+                  GreenEcoGenius, Inc.
+                </h3>
+                <p className="text-primary mt-1 text-sm font-semibold">
+                  Delaware, USA
+                </p>
                 <p className="text-metal-600 mt-4 leading-relaxed">
                   {t('aboutStructureUS')}
                 </p>

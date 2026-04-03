@@ -40,14 +40,18 @@ export function ComplianceAlerts({ alerts }: { alerts: AlertItem[] }) {
               <div className="flex items-start gap-3">
                 <AlertTriangle
                   className={`mt-0.5 h-4 w-4 shrink-0 ${
-                    alert.urgency === 'urgent' ? 'text-slate-600' : 'text-teal-600'
+                    alert.urgency === 'urgent'
+                      ? 'text-slate-600'
+                      : 'text-teal-600'
                   }`}
                 />
                 <div className="flex-1">
                   <div className="mb-1 flex items-center gap-2">
                     <span className="font-semibold">{alert.title}</span>
                     <Badge
-                      variant={alert.urgency === 'urgent' ? 'destructive' : 'outline'}
+                      variant={
+                        alert.urgency === 'urgent' ? 'destructive' : 'outline'
+                      }
                       className={
                         alert.urgency === 'warning'
                           ? 'border-teal-300 bg-teal-100 text-teal-700'
@@ -56,7 +60,9 @@ export function ComplianceAlerts({ alerts }: { alerts: AlertItem[] }) {
                     >
                       <Trans
                         i18nKey={`compliance:${alert.urgency}`}
-                        defaults={alert.urgency === 'urgent' ? 'Urgent' : 'Attention'}
+                        defaults={
+                          alert.urgency === 'urgent' ? 'Urgent' : 'Attention'
+                        }
                       />
                     </Badge>
                   </div>

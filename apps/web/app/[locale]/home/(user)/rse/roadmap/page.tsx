@@ -21,7 +21,10 @@ async function RoadmapPage() {
               <Map className="text-primary h-8 w-8" />
             </div>
             <h2 className="text-metal-900 text-2xl font-bold">
-              <Trans i18nKey="rse:roadmapTitle" defaults="Feuille de route RSE" />
+              <Trans
+                i18nKey="rse:roadmapTitle"
+                defaults="Feuille de route RSE"
+              />
             </h2>
             <p className="text-metal-500 mx-auto mt-3 max-w-md text-sm leading-relaxed">
               <Trans
@@ -37,7 +40,10 @@ async function RoadmapPage() {
                 nativeButton={false}
               >
                 <ClipboardCheck className="mr-2 h-4 w-4" />
-                <Trans i18nKey="rse:startDiagnostic" defaults="Lancer un diagnostic" />
+                <Trans
+                  i18nKey="rse:startDiagnostic"
+                  defaults="Lancer un diagnostic"
+                />
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>

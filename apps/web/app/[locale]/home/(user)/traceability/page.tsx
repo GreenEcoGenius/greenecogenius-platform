@@ -27,7 +27,10 @@ async function TraceabilityPage() {
               <Link2 className="text-primary h-8 w-8" />
             </div>
             <h2 className="text-metal-900 text-2xl font-bold">
-              <Trans i18nKey="blockchain:emptyTitle" defaults="Traçabilité blockchain" />
+              <Trans
+                i18nKey="blockchain:emptyTitle"
+                defaults="Traçabilité blockchain"
+              />
             </h2>
             <p className="text-metal-500 mx-auto mt-3 max-w-md text-sm leading-relaxed">
               <Trans
@@ -43,7 +46,10 @@ async function TraceabilityPage() {
                 nativeButton={false}
               >
                 <PackageSearch className="mr-2 h-4 w-4" />
-                <Trans i18nKey="blockchain:publishLot" defaults="Publier un lot" />
+                <Trans
+                  i18nKey="blockchain:publishLot"
+                  defaults="Publier un lot"
+                />
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
@@ -53,7 +59,10 @@ async function TraceabilityPage() {
                 nativeButton={false}
               >
                 <Shield className="mr-2 h-4 w-4" />
-                <Trans i18nKey="blockchain:browseMarketplace" defaults="Le Comptoir Circulaire" />
+                <Trans
+                  i18nKey="blockchain:browseMarketplace"
+                  defaults="Le Comptoir Circulaire"
+                />
               </Button>
             </div>
           </CardContent>
@@ -62,19 +71,47 @@ async function TraceabilityPage() {
         {/* What you'll see */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { icon: '📦', titleKey: 'blockchain:featureLots', defaultTitle: 'Lots tracés', defaultDesc: 'Chaque transaction est enregistrée avec un hash blockchain unique' },
-            { icon: '🌱', titleKey: 'blockchain:featureCO2', defaultTitle: 'CO₂ évité', defaultDesc: 'Calcul automatique de l\'impact carbone de chaque lot recyclé' },
-            { icon: '♻️', titleKey: 'blockchain:featureTonnes', defaultTitle: 'Tonnes recyclées', defaultDesc: 'Suivi précis des volumes de matières recyclées' },
-            { icon: '📜', titleKey: 'blockchain:featureCerts', defaultTitle: 'Certificats', defaultDesc: 'Certificats de traçabilité générés automatiquement' },
+            {
+              icon: '📦',
+              titleKey: 'blockchain:featureLots',
+              defaultTitle: 'Lots tracés',
+              defaultDesc:
+                'Chaque transaction est enregistrée avec un hash blockchain unique',
+            },
+            {
+              icon: '🌱',
+              titleKey: 'blockchain:featureCO2',
+              defaultTitle: 'CO₂ évité',
+              defaultDesc:
+                "Calcul automatique de l'impact carbone de chaque lot recyclé",
+            },
+            {
+              icon: '♻️',
+              titleKey: 'blockchain:featureTonnes',
+              defaultTitle: 'Tonnes recyclées',
+              defaultDesc: 'Suivi précis des volumes de matières recyclées',
+            },
+            {
+              icon: '📜',
+              titleKey: 'blockchain:featureCerts',
+              defaultTitle: 'Certificats',
+              defaultDesc: 'Certificats de traçabilité générés automatiquement',
+            },
           ].map((feature) => (
             <Card key={feature.titleKey}>
               <CardContent className="p-5">
                 <span className="text-2xl">{feature.icon}</span>
                 <h3 className="text-metal-900 mt-2 text-sm font-semibold">
-                  <Trans i18nKey={feature.titleKey} defaults={feature.defaultTitle} />
+                  <Trans
+                    i18nKey={feature.titleKey}
+                    defaults={feature.defaultTitle}
+                  />
                 </h3>
                 <p className="text-metal-500 mt-1 text-xs">
-                  <Trans i18nKey={`${feature.titleKey}Desc`} defaults={feature.defaultDesc} />
+                  <Trans
+                    i18nKey={`${feature.titleKey}Desc`}
+                    defaults={feature.defaultDesc}
+                  />
                 </p>
               </CardContent>
             </Card>

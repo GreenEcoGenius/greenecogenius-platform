@@ -43,7 +43,8 @@ function LocaleToggle() {
     document.cookie = `NEXT_LOCALE=${next}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
     const currentPath = window.location.pathname;
     const stripped = currentPath.replace(/^\/(fr|en)(\/|$)/, '/');
-    const newPath = next === 'en' ? stripped : `/${next}${stripped === '/' ? '' : stripped}`;
+    const newPath =
+      next === 'en' ? stripped : `/${next}${stripped === '/' ? '' : stripped}`;
     window.location.href = newPath || '/';
   };
 

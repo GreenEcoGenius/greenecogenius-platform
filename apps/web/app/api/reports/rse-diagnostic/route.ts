@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-
 import { NextRequest, NextResponse } from 'next/server';
 
 import * as z from 'zod';
@@ -121,32 +120,38 @@ export async function POST(req: NextRequest) {
         : 'basse') as 'haute' | 'moyenne' | 'basse',
     timeline:
       imp.score / imp.max < 0.4
-        ? (isFr ? '3 mois' : '3 months')
+        ? isFr
+          ? '3 mois'
+          : '3 months'
         : imp.score / imp.max < 0.7
-          ? (isFr ? '6 mois' : '6 months')
-          : (isFr ? '12 mois' : '12 months'),
+          ? isFr
+            ? '6 mois'
+            : '6 months'
+          : isFr
+            ? '12 mois'
+            : '12 months',
   }));
 
   const pdfBuffer = generateRSEDiagnosticPDF(
     {
-    companyName,
-    date,
-    globalScore: scores.total,
-    pillarScores: pillarScores.map((p) => ({
-      name: p.name,
-      score: Math.round((p.score / p.max) * 100),
-      details: `${p.score}/${p.max} points`,
-    })),
-    strengths: strengths.map(
-      (s) =>
-        `${s.name} : ${s.score}/${s.max} points (${Math.round((s.score / s.max) * 100)}%)`,
-    ),
-    improvements: improvements.map(
-      (i) =>
-        `${i.name} : ${i.score}/${i.max} points (${Math.round((i.score / i.max) * 100)}%)`,
-    ),
-    labelEligibility,
-    roadmapActions,
+      companyName,
+      date,
+      globalScore: scores.total,
+      pillarScores: pillarScores.map((p) => ({
+        name: p.name,
+        score: Math.round((p.score / p.max) * 100),
+        details: `${p.score}/${p.max} points`,
+      })),
+      strengths: strengths.map(
+        (s) =>
+          `${s.name} : ${s.score}/${s.max} points (${Math.round((s.score / s.max) * 100)}%)`,
+      ),
+      improvements: improvements.map(
+        (i) =>
+          `${i.name} : ${i.score}/${i.max} points (${Math.round((i.score / i.max) * 100)}%)`,
+      ),
+      labelEligibility,
+      roadmapActions,
     },
     locale,
   );

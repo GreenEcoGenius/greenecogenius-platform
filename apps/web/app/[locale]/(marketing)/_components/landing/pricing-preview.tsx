@@ -6,9 +6,22 @@ import { getTranslations } from 'next-intl/server';
 import { AnimateOnScroll } from '../animate-on-scroll';
 
 const PLANS = [
-  { nameKey: 'landing.planEssentiel', price: '149', positionKey: 'landing.planEssentielPos' },
-  { nameKey: 'landing.planAvance', price: '449', positionKey: 'landing.planAvancePos', popular: true },
-  { nameKey: 'landing.planEnterprise', price: null, positionKey: 'landing.planEnterprisePos' },
+  {
+    nameKey: 'landing.planEssentiel',
+    price: '149',
+    positionKey: 'landing.planEssentielPos',
+  },
+  {
+    nameKey: 'landing.planAvance',
+    price: '449',
+    positionKey: 'landing.planAvancePos',
+    popular: true,
+  },
+  {
+    nameKey: 'landing.planEnterprise',
+    price: null,
+    positionKey: 'landing.planEnterprisePos',
+  },
 ];
 
 export async function PricingPreview() {
@@ -31,7 +44,9 @@ export async function PricingPreview() {
             <AnimateOnScroll key={i} animation="fade-up" delay={i * 100}>
               <div
                 className={`relative rounded-2xl border bg-white p-6 shadow-sm ${
-                  plan.popular ? 'border-primary ring-primary/20 ring-2' : 'border-gray-200'
+                  plan.popular
+                    ? 'border-primary ring-primary/20 ring-2'
+                    : 'border-gray-200'
                 }`}
               >
                 {plan.popular && (
@@ -39,14 +54,21 @@ export async function PricingPreview() {
                     {t('landing.popular')}
                   </span>
                 )}
-                <h3 className="text-metal-900 text-lg font-bold">{t(plan.nameKey)}</h3>
+                <h3 className="text-metal-900 text-lg font-bold">
+                  {t(plan.nameKey)}
+                </h3>
                 <div className="my-4">
                   {plan.price ? (
                     <p className="text-metal-900 text-3xl font-bold">
-                      {plan.price}€<span className="text-metal-500 text-sm font-normal">/mois</span>
+                      {plan.price}€
+                      <span className="text-metal-500 text-sm font-normal">
+                        /mois
+                      </span>
                     </p>
                   ) : (
-                    <p className="text-metal-900 text-2xl font-bold">{t('landing.onQuote')}</p>
+                    <p className="text-metal-900 text-2xl font-bold">
+                      {t('landing.onQuote')}
+                    </p>
                   )}
                 </div>
                 <p className="text-metal-600 text-sm">{t(plan.positionKey)}</p>

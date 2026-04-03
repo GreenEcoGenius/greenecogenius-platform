@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+
 import { useTranslations } from 'next-intl';
 
 import { cn } from '@kit/ui/utils';
@@ -57,7 +58,7 @@ export function SocialProof({ className }: { className?: string }) {
     <section className={cn('py-16 sm:py-20', className)}>
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll animation="fade-up">
-          <p className="text-metal-500 mb-10 text-center text-sm font-medium uppercase tracking-wider">
+          <p className="text-metal-500 mb-10 text-center text-sm font-medium tracking-wider uppercase">
             {t('landing.socialTitle')}
           </p>
         </AnimateOnScroll>
