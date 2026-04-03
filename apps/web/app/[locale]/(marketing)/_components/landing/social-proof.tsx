@@ -27,7 +27,7 @@ const PARTNERS = [
   {
     name: 'GHG Protocol',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/ghg_protocol_logo_clear_1_2.png',
-    size: 'h-20 sm:h-24 max-w-[220px]',
+    size: 'h-28 sm:h-32 max-w-[280px]',
   },
   {
     name: 'ESRS',
