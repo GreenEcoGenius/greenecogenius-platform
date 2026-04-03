@@ -12,32 +12,32 @@ const PARTNERS = [
   {
     name: 'Supabase',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/supabase.svg',
-    size: 'h-20 sm:h-24 max-w-[220px]',
+    size: 'h-28 sm:h-32 max-w-[280px]',
   },
   {
     name: 'Polygon',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Polygon_blockchain_logo.svg.png',
-    size: 'h-16 sm:h-20 max-w-[200px]',
+    size: 'h-24 sm:h-28 max-w-[260px]',
   },
   {
     name: 'Vercel',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/png-transparent-vercel-hd-logo.png',
-    size: 'h-16 sm:h-20 max-w-[200px]',
+    size: 'h-24 sm:h-28 max-w-[260px]',
   },
   {
     name: 'GHG Protocol',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/ghg_protocol_logo_clear_1_2.png',
-    size: 'h-28 sm:h-32 max-w-[280px]',
+    size: 'h-36 sm:h-40 max-w-[320px]',
   },
   {
     name: 'ESRS',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/esrsicon1.png',
-    size: 'h-16 sm:h-20 max-w-[200px]',
+    size: 'h-24 sm:h-28 max-w-[260px]',
   },
   {
     name: 'ADEME',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/logo-ademe-removebg-preview.png.webp',
-    size: 'h-16 sm:h-20 max-w-[200px]',
+    size: 'h-24 sm:h-28 max-w-[260px]',
   },
 ];
 
