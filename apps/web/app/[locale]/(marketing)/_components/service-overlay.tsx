@@ -145,8 +145,8 @@ export function ServiceOverlay({
           <X className="text-metal-600 h-4 w-4" />
         </button>
 
-        <div className="max-h-[90svh] overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:rounded-2xl">
-          <div className="relative h-[200px] overflow-hidden sm:h-[240px]">
+        <div className="mb-16 max-h-[80svh] overflow-y-auto rounded-t-2xl bg-white shadow-2xl sm:mb-0 sm:max-h-[90svh] sm:rounded-2xl">
+          <div className="relative h-[160px] overflow-hidden sm:h-[240px]">
             <img
               src={service.heroImage}
               alt=""
@@ -155,7 +155,7 @@ export function ServiceOverlay({
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
           </div>
 
-          <div className="relative -mt-6 px-6 pb-8 sm:px-8">
+          <div className="relative -mt-6 px-6 pb-10 sm:px-8 sm:pb-8">
             <div
               className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium transition-all duration-500 ${service.badgeColor}`}
               style={{
