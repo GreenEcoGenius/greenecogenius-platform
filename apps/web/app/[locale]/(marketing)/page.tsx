@@ -17,6 +17,7 @@ import { HeroScrollEffect } from './_components/hero-scroll-effect';
 import { HeroVisual } from './_components/hero-visual';
 import { FaqSection } from './_components/landing/faq-section';
 import { HowItWorks } from './_components/landing/how-it-works';
+import { ComparisonTable } from './_components/landing/comparison-table';
 import { ImpactSimulator } from './_components/landing/impact-simulator';
 import { PricingPreview } from './_components/landing/pricing-preview';
 import { RegulatoryTimeline } from './_components/landing/regulatory-timeline';
@@ -167,6 +168,9 @@ export default async function Home() {
 
       {/* ───── SECTION 7 — SOCIAL PROOF ───── */}
       <SocialProof />
+
+      {/* ───── SECTION 7.5 — COMPARATIF CONCURRENTIEL ───── */}
+      <ComparisonTable />
 
       {/* ───── SECTION 8 — PRICING PREVIEW ───── */}
       <PricingPreview />

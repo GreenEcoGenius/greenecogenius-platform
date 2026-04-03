@@ -353,7 +353,29 @@
     "faq4A": "Our clients typically see 15-40% reduction in waste management costs through smart matching on Le Comptoir Circulaire, and save 30-60 working days per year on ESG report preparation.",
 
     "newsletterTitle": "Stay updated on ESG regulatory news",
-    "newsletterSub": "CSRD, AGEC law, EPR, ADEME Base Carbone — a monthly newsletter for CSR professionals."
+    "newsletterSub": "CSRD, AGEC law, EPR, ADEME Base Carbone — a monthly newsletter for CSR professionals.",
+
+    "compTitle": "The only platform that combines all 3",
+    "compSub": "Greenly and Sweep do carbon reporting. GreenEcoGenius does that — and much more.",
+    "compFeature": "Feature",
+    "compInternal": "In-house solution",
+    "compRecommended": "Most complete",
+    "comp_marketplace": "B2B recyclable materials marketplace",
+    "comp_blockchain": "Blockchain traceability",
+    "comp_carbonScopes": "Carbon footprint Scopes 1/2/3",
+    "comp_csrdReport": "Automated CSRD/ESRS report",
+    "comp_ademeBase": "Integrated ADEME Base Carbone",
+    "comp_agecRep": "AGEC law / EPR compliance",
+    "comp_blockchainCerts": "Blockchain PDF certificates",
+    "comp_csrLabels": "CSR Score & Labels (B Corp…)",
+    "comp_apiWebhooks": "REST API + webhooks",
+    "comp_entryPrice": "Entry price",
+    "compLegendYes": "Included",
+    "compLegendPartial": "Partial",
+    "compLegendNo": "Not available",
+    "compCallout": "GreenEcoGenius is the only solution that connects the physical valorization of your waste (Le Comptoir Circulaire) to your ESG/CSRD reporting — with immutable blockchain proof at every step.",
+    "compPriceDisclaimer": "*Indicative prices based on public rates as of Q1 2026. Subject to change.",
+    "compCta": "Compare in detail →"
   },
 
   "explorerNav": "Explorer",

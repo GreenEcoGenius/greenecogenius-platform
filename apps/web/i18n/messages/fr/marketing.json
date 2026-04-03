@@ -353,7 +353,29 @@
     "faq4A": "Nos clients observent en moyenne 15-40% de réduction des coûts de gestion des déchets grâce au smart matching du Comptoir Circulaire, et économisent 30-60 jours de travail par an sur la préparation de leurs rapports ESG.",
 
     "newsletterTitle": "Restez informé de l'actualité réglementaire ESG",
-    "newsletterSub": "CSRD, loi AGEC, REP, Base Carbone ADEME — une newsletter mensuelle pour les pros de la RSE."
+    "newsletterSub": "CSRD, loi AGEC, REP, Base Carbone ADEME — une newsletter mensuelle pour les pros de la RSE.",
+
+    "compTitle": "La seule plateforme qui combine les 3",
+    "compSub": "Greenly et Sweep font du reporting carbone. GreenEcoGenius fait ça — et bien plus.",
+    "compFeature": "Fonctionnalité",
+    "compInternal": "Solution interne",
+    "compRecommended": "Le plus complet",
+    "comp_marketplace": "Marketplace B2B matières recyclables",
+    "comp_blockchain": "Traçabilité blockchain",
+    "comp_carbonScopes": "Bilan carbone Scopes 1/2/3",
+    "comp_csrdReport": "Rapport CSRD/ESRS automatisé",
+    "comp_ademeBase": "Base Carbone ADEME intégrée",
+    "comp_agecRep": "Conformité loi AGEC / REP",
+    "comp_blockchainCerts": "Certificats PDF blockchain",
+    "comp_csrLabels": "Score CSR & Labels (B Corp…)",
+    "comp_apiWebhooks": "API REST + webhooks",
+    "comp_entryPrice": "Prix d'entrée",
+    "compLegendYes": "Inclus",
+    "compLegendPartial": "Partiel",
+    "compLegendNo": "Non disponible",
+    "compCallout": "GreenEcoGenius est la seule solution qui connecte la valorisation physique de vos déchets (Le Comptoir Circulaire) à votre reporting ESG/CSRD — avec preuve blockchain immuable à chaque étape.",
+    "compPriceDisclaimer": "*Prix indicatifs basés sur les tarifs publics au T1 2026. Sous réserve de modifications.",
+    "compCta": "Comparer en détail →"
   },
 
   "explorerNav": "Explorateur",
