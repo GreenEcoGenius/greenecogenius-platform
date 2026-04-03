@@ -25,10 +25,10 @@ const techLogos: LogoItem[] = [
 
 const sourceLogos: LogoItem[] = [
   { name: 'ADEME', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/logo-ademe-removebg-preview.png.webp', url: 'https://www.ademe.fr' },
-  { name: 'SINOE', src: null, url: 'https://www.sinoe.org' },
-  { name: 'Eurostat', src: null, url: 'https://ec.europa.eu/eurostat' },
-  { name: 'EPA', src: null, url: 'https://www.epa.gov' },
-  { name: 'FEDEREC', src: null, url: 'https://federec.com' },
+  { name: 'SINOE', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/77fd6085-0309-4069-8da9-af4890068fd3.png', url: 'https://www.sinoe.org' },
+  { name: 'Eurostat', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Eurostat_Newlogo.png', url: 'https://ec.europa.eu/eurostat' },
+  { name: 'EPA', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/EPA_logo.svg', url: 'https://www.epa.gov' },
+  { name: 'FEDEREC', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Logo_FEDEREC.png', url: 'https://federec.com' },
 ];
 
 const frameworkLogos: LogoItem[] = [
