@@ -128,7 +128,7 @@ async function CompliancePage() {
         <RegulatoryWatch />
 
         <SectionFooterImage
-          src="/images/normes/reporting-hologram-data.png"
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-3ce44a5d-32c4-45eb-8b93-1c560b509a71.png"
           alt="Conformite"
         />
       </div>

@@ -131,7 +131,7 @@ async function TraceabilityPage() {
         <TraceabilityActivityFeed activities={activities} />
 
         <SectionFooterImage
-          src="/images/normes/traceability-supply-chain.png"
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-a5aace78-d0fe-4b7d-865b-181946fc2f34.png"
           alt="Tracabilite"
         />
       </div>

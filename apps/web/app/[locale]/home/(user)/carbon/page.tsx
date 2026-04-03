@@ -457,7 +457,7 @@ async function CarbonPage() {
         <CertificatesList certificates={certs} />
 
         <SectionFooterImage
-          src="/images/normes/carbon-footprint-flowers.png"
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-5078cbe2-55c7-4019-bf5f-d42644debf1b.png"
           alt="Impact Carbone"
         />
       </div>
