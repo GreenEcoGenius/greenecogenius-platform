@@ -20,6 +20,9 @@ export const recalculateComplianceAction = authActionClient.action(
     const partial = results.filter((r) => r.status === 'partial').length;
 
     revalidatePath('/home/compliance');
+    revalidatePath('/home/carbon');
+    revalidatePath('/home/esg');
+    revalidatePath('/home/rse');
     revalidatePath('/home');
 
     return {

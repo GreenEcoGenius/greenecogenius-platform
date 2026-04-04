@@ -44,105 +44,90 @@ interface AccountData {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+const any = (c: SupabaseClient) => c as any;
+
 async function fetchAccountData(
   client: SupabaseClient,
   accountId: string,
 ): Promise<AccountData> {
+  // Parallel fetch of all data sources
   const [
-    { count: listingsCount },
-    { count: activeListingsCount },
-    { count: transactionsCount },
-    { count: completedTransactionsCount },
-    { count: carbonRecordsCount },
-    { count: blockchainRecordsCount },
-    { count: certificatesCount },
-    { count: esgDataCount },
-    { count: esgReportCount },
+    listingsRes,
+    activeListingsRes,
+    transactionsRes,
+    completedTransactionsRes,
+    carbonRes,
+    certificatesRes,
+    esgDataRes,
+    esgReportRes,
   ] = await Promise.all([
-    client
-      .from('listings')
-      .select('*', { count: 'exact', head: true })
-      .eq('account_id', accountId),
-    client
-      .from('listings')
-      .select('*', { count: 'exact', head: true })
-      .eq('account_id', accountId)
-      .eq('status', 'active'),
-    client
-      .from('marketplace_transactions')
-      .select('*', { count: 'exact', head: true })
-      .or(`seller_account_id.eq.${accountId},buyer_account_id.eq.${accountId}`),
-    client
-      .from('marketplace_transactions')
-      .select('*', { count: 'exact', head: true })
-      .or(`seller_account_id.eq.${accountId},buyer_account_id.eq.${accountId}`)
-      .in('status', ['delivered', 'completed', 'funds_released']),
-    client
-      .from('carbon_records')
-      .select('*', { count: 'exact', head: true })
-      .eq('account_id', accountId),
-    client
-      .from('blockchain_records')
-      .select('*', { count: 'exact', head: true })
-      .eq('account_id', accountId),
-    client
-      .from('certificates')
-      .select('*', { count: 'exact', head: true })
-      .eq('account_id', accountId),
-    client
-      .from('org_esg_data')
-      .select('*', { count: 'exact', head: true })
-      .eq('account_id', accountId),
-    client
-      .from('esg_reports')
-      .select('*', { count: 'exact', head: true })
-      .eq('account_id', accountId),
+    any(client).from('listings').select('*', { count: 'exact', head: true }).eq('account_id', accountId),
+    any(client).from('listings').select('*', { count: 'exact', head: true }).eq('account_id', accountId).eq('status', 'active'),
+    any(client).from('marketplace_transactions').select('*', { count: 'exact', head: true }).or(`seller_account_id.eq.${accountId},buyer_account_id.eq.${accountId}`),
+    any(client).from('marketplace_transactions').select('*', { count: 'exact', head: true }).or(`seller_account_id.eq.${accountId},buyer_account_id.eq.${accountId}`).in('status', ['delivered', 'completed', 'funds_released']),
+    any(client).from('carbon_records').select('*', { count: 'exact', head: true }).eq('account_id', accountId),
+    any(client).from('traceability_certificates').select('*', { count: 'exact', head: true }).eq('issued_to_account_id', accountId),
+    any(client).from('org_esg_data').select('*', { count: 'exact', head: true }).eq('account_id', accountId),
+    any(client).from('esg_reports').select('*', { count: 'exact', head: true }).eq('account_id', accountId),
   ]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: carbonAgg } = await (client as any)
+  // Blockchain records don't have account_id — count via listings
+  const { data: userListingIds } = await any(client)
+    .from('listings')
+    .select('id')
+    .eq('account_id', accountId);
+
+  let blockchainRecordsCount = 0;
+  if (userListingIds && userListingIds.length > 0) {
+    const ids = userListingIds.map((l: { id: string }) => l.id);
+    const { count } = await any(client)
+      .from('blockchain_records')
+      .select('*', { count: 'exact', head: true })
+      .in('listing_id', ids);
+    blockchainRecordsCount = count ?? 0;
+  }
+
+  // Carbon aggregation
+  const { data: carbonAgg } = await any(client)
     .from('carbon_records')
     .select('co2_avoided, weight_kg')
     .eq('account_id', accountId);
 
   const totalCo2Avoided = (carbonAgg ?? []).reduce(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (sum: number, r: any) => sum + Number(r.co2_avoided ?? 0),
+    (sum: number, r: { co2_avoided?: number }) => sum + Number(r.co2_avoided ?? 0),
     0,
   );
   const totalTonnesRecycled =
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (carbonAgg ?? []).reduce((sum: number, r: any) => sum + Number(r.weight_kg ?? 0), 0) /
-    1000;
+    (carbonAgg ?? []).reduce(
+      (sum: number, r: { weight_kg?: number }) => sum + Number(r.weight_kg ?? 0),
+      0,
+    ) / 1000;
 
-  const hasScopeData = (carbonRecordsCount ?? 0) > 0;
-
-  // Check RSE diagnostic
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: rseData } = await (client as any)
-    .from('rse_diagnostics')
-    .select('score')
+  // Sustainability KPIs (used as RSE proxy since rse_diagnostics table doesn't exist)
+  const { data: kpiData } = await any(client)
+    .from('org_sustainability_kpis')
+    .select('transactions_count, tonnes_recycled, total_avoided_kg')
     .eq('account_id', accountId)
     .order('created_at', { ascending: false })
     .limit(1);
 
-  const hasRseDiagnostic = rseData && rseData.length > 0;
-  const rseScore = hasRseDiagnostic ? Number(rseData[0].score ?? 0) : 0;
+  const hasKpis = kpiData && kpiData.length > 0;
+  const rseScore = hasKpis ? Math.min(100, Math.round((kpiData[0].transactions_count ?? 0) * 10)) : 0;
 
   return {
-    listingsCount: listingsCount ?? 0,
-    activeListingsCount: activeListingsCount ?? 0,
-    transactionsCount: transactionsCount ?? 0,
-    completedTransactionsCount: completedTransactionsCount ?? 0,
-    carbonRecordsCount: carbonRecordsCount ?? 0,
-    hasScopeData,
-    blockchainRecordsCount: blockchainRecordsCount ?? 0,
-    certificatesCount: certificatesCount ?? 0,
-    hasEsgData: (esgDataCount ?? 0) > 0,
-    hasEsgReport: (esgReportCount ?? 0) > 0,
+    listingsCount: listingsRes.count ?? 0,
+    activeListingsCount: activeListingsRes.count ?? 0,
+    transactionsCount: transactionsRes.count ?? 0,
+    completedTransactionsCount: completedTransactionsRes.count ?? 0,
+    carbonRecordsCount: carbonRes.count ?? 0,
+    hasScopeData: (carbonRes.count ?? 0) > 0,
+    blockchainRecordsCount,
+    certificatesCount: certificatesRes.count ?? 0,
+    hasEsgData: (esgDataRes.count ?? 0) > 0,
+    hasEsgReport: (esgReportRes.count ?? 0) > 0,
     totalCo2Avoided,
     totalTonnesRecycled,
-    hasRseDiagnostic,
+    hasRseDiagnostic: hasKpis,
     rseScore,
   };
 }
