@@ -54,14 +54,16 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
           <SidebarChatBridge />
           <AppHeader />
 
-          <div className="min-w-0 flex-1 pt-14">
-            <Page style={'sidebar'}>
-              <PageNavigation>
-                <HomeSidebar workspace={workspace} />
-              </PageNavigation>
+          <div className="flex h-screen min-w-0 flex-1 flex-col pt-14">
+            <div className="flex min-h-0 flex-1 overflow-hidden">
+              <Page style={'sidebar'}>
+                <PageNavigation>
+                  <HomeSidebar workspace={workspace} />
+                </PageNavigation>
 
-              {children}
-            </Page>
+                {children}
+              </Page>
+            </div>
           </div>
         </SidebarProvider>
 
