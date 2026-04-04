@@ -64,35 +64,41 @@ function formatPrice(cents: number): string {
 const essentielFeatures = [
   'pricingPage.featScope12',
   'pricingPage.featGuidedForm',
-  'pricingPage.featEsgDashboard',
   'pricingPage.featGhgReport',
-  'pricingPage.featAutoFill',
+  'pricingPage.featComptoir',
+  'pricingPage.featMarketPrices',
+  'pricingPage.featCo2Auto',
   'pricingPage.feat50Lots',
-  'pricingPage.featEquivalences',
+  'pricingPage.featCertificates',
+  'pricingPage.featRseBasic',
+  'pricingPage.featCompliance42',
+  'pricingPage.featGenius10',
   'pricingPage.featEmailSupport',
 ];
 
 const avanceFeatures = [
   'pricingPage.featScope123',
-  'pricingPage.featCsrdGri',
+  'pricingPage.featEsgReport',
   'pricingPage.featUnlimitedLots',
-  'pricingPage.featAiRecommendations',
-  'pricingPage.featBenchmarking',
-  'pricingPage.featCsrdTable',
-  'pricingPage.featApiAccess',
-  'pricingPage.featSbti',
+  'pricingPage.featRseFull',
+  'pricingPage.featLabels',
+  'pricingPage.featPreAudit',
+  'pricingPage.featRegulatoryWatch',
+  'pricingPage.featAutoPopulate',
+  'pricingPage.featExportAll',
+  'pricingPage.featGenius100',
   'pricingPage.featPrioritySupport',
 ];
 
 const enterpriseFeatures = [
-  'pricingPage.featErpIntegration',
-  'pricingPage.featMultiSite',
-  'pricingPage.featAuditLabel',
-  'pricingPage.featCarbonCredits',
+  'pricingPage.featGeniusUnlimited',
+  'pricingPage.featCustomReports',
+  'pricingPage.featApiAccess',
+  'pricingPage.featMultiUsers',
+  'pricingPage.featOnboarding',
   'pricingPage.featAccountManager',
   'pricingPage.featSla',
-  'pricingPage.featOnboarding',
-  'pricingPage.featWhiteLabel',
+  'pricingPage.featPriorityVisio',
 ];
 
 const faqKeys = [
