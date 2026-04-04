@@ -101,9 +101,9 @@ export default async function Home() {
                   />
                 </div>
               </div>
-              {/* Desktop : image qui déborde à droite */}
+              {/* Desktop : image qui déborde à droite, hauteur limitée */}
               <div className="relative hidden lg:block">
-                <div className="-mr-[calc(50vw-50%)] overflow-hidden rounded-l-2xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.25)]">
+                <div className="-mr-[calc(50vw-50%)] max-h-[520px] overflow-hidden rounded-l-2xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.25)] xl:max-h-[580px]">
                   <Image
                     src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/ajoute_moi_quelque_202604040436.png"
                     alt="GreenEcoGenius Platform Dashboard"
