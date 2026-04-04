@@ -17,7 +17,7 @@ export function AppHeader() {
   const { openSearch } = useGlobalSearch();
 
   return (
-    <header className="border-metal-chrome fixed top-0 right-0 left-0 z-40 flex h-14 items-center justify-between border-b bg-white px-3 lg:px-5">
+    <header className="border-metal-chrome fixed top-0 right-0 left-0 z-50 flex h-14 items-center justify-between border-b bg-white/95 px-3 backdrop-blur-sm lg:px-5">
       {/* Left: logo only */}
       <div className="flex items-center">
         <AppLogo href="/" className="h-24 w-auto" />
