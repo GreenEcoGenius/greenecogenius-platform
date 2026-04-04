@@ -349,8 +349,8 @@ function detectSection(pathname: string, locale: string): SectionContext {
     icon: <Home className="h-3.5 w-3.5" />,
     welcome:
       lang === 'fr'
-        ? 'Bonjour ! Je suis Genius, votre assistant GreenEcoGenius. Posez-moi une question precise et je vous donnerai une reponse concrete.'
-        : 'Hello! I am Genius, your GreenEcoGenius assistant. Ask me a specific question and I will give you a concrete answer.',
+        ? 'Bonjour ! Je suis Genius, l\'assistant IA de la plateforme. Posez-moi une question precise et je vous donnerai une reponse concrete.'
+        : 'Hello! I\'m Genius, the platform\'s AI assistant. Ask me a specific question and I will give you a concrete answer.',
     suggestions:
       lang === 'fr'
         ? [
