@@ -75,6 +75,11 @@ function buildSystemPrompt(basePrompt: string, context?: AIContext): string {
   const locale = context?.locale ?? 'fr';
   const parts = [getSystemBase(locale), '\n\n', basePrompt];
 
+  // Inject real user context (compliance scores, platform data)
+  if (context?.userContext) {
+    parts.push('\n\n', context.userContext);
+  }
+
   if (context?.orgData) {
     parts.push(
       `\n\n--- Organisation Data ---\n${JSON.stringify(context.orgData, null, 2)}`,

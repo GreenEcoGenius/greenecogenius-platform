@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { requireUser } from '@kit/supabase/require-user';
+import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import type { AgentType } from '~/lib/ai/client';
+import {
+  formatContextForPrompt,
+  loadGeniusContext,
+} from '~/lib/ai/genius-context';
 import { execute, routeRequest } from '~/lib/ai/orchestrator';
 
 export async function POST(req: NextRequest) {
@@ -49,9 +54,20 @@ export async function POST(req: NextRequest) {
       ? (agentType as AgentType)
       : await routeRequest(message);
 
+    // Load real user context for Genius
+    let userContextPrompt = '';
+    try {
+      const adminClient = getSupabaseServerAdminClient();
+      const geniusCtx = await loadGeniusContext(adminClient, user.id);
+      userContextPrompt = formatContextForPrompt(geniusCtx, locale ?? 'fr');
+    } catch (e) {
+      console.error('[Genius] Failed to load user context:', e);
+    }
+
     const response = await execute(resolvedAgent, message, {
       ...context,
       locale: locale ?? 'fr',
+      userContext: userContextPrompt,
     });
 
     return NextResponse.json(response);

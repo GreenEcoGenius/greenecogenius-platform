@@ -12,6 +12,7 @@ export interface AIContext {
   orgData?: Record<string, unknown>;
   lotData?: Record<string, unknown>;
   carbonData?: Record<string, unknown>;
+  userContext?: string;
   previousMessages?: Array<{ role: 'user' | 'assistant'; content: string }>;
 }
 
