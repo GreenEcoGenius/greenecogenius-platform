@@ -35,40 +35,40 @@ export default async function Home() {
       {/* ───── SECTION 1 — HERO ───── */}
       <section className="bg-white pt-24 pb-16 sm:pt-32 sm:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-8">
             {/* Colonne gauche — Texte */}
-            <div>
+            <div className="text-center lg:text-left">
               <AnimateOnScroll animation="fade-up">
                 <div className="mb-8 inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
                   <Sparkles className="h-4 w-4" strokeWidth={1.5} />
                   <span>{t('heroBadge')}</span>
                 </div>
 
-                <h1 className="text-metal-900 text-4xl font-bold leading-tight lg:text-5xl">
+                <h1 className="text-metal-900 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
                   {t('heroTitle')}
                 </h1>
 
-                <p className="text-metal-600 mt-6 max-w-lg text-lg">
+                <p className="text-metal-600 mx-auto mt-6 max-w-lg text-lg lg:mx-0">
                   {t('heroDescription')}
                 </p>
 
-                <div className="mt-8 flex flex-wrap gap-4">
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
                   <Link
                     href="/auth/sign-up"
-                    className="group inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 font-medium text-white transition-colors hover:bg-emerald-700"
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 font-medium text-white transition-colors hover:bg-emerald-700 sm:w-auto"
                   >
                     {t('heroCtaPrimary')}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" strokeWidth={1.5} />
                   </Link>
                   <Link
                     href="/solutions"
-                    className="text-metal-700 inline-flex items-center gap-2 rounded-lg border border-gray-300 px-6 py-3 font-medium transition-colors hover:border-gray-400"
+                    className="text-metal-700 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 px-6 py-3 font-medium transition-colors hover:border-gray-400 sm:w-auto"
                   >
                     {t('heroCtaSecondary')}
                   </Link>
                 </div>
 
-                <div className="text-metal-500 mt-8 flex flex-wrap items-center gap-4 text-sm">
+                <div className="text-metal-500 mt-8 flex flex-wrap items-center justify-center gap-4 text-sm lg:justify-start">
                   <span className="flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-emerald-500" />
                     {t('heroProof1')}
@@ -85,9 +85,9 @@ export default async function Home() {
               </AnimateOnScroll>
             </div>
 
-            {/* Colonne droite — Screenshot */}
+            {/* Colonne droite — Screenshot (hidden on mobile) */}
             <AnimateOnScroll animation="fade-up" delay={200}>
-              <div className="overflow-hidden rounded-xl border border-gray-200 shadow-2xl">
+              <div className="hidden overflow-hidden rounded-2xl border border-gray-200 shadow-2xl lg:block">
                 <Image
                   src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/ajoute_moi_quelque_202604040436.png"
                   alt="GreenEcoGenius Platform Dashboard"
