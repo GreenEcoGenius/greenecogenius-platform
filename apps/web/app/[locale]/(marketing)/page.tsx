@@ -158,6 +158,9 @@ export default async function Home() {
         <ImpactSimulator />
       </Suspense>
 
+      {/* ───── SECTION 7 — FONDATIONS ───── */}
+      <FoundationsSection />
+
       {/* ───── SECTION 7.5 — COMPARATIF CONCURRENTIEL ───── */}
       <ComparisonTable />
 
@@ -166,9 +169,6 @@ export default async function Home() {
 
       {/* ───── SECTION 9 — FAQ ───── */}
       <FaqSection />
-
-      {/* ───── SECTION 9.5 — FONDATIONS ───── */}
-      <FoundationsSection />
 
       {/* ───── SECTION 10 — NEWSLETTER ───── */}
       <section className="relative overflow-hidden py-20 sm:py-28">
