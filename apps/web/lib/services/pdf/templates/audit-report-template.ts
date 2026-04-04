@@ -243,9 +243,9 @@ export function generateAuditReportPDF(
       {
         columnStyles: {
           0: { cellWidth: 28 },
-          1: { cellWidth: 22 },
+          1: { cellWidth: 24 },
           2: { cellWidth: 22 },
-          3: { cellWidth: 50 },
+          3: { cellWidth: 48 },
           4: { cellWidth: 50 },
         },
       },
@@ -290,12 +290,12 @@ export function generateAuditReportPDF(
       remRows,
       {
         columnStyles: {
-          0: { cellWidth: 12 },
-          1: { cellWidth: 28 },
+          0: { cellWidth: 10 },
+          1: { cellWidth: 30 },
           2: { cellWidth: 28 },
-          3: { cellWidth: 20 },
-          4: { cellWidth: 55 },
-          5: { cellWidth: 22 },
+          3: { cellWidth: 22 },
+          4: { cellWidth: 52 },
+          5: { cellWidth: 23 },
         },
       },
     );
