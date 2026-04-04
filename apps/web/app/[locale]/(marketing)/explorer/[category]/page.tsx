@@ -12,6 +12,7 @@ import { DataSourceBadge } from '../_components/data-source-badge';
 import {
   CATEGORY_META,
   categoryFromSlug,
+  cleanSource,
   formatVolume,
   type NationalStat,
   type RegionStat,
@@ -52,21 +53,22 @@ export default async function CategoryDetailPage({ params }: PageProps) {
   if (!meta) notFound();
   const Icon = meta.icon;
 
-  const [{ data: natRow }, { data: regionRows }] = await Promise.all([
+  const [{ data: natRows }, { data: regionRows }] = await Promise.all([
     client
       .from('material_stats_national')
       .select('*')
       .eq('country_code', 'FR')
       .eq('category', categoryName)
-      .single(),
+      .order('annual_volume_tonnes', { ascending: false }),
     client
       .from('material_stats_by_region')
       .select('*')
-      .eq('country', 'FR')
+      .eq('country', 'France')
       .eq('category', categoryName)
       .order('annual_volume_tonnes', { ascending: false }),
   ]);
 
+  const natRow = natRows?.[0];
   if (!natRow) notFound();
 
   const stat: NationalStat = {
@@ -75,7 +77,7 @@ export default async function CategoryDetailPage({ params }: PageProps) {
     recycling_rate: Number(natRow.recycling_rate ?? 0),
     recovery_rate: Number(natRow.recovery_rate ?? 0),
     avg_price_per_tonne: Number(natRow.avg_price_per_tonne ?? 0),
-    data_source: natRow.data_source ?? 'ADEME',
+    data_source: cleanSource(natRow.data_source ?? ''),
     year: natRow.year ?? 2024,
     country_code: 'FR',
   };
@@ -88,9 +90,9 @@ export default async function CategoryDetailPage({ params }: PageProps) {
       recycling_rate: Number(r.recycling_rate ?? 0),
       recovery_rate: Number(r.recovery_rate ?? 0),
       avg_price_per_tonne: Number(r.avg_price_per_tonne ?? 0),
-      data_source: (r.data_source as string) ?? 'ADEME',
+      data_source: cleanSource((r.data_source as string) ?? ''),
       year: (r.year as number) ?? 2024,
-      country: 'FR',
+      country: 'France',
     }),
   );
 

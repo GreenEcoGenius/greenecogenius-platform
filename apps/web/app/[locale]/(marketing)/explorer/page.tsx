@@ -7,10 +7,11 @@ import { AnimateOnScroll } from '../_components/animate-on-scroll';
 
 import { DataSourceBadge } from './_components/data-source-badge';
 import { ExplorerContent } from './_components/explorer-content';
-import type {
-  CountryStat,
-  NationalStat,
-  RegionStat,
+import {
+  cleanSource,
+  type CountryStat,
+  type NationalStat,
+  type RegionStat,
 } from './_components/explorer-data';
 import { PublicCTA } from './_components/public-cta';
 import { SourcesDisclaimer } from './_components/sources-disclaimer';
@@ -19,16 +20,36 @@ import { getPublicSupabaseClient } from './_lib/public-client';
 const EU_COUNTRY_NAMES: Record<string, string> = {
   AT: 'Autriche', BE: 'Belgique', BG: 'Bulgarie', CY: 'Chypre',
   CZ: 'Tchéquie', DE: 'Allemagne', DK: 'Danemark', EE: 'Estonie',
-  EL: 'Grèce', ES: 'Espagne', FI: 'Finlande', HR: 'Croatie',
-  HU: 'Hongrie', IE: 'Irlande', IT: 'Italie', LT: 'Lituanie',
-  LU: 'Luxembourg', LV: 'Lettonie', MT: 'Malte', NL: 'Pays-Bas',
-  NO: 'Norvège', PL: 'Pologne', PT: 'Portugal', RO: 'Roumanie',
-  SE: 'Suède', SI: 'Slovénie', SK: 'Slovaquie', FR: 'France',
+  EL: 'Grèce', ES: 'Espagne', FI: 'Finlande', FR: 'France',
+  HR: 'Croatie', HU: 'Hongrie', IE: 'Irlande', IT: 'Italie',
+  LT: 'Lituanie', LU: 'Luxembourg', LV: 'Lettonie', MT: 'Malte',
+  NL: 'Pays-Bas', NO: 'Norvège', PL: 'Pologne', PT: 'Portugal',
+  RO: 'Roumanie', SE: 'Suède', SI: 'Slovénie', SK: 'Slovaquie',
 };
+
+/**
+ * Aggregate national rows by category — takes the max volume per source
+ * to avoid double-counting when both ADEME and Eurostat have data.
+ */
+function aggregateByCategory(
+  rows: NationalStat[],
+): NationalStat[] {
+  const byCategory = new Map<string, NationalStat>();
+
+  for (const row of rows) {
+    const existing = byCategory.get(row.category);
+    if (!existing || row.annual_volume_tonnes > existing.annual_volume_tonnes) {
+      byCategory.set(row.category, row);
+    }
+  }
+
+  return Array.from(byCategory.values()).sort(
+    (a, b) => b.annual_volume_tonnes - a.annual_volume_tonnes,
+  );
+}
 
 export async function generateMetadata() {
   const t = await getTranslations('marketing');
-
   return {
     title: t('explorer.metaTitle'),
     description: t('explorer.metaDesc'),
@@ -42,7 +63,7 @@ function toNationalStat(s: Record<string, unknown>): NationalStat {
     recycling_rate: Number(s.recycling_rate ?? 0),
     recovery_rate: Number(s.recovery_rate ?? 0),
     avg_price_per_tonne: Number(s.avg_price_per_tonne ?? 0),
-    data_source: (s.data_source as string) ?? 'ADEME',
+    data_source: cleanSource((s.data_source as string) ?? ''),
     year: (s.year as number) ?? 2024,
     country_code: s.country_code as string,
   };
@@ -57,7 +78,10 @@ export default async function ExplorerPage() {
       .from('material_stats_national')
       .select('*')
       .order('annual_volume_tonnes', { ascending: false }),
-    client.from('material_stats_by_region').select('*').eq('country', 'FR'),
+    client
+      .from('material_stats_by_region')
+      .select('*')
+      .eq('country', 'France'),
   ]);
 
   if (natResult.error)
@@ -67,10 +91,10 @@ export default async function ExplorerPage() {
 
   const allNational = (natResult.data ?? []).map(toNationalStat);
 
-  // France stats
-  const franceStats = allNational
-    .filter((s) => s.country_code === 'FR')
-    .sort((a, b) => b.annual_volume_tonnes - a.annual_volume_tonnes);
+  // France: aggregate duplicates (ADEME + Eurostat) → keep max per category
+  const franceStats = aggregateByCategory(
+    allNational.filter((s) => s.country_code === 'FR'),
+  );
 
   // France region rows
   const franceRegionRows: RegionStat[] = (regionResult.data ?? []).map(
@@ -81,18 +105,18 @@ export default async function ExplorerPage() {
       recycling_rate: Number(r.recycling_rate ?? 0),
       recovery_rate: Number(r.recovery_rate ?? 0),
       avg_price_per_tonne: Number(r.avg_price_per_tonne ?? 0),
-      data_source: (r.data_source as string) ?? 'ADEME',
+      data_source: cleanSource((r.data_source as string) ?? ''),
       year: (r.year as number) ?? 2024,
-      country: 'FR',
+      country: 'France',
     }),
   );
 
-  // USA stats
-  const usaStats = allNational
-    .filter((s) => s.country_code === 'US')
-    .sort((a, b) => b.annual_volume_tonnes - a.annual_volume_tonnes);
+  // USA: aggregate duplicates
+  const usaStats = aggregateByCategory(
+    allNational.filter((s) => s.country_code === 'US'),
+  );
 
-  // Europe: aggregate by category from all non-US, non-FR countries
+  // Europe: all non-FR, non-US → aggregate by category
   const euNational = allNational.filter(
     (s) => s.country_code !== 'US' && s.country_code !== 'FR',
   );
@@ -118,7 +142,7 @@ export default async function ExplorerPage() {
     }))
     .sort((a, b) => b.annual_volume_tonnes - a.annual_volume_tonnes);
 
-  // Europe country rows for the map (convert NationalStat to CountryStat)
+  // Europe country rows for the map
   const europeCountryRows: CountryStat[] = euNational.map((s) => ({
     country_code: s.country_code,
     country_name: EU_COUNTRY_NAMES[s.country_code] ?? s.country_code,
@@ -151,7 +175,6 @@ export default async function ExplorerPage() {
         </div>
       </section>
 
-      {/* Dynamic zone content */}
       <ExplorerContent
         franceStats={franceStats}
         europeStats={europeStats}
@@ -160,7 +183,6 @@ export default async function ExplorerPage() {
         europeCountryRows={europeCountryRows}
       />
 
-      {/* CTA */}
       <section className="pb-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
@@ -169,7 +191,6 @@ export default async function ExplorerPage() {
         </div>
       </section>
 
-      {/* Sources disclaimer */}
       <SourcesDisclaimer />
     </div>
   );

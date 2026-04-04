@@ -9,6 +9,7 @@ import { getTranslations } from 'next-intl/server';
 import { AnimateOnScroll } from '../../../_components/animate-on-scroll';
 import { DataSourceBadge } from '../../_components/data-source-badge';
 import {
+  cleanSource,
   formatVolume,
   regionFromSlug,
   type NationalStat,
@@ -49,7 +50,7 @@ export default async function RegionDetailPage({ params }: PageProps) {
     .from('material_stats_by_region')
     .select('*')
     .eq('region', regionName)
-    .eq('country', 'FR')
+    .eq('country', 'France')
     .order('annual_volume_tonnes', { ascending: false });
 
   const stats: RegionStat[] = (regionRows ?? []).map(
@@ -60,9 +61,9 @@ export default async function RegionDetailPage({ params }: PageProps) {
       recycling_rate: Number(r.recycling_rate ?? 0),
       recovery_rate: Number(r.recovery_rate ?? 0),
       avg_price_per_tonne: Number(r.avg_price_per_tonne ?? 0),
-      data_source: (r.data_source as string) ?? 'ADEME',
+      data_source: cleanSource((r.data_source as string) ?? ''),
       year: (r.year as number) ?? 2024,
-      country: 'FR',
+      country: 'France',
     }),
   );
 

@@ -117,6 +117,17 @@ export function regionFromSlug(slug: string): string | undefined {
   return REGIONS.find((r) => regionToSlug(r) === slug);
 }
 
+/* ── Source label cleanup ── */
+
+export function cleanSource(raw: string): string {
+  if (!raw) return 'ADEME';
+  if (raw.startsWith('ADEME')) return 'ADEME/SINOE';
+  if (raw.startsWith('Eurostat')) return 'Eurostat';
+  if (raw.startsWith('EPA')) return 'EPA';
+  if (raw.startsWith('Federec') || raw.startsWith('FEDEREC')) return 'FEDEREC';
+  return raw;
+}
+
 /* ── Formatting ── */
 
 export function formatVolume(tonnes: number): string {
