@@ -290,12 +290,12 @@ export function generateAuditReportPDF(
       remRows,
       {
         columnStyles: {
-          0: { cellWidth: 8 },
-          1: { cellWidth: 25 },
-          2: { cellWidth: 30 },
-          3: { cellWidth: 22 },
-          4: { cellWidth: 60 },
-          5: { cellWidth: 20 },
+          0: { cellWidth: 12 },
+          1: { cellWidth: 28 },
+          2: { cellWidth: 28 },
+          3: { cellWidth: 20 },
+          4: { cellWidth: 55 },
+          5: { cellWidth: 22 },
         },
       },
     );

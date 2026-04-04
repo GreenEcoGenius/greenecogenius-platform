@@ -253,7 +253,8 @@ export async function POST() {
           status = 'non_conforme';
           severity = 'majeur';
         } else {
-          status = 'partiel';
+          // not_evaluated = non conforme (no data yet)
+          status = 'non_conforme';
           severity = 'mineur';
         }
 
