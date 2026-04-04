@@ -46,25 +46,51 @@ export default async function RegionDetailPage({ params }: PageProps) {
   const t = await getTranslations('marketing');
   const client = getPublicSupabaseClient();
 
-  const { data: regionRows } = await client
-    .from('material_stats_by_region')
-    .select('*')
-    .eq('region', regionName)
-    .eq('country', 'France')
-    .order('annual_volume_tonnes', { ascending: false });
+  const [{ data: regionRows }, { data: nationalRows }] = await Promise.all([
+    client
+      .from('material_stats_by_region')
+      .select('*')
+      .eq('region', regionName)
+      .eq('country', 'France')
+      .order('annual_volume_tonnes', { ascending: false }),
+    client
+      .from('material_stats_national')
+      .select('category, recycling_rate, recovery_rate, avg_price_per_tonne, data_source')
+      .eq('country_code', 'FR'),
+  ]);
+
+  // Build a lookup of national stats by category for fallback
+  const nationalByCategory = new Map<string, { recycling_rate: number; recovery_rate: number; avg_price_per_tonne: number; data_source: string }>();
+  for (const n of (nationalRows ?? []) as Record<string, unknown>[]) {
+    const cat = n.category as string;
+    const existing = nationalByCategory.get(cat);
+    // Keep the one with the highest volume (best data)
+    if (!existing || Number(n.recycling_rate ?? 0) > existing.recycling_rate) {
+      nationalByCategory.set(cat, {
+        recycling_rate: Number(n.recycling_rate ?? 0),
+        recovery_rate: Number(n.recovery_rate ?? 0),
+        avg_price_per_tonne: Number(n.avg_price_per_tonne ?? 0),
+        data_source: cleanSource((n.data_source as string) ?? ''),
+      });
+    }
+  }
 
   const stats: RegionStat[] = (regionRows ?? []).map(
-    (r: Record<string, unknown>) => ({
-      region: r.region as string,
-      category: r.category as string,
-      annual_volume_tonnes: Number(r.annual_volume_tonnes ?? 0),
-      recycling_rate: Number(r.recycling_rate ?? 0),
-      recovery_rate: Number(r.recovery_rate ?? 0),
-      avg_price_per_tonne: Number(r.avg_price_per_tonne ?? 0),
-      data_source: cleanSource((r.data_source as string) ?? ''),
-      year: (r.year as number) ?? 2024,
-      country: 'France',
-    }),
+    (r: Record<string, unknown>) => {
+      const cat = r.category as string;
+      const national = nationalByCategory.get(cat);
+      return {
+        region: r.region as string,
+        category: cat,
+        annual_volume_tonnes: Number(r.annual_volume_tonnes ?? 0),
+        recycling_rate: Number(r.recycling_rate ?? 0) || (national?.recycling_rate ?? 0),
+        recovery_rate: Number(r.recovery_rate ?? 0) || (national?.recovery_rate ?? 0),
+        avg_price_per_tonne: Number(r.avg_price_per_tonne ?? 0) || (national?.avg_price_per_tonne ?? 0),
+        data_source: cleanSource((r.data_source as string) ?? '') || (national?.data_source ?? 'ADEME/SINOE'),
+        year: (r.year as number) ?? 2024,
+        country: 'France',
+      };
+    },
   );
 
   const totalVolume = stats.reduce((s, r) => s + r.annual_volume_tonnes, 0);
