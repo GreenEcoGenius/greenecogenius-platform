@@ -160,7 +160,7 @@ export function AICSRDChecklist({ className }: { className?: string }) {
   const { ask, loading, error } = useComplianceAI();
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
-  const accessible = canAccess('csrd_report');
+  const accessible = canAccess('esg_report');
 
   useEffect(() => {
     if (accessible) {
@@ -173,7 +173,7 @@ export function AICSRDChecklist({ className }: { className?: string }) {
     return (
       <UpgradePrompt
         feature="Checklist CSRD / ESRS interactive"
-        requiredPlan={requiredPlan('csrd_report')}
+        requiredPlan={requiredPlan('esg_report')}
       />
     );
   }

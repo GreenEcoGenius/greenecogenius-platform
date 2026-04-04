@@ -87,7 +87,7 @@ export function AIReductionPlan({ className }: { className?: string }) {
   const { canAccess, requiredPlan } = useSubscription();
   const { ask, loading, error } = useCarbonAI();
 
-  const accessible = canAccess('ai_recommendations');
+  const accessible = canAccess('carbon_reduction_plan');
 
   useEffect(() => {
     if (accessible) {
@@ -100,7 +100,7 @@ export function AIReductionPlan({ className }: { className?: string }) {
     return (
       <UpgradePrompt
         feature="Plan de r\u00e9duction carbone personnalis\u00e9"
-        requiredPlan={requiredPlan('ai_recommendations')}
+        requiredPlan={requiredPlan('carbon_reduction_plan')}
       />
     );
   }
