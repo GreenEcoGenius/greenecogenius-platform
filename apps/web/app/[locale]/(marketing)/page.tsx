@@ -87,7 +87,7 @@ export default async function Home() {
 
             {/* Colonne droite — Screenshot */}
             <AnimateOnScroll animation="fade-up" delay={200}>
-              <div className="relative mx-auto max-w-xl lg:max-w-none">
+              <div className="relative mx-auto max-w-xl lg:-mr-16 lg:max-w-none xl:-mr-24">
                 <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)]">
                   <Image
                     src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/ajoute_moi_quelque_202604040436.png"
