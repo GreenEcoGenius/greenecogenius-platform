@@ -419,7 +419,7 @@
     "mapSubtitle": "Volumes de matières recyclables par région — cliquez sur une région pour voir le détail.",
     "trendsTitle": "Tendances du marché",
     "demandIncrease": "de demande",
-    "trendsDisclaimer": "Données mises à jour mensuellement depuis les sources publiques ADEME et GEREP.",
+    "trendsDisclaimer": "Données issues des rapports annuels ADEME, Eurostat et EPA.",
     "dataSource": "Sources : ADEME · GEREP · INSEE · Eurostat",
     "ctaHeading": "Vous cherchez une matière spécifique ?",
     "ctaSubheading": "Inscrivez-vous gratuitement pour accéder aux détails et contacter les producteurs.",
@@ -459,6 +459,6 @@
     "sourcesFranceDesc": "Données officielles françaises sur les déchets et le recyclage",
     "sourcesEuropeDesc": "Statistiques européennes sur les déchets (règlement CE n°2150/2002)",
     "sourcesUsaDesc": "Facts and Figures about Materials, Waste and Recycling",
-    "sourcesLastUpdate": "Données actualisées annuellement. Dernière mise à jour : 2024."
+    "sourcesLastUpdate": "Données actualisées annuellement. Sources : ADEME/SINOE (2021), Eurostat (2022), EPA (2021)."
   }
 }

@@ -419,7 +419,7 @@
     "mapSubtitle": "Recyclable material volumes by region — click a region for details.",
     "trendsTitle": "Market trends",
     "demandIncrease": "demand increase",
-    "trendsDisclaimer": "Data updated monthly from ADEME and GEREP public sources.",
+    "trendsDisclaimer": "Data from ADEME, Eurostat and EPA annual reports.",
     "dataSource": "Sources: ADEME · GEREP · INSEE · Eurostat",
     "ctaHeading": "Looking for a specific material?",
     "ctaSubheading": "Sign up for free to access details and contact producers.",
@@ -459,6 +459,6 @@
     "sourcesFranceDesc": "Official French data on waste and recycling",
     "sourcesEuropeDesc": "European waste statistics (Regulation EC 2150/2002)",
     "sourcesUsaDesc": "Facts and Figures about Materials, Waste and Recycling",
-    "sourcesLastUpdate": "Data updated annually. Last update: 2024."
+    "sourcesLastUpdate": "Data updated annually. Sources: ADEME/SINOE (2021), Eurostat (2022), EPA (2021)."
   }
 }
