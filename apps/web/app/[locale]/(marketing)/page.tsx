@@ -33,9 +33,9 @@ export default async function Home() {
   return (
     <div className="flex flex-col overflow-x-hidden">
       {/* ───── SECTION 1 — HERO ───── */}
-      <section className="bg-white pt-24 pb-16 sm:pt-32 sm:pb-24">
+      <section className="overflow-hidden bg-white pt-24 pb-16 sm:pt-32 sm:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-8">
+          <div className="grid items-center gap-12 lg:grid-cols-[40%_1fr] lg:gap-12">
             {/* Colonne gauche — Texte */}
             <div className="text-center lg:text-left">
               <AnimateOnScroll animation="fade-up">
@@ -85,10 +85,11 @@ export default async function Home() {
               </AnimateOnScroll>
             </div>
 
-            {/* Colonne droite — Screenshot */}
+            {/* Colonne droite — Screenshot débordant à droite */}
             <AnimateOnScroll animation="fade-up" delay={200}>
-              <div className="relative mx-auto max-w-xl lg:-mr-16 lg:max-w-none xl:-mr-24">
-                <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)]">
+              {/* Mobile : image normale avec coins arrondis */}
+              <div className="mx-auto max-w-xl lg:hidden">
+                <div className="overflow-hidden rounded-2xl shadow-2xl">
                   <Image
                     src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/ajoute_moi_quelque_202604040436.png"
                     alt="GreenEcoGenius Platform Dashboard"
@@ -97,7 +98,20 @@ export default async function Home() {
                     className="h-auto w-full"
                     priority
                     unoptimized
-                    quality={100}
+                  />
+                </div>
+              </div>
+              {/* Desktop : image qui déborde à droite */}
+              <div className="relative hidden lg:block">
+                <div className="-mr-[calc(50vw-50%)] overflow-hidden rounded-l-2xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.25)]">
+                  <Image
+                    src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/ajoute_moi_quelque_202604040436.png"
+                    alt="GreenEcoGenius Platform Dashboard"
+                    width={2800}
+                    height={1800}
+                    className="h-auto w-full"
+                    priority
+                    unoptimized
                   />
                 </div>
               </div>
