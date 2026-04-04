@@ -107,7 +107,7 @@ async function CompliancePage() {
     (r) => r.status === 'non_compliant',
   ).length;
   const score = Math.round((compliantCount / rows.length) * 100);
-  const alertCount = nonCompliantCount + partialCount;
+  const alertCount = nonCompliantCount;
 
   // Build pillar aggregation from real data
   const pillarMap = new Map<
@@ -161,9 +161,9 @@ async function CompliancePage() {
     };
   });
 
-  // Alert items: non-compliant or partial with evidence
+  // Alert items: only non-compliant norms (not partial or not_evaluated)
   const alertItems = rows
-    .filter((r) => r.status === 'non_compliant' || r.status === 'partial')
+    .filter((r) => r.status === 'non_compliant')
     .map((r) => {
       const norm = NORMS_DATABASE.find((n) => n.id === r.norm_id);
       return {
