@@ -85,18 +85,21 @@ export default async function Home() {
               </AnimateOnScroll>
             </div>
 
-            {/* Colonne droite — Screenshot (hidden on mobile) */}
+            {/* Colonne droite — Screenshot */}
             <AnimateOnScroll animation="fade-up" delay={200}>
-              <div className="hidden overflow-hidden rounded-2xl border border-gray-200 shadow-2xl lg:block">
-                <Image
-                  src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/ajoute_moi_quelque_202604040436.png"
-                  alt="GreenEcoGenius Platform Dashboard"
-                  width={1400}
-                  height={900}
-                  className="h-auto w-full"
-                  priority
-                  unoptimized
-                />
+              <div className="relative mx-auto max-w-xl lg:max-w-none">
+                <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)]">
+                  <Image
+                    src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/ajoute_moi_quelque_202604040436.png"
+                    alt="GreenEcoGenius Platform Dashboard"
+                    width={2800}
+                    height={1800}
+                    className="h-auto w-full"
+                    priority
+                    unoptimized
+                    quality={100}
+                  />
+                </div>
               </div>
             </AnimateOnScroll>
           </div>
