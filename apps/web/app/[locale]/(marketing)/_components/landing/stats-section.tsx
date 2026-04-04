@@ -14,7 +14,7 @@ const STATS = [
   },
   {
     icon: Recycle,
-    value: 48,
+    value: 42,
     suffix: '%',
     sourceKey: 'landing.stat2Source',
     labelKey: 'landing.stat2Label',
