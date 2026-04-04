@@ -220,10 +220,77 @@ export async function POST() {
   const isFr = locale === 'fr';
   const companyName = account?.name ?? (isFr ? 'Mon entreprise' : 'My company');
 
-  // Try parallel AI analysis per pillar, fallback to mock
+  // Try to load real compliance data from database first
   let auditResult: AuditResult;
 
-  if (process.env.ANTHROPIC_API_KEY) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: realCompliance } = await (adminClient as any)
+    .from('account_norm_compliance')
+    .select('norm_id, status')
+    .eq('account_id', user.id);
+
+  if (realCompliance && realCompliance.length > 0) {
+    // Use real data from database
+    const norms: NormAnalysis[] = [];
+
+    for (const pillar of PILLARS) {
+      for (const normName of pillar.norms) {
+        const match = realCompliance.find(
+          (r: { norm_id: string }) => r.norm_id === normName || normName.includes(r.norm_id),
+        );
+        const dbStatus = match?.status ?? 'not_evaluated';
+
+        let status: NormAnalysis['status'];
+        let severity: NormAnalysis['severity'];
+
+        if (dbStatus === 'compliant') {
+          status = 'conforme';
+          severity = 'info';
+        } else if (dbStatus === 'partial') {
+          status = 'partiel';
+          severity = 'mineur';
+        } else if (dbStatus === 'non_compliant') {
+          status = 'non_conforme';
+          severity = 'majeur';
+        } else {
+          status = 'partiel';
+          severity = 'mineur';
+        }
+
+        norms.push({
+          name: normName,
+          pillar: pillar.name,
+          status,
+          severity,
+          finding: pick(MOCK_FINDINGS[status]!),
+          recommendation: pick(MOCK_RECOMMENDATIONS[status]!),
+        });
+      }
+    }
+
+    const normsCompliant = norms.filter((n) => n.status === 'conforme').length;
+    const normsPartial = norms.filter((n) => n.status === 'partiel').length;
+    const normsNonCompliant = norms.filter((n) => n.status === 'non_conforme').length;
+    const criticalIssues = norms.filter((n) => n.severity === 'critique').length;
+    const majorIssues = norms.filter((n) => n.severity === 'majeur').length;
+    const minorIssues = norms.filter((n) => n.severity === 'mineur').length;
+    const score = Math.round(((normsCompliant + normsPartial * 0.5) / norms.length) * 100);
+
+    auditResult = {
+      score,
+      normsCompliant,
+      normsPartial,
+      normsNonCompliant,
+      normsTotal: norms.length,
+      criticalIssues,
+      majorIssues,
+      minorIssues,
+      norms,
+      executiveSummary: isFr
+        ? `L'analyse de pre-audit couvre les ${norms.length} normes du referentiel GreenEcoGenius reparties sur 6 piliers. Le score global de conformite est de ${score}%. ${normsCompliant} normes sont pleinement conformes, ${normsPartial} sont partiellement conformes, et ${normsNonCompliant} presentent des non-conformites. ${criticalIssues} points critiques et ${majorIssues} points majeurs necessitent une attention immediate.`
+        : `The pre-audit analysis covers ${norms.length} standards from the GreenEcoGenius framework across 6 pillars. The overall compliance score is ${score}%. ${normsCompliant} standards are fully compliant, ${normsPartial} are partially compliant, and ${normsNonCompliant} have non-compliances. ${criticalIssues} critical issues and ${majorIssues} major issues require immediate attention.`,
+    };
+  } else if (process.env.ANTHROPIC_API_KEY) {
     try {
       // Launch 6 parallel AI calls (one per pillar) using Haiku for speed
       const pillarResults = await Promise.all(
