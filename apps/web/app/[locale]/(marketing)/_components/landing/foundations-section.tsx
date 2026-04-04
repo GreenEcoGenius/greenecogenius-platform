@@ -1,16 +1,15 @@
+'use client';
+
 import Image from 'next/image';
 
 import { Code2, Database, ShieldCheck } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
-
-import { AnimateOnScroll } from '../animate-on-scroll';
+import { useTranslations } from 'next-intl';
 
 interface LogoItem {
   name: string;
   src: string | null;
   url: string;
   size?: string;
-  removeBg?: boolean;
 }
 
 const techLogos: LogoItem[] = [
@@ -43,106 +42,107 @@ const frameworkLogos: LogoItem[] = [
   { name: 'NR (INR)', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/a22d5f61-e78e-459b-8839-efe5f1f833ae.png', url: 'https://institutnr.org' },
 ];
 
-function LogoRow({ logos }: { logos: LogoItem[] }) {
+function LogoCarouselItem({ logo }: { logo: LogoItem }) {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
-      {logos.map((logo) => (
-        <a
-          key={logo.name}
-          href={logo.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex flex-col items-center gap-2"
-        >
-          <div className="flex h-20 items-center transition-all duration-300 group-hover:scale-110">
-            {logo.src ? (
-              <Image
-                src={logo.src}
-                alt={logo.name}
-                width={200}
-                height={80}
-                className={`w-auto object-contain ${logo.size ?? 'h-16 sm:h-20'} ${logo.removeBg ? 'mix-blend-multiply' : ''}`}
-                unoptimized
-              />
-            ) : (
-              <span className="text-metal-400 group-hover:text-metal-800 rounded-lg border border-current/20 px-4 py-2 text-base font-bold transition-colors">
-                {logo.name}
-              </span>
-            )}
-          </div>
-          {logo.src && (
-            <span className="text-metal-400 group-hover:text-metal-600 text-xs transition-colors">
-              {logo.name}
-            </span>
-          )}
-        </a>
-      ))}
+    <a
+      href={logo.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex shrink-0 flex-col items-center gap-2 px-6 sm:px-10"
+    >
+      {logo.src ? (
+        <Image
+          src={logo.src}
+          alt={logo.name}
+          width={200}
+          height={80}
+          className={`w-auto object-contain transition-transform duration-300 group-hover:scale-110 ${logo.size ?? 'h-12 sm:h-14'}`}
+          unoptimized
+        />
+      ) : (
+        <span className="text-metal-400 group-hover:text-metal-800 rounded-lg border border-current/20 px-4 py-2 text-base font-bold transition-colors">
+          {logo.name}
+        </span>
+      )}
+      {logo.src && (
+        <span className="text-metal-400 group-hover:text-metal-600 text-[11px] transition-colors">
+          {logo.name}
+        </span>
+      )}
+    </a>
+  );
+}
+
+function LogoMarquee({ logos }: { logos: LogoItem[] }) {
+  const items = [...logos, ...logos];
+
+  return (
+    <div className="relative overflow-hidden">
+      <div className="from-background pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r to-transparent sm:w-24" />
+      <div className="from-background pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l to-transparent sm:w-24" />
+
+      <div className="animate-marquee flex w-max items-center py-4">
+        {items.map((logo, i) => (
+          <LogoCarouselItem key={`${logo.name}-${i}`} logo={logo} />
+        ))}
+      </div>
     </div>
   );
 }
 
-export async function FoundationsSection() {
-  const t = await getTranslations('marketing');
+export function TechCarousel() {
+  const t = useTranslations('marketing');
 
   return (
-    <section className="py-20 sm:py-28">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <AnimateOnScroll animation="fade-up">
-          <div className="mb-16 text-center">
-            <h2 className="text-metal-900 text-3xl font-bold tracking-tight">
-              {t('landing.foundationsTitle')}
-            </h2>
-            <p className="text-metal-500 mx-auto mt-3 max-w-2xl text-lg">
-              {t('landing.foundationsSub')}
-            </p>
-          </div>
-        </AnimateOnScroll>
-
-        <div className="space-y-16">
-          {/* Technologies */}
-          <AnimateOnScroll animation="fade-up">
-            <div className="rounded-2xl border border-teal-100 bg-teal-50/30 p-8">
-              <div className="mb-6 flex items-center justify-center gap-2">
-                <Code2 className="h-5 w-5 text-teal-600" strokeWidth={1.5} />
-                <h3 className="text-lg font-semibold text-teal-800">
-                  {t('landing.foundationsTech')}
-                </h3>
-              </div>
-              <LogoRow logos={techLogos} />
-            </div>
-          </AnimateOnScroll>
-
-          {/* Sources + Referentiels side by side */}
-          <div className="grid gap-8 md:grid-cols-2">
-            <AnimateOnScroll animation="fade-up">
-              <div className="h-full rounded-2xl border border-emerald-100 bg-emerald-50/30 p-8">
-                <div className="mb-6 flex items-center justify-center gap-2">
-                  <Database className="h-5 w-5 text-emerald-600" strokeWidth={1.5} />
-                  <h3 className="text-lg font-semibold text-emerald-800">
-                    {t('landing.foundationsSources')}
-                  </h3>
-                </div>
-                <LogoRow logos={sourceLogos} />
-              </div>
-            </AnimateOnScroll>
-
-            <AnimateOnScroll animation="fade-up" delay={100}>
-              <div className="h-full rounded-2xl border border-green-100 bg-green-50/30 p-8">
-                <div className="mb-2 flex items-center justify-center gap-2">
-                  <ShieldCheck className="h-5 w-5 text-green-600" strokeWidth={1.5} />
-                  <h3 className="text-lg font-semibold text-green-800">
-                    {t('landing.foundationsFrameworks')}
-                  </h3>
-                </div>
-                <p className="text-metal-400 mb-6 text-center text-xs">
-                  {t('landing.foundationsFrameworksSub')}
-                </p>
-                <LogoRow logos={frameworkLogos} />
-              </div>
-            </AnimateOnScroll>
-          </div>
+    <section className="py-10 sm:py-14">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 flex items-center justify-center gap-2">
+          <Code2 className="h-5 w-5 text-teal-600" strokeWidth={1.5} />
+          <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
+            {t('landing.foundationsTech')}
+          </p>
         </div>
       </div>
+      <LogoMarquee logos={techLogos} />
+    </section>
+  );
+}
+
+export function SourcesCarousel() {
+  const t = useTranslations('marketing');
+
+  return (
+    <section className="py-10 sm:py-14">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 flex items-center justify-center gap-2">
+          <Database className="h-5 w-5 text-emerald-600" strokeWidth={1.5} />
+          <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
+            {t('landing.foundationsSources')}
+          </p>
+        </div>
+      </div>
+      <LogoMarquee logos={sourceLogos} />
+    </section>
+  );
+}
+
+export function FrameworksCarousel() {
+  const t = useTranslations('marketing');
+
+  return (
+    <section className="py-10 sm:py-14">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-2 flex items-center justify-center gap-2">
+          <ShieldCheck className="h-5 w-5 text-green-600" strokeWidth={1.5} />
+          <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
+            {t('landing.foundationsFrameworks')}
+          </p>
+        </div>
+        <p className="text-metal-400 mb-4 text-center text-xs">
+          {t('landing.foundationsFrameworksSub')}
+        </p>
+      </div>
+      <LogoMarquee logos={frameworkLogos} />
     </section>
   );
 }

@@ -11,7 +11,7 @@ import { HeroScrollEffect } from './_components/hero-scroll-effect';
 import { HeroVisual } from './_components/hero-visual';
 import { ComparisonTable } from './_components/landing/comparison-table';
 import { FaqSection } from './_components/landing/faq-section';
-import { FoundationsSection } from './_components/landing/foundations-section';
+import { FrameworksCarousel, SourcesCarousel, TechCarousel } from './_components/landing/foundations-section';
 import { HowItWorks } from './_components/landing/how-it-works';
 import { ImpactSimulator } from './_components/landing/impact-simulator';
 import { PricingPreview } from './_components/landing/pricing-preview';
@@ -89,8 +89,14 @@ export default async function Home() {
       {/* ───── SECTION 2 — STATS MARCHÉ ───── */}
       <StatsSection />
 
+      {/* ───── CARROUSEL TECHNOLOGIES ───── */}
+      <TechCarousel />
+
       {/* ───── SECTION 3 — URGENCE RÉGLEMENTAIRE ───── */}
       <RegulatoryTimeline />
+
+      {/* ───── CARROUSEL SOURCES OFFICIELLES ───── */}
+      <SourcesCarousel />
 
       {/* ───── SECTION 4 — 3 PILIERS ───── */}
       <section id="features" className="bg-metal-50 py-20 sm:py-32">
@@ -158,8 +164,8 @@ export default async function Home() {
         <ImpactSimulator />
       </Suspense>
 
-      {/* ───── SECTION 7 — FONDATIONS ───── */}
-      <FoundationsSection />
+      {/* ───── CARROUSEL RÉFÉRENTIELS ───── */}
+      <FrameworksCarousel />
 
       {/* ───── SECTION 7.5 — COMPARATIF CONCURRENTIEL ───── */}
       <ComparisonTable />
