@@ -3,12 +3,10 @@ import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ArrowRight, Bot, CheckCircle, Recycle, Shield } from 'lucide-react';
+import { ArrowRight, Bot, Recycle, Shield, Sparkles } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { AnimateOnScroll } from './_components/animate-on-scroll';
-import { HeroScrollEffect } from './_components/hero-scroll-effect';
-import { HeroVisual } from './_components/hero-visual';
 import { ComparisonTable } from './_components/landing/comparison-table';
 import { FaqSection } from './_components/landing/faq-section';
 import { FrameworksCarousel, SourcesCarousel, TechCarousel } from './_components/landing/foundations-section';
@@ -33,58 +31,77 @@ export default async function Home() {
   const t = await getTranslations('marketing');
 
   return (
-    <div className="-mt-16 flex flex-col overflow-x-hidden md:-mt-36">
+    <div className="flex flex-col overflow-x-hidden">
       {/* ───── SECTION 1 — HERO ───── */}
-      <HeroScrollEffect>
-        <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
-          <Image
-            src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Photorealistic_aerial_drone_202604030010.png"
-            alt=""
-            fill
-            className="object-cover object-center"
-            priority
-            unoptimized
-          />
-          <div className="from-metal-900/60 via-metal-900/40 to-metal-900/70 absolute inset-0 bg-gradient-to-b" />
+      <section className="bg-white pt-24 pb-16 sm:pt-32 sm:pb-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            {/* Colonne gauche — Texte */}
+            <div>
+              <AnimateOnScroll animation="fade-up">
+                <div className="mb-8 inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
+                  <Sparkles className="h-4 w-4" strokeWidth={1.5} />
+                  <span>{t('heroBadge')}</span>
+                </div>
 
-          <HeroVisual />
+                <h1 className="text-metal-900 text-4xl font-bold leading-tight lg:text-5xl">
+                  {t('heroTitle')}
+                </h1>
 
-          {/* CTAs */}
-          <div className="relative z-10 flex flex-col items-center gap-4">
-            <AnimateOnScroll animation="fade-up" delay={300}>
-              <div className="flex items-center justify-center">
-                <Link
-                  href="/auth/sign-up"
-                  className="group text-metal-900 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold shadow-lg transition-all hover:shadow-xl sm:px-10 sm:py-4"
-                >
-                  {t('heroCta1')}
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </div>
-            </AnimateOnScroll>
+                <p className="text-metal-600 mt-6 max-w-lg text-lg">
+                  {t('heroDescription')}
+                </p>
 
-            {/* Credibility badges */}
-            <AnimateOnScroll animation="fade-up" delay={500}>
-              <div className="mt-2 flex flex-wrap items-center justify-center gap-3 text-[11px] text-white/80">
-                <span className="flex items-center gap-1">
-                  <CheckCircle className="h-3.5 w-3.5" />{' '}
-                  {t('landing.badgeCsrd')}
-                </span>
-                <span className="flex items-center gap-1">
-                  <CheckCircle className="h-3.5 w-3.5" />{' '}
-                  {t('landing.badgeBlockchain')}
-                </span>
-                <span className="flex items-center gap-1">
-                  <CheckCircle className="h-3.5 w-3.5" />{' '}
-                  {t('landing.badgeAdeme')}
-                </span>
+                <div className="mt-8 flex flex-wrap gap-4">
+                  <Link
+                    href="/auth/sign-up"
+                    className="group inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 font-medium text-white transition-colors hover:bg-emerald-700"
+                  >
+                    {t('heroCtaPrimary')}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" strokeWidth={1.5} />
+                  </Link>
+                  <Link
+                    href="/solutions"
+                    className="text-metal-700 inline-flex items-center gap-2 rounded-lg border border-gray-300 px-6 py-3 font-medium transition-colors hover:border-gray-400"
+                  >
+                    {t('heroCtaSecondary')}
+                  </Link>
+                </div>
+
+                <div className="text-metal-500 mt-8 flex flex-wrap items-center gap-4 text-sm">
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    {t('heroProof1')}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    {t('heroProof2')}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    {t('heroProof3')}
+                  </span>
+                </div>
+              </AnimateOnScroll>
+            </div>
+
+            {/* Colonne droite — Screenshot */}
+            <AnimateOnScroll animation="fade-up" delay={200}>
+              <div className="overflow-hidden rounded-xl border border-gray-200 shadow-2xl">
+                <Image
+                  src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/ajoute_moi_quelque_202604040436.png"
+                  alt="GreenEcoGenius Platform Dashboard"
+                  width={1400}
+                  height={900}
+                  className="h-auto w-full"
+                  priority
+                  unoptimized
+                />
               </div>
             </AnimateOnScroll>
           </div>
-
-          <div className="from-metal-50 absolute right-0 bottom-0 left-0 h-32 bg-gradient-to-t to-transparent" />
-        </section>
-      </HeroScrollEffect>
+        </div>
+      </section>
 
       {/* ───── SECTION 2 — STATS MARCHÉ ───── */}
       <StatsSection />
