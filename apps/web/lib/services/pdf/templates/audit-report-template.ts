@@ -242,11 +242,11 @@ export function generateAuditReportPDF(
       rows,
       {
         columnStyles: {
-          0: { cellWidth: 28 },
-          1: { cellWidth: 24 },
+          0: { cellWidth: 35 },
+          1: { cellWidth: 22 },
           2: { cellWidth: 22 },
-          3: { cellWidth: 48 },
-          4: { cellWidth: 50 },
+          3: { cellWidth: 45 },
+          4: { cellWidth: 48 },
         },
       },
     );
@@ -291,11 +291,11 @@ export function generateAuditReportPDF(
       {
         columnStyles: {
           0: { cellWidth: 10 },
-          1: { cellWidth: 30 },
-          2: { cellWidth: 28 },
+          1: { cellWidth: 35 },
+          2: { cellWidth: 26 },
           3: { cellWidth: 22 },
-          4: { cellWidth: 52 },
-          5: { cellWidth: 23 },
+          4: { cellWidth: 47 },
+          5: { cellWidth: 25 },
         },
       },
     );
