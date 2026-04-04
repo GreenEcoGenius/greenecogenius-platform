@@ -48,7 +48,7 @@ function LogoCarouselItem({ logo }: { logo: LogoItem }) {
       href={logo.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex shrink-0 flex-col items-center gap-2 px-6 sm:px-10"
+      className="group flex shrink-0 flex-col items-center gap-2 px-5 sm:px-8"
     >
       {logo.src ? (
         <Image
@@ -56,7 +56,7 @@ function LogoCarouselItem({ logo }: { logo: LogoItem }) {
           alt={logo.name}
           width={200}
           height={80}
-          className={`w-auto object-contain opacity-60 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-110 ${logo.size ?? 'h-12 sm:h-14'}`}
+          className={`w-auto object-contain transition-transform duration-300 group-hover:scale-110 ${logo.size ?? 'h-12 sm:h-14'}`}
           unoptimized
         />
       ) : (
@@ -73,12 +73,17 @@ function LogoCarouselItem({ logo }: { logo: LogoItem }) {
   );
 }
 
-function LogoGrid({ logos }: { logos: LogoItem[] }) {
+function LogoMarquee({ logos }: { logos: LogoItem[] }) {
+  const items = [...logos, ...logos, ...logos, ...logos];
+
   return (
-    <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
-        {logos.map((logo) => (
-          <LogoCarouselItem key={logo.name} logo={logo} />
+    <div className="relative overflow-hidden">
+      <div className="from-background pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r to-transparent sm:w-24" />
+      <div className="from-background pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l to-transparent sm:w-24" />
+
+      <div className="animate-marquee-fast flex w-max items-center py-4">
+        {items.map((logo, i) => (
+          <LogoCarouselItem key={`${logo.name}-${i}`} logo={logo} />
         ))}
       </div>
     </div>
@@ -98,7 +103,7 @@ export function TechCarousel() {
           </p>
         </div>
       </div>
-      <LogoGrid logos={techLogos} />
+      <LogoMarquee logos={techLogos} />
     </section>
   );
 }
@@ -116,7 +121,7 @@ export function SourcesCarousel() {
           </p>
         </div>
       </div>
-      <LogoGrid logos={sourceLogos} />
+      <LogoMarquee logos={sourceLogos} />
     </section>
   );
 }
@@ -137,7 +142,7 @@ export function FrameworksCarousel() {
           {t('landing.foundationsFrameworksSub')}
         </p>
       </div>
-      <LogoGrid logos={frameworkLogos} />
+      <LogoMarquee logos={frameworkLogos} />
     </section>
   );
 }
