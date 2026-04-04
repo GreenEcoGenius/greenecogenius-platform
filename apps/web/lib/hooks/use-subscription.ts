@@ -19,6 +19,7 @@ export type Feature =
   | 'scope3_guided'
   | 'carbon_report_pdf'
   | 'carbon_reduction_plan'
+  | 'sbti_trajectory'
   // Comptoir
   | 'comptoir_listings'
   | 'comptoir_transactions'
@@ -30,6 +31,7 @@ export type Feature =
   | 'blockchain_unlimited'
   // ESG
   | 'esg_report'
+  | 'esg_report_csrd'
   | 'esg_esrs_indicators'
   | 'esg_auto_populate'
   // RSE
@@ -76,8 +78,10 @@ const featureAccess: Record<Feature, string[]> = {
   scope3_guided: ['avance', 'enterprise'],
   carbon_reduction_plan: ['avance', 'enterprise'],
   esg_report: ['avance', 'enterprise'],
+  esg_report_csrd: ['avance', 'enterprise'],
   esg_esrs_indicators: ['avance', 'enterprise'],
   esg_auto_populate: ['avance', 'enterprise'],
+  sbti_trajectory: ['avance', 'enterprise'],
   blockchain_unlimited: ['avance', 'enterprise'],
   rse_diagnostic_full: ['avance', 'enterprise'],
   rse_label_eligibility: ['avance', 'enterprise'],

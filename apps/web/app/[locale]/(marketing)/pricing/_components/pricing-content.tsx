@@ -85,6 +85,9 @@ const essentielFeatures = [
 
 const avanceFeatures = [
   'pricingPage.featScope123',
+  'pricingPage.featCsrdReport',
+  'pricingPage.featReductionPlan',
+  'pricingPage.featSbtiTrajectory',
   'pricingPage.featEsgReport',
   'pricingPage.featUnlimitedLots',
   'pricingPage.featRseFull',
@@ -575,35 +578,11 @@ interface ComingSoonFeature {
 
 const COMING_SOON: ComingSoonFeature[] = [
   {
-    icon: FileBarChart,
-    titleFr: 'Rapport ESG conforme CSRD/GRI complet',
-    titleEn: 'Full CSRD/GRI compliant ESG report',
-    descFr: 'Rapport automatise couvrant les 82 indicateurs ESRS avec export multi-format.',
-    descEn: 'Automated report covering all 82 ESRS indicators with multi-format export.',
-    timeline: 'Q3 2026',
-  },
-  {
-    icon: Target,
-    titleFr: 'Suivi trajectoire SBTi / Net Zero',
-    titleEn: 'SBTi / Net Zero trajectory tracking',
-    descFr: 'Modelisation de votre trajectoire de reduction alignee sur les objectifs 1.5 C.',
-    descEn: 'Model your reduction trajectory aligned with 1.5 C targets.',
-    timeline: 'Q3 2026',
-  },
-  {
     icon: BarChart3,
     titleFr: 'Benchmarking sectoriel',
     titleEn: 'Industry benchmarking',
     descFr: "Comparez vos performances carbone et circulaires avec votre secteur d'activite.",
     descEn: 'Compare your carbon and circular performance with your industry peers.',
-    timeline: 'Q4 2026',
-  },
-  {
-    icon: Sparkles,
-    titleFr: 'Recommandations IA de reduction carbone',
-    titleEn: 'AI-powered carbon reduction recommendations',
-    descFr: 'Genius analyse vos donnees et propose un plan de reduction personnalise avec ROI estime.',
-    descEn: 'Genius analyzes your data and proposes a personalized reduction plan with estimated ROI.',
     timeline: 'Q4 2026',
   },
   {

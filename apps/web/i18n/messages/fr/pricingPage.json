@@ -36,6 +36,9 @@
   "featEmailSupport": "Support email",
 
   "featScope123": "Bilan carbone Scope 1, 2 & 3 complet (saisie guidée Genius)",
+  "featCsrdReport": "Rapport CSRD/GRI complet (82 indicateurs ESRS)",
+  "featReductionPlan": "Plan de réduction carbone personnalisé par Genius (avec ROI)",
+  "featSbtiTrajectory": "Suivi trajectoire SBTi / Net Zero (aligné 1.5°C)",
   "featEsgReport": "Rapport ESG avec indicateurs ESRS",
   "featUnlimitedLots": "Lots tracés blockchain illimités",
   "featRseFull": "Diagnostic RSE complet avec plan d'action",
