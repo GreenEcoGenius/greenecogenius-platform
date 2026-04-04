@@ -77,6 +77,7 @@ export default async function CategoryDetailPage({ params }: PageProps) {
     recycling_rate: Number(natRow.recycling_rate ?? 0),
     recovery_rate: Number(natRow.recovery_rate ?? 0),
     avg_price_per_tonne: Number(natRow.avg_price_per_tonne ?? 0),
+    price_currency: (natRow.price_currency as string) ?? 'EUR',
     data_source: cleanSource(natRow.data_source ?? ''),
     year: natRow.year ?? 2024,
     country_code: 'FR',

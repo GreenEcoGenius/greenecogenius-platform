@@ -142,9 +142,10 @@ export function formatVolume(tonnes: number): string {
   return `${Math.round(tonnes)} t`;
 }
 
-export function formatPrice(value: number | null): string {
+export function formatPrice(value: number | null, currency?: string): string {
   if (!value) return '—';
-  return `${value.toLocaleString('fr-FR')} €/t`;
+  const symbol = currency === 'USD' ? '$' : '€';
+  return `${value.toLocaleString('fr-FR')} ${symbol}/t`;
 }
 
 export function formatRate(value: number | null): string {
@@ -161,6 +162,7 @@ export interface NationalStat {
   recycling_rate: number;
   recovery_rate: number;
   avg_price_per_tonne: number;
+  price_currency: string;
   data_source: string;
   year: number;
   country_code: string;
@@ -212,6 +214,7 @@ export function aggregateCountryStats(rows: CountryStat[]): NationalStat[] {
       recycling_rate: 0,
       recovery_rate: 0,
       avg_price_per_tonne: 0,
+      price_currency: 'EUR',
       data_source: 'Eurostat',
       year: 2022,
       country_code: 'EU',

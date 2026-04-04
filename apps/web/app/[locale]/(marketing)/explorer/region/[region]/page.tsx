@@ -119,6 +119,7 @@ export default async function RegionDetailPage({ params }: PageProps) {
                 recycling_rate: row.recycling_rate,
                 recovery_rate: row.recovery_rate,
                 avg_price_per_tonne: row.avg_price_per_tonne,
+                price_currency: 'EUR',
                 data_source: row.data_source,
                 year: row.year,
                 country_code: 'FR',

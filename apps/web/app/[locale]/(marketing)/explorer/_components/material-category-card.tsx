@@ -53,7 +53,7 @@ export function MaterialCategoryCard({
           <span>Recyclage : {formatRate(stat.recycling_rate)}</span>
         )}
         {stat.avg_price_per_tonne > 0 && (
-          <span>{formatPrice(stat.avg_price_per_tonne)}</span>
+          <span>{formatPrice(stat.avg_price_per_tonne, stat.price_currency)}</span>
         )}
       </div>
     </>

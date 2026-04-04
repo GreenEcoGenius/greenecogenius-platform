@@ -30,7 +30,7 @@ export async function CategoryKpis({ stat }: { stat: NationalStat }) {
     {
       icon: BarChart3,
       label: t('explorer.kpiPrice'),
-      value: formatPrice(stat.avg_price_per_tonne),
+      value: formatPrice(stat.avg_price_per_tonne, stat.price_currency),
     },
     { icon: Factory, label: 'Source', value: stat.data_source },
   ];

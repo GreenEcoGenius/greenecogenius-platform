@@ -63,6 +63,7 @@ function toNationalStat(s: Record<string, unknown>): NationalStat {
     recycling_rate: Number(s.recycling_rate ?? 0),
     recovery_rate: Number(s.recovery_rate ?? 0),
     avg_price_per_tonne: Number(s.avg_price_per_tonne ?? 0),
+    price_currency: (s.price_currency as string) ?? 'EUR',
     data_source: cleanSource((s.data_source as string) ?? ''),
     year: (s.year as number) ?? 2024,
     country_code: s.country_code as string,
@@ -121,21 +122,33 @@ export default async function ExplorerPage() {
     (s) => s.country_code !== 'US' && s.country_code !== 'FR',
   );
 
-  const euByCategory = new Map<string, number>();
+  const euByCategory = new Map<
+    string,
+    { volume: number; recyclingSum: number; priceSum: number; count: number }
+  >();
   for (const s of euNational) {
-    euByCategory.set(
-      s.category,
-      (euByCategory.get(s.category) ?? 0) + s.annual_volume_tonnes,
-    );
+    const existing = euByCategory.get(s.category) ?? {
+      volume: 0, recyclingSum: 0, priceSum: 0, count: 0,
+    };
+    existing.volume += s.annual_volume_tonnes;
+    if (s.recycling_rate > 0) {
+      existing.recyclingSum += s.recycling_rate;
+      existing.count += 1;
+    }
+    if (s.avg_price_per_tonne > 0) {
+      existing.priceSum += s.avg_price_per_tonne;
+    }
+    euByCategory.set(s.category, existing);
   }
 
   const europeStats: NationalStat[] = Array.from(euByCategory.entries())
-    .map(([category, volume]) => ({
+    .map(([category, agg]) => ({
       category,
-      annual_volume_tonnes: volume,
-      recycling_rate: 0,
+      annual_volume_tonnes: agg.volume,
+      recycling_rate: agg.count > 0 ? Math.round((agg.recyclingSum / agg.count) * 10) / 10 : 0,
       recovery_rate: 0,
-      avg_price_per_tonne: 0,
+      avg_price_per_tonne: agg.count > 0 ? Math.round(agg.priceSum / agg.count) : 0,
+      price_currency: 'EUR',
       data_source: 'Eurostat',
       year: 2024,
       country_code: 'EU',
