@@ -86,6 +86,12 @@ function LogoMarquee({ logos }: { logos: LogoItem[] }) {
         {logos.map((logo) => (
           <LogoCarouselItem key={`b-${logo.name}`} logo={logo} />
         ))}
+        {logos.map((logo) => (
+          <LogoCarouselItem key={`c-${logo.name}`} logo={logo} />
+        ))}
+        {logos.map((logo) => (
+          <LogoCarouselItem key={`d-${logo.name}`} logo={logo} />
+        ))}
       </div>
     </div>
   );

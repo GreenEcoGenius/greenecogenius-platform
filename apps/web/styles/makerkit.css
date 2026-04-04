@@ -84,6 +84,10 @@
   animation: marquee 25s linear infinite;
   will-change: transform;
 
+  @media (min-width: 1024px) {
+    animation-duration: 15s;
+  }
+
   &:hover {
     animation-play-state: paused;
   }
