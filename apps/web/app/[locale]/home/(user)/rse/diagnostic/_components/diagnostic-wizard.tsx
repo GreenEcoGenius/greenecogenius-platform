@@ -122,7 +122,7 @@ function computeScores(answers: WizardAnswers) {
   const governance = countYes(answers, GOVERNANCE_KEYS) * 5;
   // Environment: 2 questions * 5 + bonus from platform data (up to 10)
   const envQuestions = countYes(answers, ENVIRONMENT_KEYS) * 5;
-  const envBonus = 20; // Mock: platform data always gives full bonus
+  const envBonus = 0; // No bonus without real platform data (transactions, carbon records)
   const environment = envQuestions + envBonus;
   const social = countYes(answers, SOCIAL_KEYS) * 5;
   const ethics = countYes(answers, ETHICS_KEYS) * 5;
