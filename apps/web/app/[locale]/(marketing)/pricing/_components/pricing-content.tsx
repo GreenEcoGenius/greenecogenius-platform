@@ -6,23 +6,30 @@ import Link from 'next/link';
 
 import {
   ArrowRight,
+  Award,
   BadgeCheck,
   BarChart3,
+  Blocks,
   Building2,
   Check,
   ChevronDown,
+  FileBarChart,
   FileText,
   Globe,
   Leaf,
   Link2,
   Mail,
+  Palette,
   Phone,
   Recycle,
+  Rocket,
   Shield,
   Sparkles,
+  Target,
   TrendingDown,
   Users,
   Zap,
+  type LucideIcon,
 } from 'lucide-react';
 
 import { Badge } from '@kit/ui/badge';
@@ -510,6 +517,9 @@ export function PricingContent({
         </div>
       </section>
 
+      {/* COMING SOON */}
+      <ComingSoonSection />
+
       {/* FOOTER CTA */}
       <section className="relative overflow-hidden py-16 text-white">
         <img
@@ -549,5 +559,182 @@ export function PricingContent({
         </div>
       </section>
     </div>
+  );
+}
+
+/* ─── Coming Soon Section ─── */
+
+interface ComingSoonFeature {
+  icon: LucideIcon;
+  titleFr: string;
+  titleEn: string;
+  descFr: string;
+  descEn: string;
+  timeline: string;
+}
+
+const COMING_SOON: ComingSoonFeature[] = [
+  {
+    icon: FileBarChart,
+    titleFr: 'Rapport ESG conforme CSRD/GRI complet',
+    titleEn: 'Full CSRD/GRI compliant ESG report',
+    descFr: 'Rapport automatise couvrant les 82 indicateurs ESRS avec export multi-format.',
+    descEn: 'Automated report covering all 82 ESRS indicators with multi-format export.',
+    timeline: 'Q3 2026',
+  },
+  {
+    icon: Target,
+    titleFr: 'Suivi trajectoire SBTi / Net Zero',
+    titleEn: 'SBTi / Net Zero trajectory tracking',
+    descFr: 'Modelisation de votre trajectoire de reduction alignee sur les objectifs 1.5 C.',
+    descEn: 'Model your reduction trajectory aligned with 1.5 C targets.',
+    timeline: 'Q3 2026',
+  },
+  {
+    icon: BarChart3,
+    titleFr: 'Benchmarking sectoriel',
+    titleEn: 'Industry benchmarking',
+    descFr: "Comparez vos performances carbone et circulaires avec votre secteur d'activite.",
+    descEn: 'Compare your carbon and circular performance with your industry peers.',
+    timeline: 'Q4 2026',
+  },
+  {
+    icon: Sparkles,
+    titleFr: 'Recommandations IA de reduction carbone',
+    titleEn: 'AI-powered carbon reduction recommendations',
+    descFr: 'Genius analyse vos donnees et propose un plan de reduction personnalise avec ROI estime.',
+    descEn: 'Genius analyzes your data and proposes a personalized reduction plan with estimated ROI.',
+    timeline: 'Q4 2026',
+  },
+  {
+    icon: Zap,
+    titleFr: 'Matching IA acheteur-vendeur',
+    titleEn: 'AI buyer-seller matching',
+    descFr: 'Algorithme intelligent qui connecte automatiquement les vendeurs et acheteurs de matieres recyclables.',
+    descEn: 'Smart algorithm that automatically connects recyclable material sellers and buyers.',
+    timeline: 'Q4 2026',
+  },
+  {
+    icon: Blocks,
+    titleFr: 'Integration ERP native (SAP, Oracle, Sage)',
+    titleEn: 'Native ERP integration (SAP, Oracle, Sage)',
+    descFr: 'Connectez votre ERP pour synchroniser automatiquement les donnees de dechets et achats.',
+    descEn: 'Connect your ERP to automatically sync waste and procurement data.',
+    timeline: '2027',
+  },
+  {
+    icon: Building2,
+    titleFr: 'Reporting multi-sites / multi-filiales',
+    titleEn: 'Multi-site / subsidiary reporting',
+    descFr: 'Consolidez les donnees de tous vos sites et filiales dans un seul dashboard.',
+    descEn: 'Consolidate data from all your sites and subsidiaries in one dashboard.',
+    timeline: '2027',
+  },
+  {
+    icon: Award,
+    titleFr: 'Audit certifie + Label GreenEcoGenius',
+    titleEn: 'Certified audit + GreenEcoGenius Label',
+    descFr: 'Audit de conformite formalise avec certification et label reconnu par nos partenaires.',
+    descEn: 'Formalized compliance audit with certification and label recognized by our partners.',
+    timeline: '2027',
+  },
+  {
+    icon: Leaf,
+    titleFr: 'Accompagnement credits carbone',
+    titleEn: 'Carbon credits support',
+    descFr: "Accedez aux marches de credits carbone et monetisez vos reductions d'emissions verifiees.",
+    descEn: 'Access carbon credit markets and monetize your verified emission reductions.',
+    timeline: '2027',
+  },
+  {
+    icon: Palette,
+    titleFr: 'Rapports white-label personnalisables',
+    titleEn: 'Customizable white-label reports',
+    descFr: 'Generez des rapports aux couleurs de votre entreprise pour vos clients et parties prenantes.',
+    descEn: 'Generate reports in your company branding for your clients and stakeholders.',
+    timeline: '2027',
+  },
+];
+
+function ComingSoonSection() {
+  return (
+    <section className="bg-slate-50 py-20">
+      <div className="container mx-auto max-w-6xl px-4">
+        <div className="mb-12 text-center">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-sm font-medium text-amber-700">
+            <Rocket className="h-4 w-4" strokeWidth={1.5} />
+            Roadmap 2026 — 2027
+          </div>
+          <h2 className="text-metal-900 text-3xl font-bold">
+            <Trans
+              i18nKey="pricingPage.comingSoonTitle"
+              defaults="Prochainement sur la plateforme"
+            />
+          </h2>
+          <p className="text-metal-500 mx-auto mt-3 max-w-2xl text-lg">
+            <Trans
+              i18nKey="pricingPage.comingSoonSubtitle"
+              defaults="Nous construisons en continu. Voici les fonctionnalites en cours de developpement."
+            />
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {COMING_SOON.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <div
+                key={feature.titleEn}
+                className="rounded-xl border border-gray-200 bg-white p-6 transition-colors hover:border-emerald-200"
+              >
+                <div className="mb-3 flex items-start justify-between">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50">
+                    <Icon
+                      className="h-5 w-5 text-emerald-600"
+                      strokeWidth={1.5}
+                    />
+                  </div>
+                  <span
+                    className={`rounded-full border px-2 py-1 text-xs font-medium ${
+                      feature.timeline.startsWith('Q')
+                        ? 'border-amber-200 bg-amber-50 text-amber-700'
+                        : 'border-gray-200 bg-gray-50 text-gray-600'
+                    }`}
+                  >
+                    {feature.timeline}
+                  </span>
+                </div>
+                <h3 className="text-metal-900 mb-2 font-semibold">
+                  <Trans
+                    i18nKey={`pricingPage.cs_${feature.titleEn.replace(/[^a-zA-Z]/g, '_').toLowerCase()}`}
+                    defaults={feature.titleFr}
+                  />
+                </h3>
+                <p className="text-metal-500 text-sm">{feature.descFr}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-12 text-center">
+          <p className="text-metal-400 text-sm">
+            <Trans
+              i18nKey="pricingPage.comingSoonInterested"
+              defaults="Une fonctionnalite vous interesse particulierement ?"
+            />
+          </p>
+          <Link
+            href="/contact"
+            className="text-sm font-medium text-emerald-600 hover:text-emerald-700"
+          >
+            <Trans
+              i18nKey="pricingPage.comingSoonContact"
+              defaults="Contactez-nous pour en discuter"
+            />{' '}
+            <ArrowRight className="ml-1 inline h-3 w-3" />
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }
