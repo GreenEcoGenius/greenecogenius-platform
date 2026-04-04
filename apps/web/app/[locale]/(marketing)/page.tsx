@@ -35,24 +35,24 @@ export default async function Home() {
       {/* ───── SECTION 1 — HERO ───── */}
       <section className="overflow-hidden bg-white pt-24 pb-16 sm:pt-32 sm:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-[40%_1fr] lg:gap-12">
+          <div className="grid items-center gap-12 lg:grid-cols-[45%_1fr] lg:gap-10">
             {/* Colonne gauche — Texte */}
             <div className="text-center lg:text-left">
               <AnimateOnScroll animation="fade-up">
-                <div className="mb-8 inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
+                <div className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
                   <Sparkles className="h-4 w-4" strokeWidth={1.5} />
                   <span>{t('heroBadge')}</span>
                 </div>
 
-                <h1 className="text-metal-900 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
+                <h1 className="text-metal-900 text-3xl font-bold leading-tight sm:text-4xl lg:text-[2.75rem] lg:leading-[1.15] xl:text-5xl">
                   {t('heroTitle')}
                 </h1>
 
-                <p className="text-metal-600 mx-auto mt-6 max-w-lg text-lg lg:mx-0">
+                <p className="text-metal-600 mx-auto mt-5 max-w-lg text-base lg:mx-0 lg:text-lg">
                   {t('heroDescription')}
                 </p>
 
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
                   <Link
                     href="/auth/sign-up"
                     className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 font-medium text-white transition-colors hover:bg-emerald-700 sm:w-auto"
@@ -68,7 +68,7 @@ export default async function Home() {
                   </Link>
                 </div>
 
-                <div className="text-metal-500 mt-8 flex flex-wrap items-center justify-center gap-4 text-sm lg:justify-start">
+                <div className="text-metal-500 mt-6 flex flex-wrap items-center justify-center gap-4 text-sm lg:justify-start">
                   <span className="flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-emerald-500" />
                     {t('heroProof1')}
