@@ -1,0 +1,127 @@
+import 'server-only';
+
+import { pdfService } from '../pdf-service';
+
+interface CarbonReportData {
+  companyName: string;
+  date: string;
+  scope1Total: number;
+  scope2Total: number;
+  scope3Total: number;
+  totalEmissions: number;
+  co2Avoided: number;
+  totalWeightTonnes: number;
+  records: Array<{
+    category: string;
+    weight_kg: number;
+    co2_avoided: number;
+    co2_transport: number;
+    co2_net: number;
+  }>;
+}
+
+export function generateCarbonReportPDF(
+  data: CarbonReportData,
+  locale: string,
+): Buffer {
+  const isFr = locale === 'fr';
+  const doc = pdfService.createDocument();
+  let pageNum = 1;
+
+  // Cover page
+  pdfService.addCoverPage(doc, {
+    title: 'GreenEcoGenius',
+    subtitle: isFr
+      ? `RAPPORT BILAN CARBONE\n\nMethodologie : GHG Protocol Corporate Standard\nBase Carbone ADEME`
+      : `CARBON ASSESSMENT REPORT\n\nMethodology: GHG Protocol Corporate Standard\nADEME Base Carbone`,
+    score: data.totalEmissions > 0
+      ? `${data.totalEmissions.toFixed(1)} tCO₂e`
+      : `${data.co2Avoided.toFixed(1)} tCO₂e`,
+    organization: data.companyName,
+    date: data.date,
+    locale,
+  });
+  pdfService.addFooter(doc, pageNum, undefined, locale);
+  pageNum++;
+
+  // Page 2 — Executive Summary
+  const headerTitle = isFr
+    ? 'GreenEcoGenius — Bilan Carbone'
+    : 'GreenEcoGenius — Carbon Report';
+
+  let y = pdfService.addNewPageWithHeader(doc, headerTitle);
+  y = pdfService.addSectionTitle(doc, isFr ? 'Resume' : 'Summary', y);
+
+  const summaryText = isFr
+    ? `Ce rapport presente le bilan carbone de ${data.companyName}, calcule selon la methodologie GHG Protocol Corporate Standard avec les facteurs d'emission de la Base Carbone ADEME.\n\nLe bilan couvre les emissions directes (Scope 1), les emissions indirectes liees a l'energie (Scope 2), et les emissions de la chaine de valeur (Scope 3). Le CO2 evite grace a l'economie circulaire est egalement quantifie.`
+    : `This report presents the carbon assessment for ${data.companyName}, calculated using the GHG Protocol Corporate Standard methodology with ADEME Base Carbone emission factors.\n\nThe assessment covers direct emissions (Scope 1), indirect energy emissions (Scope 2), and value chain emissions (Scope 3). CO2 avoided through circular economy activities is also quantified.`;
+
+  doc.setFontSize(10);
+  doc.setTextColor(107, 114, 128);
+  const lines = doc.splitTextToSize(summaryText, 165);
+  doc.text(lines, 20, y);
+  y += lines.length * 5 + 10;
+
+  // Dashboard table
+  y = pdfService.addSectionTitle(doc, 'Dashboard', y);
+
+  const dashLabels = isFr
+    ? ['Indicateur', 'Valeur']
+    : ['Indicator', 'Value'];
+
+  const dashRows = [
+    [isFr ? 'Emissions Scope 1' : 'Scope 1 Emissions', `${data.scope1Total.toFixed(1)} tCO₂e`],
+    [isFr ? 'Emissions Scope 2' : 'Scope 2 Emissions', `${data.scope2Total.toFixed(1)} tCO₂e`],
+    [isFr ? 'Emissions Scope 3' : 'Scope 3 Emissions', `${data.scope3Total.toFixed(1)} tCO₂e`],
+    [isFr ? 'Total emissions' : 'Total emissions', `${data.totalEmissions.toFixed(1)} tCO₂e`],
+    [isFr ? 'CO₂ evite (economie circulaire)' : 'CO₂ avoided (circular economy)', `${data.co2Avoided.toFixed(1)} tCO₂e`],
+    [isFr ? 'Matieres recyclees' : 'Materials recycled', `${data.totalWeightTonnes.toFixed(1)} t`],
+  ];
+
+  y = pdfService.addTable(doc, y, dashLabels, dashRows);
+  pdfService.addFooter(doc, pageNum, undefined, locale);
+  pageNum++;
+
+  // Page 3 — Detail by material (if records exist)
+  if (data.records.length > 0) {
+    y = pdfService.addNewPageWithHeader(doc, headerTitle);
+    y = pdfService.addSectionTitle(
+      doc,
+      isFr ? 'Detail par matiere' : 'Detail by material',
+      y,
+    );
+
+    const detailHeaders = isFr
+      ? ['Matiere', 'Poids (kg)', 'CO₂ evite (kg)', 'Transport (kg)', 'Net (kg)']
+      : ['Material', 'Weight (kg)', 'CO₂ avoided (kg)', 'Transport (kg)', 'Net (kg)'];
+
+    const detailRows = data.records.map((r) => [
+      r.category,
+      Math.round(r.weight_kg).toString(),
+      Math.round(r.co2_avoided).toString(),
+      Math.round(r.co2_transport).toString(),
+      Math.round(r.co2_net).toString(),
+    ]);
+
+    y = pdfService.addTable(doc, y, detailHeaders, detailRows);
+    pdfService.addFooter(doc, pageNum, undefined, locale);
+    pageNum++;
+  }
+
+  // Methodology page
+  y = pdfService.addNewPageWithHeader(doc, headerTitle);
+  y = pdfService.addSectionTitle(doc, isFr ? 'Methodologie' : 'Methodology', y);
+
+  const methodText = isFr
+    ? `Ce bilan carbone a ete genere par le moteur d'analyse GreenEcoGenius.\n\nMethodologie : GHG Protocol Corporate Standard (WRI/WBCSD)\nFacteurs d'emission : Base Carbone ADEME v23\nPerimetre : emissions directes (Scope 1), indirectes energetiques (Scope 2), chaine de valeur (Scope 3)\n\nEditeur : GreenEcoGenius OU (Estonie) · GreenEcoGenius, Inc. (Delaware, USA) — greenecogenius.tech\n\nCe rapport est indicatif et ne remplace pas un bilan carbone reglementaire realise par un organisme accredite.`
+    : `This carbon assessment was generated by the GreenEcoGenius analysis engine.\n\nMethodology: GHG Protocol Corporate Standard (WRI/WBCSD)\nEmission factors: ADEME Base Carbone v23\nScope: direct emissions (Scope 1), indirect energy (Scope 2), value chain (Scope 3)\n\nPublisher: GreenEcoGenius, Inc. (Delaware, USA) · GreenEcoGenius OU (Estonia) — greenecogenius.tech\n\nThis report is indicative and does not replace a regulatory carbon assessment by an accredited body.`;
+
+  doc.setFontSize(10);
+  doc.setTextColor(107, 114, 128);
+  const methodLines = doc.splitTextToSize(methodText, 165);
+  doc.text(methodLines, 20, y);
+
+  pdfService.addFooter(doc, pageNum, undefined, locale);
+
+  return Buffer.from(doc.output('arraybuffer'));
+}
