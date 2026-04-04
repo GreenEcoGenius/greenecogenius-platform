@@ -1,4 +1,5 @@
 import 'server-only';
+
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import { NORMS_DATABASE } from '~/lib/data/norms-database';
@@ -38,8 +39,11 @@ interface AccountData {
   hasEsgReport: boolean;
   totalCo2Avoided: number;
   totalTonnesRecycled: number;
+  hasRseDiagnostic: boolean;
+  rseScore: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function fetchAccountData(
   client: SupabaseClient,
   accountId: string,
@@ -79,32 +83,51 @@ async function fetchAccountData(
       .eq('account_id', accountId),
     client
       .from('blockchain_records')
-      .select('*', { count: 'exact', head: true }),
-    client
-      .from('traceability_certificates')
       .select('*', { count: 'exact', head: true })
-      .eq('issued_to_account_id', accountId),
+      .eq('account_id', accountId),
+    client
+      .from('certificates')
+      .select('*', { count: 'exact', head: true })
+      .eq('account_id', accountId),
     client
       .from('org_esg_data')
       .select('*', { count: 'exact', head: true })
       .eq('account_id', accountId),
-    client.from('esg_reports').select('*', { count: 'exact', head: true }),
+    client
+      .from('esg_reports')
+      .select('*', { count: 'exact', head: true })
+      .eq('account_id', accountId),
   ]);
 
-  const { data: carbonAgg } = await client
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: carbonAgg } = await (client as any)
     .from('carbon_records')
     .select('co2_avoided, weight_kg')
     .eq('account_id', accountId);
 
   const totalCo2Avoided = (carbonAgg ?? []).reduce(
-    (sum, r) => sum + Number(r.co2_avoided ?? 0),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (sum: number, r: any) => sum + Number(r.co2_avoided ?? 0),
     0,
   );
   const totalTonnesRecycled =
-    (carbonAgg ?? []).reduce((sum, r) => sum + Number(r.weight_kg ?? 0), 0) /
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (carbonAgg ?? []).reduce((sum: number, r: any) => sum + Number(r.weight_kg ?? 0), 0) /
     1000;
 
   const hasScopeData = (carbonRecordsCount ?? 0) > 0;
+
+  // Check RSE diagnostic
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: rseData } = await (client as any)
+    .from('rse_diagnostics')
+    .select('score')
+    .eq('account_id', accountId)
+    .order('created_at', { ascending: false })
+    .limit(1);
+
+  const hasRseDiagnostic = rseData && rseData.length > 0;
+  const rseScore = hasRseDiagnostic ? Number(rseData[0].score ?? 0) : 0;
 
   return {
     listingsCount: listingsCount ?? 0,
@@ -119,170 +142,204 @@ async function fetchAccountData(
     hasEsgReport: (esgReportCount ?? 0) > 0,
     totalCo2Avoided,
     totalTonnesRecycled,
+    hasRseDiagnostic,
+    rseScore,
   };
 }
 
-// ── Rule definitions per norm ─────────────────────────────────────
+// ── Per-norm evaluation rules ────────────────────────────────────
 
-type RuleFn = (d: AccountData) => {
+type EvalResult = {
   status: ComplianceStatus;
   method: VerificationMethod;
   summary: string;
 };
 
-function circularRule(d: AccountData): ReturnType<RuleFn> {
-  if (d.completedTransactionsCount >= 1 && d.listingsCount >= 1) {
-    return {
-      status: 'compliant',
-      method: 'auto_transaction',
-      summary: `${d.completedTransactionsCount} transaction(s) complétée(s), ${d.listingsCount} annonce(s) publiée(s)`,
-    };
-  }
-  if (d.listingsCount >= 1 || d.transactionsCount >= 1) {
-    return {
-      status: 'partial',
-      method: 'auto_transaction',
-      summary: `${d.listingsCount} annonce(s), ${d.transactionsCount} transaction(s) en cours`,
-    };
-  }
-  return {
-    status: 'not_evaluated',
-    method: 'pending',
-    summary: 'Publiez une annonce ou réalisez une transaction pour activer',
-  };
+type RuleFn = (d: AccountData) => EvalResult;
+
+const NOT_EVALUATED: EvalResult = {
+  status: 'not_evaluated',
+  method: 'pending',
+  summary: '',
+};
+
+// Helper
+function result(
+  status: ComplianceStatus,
+  method: VerificationMethod,
+  summary: string,
+): EvalResult {
+  return { status, method, summary };
 }
 
-function carbonRule(d: AccountData): ReturnType<RuleFn> {
-  if (d.carbonRecordsCount >= 1 && d.hasScopeData) {
-    return {
-      status: 'compliant',
-      method: 'auto_carbon',
-      summary: `${d.carbonRecordsCount} bilan(s) carbone calculé(s), ${Math.round(d.totalCo2Avoided / 1000)} t CO₂ évité`,
-    };
-  }
-  if (d.completedTransactionsCount >= 1) {
-    return {
-      status: 'partial',
-      method: 'auto_carbon',
-      summary: 'Transactions existantes, bilan carbone en cours de calcul',
-    };
-  }
-  return {
-    status: 'not_evaluated',
-    method: 'pending',
-    summary:
-      'Complétez une transaction pour générer votre premier bilan carbone',
-  };
-}
+const NORM_RULES: Record<string, RuleFn> = {
+  // ── Circular Economy ──────────────────────────────────
+  'iso-59004': (d) => {
+    if (d.completedTransactionsCount >= 10 && d.listingsCount >= 5)
+      return result('compliant', 'auto_transaction', `${d.completedTransactionsCount} transactions, ${d.listingsCount} annonces`);
+    if (d.listingsCount >= 1 || d.transactionsCount >= 1)
+      return result('partial', 'auto_transaction', `${d.listingsCount} annonce(s), ${d.transactionsCount} transaction(s)`);
+    return NOT_EVALUATED;
+  },
+  'iso-59010': (d) => NORM_RULES['iso-59004']!(d),
+  'iso-59014': (d) => NORM_RULES['iso-59004']!(d),
+  'iso-59020': (d) => {
+    if (d.completedTransactionsCount >= 20)
+      return result('compliant', 'auto_transaction', `Score circularite base sur ${d.completedTransactionsCount} transactions`);
+    if (d.completedTransactionsCount >= 5)
+      return result('partial', 'auto_transaction', `${d.completedTransactionsCount} transactions completees`);
+    return NOT_EVALUATED;
+  },
+  'iso-14001': (d) => {
+    if (d.carbonRecordsCount >= 1 && d.hasEsgReport && d.completedTransactionsCount >= 5)
+      return result('compliant', 'auto_platform', 'Systeme de management environnemental actif');
+    if (d.carbonRecordsCount >= 1 || d.hasEsgData)
+      return result('partial', 'auto_platform', 'Donnees environnementales partielles');
+    return NOT_EVALUATED;
+  },
+  'loi-agec': (d) => {
+    if (d.completedTransactionsCount >= 10 && d.blockchainRecordsCount >= 1)
+      return result('compliant', 'auto_transaction', `${d.completedTransactionsCount} transactions tracees`);
+    if (d.listingsCount >= 1 || d.transactionsCount >= 1)
+      return result('partial', 'auto_transaction', `${d.listingsCount} annonce(s) publiee(s)`);
+    return NOT_EVALUATED;
+  },
+  'decret-9-flux': (d) => {
+    if (d.completedTransactionsCount >= 5)
+      return result('compliant', 'auto_transaction', `Tri et valorisation via ${d.completedTransactionsCount} transactions`);
+    if (d.listingsCount >= 1)
+      return result('partial', 'auto_transaction', 'Annonces publiees, transactions en attente');
+    return NOT_EVALUATED;
+  },
+  'rep-elargie': (d) => {
+    if (d.completedTransactionsCount >= 3)
+      return result('compliant', 'auto_transaction', `Filieres REP couvertes via ${d.completedTransactionsCount} transactions`);
+    if (d.transactionsCount >= 1)
+      return result('partial', 'auto_transaction', 'Transaction(s) en cours');
+    return NOT_EVALUATED;
+  },
+  'ppwr': (d) => NORM_RULES['loi-agec']!(d),
+  'taxonomie-circulaire': (d) => NORM_RULES['iso-59020']!(d),
+  'dpp': (d) => {
+    if (d.blockchainRecordsCount >= 10 && d.certificatesCount >= 5)
+      return result('compliant', 'auto_blockchain', `${d.blockchainRecordsCount} produits traces, ${d.certificatesCount} passeports emis`);
+    if (d.blockchainRecordsCount >= 1)
+      return result('partial', 'auto_blockchain', `${d.blockchainRecordsCount} enregistrement(s) blockchain`);
+    return NOT_EVALUATED;
+  },
 
-function reportingRule(d: AccountData): ReturnType<RuleFn> {
-  if (d.hasEsgReport) {
-    return {
-      status: 'compliant',
-      method: 'auto_esg',
-      summary: 'Rapport ESG généré et disponible',
-    };
-  }
-  if (d.hasEsgData) {
-    return {
-      status: 'partial',
-      method: 'auto_esg',
-      summary: 'Données ESG saisies, rapport non encore généré',
-    };
-  }
-  if (d.completedTransactionsCount >= 1 || d.carbonRecordsCount >= 1) {
-    return {
-      status: 'partial',
-      method: 'auto_platform',
-      summary:
-        'Données auto-collectées depuis vos transactions, complétez le formulaire ESG',
-    };
-  }
-  return {
-    status: 'not_evaluated',
-    method: 'pending',
-    summary: 'Commencez votre rapport ESG via le wizard',
-  };
-}
+  // ── Carbon & Environment ──────────────────────────────
+  'ghg-protocol': (d) => {
+    if (d.carbonRecordsCount >= 1 && d.hasScopeData)
+      return result('compliant', 'auto_carbon', `Scopes 1/2/3 completes, ${d.carbonRecordsCount} bilan(s)`);
+    if (d.carbonRecordsCount >= 1)
+      return result('partial', 'auto_carbon', 'Bilan carbone partiel');
+    return NOT_EVALUATED;
+  },
+  'iso-14064': (d) => NORM_RULES['ghg-protocol']!(d),
+  'bilan-ges': (d) => {
+    if (d.carbonRecordsCount >= 1 && d.hasScopeData)
+      return result('compliant', 'auto_carbon', `Bilan GES complet avec facteurs ADEME`);
+    if (d.carbonRecordsCount >= 1)
+      return result('partial', 'auto_carbon', 'Saisie partielle du bilan carbone');
+    return NOT_EVALUATED;
+  },
+  'sbti': (d) => {
+    if (d.carbonRecordsCount >= 1 && d.hasScopeData && d.totalCo2Avoided > 0)
+      return result('compliant', 'auto_carbon', `Objectifs bases sur la science, ${Math.round(d.totalCo2Avoided)} kg CO2 evite`);
+    if (d.carbonRecordsCount >= 1)
+      return result('partial', 'auto_carbon', 'Bilan carbone initie, objectifs a definir');
+    return NOT_EVALUATED;
+  },
+  'cdp': (d) => {
+    if (d.hasEsgReport && d.carbonRecordsCount >= 1)
+      return result('compliant', 'auto_esg', 'Donnees carbone et ESG reportees');
+    if (d.carbonRecordsCount >= 1)
+      return result('partial', 'auto_carbon', 'Emissions carbone calculees');
+    return NOT_EVALUATED;
+  },
+  'eu-ets': (d) => {
+    if (d.carbonRecordsCount >= 1 && d.hasScopeData)
+      return result('compliant', 'auto_carbon', 'Quotas carbone documentes');
+    return NOT_EVALUATED;
+  },
+  'cbam': (d) => NORM_RULES['eu-ets']!(d),
 
-function traceabilityRule(d: AccountData): ReturnType<RuleFn> {
-  if (d.blockchainRecordsCount >= 1 && d.certificatesCount >= 1) {
-    return {
-      status: 'compliant',
-      method: 'auto_blockchain',
-      summary: `${d.blockchainRecordsCount} hash blockchain, ${d.certificatesCount} certificat(s) émis`,
-    };
-  }
-  if (d.blockchainRecordsCount >= 1 || d.certificatesCount >= 1) {
-    return {
-      status: 'partial',
-      method: 'auto_blockchain',
-      summary: `${d.blockchainRecordsCount} hash, ${d.certificatesCount} certificat(s)`,
-    };
-  }
-  if (d.completedTransactionsCount >= 1) {
-    return {
-      status: 'partial',
-      method: 'auto_transaction',
-      summary: 'Transaction complétée, enregistrement blockchain en attente',
-    };
-  }
-  return {
-    status: 'not_evaluated',
-    method: 'pending',
-    summary: 'Complétez une transaction pour activer la traçabilité blockchain',
-  };
-}
+  // ── Reporting ESG ─────────────────────────────────────
+  'csrd': (d) => {
+    if (d.hasEsgReport)
+      return result('compliant', 'auto_esg', 'Rapport CSRD/ESRS genere');
+    if (d.hasEsgData)
+      return result('partial', 'auto_esg', 'Donnees ESG saisies, rapport a generer');
+    return NOT_EVALUATED;
+  },
+  'esrs': (d) => NORM_RULES['csrd']!(d),
+  'gri': (d) => NORM_RULES['csrd']!(d),
+  'taxonomie-verte': (d) => {
+    if (d.hasEsgReport && d.completedTransactionsCount >= 3)
+      return result('compliant', 'auto_esg', 'Activites evaluees selon la taxonomie');
+    if (d.hasEsgData)
+      return result('partial', 'auto_esg', 'Donnees ESG partielles');
+    return NOT_EVALUATED;
+  },
+  'sfdr': (d) => NORM_RULES['csrd']!(d),
+  'devoir-vigilance': (d) => {
+    if (d.hasEsgReport && d.blockchainRecordsCount >= 1)
+      return result('compliant', 'auto_esg', 'Plan de vigilance documente avec tracabilite');
+    if (d.hasEsgData || d.blockchainRecordsCount >= 1)
+      return result('partial', 'auto_platform', 'Plan de vigilance en cours');
+    return NOT_EVALUATED;
+  },
+  'dpef': (d) => NORM_RULES['csrd']!(d),
+  'art-29-lec': (d) => NORM_RULES['csrd']!(d),
+  'cs3d': (d) => NORM_RULES['devoir-vigilance']!(d),
 
-function dataRule(_d: AccountData): ReturnType<RuleFn> {
-  return {
-    status: 'partial',
-    method: 'auto_platform',
-    summary:
-      'Conformité plateforme assurée, audit externe recommandé pour certification complète',
-  };
-}
+  // ── Traceability ──────────────────────────────────────
+  'blockchain-polygon': (d) => {
+    if (d.blockchainRecordsCount >= 5 && d.certificatesCount >= 1)
+      return result('compliant', 'auto_blockchain', `${d.blockchainRecordsCount} hash on-chain, ${d.certificatesCount} certificat(s)`);
+    if (d.blockchainRecordsCount >= 1)
+      return result('partial', 'auto_blockchain', `${d.blockchainRecordsCount} enregistrement(s)`);
+    return NOT_EVALUATED;
+  },
+  'vigilance-chaine': (d) => {
+    if (d.completedTransactionsCount >= 5 && d.blockchainRecordsCount >= 1)
+      return result('compliant', 'auto_blockchain', 'Chaine d\'approvisionnement tracee');
+    if (d.completedTransactionsCount >= 1)
+      return result('partial', 'auto_transaction', 'Tracabilite partielle');
+    return NOT_EVALUATED;
+  },
+  'iso-22095': (d) => NORM_RULES['blockchain-polygon']!(d),
+  'eudr': (d) => NORM_RULES['vigilance-chaine']!(d),
+  '3tg': (d) => NORM_RULES['vigilance-chaine']!(d),
+  'passeport-batterie': (d) => NORM_RULES['dpp']!(d),
 
-function labelRule(
-  d: AccountData,
-  overallCompliantCount: number,
-  totalNorms: number,
-): ReturnType<RuleFn> {
-  const pct = totalNorms > 0 ? (overallCompliantCount / totalNorms) * 100 : 0;
-  if (pct >= 80) {
-    return {
-      status: 'compliant',
-      method: 'auto_platform',
-      summary: `Score de conformité ${Math.round(pct)}% — éligible`,
-    };
-  }
-  if (pct >= 50) {
-    return {
-      status: 'partial',
-      method: 'auto_platform',
-      summary: `Score de conformité ${Math.round(pct)}% — en progression`,
-    };
-  }
-  if (d.listingsCount >= 1) {
-    return {
-      status: 'partial',
-      method: 'pending',
-      summary: 'Commencez votre parcours de conformité pour devenir éligible',
-    };
-  }
-  return {
-    status: 'not_evaluated',
-    method: 'pending',
-    summary: 'Atteignez 80% de conformité pour devenir éligible',
-  };
-}
+  // ── Data & SaaS ───────────────────────────────────────
+  'rgpd': (_d) => NOT_EVALUATED,
+  'iso-27001': (_d) => NOT_EVALUATED,
+  'soc-2': (_d) => NOT_EVALUATED,
+  'nis2': (_d) => NOT_EVALUATED,
+  'ai-act': (_d) => NOT_EVALUATED,
 
-const PILLAR_RULES: Record<string, RuleFn> = {
-  circular_economy: circularRule,
-  carbon: carbonRule,
-  reporting: reportingRule,
-  traceability: traceabilityRule,
-  data: dataRule,
+  // ── Labels ────────────────────────────────────────────
+  'b-corp': (d) => {
+    if (d.hasRseDiagnostic && d.rseScore >= 80)
+      return result('compliant', 'auto_platform', `Score RSE ${d.rseScore}/100 — eligible B Corp`);
+    if (d.hasRseDiagnostic && d.rseScore >= 50)
+      return result('partial', 'auto_platform', `Score RSE ${d.rseScore}/100 — en progression`);
+    if (d.hasRseDiagnostic)
+      return result('partial', 'auto_platform', `Score RSE ${d.rseScore}/100`);
+    return NOT_EVALUATED;
+  },
+  'numerique-responsable': (_d) => NOT_EVALUATED,
+  'lucie-26000': (d) => {
+    if (d.hasRseDiagnostic && d.rseScore >= 70)
+      return result('compliant', 'auto_platform', `Diagnostic ISO 26000 ${d.rseScore}/100`);
+    if (d.hasRseDiagnostic)
+      return result('partial', 'auto_platform', `Diagnostic complete: ${d.rseScore}/100`);
+    return NOT_EVALUATED;
+  },
+  'engage-rse': (d) => NORM_RULES['lucie-26000']!(d),
 };
 
 // ── Main engine ──────────────────────────────────────────────────
@@ -293,21 +350,23 @@ export async function evaluateAccountCompliance(
 ): Promise<{ results: NormResult[]; score: number }> {
   const data = await fetchAccountData(adminClient, accountId);
 
-  const nonLabelNorms = NORMS_DATABASE.filter((n) => n.pillar !== 'labels');
-  const labelNorms = NORMS_DATABASE.filter((n) => n.pillar === 'labels');
-
   const results: NormResult[] = [];
 
-  for (const norm of nonLabelNorms) {
-    const ruleFn = PILLAR_RULES[norm.pillar];
-    if (!ruleFn) continue;
+  for (const norm of NORMS_DATABASE) {
+    const ruleFn = NORM_RULES[norm.id];
+    const evalResult = ruleFn ? ruleFn(data) : NOT_EVALUATED;
 
-    const { status, method, summary } = ruleFn(data);
+    // Override empty summaries with a default
+    const summary = evalResult.summary || (
+      evalResult.status === 'not_evaluated'
+        ? 'Aucune donnee disponible pour evaluer cette norme'
+        : evalResult.summary
+    );
 
     results.push({
       norm_id: norm.id,
-      status,
-      verification_method: method,
+      status: evalResult.status,
+      verification_method: evalResult.method,
       evidence_summary: summary,
       evidence_data: {
         listings: data.listingsCount,
@@ -315,32 +374,18 @@ export async function evaluateAccountCompliance(
         carbon_records: data.carbonRecordsCount,
         blockchain_records: data.blockchainRecordsCount,
         certificates: data.certificatesCount,
+        esg_data: data.hasEsgData,
+        esg_report: data.hasEsgReport,
+        rse_score: data.rseScore,
       },
     });
   }
 
   const compliantCount = results.filter((r) => r.status === 'compliant').length;
-
-  for (const norm of labelNorms) {
-    const { status, method, summary } = labelRule(
-      data,
-      compliantCount,
-      nonLabelNorms.length,
-    );
-    results.push({
-      norm_id: norm.id,
-      status,
-      verification_method: method,
-      evidence_summary: summary,
-      evidence_data: {
-        compliant_norms: compliantCount,
-        total_norms: nonLabelNorms.length,
-      },
-    });
-  }
-
-  const totalCompliant = results.filter((r) => r.status === 'compliant').length;
-  const score = Math.round((totalCompliant / results.length) * 100);
+  const partialCount = results.filter((r) => r.status === 'partial').length;
+  const score = Math.round(
+    ((compliantCount + partialCount * 0.5) / results.length) * 100,
+  );
 
   // Upsert all results
   for (const r of results) {
