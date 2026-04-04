@@ -63,16 +63,17 @@
 }
 
 @keyframes marquee {
-  0% {
-    transform: translateX(0);
+  from {
+    transform: translate3d(0, 0, 0);
   }
-  100% {
-    transform: translateX(-50%);
+  to {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 @utility animate-marquee {
   animation: marquee 30s linear infinite;
+  will-change: transform;
 
   &:hover {
     animation-play-state: paused;
@@ -81,6 +82,7 @@
 
 @utility animate-marquee-fast {
   animation: marquee 25s linear infinite;
+  will-change: transform;
 
   &:hover {
     animation-play-state: paused;

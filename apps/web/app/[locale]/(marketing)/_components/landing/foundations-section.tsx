@@ -74,16 +74,17 @@ function LogoCarouselItem({ logo }: { logo: LogoItem }) {
 }
 
 function LogoMarquee({ logos }: { logos: LogoItem[] }) {
-  const items = [...logos, ...logos, ...logos, ...logos];
-
   return (
     <div className="relative overflow-hidden">
       <div className="from-background pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r to-transparent sm:w-24" />
       <div className="from-background pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l to-transparent sm:w-24" />
 
-      <div className="animate-marquee-fast flex w-max items-center py-4">
-        {items.map((logo, i) => (
-          <LogoCarouselItem key={`${logo.name}-${i}`} logo={logo} />
+      <div className="animate-marquee-fast flex w-max items-center py-4 will-change-transform">
+        {logos.map((logo) => (
+          <LogoCarouselItem key={`a-${logo.name}`} logo={logo} />
+        ))}
+        {logos.map((logo) => (
+          <LogoCarouselItem key={`b-${logo.name}`} logo={logo} />
         ))}
       </div>
     </div>
