@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Heading } from '@kit/ui/heading';
 import { Trans } from '@kit/ui/trans';
 
-import { DEMO_DATA } from '~/lib/demo/demo-data';
+
 
 // --- Types ---
 
@@ -82,7 +82,8 @@ const STEP_LABELS = [
 
 const TOTAL_STEPS = 7;
 
-const PLATFORM_ENV_DATA = DEMO_DATA.rse.platformEnvData;
+// Real platform data should come from Supabase — using zeros until connected
+const PLATFORM_ENV_DATA = { co2Avoided: '0 t CO2', recycled: '0 t', lots: 0 };
 
 // Scoring yes/no questions per pillar
 const GOVERNANCE_KEYS: (keyof WizardAnswers)[] = [
