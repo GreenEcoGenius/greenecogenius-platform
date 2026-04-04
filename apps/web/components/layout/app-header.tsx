@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, Globe, Menu, Search, Sparkles } from 'lucide-react';
+import { Globe, Menu, Search, Sparkles } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
 import { usePathname } from '@kit/i18n/navigation';
@@ -66,15 +66,6 @@ export function AppHeader() {
 
         {/* Language toggle */}
         <LocaleToggle />
-
-        {/* Notifications */}
-        <button
-          type="button"
-          className="text-metal-600 hover:bg-metal-frost flex h-9 w-9 items-center justify-center rounded-xl transition-colors"
-          aria-label="Notifications"
-        >
-          <Bell className="h-4 w-4" />
-        </button>
 
         {/* Sidebar hamburger (mobile only, last position) */}
         <MobileMenuButton />
