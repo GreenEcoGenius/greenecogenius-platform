@@ -8,7 +8,6 @@ import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
-import { SectionFooterImage } from '../_components/section-footer-image';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('rse');
@@ -100,11 +99,6 @@ async function RSEPage() {
             </Card>
           ))}
         </div>
-
-        <SectionFooterImage
-          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-f30939eb-48c4-46f7-ad85-99b7f3c11c45.png"
-          alt="RSE et Labels"
-        />
       </div>
     </PageBody>
   );

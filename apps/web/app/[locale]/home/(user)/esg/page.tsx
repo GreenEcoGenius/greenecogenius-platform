@@ -10,7 +10,6 @@ import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
-import { SectionFooterImage } from '../_components/section-footer-image';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('esg');
@@ -110,11 +109,6 @@ async function ESGPage() {
             </Card>
           ))}
         </div>
-
-        <SectionFooterImage
-          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-db261b47-d946-4d81-993d-cc45db4b6cb0.png"
-          alt="Reporting ESG"
-        />
       </div>
     </PageBody>
   );
