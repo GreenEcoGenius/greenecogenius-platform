@@ -101,9 +101,9 @@ export default async function Home() {
                   />
                 </div>
               </div>
-              {/* Desktop : image agrandie, légèrement décalée à gauche */}
+              {/* Desktop : image agrandie, légèrement décalée à droite */}
               <div className="relative hidden lg:block">
-                <div className="-ml-8 w-[115%] overflow-hidden rounded-2xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.25)] xl:-ml-12 xl:w-[118%]">
+                <div className="ml-8 w-[115%] overflow-hidden rounded-2xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.25)] xl:ml-12 xl:w-[118%]">
                   <Image
                     src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/GEG.png"
                     alt="GreenEcoGenius Platform Dashboard"
