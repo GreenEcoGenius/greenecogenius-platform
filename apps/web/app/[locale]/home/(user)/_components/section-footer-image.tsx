@@ -16,7 +16,7 @@ export function SectionFooterImage({
         alt={alt}
         width={1400}
         height={400}
-        className={`h-48 w-full object-cover sm:h-56 lg:h-64 ${className ?? ''}`}
+        className={`h-48 w-full object-cover sm:h-56 lg:h-80 ${className ?? ''}`}
       />
     </div>
   );

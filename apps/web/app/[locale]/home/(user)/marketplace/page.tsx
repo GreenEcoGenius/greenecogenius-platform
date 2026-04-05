@@ -162,7 +162,7 @@ async function MarketplacePage() {
       <SectionFooterImage
         src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/A_wide_cinematic_202604051229.png"
         alt="Le Comptoir Circulaire"
-        className="object-bottom"
+        className="object-[center_35%]"
       />
     </PageBody>
   );
