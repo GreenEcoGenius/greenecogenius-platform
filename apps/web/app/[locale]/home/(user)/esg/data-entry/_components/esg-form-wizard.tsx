@@ -286,7 +286,7 @@ export function ESGFormWizard({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pt-2">
       {/* Progress bar */}
       <div className="flex items-center gap-1">
         {STEPS.map((step, i) => {
