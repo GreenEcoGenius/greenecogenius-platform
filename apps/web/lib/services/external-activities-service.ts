@@ -20,6 +20,7 @@ export interface ExternalActivity {
   quantitative_unit: string | null;
   qualitative_value: string | null;
   document_url: string | null;
+  document_path: string | null;
   date_start: string | null;
   date_end: string | null;
   norms_impacted: string[];
@@ -27,6 +28,16 @@ export interface ExternalActivity {
   created_at: string;
   updated_at: string;
 }
+
+export const DOCUMENTS_BUCKET = 'documents';
+export const MAX_DOCUMENT_SIZE_BYTES = 10 * 1024 * 1024;
+export const ALLOWED_DOCUMENT_MIME_TYPES = [
+  'application/pdf',
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+] as const;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const anyClient = (c: SupabaseClient) => c as any;
@@ -51,6 +62,7 @@ export interface CreateExternalActivityInput {
   quantitative_unit?: string | null;
   qualitative_value?: string | null;
   document_url?: string | null;
+  document_path?: string | null;
   date_start?: string | null;
   date_end?: string | null;
 }
@@ -107,10 +119,11 @@ export class ExternalActivitiesService {
       quantitative_unit: input.quantitative_unit ?? null,
       qualitative_value: input.qualitative_value ?? null,
       document_url: input.document_url ?? null,
+      document_path: input.document_path ?? null,
       date_start: input.date_start ?? null,
       date_end: input.date_end ?? null,
       norms_impacted: normsImpactedByCategory(input.category),
-      verified: Boolean(input.document_url),
+      verified: Boolean(input.document_url || input.document_path),
     };
 
     const { data, error } = await anyClient(client)
@@ -128,6 +141,14 @@ export class ExternalActivitiesService {
     accountId: string,
     id: string,
   ): Promise<void> {
+    // Look up the row so we can also remove its uploaded document if any.
+    const { data: existing } = await anyClient(client)
+      .from('external_activities')
+      .select('document_path')
+      .eq('id', id)
+      .eq('account_id', accountId)
+      .maybeSingle();
+
     const { error } = await anyClient(client)
       .from('external_activities')
       .delete()
@@ -135,6 +156,37 @@ export class ExternalActivitiesService {
       .eq('account_id', accountId);
 
     if (error) throw error;
+
+    const path = (existing as { document_path?: string | null } | null)
+      ?.document_path;
+    if (path) {
+      try {
+        await client.storage.from(DOCUMENTS_BUCKET).remove([path]);
+      } catch {
+        // Orphan file — non-blocking.
+      }
+    }
+  }
+
+  /**
+   * Generate a short-lived signed URL for a stored document. Returns null
+   * when the path is empty or the bucket is missing.
+   */
+  static async getSignedDocumentUrl(
+    client: SupabaseClient,
+    path: string | null | undefined,
+    expiresInSeconds = 3600,
+  ): Promise<string | null> {
+    if (!path) return null;
+    try {
+      const { data, error } = await client.storage
+        .from(DOCUMENTS_BUCKET)
+        .createSignedUrl(path, expiresInSeconds);
+      if (error || !data) return null;
+      return data.signedUrl;
+    } catch {
+      return null;
+    }
   }
 
   static async countByCategory(

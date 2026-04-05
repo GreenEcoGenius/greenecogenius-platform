@@ -76,6 +76,22 @@ async function ExternalActivitiesPage() {
   if (error || !user) return null;
 
   const all = await ExternalActivitiesService.listForAccount(client, user.id);
+
+  // Generate short-lived signed URLs for any uploaded documents so the list
+  // can render a working download link. External URLs go through as-is.
+  const signedUrlByRowId = new Map<string, string>();
+  await Promise.all(
+    all
+      .filter((r) => r.document_path)
+      .map(async (r) => {
+        const signed = await ExternalActivitiesService.getSignedDocumentUrl(
+          client,
+          r.document_path,
+        );
+        if (signed) signedUrlByRowId.set(r.id, signed);
+      }),
+  );
+
   const byCategory = new Map<ExternalActivityCategory, ExternalActivity[]>();
   for (const cat of CATEGORIES) byCategory.set(cat.id, []);
   for (const row of all) byCategory.get(row.category)?.push(row);
@@ -131,35 +147,58 @@ async function ExternalActivitiesPage() {
                       </div>
                     ) : (
                       <ul className="space-y-3">
-                        {rows.map((r) => (
-                          <li
-                            key={r.id}
-                            className="flex items-start justify-between gap-3 rounded-lg border border-gray-100 bg-gray-50 p-3"
-                          >
-                            <div className="min-w-0">
-                              <p className="truncate text-sm font-medium text-gray-900">
-                                {r.title}
-                              </p>
-                              <p className="text-xs text-gray-500">
-                                {r.subcategory}
-                                {r.quantitative_value !== null
-                                  ? ` — ${r.quantitative_value}${r.quantitative_unit ? ` ${r.quantitative_unit}` : ''}`
-                                  : ''}
-                              </p>
-                              {r.description ? (
-                                <p className="mt-1 line-clamp-2 text-xs text-gray-600">
-                                  {r.description}
+                        {rows.map((r) => {
+                          const signedUrl = signedUrlByRowId.get(r.id);
+                          const docHref = signedUrl ?? r.document_url ?? null;
+                          const docLabel = signedUrl
+                            ? r.document_path?.split('/').pop() ?? 'Document'
+                            : 'Lien externe';
+                          return (
+                            <li
+                              key={r.id}
+                              className="flex items-start justify-between gap-3 rounded-lg border border-gray-100 bg-gray-50 p-3"
+                            >
+                              <div className="min-w-0">
+                                <p className="truncate text-sm font-medium text-gray-900">
+                                  {r.title}
                                 </p>
-                              ) : null}
-                              {r.verified ? (
-                                <span className="mt-1 inline-block rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700">
-                                  Piece justificative fournie
-                                </span>
-                              ) : null}
-                            </div>
-                            <DeleteActivityButton id={r.id} />
-                          </li>
-                        ))}
+                                <p className="text-xs text-gray-500">
+                                  {r.subcategory}
+                                  {r.quantitative_value !== null
+                                    ? ` — ${r.quantitative_value}${r.quantitative_unit ? ` ${r.quantitative_unit}` : ''}`
+                                    : ''}
+                                </p>
+                                {r.description ? (
+                                  <p className="mt-1 line-clamp-2 text-xs text-gray-600">
+                                    {r.description}
+                                  </p>
+                                ) : null}
+                                {docHref ? (
+                                  <a
+                                    href={docHref}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="mt-2 inline-flex items-center gap-1.5 text-xs text-emerald-700 hover:underline"
+                                  >
+                                    <FileText
+                                      className="h-3.5 w-3.5"
+                                      strokeWidth={1.5}
+                                    />
+                                    <span className="max-w-[200px] truncate">
+                                      {docLabel}
+                                    </span>
+                                  </a>
+                                ) : null}
+                                {r.verified && !docHref ? (
+                                  <span className="mt-1 inline-block rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700">
+                                    Piece justificative fournie
+                                  </span>
+                                ) : null}
+                              </div>
+                              <DeleteActivityButton id={r.id} />
+                            </li>
+                          );
+                        })}
                       </ul>
                     )}
                   </div>

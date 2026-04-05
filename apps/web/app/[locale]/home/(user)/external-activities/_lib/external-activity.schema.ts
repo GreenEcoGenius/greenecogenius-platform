@@ -17,6 +17,7 @@ export const CreateExternalActivitySchema = z.object({
   quantitative_unit: z.string().max(50).nullish(),
   qualitative_value: z.string().max(2000).nullish(),
   document_url: z.string().max(500).nullish(),
+  document_path: z.string().max(500).nullish(),
   date_start: z.string().nullish(),
   date_end: z.string().nullish(),
 });

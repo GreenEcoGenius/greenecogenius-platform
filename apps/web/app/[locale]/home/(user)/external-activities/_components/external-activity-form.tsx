@@ -30,6 +30,7 @@ import { Textarea } from '@kit/ui/textarea';
 
 import { CreateExternalActivitySchema } from '../_lib/external-activity.schema';
 import { createExternalActivity } from '../_lib/server/server-actions';
+import { DocumentUploader } from './document-uploader';
 
 type Category =
   | 'governance'
@@ -78,10 +79,18 @@ interface ExternalActivityFormProps {
   category: Category;
 }
 
+interface UploadedDoc {
+  path: string;
+  signedUrl: string;
+  filename: string;
+  contentType: string;
+}
+
 export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
   const router = useRouter();
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [uploadedDoc, setUploadedDoc] = useState<UploadedDoc | null>(null);
 
   const form = useForm({
     resolver: zodResolver(CreateExternalActivitySchema),
@@ -94,6 +103,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
       quantitative_unit: '',
       qualitative_value: '',
       document_url: '',
+      document_path: '',
       date_start: null as string | null,
       date_end: null as string | null,
     },
@@ -103,6 +113,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
     onSuccess: () => {
       setErrorMessage(null);
       setSuccess(true);
+      setUploadedDoc(null);
       form.reset({
         category,
         subcategory: SUBCATEGORIES[category]![0]!.value,
@@ -112,6 +123,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
         quantitative_unit: '',
         qualitative_value: '',
         document_url: '',
+        document_path: '',
         date_start: null,
         date_end: null,
       });
@@ -236,18 +248,59 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
           />
         </div>
 
+        <DocumentUploader
+          category={category}
+          path={uploadedDoc?.path ?? null}
+          signedUrl={uploadedDoc?.signedUrl ?? null}
+          filename={uploadedDoc?.filename ?? null}
+          contentType={uploadedDoc?.contentType ?? null}
+          onUploaded={(doc) => {
+            setUploadedDoc(doc);
+            form.setValue('document_path', doc.path);
+            // Clear any previously typed external URL since the upload wins.
+            form.setValue('document_url', '');
+          }}
+          onRemoved={() => {
+            setUploadedDoc(null);
+            form.setValue('document_path', '');
+          }}
+          onAnalyzed={(sugg) => {
+            if (sugg.title && !form.getValues('title')) {
+              form.setValue('title', sugg.title, { shouldValidate: true });
+            }
+            if (sugg.description && !form.getValues('description')) {
+              form.setValue('description', sugg.description);
+            }
+            if (
+              sugg.quantitative_value !== null &&
+              form.getValues('quantitative_value') === null
+            ) {
+              form.setValue('quantitative_value', sugg.quantitative_value);
+            }
+            if (
+              sugg.quantitative_unit &&
+              !form.getValues('quantitative_unit')
+            ) {
+              form.setValue('quantitative_unit', sugg.quantitative_unit);
+            }
+          }}
+        />
+
         <FormField
           control={form.control}
           name="document_url"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Lien piece justificative (optionnel)</FormLabel>
+              <FormLabel className="text-xs text-gray-500">
+                …ou un lien externe
+              </FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   value={field.value ?? ''}
                   type="url"
                   placeholder="https://..."
+                  disabled={Boolean(uploadedDoc)}
                 />
               </FormControl>
               <FormMessage />
