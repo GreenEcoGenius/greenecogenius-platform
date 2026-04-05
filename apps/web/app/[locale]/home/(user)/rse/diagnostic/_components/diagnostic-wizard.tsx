@@ -1,964 +1,461 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useTransition } from 'react';
 
 import Link from 'next/link';
 
-import { useTranslations } from 'next-intl';
+import {
+  Building2,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  Heart,
+  Leaf,
+  Handshake,
+  Users,
+} from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
-import { Heading } from '@kit/ui/heading';
-import { Trans } from '@kit/ui/trans';
+import { Card, CardContent } from '@kit/ui/card';
 
+import { RSE_PILLARS, TOTAL_QUESTIONS } from '~/lib/config/rse-pillars';
+import type { RSEPillar, RSEQuestion } from '~/lib/config/rse-pillars';
+import { calculateRSEScore } from '~/lib/services/rse-score-service';
+import type { RSEResult } from '~/lib/services/rse-score-service';
 
+import { saveDiagnostic } from '../../_lib/rse-actions';
 
-// --- Types ---
-
-interface WizardAnswers {
-  // Step 0: Profile
-  sector: string;
-  size: string;
-  revenue: string;
-  location: string;
-  // Step 1: Governance
-  rseCommittee: string;
-  transparencyReport: string;
-  stakeholderPolicy: string;
-  antiCorruptionPolicy: string;
-  // Step 2: Environment (additional)
-  envManagementSystem: string;
-  iso14001: string;
-  // Step 3: Social
-  satisfactionSurvey: string;
-  trainingHours: string;
-  diversityPolicy: string;
-  healthSafety: string;
-  // Step 4: Ethics
-  codeOfEthics: string;
-  supplierCode: string;
-  whistleblower: string;
-  antiCorruptionTraining: string;
-  // Step 5: Stakeholders
-  stakeholderMapping: string;
-  dialogueProcess: string;
-  communityEngagement: string;
-  partnerships: string;
-}
-
-const INITIAL_ANSWERS: WizardAnswers = {
-  sector: '',
-  size: '',
-  revenue: '',
-  location: '',
-  rseCommittee: '',
-  transparencyReport: '',
-  stakeholderPolicy: '',
-  antiCorruptionPolicy: '',
-  envManagementSystem: '',
-  iso14001: '',
-  satisfactionSurvey: '',
-  trainingHours: '',
-  diversityPolicy: '',
-  healthSafety: '',
-  codeOfEthics: '',
-  supplierCode: '',
-  whistleblower: '',
-  antiCorruptionTraining: '',
-  stakeholderMapping: '',
-  dialogueProcess: '',
-  communityEngagement: '',
-  partnerships: '',
+const PILLAR_ICONS: Record<string, React.ElementType> = {
+  Building2, Users, Leaf, Handshake, Heart,
 };
 
-const STEP_LABELS = [
-  'profileStep',
-  'governanceStep',
-  'environmentStep',
-  'socialStep',
-  'ethicsStep',
-  'stakeholdersStep',
-  'resultsStep',
-] as const;
-
-const TOTAL_STEPS = 7;
-
-// Real platform data should come from Supabase — using zeros until connected
-const PLATFORM_ENV_DATA = { co2Avoided: '0 t CO2', recycled: '0 t', lots: 0 };
-
-// Scoring yes/no questions per pillar
-const GOVERNANCE_KEYS: (keyof WizardAnswers)[] = [
-  'rseCommittee',
-  'transparencyReport',
-  'stakeholderPolicy',
-  'antiCorruptionPolicy',
-];
-const ENVIRONMENT_KEYS: (keyof WizardAnswers)[] = [
-  'envManagementSystem',
-  'iso14001',
-];
-const SOCIAL_KEYS: (keyof WizardAnswers)[] = [
-  'satisfactionSurvey',
-  'trainingHours',
-  'diversityPolicy',
-  'healthSafety',
-];
-const ETHICS_KEYS: (keyof WizardAnswers)[] = [
-  'codeOfEthics',
-  'supplierCode',
-  'whistleblower',
-  'antiCorruptionTraining',
-];
-const STAKEHOLDERS_KEYS: (keyof WizardAnswers)[] = [
-  'stakeholderMapping',
-  'dialogueProcess',
-  'communityEngagement',
-  'partnerships',
-];
-
-function countYes(answers: WizardAnswers, keys: (keyof WizardAnswers)[]) {
-  return keys.filter((k) => answers[k] === 'yes').length;
+function getLabel(q: RSEQuestion, locale: string) {
+  return locale === 'fr' ? q.question_fr : q.question_en;
 }
 
-function computeScores(answers: WizardAnswers) {
-  const governance = countYes(answers, GOVERNANCE_KEYS) * 5;
-  // Environment: 2 questions * 5 + bonus from platform data (up to 10)
-  const envQuestions = countYes(answers, ENVIRONMENT_KEYS) * 5;
-  const envBonus = 0; // No bonus without real platform data (transactions, carbon records)
-  const environment = envQuestions + envBonus;
-  const social = countYes(answers, SOCIAL_KEYS) * 5;
-  const ethics = countYes(answers, ETHICS_KEYS) * 5;
-  const stakeholders = countYes(answers, STAKEHOLDERS_KEYS) * 5;
-
-  const raw = governance + environment + social + ethics + stakeholders;
-  const maxScore = 120;
-  const normalized = Math.round((raw / maxScore) * 100);
-
-  let levelKey: string;
-  if (normalized <= 40) {
-    levelKey = 'beginner';
-  } else if (normalized <= 60) {
-    levelKey = 'intermediate';
-  } else if (normalized <= 80) {
-    levelKey = 'advanced';
-  } else {
-    levelKey = 'expert';
-  }
-
-  return {
-    governance,
-    environment,
-    social,
-    ethics,
-    stakeholders,
-    total: normalized,
-    levelKey,
-  };
+function getHelp(q: RSEQuestion, locale: string) {
+  return locale === 'fr' ? q.help_fr : q.help_en;
 }
 
-// --- Radar Chart SVG ---
+function getPillarName(p: RSEPillar, locale: string) {
+  return locale === 'fr' ? p.name_fr : p.name_en;
+}
 
-function RadarChart({
-  scores,
+function getPillarDesc(p: RSEPillar, locale: string) {
+  return locale === 'fr' ? p.description_fr : p.description_en;
+}
+
+function ScaleQuestion({
+  question,
+  value,
+  onChange,
+  locale,
 }: {
-  scores: {
-    governance: number;
-    environment: number;
-    social: number;
-    ethics: number;
-    stakeholders: number;
-  };
+  question: RSEQuestion;
+  value: number | undefined;
+  onChange: (v: number) => void;
+  locale: string;
 }) {
-  const t = useTranslations('rse');
+  const [showHelp, setShowHelp] = useState(false);
+
+  return (
+    <div className="rounded-xl border border-gray-100 bg-white p-4">
+      <div className="mb-3 flex items-start justify-between gap-2">
+        <p className="text-sm font-medium text-gray-900">{getLabel(question, locale)}</p>
+        {question.auto_from && (
+          <Badge variant="outline" className="shrink-0 border-emerald-200 bg-emerald-50 text-[10px] text-emerald-700">
+            Auto
+          </Badge>
+        )}
+      </div>
+
+      <button
+        type="button"
+        onClick={() => setShowHelp(!showHelp)}
+        className="mb-3 flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600"
+      >
+        {showHelp ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+        {getHelp(question, locale)}
+      </button>
+
+      {showHelp && (
+        <p className="mb-3 rounded-lg bg-gray-50 p-2 text-xs text-gray-500">
+          {getHelp(question, locale)}
+        </p>
+      )}
+
+      {question.type === 'scale' && question.options && (
+        <div className="space-y-2">
+          {question.options.map((opt) => (
+            <label
+              key={opt.value}
+              className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 text-sm transition-colors ${
+                value === opt.value
+                  ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
+                  : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              <input
+                type="radio"
+                name={question.id}
+                value={opt.value}
+                checked={value === opt.value}
+                onChange={() => onChange(opt.value)}
+                className="accent-emerald-600"
+              />
+              <span className="flex-1">{locale === 'fr' ? opt.label_fr : opt.label_en}</span>
+              <span className="text-xs text-gray-400">{opt.value}/{question.max_score}</span>
+            </label>
+          ))}
+        </div>
+      )}
+
+      {question.type === 'boolean' && (
+        <div className="flex gap-3">
+          {[
+            { val: question.max_score, lbl: locale === 'fr' ? 'Oui' : 'Yes' },
+            { val: 0, lbl: locale === 'fr' ? 'Non' : 'No' },
+          ].map((opt) => (
+            <label
+              key={opt.val}
+              className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border p-3 text-sm font-medium transition-colors ${
+                value === opt.val
+                  ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
+                  : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              <input
+                type="radio"
+                name={question.id}
+                value={opt.val}
+                checked={value === opt.val}
+                onChange={() => onChange(opt.val)}
+                className="accent-emerald-600"
+              />
+              {opt.lbl}
+            </label>
+          ))}
+        </div>
+      )}
+
+      {question.type === 'text' && (
+        <input
+          type="text"
+          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-emerald-300 focus:ring-1 focus:ring-emerald-200"
+          placeholder={locale === 'fr' ? 'Votre reponse...' : 'Your answer...'}
+          onChange={(e) => onChange(Number(e.target.value) || 0)}
+        />
+      )}
+
+      {question.labels_impacted.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1">
+          {question.labels_impacted.map((l) => (
+            <span key={l} className="rounded bg-gray-50 px-1.5 py-0.5 text-[10px] text-gray-400">
+              {l.replace(/_/g, ' ')}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function RadarChart({ scores }: { scores: { name: string; percentage: number }[] }) {
   const cx = 150;
   const cy = 150;
   const maxR = 100;
-  const labels = [
-    { key: 'governance', label: t('radarGovernance'), max: 20 },
-    { key: 'environment', label: t('radarEnvironment'), max: 30 },
-    { key: 'social', label: t('radarSocial'), max: 20 },
-    { key: 'ethics', label: t('radarEthics'), max: 20 },
-    { key: 'stakeholders', label: t('radarStakeholders'), max: 20 },
-  ] as const;
-
-  const angleStep = (2 * Math.PI) / labels.length;
+  const angleStep = (2 * Math.PI) / scores.length;
   const startAngle = -Math.PI / 2;
 
   function getPoint(index: number, radius: number) {
     const angle = startAngle + index * angleStep;
-    return {
-      x: cx + radius * Math.cos(angle),
-      y: cy + radius * Math.sin(angle),
-    };
+    return { x: cx + radius * Math.cos(angle), y: cy + radius * Math.sin(angle) };
   }
 
-  // Grid circles
   const gridLevels = [0.25, 0.5, 0.75, 1.0];
 
-  // Data polygon
-  const dataPoints = labels.map((l, i) => {
-    const val = scores[l.key] / l.max;
-    const r = Math.min(val, 1) * maxR;
+  const dataPoints = scores.map((s, i) => {
+    const r = (Math.min(s.percentage, 100) / 100) * maxR;
     return getPoint(i, r);
   });
-  const dataPath =
-    dataPoints.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ') +
-    ' Z';
 
   return (
     <svg viewBox="0 0 300 300" className="mx-auto h-64 w-64 sm:h-72 sm:w-72">
-      {/* Grid */}
       {gridLevels.map((level) => {
-        const points = labels
-          .map((_, i) => {
-            const p = getPoint(i, maxR * level);
-            return `${p.x},${p.y}`;
-          })
-          .join(' ');
-        return (
-          <polygon
-            key={level}
-            points={points}
-            fill="none"
-            stroke="#e5e7eb"
-            strokeWidth="1"
-            className="dark:stroke-gray-700"
-          />
-        );
+        const points = scores.map((_, i) => {
+          const p = getPoint(i, maxR * level);
+          return `${p.x},${p.y}`;
+        }).join(' ');
+        return <polygon key={level} points={points} fill="none" stroke="#e5e7eb" strokeWidth="1" />;
       })}
-
-      {/* Axis lines */}
-      {labels.map((_, i) => {
+      {scores.map((_, i) => {
         const p = getPoint(i, maxR);
-        return (
-          <line
-            key={i}
-            x1={cx}
-            y1={cy}
-            x2={p.x}
-            y2={p.y}
-            stroke="#e5e7eb"
-            strokeWidth="1"
-            className="dark:stroke-gray-700"
-          />
-        );
+        return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="#e5e7eb" strokeWidth="1" />;
       })}
-
-      {/* Data polygon */}
       <polygon
         points={dataPoints.map((p) => `${p.x},${p.y}`).join(' ')}
-        fill="rgba(34,197,94,0.2)"
-        stroke="#22C55E"
+        fill="rgba(13,148,136,0.2)"
+        stroke="#0D9488"
         strokeWidth="2"
       />
-
-      {/* Labels */}
-      {labels.map((l, i) => {
+      {scores.map((s, i) => {
         const p = getPoint(i, maxR + 24);
         return (
-          <text
-            key={l.key}
-            x={p.x}
-            y={p.y}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            className="fill-current text-[0.65rem]"
-          >
-            {l.label}
+          <text key={s.name} x={p.x} y={p.y} textAnchor="middle" dominantBaseline="middle" className="fill-current text-[0.6rem]">
+            {s.name}
           </text>
         );
       })}
-
-      {/* Data points */}
       {dataPoints.map((p, i) => (
-        <circle key={i} cx={p.x} cy={p.y} r="4" fill="#22C55E" />
+        <circle key={i} cx={p.x} cy={p.y} r="4" fill="#0D9488" />
       ))}
     </svg>
   );
 }
 
-// --- Select Field ---
-
-function SelectField({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  options: { value: string; label: string }[];
-}) {
-  return (
-    <Card>
-      <CardContent className="flex flex-col gap-2 py-4">
-        <label className="text-sm font-medium">{label}</label>
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="border-input bg-background ring-offset-background focus:ring-ring rounded-md border px-3 py-2 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none"
-        >
-          <option value="">--</option>
-          {options.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
-      </CardContent>
-    </Card>
-  );
-}
-
-// --- Radio Field ---
-
-function RadioField({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  const t = useTranslations('rse');
-  return (
-    <Card>
-      <CardContent className="flex flex-col gap-2 py-4">
-        <label className="text-sm font-medium">{label}</label>
-        <div className="flex gap-4">
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="radio"
-              name={label}
-              value="yes"
-              checked={value === 'yes'}
-              onChange={() => onChange('yes')}
-              className="accent-green-600"
-            />
-            {t('yes')}
-          </label>
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="radio"
-              name={label}
-              value="no"
-              checked={value === 'no'}
-              onChange={() => onChange('no')}
-              className="accent-slate-500"
-            />
-            {t('no')}
-          </label>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
-// --- Main Wizard ---
-
 export function DiagnosticWizard() {
   const t = useTranslations('rse');
+  const locale = useLocale();
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<WizardAnswers>(INITIAL_ANSWERS);
+  const [answers, setAnswers] = useState<Record<string, number | string>>({});
+  const [result, setResult] = useState<RSEResult | null>(null);
+  const [isPending, startTransition] = useTransition();
 
-  const update = useCallback((key: keyof WizardAnswers, value: string) => {
-    setAnswers((prev) => ({ ...prev, [key]: value }));
+  const totalSteps = RSE_PILLARS.length + 2; // overview + 5 pillars + results
+
+  const answeredCount = useMemo(
+    () => Object.keys(answers).filter((k) => answers[k] !== '' && answers[k] !== undefined).length,
+    [answers],
+  );
+
+  const updateAnswer = useCallback((id: string, value: number | string) => {
+    setAnswers((prev) => ({ ...prev, [id]: value }));
   }, []);
 
-  const scores = useMemo(() => computeScores(answers), [answers]);
+  const handleFinish = useCallback(() => {
+    const res = calculateRSEScore(answers);
+    setResult(res);
+    setStep(totalSteps - 1);
+    startTransition(async () => {
+      try { await saveDiagnostic(answers); } catch { /* noop */ }
+    });
+  }, [answers, totalSteps]);
 
-  const canGoNext = step < TOTAL_STEPS - 1;
-  const canGoBack = step > 0;
-
-  // Label eligibility — recognized market labels (GreenEcoGenius is a
-  // preparation tool, not a certification body).
-  const labels = useMemo(
-    () => [
-      { name: 'B Corp', threshold: 80 },
-      { name: 'GreenTech Innovation', threshold: 70 },
-      { name: 'Label Lucie 26000', threshold: 75 },
-      { name: 'Label Numérique Responsable', threshold: 75 },
-      { name: 'EcoVadis', threshold: 80 },
-    ],
-    [],
-  );
-
-  // Strengths and improvements
-  const pillarScores = [
-    { name: t('radarGovernance'), score: scores.governance, max: 20 },
-    { name: t('radarEnvironment'), score: scores.environment, max: 30 },
-    { name: t('radarSocial'), score: scores.social, max: 20 },
-    { name: t('radarEthics'), score: scores.ethics, max: 20 },
-    { name: t('radarStakeholders'), score: scores.stakeholders, max: 20 },
-  ];
-
-  const sorted = [...pillarScores].sort(
-    (a, b) => b.score / b.max - a.score / a.max,
-  );
-  const strengths = sorted.slice(0, 3);
-  const improvements = [...sorted].reverse().slice(0, 3);
-
-  const [downloading, setDownloading] = useState(false);
-  const [downloadError, setDownloadError] = useState(false);
-
-  const handleDownloadReport = useCallback(async () => {
-    setDownloading(true);
-    setDownloadError(false);
-
-    try {
-      const response = await fetch('/api/reports/rse-diagnostic', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          scores,
-          labels,
-          strengths,
-          improvements,
-        }),
-      });
-
-      if (!response.ok) throw new Error('Failed to generate report');
-
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-
-      const disposition = response.headers.get('Content-Disposition');
-      const filenameMatch = disposition?.match(/filename="(.+)"/);
-      a.download = filenameMatch?.[1] ?? 'Diagnostic-RSE-GreenEcoGenius.pdf';
-
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch {
-      setDownloadError(true);
-    } finally {
-      setDownloading(false);
-    }
-  }, [scores, labels, strengths, improvements]);
+  const currentPillar = step >= 1 && step <= RSE_PILLARS.length ? RSE_PILLARS[step - 1] : null;
+  const isResults = step === totalSteps - 1;
+  const isOverview = step === 0;
+  const isLastPillar = step === RSE_PILLARS.length;
 
   return (
     <div className="space-y-6">
-      {/* Progress bar */}
+      {/* ISO 26000 banner */}
+      <p className="text-center text-xs text-gray-400">
+        {locale === 'fr'
+          ? 'Diagnostic structure selon le cadre ISO 26000 — la norme internationale de responsabilite societale'
+          : 'Diagnostic structured according to the ISO 26000 framework — the international standard for social responsibility'}
+      </p>
+
+      {/* Progress */}
       <div className="space-y-2">
         <div className="flex items-center justify-between text-sm">
           <span className="font-medium">
-            <Trans i18nKey="rse:step" /> {step + 1} <Trans i18nKey="rse:of" />{' '}
-            {TOTAL_STEPS}
+            {t('step')} {step + 1} {t('of')} {totalSteps}
           </span>
-          <span className="text-muted-foreground">
-            <Trans i18nKey={`rse:${STEP_LABELS[step]}`} />
+          <span className="text-gray-500">
+            {answeredCount}/{TOTAL_QUESTIONS} {locale === 'fr' ? 'reponses' : 'answers'}
           </span>
         </div>
-        <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+        <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
           <div
-            className="h-full rounded-full bg-green-500 transition-all duration-300"
-            style={{ width: `${((step + 1) / TOTAL_STEPS) * 100}%` }}
+            className="h-full rounded-full bg-teal-500 transition-all duration-300"
+            style={{ width: `${((step + 1) / totalSteps) * 100}%` }}
           />
         </div>
       </div>
 
-      {/* Step Content */}
-      <div className="min-h-[400px]">
-        {step === 0 && <ProfileStep answers={answers} update={update} />}
-        {step === 1 && <GovernanceStep answers={answers} update={update} />}
-        {step === 2 && <EnvironmentStep answers={answers} update={update} />}
-        {step === 3 && <SocialStep answers={answers} update={update} />}
-        {step === 4 && <EthicsStep answers={answers} update={update} />}
-        {step === 5 && <StakeholdersStep answers={answers} update={update} />}
-        {step === 6 && (
-          <ResultsStep
-            scores={scores}
-            labels={labels}
-            strengths={strengths}
-            improvements={improvements}
-            onDownload={handleDownloadReport}
-            downloading={downloading}
-            downloadError={downloadError}
-          />
-        )}
-      </div>
-
-      {/* Navigation */}
-      <div className="flex justify-between">
-        {canGoBack ? (
-          <Button variant="outline" onClick={() => setStep((s) => s - 1)}>
-            <Trans i18nKey="rse:back" />
-          </Button>
-        ) : (
-          <div />
-        )}
-        {canGoNext && (
-          <Button onClick={() => setStep((s) => s + 1)}>
-            <Trans i18nKey="rse:next" />
-          </Button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// --- Step Components ---
-
-function ProfileStep({
-  answers,
-  update,
-}: {
-  answers: WizardAnswers;
-  update: (k: keyof WizardAnswers, v: string) => void;
-}) {
-  const t = useTranslations('rse');
-  return (
-    <div className="space-y-4">
-      <Heading level={4}>
-        <Trans i18nKey="rse:profileStep" />
-      </Heading>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <SelectField
-          label={t('diagnosticSectorLabel')}
-          value={answers.sector}
-          onChange={(v) => update('sector', v)}
-          options={[
-            { value: 'tech', label: t('sectorTech') },
-            { value: 'industry', label: t('sectorIndustry') },
-            { value: 'services', label: t('sectorServices') },
-            { value: 'agriculture', label: t('sectorAgriculture') },
-            { value: 'commerce', label: t('sectorCommerce') },
-            { value: 'construction', label: t('sectorConstruction') },
-            { value: 'transport', label: t('sectorTransport') },
-            { value: 'other', label: t('sectorOther') },
-          ]}
-        />
-        <SelectField
-          label={t('diagnosticSizeLabel')}
-          value={answers.size}
-          onChange={(v) => update('size', v)}
-          options={[
-            { value: '1-10', label: t('sizeRange1') },
-            { value: '11-50', label: t('sizeRange2') },
-            { value: '51-250', label: t('sizeRange3') },
-            { value: '251-500', label: t('sizeRange4') },
-            { value: '500+', label: t('sizeRange5') },
-          ]}
-        />
-        <SelectField
-          label={t('diagnosticRevenueLabel')}
-          value={answers.revenue}
-          onChange={(v) => update('revenue', v)}
-          options={[
-            { value: '<1M', label: t('revenueRange1') },
-            { value: '1-10M', label: t('revenueRange2') },
-            { value: '10-50M', label: t('revenueRange3') },
-            { value: '50-200M', label: t('revenueRange4') },
-            { value: '>200M', label: t('revenueRange5') },
-          ]}
-        />
-        <SelectField
-          label={t('diagnosticLocationLabel')}
-          value={answers.location}
-          onChange={(v) => update('location', v)}
-          options={[
-            { value: 'france', label: t('locationFrance') },
-            { value: 'europe', label: t('locationEurope') },
-            { value: 'international', label: t('locationInternational') },
-          ]}
-        />
-      </div>
-    </div>
-  );
-}
-
-function GovernanceStep({
-  answers,
-  update,
-}: {
-  answers: WizardAnswers;
-  update: (k: keyof WizardAnswers, v: string) => void;
-}) {
-  const t = useTranslations('rse');
-  return (
-    <div className="space-y-4">
-      <Heading level={4}>
-        <Trans i18nKey="rse:governanceStep" />
-      </Heading>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <RadioField
-          label={t('questionRseCommittee')}
-          value={answers.rseCommittee}
-          onChange={(v) => update('rseCommittee', v)}
-        />
-        <RadioField
-          label={t('questionTransparencyReport')}
-          value={answers.transparencyReport}
-          onChange={(v) => update('transparencyReport', v)}
-        />
-        <RadioField
-          label={t('questionStakeholderPolicy')}
-          value={answers.stakeholderPolicy}
-          onChange={(v) => update('stakeholderPolicy', v)}
-        />
-        <RadioField
-          label={t('questionAntiCorruption')}
-          value={answers.antiCorruptionPolicy}
-          onChange={(v) => update('antiCorruptionPolicy', v)}
-        />
-      </div>
-    </div>
-  );
-}
-
-function EnvironmentStep({
-  answers,
-  update,
-}: {
-  answers: WizardAnswers;
-  update: (k: keyof WizardAnswers, v: string) => void;
-}) {
-  const t = useTranslations('rse');
-  return (
-    <div className="space-y-4">
-      <Heading level={4}>
-        <Trans i18nKey="rse:environmentStep" />
-      </Heading>
-
-      {/* Pre-filled platform data */}
-      <Card className="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950/30">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-sm text-green-800 dark:text-green-300">
-            <Trans i18nKey="rse:preFilledFromPlatform" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <p className="text-lg font-bold text-green-700 dark:text-green-400">
-                {PLATFORM_ENV_DATA.co2Avoided}
-              </p>
-              <p className="text-muted-foreground text-xs">
-                {t('platformCo2Avoided')}
-              </p>
-            </div>
-            <div>
-              <p className="text-lg font-bold text-green-700 dark:text-green-400">
-                {PLATFORM_ENV_DATA.recycled}
-              </p>
-              <p className="text-muted-foreground text-xs">
-                {t('platformRecycled')}
-              </p>
-            </div>
-            <div>
-              <p className="text-lg font-bold text-green-700 dark:text-green-400">
-                {PLATFORM_ENV_DATA.lots}
-              </p>
-              <p className="text-muted-foreground text-xs">
-                {t('platformLots')}
-              </p>
-            </div>
+      {/* Overview step */}
+      {isOverview && (
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 text-gray-500">
+            <Clock className="h-4 w-4" />
+            <span className="text-sm">~15 {locale === 'fr' ? 'minutes' : 'minutes'}</span>
           </div>
-        </CardContent>
-      </Card>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <RadioField
-          label={t('questionEnvManagement')}
-          value={answers.envManagementSystem}
-          onChange={(v) => update('envManagementSystem', v)}
-        />
-        <RadioField
-          label={t('questionIso14001')}
-          value={answers.iso14001}
-          onChange={(v) => update('iso14001', v)}
-        />
-      </div>
-    </div>
-  );
-}
-
-function SocialStep({
-  answers,
-  update,
-}: {
-  answers: WizardAnswers;
-  update: (k: keyof WizardAnswers, v: string) => void;
-}) {
-  const t = useTranslations('rse');
-  return (
-    <div className="space-y-4">
-      <Heading level={4}>
-        <Trans i18nKey="rse:socialStep" />
-      </Heading>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <RadioField
-          label={t('questionSatisfactionSurvey')}
-          value={answers.satisfactionSurvey}
-          onChange={(v) => update('satisfactionSurvey', v)}
-        />
-        <RadioField
-          label={t('questionTrainingHours')}
-          value={answers.trainingHours}
-          onChange={(v) => update('trainingHours', v)}
-        />
-        <RadioField
-          label={t('questionDiversityPolicy')}
-          value={answers.diversityPolicy}
-          onChange={(v) => update('diversityPolicy', v)}
-        />
-        <RadioField
-          label={t('questionHealthSafety')}
-          value={answers.healthSafety}
-          onChange={(v) => update('healthSafety', v)}
-        />
-      </div>
-    </div>
-  );
-}
-
-function EthicsStep({
-  answers,
-  update,
-}: {
-  answers: WizardAnswers;
-  update: (k: keyof WizardAnswers, v: string) => void;
-}) {
-  const t = useTranslations('rse');
-  return (
-    <div className="space-y-4">
-      <Heading level={4}>
-        <Trans i18nKey="rse:ethicsStep" />
-      </Heading>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <RadioField
-          label={t('questionCodeOfEthics')}
-          value={answers.codeOfEthics}
-          onChange={(v) => update('codeOfEthics', v)}
-        />
-        <RadioField
-          label={t('questionSupplierCode')}
-          value={answers.supplierCode}
-          onChange={(v) => update('supplierCode', v)}
-        />
-        <RadioField
-          label={t('questionWhistleblower')}
-          value={answers.whistleblower}
-          onChange={(v) => update('whistleblower', v)}
-        />
-        <RadioField
-          label={t('questionAntiCorruptionTraining')}
-          value={answers.antiCorruptionTraining}
-          onChange={(v) => update('antiCorruptionTraining', v)}
-        />
-      </div>
-    </div>
-  );
-}
-
-function StakeholdersStep({
-  answers,
-  update,
-}: {
-  answers: WizardAnswers;
-  update: (k: keyof WizardAnswers, v: string) => void;
-}) {
-  const t = useTranslations('rse');
-  return (
-    <div className="space-y-4">
-      <Heading level={4}>
-        <Trans i18nKey="rse:stakeholdersStep" />
-      </Heading>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <RadioField
-          label={t('questionStakeholderMapping')}
-          value={answers.stakeholderMapping}
-          onChange={(v) => update('stakeholderMapping', v)}
-        />
-        <RadioField
-          label={t('questionDialogueProcess')}
-          value={answers.dialogueProcess}
-          onChange={(v) => update('dialogueProcess', v)}
-        />
-        <RadioField
-          label={t('questionCommunityEngagement')}
-          value={answers.communityEngagement}
-          onChange={(v) => update('communityEngagement', v)}
-        />
-        <RadioField
-          label={t('questionPartnerships')}
-          value={answers.partnerships}
-          onChange={(v) => update('partnerships', v)}
-        />
-      </div>
-    </div>
-  );
-}
-
-function ResultsStep({
-  scores,
-  labels,
-  strengths,
-  improvements,
-  onDownload,
-  downloading,
-  downloadError,
-}: {
-  scores: {
-    governance: number;
-    environment: number;
-    social: number;
-    ethics: number;
-    stakeholders: number;
-    total: number;
-    levelKey: string;
-  };
-  labels: { name: string; threshold: number }[];
-  strengths: { name: string; score: number; max: number }[];
-  improvements: { name: string; score: number; max: number }[];
-  onDownload: () => void;
-  downloading: boolean;
-  downloadError: boolean;
-}) {
-  const t = useTranslations('rse');
-  function getLevelColor(levelKey: string) {
-    switch (levelKey) {
-      case 'beginner':
-        return 'bg-slate-500';
-      case 'intermediate':
-        return 'bg-teal-500';
-      case 'advanced':
-        return 'bg-teal-500';
-      case 'expert':
-        return 'bg-green-500';
-      default:
-        return 'bg-gray-500';
-    }
-  }
-
-  return (
-    <div className="space-y-6">
-      <Heading level={4}>
-        <Trans i18nKey="rse:resultsStep" />
-      </Heading>
-
-      {/* Score + Level */}
-      <Card>
-        <CardContent className="flex flex-col items-center gap-4 py-8">
-          <div className="text-6xl font-bold">{scores.total}</div>
-          <p className="text-muted-foreground text-sm">/ 100</p>
-          <Badge className={`${getLevelColor(scores.levelKey)} text-white`}>
-            <Trans i18nKey="rse:level" /> :{' '}
-            <Trans i18nKey={`rse:${scores.levelKey}`} />
-          </Badge>
-        </CardContent>
-      </Card>
-
-      {/* Radar Chart */}
-      <Card>
-        <CardContent className="py-6">
-          <RadarChart scores={scores} />
-        </CardContent>
-      </Card>
-
-      {/* Strengths + Improvements */}
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm">
-              <Trans i18nKey="rse:strengths" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {strengths.map((s) => (
-                <li
-                  key={s.name}
-                  className="flex items-center justify-between text-sm"
-                >
-                  <span>{s.name}</span>
-                  <Badge variant="outline">
-                    {s.score}/{s.max}
-                  </Badge>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm">
-              <Trans i18nKey="rse:improvements" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {improvements.map((s) => (
-                <li
-                  key={s.name}
-                  className="flex items-center justify-between text-sm"
-                >
-                  <span>{s.name}</span>
-                  <Badge variant="outline">
-                    {s.score}/{s.max}
-                  </Badge>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Label Eligibility */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm">
-            <Trans i18nKey="rse:labelEligibility" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {labels.map((l) => {
-              const eligible = scores.total >= l.threshold;
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {RSE_PILLARS.map((pillar) => {
+              const Icon = PILLAR_ICONS[pillar.icon] ?? Building2;
+              const scoredQ = pillar.questions.filter((q) => q.max_score > 0);
+              const autoQ = pillar.questions.filter((q) => q.auto_from);
               return (
-                <div
-                  key={l.name}
-                  className="flex items-center justify-between rounded-lg border p-3"
-                >
-                  <span className="text-sm font-medium">{l.name}</span>
-                  <Badge
-                    variant={eligible ? 'default' : 'outline'}
-                    className={eligible ? 'bg-green-500 text-white' : ''}
-                  >
-                    {eligible
-                      ? t('eligibleStatus')
-                      : t('requiredThreshold', { threshold: l.threshold })}
-                  </Badge>
-                </div>
+                <Card key={pillar.id}>
+                  <CardContent className="p-4">
+                    <div className="mb-2 flex items-center gap-2">
+                      <Icon className="h-5 w-5 text-teal-600" strokeWidth={1.5} />
+                      <h3 className="text-sm font-semibold">{getPillarName(pillar, locale)}</h3>
+                    </div>
+                    <p className="mb-2 text-xs text-gray-500">{getPillarDesc(pillar, locale)}</p>
+                    <div className="flex items-center gap-2 text-xs text-gray-400">
+                      <span>{scoredQ.length} questions</span>
+                      {autoQ.length > 0 && (
+                        <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-[10px] text-emerald-700">
+                          {autoQ.length} auto
+                        </Badge>
+                      )}
+                      <span className="ml-auto font-medium">{pillar.weight}%</span>
+                    </div>
+                  </CardContent>
+                </Card>
               );
             })}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      )}
 
-      {/* Action buttons */}
-      <div className="flex flex-wrap gap-3">
-        <Button
-          variant={downloadError ? 'destructive' : 'outline'}
-          onClick={onDownload}
-          disabled={downloading}
-        >
-          {downloading
-            ? t('downloading')
-            : downloadError
-              ? t('downloadError')
-              : t('downloadReport')}
-        </Button>
-        <Button render={<Link href="/home/rse/roadmap" />} nativeButton={false}>
-          <Trans i18nKey="rse:viewRoadmap" />
-        </Button>
-      </div>
+      {/* Pillar questions */}
+      {currentPillar && (
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            {(() => {
+              const Icon = PILLAR_ICONS[currentPillar.icon] ?? Building2;
+              return <Icon className="h-6 w-6 text-teal-600" strokeWidth={1.5} />;
+            })()}
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">{getPillarName(currentPillar, locale)}</h2>
+              <p className="text-sm text-gray-500">{getPillarDesc(currentPillar, locale)}</p>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            {currentPillar.questions.map((q) => (
+              <ScaleQuestion
+                key={q.id}
+                question={q}
+                value={answers[q.id] as number | undefined}
+                onChange={(v) => updateAnswer(q.id, v)}
+                locale={locale}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Results */}
+      {isResults && result && (
+        <div className="space-y-6">
+          {/* Score */}
+          <Card>
+            <CardContent className="flex flex-col items-center gap-3 py-8">
+              <div className="text-6xl font-bold text-teal-700">{result.globalScore}</div>
+              <p className="text-sm text-gray-500">/ 100</p>
+              <Badge className="bg-teal-500 text-white">
+                {t('level')} : {t(result.levelKey)}
+              </Badge>
+            </CardContent>
+          </Card>
+
+          {/* Radar */}
+          <Card>
+            <CardContent className="py-6">
+              <RadarChart
+                scores={result.pillarScores.map((p) => ({
+                  name: locale === 'fr' ? p.name_fr : p.name_en,
+                  percentage: p.percentage,
+                }))}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Pillar bars */}
+          <Card>
+            <CardContent className="space-y-3 p-5">
+              {result.pillarScores.map((p) => (
+                <div key={p.pillar_id}>
+                  <div className="mb-1 flex items-center justify-between text-sm">
+                    <span className="font-medium">{locale === 'fr' ? p.name_fr : p.name_en}</span>
+                    <span className="text-gray-500">{p.percentage}%</span>
+                  </div>
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
+                    <div
+                      className="h-full rounded-full bg-teal-500 transition-all"
+                      style={{ width: `${p.percentage}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Top 5 actions */}
+          {result.actionPlan.length > 0 && (
+            <Card>
+              <CardContent className="p-5">
+                <h3 className="mb-3 text-sm font-semibold">
+                  {locale === 'fr' ? 'Actions prioritaires' : 'Priority actions'}
+                </h3>
+                <div className="space-y-2">
+                  {result.actionPlan.slice(0, 5).map((a) => (
+                    <div key={a.question_id} className="flex items-start gap-3 rounded-lg border border-gray-100 p-3">
+                      <Badge
+                        variant="outline"
+                        className={`shrink-0 text-[10px] ${
+                          a.priority === 'high'
+                            ? 'border-red-200 bg-red-50 text-red-700'
+                            : a.priority === 'medium'
+                              ? 'border-amber-200 bg-amber-50 text-amber-700'
+                              : 'border-gray-200 text-gray-500'
+                        }`}
+                      >
+                        {a.priority === 'high' ? (locale === 'fr' ? 'Haute' : 'High') : a.priority === 'medium' ? (locale === 'fr' ? 'Moyenne' : 'Medium') : (locale === 'fr' ? 'Basse' : 'Low')}
+                      </Badge>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs text-gray-700">{locale === 'fr' ? a.question_fr : a.question_en}</p>
+                        <p className="mt-0.5 text-[10px] text-gray-400">
+                          {a.current_level}/{a.target_level} — {a.labels.join(', ')}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          <div className="flex flex-wrap gap-3">
+            <Button render={<Link href="/home/rse" />} nativeButton={false}>
+              {locale === 'fr' ? 'Retour RSE & Labels' : 'Back to CSR & Labels'}
+            </Button>
+            <Button variant="outline" render={<Link href="/home/rse/roadmap" />} nativeButton={false}>
+              {t('viewRoadmap')}
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Navigation */}
+      {!isResults && (
+        <div className="flex justify-between">
+          {step > 0 ? (
+            <Button variant="outline" onClick={() => setStep((s) => s - 1)}>
+              {t('back')}
+            </Button>
+          ) : (
+            <div />
+          )}
+          {isLastPillar ? (
+            <Button onClick={handleFinish} disabled={isPending}>
+              {isPending
+                ? (locale === 'fr' ? 'Calcul en cours...' : 'Calculating...')
+                : (locale === 'fr' ? 'Voir les resultats' : 'View results')}
+            </Button>
+          ) : (
+            <Button onClick={() => setStep((s) => s + 1)}>
+              {t('next')}
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
