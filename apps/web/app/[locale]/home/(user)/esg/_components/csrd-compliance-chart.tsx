@@ -3,6 +3,7 @@
 import Link from 'next/link';
 
 import { ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
@@ -21,31 +22,34 @@ function getTextColor(pct: number): string {
   return 'text-slate-500';
 }
 
-function getCategoryLabel(cat: string): string {
-  switch (cat) {
-    case 'environment':
-      return 'Environnement';
-    case 'social':
-      return 'Social';
-    case 'governance':
-      return 'Gouvernance';
-    default:
-      return cat;
-  }
-}
-
 export function CsrdComplianceChart({
   indicators,
 }: {
   indicators: DemoData['esg']['csrdIndicators'][number][];
 }) {
+  const t = useTranslations('esg');
   let lastCategory = '';
+
+  const getCategoryLabel = (cat: string): string => {
+    switch (cat) {
+      case 'environment':
+        return t('csrdCategoryEnvironment');
+      case 'social':
+        return t('csrdCategorySocial');
+      case 'governance':
+        return t('csrdCategoryGovernance');
+      default:
+        return cat;
+    }
+  };
 
   return (
     <Card>
       <CardContent className="p-5">
-        <h3 className="text-sm font-semibold">Conformite CSRD</h3>
-        <p className="text-muted-foreground mb-4 text-xs">Normes ESRS</p>
+        <h3 className="text-sm font-semibold">{t('csrdTitle')}</h3>
+        <p className="text-muted-foreground mb-4 text-xs">
+          {t('csrdEsrsStandards')}
+        </p>
 
         <div className="space-y-2">
           {indicators.map((ind) => {
@@ -96,7 +100,7 @@ export function CsrdComplianceChart({
             className="w-full text-xs"
             render={
               <Link href="/home/esg/csrd">
-                Voir le tableau CSRD complet
+                {t('csrdViewFullTable')}
                 <ChevronRight className="ml-1 h-3 w-3" />
               </Link>
             }

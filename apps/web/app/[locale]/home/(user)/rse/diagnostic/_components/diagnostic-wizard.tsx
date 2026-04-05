@@ -4,6 +4,8 @@ import { useCallback, useMemo, useState } from 'react';
 
 import Link from 'next/link';
 
+import { useTranslations } from 'next-intl';
+
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
@@ -130,22 +132,17 @@ function computeScores(answers: WizardAnswers) {
   const stakeholders = countYes(answers, STAKEHOLDERS_KEYS) * 5;
 
   const raw = governance + environment + social + ethics + stakeholders;
-  const maxScore = 120; // 4*20 + 10 + 20(env bonus) + 10(env questions)
+  const maxScore = 120;
   const normalized = Math.round((raw / maxScore) * 100);
 
-  let level: string;
   let levelKey: string;
   if (normalized <= 40) {
-    level = 'Debutant';
     levelKey = 'beginner';
   } else if (normalized <= 60) {
-    level = 'Intermediaire';
     levelKey = 'intermediate';
   } else if (normalized <= 80) {
-    level = 'Avance';
     levelKey = 'advanced';
   } else {
-    level = 'Expert';
     levelKey = 'expert';
   }
 
@@ -156,7 +153,6 @@ function computeScores(answers: WizardAnswers) {
     ethics,
     stakeholders,
     total: normalized,
-    level,
     levelKey,
   };
 }
@@ -174,15 +170,16 @@ function RadarChart({
     stakeholders: number;
   };
 }) {
+  const t = useTranslations('rse');
   const cx = 150;
   const cy = 150;
   const maxR = 100;
   const labels = [
-    { key: 'governance', label: 'Gouvernance', max: 20 },
-    { key: 'environment', label: 'Environnement', max: 30 },
-    { key: 'social', label: 'Social', max: 20 },
-    { key: 'ethics', label: 'Ethique', max: 20 },
-    { key: 'stakeholders', label: 'Parties prenantes', max: 20 },
+    { key: 'governance', label: t('radarGovernance'), max: 20 },
+    { key: 'environment', label: t('radarEnvironment'), max: 30 },
+    { key: 'social', label: t('radarSocial'), max: 20 },
+    { key: 'ethics', label: t('radarEthics'), max: 20 },
+    { key: 'stakeholders', label: t('radarStakeholders'), max: 20 },
   ] as const;
 
   const angleStep = (2 * Math.PI) / labels.length;
@@ -326,6 +323,7 @@ function RadioField({
   value: string;
   onChange: (v: string) => void;
 }) {
+  const t = useTranslations('rse');
   return (
     <Card>
       <CardContent className="flex flex-col gap-2 py-4">
@@ -340,7 +338,7 @@ function RadioField({
               onChange={() => onChange('yes')}
               className="accent-green-600"
             />
-            Oui
+            {t('yes')}
           </label>
           <label className="flex items-center gap-2 text-sm">
             <input
@@ -351,7 +349,7 @@ function RadioField({
               onChange={() => onChange('no')}
               className="accent-slate-500"
             />
-            Non
+            {t('no')}
           </label>
         </div>
       </CardContent>
@@ -362,6 +360,7 @@ function RadioField({
 // --- Main Wizard ---
 
 export function DiagnosticWizard() {
+  const t = useTranslations('rse');
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<WizardAnswers>(INITIAL_ANSWERS);
 
@@ -389,11 +388,11 @@ export function DiagnosticWizard() {
 
   // Strengths and improvements
   const pillarScores = [
-    { name: 'Gouvernance', score: scores.governance, max: 20 },
-    { name: 'Environnement', score: scores.environment, max: 30 },
-    { name: 'Social', score: scores.social, max: 20 },
-    { name: 'Ethique', score: scores.ethics, max: 20 },
-    { name: 'Parties prenantes', score: scores.stakeholders, max: 20 },
+    { name: t('radarGovernance'), score: scores.governance, max: 20 },
+    { name: t('radarEnvironment'), score: scores.environment, max: 30 },
+    { name: t('radarSocial'), score: scores.social, max: 20 },
+    { name: t('radarEthics'), score: scores.ethics, max: 20 },
+    { name: t('radarStakeholders'), score: scores.stakeholders, max: 20 },
   ];
 
   const sorted = [...pillarScores].sort(
@@ -513,6 +512,7 @@ function ProfileStep({
   answers: WizardAnswers;
   update: (k: keyof WizardAnswers, v: string) => void;
 }) {
+  const t = useTranslations('rse');
   return (
     <div className="space-y-4">
       <Heading level={4}>
@@ -520,52 +520,52 @@ function ProfileStep({
       </Heading>
       <div className="grid gap-4 sm:grid-cols-2">
         <SelectField
-          label="Secteur d'activite"
+          label={t('diagnosticSectorLabel')}
           value={answers.sector}
           onChange={(v) => update('sector', v)}
           options={[
-            { value: 'tech', label: 'Technologie' },
-            { value: 'industry', label: 'Industrie' },
-            { value: 'services', label: 'Services' },
-            { value: 'agriculture', label: 'Agriculture' },
-            { value: 'commerce', label: 'Commerce' },
-            { value: 'construction', label: 'Construction' },
-            { value: 'transport', label: 'Transport' },
-            { value: 'other', label: 'Autre' },
+            { value: 'tech', label: t('sectorTech') },
+            { value: 'industry', label: t('sectorIndustry') },
+            { value: 'services', label: t('sectorServices') },
+            { value: 'agriculture', label: t('sectorAgriculture') },
+            { value: 'commerce', label: t('sectorCommerce') },
+            { value: 'construction', label: t('sectorConstruction') },
+            { value: 'transport', label: t('sectorTransport') },
+            { value: 'other', label: t('sectorOther') },
           ]}
         />
         <SelectField
-          label="Taille de l'entreprise"
+          label={t('diagnosticSizeLabel')}
           value={answers.size}
           onChange={(v) => update('size', v)}
           options={[
-            { value: '1-10', label: '1-10 employes' },
-            { value: '11-50', label: '11-50 employes' },
-            { value: '51-250', label: '51-250 employes' },
-            { value: '251-500', label: '251-500 employes' },
-            { value: '500+', label: '500+ employes' },
+            { value: '1-10', label: t('sizeRange1') },
+            { value: '11-50', label: t('sizeRange2') },
+            { value: '51-250', label: t('sizeRange3') },
+            { value: '251-500', label: t('sizeRange4') },
+            { value: '500+', label: t('sizeRange5') },
           ]}
         />
         <SelectField
-          label="Chiffre d'affaires"
+          label={t('diagnosticRevenueLabel')}
           value={answers.revenue}
           onChange={(v) => update('revenue', v)}
           options={[
-            { value: '<1M', label: '< 1M EUR' },
-            { value: '1-10M', label: '1-10M EUR' },
-            { value: '10-50M', label: '10-50M EUR' },
-            { value: '50-200M', label: '50-200M EUR' },
-            { value: '>200M', label: '> 200M EUR' },
+            { value: '<1M', label: t('revenueRange1') },
+            { value: '1-10M', label: t('revenueRange2') },
+            { value: '10-50M', label: t('revenueRange3') },
+            { value: '50-200M', label: t('revenueRange4') },
+            { value: '>200M', label: t('revenueRange5') },
           ]}
         />
         <SelectField
-          label="Localisation"
+          label={t('diagnosticLocationLabel')}
           value={answers.location}
           onChange={(v) => update('location', v)}
           options={[
-            { value: 'france', label: 'France' },
-            { value: 'europe', label: 'Europe (hors France)' },
-            { value: 'international', label: 'International' },
+            { value: 'france', label: t('locationFrance') },
+            { value: 'europe', label: t('locationEurope') },
+            { value: 'international', label: t('locationInternational') },
           ]}
         />
       </div>
@@ -580,6 +580,7 @@ function GovernanceStep({
   answers: WizardAnswers;
   update: (k: keyof WizardAnswers, v: string) => void;
 }) {
+  const t = useTranslations('rse');
   return (
     <div className="space-y-4">
       <Heading level={4}>
@@ -587,22 +588,22 @@ function GovernanceStep({
       </Heading>
       <div className="grid gap-4 sm:grid-cols-2">
         <RadioField
-          label="Comite RSE au conseil d'administration ?"
+          label={t('questionRseCommittee')}
           value={answers.rseCommittee}
           onChange={(v) => update('rseCommittee', v)}
         />
         <RadioField
-          label="Rapport de transparence publie ?"
+          label={t('questionTransparencyReport')}
           value={answers.transparencyReport}
           onChange={(v) => update('transparencyReport', v)}
         />
         <RadioField
-          label="Politique d'engagement parties prenantes ?"
+          label={t('questionStakeholderPolicy')}
           value={answers.stakeholderPolicy}
           onChange={(v) => update('stakeholderPolicy', v)}
         />
         <RadioField
-          label="Politique anti-corruption ?"
+          label={t('questionAntiCorruption')}
           value={answers.antiCorruptionPolicy}
           onChange={(v) => update('antiCorruptionPolicy', v)}
         />
@@ -618,6 +619,7 @@ function EnvironmentStep({
   answers: WizardAnswers;
   update: (k: keyof WizardAnswers, v: string) => void;
 }) {
+  const t = useTranslations('rse');
   return (
     <div className="space-y-4">
       <Heading level={4}>
@@ -637,19 +639,25 @@ function EnvironmentStep({
               <p className="text-lg font-bold text-green-700 dark:text-green-400">
                 {PLATFORM_ENV_DATA.co2Avoided}
               </p>
-              <p className="text-muted-foreground text-xs">CO2 evite</p>
+              <p className="text-muted-foreground text-xs">
+                {t('platformCo2Avoided')}
+              </p>
             </div>
             <div>
               <p className="text-lg font-bold text-green-700 dark:text-green-400">
                 {PLATFORM_ENV_DATA.recycled}
               </p>
-              <p className="text-muted-foreground text-xs">Recyclees</p>
+              <p className="text-muted-foreground text-xs">
+                {t('platformRecycled')}
+              </p>
             </div>
             <div>
               <p className="text-lg font-bold text-green-700 dark:text-green-400">
                 {PLATFORM_ENV_DATA.lots}
               </p>
-              <p className="text-muted-foreground text-xs">Lots traces</p>
+              <p className="text-muted-foreground text-xs">
+                {t('platformLots')}
+              </p>
             </div>
           </div>
         </CardContent>
@@ -657,12 +665,12 @@ function EnvironmentStep({
 
       <div className="grid gap-4 sm:grid-cols-2">
         <RadioField
-          label="Systeme de management environnemental en place ?"
+          label={t('questionEnvManagement')}
           value={answers.envManagementSystem}
           onChange={(v) => update('envManagementSystem', v)}
         />
         <RadioField
-          label="Certification ISO 14001 ?"
+          label={t('questionIso14001')}
           value={answers.iso14001}
           onChange={(v) => update('iso14001', v)}
         />
@@ -678,6 +686,7 @@ function SocialStep({
   answers: WizardAnswers;
   update: (k: keyof WizardAnswers, v: string) => void;
 }) {
+  const t = useTranslations('rse');
   return (
     <div className="space-y-4">
       <Heading level={4}>
@@ -685,22 +694,22 @@ function SocialStep({
       </Heading>
       <div className="grid gap-4 sm:grid-cols-2">
         <RadioField
-          label="Enquete de satisfaction employes ?"
+          label={t('questionSatisfactionSurvey')}
           value={answers.satisfactionSurvey}
           onChange={(v) => update('satisfactionSurvey', v)}
         />
         <RadioField
-          label="Heures de formation par employe tracees ?"
+          label={t('questionTrainingHours')}
           value={answers.trainingHours}
           onChange={(v) => update('trainingHours', v)}
         />
         <RadioField
-          label="Politique diversite et inclusion ?"
+          label={t('questionDiversityPolicy')}
           value={answers.diversityPolicy}
           onChange={(v) => update('diversityPolicy', v)}
         />
         <RadioField
-          label="Programme sante et securite au travail ?"
+          label={t('questionHealthSafety')}
           value={answers.healthSafety}
           onChange={(v) => update('healthSafety', v)}
         />
@@ -716,6 +725,7 @@ function EthicsStep({
   answers: WizardAnswers;
   update: (k: keyof WizardAnswers, v: string) => void;
 }) {
+  const t = useTranslations('rse');
   return (
     <div className="space-y-4">
       <Heading level={4}>
@@ -723,22 +733,22 @@ function EthicsStep({
       </Heading>
       <div className="grid gap-4 sm:grid-cols-2">
         <RadioField
-          label="Code d'ethique formalise ?"
+          label={t('questionCodeOfEthics')}
           value={answers.codeOfEthics}
           onChange={(v) => update('codeOfEthics', v)}
         />
         <RadioField
-          label="Code de conduite fournisseurs ?"
+          label={t('questionSupplierCode')}
           value={answers.supplierCode}
           onChange={(v) => update('supplierCode', v)}
         />
         <RadioField
-          label="Mecanisme de signalement (whistleblower) ?"
+          label={t('questionWhistleblower')}
           value={answers.whistleblower}
           onChange={(v) => update('whistleblower', v)}
         />
         <RadioField
-          label="Formation anti-corruption ?"
+          label={t('questionAntiCorruptionTraining')}
           value={answers.antiCorruptionTraining}
           onChange={(v) => update('antiCorruptionTraining', v)}
         />
@@ -754,6 +764,7 @@ function StakeholdersStep({
   answers: WizardAnswers;
   update: (k: keyof WizardAnswers, v: string) => void;
 }) {
+  const t = useTranslations('rse');
   return (
     <div className="space-y-4">
       <Heading level={4}>
@@ -761,22 +772,22 @@ function StakeholdersStep({
       </Heading>
       <div className="grid gap-4 sm:grid-cols-2">
         <RadioField
-          label="Cartographie des parties prenantes ?"
+          label={t('questionStakeholderMapping')}
           value={answers.stakeholderMapping}
           onChange={(v) => update('stakeholderMapping', v)}
         />
         <RadioField
-          label="Processus de dialogue structure ?"
+          label={t('questionDialogueProcess')}
           value={answers.dialogueProcess}
           onChange={(v) => update('dialogueProcess', v)}
         />
         <RadioField
-          label="Engagement communautaire ?"
+          label={t('questionCommunityEngagement')}
           value={answers.communityEngagement}
           onChange={(v) => update('communityEngagement', v)}
         />
         <RadioField
-          label="Partenariats avec ONG ou institutions ?"
+          label={t('questionPartnerships')}
           value={answers.partnerships}
           onChange={(v) => update('partnerships', v)}
         />
@@ -801,7 +812,6 @@ function ResultsStep({
     ethics: number;
     stakeholders: number;
     total: number;
-    level: string;
     levelKey: string;
   };
   labels: { name: string; threshold: number }[];
@@ -811,6 +821,7 @@ function ResultsStep({
   downloading: boolean;
   downloadError: boolean;
 }) {
+  const t = useTranslations('rse');
   function getLevelColor(levelKey: string) {
     switch (levelKey) {
       case 'beginner':
@@ -920,7 +931,9 @@ function ResultsStep({
                     variant={eligible ? 'default' : 'outline'}
                     className={eligible ? 'bg-green-500 text-white' : ''}
                   >
-                    {eligible ? 'Eligible' : `${l.threshold} requis`}
+                    {eligible
+                      ? t('eligibleStatus')
+                      : t('requiredThreshold', { threshold: l.threshold })}
                   </Badge>
                 </div>
               );
@@ -936,13 +949,11 @@ function ResultsStep({
           onClick={onDownload}
           disabled={downloading}
         >
-          {downloading ? (
-            'Telechargement...'
-          ) : downloadError ? (
-            'Erreur, reessayez'
-          ) : (
-            <Trans i18nKey="rse:downloadReport" />
-          )}
+          {downloading
+            ? t('downloading')
+            : downloadError
+              ? t('downloadError')
+              : t('downloadReport')}
         </Button>
         <Button render={<Link href="/home/rse/roadmap" />} nativeButton={false}>
           <Trans i18nKey="rse:viewRoadmap" />

@@ -3,10 +3,10 @@
 import { useState } from 'react';
 
 import { Loader2, Shield } from 'lucide-react';
-
-import { Trans } from '@kit/ui/trans';
+import { useTranslations } from 'next-intl';
 
 export function PreAuditButton() {
+  const t = useTranslations('compliance');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
@@ -66,15 +66,13 @@ export function PreAuditButton() {
       ) : (
         <Shield className="mr-1 inline-block h-4 w-4" />
       )}
-      {status === 'loading' ? (
-        'Analyse en cours...'
-      ) : status === 'success' ? (
-        'Rapport telecharge !'
-      ) : status === 'error' ? (
-        'Erreur, reessayez'
-      ) : (
-        <Trans i18nKey="compliance:launchAudit" />
-      )}
+      {status === 'loading'
+        ? t('preAuditLoading')
+        : status === 'success'
+          ? t('preAuditSuccess')
+          : status === 'error'
+            ? t('preAuditError')
+            : t('launchAudit')}
     </button>
   );
 }

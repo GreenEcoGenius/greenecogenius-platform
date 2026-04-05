@@ -378,7 +378,7 @@ async function CarbonPage() {
                     </span>
                   </p>
                   <p className="text-muted-foreground text-xs">
-                    Scope 1 + 2 + 3
+                    <Trans i18nKey="carbon:scopesAll" />
                   </p>
                 </div>
               </div>

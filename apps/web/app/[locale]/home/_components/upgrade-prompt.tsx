@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { Lock, Sparkles } from 'lucide-react';
 
+import { useTranslations } from 'next-intl';
+
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
@@ -13,13 +15,14 @@ interface UpgradePromptProps {
   requiredPlan: string;
 }
 
-const planNames: Record<string, string> = {
-  essentiel: 'Essentiel',
-  avance: 'Avancé',
-  enterprise: 'Enterprise',
-};
-
 export function UpgradePrompt({ feature, requiredPlan }: UpgradePromptProps) {
+  const t = useTranslations('common');
+  const planNames: Record<string, string> = {
+    essentiel: t('plans.essential'),
+    avance: t('plans.advanced'),
+    enterprise: t('plans.enterprise'),
+  };
+
   return (
     <Card className="border-dashed">
       <CardContent className="flex flex-col items-center gap-4 py-12 text-center">

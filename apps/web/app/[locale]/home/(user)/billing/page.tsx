@@ -69,6 +69,7 @@ function formatPrice(cents: number): string {
 async function PersonalAccountBillingPage() {
   const user = await requireUserInServerComponent();
   const adminClient = getSupabaseServerAdminClient();
+  const t = await getTranslations('billing');
 
   // Fetch plans
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -110,8 +111,8 @@ async function PersonalAccountBillingPage() {
                 </p>
                 <p className="text-muted-foreground text-sm">
                   {currentSub.status === 'trialing'
-                    ? "Période d'essai en cours"
-                    : 'Abonnement actif'}
+                    ? t('trialInProgress')
+                    : t('subscriptionActive')}
                 </p>
               </div>
             </div>
@@ -130,19 +131,19 @@ async function PersonalAccountBillingPage() {
             <div className="mb-2 flex items-center justify-center gap-2">
               <Zap className="h-5 w-5 text-green-600" />
               <CardTitle>
-                {essentiel?.display_name ?? 'Plan Essentiel'}
+                {essentiel?.display_name ?? t('planEssentielDefault')}
               </CardTitle>
             </div>
             {currentPlan === 'essentiel' && (
               <Badge className="mx-auto bg-green-600 text-white">
-                Plan actuel
+                {t('currentPlan')}
               </Badge>
             )}
             <div className="mt-3">
               <span className="text-3xl font-bold">
                 {essentiel ? formatPrice(essentiel.monthly_price) : '149'}€
               </span>
-              <span className="text-muted-foreground">/mois</span>
+              <span className="text-muted-foreground">{t('perMonthSuffix')}</span>
             </div>
           </CardHeader>
           <CardContent className="flex flex-1 flex-col">
@@ -173,7 +174,9 @@ async function PersonalAccountBillingPage() {
           <CardHeader className="text-center">
             <div className="mb-2 flex items-center justify-center gap-2">
               <BarChart3 className="text-primary h-5 w-5" />
-              <CardTitle>{avance?.display_name ?? 'Plan Avancé'}</CardTitle>
+              <CardTitle>
+                {avance?.display_name ?? t('planAvanceDefault')}
+              </CardTitle>
               {!currentPlan && (
                 <Badge className="animate-pulse bg-green-600 text-white">
                   <Sparkles className="mr-1 h-3 w-3" />
@@ -181,14 +184,16 @@ async function PersonalAccountBillingPage() {
                 </Badge>
               )}
               {currentPlan === 'avance' && (
-                <Badge className="bg-green-600 text-white">Plan actuel</Badge>
+                <Badge className="bg-green-600 text-white">
+                  {t('currentPlan')}
+                </Badge>
               )}
             </div>
             <div className="mt-3">
               <span className="text-3xl font-bold">
                 {avance ? formatPrice(avance.monthly_price) : '449'}€
               </span>
-              <span className="text-muted-foreground">/mois</span>
+              <span className="text-muted-foreground">{t('perMonthSuffix')}</span>
             </div>
           </CardHeader>
           <CardContent className="flex flex-1 flex-col">
@@ -266,11 +271,10 @@ async function PersonalAccountBillingPage() {
       {/* Bottom section — included with marketplace */}
       <div className="mt-10 rounded-xl border border-green-200 bg-green-50/50 p-6 dark:border-green-900 dark:bg-green-950/30">
         <h3 className="mb-3 text-center text-lg font-semibold">
-          Inclus dans chaque transaction marketplace
+          {t('includedEachTransactionTitle')}
         </h3>
         <p className="text-muted-foreground mb-4 text-center text-sm">
-          Sans abonnement, vous bénéficiez déjà de ces fonctionnalités via la
-          commission marketplace.
+          {t('includedEachTransactionDesc')}
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           {[
@@ -278,7 +282,7 @@ async function PersonalAccountBillingPage() {
               icon: (
                 <Link2 size={16} strokeWidth={1.5} className="text-teal-600" />
               ),
-              label: 'Traçabilité blockchain',
+              label: t('tagBlockchainTraceability'),
             },
             {
               icon: (
@@ -288,7 +292,7 @@ async function PersonalAccountBillingPage() {
                   className="text-emerald-600"
                 />
               ),
-              label: 'Calcul CO₂ automatique',
+              label: t('tagAutoCO2'),
             },
             {
               icon: (
@@ -298,7 +302,7 @@ async function PersonalAccountBillingPage() {
                   className="text-teal-600"
                 />
               ),
-              label: 'Certificat PDF',
+              label: t('tagPdfCertificate'),
             },
             {
               icon: (
@@ -308,7 +312,7 @@ async function PersonalAccountBillingPage() {
                   className="text-emerald-600"
                 />
               ),
-              label: 'Dashboard carbone',
+              label: t('tagCarbonDashboard'),
             },
             {
               icon: (
@@ -318,7 +322,7 @@ async function PersonalAccountBillingPage() {
                   className="text-teal-600"
                 />
               ),
-              label: 'Export PDF/CSV',
+              label: t('tagExportPdfCsv'),
             },
           ].map((tag) => (
             <span
@@ -333,36 +337,24 @@ async function PersonalAccountBillingPage() {
 
       {/* FAQ */}
       <div className="mt-8 space-y-4">
-        <h3 className="text-lg font-semibold">Questions fréquentes</h3>
+        <h3 className="text-lg font-semibold">{t('faqTitle')}</h3>
         <div className="space-y-3">
           <div className="rounded-lg border p-4">
-            <p className="font-medium">
-              Qu&apos;est-ce qui est inclus gratuitement ?
-            </p>
+            <p className="font-medium">{t('faqIncludedQ')}</p>
             <p className="text-muted-foreground mt-1 text-sm">
-              Chaque transaction sur Le Comptoir Circulaire inclut la
-              traçabilité blockchain, le calcul CO₂, un certificat PDF et le
-              dashboard carbone. Tout est compris dans la commission
-              marketplace.
+              {t('faqIncludedA')}
             </p>
           </div>
           <div className="rounded-lg border p-4">
-            <p className="font-medium">
-              Comment fonctionne l&apos;essai gratuit ?
-            </p>
+            <p className="font-medium">{t('faqTrialQ')}</p>
             <p className="text-muted-foreground mt-1 text-sm">
-              14 jours d&apos;accès complet à toutes les fonctionnalités de
-              votre plan. Aucun paiement avant la fin de la période
-              d&apos;essai. Annulable à tout moment.
+              {t('faqTrialA')}
             </p>
           </div>
           <div className="rounded-lg border p-4">
-            <p className="font-medium">
-              Puis-je changer de plan à tout moment ?
-            </p>
+            <p className="font-medium">{t('faqChangePlanQ')}</p>
             <p className="text-muted-foreground mt-1 text-sm">
-              Oui, vous pouvez upgrader ou downgrader à tout moment. La
-              différence est calculée au prorata.
+              {t('faqChangePlanA')}
             </p>
           </div>
         </div>

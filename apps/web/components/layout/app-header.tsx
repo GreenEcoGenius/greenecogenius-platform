@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { Globe, Menu, Search, Sparkles } from 'lucide-react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { usePathname } from '@kit/i18n/navigation';
 import { useSidebar } from '@kit/ui/sidebar';
@@ -15,6 +15,7 @@ import { useChat } from '../ai/chat-context';
 import { useGlobalSearch } from './global-search';
 
 export function AppHeader() {
+  const t = useTranslations('common');
   const { chatOpen, toggleChat } = useChat();
   const { openSearch } = useGlobalSearch();
   const [visible, setVisible] = useState(true);
@@ -72,7 +73,7 @@ export function AppHeader() {
           type="button"
           onClick={openSearch}
           className="text-metal-600 hover:bg-metal-frost flex h-11 w-11 items-center justify-center rounded-xl transition-colors md:hidden"
-          aria-label="Rechercher"
+          aria-label={t('search.ariaLabel')}
         >
           <Search className="h-5 w-5" />
         </button>
@@ -84,7 +85,7 @@ export function AppHeader() {
           className="border-metal-silver bg-metal-50 text-metal-steel hover:border-metal-400 hidden items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition-colors md:flex"
         >
           <Search className="h-4 w-4" />
-          <span>Rechercher...</span>
+          <span>{t('search.placeholder')}</span>
           <kbd className="border-metal-chrome text-metal-steel ml-4 rounded border bg-white px-1.5 py-0.5 text-[11px]">
             ⌘K
           </kbd>
@@ -119,6 +120,7 @@ export function AppHeader() {
 function LocaleToggle() {
   const locale = useLocale();
   const pathname = usePathname();
+  const t = useTranslations('common');
 
   const toggle = () => {
     const next = locale === 'fr' ? 'en' : 'fr';
@@ -138,8 +140,16 @@ function LocaleToggle() {
       type="button"
       onClick={toggle}
       className="text-metal-600 hover:bg-metal-frost flex h-11 items-center gap-1.5 rounded-xl px-3 text-sm font-semibold uppercase transition-colors"
-      aria-label={locale === 'fr' ? 'Switch to English' : 'Passer en français'}
-      title={locale === 'fr' ? 'Switch to English' : 'Passer en français'}
+      aria-label={
+        locale === 'fr'
+          ? t('locale.switchToEnglish')
+          : t('locale.switchToFrench')
+      }
+      title={
+        locale === 'fr'
+          ? t('locale.switchToEnglish')
+          : t('locale.switchToFrench')
+      }
     >
       <Globe className="h-4 w-4" />
       {locale === 'fr' ? 'EN' : 'FR'}
@@ -148,6 +158,7 @@ function LocaleToggle() {
 }
 
 function MobileMenuButton() {
+  const t = useTranslations('common');
   let toggleSidebar: (() => void) | undefined;
 
   try {
@@ -164,7 +175,7 @@ function MobileMenuButton() {
       type="button"
       onClick={toggleSidebar}
       className="text-metal-700 hover:bg-metal-frost flex h-11 w-11 items-center justify-center rounded-xl transition-colors lg:hidden"
-      aria-label="Menu"
+      aria-label={t('menu')}
     >
       <Menu className="h-6 w-6" />
     </button>

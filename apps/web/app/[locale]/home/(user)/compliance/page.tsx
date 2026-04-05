@@ -30,6 +30,7 @@ async function CompliancePage() {
   const client = getSupabaseServerClient();
   const user = await requireUser(client);
   const userId = user.data?.id;
+  const t = await getTranslations('compliance');
 
   if (!userId) return null;
 
@@ -136,11 +137,11 @@ async function CompliancePage() {
   }
 
   const pillarLabels: Record<string, { name: string; icon: string }> = {
-    circular_economy: { name: 'Économie circulaire', icon: 'circular' },
-    carbon: { name: 'Carbone & Env.', icon: 'carbon' },
-    reporting: { name: 'Reporting ESG', icon: 'reporting' },
-    traceability: { name: 'Traçabilité', icon: 'traceability' },
-    labels: { name: 'Éligibilité labels', icon: 'labels' },
+    circular_economy: { name: t('pillarCircularEconomy'), icon: 'circular' },
+    carbon: { name: t('pillarCarbonEnv'), icon: 'carbon' },
+    reporting: { name: t('pillarReportingEsg'), icon: 'reporting' },
+    traceability: { name: t('pillarTraceabilityName'), icon: 'traceability' },
+    labels: { name: t('pillarLabelsName'), icon: 'labels' },
   };
 
   const pillars = Array.from(pillarMap.entries()).map(([key, val]) => ({

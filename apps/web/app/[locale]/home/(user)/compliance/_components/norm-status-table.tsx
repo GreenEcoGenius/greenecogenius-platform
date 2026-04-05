@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { CheckCircle, Clock, Eye, MinusCircle, XCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -18,15 +19,6 @@ interface NormRow {
   autoVerified: string;
   evidenceSummary: string;
 }
-
-const PILLAR_NAMES: Record<string, string> = {
-  circular_economy: 'Économie circulaire',
-  carbon: 'Carbone & Env.',
-  reporting: 'Reporting ESG',
-  traceability: 'Traçabilité',
-  data: 'Données & SaaS',
-  labels: 'Éligibilité labels',
-};
 
 const STATUS_CONFIG: Record<
   NormStatus,
@@ -54,20 +46,30 @@ const STATUS_CONFIG: Record<
   },
 };
 
-const METHOD_LABELS: Record<string, { label: string; icon: string }> = {
-  auto_transaction: { label: 'Écosystème', icon: '🔄' },
-  auto_blockchain: { label: 'Blockchain', icon: '⛓️' },
-  auto_carbon: { label: 'IA', icon: '🤖' },
-  auto_esg: { label: 'ESG', icon: '📊' },
-  auto_platform: { label: 'Plateforme', icon: '🏗️' },
-  manual: { label: 'Manuel', icon: '✍️' },
-  pending: { label: 'En attente', icon: '⏳' },
-};
-
 type FilterType = 'all' | NormStatus;
 
 export function NormStatusTable({ norms }: { norms: NormRow[] }) {
+  const t = useTranslations('compliance');
   const [filter, setFilter] = useState<FilterType>('all');
+
+  const PILLAR_NAMES: Record<string, string> = {
+    circular_economy: t('pillarCircularEconomy'),
+    carbon: t('pillarCarbonEnv'),
+    reporting: t('pillarReportingEsg'),
+    traceability: t('pillarTraceabilityName'),
+    data: t('pillarDataSaas'),
+    labels: t('pillarLabelsName'),
+  };
+
+  const METHOD_LABELS: Record<string, { label: string; icon: string }> = {
+    auto_transaction: { label: t('methodEcosystem'), icon: '🔄' },
+    auto_blockchain: { label: t('methodBlockchain'), icon: '⛓️' },
+    auto_carbon: { label: t('methodAI'), icon: '🤖' },
+    auto_esg: { label: t('methodESG'), icon: '📊' },
+    auto_platform: { label: t('methodPlatform'), icon: '🏗️' },
+    manual: { label: t('methodManual'), icon: '✍️' },
+    pending: { label: t('methodPending'), icon: '⏳' },
+  };
 
   const filtered =
     filter === 'all' ? norms : norms.filter((n) => n.status === filter);
@@ -97,10 +99,13 @@ export function NormStatusTable({ norms }: { norms: NormRow[] }) {
           <div className="flex gap-1.5">
             {(
               [
-                { key: 'all' as const, label: 'Tous' },
-                { key: 'compliant' as const, label: 'Conformes' },
-                { key: 'partial' as const, label: 'Partiels' },
-                { key: 'non_compliant' as const, label: 'Non conformes' },
+                { key: 'all' as const, label: t('filterAllLabel') },
+                { key: 'compliant' as const, label: t('filterCompliantLabel') },
+                { key: 'partial' as const, label: t('filterPartialLabel') },
+                {
+                  key: 'non_compliant' as const,
+                  label: t('filterNonCompliantLabel'),
+                },
               ] as const
             ).map(({ key, label }) => (
               <Button
@@ -123,11 +128,11 @@ export function NormStatusTable({ norms }: { norms: NormRow[] }) {
           <table className="w-full text-left text-sm">
             <thead>
               <tr className="border-b text-xs font-medium text-gray-500 uppercase">
-                <th className="px-3 py-2">Norme</th>
-                <th className="px-3 py-2">Pilier</th>
-                <th className="px-3 py-2">Statut</th>
-                <th className="px-3 py-2">Vérification</th>
-                <th className="px-3 py-2">Action</th>
+                <th className="px-3 py-2">{t('columnNorm')}</th>
+                <th className="px-3 py-2">{t('columnPillar')}</th>
+                <th className="px-3 py-2">{t('columnStatus')}</th>
+                <th className="px-3 py-2">{t('columnVerification')}</th>
+                <th className="px-3 py-2">{t('columnAction')}</th>
               </tr>
             </thead>
             <tbody className="divide-y">

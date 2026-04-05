@@ -81,5 +81,12 @@
   "scopeProgress": "Progression du bilan",
   "autoFilled": "Auto-rempli",
   "toComplete": "À saisir",
-  "completeNow": "Compléter maintenant"
+  "completeNow": "Compléter maintenant",
+  "scopesAll": "Scope 1 + 2 + 3",
+  "chartCO2Avoided": "CO₂ évité",
+  "chartCO2Transport": "CO₂ transport",
+  "chartNetBalance": "Bilan net",
+  "chartWeight": "Poids",
+  "chartCenterLabel": "kg CO₂",
+  "exportPdf": "Rapport PDF"
 }

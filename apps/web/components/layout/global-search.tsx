@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -16,80 +16,85 @@ import {
   Shield,
   X,
 } from 'lucide-react';
-
-const SEARCH_ITEMS = [
-  {
-    category: 'Sections',
-    items: [
-      {
-        label: 'Dashboard',
-        icon: <Home className="h-4 w-4" />,
-        href: '/home',
-      },
-      {
-        label: 'Le Comptoir Circulaire',
-        icon: <Recycle className="h-4 w-4" />,
-        href: '/home/marketplace',
-      },
-      {
-        label: 'Impact Carbone',
-        icon: <Leaf className="h-4 w-4" />,
-        href: '/home/carbon',
-      },
-      {
-        label: 'Reporting ESG',
-        icon: <BarChart3 className="h-4 w-4" />,
-        href: '/home/esg',
-      },
-      {
-        label: 'Tracabilite',
-        icon: <Link2 className="h-4 w-4" />,
-        href: '/home/traceability',
-      },
-      {
-        label: 'RSE & Labels',
-        icon: <Award className="h-4 w-4" />,
-        href: '/home/rse',
-      },
-      {
-        label: 'Conformite',
-        icon: <Shield className="h-4 w-4" />,
-        href: '/home/compliance',
-      },
-    ],
-  },
-  {
-    category: 'Actions rapides',
-    items: [
-      {
-        label: 'Creer une annonce',
-        icon: <Recycle className="h-4 w-4" />,
-        href: '/home/marketplace/new',
-      },
-      {
-        label: 'Generer un rapport ESG',
-        icon: <FileText className="h-4 w-4" />,
-        href: '/home/esg',
-      },
-      {
-        label: 'Lancer un diagnostic RSE',
-        icon: <Award className="h-4 w-4" />,
-        href: '/home/rse',
-      },
-      {
-        label: 'Emettre un certificat',
-        icon: <Link2 className="h-4 w-4" />,
-        href: '/home/traceability',
-      },
-    ],
-  },
-];
+import { useTranslations } from 'next-intl';
 
 export function GlobalSearch() {
+  const t = useTranslations('common');
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  const SEARCH_ITEMS = useMemo(
+    () => [
+      {
+        category: t('search.categorySections'),
+        items: [
+          {
+            label: t('search.itemDashboard'),
+            icon: <Home className="h-4 w-4" />,
+            href: '/home',
+          },
+          {
+            label: t('search.itemMarketplace'),
+            icon: <Recycle className="h-4 w-4" />,
+            href: '/home/marketplace',
+          },
+          {
+            label: t('search.itemCarbon'),
+            icon: <Leaf className="h-4 w-4" />,
+            href: '/home/carbon',
+          },
+          {
+            label: t('search.itemEsg'),
+            icon: <BarChart3 className="h-4 w-4" />,
+            href: '/home/esg',
+          },
+          {
+            label: t('search.itemTraceability'),
+            icon: <Link2 className="h-4 w-4" />,
+            href: '/home/traceability',
+          },
+          {
+            label: t('search.itemRse'),
+            icon: <Award className="h-4 w-4" />,
+            href: '/home/rse',
+          },
+          {
+            label: t('search.itemCompliance'),
+            icon: <Shield className="h-4 w-4" />,
+            href: '/home/compliance',
+          },
+        ],
+      },
+      {
+        category: t('search.categoryQuickActions'),
+        items: [
+          {
+            label: t('search.actionCreateListing'),
+            icon: <Recycle className="h-4 w-4" />,
+            href: '/home/marketplace/new',
+          },
+          {
+            label: t('search.actionGenerateReport'),
+            icon: <FileText className="h-4 w-4" />,
+            href: '/home/esg',
+          },
+          {
+            label: t('search.actionStartDiagnostic'),
+            icon: <Award className="h-4 w-4" />,
+            href: '/home/rse',
+          },
+          {
+            label: t('search.actionIssueCertificate'),
+            icon: <Link2 className="h-4 w-4" />,
+            href: '/home/traceability',
+          },
+        ],
+      },
+    ],
+    [t],
+  );
 
   // ⌘K / Ctrl+K shortcut
   useEffect(() => {
@@ -167,7 +172,7 @@ export function GlobalSearch() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Rechercher dans GreenEcoGenius..."
+            placeholder={t('search.modalPlaceholder')}
             className="text-metal-900 placeholder:text-metal-steel flex-1 border-none bg-transparent text-sm outline-none"
           />
           <button
@@ -183,7 +188,7 @@ export function GlobalSearch() {
         <div className="max-h-[50vh] overflow-y-auto p-2">
           {filtered.length === 0 ? (
             <p className="text-metal-500 py-8 text-center text-sm">
-              Aucun resultat pour &laquo; {query} &raquo;
+              {t('search.noResults', { query })}
             </p>
           ) : (
             filtered.map((group) => (
@@ -209,12 +214,12 @@ export function GlobalSearch() {
 
         {/* Footer hint */}
         <div className="border-metal-chrome text-metal-steel flex items-center justify-between border-t px-4 py-2 text-[11px]">
-          <span>Naviguer avec les fleches</span>
+          <span>{t('search.navigateWithArrows')}</span>
           <span>
             <kbd className="border-metal-chrome bg-metal-50 rounded border px-1 py-0.5">
               Esc
             </kbd>{' '}
-            pour fermer
+            {t('search.pressEscToClose')}
           </span>
         </div>
       </div>
@@ -223,8 +228,6 @@ export function GlobalSearch() {
 }
 
 export function useGlobalSearch() {
-  const [, setForceOpen] = useState(false);
-
   const openSearch = useCallback(() => {
     // Dispatch a keyboard event to trigger the ⌘K handler
     window.dispatchEvent(

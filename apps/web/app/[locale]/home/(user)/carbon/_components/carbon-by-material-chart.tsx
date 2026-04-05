@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import {
   Cell,
   Legend,
@@ -72,6 +73,7 @@ function CustomTooltip({
     payload: { category: string; co2_avoided: number; weight: number };
   }>;
 }) {
+  const t = useTranslations('carbon');
   if (!active || !payload || !payload.length) return null;
   const item = payload[0]?.payload;
   if (!item) return null;
@@ -79,9 +81,11 @@ function CustomTooltip({
   return (
     <div className="rounded-lg border bg-white p-3 shadow-lg dark:bg-gray-900">
       <p className="mb-1 text-sm font-semibold capitalize">{item.category}</p>
-      <p className="text-sm">CO₂ évité: {fmtKg(item.co2_avoided)} kg</p>
+      <p className="text-sm">
+        {t('chartCO2Avoided')}: {fmtKg(item.co2_avoided)} kg
+      </p>
       <p className="text-muted-foreground text-sm">
-        Poids:{' '}
+        {t('chartWeight')}:{' '}
         {(item.weight / 1000).toLocaleString('fr-FR', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,

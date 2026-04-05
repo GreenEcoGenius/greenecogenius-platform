@@ -130,6 +130,8 @@
   "kpiVolume": "Total volume",
   "kpiTransactions": "Transactions this month",
   "kpiCO2Market": "Marketplace CO₂ avoided",
+  "comptoirTitle": "Le Comptoir Circulaire",
+  "co2AvoidedEstimated": "Estimated CO₂ avoided:",
 
   "dashboard": {
     "marketplace": "Marketplace",

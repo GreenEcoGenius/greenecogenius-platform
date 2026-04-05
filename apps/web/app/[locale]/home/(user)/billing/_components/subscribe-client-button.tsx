@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { ArrowRight, Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@kit/ui/button';
 import { Trans } from '@kit/ui/trans';
@@ -14,6 +15,7 @@ export function SubscribeClientButton({
   planId: string;
   variant: 'default' | 'outline';
 }) {
+  const t = useTranslations('billing');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,7 +33,7 @@ export function SubscribeClientButton({
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error ?? 'Une erreur est survenue');
+        setError(data.error ?? t('errorGeneric'));
         setLoading(false);
         return;
       }
@@ -39,11 +41,11 @@ export function SubscribeClientButton({
       if (data.url) {
         window.location.href = data.url;
       } else {
-        setError('Aucune URL de paiement reçue');
+        setError(t('errorNoPaymentUrl'));
         setLoading(false);
       }
-    } catch (err) {
-      setError('Erreur réseau. Réessayez.');
+    } catch {
+      setError(t('errorNetwork'));
       setLoading(false);
     }
   };
@@ -71,6 +73,7 @@ export function SubscribeClientButton({
 }
 
 export function ManageClientButton() {
+  const t = useTranslations('billing');
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
@@ -99,7 +102,7 @@ export function ManageClientButton() {
       disabled={loading}
     >
       {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-      Gérer mon abonnement
+      {t('manageSubscription')}
     </Button>
   );
 }

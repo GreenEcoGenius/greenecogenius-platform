@@ -81,5 +81,12 @@
   "scopeProgress": "Assessment progress",
   "autoFilled": "Auto-filled",
   "toComplete": "To complete",
-  "completeNow": "Complete now"
+  "completeNow": "Complete now",
+  "scopesAll": "Scope 1 + 2 + 3",
+  "chartCO2Avoided": "CO₂ avoided",
+  "chartCO2Transport": "CO₂ transport",
+  "chartNetBalance": "Net balance",
+  "chartWeight": "Weight",
+  "chartCenterLabel": "kg CO₂",
+  "exportPdf": "PDF Report"
 }

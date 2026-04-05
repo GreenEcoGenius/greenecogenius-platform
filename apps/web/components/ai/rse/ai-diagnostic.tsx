@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
   Award,
@@ -12,6 +12,7 @@ import {
   Sparkles,
   Users,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -24,74 +25,102 @@ import { useRSEAI } from '~/lib/hooks/use-ai';
 import { useSubscription } from '~/lib/hooks/use-subscription';
 
 interface DomainScore {
-  name: string;
+  nameKey: string;
   score: number;
   icon: React.ElementType;
   color: string;
 }
 
-const defaultDomains: DomainScore[] = [
-  { name: 'Gouvernance', score: 72, icon: Building2, color: 'bg-blue-500' },
-  { name: 'Environnement', score: 85, icon: Leaf, color: 'bg-green-500' },
-  { name: 'Social', score: 68, icon: Heart, color: 'bg-pink-500' },
-  { name: 'Ethique', score: 76, icon: Scale, color: 'bg-purple-500' },
-  { name: 'Parties prenantes', score: 61, icon: Users, color: 'bg-teal-500' },
-];
-
-const defaultStrengths = [
-  'Politique environnementale bien structuree',
-  'Gouvernance transparente avec comite RSE actif',
-  'Reporting carbone conforme aux standards',
-];
-
-const defaultImprovements = [
-  'Renforcer le dialogue avec les parties prenantes externes',
-  'Formaliser la politique ethique et anti-corruption',
-  'Ameliorer les indicateurs sociaux (QVT, diversite)',
-];
-
 interface LabelEligibility {
-  name: string;
+  nameKey: string;
+  detailKey: string;
   status: 'eligible' | 'en_cours' | 'non_eligible';
-  detail: string;
 }
 
-const defaultLabels: LabelEligibility[] = [
-  {
-    name: 'B Corp',
-    status: 'en_cours',
-    detail: 'Score estime: 72/200 (seuil: 80)',
-  },
-  { name: 'GreenTech', status: 'eligible', detail: 'Criteres remplis' },
-  { name: 'Label NR', status: 'en_cours', detail: 'Niveau NR1 atteignable' },
-];
-
-const statusConfig = {
-  eligible: {
-    badge:
-      'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-    label: 'Eligible',
-  },
-  en_cours: {
-    badge: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400',
-    label: 'En cours',
-  },
-  non_eligible: {
-    badge:
-      'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400',
-    label: 'Non eligible',
-  },
-};
-
 export function AIDiagnostic() {
+  const t = useTranslations('rse');
   const subscription = useSubscription();
   const { ask, loading, response, error, reset } = useRSEAI();
   const [hasDiagnosed, setHasDiagnosed] = useState(false);
 
+  const defaultDomains: DomainScore[] = useMemo(
+    () => [
+      {
+        nameKey: 'domainGovernance',
+        score: 72,
+        icon: Building2,
+        color: 'bg-blue-500',
+      },
+      {
+        nameKey: 'domainEnvironment',
+        score: 85,
+        icon: Leaf,
+        color: 'bg-green-500',
+      },
+      { nameKey: 'domainSocial', score: 68, icon: Heart, color: 'bg-pink-500' },
+      {
+        nameKey: 'domainEthics',
+        score: 76,
+        icon: Scale,
+        color: 'bg-purple-500',
+      },
+      {
+        nameKey: 'domainStakeholders',
+        score: 61,
+        icon: Users,
+        color: 'bg-teal-500',
+      },
+    ],
+    [],
+  );
+
+  const defaultStrengths = [
+    'strengthPolicyEnv',
+    'strengthGovernance',
+    'strengthReporting',
+  ];
+
+  const defaultImprovements = [
+    'improvementStakeholders',
+    'improvementEthics',
+    'improvementSocial',
+  ];
+
+  const defaultLabels: LabelEligibility[] = [
+    {
+      nameKey: 'labelBCorp',
+      detailKey: 'labelBCorpDetail',
+      status: 'en_cours',
+    },
+    {
+      nameKey: 'labelGreenTech',
+      detailKey: 'labelGreenTechDetail',
+      status: 'eligible',
+    },
+    { nameKey: 'labelNR', detailKey: 'labelNRDetail', status: 'en_cours' },
+  ];
+
+  const statusConfig = {
+    eligible: {
+      badge:
+        'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+      label: t('eligibleLabel'),
+    },
+    en_cours: {
+      badge: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400',
+      label: t('inProgressLabel'),
+    },
+    non_eligible: {
+      badge:
+        'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400',
+      label: t('notEligibleLabel'),
+    },
+  };
+
   if (!subscription.loading && !subscription.canAccess('dedicated_support')) {
     return (
       <UpgradePrompt
-        feature="Diagnostic RSE complet"
+        feature={t('aiDiagnosticFeature')}
         requiredPlan="enterprise"
       />
     );
@@ -108,7 +137,7 @@ export function AIDiagnostic() {
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base">
             <Shield className="h-5 w-5 text-emerald-600" />
-            Diagnostic RSE
+            {t('aiDiagnosticTitle')}
           </CardTitle>
           <AIPoweredBadge methodology="ISO 26000" />
         </div>
@@ -121,10 +150,9 @@ export function AIDiagnostic() {
               <Shield className="h-8 w-8 text-emerald-500" />
             </div>
             <div>
-              <p className="text-sm font-medium">Diagnostic RSE complet</p>
+              <p className="text-sm font-medium">{t('aiDiagnosticFeature')}</p>
               <p className="text-muted-foreground mt-1 text-xs">
-                Evaluation selon les 5 domaines ISO 26000 avec recommandations
-                personnalisees.
+                {t('aiDiagnosticDesc')}
               </p>
             </div>
             <Button
@@ -132,7 +160,7 @@ export function AIDiagnostic() {
               className="bg-emerald-600 hover:bg-emerald-700"
             >
               <Sparkles className="mr-2 h-4 w-4" />
-              Lancer le diagnostic RSE
+              {t('aiDiagnosticRun')}
             </Button>
           </div>
         )}
@@ -140,7 +168,7 @@ export function AIDiagnostic() {
         {loading && (
           <div className="py-6">
             <p className="mb-4 text-center text-sm text-emerald-600">
-              Analyse RSE en cours selon ISO 26000...
+              {t('aiDiagnosticAnalyzing')}
             </p>
             <AILoadingState lines={5} />
           </div>
@@ -158,7 +186,7 @@ export function AIDiagnostic() {
                 setHasDiagnosed(false);
               }}
             >
-              Reessayer
+              {t('aiDiagnosticRetry')}
             </Button>
           </div>
         )}
@@ -167,15 +195,17 @@ export function AIDiagnostic() {
           <div className="space-y-6">
             {/* Domain scores */}
             <div className="space-y-3">
-              <h4 className="text-sm font-semibold">Scores par domaine</h4>
+              <h4 className="text-sm font-semibold">
+                {t('aiDiagnosticScoresByDomain')}
+              </h4>
               {defaultDomains.map((domain) => {
                 const Icon = domain.icon;
                 return (
-                  <div key={domain.name} className="space-y-1">
+                  <div key={domain.nameKey} className="space-y-1">
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <Icon className="h-4 w-4 text-gray-500" />
-                        <span>{domain.name}</span>
+                        <span>{t(domain.nameKey)}</span>
                       </div>
                       <span className="font-semibold">{domain.score}%</span>
                     </div>
@@ -202,13 +232,13 @@ export function AIDiagnostic() {
             {/* Strengths */}
             <div>
               <h4 className="mb-2 text-sm font-semibold text-green-700 dark:text-green-400">
-                Points forts
+                {t('strengths')}
               </h4>
               <ul className="space-y-1.5">
-                {defaultStrengths.map((s, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm">
+                {defaultStrengths.map((k) => (
+                  <li key={k} className="flex items-start gap-2 text-sm">
                     <span className="mt-1 text-green-500">+</span>
-                    {s}
+                    {t(k)}
                   </li>
                 ))}
               </ul>
@@ -217,13 +247,13 @@ export function AIDiagnostic() {
             {/* Improvements */}
             <div>
               <h4 className="mb-2 text-sm font-semibold text-teal-700 dark:text-teal-400">
-                Axes d&apos;amelioration
+                {t('improvements')}
               </h4>
               <ul className="space-y-1.5">
-                {defaultImprovements.map((s, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm">
+                {defaultImprovements.map((k) => (
+                  <li key={k} className="flex items-start gap-2 text-sm">
                     <span className="mt-1 text-teal-500">-</span>
-                    {s}
+                    {t(k)}
                   </li>
                 ))}
               </ul>
@@ -233,22 +263,22 @@ export function AIDiagnostic() {
             <div>
               <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold">
                 <Award className="h-4 w-4" />
-                Eligibilite aux labels
+                {t('labelEligibility')}
               </h4>
               <div className="space-y-2">
                 {defaultLabels.map((label) => {
                   const config = statusConfig[label.status];
                   return (
                     <div
-                      key={label.name}
+                      key={label.nameKey}
                       className="flex items-center justify-between rounded-md border p-2.5"
                     >
                       <div>
                         <span className="text-sm font-medium">
-                          {label.name}
+                          {t(label.nameKey)}
                         </span>
                         <p className="text-muted-foreground text-xs">
-                          {label.detail}
+                          {t(label.detailKey)}
                         </p>
                       </div>
                       <Badge className={`text-[10px] ${config.badge}`}>
@@ -263,8 +293,7 @@ export function AIDiagnostic() {
             {/* Disclaimer + reset */}
             <div className="flex items-center justify-between border-t pt-3">
               <span className="text-muted-foreground text-[10px]">
-                Genere par IA -- les resultats peuvent contenir des
-                inexactitudes
+                {t('aiDisclaimer')}
               </span>
               <Button
                 variant="ghost"
@@ -275,7 +304,7 @@ export function AIDiagnostic() {
                   setHasDiagnosed(false);
                 }}
               >
-                Nouveau diagnostic
+                {t('aiDiagnosticNewDiagnostic')}
               </Button>
             </div>
           </div>

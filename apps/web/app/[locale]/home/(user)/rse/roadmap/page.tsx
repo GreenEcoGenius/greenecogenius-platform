@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { ArrowRight, ClipboardCheck, Map } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
@@ -8,7 +9,8 @@ import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 export const generateMetadata = async () => {
-  return { title: 'Feuille de route RSE' };
+  const t = await getTranslations('rse');
+  return { title: t('roadmapPageTitle') };
 };
 
 async function RoadmapPage() {

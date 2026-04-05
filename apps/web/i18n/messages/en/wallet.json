@@ -43,5 +43,6 @@
     "cancelled": "Cancelled"
   },
   "upgradeRequired": "This feature requires a higher plan.",
-  "upgradeTo": "Upgrade to"
+  "upgradeTo": "Upgrade to",
+  "confirmDeliveryPrompt": "Do you confirm receipt of the goods? This action will release payment to the seller."
 }

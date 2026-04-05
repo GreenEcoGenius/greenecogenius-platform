@@ -12,6 +12,8 @@ import {
   Zap,
 } from 'lucide-react';
 
+import { useTranslations } from 'next-intl';
+
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
@@ -503,27 +505,28 @@ function StepCompanyInfo({
   formData: ESGFormData;
   updateField: <K extends keyof ESGFormData>(k: K, v: ESGFormData[K]) => void;
 }) {
+  const t = useTranslations('esg');
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 5 }, (_, i) => currentYear - i);
 
   const sectors = [
-    { value: 'industrie', labelKey: 'Industrie' },
-    { value: 'btp', labelKey: 'BTP' },
-    { value: 'logistique', labelKey: 'Logistique' },
-    { value: 'commerce', labelKey: 'Commerce' },
-    { value: 'services', labelKey: 'Services' },
-    { value: 'agroalimentaire', labelKey: 'Agroalimentaire' },
-    { value: 'autre', labelKey: 'Autre' },
+    { value: 'industrie', labelKey: t('sectorIndustryLabel') },
+    { value: 'btp', labelKey: t('sectorBtpLabel') },
+    { value: 'logistique', labelKey: t('sectorLogistiqueLabel') },
+    { value: 'commerce', labelKey: t('sectorCommerceLabel') },
+    { value: 'services', labelKey: t('sectorServicesLabel') },
+    { value: 'agroalimentaire', labelKey: t('sectorAgroLabel') },
+    { value: 'autre', labelKey: t('sectorAutreLabel') },
   ];
 
   const periods = [
-    { value: 'Q1', labelKey: 'T1 (Jan-Mar)' },
-    { value: 'Q2', labelKey: 'T2 (Avr-Jun)' },
-    { value: 'Q3', labelKey: 'T3 (Jul-Sep)' },
-    { value: 'Q4', labelKey: 'T4 (Oct-Dec)' },
-    { value: 'H1', labelKey: 'S1 (Jan-Jun)' },
-    { value: 'H2', labelKey: 'S2 (Jul-Dec)' },
-    { value: 'year', labelKey: 'Année complète' },
+    { value: 'Q1', labelKey: t('periodQ1Label') },
+    { value: 'Q2', labelKey: t('periodQ2Label') },
+    { value: 'Q3', labelKey: t('periodQ3Label') },
+    { value: 'Q4', labelKey: t('periodQ4Label') },
+    { value: 'H1', labelKey: t('periodH1Label') },
+    { value: 'H2', labelKey: t('periodH2Label') },
+    { value: 'year', labelKey: t('periodYearLabel') },
   ];
 
   return (
@@ -601,10 +604,11 @@ function StepScope1({
   updateField: <K extends keyof ESGFormData>(k: K, v: ESGFormData[K]) => void;
   estimate: number;
 }) {
+  const t = useTranslations('esg');
   const fuelTypes = [
-    { value: 'diesel', labelKey: 'Diesel' },
-    { value: 'essence', labelKey: 'Essence SP95' },
-    { value: 'gpl', labelKey: 'GPL' },
+    { value: 'diesel', labelKey: t('fuelTypeDiesel') },
+    { value: 'essence', labelKey: t('fuelTypeEssence') },
+    { value: 'gpl', labelKey: t('fuelTypeGpl') },
   ];
 
   return (
@@ -668,9 +672,10 @@ function StepScope2({
   updateField: <K extends keyof ESGFormData>(k: K, v: ESGFormData[K]) => void;
   estimate: number;
 }) {
+  const t = useTranslations('esg');
   const sources = [
-    { value: 'grid_fr', labelKey: 'Réseau France standard' },
-    { value: 'renewable', labelKey: '100% renouvelable' },
+    { value: 'grid_fr', labelKey: t('sourceGridFrLabel') },
+    { value: 'renewable', labelKey: t('sourceRenewableLabel') },
   ];
 
   return (
@@ -728,6 +733,8 @@ function StepScope3({
   estimate: number;
   subscription: ReturnType<typeof useSubscription>;
 }) {
+  const t = useTranslations('esg');
+
   if (!subscription.canAccess('scope3')) {
     return (
       <div className="space-y-6">
@@ -740,7 +747,7 @@ function StepScope3({
           </p>
         </div>
         <UpgradePrompt
-          feature="Scope 3 - Emissions indirectes"
+          feature={t('scope3FeatureLabel')}
           requiredPlan={subscription.requiredPlan('scope3')}
         />
       </div>
@@ -748,10 +755,10 @@ function StepScope3({
   }
 
   const travelModes = [
-    { value: 'car', labelKey: 'Voiture' },
-    { value: 'train', labelKey: 'Train' },
-    { value: 'plane', labelKey: 'Avion' },
-    { value: 'mixed', labelKey: 'Mixte' },
+    { value: 'car', labelKey: t('travelCarLabel') },
+    { value: 'train', labelKey: t('travelTrainLabel') },
+    { value: 'plane', labelKey: t('travelPlaneLabel') },
+    { value: 'mixed', labelKey: t('travelMixedLabel') },
   ];
 
   return (

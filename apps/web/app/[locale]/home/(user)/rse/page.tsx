@@ -16,6 +16,29 @@ export const generateMetadata = async () => {
 };
 
 async function RSEPage() {
+  const t = await getTranslations('rse');
+  const features = [
+    {
+      icon: '📊',
+      title: t('featureScoreTitle'),
+      desc: t('featureScoreDesc'),
+    },
+    {
+      icon: '🏆',
+      title: t('featureLabelsTitle'),
+      desc: t('featureLabelsDesc'),
+    },
+    {
+      icon: '📋',
+      title: t('featureActionPlanTitle'),
+      desc: t('featureActionPlanDesc'),
+    },
+    {
+      icon: '🔗',
+      title: t('featureEcosystemTitle'),
+      desc: t('featureEcosystemDesc'),
+    },
+  ];
   return (
     <PageBody>
       <div className="space-y-6">
@@ -66,28 +89,7 @@ async function RSEPage() {
 
         {/* What you'll get */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              icon: '📊',
-              title: 'Score RSE',
-              desc: 'Score global sur 100 calculé depuis vos réponses au diagnostic',
-            },
-            {
-              icon: '🏆',
-              title: 'Éligibilité labels',
-              desc: 'B Corp, GreenTech, Label NR — votre éligibilité en temps réel',
-            },
-            {
-              icon: '📋',
-              title: "Plan d'action",
-              desc: "Actions prioritaires recommandées par l'IA pour améliorer votre score",
-            },
-            {
-              icon: '🔗',
-              title: 'Écosystème',
-              desc: 'Données croisées avec vos transactions, carbone et traçabilité',
-            },
-          ].map((f) => (
+          {features.map((f) => (
             <Card key={f.title}>
               <CardContent className="p-5">
                 <span className="text-2xl">{f.icon}</span>

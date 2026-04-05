@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { CheckCircle, Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@kit/ui/button';
 import { Trans } from '@kit/ui/trans';
@@ -14,15 +15,12 @@ interface ConfirmDeliveryButtonProps {
 export function ConfirmDeliveryButton({
   transactionId,
 }: ConfirmDeliveryButtonProps) {
+  const t = useTranslations('wallet');
   const [loading, setLoading] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
 
   const handleConfirm = async () => {
-    if (
-      !window.confirm(
-        'Confirmez-vous la réception de la marchandise ? Cette action libérera le paiement au vendeur.',
-      )
-    ) {
+    if (!window.confirm(t('confirmDeliveryPrompt'))) {
       return;
     }
 

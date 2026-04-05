@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { usePathname } from 'next/navigation';
 
@@ -22,7 +22,7 @@ import {
   Wallet,
   X,
 } from 'lucide-react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { cn } from '@kit/ui/utils';
 
@@ -55,317 +55,92 @@ interface Message {
   streaming?: boolean;
 }
 
-/* ─── Section detection (locale-aware) ─── */
+/* ─── Section detection ─── */
 
-type SectionDef = {
-  match: string[];
-  agent: AgentType;
-  name: string;
-  iconEl: React.ReactNode;
-  fr: { welcome: string; suggestions: string[] };
-  en: { welcome: string; suggestions: string[] };
+type SectionKey =
+  | 'comptoir'
+  | 'listings'
+  | 'carbon'
+  | 'esg'
+  | 'traceability'
+  | 'rse'
+  | 'compliance'
+  | 'wallet'
+  | 'billing'
+  | 'profile';
+
+const SECTION_MATCHES: { match: string[]; key: SectionKey; agent: AgentType }[] =
+  [
+    { match: ['/marketplace', '/comptoir'], key: 'comptoir', agent: 'comptoir' },
+    { match: ['/my-listings', '/annonces'], key: 'listings', agent: 'comptoir' },
+    { match: ['/carbon', '/impact'], key: 'carbon', agent: 'carbon' },
+    { match: ['/esg', '/reporting'], key: 'esg', agent: 'esg' },
+    {
+      match: ['/traceability', '/tracabilite'],
+      key: 'traceability',
+      agent: 'traceability',
+    },
+    { match: ['/rse', '/labels'], key: 'rse', agent: 'rse' },
+    {
+      match: ['/compliance', '/conformite'],
+      key: 'compliance',
+      agent: 'compliance',
+    },
+    { match: ['/wallet', '/portefeuille'], key: 'wallet', agent: 'comptoir' },
+    { match: ['/billing', '/facturation'], key: 'billing', agent: 'general' },
+    {
+      match: ['/settings', '/profil', '/profile'],
+      key: 'profile',
+      agent: 'general',
+    },
+  ];
+
+const ICONS: Record<SectionKey, React.ReactNode> = {
+  comptoir: <Store className="h-3.5 w-3.5" />,
+  listings: <PackageSearch className="h-3.5 w-3.5" />,
+  carbon: <Leaf className="h-3.5 w-3.5" />,
+  esg: <BarChart3 className="h-3.5 w-3.5" />,
+  traceability: <Link2 className="h-3.5 w-3.5" />,
+  rse: <Award className="h-3.5 w-3.5" />,
+  compliance: <Shield className="h-3.5 w-3.5" />,
+  wallet: <Wallet className="h-3.5 w-3.5" />,
+  billing: <CreditCard className="h-3.5 w-3.5" />,
+  profile: <User className="h-3.5 w-3.5" />,
 };
 
-const SECTIONS: SectionDef[] = [
-  {
-    match: ['/marketplace', '/comptoir'],
-    agent: 'comptoir',
-    name: 'Le Comptoir Circulaire',
-    iconEl: <Store className="h-3.5 w-3.5" />,
-    fr: {
-      welcome:
-        'Je suis votre assistant Comptoir Circulaire. Je peux analyser vos annonces, estimer des prix et trouver des acheteurs.',
-      suggestions: [
-        'Analyser mes annonces actives',
-        'Estimer le prix de ma matiere',
-        'Creer une nouvelle annonce',
-        'Trouver des acheteurs',
-      ],
-    },
-    en: {
-      welcome:
-        'I am your Circular Marketplace assistant. I can analyze your listings, estimate prices, and find buyers.',
-      suggestions: [
-        'Analyze my active listings',
-        'Estimate my material price',
-        'Create a new listing',
-        'Find buyers',
-      ],
-    },
-  },
-  {
-    match: ['/my-listings', '/annonces'],
-    agent: 'comptoir',
-    name: 'Mes Annonces',
-    iconEl: <PackageSearch className="h-3.5 w-3.5" />,
-    fr: {
-      welcome:
-        'Je suis votre assistant Annonces. Je peux analyser la performance de vos annonces.',
-      suggestions: [
-        'Performance de mes annonces',
-        'Pourquoi pas de vues ?',
-        'Ameliorer mes annonces',
-        'Publier un nouveau lot',
-      ],
-    },
-    en: {
-      welcome:
-        'I am your Listings assistant. I can analyze your listing performance.',
-      suggestions: [
-        'My listings performance',
-        'Why no views?',
-        'Improve my listings',
-        'Publish a new lot',
-      ],
-    },
-  },
-  {
-    match: ['/carbon', '/impact'],
-    agent: 'carbon',
-    name: 'Impact Carbone',
-    iconEl: <Leaf className="h-3.5 w-3.5" />,
-    fr: {
-      welcome:
-        'Je suis votre assistant Impact Carbone. Je peux vous guider pour completer votre bilan et generer des recommandations.',
-      suggestions: [
-        'Completer mon bilan carbone',
-        'Expliquer mes emissions Scope 3',
-        'Recommandations pour reduire',
-        'Generer le rapport carbone',
-      ],
-    },
-    en: {
-      welcome:
-        'I am your Carbon Impact assistant. I can guide you through your carbon assessment and generate recommendations.',
-      suggestions: [
-        'Complete my carbon assessment',
-        'Explain my Scope 3 emissions',
-        'Reduction recommendations',
-        'Generate carbon report',
-      ],
-    },
-  },
-  {
-    match: ['/esg', '/reporting'],
-    agent: 'esg',
-    name: 'Reporting ESG',
-    iconEl: <BarChart3 className="h-3.5 w-3.5" />,
-    fr: {
-      welcome:
-        'Je suis votre assistant Reporting ESG. Je peux completer les champs manquants et generer vos rapports CSRD/GRI.',
-      suggestions: [
-        'Completer les champs manquants',
-        'Generer mon rapport CSRD',
-        'Expliquer ma conformite ESRS',
-        'Comparer avec le trimestre precedent',
-      ],
-    },
-    en: {
-      welcome:
-        'I am your ESG Reporting assistant. I can complete missing fields and generate your CSRD/GRI reports.',
-      suggestions: [
-        'Complete missing fields',
-        'Generate my CSRD report',
-        'Explain my ESRS compliance',
-        'Compare with last quarter',
-      ],
-    },
-  },
-  {
-    match: ['/traceability', '/tracabilite'],
-    agent: 'traceability',
-    name: 'Tracabilite',
-    iconEl: <Link2 className="h-3.5 w-3.5" />,
-    fr: {
-      welcome:
-        'Je suis votre assistant Tracabilite. Je peux emettre des certificats et verifier des lots on-chain.',
-      suggestions: [
-        'Emettre les certificats en attente',
-        'Verifier un lot sur la blockchain',
-        'Resume de mes alertes',
-        "Historique d'un lot",
-      ],
-    },
-    en: {
-      welcome:
-        'I am your Traceability assistant. I can issue certificates and verify lots on-chain.',
-      suggestions: [
-        'Issue pending certificates',
-        'Verify a lot on blockchain',
-        'Summary of my alerts',
-        'Lot history',
-      ],
-    },
-  },
-  {
-    match: ['/rse', '/labels'],
-    agent: 'rse',
-    name: 'RSE & Labels',
-    iconEl: <Award className="h-3.5 w-3.5" />,
-    fr: {
-      welcome:
-        'Je suis votre assistant RSE & Labels. Je peux lancer un diagnostic complet et evaluer votre eligibilite aux labels.',
-      suggestions: [
-        'Lancer un diagnostic complet',
-        'Comment obtenir B Corp ?',
-        'Que dois-je ameliorer en priorite ?',
-        'Generer ma feuille de route',
-      ],
-    },
-    en: {
-      welcome:
-        'I am your CSR & Labels assistant. I can run a full diagnostic and evaluate your label eligibility.',
-      suggestions: [
-        'Run a full diagnostic',
-        'How to get B Corp?',
-        'What should I improve first?',
-        'Generate my roadmap',
-      ],
-    },
-  },
-  {
-    match: ['/compliance', '/conformite'],
-    agent: 'compliance',
-    name: 'Conformite',
-    iconEl: <Shield className="h-3.5 w-3.5" />,
-    fr: {
-      welcome:
-        'Je suis votre assistant Conformite. Je peux lancer un pre-audit et verifier les 42 normes integrees.',
-      suggestions: [
-        'Lancer un pre-audit',
-        'Expliquer mes non-conformites',
-        'Veille reglementaire',
-        'Comment me conformer au RGPD ?',
-      ],
-    },
-    en: {
-      welcome:
-        'I am your Compliance assistant. I can run a pre-audit and check all 42 integrated standards.',
-      suggestions: [
-        'Run a pre-audit',
-        'Explain my non-compliances',
-        'Regulatory watch',
-        'How to comply with GDPR?',
-      ],
-    },
-  },
-  {
-    match: ['/wallet', '/portefeuille'],
-    agent: 'comptoir',
-    name: 'Portefeuille',
-    iconEl: <Wallet className="h-3.5 w-3.5" />,
-    fr: {
-      welcome:
-        'Je suis votre assistant Portefeuille. Je peux vous aider avec vos transactions et commissions.',
-      suggestions: [
-        'Resume de mes transactions',
-        'Combien ai-je gagne ce mois ?',
-        'Detail des commissions',
-        'Expliquer le systeme de commissions',
-      ],
-    },
-    en: {
-      welcome:
-        'I am your Wallet assistant. I can help with your transactions and commissions.',
-      suggestions: [
-        'Summary of my transactions',
-        'How much did I earn this month?',
-        'Commission details',
-        'Explain the commission system',
-      ],
-    },
-  },
-  {
-    match: ['/billing', '/facturation'],
-    agent: 'general',
-    name: 'Facturation',
-    iconEl: <CreditCard className="h-3.5 w-3.5" />,
-    fr: {
-      welcome:
-        'Je suis votre assistant Facturation. Je peux comparer les plans et vous guider.',
-      suggestions: [
-        'Comparer les plans',
-        'Que debloque le Plan Avance ?',
-        'Expliquer mon plan actuel',
-        'Comment changer de plan ?',
-      ],
-    },
-    en: {
-      welcome:
-        'I am your Billing assistant. I can compare plans and guide you.',
-      suggestions: [
-        'Compare plans',
-        'What does the Advanced Plan unlock?',
-        'Explain my current plan',
-        'How to change my plan?',
-      ],
-    },
-  },
-  {
-    match: ['/settings', '/profil', '/profile'],
-    agent: 'general',
-    name: 'Profil',
-    iconEl: <User className="h-3.5 w-3.5" />,
-    fr: {
-      welcome:
-        'Je suis votre assistant Profil. Comment puis-je vous aider avec votre compte ?',
-      suggestions: [
-        'Comment modifier mes informations ?',
-        'Quel est mon plan actuel ?',
-        'Configurer mes notifications',
-        'Inviter un collaborateur',
-      ],
-    },
-    en: {
-      welcome: 'I am your Profile assistant. How can I help with your account?',
-      suggestions: [
-        'How to update my information?',
-        'What is my current plan?',
-        'Configure notifications',
-        'Invite a team member',
-      ],
-    },
-  },
-];
+function useSectionContext(pathname: string): SectionContext {
+  const t = useTranslations('common');
 
-function detectSection(pathname: string, locale: string): SectionContext {
-  const lang = locale === 'fr' ? 'fr' : 'en';
-
-  for (const s of SECTIONS) {
-    if (s.match.some((m) => pathname.includes(m))) {
-      return {
-        agent: s.agent,
-        name: s.name,
-        icon: s.iconEl,
-        welcome: s[lang].welcome,
-        suggestions: s[lang].suggestions,
-      };
-    }
-  }
-
-  return {
-    agent: 'general',
-    name: lang === 'fr' ? 'Accueil' : 'Home',
-    icon: <Home className="h-3.5 w-3.5" />,
-    welcome:
-      lang === 'fr'
-        ? 'Bonjour ! Je suis Genius, l\'assistant IA de la plateforme. Posez-moi une question precise et je vous donnerai une reponse concrete.'
-        : 'Hello! I\'m Genius, the platform\'s AI assistant. Ask me a specific question and I will give you a concrete answer.',
-    suggestions:
-      lang === 'fr'
-        ? [
-            'Resume de mon activite',
-            'Que dois-je faire en priorite ?',
-            'Guide-moi vers la bonne section',
-            'Comment fonctionne la plateforme ?',
-          ]
-        : [
-            'Summary of my activity',
-            'What should I prioritize?',
-            'Guide me to the right section',
-            'How does the platform work?',
+  return useMemo(() => {
+    for (const s of SECTION_MATCHES) {
+      if (s.match.some((m) => pathname.includes(m))) {
+        return {
+          agent: s.agent,
+          name: t(`ai.${s.key}Name`),
+          icon: ICONS[s.key],
+          welcome: t(`ai.${s.key}Welcome`),
+          suggestions: [
+            t(`ai.${s.key}Suggestion1`),
+            t(`ai.${s.key}Suggestion2`),
+            t(`ai.${s.key}Suggestion3`),
+            t(`ai.${s.key}Suggestion4`),
           ],
-  };
+        };
+      }
+    }
+    return {
+      agent: 'general',
+      name: t('ai.sectionHome'),
+      icon: <Home className="h-3.5 w-3.5" />,
+      welcome: t('ai.homeWelcome'),
+      suggestions: [
+        t('ai.homeSuggestion1'),
+        t('ai.homeSuggestion2'),
+        t('ai.homeSuggestion3'),
+        t('ai.homeSuggestion4'),
+      ],
+    };
+  }, [pathname, t]);
 }
 
 /* ─── Streaming ─── */
@@ -413,8 +188,9 @@ function StreamingMessage({ content }: { content: string }) {
 export function AIChatPanel() {
   const pathname = usePathname();
   const locale = useLocale();
+  const t = useTranslations('common');
   const { chatOpen, closeChat } = useChat();
-  const section = detectSection(pathname ?? '', locale);
+  const section = useSectionContext(pathname ?? '');
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -483,7 +259,7 @@ export function AIChatPanel() {
           {
             id: crypto.randomUUID(),
             role: 'assistant',
-            content: data.content || data.message || 'Pas de reponse.',
+            content: data.content || data.message || t('ai.noResponse'),
             streaming: true,
           },
         ]);
@@ -493,17 +269,14 @@ export function AIChatPanel() {
           {
             id: crypto.randomUUID(),
             role: 'assistant',
-            content:
-              locale === 'fr'
-                ? 'Desole, je rencontre une difficulte technique. Veuillez reessayer.'
-                : 'Sorry, I encountered a technical issue. Please try again.',
+            content: t('ai.errorFallback'),
           },
         ]);
       } finally {
         setLoading(false);
       }
     },
-    [input, loading, locale, messages, section.agent],
+    [input, loading, locale, messages, section.agent, t],
   );
 
   const handleKeyDown = useCallback(
@@ -541,9 +314,7 @@ export function AIChatPanel() {
             type="button"
             onClick={() => fileInputRef.current?.click()}
             className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
-            title={
-              locale === 'fr' ? 'Importer un document' : 'Import a document'
-            }
+            title={t('ai.importDocument')}
           >
             <Paperclip className="h-3.5 w-3.5" />
           </button>
@@ -551,9 +322,7 @@ export function AIChatPanel() {
             type="button"
             onClick={() => setMessages([])}
             className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
-            title={
-              locale === 'fr' ? 'Nouvelle conversation' : 'New conversation'
-            }
+            title={t('ai.newConversation')}
           >
             <PenLine className="h-3.5 w-3.5" />
           </button>
@@ -561,7 +330,7 @@ export function AIChatPanel() {
             type="button"
             onClick={closeChat}
             className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
-            title={locale === 'fr' ? 'Fermer' : 'Close'}
+            title={t('ai.close')}
           >
             <X className="h-4 w-4" />
           </button>
@@ -642,9 +411,7 @@ export function AIChatPanel() {
 
       {/* Disclaimer */}
       <div className="text-metal-steel px-4 text-center text-[10px]">
-        {locale === 'fr'
-          ? "L'IA peut generer des informations inexactes"
-          : 'AI may generate inaccurate information'}
+        {t('ai.disclaimer')}
       </div>
 
       {/* Hidden file input */}
@@ -656,11 +423,7 @@ export function AIChatPanel() {
         onChange={(e) => {
           const file = e.target.files?.[0];
           if (file) {
-            handleSend(
-              locale === 'fr'
-                ? `[Document importe : ${file.name}]`
-                : `[Imported document: ${file.name}]`,
-            );
+            handleSend(t('ai.importedDocument', { name: file.name }));
           }
           e.target.value = '';
         }}
@@ -673,7 +436,7 @@ export function AIChatPanel() {
             type="button"
             onClick={() => fileInputRef.current?.click()}
             className="text-metal-steel hover:text-metal-600 flex h-8 w-8 shrink-0 items-center justify-center transition-colors"
-            title={locale === 'fr' ? 'Joindre un fichier' : 'Attach a file'}
+            title={t('ai.attachFile')}
           >
             <Paperclip className="h-4 w-4" />
           </button>
@@ -687,13 +450,11 @@ export function AIChatPanel() {
               el.style.height = Math.min(el.scrollHeight, 100) + 'px';
             }}
             onKeyDown={handleKeyDown}
-            placeholder={
-              locale === 'fr'
-                ? 'Posez votre question...'
-                : 'Ask your question...'
-            }
+            placeholder={t('ai.askQuestion')}
             rows={1}
-            className="text-metal-900 placeholder:text-metal-steel max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-[13px] leading-relaxed outline-none"
+            className={cn(
+              'text-metal-900 placeholder:text-metal-steel max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-[13px] leading-relaxed outline-none',
+            )}
             disabled={loading}
           />
           <button

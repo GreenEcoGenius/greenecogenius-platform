@@ -43,5 +43,6 @@
     "cancelled": "Annulé"
   },
   "upgradeRequired": "Cette fonctionnalité nécessite un abonnement supérieur.",
-  "upgradeTo": "Passer au plan"
+  "upgradeTo": "Passer au plan",
+  "confirmDeliveryPrompt": "Confirmez-vous la réception de la marchandise ? Cette action libérera le paiement au vendeur."
 }

@@ -21,10 +21,34 @@ async function ESGPage() {
   const client = getSupabaseServerClient();
   const user = await requireUser(client);
   const userId = user.data?.id;
+  const t = await getTranslations('esg');
 
   if (!userId) {
     return null;
   }
+
+  const features = [
+    {
+      icon: '📋',
+      title: t('featureCsrdTitle'),
+      desc: t('featureCsrdDesc'),
+    },
+    {
+      icon: '🌍',
+      title: t('featureGhgTitle'),
+      desc: t('featureGhgDesc'),
+    },
+    {
+      icon: '🤖',
+      title: t('featureAiTitle'),
+      desc: t('featureAiDesc'),
+    },
+    {
+      icon: '⛓️',
+      title: t('featureBlockchainTitle'),
+      desc: t('featureBlockchainDesc'),
+    },
+  ];
 
   return (
     <PageBody>
@@ -76,28 +100,7 @@ async function ESGPage() {
 
         {/* Features */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              icon: '📋',
-              title: 'CSRD / ESRS',
-              desc: 'Rapport conforme aux 12 normes ESRS de la directive européenne',
-            },
-            {
-              icon: '🌍',
-              title: 'GHG Protocol',
-              desc: 'Bilan carbone Scopes 1, 2 et 3 auto-calculé',
-            },
-            {
-              icon: '🤖',
-              title: 'Auto-remplissage IA',
-              desc: 'Champs remplis automatiquement depuis vos transactions',
-            },
-            {
-              icon: '⛓️',
-              title: 'Preuves blockchain',
-              desc: 'Données vérifiables on-chain pour vos auditeurs',
-            },
-          ].map((f) => (
+          {features.map((f) => (
             <Card key={f.title}>
               <CardContent className="p-5">
                 <span className="text-2xl">{f.icon}</span>

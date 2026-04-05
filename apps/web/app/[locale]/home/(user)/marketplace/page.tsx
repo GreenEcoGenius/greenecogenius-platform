@@ -60,7 +60,7 @@ async function MarketplacePage() {
       <div className="from-primary/10 via-primary/5 relative overflow-hidden rounded-2xl border bg-gradient-to-br to-transparent p-8">
         <div className="relative z-10">
           <h2 className="text-xl font-bold md:text-2xl">
-            Le Comptoir Circulaire
+            {t('comptoirTitle')}
           </h2>
           <p className="text-muted-foreground mt-1 text-base">
             {t('marketplaceBanner')}
@@ -134,7 +134,7 @@ async function MarketplacePage() {
               <ListingCard listing={listing} account="" />
               <div className="bg-card -mt-1 flex items-center gap-1.5 rounded-b-lg border border-t-0 px-5 py-2 text-xs text-[#2e8b6e]">
                 <Leaf className="h-3 w-3" />
-                CO₂ evite estime :{' '}
+                {t('co2AvoidedEstimated')}{' '}
                 {(((listing.quantity ?? 0) * 0.8) / 1000).toFixed(1)}t
               </div>
             </div>

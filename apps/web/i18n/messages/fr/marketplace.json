@@ -129,7 +129,9 @@
   "marketplaceBanner": "Marketplace B2B de matieres recyclables",
   "kpiVolume": "Volume total",
   "kpiTransactions": "Transactions ce mois",
-  "kpiCO2Market": "CO₂ evite marketplace",
+  "kpiCO2Market": "CO₂ évité marketplace",
+  "comptoirTitle": "Le Comptoir Circulaire",
+  "co2AvoidedEstimated": "CO₂ évité estimé :",
 
   "dashboard": {
     "marketplace": "Marketplace",

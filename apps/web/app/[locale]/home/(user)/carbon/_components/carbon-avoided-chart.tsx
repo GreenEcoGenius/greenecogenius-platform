@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import {
   Area,
   AreaChart,
@@ -26,26 +27,30 @@ interface CarbonAvoidedChartProps {
   data: MonthlyData[];
 }
 
-const MONTH_LABELS: Record<string, string> = {
-  '01': 'Jan',
-  '02': 'Fév',
-  '03': 'Mar',
-  '04': 'Avr',
-  '05': 'Mai',
-  '06': 'Juin',
-  '07': 'Juil',
-  '08': 'Août',
-  '09': 'Sep',
-  '10': 'Oct',
-  '11': 'Nov',
-  '12': 'Déc',
+const MONTH_KEYS: Record<string, string> = {
+  '01': 'jan',
+  '02': 'feb',
+  '03': 'mar',
+  '04': 'apr',
+  '05': 'may',
+  '06': 'jun',
+  '07': 'jul',
+  '08': 'aug',
+  '09': 'sep',
+  '10': 'oct',
+  '11': 'nov',
+  '12': 'dec',
 };
 
-function formatMonthLabel(ym: string): string {
-  const parts = ym.split('-');
-  if (parts.length < 2) return ym;
-  const monthNum = parts[1] ?? '';
-  return MONTH_LABELS[monthNum] ?? ym;
+function useFormatMonthLabel() {
+  const t = useTranslations('common');
+  return (ym: string): string => {
+    const parts = ym.split('-');
+    if (parts.length < 2) return ym;
+    const monthNum = parts[1] ?? '';
+    const key = MONTH_KEYS[monthNum];
+    return key ? t(`months.${key}`) : ym;
+  };
 }
 
 function fmtKg(value: number): string {
@@ -64,6 +69,7 @@ function CustomTooltip({
   payload?: Array<{ value: number; dataKey: string; color: string }>;
   label?: string;
 }) {
+  const t = useTranslations('carbon');
   if (!active || !payload || !payload.length) return null;
 
   const avoided = payload.find((p) => p.dataKey === 'co2_avoided');
@@ -77,10 +83,14 @@ function CustomTooltip({
     <div className="rounded-lg border bg-white p-3 shadow-lg dark:bg-gray-900">
       <p className="mb-2 text-sm font-semibold">{label}</p>
       <div className="space-y-1 text-sm">
-        <p className="text-teal-600">CO₂ évité: {fmtKg(avoidedVal)} kg</p>
-        <p className="text-teal-500">CO₂ transport: {fmtKg(transportVal)} kg</p>
+        <p className="text-teal-600">
+          {t('chartCO2Avoided')}: {fmtKg(avoidedVal)} kg
+        </p>
+        <p className="text-teal-500">
+          {t('chartCO2Transport')}: {fmtKg(transportVal)} kg
+        </p>
         <p className="font-semibold text-emerald-700">
-          Bilan net: {fmtKg(net)} kg
+          {t('chartNetBalance')}: {fmtKg(net)} kg
         </p>
       </div>
     </div>
@@ -88,6 +98,9 @@ function CustomTooltip({
 }
 
 export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
+  const t = useTranslations('carbon');
+  const formatMonthLabel = useFormatMonthLabel();
+
   if (!data.length) return null;
 
   const chartData = data.map((d) => ({
@@ -132,8 +145,8 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
               verticalAlign="top"
               height={36}
               formatter={(value: string) => {
-                if (value === 'co2_avoided') return 'CO₂ évité';
-                if (value === 'co2_transport') return 'CO₂ transport';
+                if (value === 'co2_avoided') return t('chartCO2Avoided');
+                if (value === 'co2_transport') return t('chartCO2Transport');
                 return value;
               }}
             />

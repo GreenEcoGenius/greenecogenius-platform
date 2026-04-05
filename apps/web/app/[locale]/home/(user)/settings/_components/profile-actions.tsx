@@ -1,7 +1,7 @@
 'use client';
 
 import { LogOut, Moon, Sun } from 'lucide-react';
-import { useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
@@ -14,16 +14,14 @@ export function ProfileActions({
 }: {
   enableThemeToggle: boolean;
 }) {
+  const t = useTranslations('account');
   const signOut = useSignOut();
   const { theme, setTheme } = useTheme();
-  const locale = useLocale();
 
   return (
     <Card className="mt-6">
       <CardHeader>
-        <CardTitle className="text-base">
-          {locale === 'fr' ? 'Préférences' : 'Preferences'}
-        </CardTitle>
+        <CardTitle className="text-base">{t('preferences')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Theme */}
@@ -35,7 +33,7 @@ export function ProfileActions({
               ) : (
                 <Sun className="h-4 w-4 text-teal-500" strokeWidth={1.5} />
               )}
-              <p className="text-sm font-medium">Theme</p>
+              <p className="text-sm font-medium">{t('theme')}</p>
             </div>
             <div className="grid grid-cols-3 gap-2">
               <button
@@ -47,7 +45,7 @@ export function ProfileActions({
                     : 'bg-muted text-muted-foreground border-transparent hover:border-gray-300'
                 }`}
               >
-                Clair
+                {t('themeLight')}
               </button>
               <button
                 type="button"
@@ -58,7 +56,7 @@ export function ProfileActions({
                     : 'bg-muted text-muted-foreground border-transparent hover:border-gray-300'
                 }`}
               >
-                Sombre
+                {t('themeDark')}
               </button>
               <button
                 type="button"
@@ -69,7 +67,7 @@ export function ProfileActions({
                     : 'bg-muted text-muted-foreground border-transparent hover:border-gray-300'
                 }`}
               >
-                Auto
+                {t('themeAuto')}
               </button>
             </div>
           </div>
@@ -84,13 +82,7 @@ export function ProfileActions({
             disabled={signOut.isPending}
           >
             <LogOut className="mr-2 h-4 w-4" strokeWidth={1.5} />
-            {signOut.isPending
-              ? locale === 'fr'
-                ? 'Déconnexion...'
-                : 'Signing out...'
-              : locale === 'fr'
-                ? 'Se déconnecter'
-                : 'Sign out'}
+            {signOut.isPending ? t('signingOut') : t('signOut')}
           </Button>
         </div>
       </CardContent>

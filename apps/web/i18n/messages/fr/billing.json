@@ -123,5 +123,29 @@
       "heading": "Votre paiement a échoué",
       "description": "Votre paiement a échoué. Veuillez mettre à jour votre moyen de paiement."
     }
-  }
+  },
+  "trialInProgress": "Période d'essai en cours",
+  "subscriptionActive": "Abonnement actif",
+  "currentPlan": "Plan actuel",
+  "planEssentielDefault": "Plan Essentiel",
+  "planAvanceDefault": "Plan Avancé",
+  "perMonthSuffix": "/mois",
+  "manageSubscription": "Gérer mon abonnement",
+  "includedEachTransactionTitle": "Inclus dans chaque transaction marketplace",
+  "includedEachTransactionDesc": "Sans abonnement, vous bénéficiez déjà de ces fonctionnalités via la commission marketplace.",
+  "tagBlockchainTraceability": "Traçabilité blockchain",
+  "tagAutoCO2": "Calcul CO₂ automatique",
+  "tagPdfCertificate": "Certificat PDF",
+  "tagCarbonDashboard": "Dashboard carbone",
+  "tagExportPdfCsv": "Export PDF/CSV",
+  "faqTitle": "Questions fréquentes",
+  "faqIncludedQ": "Qu'est-ce qui est inclus gratuitement ?",
+  "faqIncludedA": "Chaque transaction sur Le Comptoir Circulaire inclut la traçabilité blockchain, le calcul CO₂, un certificat PDF et le dashboard carbone. Tout est compris dans la commission marketplace.",
+  "faqTrialQ": "Comment fonctionne l'essai gratuit ?",
+  "faqTrialA": "14 jours d'accès complet à toutes les fonctionnalités de votre plan. Aucun paiement avant la fin de la période d'essai. Annulable à tout moment.",
+  "faqChangePlanQ": "Puis-je changer de plan à tout moment ?",
+  "faqChangePlanA": "Oui, vous pouvez upgrader ou downgrader à tout moment. La différence est calculée au prorata.",
+  "errorGeneric": "Une erreur est survenue",
+  "errorNoPaymentUrl": "Aucune URL de paiement reçue",
+  "errorNetwork": "Erreur réseau. Réessayez."
 }

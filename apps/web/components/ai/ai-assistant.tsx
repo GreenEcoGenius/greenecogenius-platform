@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { usePathname } from 'next/navigation';
 
@@ -21,6 +21,7 @@ import {
   Wallet,
   X,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { AILoadingState } from './shared/ai-loading-state';
 
@@ -50,186 +51,89 @@ interface Message {
   streaming?: boolean;
 }
 
-/* ─── Section detection ─── */
+type SectionKey =
+  | 'comptoir'
+  | 'listings'
+  | 'carbon'
+  | 'esg'
+  | 'traceability'
+  | 'rse'
+  | 'compliance'
+  | 'wallet'
+  | 'billing'
+  | 'profile';
 
-function detectSection(pathname: string): SectionContext {
-  if (pathname.includes('/marketplace') || pathname.includes('/comptoir')) {
-    return {
-      agent: 'comptoir',
-      name: 'Le Comptoir Circulaire',
-      icon: <Store className="h-4 w-4" />,
-      welcome:
-        'Je suis votre assistant Comptoir Circulaire. Je peux analyser vos annonces, estimer des prix, trouver des acheteurs, et vous guider pour publier un lot.',
-      suggestions: [
-        'Analyser mes annonces actives',
-        'Estimer le prix de ma matiere',
-        'Creer une nouvelle annonce',
-        'Trouver des acheteurs',
-      ],
-    };
-  }
-
-  if (pathname.includes('/my-listings') || pathname.includes('/annonces')) {
-    return {
-      agent: 'comptoir',
-      name: 'Mes Annonces',
-      icon: <PackageSearch className="h-4 w-4" />,
-      welcome:
-        'Je suis votre assistant Annonces. Je peux analyser la performance de vos annonces et suggerer des ameliorations.',
-      suggestions: [
-        'Performance de mes annonces',
-        'Pourquoi pas de vues ?',
-        'Ameliorer mes annonces',
-        'Publier un nouveau lot',
-      ],
-    };
-  }
-
-  if (pathname.includes('/carbon') || pathname.includes('/impact')) {
-    return {
-      agent: 'carbon',
-      name: 'Impact Carbone',
-      icon: <Leaf className="h-4 w-4" />,
-      welcome:
-        'Je suis votre assistant Impact Carbone. Je peux vous guider pour completer votre bilan, expliquer vos emissions, et generer des recommandations de reduction.',
-      suggestions: [
-        'Completer mon bilan carbone',
-        'Expliquer mes emissions Scope 3',
-        'Recommandations pour reduire',
-        'Generer le rapport carbone',
-      ],
-    };
-  }
-
-  if (pathname.includes('/esg') || pathname.includes('/reporting')) {
-    return {
-      agent: 'esg',
-      name: 'Reporting ESG',
-      icon: <BarChart3 className="h-4 w-4" />,
-      welcome:
-        'Je suis votre assistant Reporting ESG. Je peux vous aider a completer les champs manquants, expliquer les indicateurs ESRS, et generer vos rapports CSRD/GRI.',
-      suggestions: [
-        'Completer les champs manquants',
-        'Generer mon rapport CSRD',
-        'Expliquer ma conformite ESRS',
-        'Comparer avec le trimestre precedent',
-      ],
-    };
-  }
-
-  if (pathname.includes('/traceability') || pathname.includes('/tracabilite')) {
-    return {
+const SECTION_MATCHES: { match: string[]; key: SectionKey; agent: AgentType }[] =
+  [
+    { match: ['/marketplace', '/comptoir'], key: 'comptoir', agent: 'comptoir' },
+    { match: ['/my-listings', '/annonces'], key: 'listings', agent: 'comptoir' },
+    { match: ['/carbon', '/impact'], key: 'carbon', agent: 'carbon' },
+    { match: ['/esg', '/reporting'], key: 'esg', agent: 'esg' },
+    {
+      match: ['/traceability', '/tracabilite'],
+      key: 'traceability',
       agent: 'traceability',
-      name: 'Tracabilite',
-      icon: <Link2 className="h-4 w-4" />,
-      welcome:
-        'Je suis votre assistant Tracabilite. Je peux emettre des certificats, verifier des lots on-chain, et analyser vos alertes actives.',
-      suggestions: [
-        'Emettre les certificats en attente',
-        'Verifier un lot sur la blockchain',
-        'Resume de mes alertes',
-        "Historique d'un lot",
-      ],
-    };
-  }
-
-  if (pathname.includes('/rse') || pathname.includes('/labels')) {
-    return {
-      agent: 'rse',
-      name: 'RSE & Labels',
-      icon: <Award className="h-4 w-4" />,
-      welcome:
-        'Je suis votre assistant RSE & Labels, propulse par Claude Opus. Je peux lancer un diagnostic complet, evaluer votre eligibilite aux labels, et generer votre feuille de route.',
-      suggestions: [
-        'Lancer un diagnostic complet',
-        'Comment obtenir B Corp ?',
-        'Que dois-je ameliorer en priorite ?',
-        'Generer ma feuille de route',
-      ],
-    };
-  }
-
-  if (pathname.includes('/compliance') || pathname.includes('/conformite')) {
-    return {
+    },
+    { match: ['/rse', '/labels'], key: 'rse', agent: 'rse' },
+    {
+      match: ['/compliance', '/conformite'],
+      key: 'compliance',
       agent: 'compliance',
-      name: 'Conformite',
-      icon: <Shield className="h-4 w-4" />,
-      welcome:
-        'Je suis votre assistant Conformite. Je peux lancer un pre-audit, expliquer vos non-conformites, et verifier les 42 normes integrees.',
-      suggestions: [
-        'Lancer un pre-audit',
-        'Expliquer mes non-conformites',
-        'Veille reglementaire',
-        'Comment me conformer au RGPD ?',
-      ],
-    };
-  }
+    },
+    { match: ['/wallet', '/portefeuille'], key: 'wallet', agent: 'comptoir' },
+    { match: ['/billing', '/facturation'], key: 'billing', agent: 'general' },
+    {
+      match: ['/settings', '/profil', '/profile'],
+      key: 'profile',
+      agent: 'general',
+    },
+  ];
 
-  if (pathname.includes('/wallet') || pathname.includes('/portefeuille')) {
-    return {
-      agent: 'comptoir',
-      name: 'Portefeuille',
-      icon: <Wallet className="h-4 w-4" />,
-      welcome:
-        'Je suis votre assistant Portefeuille. Je peux vous aider avec vos transactions, commissions, et solde.',
-      suggestions: [
-        'Resume de mes transactions',
-        'Combien ai-je gagne ce mois ?',
-        'Detail des commissions',
-        'Expliquer le systeme de commissions',
-      ],
-    };
-  }
+const ICONS: Record<SectionKey, React.ReactNode> = {
+  comptoir: <Store className="h-4 w-4" />,
+  listings: <PackageSearch className="h-4 w-4" />,
+  carbon: <Leaf className="h-4 w-4" />,
+  esg: <BarChart3 className="h-4 w-4" />,
+  traceability: <Link2 className="h-4 w-4" />,
+  rse: <Award className="h-4 w-4" />,
+  compliance: <Shield className="h-4 w-4" />,
+  wallet: <Wallet className="h-4 w-4" />,
+  billing: <CreditCard className="h-4 w-4" />,
+  profile: <User className="h-4 w-4" />,
+};
 
-  if (pathname.includes('/billing') || pathname.includes('/facturation')) {
+function useSectionContext(pathname: string): SectionContext {
+  const t = useTranslations('common');
+  return useMemo(() => {
+    for (const s of SECTION_MATCHES) {
+      if (s.match.some((m) => pathname.includes(m))) {
+        return {
+          agent: s.agent,
+          name: t(`ai.${s.key}Name`),
+          icon: ICONS[s.key],
+          welcome: t(`ai.${s.key}Welcome`),
+          suggestions: [
+            t(`ai.${s.key}Suggestion1`),
+            t(`ai.${s.key}Suggestion2`),
+            t(`ai.${s.key}Suggestion3`),
+            t(`ai.${s.key}Suggestion4`),
+          ],
+        };
+      }
+    }
     return {
       agent: 'general',
-      name: 'Facturation',
-      icon: <CreditCard className="h-4 w-4" />,
-      welcome:
-        'Je suis votre assistant Facturation. Je peux comparer les plans, expliquer les fonctionnalites, et vous guider.',
+      name: t('ai.sectionHome'),
+      icon: <Home className="h-4 w-4" />,
+      welcome: t('ai.homeWelcome'),
       suggestions: [
-        'Comparer les plans',
-        'Que debloque le Plan Avance ?',
-        'Expliquer mon plan actuel',
-        'Comment changer de plan ?',
+        t('ai.homeSuggestion1'),
+        t('ai.homeSuggestion2'),
+        t('ai.homeSuggestion3'),
+        t('ai.homeSuggestion4'),
       ],
     };
-  }
-
-  if (
-    pathname.includes('/settings') ||
-    pathname.includes('/profil') ||
-    pathname.includes('/profile')
-  ) {
-    return {
-      agent: 'general',
-      name: 'Profil',
-      icon: <User className="h-4 w-4" />,
-      welcome:
-        'Je suis votre assistant Profil. Comment puis-je vous aider avec votre compte ?',
-      suggestions: [
-        'Comment modifier mes informations ?',
-        'Quel est mon plan actuel ?',
-        'Configurer mes notifications',
-        'Inviter un collaborateur',
-      ],
-    };
-  }
-
-  return {
-    agent: 'general',
-    name: 'Accueil',
-    icon: <Home className="h-4 w-4" />,
-    welcome:
-      'Bonjour ! Je suis votre assistant GreenEcoGenius. Je peux vous orienter vers la bonne section, resumer votre activite, ou repondre a vos questions sur la plateforme.',
-    suggestions: [
-      'Resume de mon activite',
-      'Que dois-je faire en priorite ?',
-      'Guide-moi vers la bonne section',
-      'Comment fonctionne la plateforme ?',
-    ],
-  };
+  }, [pathname, t]);
 }
 
 /* ─── Streaming text hook ─── */
@@ -278,7 +182,8 @@ const MOBILE_BREAKPOINT = 768;
 
 export function AIAssistant() {
   const pathname = usePathname();
-  const section = detectSection(pathname ?? '');
+  const t = useTranslations('common');
+  const section = useSectionContext(pathname ?? '');
 
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -361,7 +266,7 @@ export function AIAssistant() {
           {
             id: crypto.randomUUID(),
             role: 'assistant',
-            content: data.content || data.message || 'Pas de reponse.',
+            content: data.content || data.message || t('ai.noResponse'),
             streaming: true,
           },
         ]);
@@ -371,15 +276,14 @@ export function AIAssistant() {
           {
             id: crypto.randomUUID(),
             role: 'assistant',
-            content:
-              'Desole, je rencontre une difficulte technique. Veuillez reessayer dans quelques instants.',
+            content: t('ai.errorFallback'),
           },
         ]);
       } finally {
         setLoading(false);
       }
     },
-    [input, loading, messages, section.agent],
+    [input, loading, messages, section.agent, t],
   );
 
   const handleKeyDown = useCallback(
@@ -403,7 +307,7 @@ export function AIAssistant() {
         <button
           onClick={() => setOpen(true)}
           className="from-primary to-primary-hover shadow-primary/30 hover:shadow-primary/40 fixed right-6 bottom-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl"
-          aria-label="Ouvrir l'assistant IA"
+          aria-label={t('ai.open')}
         >
           <Sparkles className="h-5 w-5" />
         </button>
@@ -417,7 +321,7 @@ export function AIAssistant() {
             <div>
               <div className="flex items-center gap-2 text-sm font-semibold text-white">
                 <Sparkles className="h-4 w-4" />
-                Assistant GreenEcoGenius
+                {t('ai.title')}
               </div>
               <div className="mt-0.5 flex items-center gap-1.5 text-xs text-white/80">
                 {section.icon}
@@ -430,15 +334,15 @@ export function AIAssistant() {
                   setMessages([]);
                 }}
                 className="flex h-7 w-7 items-center justify-center rounded-lg text-white/70 transition-colors hover:bg-white/15 hover:text-white"
-                aria-label="Nouvelle conversation"
-                title="Nouvelle conversation"
+                aria-label={t('ai.newConversation')}
+                title={t('ai.newConversation')}
               >
                 <Minimize2 className="h-3.5 w-3.5" />
               </button>
               <button
                 onClick={() => setOpen(false)}
                 className="flex h-7 w-7 items-center justify-center rounded-lg text-white/70 transition-colors hover:bg-white/15 hover:text-white"
-                aria-label="Fermer"
+                aria-label={t('ai.close')}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -518,7 +422,7 @@ export function AIAssistant() {
 
           {/* Disclaimer */}
           <div className="text-metal-steel px-4 text-center text-[10px]">
-            L&apos;IA peut generer des informations inexactes
+            {t('ai.disclaimer')}
           </div>
 
           {/* Input */}
@@ -534,7 +438,7 @@ export function AIAssistant() {
                   el.style.height = Math.min(el.scrollHeight, 100) + 'px';
                 }}
                 onKeyDown={handleKeyDown}
-                placeholder="Posez votre question..."
+                placeholder={t('ai.askQuestion')}
                 rows={1}
                 className="text-metal-900 placeholder:text-metal-steel max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-sm leading-relaxed outline-none"
                 disabled={loading}
