@@ -22,6 +22,7 @@ const techLogos: LogoItem[] = [
   { name: 'GitHub', src: '/images/logos/github.svg', url: 'https://github.com' },
   { name: 'Cursor', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Cursor_logo.svg.png', url: 'https://cursor.com', size: 'h-8 sm:h-10' },
   { name: 'Alchemy', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/a5c0742e-793f-4358-9ab5-38221f77375e.png', url: 'https://www.alchemy.com', size: 'h-20 sm:h-24' },
+  { name: 'Docusign', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/a31b8a42-d341-40c9-b0d8-a29ffbc45a41.png', url: 'https://www.docusign.com', size: 'h-10 sm:h-12' },
 ];
 
 const sourceLogos: LogoItem[] = [
