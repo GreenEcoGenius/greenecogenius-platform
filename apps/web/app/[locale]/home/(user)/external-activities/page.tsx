@@ -19,6 +19,7 @@ import {
   type ExternalActivityCategory,
 } from '~/lib/services/external-activities-service';
 
+import { SectionFooterImage } from '../_components/section-footer-image';
 import { DeleteActivityButton } from './_components/delete-activity-button';
 import { ExternalActivityForm } from './_components/external-activity-form';
 
@@ -213,6 +214,11 @@ async function ExternalActivitiesPage() {
             );
           })}
         </Tabs>
+
+        <SectionFooterImage
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/_Wide-angle_hero_image_202604051229.png"
+          alt={t('title')}
+        />
       </PageBody>
     </>
   );
