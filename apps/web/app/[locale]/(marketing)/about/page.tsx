@@ -4,10 +4,15 @@ import Link from 'next/link';
 import {
   ArrowRight,
   BarChart3,
+  Eye,
   Globe2,
   Leaf,
   Lightbulb,
+  Link as LinkIcon,
+  Lock,
   Recycle,
+  Shield,
+  ShieldCheck,
   Target,
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
@@ -249,6 +254,69 @@ export default async function AboutPage() {
               {t('aboutStructureFounder')}
             </p>
           </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* ───── SECURITY & DATA PROTECTION ───── */}
+      <section className="bg-slate-50 py-20 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <AnimateOnScroll animation="fade-up">
+            <div className="mx-auto max-w-2xl text-center">
+              <div className="bg-primary/10 text-primary mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl">
+                <ShieldCheck className="h-6 w-6" strokeWidth={1.5} />
+              </div>
+              <h2 className="text-metal-900 text-3xl font-bold tracking-tight sm:text-4xl">
+                {t('aboutSecurityHeading')}
+              </h2>
+              <p className="text-metal-600 mt-4 text-base sm:text-lg">
+                {t('aboutSecuritySubheading')}
+              </p>
+            </div>
+          </AnimateOnScroll>
+
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                icon: Shield,
+                title: t('aboutSecurityHostingTitle'),
+                text: t('aboutSecurityHostingText'),
+              },
+              {
+                icon: ShieldCheck,
+                title: t('aboutSecurityCertifiedTitle'),
+                text: t('aboutSecurityCertifiedText'),
+              },
+              {
+                icon: LinkIcon,
+                title: t('aboutSecurityBlockchainTitle'),
+                text: t('aboutSecurityBlockchainText'),
+              },
+              {
+                icon: Lock,
+                title: t('aboutSecurityEncryptionTitle'),
+                text: t('aboutSecurityEncryptionText'),
+              },
+              {
+                icon: Eye,
+                title: t('aboutSecurityAccessTitle'),
+                text: t('aboutSecurityAccessText'),
+              },
+            ].map(({ icon: Icon, title, text }) => (
+              <AnimateOnScroll key={title} animation="fade-up">
+                <div className="h-full rounded-2xl border border-slate-200 bg-white p-6 transition-shadow duration-200 hover:shadow-md">
+                  <div className="bg-primary/10 text-primary mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl">
+                    <Icon className="h-5 w-5" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-metal-900 text-base font-semibold">
+                    {title}
+                  </h3>
+                  <p className="text-metal-600 mt-2 text-sm leading-relaxed">
+                    {text}
+                  </p>
+                </div>
+              </AnimateOnScroll>
+            ))}
+          </div>
         </div>
       </section>
 

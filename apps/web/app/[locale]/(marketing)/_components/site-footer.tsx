@@ -1,3 +1,5 @@
+import { ShieldCheck } from 'lucide-react';
+
 import { Footer } from '@kit/ui/marketing';
 import { Trans } from '@kit/ui/trans';
 
@@ -17,6 +19,12 @@ export function SiteFooter() {
             year: new Date().getFullYear(),
           }}
         />
+      }
+      securityBadge={
+        <span className="inline-flex items-center gap-1.5">
+          <ShieldCheck className="h-3.5 w-3.5" strokeWidth={1.5} />
+          <Trans i18nKey="marketing.footerSecurityBadge" />
+        </span>
       }
       sections={[
         {

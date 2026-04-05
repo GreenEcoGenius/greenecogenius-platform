@@ -13,6 +13,7 @@ interface FooterProps extends React.HTMLAttributes<HTMLElement> {
   description: React.ReactNode;
   copyright: React.ReactNode;
   sections: FooterSection[];
+  securityBadge?: React.ReactNode;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -21,6 +22,7 @@ export const Footer: React.FC<FooterProps> = ({
   description,
   copyright,
   sections,
+  securityBadge,
   ...props
 }) => {
   return (
@@ -67,6 +69,9 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Copyright — always last on mobile */}
         <div className="border-metal-chrome text-metal-steel mt-8 border-t pt-6 text-xs">
           <p>{copyright}</p>
+          {securityBadge ? (
+            <p className="mt-2 text-xs text-gray-400">{securityBadge}</p>
+          ) : null}
         </div>
       </div>
     </footer>
