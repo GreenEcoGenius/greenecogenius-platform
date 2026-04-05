@@ -22,10 +22,6 @@ export function AppHeader() {
   const lastScrollY = useRef(0);
 
   useEffect(() => {
-    // The dashboard layout scrolls an internal div (overflow-y-auto) marked
-    // with data-scroll-root, not the window. Attach the listener directly to
-    // that element — capture-phase listeners on document are unreliable on
-    // iOS Safari for scroll events from nested containers.
     const scrollRoot =
       (document.querySelector('[data-scroll-root]') as HTMLElement | null) ??
       null;
