@@ -294,7 +294,7 @@ export function AIChatPanel() {
   if (!chatOpen) return null;
 
   return (
-    <div className="border-metal-chrome fixed top-14 right-0 bottom-0 z-30 flex w-[380px] flex-col border-l bg-white">
+    <div className="border-metal-chrome fixed top-20 right-0 bottom-0 z-30 flex w-[380px] flex-col border-l bg-white md:top-24">
       {/* Header */}
       <div className="border-metal-chrome flex items-center justify-between border-b px-4 py-3">
         <div className="flex items-center gap-2">

@@ -54,8 +54,8 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
           <SidebarChatBridge />
           <AppHeader />
 
-          <div className="flex min-w-0 flex-1 flex-col lg:h-dvh">
-            <div className="flex min-h-0 flex-1 lg:overflow-hidden">
+          <div className="min-w-0 flex-1 lg:flex lg:h-dvh lg:flex-col">
+            <div className="min-h-0 flex-1 lg:flex lg:overflow-hidden">
               <Page
                 style={'sidebar'}
                 contentContainerClassName="mx-auto flex w-full min-w-0 flex-1 flex-col bg-white pt-20 md:pt-24 lg:overflow-y-auto lg:bg-inherit"
