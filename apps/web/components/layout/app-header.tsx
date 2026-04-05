@@ -17,14 +17,14 @@ export function AppHeader() {
   const { openSearch } = useGlobalSearch();
 
   return (
-    <header className="border-metal-chrome fixed top-0 right-0 left-0 z-50 flex h-24 items-center justify-between border-b bg-white/95 px-3 backdrop-blur-sm md:h-28 lg:px-5">
+    <header className="border-metal-chrome fixed top-0 right-0 left-0 z-50 flex h-20 items-center justify-between overflow-visible border-b bg-white/95 px-2 backdrop-blur-sm md:h-28 md:px-3 lg:px-5">
       {/* Left: logo only */}
       <div className="flex items-center">
         <AppLogo href="/" />
       </div>
 
       {/* Right: all actions grouped */}
-      <div className="flex items-center gap-2">
+      <div className="-mr-1 flex items-center gap-1 md:mr-0 md:gap-2">
         {/* Search (mobile icon) */}
         <button
           type="button"
