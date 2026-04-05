@@ -11,6 +11,7 @@ import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { SectionFooterImage } from '../_components/section-footer-image';
+import { SectionHeader } from '../_components/section-header';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('esg');
@@ -53,8 +54,9 @@ async function ESGPage() {
 
   return (
     <PageBody>
+      <SectionHeader titleKey="esgTitle" descKey="esgDesc" />
+
       <div className="space-y-6">
-        {/* Empty state */}
         <Card>
           <CardContent className="flex flex-col items-center px-6 py-16 text-center">
             <div className="bg-primary-light mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">

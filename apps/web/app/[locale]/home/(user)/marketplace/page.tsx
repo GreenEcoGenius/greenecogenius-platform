@@ -19,6 +19,7 @@ import { Trans } from '@kit/ui/trans';
 import { ListingCard } from '~/home/_components/listing-card';
 
 import { SectionFooterImage } from '../_components/section-footer-image';
+import { SectionHeader } from '../_components/section-header';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('common');
@@ -57,42 +58,9 @@ async function MarketplacePage() {
 
   return (
     <PageBody>
-      {/* Section 1 -- Marketplace Banner */}
-      <div className="from-primary/10 via-primary/5 relative overflow-hidden rounded-2xl border bg-gradient-to-br to-transparent p-8">
-        <div className="relative z-10">
-          <h2 className="text-xl font-bold md:text-2xl">
-            {t('comptoirTitle')}
-          </h2>
-          <p className="text-muted-foreground mt-1 text-base">
-            {t('marketplaceBanner')}
-          </p>
-          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
-            <Badge
-              variant="secondary"
-              className="gap-1.5 rounded-full px-3 py-1"
-            >
-              <Package className="h-3.5 w-3.5" />
-              {listingCount} {t('kpiComptoir')}
-            </Badge>
-            <Badge
-              variant="secondary"
-              className="gap-1.5 rounded-full px-3 py-1"
-            >
-              <Activity className="h-3.5 w-3.5" />
-              {sellerCount} {t('totalSellers')}
-            </Badge>
-            <Badge
-              variant="secondary"
-              className="gap-1.5 rounded-full px-3 py-1"
-            >
-              <TrendingUp className="h-3.5 w-3.5" />
-              {volumeLabel}
-            </Badge>
-          </div>
-        </div>
-      </div>
+      <SectionHeader titleKey="marketplaceTitle" descKey="marketplaceDesc" />
 
-      {/* Section 2 -- 4 KPI Cards */}
+      {/* KPI Cards */}
       <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <MarketKpiCard
           icon={<Package className="h-5 w-5 text-[#1b9e77]" />}

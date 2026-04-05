@@ -14,6 +14,7 @@ import { LabelEligibilityService } from '~/lib/services/label-eligibility-servic
 
 import { LabelEligibilitySection } from '../compliance/_components/label-eligibility-section';
 import { SectionFooterImage } from '../_components/section-footer-image';
+import { SectionHeader } from '../_components/section-header';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('rse');
@@ -53,8 +54,9 @@ async function RSEPage() {
   ];
   return (
     <PageBody>
+      <SectionHeader titleKey="rseTitle" descKey="rseDesc" />
+
       <div className="space-y-6">
-        {/* Empty state */}
         <Card>
           <CardContent className="flex flex-col items-center px-6 py-16 text-center">
             <div className="bg-primary-light mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">

@@ -13,6 +13,7 @@ import { Trans } from '@kit/ui/trans';
 import { NORMS_DATABASE } from '~/lib/data/norms-database';
 
 import { SectionFooterImage } from '../_components/section-footer-image';
+import { SectionHeader } from '../_components/section-header';
 import { ComplianceAlerts } from './_components/compliance-alerts';
 import { CompliancePillarCards } from './_components/compliance-pillar-cards';
 import { ComplianceScoreCard } from './_components/compliance-score-card';
@@ -60,6 +61,8 @@ async function CompliancePage() {
   if (!hasComplianceData) {
     return (
       <PageBody>
+        <SectionHeader titleKey="complianceTitle" descKey="complianceDesc" />
+
         <div className="space-y-6">
           <Card>
             <CardContent className="flex flex-col items-center px-6 py-16 text-center">
@@ -199,9 +202,10 @@ async function CompliancePage() {
 
   return (
     <PageBody>
+      <SectionHeader titleKey="complianceTitle" descKey="complianceDesc" />
+
       <div className="space-y-8">
-        <div className="flex items-center justify-between">
-          <div />
+        <div className="flex items-center justify-end">
           <RecalculateButton />
         </div>
 

@@ -1,0 +1,18 @@
+{
+  "homeTitle": "Tableau de bord",
+  "homeDesc": "Vue d'ensemble de votre performance environnementale et de votre conformité.",
+  "marketplaceTitle": "Le Comptoir Circulaire",
+  "marketplaceDesc": "Marketplace B2B de matières recyclables. Publiez, achetez ou mettez en collecte.",
+  "carbonTitle": "Impact Carbone",
+  "carbonDesc": "Calculez vos émissions Scopes 1, 2 et 3 et suivez votre plan de réduction.",
+  "esgTitle": "Reporting ESG",
+  "esgDesc": "Générez votre rapport conforme CSRD, GHG Protocol et GRI.",
+  "traceabilityTitle": "Traçabilité Blockchain",
+  "traceabilityDesc": "Vos transactions certifiées sur Polygon avec CO₂ évité vérifié.",
+  "rseTitle": "RSE & Labels",
+  "rseDesc": "Diagnostic RSE et préparation aux labels B Corp, Lucie, GreenTech.",
+  "complianceTitle": "Conformité",
+  "complianceDesc": "Évaluation automatique de votre conformité sur 37 normes environnementales.",
+  "externalTitle": "Données complémentaires",
+  "externalDesc": "Renseignez vos activités extérieures pour enrichir votre score de conformité."
+}

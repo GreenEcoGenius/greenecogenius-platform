@@ -10,7 +10,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { PageBody, PageHeader } from '@kit/ui/page';
+import { PageBody } from '@kit/ui/page';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@kit/ui/tabs';
 
 import {
@@ -20,6 +20,7 @@ import {
 } from '~/lib/services/external-activities-service';
 
 import { SectionFooterImage } from '../_components/section-footer-image';
+import { SectionHeader } from '../_components/section-header';
 import { DeleteActivityButton } from './_components/delete-activity-button';
 import { ExternalActivityForm } from './_components/external-activity-form';
 
@@ -95,10 +96,8 @@ async function ExternalActivitiesPage() {
   for (const row of all) byCategory.get(row.category)?.push(row);
 
   return (
-    <>
-      <PageHeader title={t('title')} description={t('description')} />
-
-      <PageBody>
+    <PageBody>
+      <SectionHeader titleKey="externalTitle" descKey="externalDesc" />
         <Tabs defaultValue={CATEGORIES[0]!.id} className="w-full">
           <TabsList className="grid w-full grid-cols-5">
             {CATEGORIES.map((c) => {
@@ -219,8 +218,7 @@ async function ExternalActivitiesPage() {
           src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/_Wide-angle_hero_image_202604051229.png"
           alt={t('title')}
         />
-      </PageBody>
-    </>
+    </PageBody>
   );
 }
 

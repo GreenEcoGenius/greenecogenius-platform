@@ -20,6 +20,7 @@ import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { SectionFooterImage } from '../_components/section-footer-image';
+import { SectionHeader } from '../_components/section-header';
 import { CarbonAvoidedChart } from './_components/carbon-avoided-chart';
 import { CarbonByMaterialChart } from './_components/carbon-by-material-chart';
 import { CarbonEquivalences } from './_components/carbon-equivalences';
@@ -215,30 +216,10 @@ async function CarbonPage() {
 
   return (
     <PageBody>
-      <div className="space-y-8">
-        {/* Section 1 - Banner */}
-        <Card className="overflow-hidden border-0 bg-gradient-to-r from-emerald-600 to-teal-700 text-white">
-          <CardContent className="p-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h2 className="text-2xl font-bold">
-                  <Trans i18nKey="carbon:bannerTitle" />
-                </h2>
-                <p className="mt-1 text-emerald-100">
-                  <Trans i18nKey="carbon:bannerSubtitle" />
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Shield className="h-5 w-5 text-emerald-200" />
-                <Badge className="border-emerald-400 bg-emerald-500/30 text-white">
-                  <Trans i18nKey="carbon:bannerBlockchain" />
-                </Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      <SectionHeader titleKey="carbonTitle" descKey="carbonDesc" />
 
-        {/* Section 2 - 5 KPI Cards */}
+      <div className="space-y-8">
+        {/* KPI Cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <Card>
             <CardContent className="p-5">

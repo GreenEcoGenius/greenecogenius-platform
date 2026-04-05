@@ -21,6 +21,7 @@ import { PageBody } from '@kit/ui/page';
 
 import { KpiCard, KpiCardGrid } from './_components/kpi-card';
 import { SectionFooterImage } from './_components/section-footer-image';
+import { SectionHeader } from './_components/section-header';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('marketplace');
@@ -111,8 +112,9 @@ async function UserHomePage() {
 
   return (
     <PageBody>
+      <SectionHeader titleKey="homeTitle" descKey="homeDesc" />
+
       <div className="space-y-8">
-        {/* 3 KPI Cards */}
         <KpiCardGrid>
           <KpiCard
             variant="teal"
