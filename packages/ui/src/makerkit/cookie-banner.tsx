@@ -1,9 +1,8 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Button } from '../shadcn/button';
-import { Dialog, DialogContent } from '../shadcn/dialog';
 import { Heading } from '../shadcn/heading';
 import { Trans } from './trans';
 
@@ -18,8 +17,13 @@ enum ConsentStatus {
 
 export function CookieBanner() {
   const { status, accept, reject } = useCookieConsent();
+  const [mounted, setMounted] = useState(false);
 
-  if (!isBrowser()) {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
     return null;
   }
 
@@ -28,39 +32,60 @@ export function CookieBanner() {
   }
 
   return (
-    <Dialog open modal={false}>
-      <DialogContent
-        className={`dark:shadow-primary-500/40 bg-background animate-in fade-in zoom-in-95 slide-in-from-bottom-16 fill-mode-both fixed bottom-0 w-full max-w-lg border p-6 shadow-2xl delay-1000 duration-1000 lg:bottom-[2rem] lg:left-[2rem] lg:h-48 lg:rounded-lg`}
-      >
-        <div className={'flex flex-col space-y-4'}>
-          <div>
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cookie-banner-title"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+    >
+      {/* Backdrop */}
+      <div
+        className="animate-in fade-in fixed inset-0 bg-black/50 backdrop-blur-sm duration-300"
+        aria-hidden="true"
+      />
+
+      {/* Modal */}
+      <div className="bg-background animate-in fade-in zoom-in-95 slide-in-from-bottom-4 relative w-full max-w-md rounded-xl border p-6 shadow-2xl duration-300">
+        <div className="flex flex-col space-y-4">
+          <div id="cookie-banner-title">
             <Heading level={3}>
               <Trans i18nKey={'cookieBanner.title'} />
             </Heading>
           </div>
 
-          <div className={'text-gray-500 dark:text-gray-400'}>
+          <p className="text-muted-foreground text-sm">
             <Trans i18nKey={'cookieBanner.description'} />
-          </div>
+          </p>
 
-          <div className={'flex justify-end space-x-2.5'}>
-            <Button variant={'ghost'} onClick={reject}>
+          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <Button
+              variant={'outline'}
+              onClick={reject}
+              data-test="cookie-banner-reject"
+            >
               <Trans i18nKey={'cookieBanner.reject'} />
             </Button>
 
-            <Button autoFocus onClick={accept}>
+            <Button
+              autoFocus
+              onClick={accept}
+              data-test="cookie-banner-accept"
+            >
               <Trans i18nKey={'cookieBanner.accept'} />
             </Button>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 }
 
 export function useCookieConsent() {
-  const initialState = getStatusFromLocalStorage();
-  const [status, setStatus] = useState<ConsentStatus>(initialState);
+  const [status, setStatus] = useState<ConsentStatus>(ConsentStatus.Unknown);
+
+  useEffect(() => {
+    setStatus(getStatusFromLocalStorage());
+  }, []);
 
   const accept = useCallback(() => {
     const status = ConsentStatus.Accepted;
