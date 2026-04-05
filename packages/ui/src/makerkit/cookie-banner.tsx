@@ -45,33 +45,49 @@ export function CookieBanner() {
       />
 
       {/* Modal */}
-      <div className="bg-background animate-in fade-in zoom-in-95 slide-in-from-bottom-4 relative w-full max-w-md rounded-xl border p-6 shadow-2xl duration-300">
-        <div className="flex flex-col space-y-4">
+      <div className="bg-background animate-in fade-in zoom-in-95 slide-in-from-bottom-4 relative w-full max-w-xl rounded-2xl border p-8 shadow-2xl duration-300 sm:p-10">
+        <div className="flex flex-col space-y-5">
           <div id="cookie-banner-title">
-            <Heading level={3}>
-              <Trans i18nKey={'cookieBanner.title'} />
+            <Heading level={2}>
+              <Trans
+                i18nKey={'common.cookieBanner.title'}
+                defaults={'Nous utilisons des cookies 🍪'}
+              />
             </Heading>
           </div>
 
-          <p className="text-muted-foreground text-sm">
-            <Trans i18nKey={'cookieBanner.description'} />
+          <p className="text-muted-foreground text-base leading-relaxed">
+            <Trans
+              i18nKey={'common.cookieBanner.description'}
+              defaults={
+                'Ce site utilise des cookies pour vous offrir la meilleure expérience possible et améliorer nos services.'
+              }
+            />
           </p>
 
-          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
             <Button
               variant={'outline'}
+              size={'lg'}
               onClick={reject}
               data-test="cookie-banner-reject"
             >
-              <Trans i18nKey={'cookieBanner.reject'} />
+              <Trans
+                i18nKey={'common.cookieBanner.reject'}
+                defaults={'Refuser'}
+              />
             </Button>
 
             <Button
               autoFocus
+              size={'lg'}
               onClick={accept}
               data-test="cookie-banner-accept"
             >
-              <Trans i18nKey={'cookieBanner.accept'} />
+              <Trans
+                i18nKey={'common.cookieBanner.accept'}
+                defaults={'Accepter'}
+              />
             </Button>
           </div>
         </div>
