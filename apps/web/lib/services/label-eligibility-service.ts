@@ -181,49 +181,49 @@ function pct(n: number, total: number): number {
 function buildLabels(d: AggregateData, t: TFn): LabelEligibility[] {
   const bCorpMet: string[] = [];
   const bCorpMissing: string[] = [];
-  (d.externalGovernance >= 1 ? bCorpMet : bCorpMissing).push(t('cr.bCorpGovernance'));
-  (d.externalSocial >= 1 ? bCorpMet : bCorpMissing).push(t('cr.bCorpWorkers'));
-  (d.externalCommunity >= 1 ? bCorpMet : bCorpMissing).push(t('cr.bCorpCommunity'));
-  (d.externalEnvironment >= 1 || d.hasCarbonReport ? bCorpMet : bCorpMissing).push(t('cr.bCorpEnvironment'));
-  (d.transactions >= 1 || d.co2Avoided > 0 ? bCorpMet : bCorpMissing).push(t('cr.bCorpClientImpact'));
+  (d.externalGovernance >= 1 ? bCorpMet : bCorpMissing).push(t('crBCorpGovernance'));
+  (d.externalSocial >= 1 ? bCorpMet : bCorpMissing).push(t('crBCorpWorkers'));
+  (d.externalCommunity >= 1 ? bCorpMet : bCorpMissing).push(t('crBCorpCommunity'));
+  (d.externalEnvironment >= 1 || d.hasCarbonReport ? bCorpMet : bCorpMissing).push(t('crBCorpEnvironment'));
+  (d.transactions >= 1 || d.co2Avoided > 0 ? bCorpMet : bCorpMissing).push(t('crBCorpClientImpact'));
   const bCorpCoverage = pct(bCorpMet.length, 5);
 
   const lbcMet: string[] = [];
   const lbcMissing: string[] = [];
-  (d.hasCarbonReport ? lbcMet : lbcMissing).push(t('cr.carbonAssessment'));
-  (d.hasScope1or2 ? lbcMet : lbcMissing).push(t('cr.scope12Filled'));
-  (d.hasScope3 ? lbcMet : lbcMissing).push(t('cr.scope3Filled'));
-  (d.co2Avoided > 0 ? lbcMet : lbcMissing).push(t('cr.measurableAvoidedEmissions'));
+  (d.hasCarbonReport ? lbcMet : lbcMissing).push(t('crCarbonAssessment'));
+  (d.hasScope1or2 ? lbcMet : lbcMissing).push(t('crScope12Filled'));
+  (d.hasScope3 ? lbcMet : lbcMissing).push(t('crScope3Filled'));
+  (d.co2Avoided > 0 ? lbcMet : lbcMissing).push(t('crMeasurableAvoidedEmissions'));
 
   const sbtiMet: string[] = [];
   const sbtiMissing: string[] = [];
-  (d.hasScope1or2 ? sbtiMet : sbtiMissing).push(t('cr.scope12Covered'));
-  (d.hasScope3 ? sbtiMet : sbtiMissing).push(t('cr.scope3Covered'));
-  (d.hasCarbonReport ? sbtiMet : sbtiMissing).push(t('cr.carbonUpToDate'));
+  (d.hasScope1or2 ? sbtiMet : sbtiMissing).push(t('crScope12Covered'));
+  (d.hasScope3 ? sbtiMet : sbtiMissing).push(t('crScope3Covered'));
+  (d.hasCarbonReport ? sbtiMet : sbtiMissing).push(t('crCarbonUpToDate'));
 
   const lucieMet: string[] = [];
   const lucieMissing: string[] = [];
-  (d.externalGovernance >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieGovernance'));
-  (d.externalSocial >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieHumanRights'));
-  (d.hasCarbonReport || d.externalEnvironment >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieEnvironment'));
-  (d.externalProcurement >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieFairPractices'));
-  (d.transactions >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieConsumers'));
-  (d.externalCommunity >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieCommunities'));
+  (d.externalGovernance >= 1 ? lucieMet : lucieMissing).push(t('crLucieGovernance'));
+  (d.externalSocial >= 1 ? lucieMet : lucieMissing).push(t('crLucieHumanRights'));
+  (d.hasCarbonReport || d.externalEnvironment >= 1 ? lucieMet : lucieMissing).push(t('crLucieEnvironment'));
+  (d.externalProcurement >= 1 ? lucieMet : lucieMissing).push(t('crLucieFairPractices'));
+  (d.transactions >= 1 ? lucieMet : lucieMissing).push(t('crLucieConsumers'));
+  (d.externalCommunity >= 1 ? lucieMet : lucieMissing).push(t('crLucieCommunities'));
   const lucieCoverage = pct(lucieMet.length, 6);
 
   const ecoMet: string[] = [];
   const ecoMissing: string[] = [];
-  (d.hasCarbonReport || d.externalEnvironment >= 1 ? ecoMet : ecoMissing).push(t('cr.ecoEnvironment'));
-  (d.externalSocial >= 1 ? ecoMet : ecoMissing).push(t('cr.ecoSocial'));
-  (d.externalGovernance >= 1 ? ecoMet : ecoMissing).push(t('cr.ecoEthics'));
-  (d.externalProcurement >= 1 ? ecoMet : ecoMissing).push(t('cr.ecoProcurement'));
+  (d.hasCarbonReport || d.externalEnvironment >= 1 ? ecoMet : ecoMissing).push(t('crEcoEnvironment'));
+  (d.externalSocial >= 1 ? ecoMet : ecoMissing).push(t('crEcoSocial'));
+  (d.externalGovernance >= 1 ? ecoMet : ecoMissing).push(t('crEcoEthics'));
+  (d.externalProcurement >= 1 ? ecoMet : ecoMissing).push(t('crEcoProcurement'));
   const ecoCoverage = pct(ecoMet.length, 4);
 
   const cdpMet: string[] = [];
   const cdpMissing: string[] = [];
-  (d.hasScope1or2 ? cdpMet : cdpMissing).push(t('cr.scope12'));
-  (d.hasScope3 ? cdpMet : cdpMissing).push(t('cr.scope3Recommended'));
-  (d.hasEsgReport ? cdpMet : cdpMissing).push(t('cr.esgReportPublished'));
+  (d.hasScope1or2 ? cdpMet : cdpMissing).push(t('crScope12'));
+  (d.hasScope3 ? cdpMet : cdpMissing).push(t('crScope3Recommended'));
+  (d.hasEsgReport ? cdpMet : cdpMissing).push(t('crEsgReportPublished'));
 
   return [
     {
@@ -234,21 +234,21 @@ function buildLabels(d: AggregateData, t: TFn): LabelEligibility[] {
       coverage: bCorpCoverage,
       eligible: bCorpCoverage >= 80 && d.rseScore >= 80,
       message: bCorpCoverage >= 80
-        ? t('msg.bCorpReady')
-        : t('msg.bCorpProgress', { pct: bCorpCoverage }),
+        ? t('msgBCorpReady')
+        : t('msgBCorpProgress', { pct: bCorpCoverage }),
       criteria_met: bCorpMet,
       criteria_missing: bCorpMissing,
     },
     {
       id: 'label-bas-carbone',
-      label: t('lbl.labelBasCarbone'),
-      organism: t('org.transitionEcologique'),
+      label: t('lblLabelBasCarbone'),
+      organism: t('orgTransitionEcologique'),
       url: 'https://label-bas-carbone.ecologie.gouv.fr',
       coverage: pct(lbcMet.length, 4),
       eligible: d.hasCarbonReport && d.hasScope1or2 && d.co2Avoided > 0,
       message: d.hasCarbonReport && d.hasScope1or2
-        ? t('msg.lbcReady')
-        : t('msg.lbcProgress'),
+        ? t('msgLbcReady')
+        : t('msgLbcProgress'),
       criteria_met: lbcMet,
       criteria_missing: lbcMissing,
     },
@@ -260,10 +260,10 @@ function buildLabels(d: AggregateData, t: TFn): LabelEligibility[] {
       coverage: pct(sbtiMet.length, 3),
       eligible: d.hasScope1or2 && d.hasCarbonReport,
       message: d.hasScope1or2 && d.hasScope3
-        ? t('msg.sbtiReady')
+        ? t('msgSbtiReady')
         : !d.hasScope1or2
-          ? t('msg.sbtiNeedScope12')
-          : t('msg.sbtiNeedScope3'),
+          ? t('msgSbtiNeedScope12')
+          : t('msgSbtiNeedScope3'),
       criteria_met: sbtiMet,
       criteria_missing: sbtiMissing,
     },
@@ -275,8 +275,8 @@ function buildLabels(d: AggregateData, t: TFn): LabelEligibility[] {
       coverage: lucieCoverage,
       eligible: lucieCoverage >= 80 && d.rseScore >= 70,
       message: lucieCoverage >= 80
-        ? t('msg.lucieReady')
-        : t('msg.lucieProgress', { met: lucieMet.length }),
+        ? t('msgLucieReady')
+        : t('msgLucieProgress', { met: lucieMet.length }),
       criteria_met: lucieMet,
       criteria_missing: lucieMissing,
     },
@@ -288,8 +288,8 @@ function buildLabels(d: AggregateData, t: TFn): LabelEligibility[] {
       coverage: ecoCoverage,
       eligible: ecoCoverage >= 75,
       message: ecoCoverage >= 75
-        ? t('msg.ecovadisReady')
-        : t('msg.ecovadisProgress', { met: ecoMet.length }),
+        ? t('msgEcovadisReady')
+        : t('msgEcovadisProgress', { met: ecoMet.length }),
       criteria_met: ecoMet,
       criteria_missing: ecoMissing,
     },
@@ -301,8 +301,8 @@ function buildLabels(d: AggregateData, t: TFn): LabelEligibility[] {
       coverage: pct(cdpMet.length, 3),
       eligible: d.hasScope1or2,
       message: d.hasScope1or2
-        ? t('msg.cdpReady')
-        : t('msg.cdpProgress'),
+        ? t('msgCdpReady')
+        : t('msgCdpProgress'),
       criteria_met: cdpMet,
       criteria_missing: cdpMissing,
     },
@@ -314,8 +314,8 @@ function buildLabels(d: AggregateData, t: TFn): LabelEligibility[] {
       coverage: d.transactions >= 5 && d.co2Avoided > 0 ? 100 : 50,
       eligible: d.transactions >= 5 && d.co2Avoided > 0,
       message: d.transactions >= 5 && d.co2Avoided > 0
-        ? t('msg.greentechReady')
-        : t('msg.greentechProgress'),
+        ? t('msgGreentechReady')
+        : t('msgGreentechProgress'),
       criteria_met: [],
       criteria_missing: [],
     },
