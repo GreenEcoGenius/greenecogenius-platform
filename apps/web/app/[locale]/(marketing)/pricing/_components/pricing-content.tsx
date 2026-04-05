@@ -611,10 +611,10 @@ const COMING_SOON: ComingSoonFeature[] = [
   },
   {
     icon: Award,
-    titleFr: 'Audit certifie + Label GreenEcoGenius',
-    titleEn: 'Certified audit + GreenEcoGenius Label',
-    descFr: 'Audit de conformite formalise avec certification et label reconnu par nos partenaires.',
-    descEn: 'Formalized compliance audit with certification and label recognized by our partners.',
+    titleFr: 'Préparation aux labels reconnus',
+    titleEn: 'Preparation for recognized labels',
+    descFr: 'Accompagnement à la candidature aux labels reconnus : B Corp, GreenTech Innovation, Label Lucie 26000, Label Numérique Responsable, EcoVadis.',
+    descEn: 'Support for applying to recognized labels: B Corp, GreenTech Innovation, Label Lucie 26000, Label Numérique Responsable, EcoVadis.',
     timeline: '2027',
   },
   {

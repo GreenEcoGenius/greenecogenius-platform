@@ -238,11 +238,14 @@ function PillarContent({
 
         {pillar === 'labels' && (
           <div className="from-primary to-primary-hover mt-8 rounded-2xl bg-gradient-to-br p-6 text-white sm:p-8">
-            <h3 className="text-lg font-bold">Label GreenEcoGenius</h3>
+            <h3 className="text-lg font-bold">
+              Préparation aux labels reconnus
+            </h3>
             <p className="mt-2 text-sm text-white/80">
-              Notre programme de labellisation recompense les entreprises qui
-              atteignent un score RSE superieur a 80 points avec preuves
-              blockchain. Engagement verifiable, zero greenwashing.
+              GreenEcoGenius vous aide à préparer votre candidature aux labels
+              reconnus du marché : B Corp, GreenTech Innovation, Label Lucie
+              26000, Label Numérique Responsable et EcoVadis. Nous sommes un
+              outil de préparation, pas un organisme de certification.
             </p>
           </div>
         )}

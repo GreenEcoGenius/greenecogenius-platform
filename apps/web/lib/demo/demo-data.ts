@@ -774,7 +774,7 @@ export const DEMO_DATA = {
     ],
     labels: [
       {
-        name: 'GreenTech',
+        name: 'GreenTech Innovation',
         score: 85,
         threshold: 70,
         status: 'eligible',
@@ -788,18 +788,25 @@ export const DEMO_DATA = {
         color: '#3B82F6',
       },
       {
-        name: 'Label NR',
+        name: 'Label Numérique Responsable',
         score: 71,
         threshold: 75,
         status: 'in_progress',
         color: '#8B5CF6',
       },
       {
-        name: 'GEG Label',
+        name: 'Label Lucie 26000',
         score: 74,
         threshold: 80,
         status: 'in_progress',
         color: '#0D9488',
+      },
+      {
+        name: 'EcoVadis',
+        score: 68,
+        threshold: 80,
+        status: 'in_progress',
+        color: '#F59E0B',
       },
     ],
     actions: [

@@ -144,7 +144,7 @@ async function CompliancePage() {
     carbon: { name: 'Carbone & Env.', icon: 'carbon' },
     reporting: { name: 'Reporting ESG', icon: 'reporting' },
     traceability: { name: 'Traçabilité', icon: 'traceability' },
-    labels: { name: 'Labels', icon: 'labels' },
+    labels: { name: 'Éligibilité labels', icon: 'labels' },
   };
 
   const pillars = Array.from(pillarMap.entries()).map(([key, val]) => ({

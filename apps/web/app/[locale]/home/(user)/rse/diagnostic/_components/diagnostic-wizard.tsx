@@ -374,13 +374,15 @@ export function DiagnosticWizard() {
   const canGoNext = step < TOTAL_STEPS - 1;
   const canGoBack = step > 0;
 
-  // Label eligibility
+  // Label eligibility — recognized market labels (GreenEcoGenius is a
+  // preparation tool, not a certification body).
   const labels = useMemo(
     () => [
       { name: 'B Corp', threshold: 80 },
-      { name: 'GreenTech', threshold: 70 },
-      { name: 'Label NR', threshold: 75 },
-      { name: 'GEG Label', threshold: 80 },
+      { name: 'GreenTech Innovation', threshold: 70 },
+      { name: 'Label Lucie 26000', threshold: 75 },
+      { name: 'Label Numérique Responsable', threshold: 75 },
+      { name: 'EcoVadis', threshold: 80 },
     ],
     [],
   );

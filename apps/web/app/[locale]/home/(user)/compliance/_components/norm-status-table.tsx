@@ -25,7 +25,7 @@ const PILLAR_NAMES: Record<string, string> = {
   reporting: 'Reporting ESG',
   traceability: 'Traçabilité',
   data: 'Données & SaaS',
-  labels: 'Labels',
+  labels: 'Éligibilité labels',
 };
 
 const STATUS_CONFIG: Record<
