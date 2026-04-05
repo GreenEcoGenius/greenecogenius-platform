@@ -57,7 +57,7 @@ export function AppHeader() {
   return (
     <header
       className={cn(
-        'border-metal-chrome fixed top-0 right-0 left-0 z-50 flex h-20 items-center justify-between overflow-visible border-b bg-white/95 px-2 backdrop-blur-sm transition-transform duration-300 md:h-28 md:px-3 lg:px-5',
+        'border-metal-chrome fixed top-0 right-0 left-0 z-50 flex h-20 items-center justify-between overflow-visible border-b bg-white/95 px-2 backdrop-blur-sm transition-transform duration-300 md:h-24 md:px-3 lg:px-5',
         visible ? 'translate-y-0' : '-translate-y-full',
       )}
     >
