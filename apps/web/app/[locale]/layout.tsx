@@ -6,6 +6,7 @@ import { getMessages } from 'next-intl/server';
 import { PublicEnvScript } from 'next-runtime-env';
 
 import { routing } from '@kit/i18n/routing';
+import { CookieBanner } from '@kit/ui/cookie-banner';
 import { Toaster } from '@kit/ui/sonner';
 import { cn } from '@kit/ui/utils';
 
@@ -58,6 +59,8 @@ export default async function LocaleLayout({
           {children}
 
           <Toaster richColors={true} theme={theme} position="top-center" />
+
+          <CookieBanner />
 
           <CrispChat />
         </RootProviders>
