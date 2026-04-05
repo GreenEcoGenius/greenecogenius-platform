@@ -9,7 +9,7 @@ import {
   formatContextForPrompt,
   loadGeniusContext,
 } from '~/lib/ai/genius-context';
-import { execute, routeRequest } from '~/lib/ai/orchestrator';
+import { executeStream, routeRequest } from '~/lib/ai/orchestrator';
 
 export async function POST(req: NextRequest) {
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -54,7 +54,6 @@ export async function POST(req: NextRequest) {
       ? (agentType as AgentType)
       : await routeRequest(message);
 
-    // Load real user context for Genius
     let userContextPrompt = '';
     try {
       const adminClient = getSupabaseServerAdminClient();
@@ -64,19 +63,23 @@ export async function POST(req: NextRequest) {
       console.error('[Genius] Failed to load user context:', e);
     }
 
-    const response = await execute(resolvedAgent, message, {
+    const stream = executeStream(resolvedAgent, message, {
       ...context,
       locale: locale ?? 'fr',
       userContext: userContextPrompt,
     });
 
-    return NextResponse.json(response);
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-cache',
+        'Transfer-Encoding': 'chunked',
+      },
+    });
   } catch (error) {
     console.error('[AI Chat] Error:', error);
-
     const message =
       error instanceof Error ? error.message : 'Internal server error';
-
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

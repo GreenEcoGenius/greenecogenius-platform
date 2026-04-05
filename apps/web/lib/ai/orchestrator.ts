@@ -157,6 +157,50 @@ export async function execute(
 }
 
 /**
+ * Streaming version — returns a ReadableStream of text deltas.
+ */
+export function executeStream(
+  agentType: AgentType,
+  message: string,
+  context?: AIContext,
+): ReadableStream<Uint8Array> {
+  const encoder = new TextEncoder();
+
+  return new ReadableStream({
+    async start(controller) {
+      try {
+        const client = getAnthropicClient();
+        const config = TOKEN_LIMITS[agentType];
+        const basePrompt = AGENT_PROMPTS[agentType];
+        if (!basePrompt) throw new Error(`Unknown agent: ${agentType}`);
+
+        const systemPrompt = buildSystemPrompt(basePrompt, context);
+        const messages: Array<{ role: 'user' | 'assistant'; content: string }> = [];
+        if (context?.previousMessages) messages.push(...context.previousMessages);
+        messages.push({ role: 'user', content: message });
+
+        const stream = client.messages.stream({
+          model: config.model,
+          max_tokens: config.maxTokens,
+          system: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }],
+          messages,
+        });
+
+        for await (const event of stream) {
+          if (event.type === 'content_block_delta' && 'delta' in event && event.delta.type === 'text_delta') {
+            controller.enqueue(encoder.encode(event.delta.text));
+          }
+        }
+
+        controller.close();
+      } catch (err) {
+        controller.error(err);
+      }
+    },
+  });
+}
+
+/**
  * Executes multiple agents in parallel and returns all responses.
  */
 export async function executeMultiAgent(

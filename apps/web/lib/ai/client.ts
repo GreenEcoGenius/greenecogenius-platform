@@ -13,17 +13,16 @@ export function getAnthropicClient(): Anthropic {
 
 export const MODELS = {
   FAST: 'claude-haiku-4-5-20251001',
-  BALANCED: 'claude-sonnet-4-6',
-  PREMIUM: 'claude-opus-4-6',
+  BALANCED: 'claude-sonnet-4-20250514',
 } as const;
 
 export const TOKEN_LIMITS = {
   comptoir: { maxTokens: 1024, model: MODELS.FAST },
-  carbon: { maxTokens: 4096, model: MODELS.BALANCED },
-  esg: { maxTokens: 8192, model: MODELS.BALANCED },
-  traceability: { maxTokens: 2048, model: MODELS.FAST },
-  rse: { maxTokens: 8192, model: MODELS.PREMIUM },
-  compliance: { maxTokens: 4096, model: MODELS.BALANCED },
+  carbon: { maxTokens: 2048, model: MODELS.BALANCED },
+  esg: { maxTokens: 4096, model: MODELS.BALANCED },
+  traceability: { maxTokens: 1024, model: MODELS.FAST },
+  rse: { maxTokens: 4096, model: MODELS.BALANCED },
+  compliance: { maxTokens: 2048, model: MODELS.BALANCED },
 } as const;
 
 export type AgentType = keyof typeof TOKEN_LIMITS;

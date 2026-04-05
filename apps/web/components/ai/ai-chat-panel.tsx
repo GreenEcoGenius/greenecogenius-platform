@@ -227,6 +227,10 @@ export function AIChatPanel() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatOpen]);
 
+  const streamBufferRef = useRef('');
+  const streamMsgIdRef = useRef('');
+  const throttleRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const handleSend = useCallback(
     async (text?: string) => {
       const trimmed = (text ?? input).trim();
@@ -239,6 +243,15 @@ export function AIChatPanel() {
       setInput('');
       if (inputRef.current) inputRef.current.style.height = 'auto';
       setLoading(true);
+
+      const assistantId = crypto.randomUUID();
+      streamMsgIdRef.current = assistantId;
+      streamBufferRef.current = '';
+
+      setMessages((prev) => [
+        ...prev,
+        { id: assistantId, role: 'assistant', content: '', streaming: true },
+      ]);
 
       try {
         const previousMessages = messages.map((m) => ({
@@ -258,26 +271,65 @@ export function AIChatPanel() {
         });
 
         if (!res.ok) throw new Error('Server error');
-        const data = await res.json();
 
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: crypto.randomUUID(),
-            role: 'assistant',
-            content: data.content || data.message || t('ai.noResponse'),
-            streaming: true,
-          },
-        ]);
+        const reader = res.body?.getReader();
+        const decoder = new TextDecoder();
+
+        if (!reader) throw new Error('No stream');
+
+        const flushBuffer = () => {
+          const content = streamBufferRef.current;
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === assistantId ? { ...m, content } : m,
+            ),
+          );
+        };
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          streamBufferRef.current += decoder.decode(value, { stream: true });
+
+          if (!throttleRef.current) {
+            throttleRef.current = setTimeout(() => {
+              flushBuffer();
+              throttleRef.current = null;
+            }, 50);
+          }
+        }
+
+        if (throttleRef.current) {
+          clearTimeout(throttleRef.current);
+          throttleRef.current = null;
+        }
+        flushBuffer();
+
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantId ? { ...m, streaming: false } : m,
+          ),
+        );
       } catch {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: crypto.randomUUID(),
-            role: 'assistant',
-            content: t('ai.errorFallback'),
-          },
-        ]);
+        setMessages((prev) => {
+          const hasEmpty = prev.find((m) => m.id === assistantId && !m.content);
+          if (hasEmpty) {
+            return prev.map((m) =>
+              m.id === assistantId
+                ? { ...m, content: t('ai.errorFallback'), streaming: false }
+                : m,
+            );
+          }
+          return [
+            ...prev,
+            {
+              id: crypto.randomUUID(),
+              role: 'assistant' as const,
+              content: t('ai.errorFallback'),
+            },
+          ];
+        });
       } finally {
         setLoading(false);
       }
@@ -388,24 +440,25 @@ export function AIChatPanel() {
                       <Sparkles className="text-primary h-3 w-3" />
                     </div>
                     <div className="bg-metal-50 text-metal-800 max-w-[85%] rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] leading-relaxed">
-                      {msg.streaming ? (
-                        <StreamingMessage content={msg.content} />
-                      ) : (
-                        <div className="whitespace-pre-wrap">{msg.content}</div>
-                      )}
+                      <div className="whitespace-pre-wrap">
+                        {msg.content}
+                        {msg.streaming && msg.content && (
+                          <span className="bg-teal-500 ml-0.5 inline-block h-3.5 w-0.5 animate-pulse" />
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
               </div>
             ))}
 
-            {loading && (
+            {loading && !messages.some((m) => m.streaming && m.content) && (
               <div className="flex gap-2">
                 <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
                   <Sparkles className="text-primary h-3 w-3" />
                 </div>
-                <div className="bg-metal-50 rounded-xl rounded-tl-sm px-3 py-3">
-                  <AILoadingState lines={1} />
+                <div className="bg-metal-50 text-metal-500 rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px]">
+                  {locale === 'fr' ? 'Genius reflechit...' : 'Genius is thinking...'}
                 </div>
               </div>
             )}
