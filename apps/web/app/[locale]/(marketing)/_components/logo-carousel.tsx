@@ -29,6 +29,10 @@ const partners = [
     name: 'ADEME',
     logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/logo-ademe-removebg-preview.png.webp',
   },
+  {
+    name: 'Docusign',
+    logo: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/a31b8a42-d341-40c9-b0d8-a29ffbc45a41.png',
+  },
 ];
 
 function LogoItem({ name, logo }: { name: string; logo: string }) {

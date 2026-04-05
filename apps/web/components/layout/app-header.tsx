@@ -22,17 +22,24 @@ export function AppHeader() {
   const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const scrollRoot =
-      (document.querySelector('[data-scroll-root]') as HTMLElement | null) ??
-      null;
+    const LG_BREAKPOINT = 1024;
 
-    const readScrollY = (): number => {
-      if (scrollRoot) return scrollRoot.scrollTop;
-      return window.scrollY;
+    const getScrollTarget = (): HTMLElement | Window => {
+      if (window.innerWidth >= LG_BREAKPOINT) {
+        const el = document.querySelector('[data-scroll-root]') as HTMLElement | null;
+        if (el) return el;
+      }
+      return window;
     };
 
+    const readScrollY = (target: HTMLElement | Window): number => {
+      return target instanceof HTMLElement ? target.scrollTop : window.scrollY;
+    };
+
+    let currentTarget = getScrollTarget();
+
     const onScroll = () => {
-      const currentY = readScrollY();
+      const currentY = readScrollY(currentTarget);
 
       if (currentY < 100) {
         setVisible(true);
@@ -45,9 +52,22 @@ export function AppHeader() {
       lastScrollY.current = currentY;
     };
 
-    const target: HTMLElement | Window = scrollRoot ?? window;
-    target.addEventListener('scroll', onScroll, { passive: true });
-    return () => target.removeEventListener('scroll', onScroll);
+    const onResize = () => {
+      const newTarget = getScrollTarget();
+      if (newTarget !== currentTarget) {
+        currentTarget.removeEventListener('scroll', onScroll);
+        currentTarget = newTarget;
+        lastScrollY.current = readScrollY(currentTarget);
+        currentTarget.addEventListener('scroll', onScroll, { passive: true });
+      }
+    };
+
+    currentTarget.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => {
+      currentTarget.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
 
   return (
