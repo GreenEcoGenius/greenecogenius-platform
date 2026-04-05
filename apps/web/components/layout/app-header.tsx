@@ -17,29 +17,29 @@ export function AppHeader() {
   const { openSearch } = useGlobalSearch();
 
   return (
-    <header className="border-metal-chrome fixed top-0 right-0 left-0 z-50 flex h-14 items-center justify-between border-b bg-white/95 px-3 backdrop-blur-sm lg:px-5">
+    <header className="border-metal-chrome fixed top-0 right-0 left-0 z-50 flex h-24 items-center justify-between border-b bg-white/95 px-3 backdrop-blur-sm md:h-28 lg:px-5">
       {/* Left: logo only */}
       <div className="flex items-center">
-        <AppLogo href="/" className="h-24 w-auto" />
+        <AppLogo href="/" />
       </div>
 
       {/* Right: all actions grouped */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-2">
         {/* Search (mobile icon) */}
         <button
           type="button"
           onClick={openSearch}
-          className="text-metal-600 hover:bg-metal-frost flex h-9 w-9 items-center justify-center rounded-xl transition-colors md:hidden"
+          className="text-metal-600 hover:bg-metal-frost flex h-11 w-11 items-center justify-center rounded-xl transition-colors md:hidden"
           aria-label="Rechercher"
         >
-          <Search className="h-4 w-4" />
+          <Search className="h-5 w-5" />
         </button>
 
         {/* Search (desktop expanded) */}
         <button
           type="button"
           onClick={openSearch}
-          className="border-metal-silver bg-metal-50 text-metal-steel hover:border-metal-400 hidden items-center gap-2 rounded-xl border px-3 py-1.5 text-sm transition-colors md:flex"
+          className="border-metal-silver bg-metal-50 text-metal-steel hover:border-metal-400 hidden items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition-colors md:flex"
         >
           <Search className="h-4 w-4" />
           <span>Rechercher...</span>
@@ -53,7 +53,7 @@ export function AppHeader() {
           type="button"
           onClick={toggleChat}
           className={cn(
-            'flex h-9 w-9 items-center justify-center rounded-xl transition-colors',
+            'flex h-11 w-11 items-center justify-center rounded-xl transition-colors',
             chatOpen
               ? 'bg-primary text-white'
               : 'text-metal-600 hover:bg-metal-frost',
@@ -61,7 +61,7 @@ export function AppHeader() {
           aria-label="Genius"
           title="Genius"
         >
-          <Sparkles className="h-4 w-4" />
+          <Sparkles className="h-5 w-5" />
         </button>
 
         {/* Language toggle */}
@@ -95,11 +95,11 @@ function LocaleToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="text-metal-600 hover:bg-metal-frost flex h-9 items-center gap-1 rounded-xl px-2 text-xs font-semibold uppercase transition-colors"
+      className="text-metal-600 hover:bg-metal-frost flex h-11 items-center gap-1.5 rounded-xl px-3 text-sm font-semibold uppercase transition-colors"
       aria-label={locale === 'fr' ? 'Switch to English' : 'Passer en français'}
       title={locale === 'fr' ? 'Switch to English' : 'Passer en français'}
     >
-      <Globe className="h-3.5 w-3.5" />
+      <Globe className="h-4 w-4" />
       {locale === 'fr' ? 'EN' : 'FR'}
     </button>
   );
@@ -121,10 +121,10 @@ function MobileMenuButton() {
     <button
       type="button"
       onClick={toggleSidebar}
-      className="text-metal-700 hover:bg-metal-frost flex h-9 w-9 items-center justify-center rounded-xl transition-colors lg:hidden"
+      className="text-metal-700 hover:bg-metal-frost flex h-11 w-11 items-center justify-center rounded-xl transition-colors lg:hidden"
       aria-label="Menu"
     >
-      <Menu className="h-5 w-5" />
+      <Menu className="h-6 w-6" />
     </button>
   );
 }
