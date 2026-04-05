@@ -27,7 +27,7 @@ async function RSEPage() {
   const user = await requireUser(client);
   const userId = user.data?.id;
   const labels = userId
-    ? await LabelEligibilityService.compute(client, userId)
+    ? await LabelEligibilityService.compute(client, userId, t)
     : [];
   const features = [
     {

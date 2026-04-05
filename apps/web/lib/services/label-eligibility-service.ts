@@ -2,29 +2,15 @@ import 'server-only';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-/**
- * Label eligibility service.
- *
- * Reads the same signals used by the compliance engine (transactions,
- * carbon, blockchain, ESG, RSE, external activities) and derives whether
- * the account is ready to candidate to the main ESG labels / reporting
- * frameworks. Returns a list of actionable statuses instead of a binary.
- */
-
 export interface LabelEligibility {
   id: string;
   label: string;
   organism: string;
   url: string;
-  /** 0-100 percentage of requirements covered */
   coverage: number;
-  /** True when the account meets the minimum bar to start applying */
   eligible: boolean;
-  /** Human-readable next step or explanation */
   message: string;
-  /** Checklist of what's already covered */
   criteria_met: string[];
-  /** Checklist of what still needs work */
   criteria_missing: string[];
 }
 
@@ -47,6 +33,8 @@ interface AggregateData {
   externalProcurement: number;
   externalCommunity: number;
 }
+
+type TFn = (key: string, values?: Record<string, unknown>) => string;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const anyClient = (c: SupabaseClient) => c as any;
@@ -190,84 +178,52 @@ function pct(n: number, total: number): number {
   return Math.min(100, Math.round((n / total) * 100));
 }
 
-function buildLabels(d: AggregateData): LabelEligibility[] {
-  // B Corp — 5 impact areas, each a criterion
+function buildLabels(d: AggregateData, t: TFn): LabelEligibility[] {
   const bCorpMet: string[] = [];
   const bCorpMissing: string[] = [];
-  (d.externalGovernance >= 1 ? bCorpMet : bCorpMissing).push(
-    'Gouvernance (composition CA, anti-corruption, code de conduite)',
-  );
-  (d.externalSocial >= 1 ? bCorpMet : bCorpMissing).push(
-    'Travailleurs (effectifs, formation, diversite)',
-  );
-  (d.externalCommunity >= 1 ? bCorpMet : bCorpMissing).push(
-    'Communaute (mecenat, benevolat, partenariats)',
-  );
-  (d.externalEnvironment >= 1 || d.hasCarbonReport
-    ? bCorpMet
-    : bCorpMissing
-  ).push('Environnement (empreinte mesuree ou actions documentees)');
-  (d.transactions >= 1 || d.co2Avoided > 0 ? bCorpMet : bCorpMissing).push(
-    'Impact client (transactions tracees ou CO₂ evite)',
-  );
+  (d.externalGovernance >= 1 ? bCorpMet : bCorpMissing).push(t('cr.bCorpGovernance'));
+  (d.externalSocial >= 1 ? bCorpMet : bCorpMissing).push(t('cr.bCorpWorkers'));
+  (d.externalCommunity >= 1 ? bCorpMet : bCorpMissing).push(t('cr.bCorpCommunity'));
+  (d.externalEnvironment >= 1 || d.hasCarbonReport ? bCorpMet : bCorpMissing).push(t('cr.bCorpEnvironment'));
+  (d.transactions >= 1 || d.co2Avoided > 0 ? bCorpMet : bCorpMissing).push(t('cr.bCorpClientImpact'));
   const bCorpCoverage = pct(bCorpMet.length, 5);
 
-  // Label Bas-Carbone — requires a measured carbon footprint + reduction path
   const lbcMet: string[] = [];
   const lbcMissing: string[] = [];
-  (d.hasCarbonReport ? lbcMet : lbcMissing).push(
-    'Bilan carbone realise (Scope 1/2/3)',
-  );
-  (d.hasScope1or2 ? lbcMet : lbcMissing).push('Scopes 1 & 2 renseignes');
-  (d.hasScope3 ? lbcMet : lbcMissing).push('Scope 3 renseigne');
-  (d.co2Avoided > 0 ? lbcMet : lbcMissing).push('Emissions evitees mesurables');
+  (d.hasCarbonReport ? lbcMet : lbcMissing).push(t('cr.carbonAssessment'));
+  (d.hasScope1or2 ? lbcMet : lbcMissing).push(t('cr.scope12Filled'));
+  (d.hasScope3 ? lbcMet : lbcMissing).push(t('cr.scope3Filled'));
+  (d.co2Avoided > 0 ? lbcMet : lbcMissing).push(t('cr.measurableAvoidedEmissions'));
 
-  // SBTi — requires Scope 1/2 at minimum, Scope 3 for ambition
   const sbtiMet: string[] = [];
   const sbtiMissing: string[] = [];
-  (d.hasScope1or2 ? sbtiMet : sbtiMissing).push('Scopes 1 & 2 couverts');
-  (d.hasScope3 ? sbtiMet : sbtiMissing).push('Scope 3 couvert');
-  (d.hasCarbonReport ? sbtiMet : sbtiMissing).push('Bilan carbone a jour');
+  (d.hasScope1or2 ? sbtiMet : sbtiMissing).push(t('cr.scope12Covered'));
+  (d.hasScope3 ? sbtiMet : sbtiMissing).push(t('cr.scope3Covered'));
+  (d.hasCarbonReport ? sbtiMet : sbtiMissing).push(t('cr.carbonUpToDate'));
 
-  // Label Lucie (ISO 26000) — 7 sujets centraux
   const lucieMet: string[] = [];
   const lucieMissing: string[] = [];
-  (d.externalGovernance >= 1 ? lucieMet : lucieMissing).push('Gouvernance');
-  (d.externalSocial >= 1 ? lucieMet : lucieMissing).push(
-    "Droits de l'Homme & relations de travail",
-  );
-  (d.hasCarbonReport || d.externalEnvironment >= 1
-    ? lucieMet
-    : lucieMissing
-  ).push('Environnement');
-  (d.externalProcurement >= 1 ? lucieMet : lucieMissing).push(
-    'Loyaute des pratiques (achats)',
-  );
-  (d.transactions >= 1 ? lucieMet : lucieMissing).push('Consommateurs');
-  (d.externalCommunity >= 1 ? lucieMet : lucieMissing).push('Communautes');
+  (d.externalGovernance >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieGovernance'));
+  (d.externalSocial >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieHumanRights'));
+  (d.hasCarbonReport || d.externalEnvironment >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieEnvironment'));
+  (d.externalProcurement >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieFairPractices'));
+  (d.transactions >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieConsumers'));
+  (d.externalCommunity >= 1 ? lucieMet : lucieMissing).push(t('cr.lucieCommunities'));
   const lucieCoverage = pct(lucieMet.length, 6);
 
-  // EcoVadis — 4 themes: environnement, social, ethique, achats
   const ecoMet: string[] = [];
   const ecoMissing: string[] = [];
-  (d.hasCarbonReport || d.externalEnvironment >= 1 ? ecoMet : ecoMissing).push(
-    'Environnement',
-  );
-  (d.externalSocial >= 1 ? ecoMet : ecoMissing).push('Social & droits humains');
-  (d.externalGovernance >= 1 ? ecoMet : ecoMissing).push(
-    'Ethique (anti-corruption, gouvernance)',
-  );
-  (d.externalProcurement >= 1 ? ecoMet : ecoMissing).push(
-    'Achats responsables',
-  );
+  (d.hasCarbonReport || d.externalEnvironment >= 1 ? ecoMet : ecoMissing).push(t('cr.ecoEnvironment'));
+  (d.externalSocial >= 1 ? ecoMet : ecoMissing).push(t('cr.ecoSocial'));
+  (d.externalGovernance >= 1 ? ecoMet : ecoMissing).push(t('cr.ecoEthics'));
+  (d.externalProcurement >= 1 ? ecoMet : ecoMissing).push(t('cr.ecoProcurement'));
   const ecoCoverage = pct(ecoMet.length, 4);
 
-  // CDP — carbon questionnaire
   const cdpMet: string[] = [];
   const cdpMissing: string[] = [];
-  (d.hasScope1or2 ? cdpMet : cdpMissing).push('Scopes 1 & 2');
-  (d.hasScope3 ? cdpMet : cdpMissing).push('Scope 3 (recommande)');
-  (d.hasEsgReport ? cdpMet : cdpMissing).push('Rapport ESG publie');
+  (d.hasScope1or2 ? cdpMet : cdpMissing).push(t('cr.scope12'));
+  (d.hasScope3 ? cdpMet : cdpMissing).push(t('cr.scope3Recommended'));
+  (d.hasEsgReport ? cdpMet : cdpMissing).push(t('cr.esgReportPublished'));
 
   return [
     {
@@ -277,24 +233,22 @@ function buildLabels(d: AggregateData): LabelEligibility[] {
       url: 'https://www.bcorporation.net',
       coverage: bCorpCoverage,
       eligible: bCorpCoverage >= 80 && d.rseScore >= 80,
-      message:
-        bCorpCoverage >= 80
-          ? 'Pret a candidater sur le BIA (Business Impact Assessment).'
-          : `${bCorpCoverage}% des piliers couverts — completez les donnees manquantes pour candidater.`,
+      message: bCorpCoverage >= 80
+        ? t('msg.bCorpReady')
+        : t('msg.bCorpProgress', { pct: bCorpCoverage }),
       criteria_met: bCorpMet,
       criteria_missing: bCorpMissing,
     },
     {
       id: 'label-bas-carbone',
-      label: 'Label Bas-Carbone',
-      organism: 'Ministere de la Transition Ecologique',
+      label: t('lbl.labelBasCarbone'),
+      organism: t('org.transitionEcologique'),
       url: 'https://label-bas-carbone.ecologie.gouv.fr',
       coverage: pct(lbcMet.length, 4),
       eligible: d.hasCarbonReport && d.hasScope1or2 && d.co2Avoided > 0,
-      message:
-        d.hasCarbonReport && d.hasScope1or2
-          ? 'Le projet peut etre depose, sous reserve de methodologie validee.'
-          : 'Completez le bilan carbone avec Scopes 1 & 2 pour deposer un projet.',
+      message: d.hasCarbonReport && d.hasScope1or2
+        ? t('msg.lbcReady')
+        : t('msg.lbcProgress'),
       criteria_met: lbcMet,
       criteria_missing: lbcMissing,
     },
@@ -305,12 +259,11 @@ function buildLabels(d: AggregateData): LabelEligibility[] {
       url: 'https://sciencebasedtargets.org',
       coverage: pct(sbtiMet.length, 3),
       eligible: d.hasScope1or2 && d.hasCarbonReport,
-      message:
-        d.hasScope1or2 && d.hasScope3
-          ? 'Vous pouvez soumettre une trajectoire alignee 1.5°C.'
-          : !d.hasScope1or2
-            ? 'Commencez par renseigner vos Scopes 1 & 2.'
-            : 'Ajoutez le Scope 3 pour une trajectoire Net Zero credible.',
+      message: d.hasScope1or2 && d.hasScope3
+        ? t('msg.sbtiReady')
+        : !d.hasScope1or2
+          ? t('msg.sbtiNeedScope12')
+          : t('msg.sbtiNeedScope3'),
       criteria_met: sbtiMet,
       criteria_missing: sbtiMissing,
     },
@@ -321,10 +274,9 @@ function buildLabels(d: AggregateData): LabelEligibility[] {
       url: 'https://agence-lucie.com',
       coverage: lucieCoverage,
       eligible: lucieCoverage >= 80 && d.rseScore >= 70,
-      message:
-        lucieCoverage >= 80
-          ? 'Dossier de candidature Lucie pret a etre constitue.'
-          : `${lucieMet.length}/6 sujets centraux ISO 26000 couverts.`,
+      message: lucieCoverage >= 80
+        ? t('msg.lucieReady')
+        : t('msg.lucieProgress', { met: lucieMet.length }),
       criteria_met: lucieMet,
       criteria_missing: lucieMissing,
     },
@@ -335,10 +287,9 @@ function buildLabels(d: AggregateData): LabelEligibility[] {
       url: 'https://ecovadis.com',
       coverage: ecoCoverage,
       eligible: ecoCoverage >= 75,
-      message:
-        ecoCoverage >= 75
-          ? "Donnees suffisantes pour repondre au questionnaire EcoVadis."
-          : `${ecoMet.length}/4 themes EcoVadis couverts.`,
+      message: ecoCoverage >= 75
+        ? t('msg.ecovadisReady')
+        : t('msg.ecovadisProgress', { met: ecoMet.length }),
       criteria_met: ecoMet,
       criteria_missing: ecoMissing,
     },
@@ -350,8 +301,8 @@ function buildLabels(d: AggregateData): LabelEligibility[] {
       coverage: pct(cdpMet.length, 3),
       eligible: d.hasScope1or2,
       message: d.hasScope1or2
-        ? 'Vous pouvez repondre au questionnaire Climat CDP.'
-        : 'Completez les Scopes 1 & 2 pour repondre au CDP.',
+        ? t('msg.cdpReady')
+        : t('msg.cdpProgress'),
       criteria_met: cdpMet,
       criteria_missing: cdpMissing,
     },
@@ -362,10 +313,9 @@ function buildLabels(d: AggregateData): LabelEligibility[] {
       url: 'https://greentechinnovation.fr',
       coverage: d.transactions >= 5 && d.co2Avoided > 0 ? 100 : 50,
       eligible: d.transactions >= 5 && d.co2Avoided > 0,
-      message:
-        d.transactions >= 5 && d.co2Avoided > 0
-          ? "Candidature possible au prochain Appel a Manifestation d'Interet."
-          : 'Poursuivez les transactions pour solidifier votre dossier GreenTech.',
+      message: d.transactions >= 5 && d.co2Avoided > 0
+        ? t('msg.greentechReady')
+        : t('msg.greentechProgress'),
       criteria_met: [],
       criteria_missing: [],
     },
@@ -376,8 +326,9 @@ export class LabelEligibilityService {
   static async compute(
     client: SupabaseClient,
     accountId: string,
+    t: TFn,
   ): Promise<LabelEligibility[]> {
     const data = await fetchAggregateData(client, accountId);
-    return buildLabels(data);
+    return buildLabels(data, t);
   }
 }
