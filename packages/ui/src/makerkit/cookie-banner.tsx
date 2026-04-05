@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Button } from '../shadcn/button';
-import { Heading } from '../shadcn/heading';
 import { Trans } from './trans';
 
 // configure this as you wish
@@ -34,29 +33,25 @@ export function CookieBanner() {
   return (
     <div
       role="dialog"
-      aria-modal="true"
       aria-labelledby="cookie-banner-title"
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      aria-describedby="cookie-banner-description"
+      className="bg-background animate-in fade-in slide-in-from-bottom-full fixed inset-x-0 bottom-0 z-[100] border-t shadow-2xl duration-500"
     >
-      {/* Backdrop */}
-      <div
-        className="animate-in fade-in fixed inset-0 bg-black/50 backdrop-blur-sm duration-300"
-        aria-hidden="true"
-      />
-
-      {/* Modal */}
-      <div className="bg-background animate-in fade-in zoom-in-95 slide-in-from-bottom-4 relative w-full max-w-xl rounded-2xl border p-8 shadow-2xl duration-300 sm:p-10">
-        <div className="flex flex-col space-y-5">
-          <div id="cookie-banner-title">
-            <Heading level={2}>
-              <Trans
-                i18nKey={'common.cookieBanner.title'}
-                defaults={'Nous utilisons des cookies 🍪'}
-              />
-            </Heading>
-          </div>
-
-          <p className="text-muted-foreground text-base leading-relaxed">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 sm:px-6 md:flex-row md:items-center md:justify-between md:gap-8 lg:px-8">
+        <div className="flex-1">
+          <h3
+            id="cookie-banner-title"
+            className="text-foreground text-base font-semibold"
+          >
+            <Trans
+              i18nKey={'common.cookieBanner.title'}
+              defaults={'Nous utilisons des cookies 🍪'}
+            />
+          </h3>
+          <p
+            id="cookie-banner-description"
+            className="text-muted-foreground mt-1 text-sm leading-relaxed"
+          >
             <Trans
               i18nKey={'common.cookieBanner.description'}
               defaults={
@@ -64,32 +59,30 @@ export function CookieBanner() {
               }
             />
           </p>
+        </div>
 
-          <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
-            <Button
-              variant={'outline'}
-              size={'lg'}
-              onClick={reject}
-              data-test="cookie-banner-reject"
-            >
-              <Trans
-                i18nKey={'common.cookieBanner.reject'}
-                defaults={'Refuser'}
-              />
-            </Button>
+        <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center md:flex-shrink-0">
+          <Button
+            variant={'outline'}
+            onClick={reject}
+            data-test="cookie-banner-reject"
+          >
+            <Trans
+              i18nKey={'common.cookieBanner.reject'}
+              defaults={'Refuser'}
+            />
+          </Button>
 
-            <Button
-              autoFocus
-              size={'lg'}
-              onClick={accept}
-              data-test="cookie-banner-accept"
-            >
-              <Trans
-                i18nKey={'common.cookieBanner.accept'}
-                defaults={'Accepter'}
-              />
-            </Button>
-          </div>
+          <Button
+            autoFocus
+            onClick={accept}
+            data-test="cookie-banner-accept"
+          >
+            <Trans
+              i18nKey={'common.cookieBanner.accept'}
+              defaults={'Accepter'}
+            />
+          </Button>
         </div>
       </div>
     </div>
