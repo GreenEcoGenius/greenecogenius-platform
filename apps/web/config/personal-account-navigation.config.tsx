@@ -1,5 +1,6 @@
 import {
   Award,
+  ClipboardList,
   CreditCard,
   FileBarChart,
   Home,
@@ -58,6 +59,11 @@ const routes = [
         label: 'common.routes.compliance',
         path: '/home/compliance',
         Icon: <ShieldCheck className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.externalActivities',
+        path: '/home/external-activities',
+        Icon: <ClipboardList className={iconClasses} />,
       },
     ],
   },
