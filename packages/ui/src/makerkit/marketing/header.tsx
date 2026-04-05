@@ -20,15 +20,6 @@ export const Header: React.FC<HeaderProps> = function ({
   centered = true,
   ...props
 }) {
-  const grids = {
-    1: 'grid-cols-1',
-    2: 'grid-cols-2',
-    3: 'grid-cols-3',
-  };
-
-  const gridAmount = [logo, navigation, actions].filter(Boolean).length;
-  const gridClassName = grids[gridAmount as keyof typeof grids];
-
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
 
@@ -68,12 +59,7 @@ export const Header: React.FC<HeaderProps> = function ({
           'container mx-auto': centered,
         })}
       >
-        <div
-          className={cn(
-            'flex h-16 items-center justify-between gap-x-2 px-2 md:grid md:h-24 md:gap-x-4 md:px-0',
-            gridClassName,
-          )}
-        >
+        <div className="flex h-20 items-center gap-x-4 px-2 md:h-24 md:gap-x-8 md:px-0">
           <div className="flex items-center">{logo}</div>
 
           <If condition={navigation}>
@@ -83,7 +69,7 @@ export const Header: React.FC<HeaderProps> = function ({
           </If>
 
           <If condition={actions}>
-            <div className="flex items-center justify-end gap-x-2">
+            <div className="ml-auto flex items-center justify-end gap-x-2">
               {actions}
             </div>
           </If>
