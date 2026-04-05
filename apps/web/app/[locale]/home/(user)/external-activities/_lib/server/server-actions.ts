@@ -3,7 +3,6 @@
 import { revalidatePath } from 'next/cache';
 
 import { authActionClient } from '@kit/next/safe-action';
-import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
@@ -17,10 +16,8 @@ import {
 
 export const createExternalActivity = authActionClient
   .inputSchema(CreateExternalActivitySchema)
-  .action(async ({ parsedInput: input }) => {
+  .action(async ({ parsedInput: input, ctx: { user } }) => {
     const client = getSupabaseServerClient();
-    const { data: user, error } = await requireUser(client);
-    if (error || !user) throw new Error('Unauthorized');
 
     const activity = await ExternalActivitiesService.create(
       client,
@@ -45,10 +42,8 @@ export const createExternalActivity = authActionClient
 
 export const deleteExternalActivity = authActionClient
   .inputSchema(DeleteExternalActivitySchema)
-  .action(async ({ parsedInput }) => {
+  .action(async ({ parsedInput, ctx: { user } }) => {
     const client = getSupabaseServerClient();
-    const { data: user, error } = await requireUser(client);
-    if (error || !user) throw new Error('Unauthorized');
 
     await ExternalActivitiesService.delete(client, user.id, parsedInput.id);
 

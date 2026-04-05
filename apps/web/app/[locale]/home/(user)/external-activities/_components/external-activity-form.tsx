@@ -81,6 +81,7 @@ interface ExternalActivityFormProps {
 export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
   const router = useRouter();
   const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const form = useForm({
     resolver: zodResolver(CreateExternalActivitySchema),
@@ -100,6 +101,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
 
   const { execute, isPending } = useAction(createExternalActivity, {
     onSuccess: () => {
+      setErrorMessage(null);
       setSuccess(true);
       form.reset({
         category,
@@ -115,6 +117,14 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
       });
       router.refresh();
       setTimeout(() => setSuccess(false), 2500);
+    },
+    onError: ({ error }) => {
+      const message =
+        error.serverError ??
+        error.thrownError?.message ??
+        "Impossible d'enregistrer la donnee pour le moment.";
+      setErrorMessage(String(message));
+      setSuccess(false);
     },
   });
 
@@ -245,9 +255,11 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
           )}
         />
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           {success ? (
             <p className="text-sm text-emerald-600">Enregistre.</p>
+          ) : errorMessage ? (
+            <p className="text-xs text-red-500">{errorMessage}</p>
           ) : (
             <span />
           )}

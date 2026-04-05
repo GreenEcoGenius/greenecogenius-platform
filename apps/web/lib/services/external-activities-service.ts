@@ -31,6 +31,17 @@ export interface ExternalActivity {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const anyClient = (c: SupabaseClient) => c as any;
 
+/**
+ * Postgres error 42P01 = "relation does not exist". Returned when the
+ * external_activities migration has not yet been applied. Tolerate it so
+ * the UI renders an empty state rather than a 500.
+ */
+function isMissingTableError(error: unknown): boolean {
+  if (!error || typeof error !== 'object') return false;
+  const code = (error as { code?: string }).code;
+  return code === '42P01';
+}
+
 export interface CreateExternalActivityInput {
   category: ExternalActivityCategory;
   subcategory: string;
@@ -55,7 +66,10 @@ export class ExternalActivitiesService {
       .eq('account_id', accountId)
       .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      if (isMissingTableError(error)) return [];
+      throw error;
+    }
     return (data ?? []) as ExternalActivity[];
   }
 
@@ -71,7 +85,10 @@ export class ExternalActivitiesService {
       .eq('category', category)
       .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      if (isMissingTableError(error)) return [];
+      throw error;
+    }
     return (data ?? []) as ExternalActivity[];
   }
 
