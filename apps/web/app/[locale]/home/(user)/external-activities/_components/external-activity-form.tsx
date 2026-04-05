@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@kit/ui/button';
@@ -39,39 +40,40 @@ type Category =
   | 'procurement'
   | 'community';
 
-const SUBCATEGORIES: Record<Category, { value: string; label: string }[]> = {
+// Only the subcategory keys per category — labels come from i18n.
+const SUBCATEGORIES: Record<Category, string[]> = {
   governance: [
-    { value: 'board_composition', label: 'Composition du conseil' },
-    { value: 'anti_corruption', label: 'Politique anti-corruption' },
-    { value: 'code_of_conduct', label: 'Code de conduite' },
-    { value: 'esg_committee', label: 'Comite RSE / ESG' },
-    { value: 'remuneration', label: 'Politique de remuneration' },
+    'board_composition',
+    'anti_corruption',
+    'code_of_conduct',
+    'esg_committee',
+    'remuneration',
   ],
   social: [
-    { value: 'employee_count', label: 'Effectifs' },
-    { value: 'training_rate', label: 'Taux de formation' },
-    { value: 'diversity', label: 'Diversite et inclusion' },
-    { value: 'working_conditions', label: 'Conditions de travail' },
-    { value: 'social_dialogue', label: 'Dialogue social' },
+    'employee_count',
+    'training_rate',
+    'diversity',
+    'working_conditions',
+    'social_dialogue',
   ],
   environment: [
-    { value: 'water_consumption', label: "Consommation d'eau" },
-    { value: 'renewable_energy', label: 'Energie renouvelable' },
-    { value: 'biodiversity', label: 'Biodiversite' },
-    { value: 'zero_waste', label: 'Politique zero dechet' },
-    { value: 'mobility', label: 'Mobilite / flotte' },
+    'water_consumption',
+    'renewable_energy',
+    'biodiversity',
+    'zero_waste',
+    'mobility',
   ],
   procurement: [
-    { value: 'local_purchasing', label: 'Achats locaux' },
-    { value: 'supplier_audit', label: 'Audit fournisseurs' },
-    { value: 'responsible_procurement_policy', label: 'Politique achats responsables' },
-    { value: 'esg_criteria', label: 'Criteres ESG appels d offres' },
+    'local_purchasing',
+    'supplier_audit',
+    'responsible_procurement_policy',
+    'esg_criteria',
   ],
   community: [
-    { value: 'patronage', label: 'Mecenat' },
-    { value: 'volunteering', label: 'Benevolat employes' },
-    { value: 'ngo_partnership', label: 'Partenariats ONG' },
-    { value: 'local_action', label: 'Actions locales' },
+    'patronage',
+    'volunteering',
+    'ngo_partnership',
+    'local_action',
   ],
 };
 
@@ -87,6 +89,7 @@ interface UploadedDoc {
 }
 
 export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
+  const t = useTranslations('externalActivities');
   const router = useRouter();
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -96,7 +99,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
     resolver: zodResolver(CreateExternalActivitySchema),
     defaultValues: {
       category,
-      subcategory: SUBCATEGORIES[category]![0]!.value,
+      subcategory: SUBCATEGORIES[category]![0]!,
       title: '',
       description: '',
       quantitative_value: null as number | null,
@@ -116,7 +119,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
       setUploadedDoc(null);
       form.reset({
         category,
-        subcategory: SUBCATEGORIES[category]![0]!.value,
+        subcategory: SUBCATEGORIES[category]![0]!,
         title: '',
         description: '',
         quantitative_value: null,
@@ -134,7 +137,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
       const message =
         error.serverError ??
         error.thrownError?.message ??
-        "Impossible d'enregistrer la donnee pour le moment.";
+        t('form.genericError');
       setErrorMessage(String(message));
       setSuccess(false);
     },
@@ -151,16 +154,19 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
           name="subcategory"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Sous-categorie</FormLabel>
+              <FormLabel>{t('form.subcategory')}</FormLabel>
               <FormControl>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {SUBCATEGORIES[category]!.map((s) => (
-                      <SelectItem key={s.value} value={s.value}>
-                        {s.label}
+                    {SUBCATEGORIES[category]!.map((key) => (
+                      <SelectItem key={key} value={key}>
+                        {t(
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                          `subcategories.${key}` as any,
+                        )}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -176,9 +182,12 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Titre</FormLabel>
+              <FormLabel>{t('form.title')}</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Ex: Code de conduite 2026" />
+                <Input
+                  {...field}
+                  placeholder={t('form.titlePlaceholder')}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -190,12 +199,12 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>{t('form.description')}</FormLabel>
               <FormControl>
                 <Textarea
                   {...field}
                   value={field.value ?? ''}
-                  placeholder="Decrivez l'activite, son contexte, ses beneficiaires..."
+                  placeholder={t('form.descriptionPlaceholder')}
                   rows={3}
                 />
               </FormControl>
@@ -210,7 +219,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
             name="quantitative_value"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Valeur chiffree</FormLabel>
+                <FormLabel>{t('form.quantitativeValue')}</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -221,7 +230,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
                         e.target.value === '' ? null : Number(e.target.value),
                       )
                     }
-                    placeholder="Ex: 42"
+                    placeholder={t('form.quantitativeValuePlaceholder')}
                   />
                 </FormControl>
                 <FormMessage />
@@ -234,12 +243,12 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
             name="quantitative_unit"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Unite</FormLabel>
+                <FormLabel>{t('form.quantitativeUnit')}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value ?? ''}
-                    placeholder="Ex: %, m³, h, ETP"
+                    placeholder={t('form.quantitativeUnitPlaceholder')}
                   />
                 </FormControl>
                 <FormMessage />
@@ -257,7 +266,6 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
           onUploaded={(doc) => {
             setUploadedDoc(doc);
             form.setValue('document_path', doc.path);
-            // Clear any previously typed external URL since the upload wins.
             form.setValue('document_url', '');
           }}
           onRemoved={() => {
@@ -292,7 +300,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-xs text-gray-500">
-                …ou un lien externe
+                {t('form.externalUrlLabel')}
               </FormLabel>
               <FormControl>
                 <Input
@@ -310,7 +318,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
 
         <div className="flex items-center justify-between gap-2">
           {success ? (
-            <p className="text-sm text-emerald-600">Enregistre.</p>
+            <p className="text-sm text-emerald-600">{t('form.saved')}</p>
           ) : errorMessage ? (
             <p className="text-xs text-red-500">{errorMessage}</p>
           ) : (
@@ -320,10 +328,10 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
             {isPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Enregistrement...
+                {t('form.submitting')}
               </>
             ) : (
-              'Ajouter'
+              t('form.submit')
             )}
           </Button>
         </div>

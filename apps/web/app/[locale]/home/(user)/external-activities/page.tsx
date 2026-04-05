@@ -6,6 +6,7 @@ import {
   ShoppingBag,
   Users,
 } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -22,55 +23,51 @@ import { DeleteActivityButton } from './_components/delete-activity-button';
 import { ExternalActivityForm } from './_components/external-activity-form';
 
 export async function generateMetadata() {
-  return { title: 'Donnees complementaires' };
+  const t = await getTranslations('externalActivities');
+  return { title: t('title') };
 }
 
 type CategoryMeta = {
   id: ExternalActivityCategory;
-  label: string;
   icon: typeof Building2;
-  description: string;
 };
 
 const CATEGORIES: CategoryMeta[] = [
-  {
-    id: 'governance',
-    label: 'Gouvernance',
-    icon: Building2,
-    description:
-      'Composition du conseil, politiques anti-corruption, code de conduite, comite RSE.',
-  },
-  {
-    id: 'social',
-    label: 'Social & RH',
-    icon: Users,
-    description:
-      'Effectifs, formation, diversite, conditions de travail, dialogue social.',
-  },
-  {
-    id: 'environment',
-    label: 'Environnement',
-    icon: Leaf,
-    description:
-      "Consommation d'eau, energies renouvelables, biodiversite, mobilite.",
-  },
-  {
-    id: 'procurement',
-    label: 'Achats',
-    icon: ShoppingBag,
-    description:
-      'Achats locaux, audits fournisseurs, politiques achats responsables.',
-  },
-  {
-    id: 'community',
-    label: 'Communaute',
-    icon: Heart,
-    description:
-      'Mecenat, benevolat, partenariats ONG, actions locales.',
-  },
+  { id: 'governance', icon: Building2 },
+  { id: 'social', icon: Users },
+  { id: 'environment', icon: Leaf },
+  { id: 'procurement', icon: ShoppingBag },
+  { id: 'community', icon: Heart },
 ];
 
+const KNOWN_SUBCATEGORIES = new Set<string>([
+  'board_composition',
+  'anti_corruption',
+  'code_of_conduct',
+  'esg_committee',
+  'remuneration',
+  'employee_count',
+  'training_rate',
+  'diversity',
+  'working_conditions',
+  'social_dialogue',
+  'water_consumption',
+  'renewable_energy',
+  'biodiversity',
+  'zero_waste',
+  'mobility',
+  'local_purchasing',
+  'supplier_audit',
+  'responsible_procurement_policy',
+  'esg_criteria',
+  'patronage',
+  'volunteering',
+  'ngo_partnership',
+  'local_action',
+]);
+
 async function ExternalActivitiesPage() {
+  const t = await getTranslations('externalActivities');
   const client = getSupabaseServerClient();
   const { data: user, error } = await requireUser(client);
   if (error || !user) return null;
@@ -98,21 +95,19 @@ async function ExternalActivitiesPage() {
 
   return (
     <>
-      <PageHeader
-        title="Donnees complementaires"
-        description="Renseignez vos activites exterieures a la plateforme pour enrichir votre score de conformite et preparer vos rapports ESG."
-      />
+      <PageHeader title={t('title')} description={t('description')} />
 
-      <PageBody>
+      <PageBody className="pb-4 lg:pb-4">
         <Tabs defaultValue={CATEGORIES[0]!.id} className="w-full">
           <TabsList className="grid w-full grid-cols-5">
             {CATEGORIES.map((c) => {
               const Icon = c.icon;
               const count = byCategory.get(c.id)?.length ?? 0;
+              const label = t(`categories.${c.id}.label`);
               return (
                 <TabsTrigger key={c.id} value={c.id} className="gap-1.5">
                   <Icon className="h-4 w-4" strokeWidth={1.5} />
-                  <span className="hidden sm:inline">{c.label}</span>
+                  <span className="hidden sm:inline">{label}</span>
                   {count > 0 ? (
                     <span className="ml-1 rounded-full bg-emerald-100 px-1.5 text-xs text-emerald-700">
                       {count}
@@ -125,34 +120,45 @@ async function ExternalActivitiesPage() {
 
           {CATEGORIES.map((c) => {
             const rows = byCategory.get(c.id) ?? [];
+            const label = t(`categories.${c.id}.label`);
+            const description = t(`categories.${c.id}.description`);
             return (
               <TabsContent key={c.id} value={c.id} className="mt-6">
                 <div className="grid gap-6 lg:grid-cols-2">
                   <div className="rounded-xl border bg-white p-6">
                     <h3 className="mb-1 text-lg font-semibold">
-                      Ajouter une donnee — {c.label}
+                      {t('addData', { category: label })}
                     </h3>
-                    <p className="mb-4 text-sm text-gray-500">{c.description}</p>
+                    <p className="mb-4 text-sm text-gray-500">{description}</p>
                     <ExternalActivityForm category={c.id} />
                   </div>
 
                   <div className="rounded-xl border bg-white p-6">
                     <h3 className="mb-4 text-lg font-semibold">
-                      Donnees enregistrees ({rows.length})
+                      {t('savedData')} ({rows.length})
                     </h3>
                     {rows.length === 0 ? (
                       <div className="flex flex-col items-center gap-2 py-8 text-center text-sm text-gray-400">
                         <FileText className="h-8 w-8" strokeWidth={1.5} />
-                        Aucune donnee enregistree.
+                        {t('noDataYet')}
                       </div>
                     ) : (
                       <ul className="space-y-3">
                         {rows.map((r) => {
                           const signedUrl = signedUrlByRowId.get(r.id);
                           const docHref = signedUrl ?? r.document_url ?? null;
+                          const subcategoryLabel = KNOWN_SUBCATEGORIES.has(
+                            r.subcategory,
+                          )
+                            ? t(
+                                // Narrowed by KNOWN_SUBCATEGORIES above.
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                `subcategories.${r.subcategory}` as any,
+                              )
+                            : r.subcategory;
                           const docLabel = signedUrl
-                            ? r.document_path?.split('/').pop() ?? 'Document'
-                            : 'Lien externe';
+                            ? (r.document_path?.split('/').pop() ?? 'Document')
+                            : t('list.externalLink');
                           return (
                             <li
                               key={r.id}
@@ -163,7 +169,7 @@ async function ExternalActivitiesPage() {
                                   {r.title}
                                 </p>
                                 <p className="text-xs text-gray-500">
-                                  {r.subcategory}
+                                  {subcategoryLabel}
                                   {r.quantitative_value !== null
                                     ? ` — ${r.quantitative_value}${r.quantitative_unit ? ` ${r.quantitative_unit}` : ''}`
                                     : ''}
@@ -191,7 +197,7 @@ async function ExternalActivitiesPage() {
                                 ) : null}
                                 {r.verified && !docHref ? (
                                   <span className="mt-1 inline-block rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700">
-                                    Piece justificative fournie
+                                    {t('list.proofProvided')}
                                   </span>
                                 ) : null}
                               </div>

@@ -29,6 +29,7 @@ const namespaces = [
   'blockchain',
   'rse',
   'compliance',
+  'externalActivities',
 ] as const;
 
 const isDevelopment = process.env.NODE_ENV === 'development';

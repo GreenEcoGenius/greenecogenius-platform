@@ -9,6 +9,7 @@ import {
   Trash2,
   Upload,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@kit/ui/button';
 import { Input } from '@kit/ui/input';
@@ -54,6 +55,7 @@ export function DocumentUploader({
   onRemoved,
   onAnalyzed,
 }: DocumentUploaderProps) {
+  const t = useTranslations('externalActivities');
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
@@ -78,7 +80,7 @@ export function DocumentUploader({
         const body = (await res.json().catch(() => null)) as
           | { error?: string }
           | null;
-        throw new Error(body?.error ?? 'Upload echoue');
+        throw new Error(body?.error ?? t('uploader.uploadFailed'));
       }
 
       const data = (await res.json()) as {
@@ -90,7 +92,7 @@ export function DocumentUploader({
 
       onUploaded(data);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Upload echoue');
+      setError(e instanceof Error ? e.message : t('uploader.uploadFailed'));
     } finally {
       setUploading(false);
       if (inputRef.current) inputRef.current.value = '';
@@ -111,12 +113,12 @@ export function DocumentUploader({
         const body = (await res.json().catch(() => null)) as
           | { error?: string }
           | null;
-        throw new Error(body?.error ?? 'Analyse echouee');
+        throw new Error(body?.error ?? t('uploader.analysisFailed'));
       }
       const data = (await res.json()) as AnalysisSuggestion;
       onAnalyzed(data);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Analyse echouee');
+      setError(e instanceof Error ? e.message : t('uploader.analysisFailed'));
     } finally {
       setAnalyzing(false);
     }
@@ -127,7 +129,7 @@ export function DocumentUploader({
   return (
     <div className="space-y-2">
       <label className="text-sm font-medium text-gray-900">
-        Piece justificative (optionnel)
+        {t('uploader.label')}
       </label>
 
       {path && signedUrl ? (
@@ -155,7 +157,7 @@ export function DocumentUploader({
               {analyzing ? (
                 <>
                   <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
-                  Analyse...
+                  {t('uploader.analyzing')}
                 </>
               ) : (
                 <>
@@ -163,7 +165,7 @@ export function DocumentUploader({
                     className="mr-1.5 h-3.5 w-3.5"
                     strokeWidth={1.5}
                   />
-                  Analyser avec Genius
+                  {t('uploader.analyze')}
                 </>
               )}
             </Button>
@@ -173,7 +175,7 @@ export function DocumentUploader({
             size="sm"
             variant="ghost"
             onClick={onRemoved}
-            aria-label="Retirer le document"
+            aria-label={t('uploader.remove')}
           >
             <Trash2 className="h-4 w-4 text-red-500" strokeWidth={1.5} />
           </Button>
@@ -189,17 +191,17 @@ export function DocumentUploader({
             {uploading ? (
               <>
                 <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
-                Envoi...
+                {t('uploader.uploading')}
               </>
             ) : (
               <>
                 <Upload className="mr-1.5 h-4 w-4" strokeWidth={1.5} />
-                Uploader un fichier
+                {t('uploader.upload')}
               </>
             )}
           </Button>
           <span className="text-xs text-gray-400">
-            PDF, JPG, PNG, DOCX — max 10 Mo
+            {t('uploader.constraints')}
           </span>
           <Input
             ref={inputRef}
