@@ -59,7 +59,7 @@ export const Header: React.FC<HeaderProps> = function ({
           'container mx-auto': centered,
         })}
       >
-        <div className="flex h-20 items-center gap-x-4 px-2 md:h-24 md:gap-x-8 md:px-0">
+        <div className="flex h-24 items-center gap-x-4 px-2 md:h-28 md:gap-x-8 md:px-0">
           <div className="flex items-center">{logo}</div>
 
           <If condition={navigation}>
