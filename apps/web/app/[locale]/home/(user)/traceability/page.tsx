@@ -8,6 +8,7 @@ import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
+import { SectionFooterImage } from '../_components/section-footer-image';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('blockchain');
@@ -116,6 +117,11 @@ async function TraceabilityPage() {
             </Card>
           ))}
         </div>
+
+        <SectionFooterImage
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-a5aace78-d0fe-4b7d-865b-181946fc2f34.png"
+          alt="Tracabilite"
+        />
       </div>
     </PageBody>
   );

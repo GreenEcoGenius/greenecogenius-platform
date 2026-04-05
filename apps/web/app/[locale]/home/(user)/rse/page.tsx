@@ -13,6 +13,7 @@ import { Trans } from '@kit/ui/trans';
 import { LabelEligibilityService } from '~/lib/services/label-eligibility-service';
 
 import { LabelEligibilitySection } from '../compliance/_components/label-eligibility-section';
+import { SectionFooterImage } from '../_components/section-footer-image';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('rse');
@@ -114,6 +115,11 @@ async function RSEPage() {
         </div>
 
         {labels.length > 0 && <LabelEligibilitySection labels={labels} />}
+
+        <SectionFooterImage
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-f30939eb-48c4-46f7-ad85-99b7f3c11c45.png"
+          alt="RSE et Labels"
+        />
       </div>
     </PageBody>
   );

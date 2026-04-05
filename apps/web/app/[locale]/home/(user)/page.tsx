@@ -20,6 +20,7 @@ import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
 
 import { KpiCard, KpiCardGrid } from './_components/kpi-card';
+import { SectionFooterImage } from './_components/section-footer-image';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('marketplace');
@@ -332,6 +333,11 @@ async function UserHomePage() {
             </CardContent>
           </Card>
         )}
+
+        <SectionFooterImage
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-691ab3f4-2772-42cc-ae8b-5f039dee20c9.png"
+          alt={t('dashboard.circularEconomy')}
+        />
       </div>
     </PageBody>
   );

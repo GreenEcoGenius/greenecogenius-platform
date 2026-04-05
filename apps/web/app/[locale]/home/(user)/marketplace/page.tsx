@@ -18,6 +18,7 @@ import { Trans } from '@kit/ui/trans';
 
 import { ListingCard } from '~/home/_components/listing-card';
 
+import { SectionFooterImage } from '../_components/section-footer-image';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('common');
@@ -157,6 +158,12 @@ async function MarketplacePage() {
           />
         </div>
       )}
+
+      <SectionFooterImage
+        src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-02804b64-3b87-48dd-9efc-f7f4f979ef5a.png"
+        alt="Le Comptoir Circulaire"
+        className="lg:object-top"
+      />
     </PageBody>
   );
 }

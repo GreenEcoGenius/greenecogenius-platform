@@ -12,6 +12,7 @@ import { Trans } from '@kit/ui/trans';
 
 import { NORMS_DATABASE } from '~/lib/data/norms-database';
 
+import { SectionFooterImage } from '../_components/section-footer-image';
 import { ComplianceAlerts } from './_components/compliance-alerts';
 import { CompliancePillarCards } from './_components/compliance-pillar-cards';
 import { ComplianceScoreCard } from './_components/compliance-score-card';
@@ -97,6 +98,11 @@ async function CompliancePage() {
           </Card>
 
           <RegulatoryWatch />
+
+          <SectionFooterImage
+            src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-3ce44a5d-32c4-45eb-8b93-1c560b509a71.png"
+            alt="Conformite"
+          />
         </div>
       </PageBody>
     );
@@ -214,6 +220,11 @@ async function CompliancePage() {
         {alertItems.length > 0 && <ComplianceAlerts alerts={alertItems} />}
 
         <RegulatoryWatch />
+
+        <SectionFooterImage
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-3ce44a5d-32c4-45eb-8b93-1c560b509a71.png"
+          alt="Conformite"
+        />
       </div>
     </PageBody>
   );

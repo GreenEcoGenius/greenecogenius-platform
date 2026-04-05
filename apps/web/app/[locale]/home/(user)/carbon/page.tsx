@@ -19,6 +19,7 @@ import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
+import { SectionFooterImage } from '../_components/section-footer-image';
 import { CarbonAvoidedChart } from './_components/carbon-avoided-chart';
 import { CarbonByMaterialChart } from './_components/carbon-by-material-chart';
 import { CarbonEquivalences } from './_components/carbon-equivalences';
@@ -447,6 +448,11 @@ async function CarbonPage() {
 
         {/* Section 6 - Certificates */}
         <CertificatesList certificates={certs} />
+
+        <SectionFooterImage
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-5078cbe2-55c7-4019-bf5f-d42644debf1b.png"
+          alt="Impact Carbone"
+        />
       </div>
     </PageBody>
   );
