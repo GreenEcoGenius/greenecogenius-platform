@@ -630,21 +630,20 @@ function StepScope1({
           />
         </FormGroup>
 
-        <div className="space-y-4">
-          <FormGroup label="esg:fuelLabel">
-            <NumberInput
-              value={formData.scope1_fuel_liters}
-              onChange={(v) => updateField('scope1_fuel_liters', v)}
-            />
-          </FormGroup>
-          <FormGroup label="esg:fuelTypeLabel">
-            <SelectInput
-              value={formData.scope1_fuel_type}
-              onChange={(v) => updateField('scope1_fuel_type', v)}
-              options={fuelTypes}
-            />
-          </FormGroup>
-        </div>
+        <FormGroup label="esg:fuelLabel">
+          <NumberInput
+            value={formData.scope1_fuel_liters}
+            onChange={(v) => updateField('scope1_fuel_liters', v)}
+          />
+        </FormGroup>
+
+        <FormGroup label="esg:fuelTypeLabel">
+          <SelectInput
+            value={formData.scope1_fuel_type}
+            onChange={(v) => updateField('scope1_fuel_type', v)}
+            options={fuelTypes}
+          />
+        </FormGroup>
 
         <FormGroup label="esg:otherScope1Label">
           <NumberInput
