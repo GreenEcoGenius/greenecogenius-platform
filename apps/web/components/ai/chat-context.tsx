@@ -8,6 +8,9 @@ interface ChatContextValue {
   closeChat: () => void;
   toggleChat: () => void;
   setSidebarControl: (control: { setOpen: (open: boolean) => void }) => void;
+  pendingPrompt: string | null;
+  openChatWithPrompt: (prompt: string) => void;
+  consumePrompt: () => string | null;
 }
 
 const ChatContext = createContext<ChatContextValue>({
@@ -16,6 +19,9 @@ const ChatContext = createContext<ChatContextValue>({
   closeChat: () => {},
   toggleChat: () => {},
   setSidebarControl: () => {},
+  pendingPrompt: null,
+  openChatWithPrompt: () => {},
+  consumePrompt: () => null,
 });
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
@@ -23,6 +29,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [sidebarControl, setSidebarControlState] = useState<{
     setOpen: (open: boolean) => void;
   } | null>(null);
+  const [pendingPrompt, setPendingPrompt] = useState<string | null>(null);
 
   const openChat = useCallback(() => {
     setChatOpen(true);
@@ -46,6 +53,21 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     });
   }, [sidebarControl]);
 
+  const openChatWithPrompt = useCallback(
+    (prompt: string) => {
+      setPendingPrompt(prompt);
+      setChatOpen(true);
+      sidebarControl?.setOpen(false);
+    },
+    [sidebarControl],
+  );
+
+  const consumePrompt = useCallback(() => {
+    const p = pendingPrompt;
+    setPendingPrompt(null);
+    return p;
+  }, [pendingPrompt]);
+
   const setSidebarControl = useCallback(
     (control: { setOpen: (open: boolean) => void }) => {
       setSidebarControlState(control);
@@ -55,7 +77,16 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ChatContext.Provider
-      value={{ chatOpen, openChat, closeChat, toggleChat, setSidebarControl }}
+      value={{
+        chatOpen,
+        openChat,
+        closeChat,
+        toggleChat,
+        setSidebarControl,
+        pendingPrompt,
+        openChatWithPrompt,
+        consumePrompt,
+      }}
     >
       {children}
     </ChatContext.Provider>

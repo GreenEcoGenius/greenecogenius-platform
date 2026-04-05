@@ -189,7 +189,7 @@ export function AIChatPanel() {
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations('common');
-  const { chatOpen, closeChat } = useChat();
+  const { chatOpen, closeChat, consumePrompt } = useChat();
   const section = useSectionContext(pathname ?? '');
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -214,11 +214,17 @@ export function AIChatPanel() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
-  // Focus input when opened
+  // Focus input when opened + auto-send pending prompt
   useEffect(() => {
     if (chatOpen) {
-      setTimeout(() => inputRef.current?.focus(), 300);
+      const prompt = consumePrompt();
+      if (prompt) {
+        setTimeout(() => handleSend(prompt), 400);
+      } else {
+        setTimeout(() => inputRef.current?.focus(), 300);
+      }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatOpen]);
 
   const handleSend = useCallback(

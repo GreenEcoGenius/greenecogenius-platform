@@ -9,9 +9,11 @@ import {
   ChevronDown,
   ChevronUp,
   Clock,
+  Download,
   Heart,
   Leaf,
   Handshake,
+  Sparkles,
   Users,
 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -25,7 +27,10 @@ import type { RSEPillar, RSEQuestion } from '~/lib/config/rse-pillars';
 import { calculateRSEScore } from '~/lib/services/rse-score-service';
 import type { RSEResult } from '~/lib/services/rse-score-service';
 
+import { useChat } from '~/components/ai/chat-context';
+
 import { saveDiagnostic } from '../../_lib/rse-actions';
+import { generateRSEReport } from '../../_lib/rse-pdf';
 
 const PILLAR_ICONS: Record<string, React.ElementType> = {
   Building2, Users, Leaf, Handshake, Heart,
@@ -218,6 +223,7 @@ function RadarChart({ scores }: { scores: { name: string; percentage: number }[]
 export function DiagnosticWizard() {
   const t = useTranslations('rse');
   const locale = useLocale();
+  const { openChatWithPrompt } = useChat();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number | string>>({});
   const [result, setResult] = useState<RSEResult | null>(null);
@@ -422,8 +428,46 @@ export function DiagnosticWizard() {
             </Card>
           )}
 
+          {/* Actions */}
           <div className="flex flex-wrap gap-3">
-            <Button render={<Link href="/home/rse" />} nativeButton={false}>
+            <Button
+              variant="default"
+              onClick={() => {
+                if (!result) return;
+                const doc = generateRSEReport(result, answers, locale === 'fr' ? 'fr' : 'en');
+                doc.save(`Diagnostic-RSE-GreenEcoGenius-${new Date().toISOString().slice(0, 10)}.pdf`);
+              }}
+            >
+              <Download className="mr-2 h-4 w-4" />
+              {locale === 'fr' ? 'Telecharger le rapport RSE' : 'Download CSR report'}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (!result) return;
+                const pillarSummary = result.pillarScores
+                  .map((p) => `${locale === 'fr' ? p.name_fr : p.name_en}: ${p.percentage}%`)
+                  .join(', ');
+                const weakest = [...result.pillarScores].sort((a, b) => a.percentage - b.percentage).slice(0, 2);
+                const weakNames = weakest.map((w) => locale === 'fr' ? w.name_fr : w.name_en).join(' et ');
+                const prompt = locale === 'fr'
+                  ? `Mon diagnostic RSE ISO 26000 donne un score global de ${result.globalScore}/100 (niveau ${t(result.levelKey)}). Scores par pilier : ${pillarSummary}. Mes piliers les plus faibles sont ${weakNames}. Donne-moi des conseils personnalises pour ameliorer mon score et atteindre l'eligibilite aux labels B Corp et Lucie.`
+                  : `My ISO 26000 CSR diagnostic gives a global score of ${result.globalScore}/100 (level ${t(result.levelKey)}). Pillar scores: ${pillarSummary}. My weakest pillars are ${weakNames}. Give me personalized advice to improve my score and achieve B Corp and Lucie label eligibility.`;
+                openChatWithPrompt(prompt);
+              }}
+            >
+              <Sparkles className="mr-2 h-4 w-4" />
+              {locale === 'fr' ? 'Demander conseil a Genius' : 'Ask Genius for advice'}
+            </Button>
+          </div>
+          <p className="text-center text-[11px] text-gray-400">
+            {locale === 'fr'
+              ? 'Accompagnement personnalise propulse par Genius, notre IA Anthropic.'
+              : 'Personalized guidance powered by Genius, our Anthropic AI.'}
+          </p>
+
+          <div className="flex flex-wrap gap-3">
+            <Button variant="outline" render={<Link href="/home/rse" />} nativeButton={false}>
               {locale === 'fr' ? 'Retour RSE & Labels' : 'Back to CSR & Labels'}
             </Button>
             <Button variant="outline" render={<Link href="/home/rse/roadmap" />} nativeButton={false}>
