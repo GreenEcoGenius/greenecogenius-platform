@@ -88,10 +88,10 @@ export default async function Home() {
             {/* Colonne droite — Screenshot débordant à droite */}
             <AnimateOnScroll animation="fade-up" delay={200}>
               {/* Mobile : image normale avec coins arrondis */}
-              <div className="mx-auto max-w-xl lg:hidden">
+              <div className="mx-auto max-w-md lg:hidden">
                 <div className="overflow-hidden rounded-2xl shadow-2xl">
                   <Image
-                    src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/ajoute_moi_quelque_202604040436.png"
+                    src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/rajoute_moi_des_202604040547.png"
                     alt="GreenEcoGenius Platform Dashboard"
                     width={2800}
                     height={1800}
@@ -103,9 +103,9 @@ export default async function Home() {
               </div>
               {/* Desktop : image qui déborde à droite, hauteur limitée */}
               <div className="relative hidden lg:block">
-                <div className="-mr-[calc(50vw-50%)] max-h-[520px] overflow-hidden rounded-l-2xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.25)] xl:max-h-[580px]">
+                <div className="-mr-[calc(50vw-50%)] max-h-[420px] overflow-hidden rounded-l-2xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.25)] xl:max-h-[460px]">
                   <Image
-                    src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/ajoute_moi_quelque_202604040436.png"
+                    src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/rajoute_moi_des_202604040547.png"
                     alt="GreenEcoGenius Platform Dashboard"
                     width={2800}
                     height={1800}
