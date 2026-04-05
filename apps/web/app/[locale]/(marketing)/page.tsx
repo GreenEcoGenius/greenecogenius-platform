@@ -35,7 +35,7 @@ export default async function Home() {
       {/* ───── SECTION 1 — HERO ───── */}
       <section className="overflow-hidden bg-white pt-24 pb-16 sm:pt-32 sm:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-[45%_1fr] lg:gap-10">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-12">
             {/* Colonne gauche — Texte */}
             <div className="text-center lg:text-left">
               <AnimateOnScroll animation="fade-up">
@@ -101,15 +101,15 @@ export default async function Home() {
                   />
                 </div>
               </div>
-              {/* Desktop : image qui déborde à droite, hauteur limitée */}
+              {/* Desktop : image contenue dans sa colonne, entièrement visible */}
               <div className="relative hidden lg:block">
-                <div className="-mr-[calc(50vw-50%)] max-h-[420px] overflow-hidden rounded-l-2xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.25)] xl:max-h-[460px]">
+                <div className="overflow-hidden rounded-2xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.25)]">
                   <Image
                     src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/GEG.png"
                     alt="GreenEcoGenius Platform Dashboard"
                     width={2800}
                     height={1800}
-                    className="h-auto w-full"
+                    className="h-auto w-full object-contain"
                     priority
                     unoptimized
                   />
