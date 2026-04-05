@@ -67,9 +67,52 @@ async function fetchAccountData(
     any(client).from('marketplace_transactions').select('*', { count: 'exact', head: true }).or(`seller_account_id.eq.${accountId},buyer_account_id.eq.${accountId}`).in('status', ['delivered', 'completed', 'funds_released']),
     any(client).from('carbon_records').select('*', { count: 'exact', head: true }).eq('account_id', accountId),
     any(client).from('traceability_certificates').select('*', { count: 'exact', head: true }).eq('issued_to_account_id', accountId),
-    any(client).from('org_esg_data').select('*', { count: 'exact', head: true }).eq('account_id', accountId),
+    any(client)
+      .from('org_esg_data')
+      .select(
+        'scope1_natural_gas_kwh, scope1_fuel_liters, scope1_other_kg_co2, scope2_electricity_kwh, scope2_heating_kwh, scope3_business_travel_km, scope3_commuting_employees, scope3_commuting_avg_km, scope3_purchased_goods_eur, scope3_waste_tonnes, nb_employees, office_surface_m2, submitted_at',
+      )
+      .eq('account_id', accountId),
     any(client).from('esg_reports').select('*', { count: 'exact', head: true }).eq('account_id', accountId),
   ]);
+
+  // Determine if ESG data is actually filled in (user-entered), not just a
+  // blank default row. A norm should only move to "partial" once the user has
+  // entered real data in at least one field, or explicitly submitted the form.
+  type EsgRow = {
+    scope1_natural_gas_kwh?: number | null;
+    scope1_fuel_liters?: number | null;
+    scope1_other_kg_co2?: number | null;
+    scope2_electricity_kwh?: number | null;
+    scope2_heating_kwh?: number | null;
+    scope3_business_travel_km?: number | null;
+    scope3_commuting_employees?: number | null;
+    scope3_commuting_avg_km?: number | null;
+    scope3_purchased_goods_eur?: number | null;
+    scope3_waste_tonnes?: number | null;
+    nb_employees?: number | null;
+    office_surface_m2?: number | null;
+    submitted_at?: string | null;
+  };
+  const esgRows: EsgRow[] = (esgDataRes.data as EsgRow[] | null) ?? [];
+  const hasRealEsgData = esgRows.some((row) => {
+    if (row.submitted_at) return true;
+    const numericFields: Array<number | null | undefined> = [
+      row.scope1_natural_gas_kwh,
+      row.scope1_fuel_liters,
+      row.scope1_other_kg_co2,
+      row.scope2_electricity_kwh,
+      row.scope2_heating_kwh,
+      row.scope3_business_travel_km,
+      row.scope3_commuting_employees,
+      row.scope3_commuting_avg_km,
+      row.scope3_purchased_goods_eur,
+      row.scope3_waste_tonnes,
+      row.nb_employees,
+      row.office_surface_m2,
+    ];
+    return numericFields.some((v) => Number(v ?? 0) > 0);
+  });
 
   // Blockchain records don't have account_id — count via listings
   const { data: userListingIds } = await any(client)
@@ -123,7 +166,7 @@ async function fetchAccountData(
     hasScopeData: (carbonRes.count ?? 0) > 0,
     blockchainRecordsCount,
     certificatesCount: certificatesRes.count ?? 0,
-    hasEsgData: (esgDataRes.count ?? 0) > 0,
+    hasEsgData: hasRealEsgData,
     hasEsgReport: (esgReportRes.count ?? 0) > 0,
     totalCo2Avoided,
     totalTonnesRecycled,
