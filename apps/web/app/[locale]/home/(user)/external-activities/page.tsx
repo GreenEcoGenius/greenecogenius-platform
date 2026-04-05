@@ -97,7 +97,7 @@ async function ExternalActivitiesPage() {
     <>
       <PageHeader title={t('title')} description={t('description')} />
 
-      <PageBody className="pb-4 lg:pb-4">
+      <PageBody>
         <Tabs defaultValue={CATEGORIES[0]!.id} className="w-full">
           <TabsList className="grid w-full grid-cols-5">
             {CATEGORIES.map((c) => {
