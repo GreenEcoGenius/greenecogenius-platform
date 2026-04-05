@@ -41,6 +41,14 @@ interface AccountData {
   totalTonnesRecycled: number;
   hasRseDiagnostic: boolean;
   rseScore: number;
+  // External activities (manually declared ESG data)
+  externalGovernanceCount: number;
+  externalSocialCount: number;
+  externalEnvironmentCount: number;
+  externalProcurementCount: number;
+  externalCommunityCount: number;
+  externalActivitiesTotal: number;
+  externalVerifiedCount: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -157,6 +165,30 @@ async function fetchAccountData(
   const hasKpis = kpiData && kpiData.length > 0;
   const rseScore = hasKpis ? Math.min(100, Math.round((kpiData[0].transactions_count ?? 0) * 10)) : 0;
 
+  // External activities — manually declared ESG data
+  const { data: externalRows } = await any(client)
+    .from('external_activities')
+    .select('category, verified')
+    .eq('account_id', accountId);
+
+  const extRows: Array<{ category: string; verified: boolean }> =
+    (externalRows as Array<{ category: string; verified: boolean }> | null) ?? [];
+
+  const externalCounts = {
+    governance: 0,
+    social: 0,
+    environment: 0,
+    procurement: 0,
+    community: 0,
+  };
+  let externalVerifiedCount = 0;
+  for (const r of extRows) {
+    if (r.category in externalCounts) {
+      externalCounts[r.category as keyof typeof externalCounts]++;
+    }
+    if (r.verified) externalVerifiedCount++;
+  }
+
   return {
     listingsCount: listingsRes.count ?? 0,
     activeListingsCount: activeListingsRes.count ?? 0,
@@ -172,6 +204,13 @@ async function fetchAccountData(
     totalTonnesRecycled,
     hasRseDiagnostic: hasKpis,
     rseScore,
+    externalGovernanceCount: externalCounts.governance,
+    externalSocialCount: externalCounts.social,
+    externalEnvironmentCount: externalCounts.environment,
+    externalProcurementCount: externalCounts.procurement,
+    externalCommunityCount: externalCounts.community,
+    externalActivitiesTotal: extRows.length,
+    externalVerifiedCount,
   };
 }
 
@@ -219,9 +258,14 @@ const NORM_RULES: Record<string, RuleFn> = {
     return NOT_EVALUATED;
   },
   'iso-14001': (d) => {
-    if (d.carbonRecordsCount >= 1 && d.hasEsgReport && d.completedTransactionsCount >= 5)
+    const envSignals =
+      (d.carbonRecordsCount >= 1 ? 1 : 0) +
+      (d.hasEsgReport ? 1 : 0) +
+      (d.completedTransactionsCount >= 5 ? 1 : 0) +
+      (d.externalEnvironmentCount >= 2 ? 1 : 0);
+    if (envSignals >= 3)
       return result('compliant', 'auto_platform', 'Systeme de management environnemental actif');
-    if (d.carbonRecordsCount >= 1 || d.hasEsgData)
+    if (d.carbonRecordsCount >= 1 || d.hasEsgData || d.externalEnvironmentCount >= 1)
       return result('partial', 'auto_platform', 'Donnees environnementales partielles');
     return NOT_EVALUATED;
   },
@@ -295,10 +339,18 @@ const NORM_RULES: Record<string, RuleFn> = {
 
   // ── Reporting ESG ─────────────────────────────────────
   'csrd': (d) => {
+    const esrsCoverage =
+      (d.externalGovernanceCount >= 1 ? 1 : 0) + // G1
+      (d.externalSocialCount >= 1 ? 1 : 0) + // S1
+      (d.externalEnvironmentCount >= 1 ? 1 : 0) + // E2/E3/E4
+      (d.carbonRecordsCount >= 1 ? 1 : 0) + // E1
+      (d.completedTransactionsCount >= 1 ? 1 : 0); // E5
+    if (d.hasEsgReport && esrsCoverage >= 4)
+      return result('compliant', 'auto_esg', `Rapport CSRD/ESRS complet (${esrsCoverage}/5 piliers ESRS)`);
     if (d.hasEsgReport)
       return result('compliant', 'auto_esg', 'Rapport CSRD/ESRS genere');
-    if (d.hasEsgData)
-      return result('partial', 'auto_esg', 'Donnees ESG saisies, rapport a generer');
+    if (d.hasEsgData || esrsCoverage >= 1)
+      return result('partial', 'auto_esg', `Donnees ESG partielles (${esrsCoverage}/5 piliers ESRS)`);
     return NOT_EVALUATED;
   },
   'esrs': (d) => NORM_RULES['csrd']!(d),
@@ -312,9 +364,15 @@ const NORM_RULES: Record<string, RuleFn> = {
   },
   'sfdr': (d) => NORM_RULES['csrd']!(d),
   'devoir-vigilance': (d) => {
+    if (
+      d.hasEsgReport &&
+      d.blockchainRecordsCount >= 1 &&
+      d.externalProcurementCount >= 1
+    )
+      return result('compliant', 'auto_esg', 'Plan de vigilance documente, tracabilite et achats responsables');
     if (d.hasEsgReport && d.blockchainRecordsCount >= 1)
       return result('compliant', 'auto_esg', 'Plan de vigilance documente avec tracabilite');
-    if (d.hasEsgData || d.blockchainRecordsCount >= 1)
+    if (d.hasEsgData || d.blockchainRecordsCount >= 1 || d.externalProcurementCount >= 1)
       return result('partial', 'auto_platform', 'Plan de vigilance en cours');
     return NOT_EVALUATED;
   },
@@ -351,24 +409,42 @@ const NORM_RULES: Record<string, RuleFn> = {
 
   // ── Labels ────────────────────────────────────────────
   'b-corp': (d) => {
-    if (d.hasRseDiagnostic && d.rseScore >= 80)
-      return result('compliant', 'auto_platform', `Score RSE ${d.rseScore}/100 — eligible B Corp`);
+    const pillars =
+      (d.externalGovernanceCount >= 1 ? 1 : 0) + // Governance
+      (d.externalSocialCount >= 1 ? 1 : 0) + // Workers
+      (d.externalEnvironmentCount >= 1 ? 1 : 0) + // Environment
+      (d.externalCommunityCount >= 1 ? 1 : 0) + // Community
+      (d.completedTransactionsCount >= 1 || d.totalCo2Avoided > 0 ? 1 : 0); // Customers/impact
+    if (d.hasRseDiagnostic && d.rseScore >= 80 && pillars >= 4)
+      return result('compliant', 'auto_platform', `Score RSE ${d.rseScore}/100, ${pillars}/5 piliers B Corp couverts`);
     if (d.hasRseDiagnostic && d.rseScore >= 50)
-      return result('partial', 'auto_platform', `Score RSE ${d.rseScore}/100 — en progression`);
-    if (d.hasRseDiagnostic)
-      return result('partial', 'auto_platform', `Score RSE ${d.rseScore}/100`);
+      return result('partial', 'auto_platform', `Score RSE ${d.rseScore}/100, ${pillars}/5 piliers B Corp couverts`);
+    if (d.hasRseDiagnostic || pillars >= 1)
+      return result('partial', 'auto_platform', `${pillars}/5 piliers B Corp couverts`);
     return NOT_EVALUATED;
   },
   'numerique-responsable': (_d) => NOT_EVALUATED,
   'lucie-26000': (d) => {
-    if (d.hasRseDiagnostic && d.rseScore >= 70)
-      return result('compliant', 'auto_platform', `Diagnostic ISO 26000 ${d.rseScore}/100`);
-    if (d.hasRseDiagnostic)
-      return result('partial', 'auto_platform', `Diagnostic complete: ${d.rseScore}/100`);
+    // ISO 26000 / Lucie evaluates 7 core subjects — we map them to signals
+    const subjects =
+      (d.externalGovernanceCount >= 1 ? 1 : 0) + // Gouvernance
+      (d.externalSocialCount >= 1 ? 1 : 0) + // Droits de l'Homme + Relations travail
+      (d.carbonRecordsCount >= 1 || d.externalEnvironmentCount >= 1 ? 1 : 0) + // Environnement
+      (d.externalProcurementCount >= 1 ? 1 : 0) + // Loyaute des pratiques
+      (d.completedTransactionsCount >= 1 ? 1 : 0) + // Consommateurs
+      (d.externalCommunityCount >= 1 ? 1 : 0); // Communautes
+    if (d.hasRseDiagnostic && d.rseScore >= 70 && subjects >= 5)
+      return result('compliant', 'auto_platform', `Diagnostic ISO 26000 ${d.rseScore}/100, ${subjects}/6 sujets centraux couverts`);
+    if (d.hasRseDiagnostic || subjects >= 2)
+      return result('partial', 'auto_platform', `${subjects}/6 sujets centraux ISO 26000 couverts`);
     return NOT_EVALUATED;
   },
   'engage-rse': (d) => NORM_RULES['lucie-26000']!(d),
 };
+
+// ISO 26000 norm may be listed under id 'iso-26000' in NORMS_DATABASE — alias
+// it to the lucie-26000 rule since both score the same underlying subjects.
+NORM_RULES['iso-26000'] = (d) => NORM_RULES['lucie-26000']!(d);
 
 // ── Main engine ──────────────────────────────────────────────────
 
@@ -405,6 +481,12 @@ export async function evaluateAccountCompliance(
         esg_data: data.hasEsgData,
         esg_report: data.hasEsgReport,
         rse_score: data.rseScore,
+        external_governance: data.externalGovernanceCount,
+        external_social: data.externalSocialCount,
+        external_environment: data.externalEnvironmentCount,
+        external_procurement: data.externalProcurementCount,
+        external_community: data.externalCommunityCount,
+        external_total: data.externalActivitiesTotal,
       },
     });
   }

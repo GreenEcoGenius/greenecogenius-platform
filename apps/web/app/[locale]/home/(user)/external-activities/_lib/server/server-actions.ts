@@ -4,8 +4,10 @@ import { revalidatePath } from 'next/cache';
 
 import { authActionClient } from '@kit/next/safe-action';
 import { requireUser } from '@kit/supabase/require-user';
+import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
+import { evaluateAccountCompliance } from '~/lib/compliance/compliance-engine';
 import { ExternalActivitiesService } from '~/lib/services/external-activities-service';
 
 import {
@@ -26,6 +28,15 @@ export const createExternalActivity = authActionClient
       input,
     );
 
+    // Recalculate compliance so the new activity immediately reflects in the
+    // ISO 26000 / CSRD / B Corp / Lucie / devoir-vigilance scores.
+    try {
+      const adminClient = getSupabaseServerAdminClient();
+      await evaluateAccountCompliance(adminClient, user.id);
+    } catch {
+      // Non-blocking — the user can still recalc manually from /home/compliance
+    }
+
     revalidatePath('/home/external-activities');
     revalidatePath('/home/compliance');
 
@@ -40,6 +51,13 @@ export const deleteExternalActivity = authActionClient
     if (error || !user) throw new Error('Unauthorized');
 
     await ExternalActivitiesService.delete(client, user.id, parsedInput.id);
+
+    try {
+      const adminClient = getSupabaseServerAdminClient();
+      await evaluateAccountCompliance(adminClient, user.id);
+    } catch {
+      // Non-blocking
+    }
 
     revalidatePath('/home/external-activities');
     revalidatePath('/home/compliance');
