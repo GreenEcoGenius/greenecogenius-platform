@@ -88,5 +88,8 @@
   "chartNetBalance": "Bilan net",
   "chartWeight": "Poids",
   "chartCenterLabel": "kg CO₂",
-  "exportPdf": "Rapport PDF"
+  "exportPdf": "Rapport PDF",
+  "assessmentTitle": "Bilan Carbone GHG Protocol",
+  "startAssessment": "Realiser mon bilan carbone",
+  "startAssessmentDesc": "Calculez vos emissions Scopes 1, 2 et 3 conformement au GHG Protocol Corporate Standard."
 }

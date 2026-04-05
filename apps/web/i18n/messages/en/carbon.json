@@ -88,5 +88,8 @@
   "chartNetBalance": "Net balance",
   "chartWeight": "Weight",
   "chartCenterLabel": "kg CO₂",
-  "exportPdf": "PDF Report"
+  "exportPdf": "PDF Report",
+  "assessmentTitle": "GHG Protocol Carbon Assessment",
+  "startAssessment": "Complete my carbon assessment",
+  "startAssessmentDesc": "Calculate your Scope 1, 2 and 3 emissions in compliance with the GHG Protocol Corporate Standard."
 }

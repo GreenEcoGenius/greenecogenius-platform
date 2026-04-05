@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import {
   ArrowRight,
+  ClipboardCheck,
   Factory,
   Flame,
   Leaf,
@@ -217,6 +218,19 @@ async function CarbonPage() {
   return (
     <PageBody>
       <SectionHeader titleKey="carbonTitle" descKey="carbonDesc" />
+
+      <div className="mb-6 flex flex-wrap gap-3">
+        <Button
+          variant="default"
+          size="sm"
+          render={<Link href="/home/carbon/assessment" />}
+          nativeButton={false}
+        >
+          <ClipboardCheck className="mr-2 h-4 w-4" />
+          <Trans i18nKey="carbon:startAssessment" />
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
 
       <div className="space-y-8">
         {/* KPI Cards */}
