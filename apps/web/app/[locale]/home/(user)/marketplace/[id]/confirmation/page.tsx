@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, FileSignature } from 'lucide-react';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Button } from '@kit/ui/button';
@@ -11,14 +11,19 @@ import { TransactionImpactPanel } from '~/home/_components/transaction-impact-pa
 
 interface ConfirmationPageProps {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ transaction_id?: string }>;
 }
 
 export async function generateMetadata() {
   return { title: 'Confirmation de paiement' };
 }
 
-async function ConfirmationPage({ params }: ConfirmationPageProps) {
+async function ConfirmationPage({
+  params,
+  searchParams,
+}: ConfirmationPageProps) {
   const { id } = await params;
+  const { transaction_id: transactionId } = await searchParams;
   const client = getSupabaseServerClient();
 
   const { data: listing } = await client
@@ -58,7 +63,22 @@ async function ConfirmationPage({ params }: ConfirmationPageProps) {
           />
         ) : null}
 
-        <div className="flex gap-3">
+        <div className="flex flex-wrap justify-center gap-3">
+          {transactionId ? (
+            <Button
+              className="bg-teal-600 hover:bg-teal-700"
+              nativeButton={false}
+              render={
+                <Link href={`/home/transactions/${transactionId}`}>
+                  <FileSignature
+                    className="mr-1.5 h-4 w-4"
+                    strokeWidth={1.5}
+                  />
+                  Acceder au contrat de vente
+                </Link>
+              }
+            />
+          ) : null}
           <Button
             variant="outline"
             render={
@@ -69,6 +89,7 @@ async function ConfirmationPage({ params }: ConfirmationPageProps) {
             nativeButton={false}
           />
           <Button
+            variant="outline"
             render={
               <Link href="/home/marketplace">
                 <Trans i18nKey="marketplace.backToMarketplace" />
