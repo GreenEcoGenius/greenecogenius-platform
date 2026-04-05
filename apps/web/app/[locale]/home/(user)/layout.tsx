@@ -66,11 +66,12 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
 
                 {children}
               </Page>
+
+              <GlobalAIAssistant />
             </div>
           </div>
         </SidebarProvider>
 
-        <GlobalAIAssistant />
         <GlobalSearch />
       </ChatProvider>
     </UserWorkspaceContextProvider>
@@ -87,7 +88,7 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
       <ChatProvider>
         <AppHeader />
 
-        <div className="min-w-0 flex-1">
+        <div className="flex min-w-0 flex-1">
           <Page
             style={'header'}
             contentContainerClassName="flex flex-1 flex-col space-y-4 pt-20 md:pt-32"
@@ -98,9 +99,10 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
 
             {children}
           </Page>
+
+          <GlobalAIAssistant />
         </div>
 
-        <GlobalAIAssistant />
         <GlobalSearch />
       </ChatProvider>
     </UserWorkspaceContextProvider>
