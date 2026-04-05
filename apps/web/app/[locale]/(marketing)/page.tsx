@@ -44,31 +44,31 @@ export default async function Home() {
                   <span>{t('heroBadge')}</span>
                 </div>
 
-                <h1 className="text-metal-900 text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
+                <h1 className="text-metal-900 text-3xl font-bold leading-[1.15] tracking-tight sm:text-4xl lg:text-[2.5rem] xl:text-5xl">
                   {t('heroTitle')}
                 </h1>
 
-                <p className="text-metal-600 mx-auto mt-8 max-w-xl text-lg leading-relaxed lg:mx-0 lg:text-xl">
+                <p className="text-metal-600 mx-auto mt-6 max-w-xl text-base leading-relaxed lg:mx-0 lg:text-lg">
                   {t('heroDescription')}
                 </p>
 
-                <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
                   <Link
                     href="/auth/sign-up"
-                    className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-7 py-4 text-base font-semibold text-white transition-colors hover:bg-emerald-700 sm:w-auto"
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 font-medium text-white transition-colors hover:bg-emerald-700 sm:w-auto"
                   >
                     {t('heroCtaPrimary')}
-                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" strokeWidth={1.5} />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" strokeWidth={1.5} />
                   </Link>
                   <Link
                     href="/auth/sign-up"
-                    className="text-metal-800 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 px-7 py-4 text-base font-semibold transition-colors hover:border-gray-400 sm:w-auto"
+                    className="text-metal-700 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 px-6 py-3 font-medium transition-colors hover:border-gray-400 sm:w-auto"
                   >
                     {t('heroCtaSecondary')}
                   </Link>
                 </div>
 
-                <div className="text-metal-500 mt-8 flex flex-wrap items-center justify-center gap-5 text-sm lg:justify-start">
+                <div className="text-metal-500 mt-6 flex flex-wrap items-center justify-center gap-4 text-sm lg:justify-start">
                   <span className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-emerald-500" />
                     {t('heroProof1')}
