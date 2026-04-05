@@ -170,5 +170,9 @@
   "domainEnvironment": "Environnement",
   "domainSocial": "Social",
   "domainEthics": "Éthique",
-  "domainStakeholders": "Parties prenantes"
+  "domainStakeholders": "Parties prenantes",
+  "labelSectionTitle": "Éligibilité aux labels",
+  "labelsAccessible": "{eligible}/{total} labels accessibles",
+  "labelCoverage": "Couverture",
+  "learnMore": "En savoir plus"
 }

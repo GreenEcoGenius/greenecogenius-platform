@@ -11,12 +11,10 @@ import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { NORMS_DATABASE } from '~/lib/data/norms-database';
-import { LabelEligibilityService } from '~/lib/services/label-eligibility-service';
 
 import { ComplianceAlerts } from './_components/compliance-alerts';
 import { CompliancePillarCards } from './_components/compliance-pillar-cards';
 import { ComplianceScoreCard } from './_components/compliance-score-card';
-import { LabelEligibilitySection } from './_components/label-eligibility-section';
 import { NormStatusTable } from './_components/norm-status-table';
 import { RecalculateButton } from './_components/recalculate-button';
 import { RegulatoryWatch } from './_components/regulatory-watch';
@@ -185,9 +183,6 @@ async function CompliancePage() {
     })
     .slice(0, 5);
 
-  // Label eligibility — computed from the same underlying signals
-  const labels = await LabelEligibilityService.compute(client, userId);
-
   const lastEvaluated = rows[0]?.last_evaluated_at
     ? new Date(rows[0].last_evaluated_at).toLocaleDateString('fr-FR', {
         day: 'numeric',
@@ -215,8 +210,6 @@ async function CompliancePage() {
         <CompliancePillarCards pillars={pillars} />
 
         <NormStatusTable norms={normRows} />
-
-        <LabelEligibilitySection labels={labels} />
 
         {alertItems.length > 0 && <ComplianceAlerts alerts={alertItems} />}
 

@@ -170,5 +170,9 @@
   "domainEnvironment": "Environment",
   "domainSocial": "Social",
   "domainEthics": "Ethics",
-  "domainStakeholders": "Stakeholders"
+  "domainStakeholders": "Stakeholders",
+  "labelSectionTitle": "Label eligibility",
+  "labelsAccessible": "{eligible}/{total} labels accessible",
+  "labelCoverage": "Coverage",
+  "learnMore": "Learn more"
 }

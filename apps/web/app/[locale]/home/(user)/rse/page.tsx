@@ -3,11 +3,16 @@ import Link from 'next/link';
 import { ArrowRight, Award, ClipboardCheck, Target } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
+import { requireUser } from '@kit/supabase/require-user';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Button } from '@kit/ui/button';
 import { Card, CardContent } from '@kit/ui/card';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
+import { LabelEligibilityService } from '~/lib/services/label-eligibility-service';
+
+import { LabelEligibilitySection } from '../compliance/_components/label-eligibility-section';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('rse');
@@ -17,6 +22,12 @@ export const generateMetadata = async () => {
 
 async function RSEPage() {
   const t = await getTranslations('rse');
+  const client = getSupabaseServerClient();
+  const user = await requireUser(client);
+  const userId = user.data?.id;
+  const labels = userId
+    ? await LabelEligibilityService.compute(client, userId)
+    : [];
   const features = [
     {
       icon: '📊',
@@ -101,6 +112,8 @@ async function RSEPage() {
             </Card>
           ))}
         </div>
+
+        {labels.length > 0 && <LabelEligibilitySection labels={labels} />}
       </div>
     </PageBody>
   );

@@ -1,4 +1,5 @@
 import { Award, Check, ExternalLink, X } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -10,9 +11,10 @@ interface LabelEligibilitySectionProps {
   labels: LabelEligibility[];
 }
 
-export function LabelEligibilitySection({
+export async function LabelEligibilitySection({
   labels,
 }: LabelEligibilitySectionProps) {
+  const t = await getTranslations('rse');
   const eligibleCount = labels.filter((l) => l.eligible).length;
 
   return (
@@ -22,14 +24,17 @@ export function LabelEligibilitySection({
           <div className="flex items-center gap-2">
             <Award className="h-5 w-5 text-emerald-600" strokeWidth={1.5} />
             <h2 className="text-xl font-semibold text-gray-900">
-              Eligibilite aux labels
+              {t('labelSectionTitle')}
             </h2>
           </div>
           <Badge
             variant="secondary"
             className="border-emerald-100 bg-emerald-50 text-emerald-700"
           >
-            {eligibleCount}/{labels.length} labels accessibles
+            {t('labelsAccessible', {
+              eligible: eligibleCount,
+              total: labels.length,
+            })}
           </Badge>
         </div>
 
@@ -48,21 +53,21 @@ export function LabelEligibilitySection({
                 </div>
                 {l.eligible ? (
                   <Badge className="border-emerald-200 bg-emerald-50 text-emerald-700">
-                    Eligible
+                    {t('eligible')}
                   </Badge>
                 ) : (
                   <Badge
                     variant="outline"
                     className="border-gray-200 text-gray-500"
                   >
-                    En progression
+                    {t('inProgress')}
                   </Badge>
                 )}
               </div>
 
               <div className="mb-3">
                 <div className="mb-1 flex items-center justify-between text-xs text-gray-500">
-                  <span>Couverture</span>
+                  <span>{t('labelCoverage')}</span>
                   <span className="font-medium">{l.coverage}%</span>
                 </div>
                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
@@ -119,11 +124,10 @@ export function LabelEligibilitySection({
                       className="mr-1.5 h-3.5 w-3.5"
                       strokeWidth={1.5}
                     />
-                    En savoir plus
+                    {t('learnMore')}
                   </a>
                 }
               />
-
             </div>
           ))}
         </div>
