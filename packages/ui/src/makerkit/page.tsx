@@ -32,7 +32,7 @@ function PageWithSidebar(props: PageProps) {
 
   return (
     <div
-      className={cn('flex h-full min-w-0 flex-1 overflow-hidden', props.className)}
+      className={cn('flex min-w-0 flex-1 lg:h-full lg:overflow-hidden', props.className)}
     >
       {Navigation}
 
@@ -40,13 +40,13 @@ function PageWithSidebar(props: PageProps) {
         data-scroll-root="true"
         className={
           props.contentContainerClassName ??
-          'mx-auto flex w-full min-w-0 flex-1 flex-col overflow-y-auto bg-inherit'
+          'mx-auto flex w-full min-w-0 flex-1 flex-col bg-white lg:overflow-y-auto lg:bg-inherit'
         }
       >
         {MobileNavigation}
 
         <div
-          className={'bg-background flex min-w-0 flex-1 flex-col px-4 lg:px-0'}
+          className={'flex min-w-0 flex-1 flex-col px-4 lg:bg-background lg:px-0'}
         >
           {Children}
         </div>
