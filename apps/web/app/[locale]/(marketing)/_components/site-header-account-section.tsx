@@ -67,14 +67,13 @@ function AuthButtons() {
 
       <Button
         nativeButton={false}
-        className="text-sm"
+        className="px-5 py-2.5 text-sm font-semibold"
         render={
           <Link href={pathsConfig.auth.signIn}>
             <Trans i18nKey="auth.signIn" />
           </Link>
         }
         variant="outline"
-        size="sm"
       />
 
       <Button
@@ -84,9 +83,8 @@ function AuthButtons() {
             <Trans i18nKey="auth.signUp" />
           </Link>
         }
-        className="text-sm"
+        className="px-5 py-2.5 text-sm font-semibold"
         variant="default"
-        size="sm"
       />
     </div>
   );

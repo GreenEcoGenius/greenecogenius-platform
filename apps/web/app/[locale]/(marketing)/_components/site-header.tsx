@@ -9,7 +9,7 @@ import { SiteNavigation } from './site-navigation';
 export function SiteHeader(props: { user?: JWTUserData | null }) {
   return (
     <Header
-      logo={<AppLogo href="/" className="-ml-2 lg:-ml-4" />}
+      logo={<AppLogo href="/" className="-ml-4 lg:-ml-8" />}
       navigation={<SiteNavigation user={props.user ?? null} />}
       actions={<SiteHeaderAccountSection user={props.user ?? null} />}
     />
