@@ -21,19 +21,21 @@ export function AppHeader() {
   const lastScrollY = useRef(0);
 
   useEffect(() => {
-    // Use capture phase to catch scroll events on any nested scroll container
-    // (the dashboard uses an internal overflow-y-auto, not window scroll).
-    const onScroll = (event: Event) => {
-      const target = event.target;
-      let currentY = 0;
+    // The dashboard layout scrolls an internal div (overflow-y-auto) marked
+    // with data-scroll-root, not the window. Attach the listener directly to
+    // that element — capture-phase listeners on document are unreliable on
+    // iOS Safari for scroll events from nested containers.
+    const scrollRoot =
+      (document.querySelector('[data-scroll-root]') as HTMLElement | null) ??
+      null;
 
-      if (target instanceof Document) {
-        currentY = window.scrollY;
-      } else if (target instanceof HTMLElement) {
-        currentY = target.scrollTop;
-      } else {
-        return;
-      }
+    const readScrollY = (): number => {
+      if (scrollRoot) return scrollRoot.scrollTop;
+      return window.scrollY;
+    };
+
+    const onScroll = () => {
+      const currentY = readScrollY();
 
       if (currentY < 100) {
         setVisible(true);
@@ -46,12 +48,9 @@ export function AppHeader() {
       lastScrollY.current = currentY;
     };
 
-    document.addEventListener('scroll', onScroll, {
-      capture: true,
-      passive: true,
-    });
-    return () =>
-      document.removeEventListener('scroll', onScroll, { capture: true });
+    const target: HTMLElement | Window = scrollRoot ?? window;
+    target.addEventListener('scroll', onScroll, { passive: true });
+    return () => target.removeEventListener('scroll', onScroll);
   }, []);
 
   return (

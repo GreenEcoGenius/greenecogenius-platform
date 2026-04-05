@@ -37,6 +37,7 @@ function PageWithSidebar(props: PageProps) {
       {Navigation}
 
       <div
+        data-scroll-root="true"
         className={
           props.contentContainerClassName ??
           'mx-auto flex w-full min-w-0 flex-1 flex-col overflow-y-auto bg-inherit'
@@ -77,6 +78,7 @@ function PageWithHeader(props: PageProps) {
   return (
     <div className={cn('flex h-screen flex-1 flex-col', props.className)}>
       <div
+        data-scroll-root="true"
         className={
           props.contentContainerClassName ?? 'flex flex-1 flex-col space-y-4'
         }
