@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
+
 import { Globe, Menu, Search, Sparkles } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
@@ -15,9 +17,50 @@ import { useGlobalSearch } from './global-search';
 export function AppHeader() {
   const { chatOpen, toggleChat } = useChat();
   const { openSearch } = useGlobalSearch();
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    // Use capture phase to catch scroll events on any nested scroll container
+    // (the dashboard uses an internal overflow-y-auto, not window scroll).
+    const onScroll = (event: Event) => {
+      const target = event.target;
+      let currentY = 0;
+
+      if (target instanceof Document) {
+        currentY = window.scrollY;
+      } else if (target instanceof HTMLElement) {
+        currentY = target.scrollTop;
+      } else {
+        return;
+      }
+
+      if (currentY < 100) {
+        setVisible(true);
+      } else if (currentY < lastScrollY.current) {
+        setVisible(true);
+      } else if (currentY > lastScrollY.current) {
+        setVisible(false);
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    document.addEventListener('scroll', onScroll, {
+      capture: true,
+      passive: true,
+    });
+    return () =>
+      document.removeEventListener('scroll', onScroll, { capture: true });
+  }, []);
 
   return (
-    <header className="border-metal-chrome fixed top-0 right-0 left-0 z-50 flex h-20 items-center justify-between overflow-visible border-b bg-white/95 px-2 backdrop-blur-sm md:h-28 md:px-3 lg:px-5">
+    <header
+      className={cn(
+        'border-metal-chrome fixed top-0 right-0 left-0 z-50 flex h-20 items-center justify-between overflow-visible border-b bg-white/95 px-2 backdrop-blur-sm transition-transform duration-300 md:h-28 md:px-3 lg:px-5',
+        visible ? 'translate-y-0' : '-translate-y-full',
+      )}
+    >
       {/* Left: logo only */}
       <div className="flex items-center">
         <AppLogo href="/" />
