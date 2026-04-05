@@ -215,7 +215,7 @@ async function ExternalActivitiesPage() {
         </Tabs>
 
         <SectionFooterImage
-          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/_Wide-angle_hero_image_202604051229.png"
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/gouvernance.png"
           alt={t('title')}
         />
     </PageBody>
