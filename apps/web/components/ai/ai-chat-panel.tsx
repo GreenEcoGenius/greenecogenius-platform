@@ -352,7 +352,184 @@ export function AIChatPanel() {
   if (!chatOpen) return null;
 
   return (
-    <div className="border-metal-chrome flex h-full w-[380px] shrink-0 flex-col border-l bg-white pt-20 md:pt-24">
+    <>
+      {/* Mobile: full-screen overlay */}
+      <div
+        className="fixed inset-0 z-[60] flex flex-col bg-white md:hidden"
+        role="dialog"
+        aria-modal="true"
+      >
+        {/* Mobile header */}
+        <div className="border-metal-chrome flex items-center justify-between border-b px-4 py-3">
+          <div className="flex items-center gap-2">
+            <span className="bg-primary-light rounded-lg p-1.5">
+              <Sparkles className="text-primary h-3.5 w-3.5" />
+            </span>
+            <div>
+              <p className="text-metal-900 text-sm font-semibold">Genius</p>
+              <div className="text-metal-500 flex items-center gap-1 text-[11px]">
+                {section.icon}
+                {section.name}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+              title={t('ai.importDocument')}
+            >
+              <Paperclip className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setMessages([])}
+              className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+              title={t('ai.newConversation')}
+            >
+              <PenLine className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={closeChat}
+              className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+              title={t('ai.close')}
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile messages */}
+        <div className="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
+          {!hasMessages && !loading ? (
+            <div className="flex flex-1 flex-col">
+              <div className="mb-4 flex gap-2">
+                <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                  <Sparkles className="text-primary h-3 w-3" />
+                </div>
+                <div className="bg-metal-50 text-metal-700 rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] leading-relaxed">
+                  {section.welcome}
+                </div>
+              </div>
+              <div className="mt-auto flex flex-col gap-1.5">
+                {section.suggestions.map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    type="button"
+                    onClick={() => handleSend(suggestion)}
+                    className="border-metal-chrome text-metal-600 hover:border-primary/30 hover:bg-primary-light/50 hover:text-primary flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left text-[13px] transition-all duration-150"
+                  >
+                    <span className="text-primary">&#8599;</span>
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <>
+              {messages.map((msg) => (
+                <div key={msg.id}>
+                  {msg.role === 'user' ? (
+                    <div className="flex justify-end">
+                      <div className="bg-primary max-w-[85%] rounded-xl rounded-br-sm px-3 py-2 text-[13px] text-white">
+                        {msg.content}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                        <Sparkles className="text-primary h-3 w-3" />
+                      </div>
+                      <div className="bg-metal-50 text-metal-800 max-w-[85%] rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] leading-relaxed">
+                        <div className="whitespace-pre-wrap">
+                          {msg.content}
+                          {msg.streaming && msg.content && (
+                            <span className="bg-teal-500 ml-0.5 inline-block h-3.5 w-0.5 animate-pulse" />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {loading && !messages.some((m) => m.streaming && m.content) && (
+                <div className="flex gap-2">
+                  <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                    <Sparkles className="text-primary h-3 w-3" />
+                  </div>
+                  <div className="bg-metal-50 text-metal-500 rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px]">
+                    {locale === 'fr' ? 'Genius reflechit...' : 'Genius is thinking...'}
+                  </div>
+                </div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </>
+          )}
+        </div>
+
+        {/* Mobile disclaimer */}
+        <div className="text-metal-steel px-4 text-center text-[10px]">
+          {t('ai.disclaimer')}
+        </div>
+
+        {/* Mobile hidden file input */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".pdf,.csv,.xlsx,.xls,.docx,.doc,.png,.jpg,.jpeg"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              handleSend(t('ai.importedDocument', { name: file.name }));
+            }
+            e.target.value = '';
+          }}
+        />
+
+        {/* Mobile input */}
+        <div className="border-metal-chrome border-t p-3 pb-[env(safe-area-inset-bottom,12px)]">
+          <div className="border-metal-silver bg-metal-50 flex items-end gap-2 rounded-xl border px-3 py-2">
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="text-metal-steel hover:text-metal-600 flex h-8 w-8 shrink-0 items-center justify-center transition-colors"
+              title={t('ai.attachFile')}
+            >
+              <Paperclip className="h-4 w-4" />
+            </button>
+            <textarea
+              value={input}
+              onChange={(e) => {
+                setInput(e.target.value);
+                const el = e.target;
+                el.style.height = 'auto';
+                el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+              }}
+              onKeyDown={handleKeyDown}
+              placeholder={t('ai.askQuestion')}
+              rows={1}
+              className="text-metal-900 placeholder:text-metal-steel max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-[14px] leading-relaxed outline-none"
+              disabled={loading}
+            />
+            <button
+              type="button"
+              onClick={() => handleSend()}
+              disabled={loading || !input.trim()}
+              className="bg-primary hover:bg-primary-hover flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-white transition-all duration-150 disabled:opacity-30"
+            >
+              <Send className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop: sidebar panel */}
+      <div className="border-metal-chrome hidden h-full w-[380px] shrink-0 flex-col border-l bg-white pt-20 md:flex md:pt-24">
       {/* Header */}
       <div className="border-metal-chrome flex items-center justify-between border-b px-4 py-3">
         <div className="flex items-center gap-2">
@@ -527,5 +704,6 @@ export function AIChatPanel() {
         </div>
       </div>
     </div>
+    </>
   );
 }
