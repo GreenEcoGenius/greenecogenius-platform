@@ -31,7 +31,7 @@ export default async function Home() {
   const t = await getTranslations('marketing');
 
   return (
-    <div className="flex flex-col overflow-x-hidden">
+    <div className="flex flex-col">
       {/* ───── SECTION 1 — HERO ───── */}
       <section className="overflow-hidden bg-white pt-24 pb-16 sm:pt-32 sm:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

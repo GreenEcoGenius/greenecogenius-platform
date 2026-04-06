@@ -43,13 +43,13 @@ const frameworkLogos: LogoItem[] = [
   { name: 'NR (INR)', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/a22d5f61-e78e-459b-8839-efe5f1f833ae.png', url: 'https://institutnr.org' },
 ];
 
-function LogoCarouselItem({ logo }: { logo: LogoItem }) {
+function LogoGridItem({ logo }: { logo: LogoItem }) {
   return (
     <a
       href={logo.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex shrink-0 flex-col items-center gap-2 px-5 sm:px-8"
+      className="group flex flex-col items-center justify-center gap-2 rounded-xl border border-transparent px-4 py-5 transition-all duration-300 hover:border-gray-200 hover:bg-gray-50 hover:shadow-sm"
     >
       {logo.src ? (
         <Image
@@ -57,7 +57,7 @@ function LogoCarouselItem({ logo }: { logo: LogoItem }) {
           alt={logo.name}
           width={200}
           height={80}
-          className={`w-auto object-contain transition-transform duration-300 group-hover:scale-110 ${logo.size ?? 'h-12 sm:h-14'}`}
+          className={`w-auto object-contain transition-transform duration-300 group-hover:scale-105 ${logo.size ?? 'h-12 sm:h-14'}`}
           unoptimized
         />
       ) : (
@@ -66,7 +66,7 @@ function LogoCarouselItem({ logo }: { logo: LogoItem }) {
         </span>
       )}
       {logo.src && (
-        <span className="text-metal-400 group-hover:text-metal-600 text-[11px] transition-colors">
+        <span className="text-metal-400 group-hover:text-teal-600 text-[11px] font-medium transition-colors">
           {logo.name}
         </span>
       )}
@@ -74,26 +74,17 @@ function LogoCarouselItem({ logo }: { logo: LogoItem }) {
   );
 }
 
-function LogoMarquee({ logos }: { logos: LogoItem[] }) {
+function LogoGrid({ logos, columns }: { logos: LogoItem[]; columns?: string }) {
   return (
-    <div className="relative overflow-hidden">
-      <div className="from-background pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r to-transparent sm:w-24" />
-      <div className="from-background pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l to-transparent sm:w-24" />
-
-      <div className="animate-marquee-fast flex w-max items-center py-4 will-change-transform">
-        {logos.map((logo) => (
-          <LogoCarouselItem key={`a-${logo.name}`} logo={logo} />
-        ))}
-        {logos.map((logo) => (
-          <LogoCarouselItem key={`b-${logo.name}`} logo={logo} />
-        ))}
-        {logos.map((logo) => (
-          <LogoCarouselItem key={`c-${logo.name}`} logo={logo} />
-        ))}
-        {logos.map((logo) => (
-          <LogoCarouselItem key={`d-${logo.name}`} logo={logo} />
-        ))}
-      </div>
+    <div
+      className={
+        columns ??
+        'grid grid-cols-3 gap-2 sm:grid-cols-5 sm:gap-4 lg:grid-cols-5'
+      }
+    >
+      {logos.map((logo) => (
+        <LogoGridItem key={logo.name} logo={logo} />
+      ))}
     </div>
   );
 }
@@ -104,14 +95,14 @@ export function TechCarousel() {
   return (
     <section className="py-10 sm:py-14">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-6 flex items-center justify-center gap-2">
+        <div className="mb-8 flex items-center justify-center gap-2">
           <Code2 className="h-5 w-5 text-teal-600" strokeWidth={1.5} />
           <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
             {t('landing.foundationsTech')}
           </p>
         </div>
+        <LogoGrid logos={techLogos} columns="grid grid-cols-3 gap-2 sm:grid-cols-5 sm:gap-4 lg:grid-cols-5" />
       </div>
-      <LogoMarquee logos={techLogos} />
     </section>
   );
 }
@@ -122,14 +113,14 @@ export function SourcesCarousel() {
   return (
     <section className="py-10 sm:py-14">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-6 flex items-center justify-center gap-2">
+        <div className="mb-8 flex items-center justify-center gap-2">
           <Database className="h-5 w-5 text-emerald-600" strokeWidth={1.5} />
           <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
             {t('landing.foundationsSources')}
           </p>
         </div>
+        <LogoGrid logos={sourceLogos} columns="grid grid-cols-3 gap-2 sm:grid-cols-5 sm:gap-4 lg:grid-cols-5" />
       </div>
-      <LogoMarquee logos={sourceLogos} />
     </section>
   );
 }
@@ -146,11 +137,11 @@ export function FrameworksCarousel() {
             {t('landing.foundationsFrameworks')}
           </p>
         </div>
-        <p className="text-metal-400 mb-4 text-center text-xs">
+        <p className="text-metal-400 mb-6 text-center text-xs">
           {t('landing.foundationsFrameworksSub')}
         </p>
+        <LogoGrid logos={frameworkLogos} columns="grid grid-cols-3 gap-2 sm:grid-cols-4 sm:gap-4 lg:grid-cols-7" />
       </div>
-      <LogoMarquee logos={frameworkLogos} />
     </section>
   );
 }
