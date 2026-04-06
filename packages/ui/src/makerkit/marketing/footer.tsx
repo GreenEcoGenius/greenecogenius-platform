@@ -1,7 +1,3 @@
-'use client';
-
-import { useEffect, useRef, useState } from 'react';
-
 import { cn } from '../../lib/utils';
 
 interface FooterSection {
@@ -29,42 +25,12 @@ export const Footer: React.FC<FooterProps> = ({
   securityBadge,
   ...props
 }) => {
-  // Mirror the scroll-hide / scroll-show logic used by the marketing Header
-  // so the footer slides out of view when scrolling down and slides back in
-  // when scrolling up. Only applies on mobile — desktop keeps the footer
-  // static to avoid layout surprises on long-form pages.
-  const [visible, setVisible] = useState(true);
-  const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const currentY = window.scrollY;
-      const maxScroll =
-        document.documentElement.scrollHeight - window.innerHeight;
-
-      // Near top or near bottom → always show.
-      if (currentY < 100 || maxScroll - currentY < 100) {
-        setVisible(true);
-      } else if (currentY < lastScrollY.current) {
-        // Scrolling up → show.
-        setVisible(true);
-      } else if (currentY > lastScrollY.current) {
-        // Scrolling down → hide.
-        setVisible(false);
-      }
-
-      lastScrollY.current = currentY;
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const visible = true;
 
   return (
     <footer
       className={cn(
-        'site-footer border-metal-chrome bg-metal-50 relative mt-auto w-full border-t py-8 transition-transform duration-300 md:!translate-y-0 xl:py-16 2xl:py-20',
-        visible ? 'translate-y-0' : 'translate-y-full',
+        'site-footer border-metal-chrome bg-metal-50 relative mt-auto w-full border-t py-8 xl:py-16 2xl:py-20',
         className,
       )}
       {...props}

@@ -14,6 +14,10 @@ export function HeroScrollEffect({ children }: { children: React.ReactNode }) {
     const el = ref.current;
     if (!el) return;
 
+    // Disable scroll-driven transforms on mobile to avoid scroll jank
+    const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+    if (!isDesktop) return;
+
     let ticking = false;
 
     const onScroll = () => {
@@ -25,13 +29,9 @@ export function HeroScrollEffect({ children }: { children: React.ReactNode }) {
         const windowHeight = window.innerHeight;
         const progress = Math.min(scrollY / windowHeight, 1);
 
-        // Scale: 1 → 0.85
         const scale = 1 - progress * 0.15;
-        // Opacity: 1 → 0
         const opacity = 1 - progress * 1.2;
-        // Slight upward shift
         const translateY = progress * -30;
-        // Border radius grows as it shrinks
         const borderRadius = progress * 24;
 
         el.style.transform = `scale(${scale}) translateY(${translateY}px)`;

@@ -79,6 +79,10 @@ export function HeroVisual() {
   const [activeService, setActiveService] = useState<string | null>(null);
 
   useEffect(() => {
+    // Disable scroll-driven transforms on mobile to avoid scroll jank
+    const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+    if (!isDesktop) return;
+
     let ticking = false;
 
     const onScroll = () => {

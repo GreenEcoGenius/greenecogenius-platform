@@ -26,15 +26,13 @@ export const Header: React.FC<HeaderProps> = function ({
   useEffect(() => {
     const onScroll = () => {
       const currentY = window.scrollY;
+      const delta = currentY - lastScrollY.current;
 
       if (currentY < 100) {
-        // Always show near top
         setVisible(true);
-      } else if (currentY < lastScrollY.current) {
-        // Scrolling up → show
+      } else if (delta < -5) {
         setVisible(true);
-      } else {
-        // Scrolling down → hide
+      } else if (delta > 10) {
         setVisible(false);
       }
 
