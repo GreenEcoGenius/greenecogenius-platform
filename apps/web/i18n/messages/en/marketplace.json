@@ -133,6 +133,14 @@
   "comptoirTitle": "Le Comptoir Circulaire",
   "co2AvoidedEstimated": "Estimated CO₂ avoided:",
 
+  "flux": {
+    "generate": "Generate image with AI",
+    "generating": "Generating...",
+    "remove": "Remove",
+    "hint": "AI-generated image — Flux by Black Forest Labs",
+    "attribution": "AI-generated image — Flux by Black Forest Labs"
+  },
+
   "dashboard": {
     "marketplace": "Marketplace",
     "activeListings": "active listings",

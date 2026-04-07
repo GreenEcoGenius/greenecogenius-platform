@@ -7,6 +7,9 @@ import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
+import { REPORT_SECTION_PROMPTS } from '~/lib/config/flux-prompts';
+import { FluxClient } from '~/lib/services/flux-client';
+import { getUserPlan } from '~/lib/services/flux-usage';
 import { generateESGReportPDF } from '~/lib/services/pdf/templates/esg-report-template';
 
 const ESGReportSchema = z.object({
@@ -192,6 +195,36 @@ ${perEmployeeKg > 0 ? `The carbon intensity per employee stands at ${fmt(perEmpl
 This report follows ${formatLabel} standards and relies on ADEME Base Carbone 2024 emission factors.`;
   }
 
+  // Generate Flux illustrations for Enterprise users
+  let fluxImages: Record<string, string> | undefined;
+
+  if (FluxClient.isConfigured()) {
+    const plan = await getUserPlan(client, user.id);
+
+    if (plan === 'enterprise') {
+      fluxImages = {};
+      const flux = new FluxClient();
+      const sections = ['carbon', 'circular_economy'] as const;
+
+      for (const section of sections) {
+        try {
+          const prompt = REPORT_SECTION_PROMPTS[section];
+          if (!prompt) continue;
+          const imageUrl = await flux.generateAndWait({
+            prompt,
+            width: 1200,
+            height: 800,
+          });
+          const imgResponse = await fetch(imageUrl);
+          const imgBuffer = Buffer.from(await imgResponse.arrayBuffer());
+          fluxImages[section] = `data:image/png;base64,${imgBuffer.toString('base64')}`;
+        } catch (err) {
+          console.error(`Flux ESG illustration failed for ${section}:`, err);
+        }
+      }
+    }
+  }
+
   // Generate PDF
   const pdfBuffer = generateESGReportPDF(
     {
@@ -218,6 +251,7 @@ This report follows ${formatLabel} standards and relies on ADEME Base Carbone 20
       aiSummary,
       nbEmployees: esg.nb_employees,
       industrySector: esg.industry_sector,
+      fluxImages,
     },
     locale,
   );

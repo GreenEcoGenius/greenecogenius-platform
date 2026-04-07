@@ -20,6 +20,8 @@ import {
 import { Textarea } from '@kit/ui/textarea';
 import { Trans } from '@kit/ui/trans';
 
+import { ListingImageSection } from './listing-image-section';
+
 interface CreateListingFormProps {
   account: string;
   accountId?: string;
@@ -40,6 +42,9 @@ export function CreateListingForm({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [listingType, setListingType] = useState('sell');
+  const [selectedCategorySlug, setSelectedCategorySlug] = useState('');
+  const [descriptionText, setDescriptionText] = useState('');
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
   const t = useTranslations('marketplace');
   const locale =
     useTranslations()('common.languageCode' as never) === 'fr' ? 'fr' : 'en';
@@ -71,20 +76,33 @@ export function CreateListingForm({
 
     if (!resolvedAccountId) return;
 
-    const { error } = await supabase.from('listings').insert({
-      account_id: resolvedAccountId,
-      title,
-      description: description || null,
-      category_id: categoryId,
-      quantity,
-      unit,
-      price_per_unit: pricePerUnit ? parseFloat(pricePerUnit) : null,
-      transport_price: transportPrice ? parseFloat(transportPrice) : null,
-      listing_type: listingType,
-      location_city: locationCity || null,
-      location_country: locationCountry || 'FR',
-      status: 'active',
-    });
+    const { data: inserted, error } = await supabase
+      .from('listings')
+      .insert({
+        account_id: resolvedAccountId,
+        title,
+        description: description || null,
+        category_id: categoryId,
+        quantity,
+        unit,
+        price_per_unit: pricePerUnit ? parseFloat(pricePerUnit) : null,
+        transport_price: transportPrice ? parseFloat(transportPrice) : null,
+        listing_type: listingType,
+        location_city: locationCity || null,
+        location_country: locationCountry || 'FR',
+        status: 'active',
+      })
+      .select('id')
+      .single();
+
+    // Save Flux-generated image as listing image
+    if (inserted?.id && generatedImageUrl) {
+      await supabase.from('listing_images').insert({
+        listing_id: inserted.id,
+        storage_path: generatedImageUrl,
+        position: 0,
+      });
+    }
 
     const redirectPath = account
       ? `/home/${account}/marketplace`
@@ -144,6 +162,7 @@ export function CreateListingForm({
           name="description"
           rows={4}
           placeholder={t('descriptionPlaceholder')}
+          onChange={(e) => setDescriptionText(e.target.value)}
         />
       </div>
 
@@ -151,7 +170,14 @@ export function CreateListingForm({
         <Label htmlFor="category_id">
           <Trans i18nKey="marketplace.category" />
         </Label>
-        <Select name="category_id" required>
+        <Select
+          name="category_id"
+          required
+          onValueChange={(val) => {
+            const cat = categories.find((c) => c.id === val);
+            setSelectedCategorySlug(cat?.slug ?? '');
+          }}
+        >
           <SelectTrigger>
             <SelectValue placeholder={t('selectCategory')} />
           </SelectTrigger>
@@ -261,6 +287,12 @@ export function CreateListingForm({
           </Select>
         </div>
       </div>
+
+      <ListingImageSection
+        categorySlug={selectedCategorySlug}
+        description={descriptionText}
+        onImageGenerated={setGeneratedImageUrl}
+      />
 
       <Button type="submit" className="w-full" disabled={isPending}>
         {isPending ? (

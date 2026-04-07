@@ -7,7 +7,10 @@ import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { computeDataHash } from '~/lib/blockchain/alchemy-service';
+import { CERTIFICATE_PROMPTS } from '~/lib/config/flux-prompts';
 import { getLotById } from '~/lib/mock/traceability-mock-data';
+import { FluxClient } from '~/lib/services/flux-client';
+import { canGenerateImage } from '~/lib/services/flux-usage';
 import { generateCertificatePDF } from '~/lib/services/pdf/templates/certificate-template';
 
 const IssueSchema = z.object({
@@ -43,6 +46,14 @@ export async function POST(req: NextRequest) {
   const blockchainConfigured = Boolean(
     process.env.CONTRACT_ADDRESS && process.env.DEPLOYER_PRIVATE_KEY,
   );
+
+  // Check if Flux background generation is available for this user
+  let fluxEnabled = false;
+
+  if (FluxClient.isConfigured()) {
+    const { allowed } = await canGenerateImage(client, user.id);
+    fluxEnabled = allowed;
+  }
 
   const certificates: Array<{
     lotId: string;
@@ -94,6 +105,27 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Generate Flux AI background for the certificate (if available)
+    let fluxBackgroundBase64: string | undefined;
+
+    if (fluxEnabled) {
+      try {
+        const materialKey = lot.materialType?.toLowerCase().replace(/\s+/g, '_') ?? 'plastics';
+        const prompt = CERTIFICATE_PROMPTS[materialKey] ?? CERTIFICATE_PROMPTS.plastics!;
+        const flux = new FluxClient();
+        const imageUrl = await flux.generateAndWait({
+          prompt,
+          width: 1200,
+          height: 800,
+        });
+        const imgResponse = await fetch(imageUrl);
+        const imgBuffer = Buffer.from(await imgResponse.arrayBuffer());
+        fluxBackgroundBase64 = `data:image/png;base64,${imgBuffer.toString('base64')}`;
+      } catch (err) {
+        console.error(`Flux background generation failed for ${lotId}:`, err);
+      }
+    }
+
     // Generate real PDF
     const pdfBuffer = await generateCertificatePDF(
       {
@@ -111,6 +143,7 @@ export async function POST(req: NextRequest) {
         txHash,
         issuedAt,
         contractAddress: process.env.CONTRACT_ADDRESS ?? undefined,
+        fluxBackgroundBase64,
       },
       locale,
     );

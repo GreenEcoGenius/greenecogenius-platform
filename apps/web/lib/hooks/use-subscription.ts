@@ -51,6 +51,11 @@ export type Feature =
   // Export
   | 'export_pdf'
   | 'export_csv'
+  // Flux AI images
+  | 'flux_image_generation'
+  | 'flux_certificates'
+  | 'flux_esg_reports'
+  | 'flux_white_label'
   // Enterprise
   | 'api_access'
   | 'multi_users'
@@ -90,6 +95,12 @@ const featureAccess: Record<Feature, string[]> = {
   compliance_regulatory_watch: ['avance', 'enterprise'],
   genius_advanced: ['avance', 'enterprise'],
   export_csv: ['avance', 'enterprise'],
+
+  // Flux AI images
+  flux_image_generation: ['avance', 'enterprise'],
+  flux_certificates: ['avance', 'enterprise'],
+  flux_esg_reports: ['enterprise'],
+  flux_white_label: ['enterprise'],
 
   // Enterprise only
   genius_unlimited: ['enterprise'],
