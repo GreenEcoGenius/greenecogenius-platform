@@ -31,7 +31,7 @@ export function SiteNavigation({ user }: { user: JWTUserData | null }) {
     <>
       <div className="hidden items-center justify-center md:flex">
         <NavigationMenu>
-          <NavigationMenuList className="gap-x-2.5">
+          <NavigationMenuList className="gap-x-6">
             {Object.values(links).map((item) => (
               <SiteNavigationItem key={item.path} path={item.path}>
                 <Trans i18nKey={item.label} />
