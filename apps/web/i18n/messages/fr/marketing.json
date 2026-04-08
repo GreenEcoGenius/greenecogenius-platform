@@ -115,7 +115,7 @@
   "aboutSecurityEncryptionText": "Données chiffrées en transit (TLS) et au repos.",
   "aboutSecurityAccessTitle": "Contrôle d'accès",
   "aboutSecurityAccessText": "Row Level Security (RLS) activé sur toutes les tables — chaque utilisateur ne voit que ses propres données.",
-  "footerSecurityBadge": "Infrastructure certifiée ISO 27001 & SOC 2 · Données hébergées dans l'UE (RGPD) · Blockchain Polygon Mainnet",
+  "footerSecurityBadge": "Hébergé sur infrastructure certifiée ISO 27001 & SOC 2 (Supabase, Vercel) · Données dans l'UE (RGPD) · Blockchain Polygon Mainnet",
 
   "faq": "FAQ",
   "faq1Question": "Qu'est-ce que Le Comptoir Circulaire ?",
