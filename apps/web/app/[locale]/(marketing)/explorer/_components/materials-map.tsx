@@ -81,7 +81,7 @@ export function MaterialsMap({
         viewBox="0 0 500 520"
         className="mx-auto w-full max-w-lg"
         role="img"
-        aria-label="Carte des matières recyclables par région"
+        aria-label={t('explorer.franceMapTitle')}
       >
         {Object.entries(REGION_PATHS).map(([name, d]) => {
           const vol = volumeByRegion.get(name) ?? 0;
@@ -121,7 +121,7 @@ export function MaterialsMap({
           >
             <div className="rounded-lg bg-white px-3 py-2 text-center shadow-lg">
               <p className="text-metal-900 text-xs font-semibold">
-                {tooltip.name}
+                {t.raw(`explorer.regionNames.${tooltip.name}`) as string}
               </p>
               <p className="text-primary text-xs font-bold">
                 {tooltip.volume > 0 ? formatVolume(tooltip.volume) : '—'}

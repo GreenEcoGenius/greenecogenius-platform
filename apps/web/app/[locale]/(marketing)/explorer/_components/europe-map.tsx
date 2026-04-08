@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import type { CountryStat } from './explorer-data';
 
@@ -173,6 +173,7 @@ function getCountryColor(volumeMt: number): string {
 
 export function EuropeMap({ countryStats }: { countryStats: CountryStat[] }) {
   const t = useTranslations('marketing');
+  const locale = useLocale();
   const [hovered, setHovered] = useState<string | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
@@ -244,7 +245,7 @@ export function EuropeMap({ countryStats }: { countryStats: CountryStat[] }) {
             style={{ left: tooltipPos.x, top: tooltipPos.y }}
           >
             <p className="text-metal-900 text-[13px] font-semibold">
-              {hoveredInfo.nameFR}
+              {locale === 'fr' ? hoveredInfo.nameFR : hoveredInfo.nameEN}
             </p>
             <p className="text-primary text-xs font-medium">
               {hoveredVol > 1_000_000

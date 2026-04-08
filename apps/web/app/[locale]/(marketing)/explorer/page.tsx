@@ -17,15 +17,12 @@ import { PublicCTA } from './_components/public-cta';
 import { SourcesDisclaimer } from './_components/sources-disclaimer';
 import { getPublicSupabaseClient } from './_lib/public-client';
 
-const EU_COUNTRY_NAMES: Record<string, string> = {
-  AT: 'Autriche', BE: 'Belgique', BG: 'Bulgarie', CY: 'Chypre',
-  CZ: 'Tchéquie', DE: 'Allemagne', DK: 'Danemark', EE: 'Estonie',
-  EL: 'Grèce', ES: 'Espagne', FI: 'Finlande', FR: 'France',
-  HR: 'Croatie', HU: 'Hongrie', IE: 'Irlande', IT: 'Italie',
-  LT: 'Lituanie', LU: 'Luxembourg', LV: 'Lettonie', MT: 'Malte',
-  NL: 'Pays-Bas', NO: 'Norvège', PL: 'Pologne', PT: 'Portugal',
-  RO: 'Roumanie', SE: 'Suède', SI: 'Slovénie', SK: 'Slovaquie',
-};
+const EU_COUNTRY_CODES = [
+  'AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE',
+  'EL', 'ES', 'FI', 'FR', 'HR', 'HU', 'IE', 'IT',
+  'LT', 'LU', 'LV', 'MT', 'NL', 'NO', 'PL', 'PT',
+  'RO', 'SE', 'SI', 'SK',
+] as const;
 
 /**
  * Aggregate national rows by category — takes the max volume per source
@@ -158,7 +155,9 @@ export default async function ExplorerPage() {
   // Europe country rows for the map
   const europeCountryRows: CountryStat[] = euNational.map((s) => ({
     country_code: s.country_code,
-    country_name: EU_COUNTRY_NAMES[s.country_code] ?? s.country_code,
+    country_name: EU_COUNTRY_CODES.includes(s.country_code as (typeof EU_COUNTRY_CODES)[number])
+      ? t.raw(`explorer.countryNames.${s.country_code}`) as string
+      : s.country_code,
     category: s.category,
     tonnage_tonnes: s.annual_volume_tonnes,
     percentage: 0,
