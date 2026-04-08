@@ -14,8 +14,15 @@ export async function generateMetadata() {
   };
 }
 
-async function ContactPage() {
+async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ subject?: string }>;
+}) {
   const t = await getTranslations('marketing');
+  const { subject } = await searchParams;
+
+  const defaultMessage = subject ? `[${subject}]\n\n` : undefined;
 
   return (
     <div>
@@ -42,7 +49,7 @@ async function ContactPage() {
               </p>
             </div>
 
-            <ContactForm />
+            <ContactForm defaultMessage={defaultMessage} />
           </div>
         </div>
       </div>

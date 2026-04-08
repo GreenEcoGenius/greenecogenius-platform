@@ -23,7 +23,7 @@ import { Trans } from '@kit/ui/trans';
 import { ContactEmailSchema } from '~/(marketing)/contact/_lib/contact-email.schema';
 import { sendContactEmail } from '~/(marketing)/contact/_lib/server/server-actions';
 
-export function ContactForm() {
+export function ContactForm({ defaultMessage }: { defaultMessage?: string }) {
   const [state, setState] = useState({
     success: false,
     error: false,
@@ -43,7 +43,7 @@ export function ContactForm() {
     defaultValues: {
       name: '',
       email: '',
-      message: '',
+      message: defaultMessage ?? '',
     },
   });
 

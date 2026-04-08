@@ -363,13 +363,16 @@ export function PricingContent({
                 variant="secondary"
                 className="border-metal-silver bg-metal-frost text-metal-700 hover:bg-metal-chrome mt-6 w-full rounded-xl border"
                 render={
-                  <Link href="mailto:contact@greenecogenius.tech">
+                  <Link href="/contact?subject=Demande+Plan+Enterprise">
                     <Users className="mr-2 h-4 w-4" />
                     <Trans i18nKey="pricingPage.contactSales" />
                   </Link>
                 }
                 nativeButton={false}
               />
+              <p className="mt-2 text-center text-xs text-gray-400">
+                <Trans i18nKey="pricingPage.responseTime" />
+              </p>
             </CardContent>
           </Card>
         </div>
