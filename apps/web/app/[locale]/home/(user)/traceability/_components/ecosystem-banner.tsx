@@ -33,7 +33,7 @@ export function EcosystemBanner({
       value: transactionsThisMonth,
       labelKey: 'blockchain:ecosystemComptoir' as const,
       href: '/home/marketplace',
-      color: 'text-teal-700 dark:text-teal-400',
+      color: 'text-[#1BC454] dark:text-[#1ED760]',
     },
     {
       icon: Leaf,
@@ -54,12 +54,12 @@ export function EcosystemBanner({
       value: blockchainHashes,
       labelKey: 'blockchain:ecosystemBlockchain' as const,
       href: '/home/traceability',
-      color: 'text-teal-700 dark:text-teal-400',
+      color: 'text-[#1BC454] dark:text-[#1ED760]',
     },
   ];
 
   return (
-    <div className="rounded-xl border border-emerald-200 bg-gradient-to-r from-emerald-50/80 to-teal-50/80 px-6 py-4 dark:border-emerald-800/40 dark:from-emerald-950/30 dark:to-teal-950/30">
+    <div className="rounded-xl border border-emerald-200 bg-gradient-to-r from-emerald-50/80 to-[#E8FFF0]/80 px-6 py-4 dark:border-emerald-800/40 dark:from-emerald-950/30 dark:to-[#0A1F1B]/30">
       <div className="mb-2 flex items-center gap-2">
         <ArrowRightLeft className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
         <span className="text-xs font-semibold tracking-wider text-emerald-700 uppercase dark:text-emerald-400">

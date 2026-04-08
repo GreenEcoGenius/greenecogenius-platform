@@ -22,7 +22,7 @@ function getScoreColor(score: number) {
   if (score > 80)
     return { stroke: '#22c55e', text: 'text-green-600', label: 'Excellent' };
   if (score >= 50)
-    return { stroke: '#14b8a6', text: 'text-teal-600', label: 'Moyen' };
+    return { stroke: '#1ED760', text: 'text-[#1ED760]', label: 'Moyen' };
   return { stroke: '#065f46', text: 'text-emerald-800', label: 'Critique' };
 }
 
@@ -91,7 +91,7 @@ export function AITrustScore({ score, checks }: AITrustScoreProps) {
               score > 80
                 ? 'border-green-200 text-green-700 dark:border-green-800 dark:text-green-400'
                 : score >= 50
-                  ? 'border-teal-200 text-teal-700 dark:border-teal-800 dark:text-teal-400'
+                  ? 'border-[#B8F5CE] text-[#1BC454] dark:border-[#15a045] dark:text-[#1ED760]'
                   : 'border-emerald-200 text-emerald-800 dark:border-emerald-800 dark:text-emerald-400'
             }`}
           >
@@ -109,7 +109,7 @@ export function AITrustScore({ score, checks }: AITrustScoreProps) {
               {check.passed ? (
                 <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
               ) : (
-                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-teal-500" />
+                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#E8FFF0]0" />
               )}
               <div className="min-w-0">
                 <span className="font-medium">{check.label}</span>

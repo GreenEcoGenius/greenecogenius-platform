@@ -579,7 +579,7 @@ export function CreateListingForm({
                   size="sm"
                   onClick={handleFluxGenerate}
                   disabled={fluxGenerating}
-                  className="text-teal-600 hover:text-teal-700"
+                  className="text-[#1ED760] hover:text-[#1BC454]"
                 >
                   {fluxGenerating ? (
                     <>

@@ -13,10 +13,10 @@ const CONTRACT_ADDRESS = '0x9EB83c7Acd57E228Cc3f9316eC4f27ce1fE94cF6';
 const STATUS_BADGE_STYLES: Record<string, string> = {
   created: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
   qualified: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  listed: 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
-  sold: 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
+  listed: 'bg-[#B8F5CE] text-[#1BC454] dark:bg-[#0A1F1B]/40 dark:text-[#B8F5CE]',
+  sold: 'bg-[#B8F5CE] text-[#1BC454] dark:bg-[#0A1F1B]/40 dark:text-[#B8F5CE]',
   in_transit:
-    'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
+    'bg-[#B8F5CE] text-[#1BC454] dark:bg-[#0A1F1B]/40 dark:text-[#B8F5CE]',
   delivered:
     'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
   certified:
@@ -35,8 +35,8 @@ const STATUS_I18N: Record<string, string> = {
 
 const SOURCE_BADGE_STYLES: Record<string, string> = {
   marketplace:
-    'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
-  collecte: 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
+    'bg-[#B8F5CE] text-[#1BC454] dark:bg-[#0A1F1B]/40 dark:text-[#B8F5CE]',
+  collecte: 'bg-[#B8F5CE] text-[#1BC454] dark:bg-[#0A1F1B]/40 dark:text-[#B8F5CE]',
   import: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
 };
 

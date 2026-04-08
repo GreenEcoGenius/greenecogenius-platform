@@ -70,13 +70,13 @@ function NumField({
           min={0}
           value={value || ''}
           onChange={(e) => onChange(Number(e.target.value) || 0)}
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-teal-300 focus:ring-1 focus:ring-teal-200"
+          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#B8F5CE] focus:ring-1 focus:ring-[#B8F5CE]"
         />
         {unit && <span className="shrink-0 text-xs text-gray-400">{unit}</span>}
       </div>
       {help && <p className="text-[11px] text-gray-400">{help}</p>}
       {estimate && (
-        <p className="text-[11px] font-medium text-teal-600">{estimate}</p>
+        <p className="text-[11px] font-medium text-[#1ED760]">{estimate}</p>
       )}
     </div>
   );
@@ -99,7 +99,7 @@ function SelectField({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-teal-300 focus:ring-1 focus:ring-teal-200"
+        className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#B8F5CE] focus:ring-1 focus:ring-[#B8F5CE]"
       >
         <option value="">--</option>
         {options.map((o) => (
@@ -112,9 +112,9 @@ function SelectField({
 
 function ScopeTotal({ label, tonnes }: { label: string; tonnes: number }) {
   return (
-    <div className="mt-4 rounded-lg bg-teal-50 p-3 text-center">
-      <p className="text-xs font-medium text-teal-700">{label}</p>
-      <p className="text-2xl font-bold text-teal-800">{Math.round(tonnes * 10) / 10} tCO2e</p>
+    <div className="mt-4 rounded-lg bg-[#E8FFF0] p-3 text-center">
+      <p className="text-xs font-medium text-[#1BC454]">{label}</p>
+      <p className="text-2xl font-bold text-[#15a045]">{Math.round(tonnes * 10) / 10} tCO2e</p>
     </div>
   );
 }
@@ -203,7 +203,7 @@ export function CarbonWizard() {
             </span>
           </div>
           <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
-            <div className="h-full rounded-full bg-teal-500 transition-all" style={{ width: `${((step + 1) / STEPS.length) * 100}%` }} />
+            <div className="h-full rounded-full bg-[#E8FFF0]0 transition-all" style={{ width: `${((step + 1) / STEPS.length) * 100}%` }} />
           </div>
         </div>
       )}
@@ -213,7 +213,7 @@ export function CarbonWizard() {
         <Card>
           <CardContent className="space-y-4 p-5">
             <div className="flex items-center gap-2">
-              <Building2 className="h-5 w-5 text-teal-600" />
+              <Building2 className="h-5 w-5 text-[#1ED760]" />
               <h2 className="text-lg font-bold">{fr ? 'Informations generales' : 'General information'}</h2>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -226,8 +226,8 @@ export function CarbonWizard() {
             </div>
             <div className="space-y-2 pt-2">
               <p className="text-sm font-medium text-gray-700">{fr ? 'Votre entreprise dispose-t-elle de :' : 'Does your company have:'}</p>
-              <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={profile.has_fleet} onChange={(e) => setProfile((p) => ({ ...p, has_fleet: e.target.checked }))} className="accent-teal-600" />{fr ? 'Vehicules de fonction / flotte' : 'Company vehicles / fleet'}</label>
-              <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={profile.has_refrigeration} onChange={(e) => setProfile((p) => ({ ...p, has_refrigeration: e.target.checked }))} className="accent-teal-600" />{fr ? 'Climatisation ou refrigeration' : 'Air conditioning or refrigeration'}</label>
+              <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={profile.has_fleet} onChange={(e) => setProfile((p) => ({ ...p, has_fleet: e.target.checked }))} className="accent-[#1ED760]" />{fr ? 'Vehicules de fonction / flotte' : 'Company vehicles / fleet'}</label>
+              <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={profile.has_refrigeration} onChange={(e) => setProfile((p) => ({ ...p, has_refrigeration: e.target.checked }))} className="accent-[#1ED760]" />{fr ? 'Climatisation ou refrigeration' : 'Air conditioning or refrigeration'}</label>
             </div>
           </CardContent>
         </Card>
@@ -293,8 +293,8 @@ export function CarbonWizard() {
               <div className="space-y-2">
                 <p className="text-sm font-medium text-gray-700">{fr ? 'Source' : 'Source'}</p>
                 {(['grid', 'renewable', 'self'] as const).map((src) => (
-                  <label key={src} className={`flex items-center gap-2 rounded-lg border p-2.5 text-sm ${scope2.electricity_source === src ? 'border-teal-300 bg-teal-50' : 'border-gray-100'}`}>
-                    <input type="radio" name="elec_source" value={src} checked={scope2.electricity_source === src} onChange={() => setScope2((p) => ({ ...p, electricity_source: src }))} className="accent-teal-600" />
+                  <label key={src} className={`flex items-center gap-2 rounded-lg border p-2.5 text-sm ${scope2.electricity_source === src ? 'border-[#B8F5CE] bg-[#E8FFF0]' : 'border-gray-100'}`}>
+                    <input type="radio" name="elec_source" value={src} checked={scope2.electricity_source === src} onChange={() => setScope2((p) => ({ ...p, electricity_source: src }))} className="accent-[#1ED760]" />
                     {src === 'grid' ? `${fr ? 'Mix reseau' : 'Grid mix'} (${profile.country}: ${ELECTRICITY_FACTORS[profile.country]?.factor ?? 0.052} kgCO2e/kWh)` : src === 'renewable' ? (fr ? 'Contrat 100% renouvelable (GO)' : '100% renewable contract (GO)') : (fr ? 'Autoproduction (solaire)' : 'Self-production (solar)')}
                   </label>
                 ))}
@@ -302,7 +302,7 @@ export function CarbonWizard() {
               <NumField label={fr ? 'Chauffage urbain' : 'District heating'} value={scope2.district_heating_kwh} onChange={(v) => setScope2((p) => ({ ...p, district_heating_kwh: v }))} unit="kWh" help={fr ? 'Si raccorde a un reseau de chaleur' : 'If connected to a district heating network'} />
             </div>
 
-            <div className="rounded-lg border border-teal-100 bg-teal-50/50 p-3 text-xs text-teal-700">
+            <div className="rounded-lg border border-[#B8F5CE] bg-[#E8FFF0]/50 p-3 text-xs text-[#1BC454]">
               {fr
                 ? `Le mix electrique francais est l'un des plus bas d'Europe grace au nucleaire (0.052 kgCO2e/kWh vs 0.385 en Allemagne).`
                 : `The French electricity mix is one of the lowest in Europe thanks to nuclear (0.052 kgCO2e/kWh vs 0.385 in Germany).`}
@@ -386,11 +386,11 @@ export function CarbonWizard() {
       {/* Step 4: Results */}
       {isResults && result && (
         <div className="space-y-6">
-          <Card className="border-teal-200 bg-gradient-to-br from-teal-50 to-white">
+          <Card className="border-[#B8F5CE] bg-gradient-to-br from-[#E8FFF0] to-white">
             <CardContent className="flex flex-col items-center py-8">
-              <p className="text-sm font-medium text-teal-700">TOTAL</p>
-              <p className="text-5xl font-bold text-teal-800">{Math.round(result.total * 10) / 10}</p>
-              <p className="text-sm text-teal-600">tCO2e</p>
+              <p className="text-sm font-medium text-[#1BC454]">TOTAL</p>
+              <p className="text-5xl font-bold text-[#15a045]">{Math.round(result.total * 10) / 10}</p>
+              <p className="text-sm text-[#1ED760]">tCO2e</p>
               <div className="mt-3 flex gap-4 text-xs text-gray-500">
                 <span>{result.intensity_per_employee} tCO2e / {fr ? 'employe' : 'employee'}</span>
                 <span>{result.intensity_per_revenue} kgCO2e / EUR</span>

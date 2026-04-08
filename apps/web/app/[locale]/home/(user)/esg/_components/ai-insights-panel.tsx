@@ -20,11 +20,11 @@ function getIcon(type: DemoData['esg']['aiInsights'][number]['type']) {
     case 'strength':
       return <Trophy className="h-4 w-4 text-emerald-500" />;
     case 'warning':
-      return <TriangleAlert className="h-4 w-4 text-teal-500" />;
+      return <TriangleAlert className="h-4 w-4 text-[#E8FFF0]0" />;
     case 'trend':
       return <TrendingUp className="h-4 w-4 text-blue-500" />;
     case 'tip':
-      return <Lightbulb className="h-4 w-4 text-teal-500" />;
+      return <Lightbulb className="h-4 w-4 text-[#E8FFF0]0" />;
   }
 }
 

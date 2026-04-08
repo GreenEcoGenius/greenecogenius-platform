@@ -24,23 +24,23 @@ interface CarbonByMaterialChartProps {
 }
 
 const MATERIAL_COLORS: Record<string, string> = {
-  plastique: '#0D9488',
-  metal: '#059669',
+  plastique: '#1ED760',
+  metal: '#1BC454',
   bois: '#16A34A',
   papier: '#94A3B8',
   verre: '#D97706',
-  textile: '#0F766E',
+  textile: '#1BC454',
   deee: '#64748B',
   organique: '#047857',
 };
 
 const FALLBACK_COLORS = [
-  '#0D9488',
-  '#059669',
+  '#1ED760',
+  '#1BC454',
   '#16A34A',
   '#94A3B8',
   '#D97706',
-  '#0F766E',
+  '#1BC454',
   '#64748B',
   '#047857',
 ];

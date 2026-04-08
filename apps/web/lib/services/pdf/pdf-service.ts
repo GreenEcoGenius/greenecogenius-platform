@@ -28,13 +28,13 @@ const PDF_SERVICE_LABELS = {
 type PdfLocale = keyof typeof PDF_SERVICE_LABELS;
 
 const COLORS = {
-  primary: [5, 150, 105] as [number, number, number],
-  black: [17, 24, 39] as [number, number, number],
+  primary: [30, 215, 96] as [number, number, number],
+  black: [10, 31, 27] as [number, number, number],
   gray: [107, 114, 128] as [number, number, number],
   lightGray: [229, 231, 235] as [number, number, number],
   white: [255, 255, 255] as [number, number, number],
   red: [239, 68, 68] as [number, number, number],
-  green: [16, 185, 129] as [number, number, number],
+  green: [30, 215, 96] as [number, number, number],
   yellow: [245, 158, 11] as [number, number, number],
   indigo: [79, 70, 229] as [number, number, number],
 };

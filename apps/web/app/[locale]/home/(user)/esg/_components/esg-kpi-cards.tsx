@@ -80,12 +80,12 @@ export function EsgKpiCards({ data }: { data: DemoData['esg']['kpi'] }) {
         iconBgClass="bg-blue-50 dark:bg-blue-950/30"
       />
       <KpiCard
-        icon={<LinkIcon className="h-5 w-5 text-teal-600" />}
+        icon={<LinkIcon className="h-5 w-5 text-[#1ED760]" />}
         label={t('blockchainProofs')}
         value={`${data.blockchainProofs} hash`}
         sub={t('verifiedOnChain')}
         href="https://polygonscan.com"
-        iconBgClass="bg-teal-50 dark:bg-teal-950/30"
+        iconBgClass="bg-[#E8FFF0] dark:bg-[#0A1F1B]/30"
       />
     </div>
   );

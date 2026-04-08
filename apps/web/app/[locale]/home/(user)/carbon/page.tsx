@@ -238,14 +238,14 @@ async function CarbonPage() {
           <Card>
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-teal-50 p-2 dark:bg-teal-950/30">
-                  <Flame className="h-5 w-5 text-teal-600" />
+                <div className="rounded-lg bg-[#E8FFF0] p-2 dark:bg-[#0A1F1B]/30">
+                  <Flame className="h-5 w-5 text-[#1ED760]" />
                 </div>
                 <div className="flex-1">
                   <p className="text-muted-foreground text-xs">
                     <Trans i18nKey="carbon:scope1" />
                   </p>
-                  <p className="text-2xl font-bold text-teal-600">
+                  <p className="text-2xl font-bold text-[#1ED760]">
                     {mockScope1}
                     <span className="ml-1 text-sm font-normal text-gray-500">
                       t
@@ -311,7 +311,7 @@ async function CarbonPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-teal-200 dark:border-teal-800">
+          <Card className="border-[#B8F5CE] dark:border-[#15a045]">
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
                 <div className="rounded-lg bg-green-50 p-2 dark:bg-green-950/30">
@@ -333,7 +333,7 @@ async function CarbonPage() {
                     </p>
                     <Badge
                       variant="outline"
-                      className="border-teal-300 text-[10px] text-green-600"
+                      className="border-[#B8F5CE] text-[10px] text-green-600"
                     >
                       73% <Trans i18nKey="carbon:scope3Auto" />
                     </Badge>
@@ -460,8 +460,8 @@ function ScopeProgressSection() {
       labelKey: 'carbon:scope1Desc',
       progress: 0,
       status: 'partial' as const,
-      color: 'bg-teal-500',
-      bgColor: 'bg-teal-100 dark:bg-teal-950/30',
+      color: 'bg-[#E8FFF0]0',
+      bgColor: 'bg-[#B8F5CE] dark:bg-[#0A1F1B]/30',
     },
     {
       name: 'Scope 2',
@@ -521,7 +521,7 @@ function ScopeProgressSection() {
                   ) : (
                     <Badge
                       variant="outline"
-                      className="border-teal-300 text-xs text-teal-600"
+                      className="border-[#B8F5CE] text-xs text-[#1ED760]"
                     >
                       <Trans i18nKey="carbon:toComplete" />
                     </Badge>

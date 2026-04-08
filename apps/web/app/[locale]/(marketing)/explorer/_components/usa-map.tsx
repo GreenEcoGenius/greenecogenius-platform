@@ -376,7 +376,7 @@ function getStateColor(volumeMt: number): string {
   if (volumeMt > 20) return '#064E3B';
   if (volumeMt > 15) return '#065F46';
   if (volumeMt > 10) return '#047857';
-  if (volumeMt > 5) return '#059669';
+  if (volumeMt > 5) return '#1BC454';
   if (volumeMt > 2) return '#34D399';
   if (volumeMt > 0.5) return '#6EE7B7';
   return '#D1FAE5';
@@ -508,7 +508,7 @@ export function UsaMap({ stats }: { stats: NationalStat[] }) {
           { color: '#D1FAE5', label: '< 1 Mt' },
           { color: '#6EE7B7', label: '' },
           { color: '#34D399', label: '' },
-          { color: '#059669', label: '' },
+          { color: '#1BC454', label: '' },
           { color: '#047857', label: '' },
           { color: '#064E3B', label: '> 20 Mt' },
         ].map((item, i) => (

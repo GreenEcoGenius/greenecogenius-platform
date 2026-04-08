@@ -199,7 +199,7 @@ async function TransactionDetailPage({ params }: Params) {
               <div className="mb-5 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <FileSignature
-                    className="h-5 w-5 text-teal-600"
+                    className="h-5 w-5 text-[#1ED760]"
                     strokeWidth={1.5}
                   />
                   <h2 className="text-lg font-semibold text-gray-900">

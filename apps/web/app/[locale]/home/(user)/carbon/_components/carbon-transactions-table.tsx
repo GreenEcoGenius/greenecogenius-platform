@@ -93,7 +93,7 @@ export function CarbonTransactionsTable({
                 <td className="px-4 py-3 text-right whitespace-nowrap text-green-600">
                   {fmt(tx.co2_avoided)} kg
                 </td>
-                <td className="px-4 py-3 text-right whitespace-nowrap text-teal-500">
+                <td className="px-4 py-3 text-right whitespace-nowrap text-[#E8FFF0]0">
                   {fmt(tx.co2_transport)} kg
                 </td>
                 <td className="px-4 py-3 text-right font-medium whitespace-nowrap">

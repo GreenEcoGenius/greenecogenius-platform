@@ -93,7 +93,7 @@ function StatusBadge({ regulation }: { regulation: Regulation }) {
       );
     case 'partiel':
       return (
-        <span className="inline-flex items-center gap-1 text-xs text-teal-600 dark:text-teal-400">
+        <span className="inline-flex items-center gap-1 text-xs text-[#1ED760] dark:text-[#1ED760]">
           <AlertTriangle className="h-3.5 w-3.5" />
           Partiel{regulation.detail ? ` (${regulation.detail})` : ''}
         </span>

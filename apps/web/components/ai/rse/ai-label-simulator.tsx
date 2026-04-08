@@ -103,7 +103,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   className={
                     label.score >= label.threshold
                       ? 'border-green-200 text-green-700 dark:border-green-800 dark:text-green-400'
-                      : 'border-teal-200 text-teal-700 dark:border-teal-800 dark:text-teal-400'
+                      : 'border-[#B8F5CE] text-[#1BC454] dark:border-[#15a045] dark:text-[#1ED760]'
                   }
                 >
                   {label.score}/{label.threshold * 2.5}
@@ -231,7 +231,7 @@ export function AILabelSimulator({ className }: { className?: string }) {
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-base">
-              <Award className="h-5 w-5 text-teal-600" />
+              <Award className="h-5 w-5 text-[#1ED760]" />
               Simulateur de labels
             </CardTitle>
             <AIPoweredBadge methodology="Multi-referentiel" />

@@ -23,11 +23,11 @@ const IMPACT_STYLES: Record<
     i18nKey: 'compliance:impactMedium',
   },
   high: {
-    className: 'bg-teal-100 text-teal-700',
+    className: 'bg-[#B8F5CE] text-[#1BC454]',
     i18nKey: 'compliance:impactHigh',
   },
   strategic: {
-    className: 'bg-teal-100 text-teal-700',
+    className: 'bg-[#B8F5CE] text-[#1BC454]',
     i18nKey: 'compliance:impactStrategic',
   },
 };

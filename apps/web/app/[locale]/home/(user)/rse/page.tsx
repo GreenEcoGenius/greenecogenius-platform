@@ -39,22 +39,22 @@ async function RSEPage() {
 
   const features = [
     {
-      icon: <BarChart3 className="h-5 w-5 text-teal-600" />,
+      icon: <BarChart3 className="h-5 w-5 text-[#1ED760]" />,
       title: t('featureScoreTitle'),
       desc: t('featureScoreDesc'),
     },
     {
-      icon: <Award className="h-5 w-5 text-teal-600" />,
+      icon: <Award className="h-5 w-5 text-[#1ED760]" />,
       title: t('featureLabelsTitle'),
       desc: t('featureLabelsDesc'),
     },
     {
-      icon: <Target className="h-5 w-5 text-teal-600" />,
+      icon: <Target className="h-5 w-5 text-[#1ED760]" />,
       title: t('featureActionPlanTitle'),
       desc: t('featureActionPlanDesc'),
     },
     {
-      icon: <Link2 className="h-5 w-5 text-teal-600" />,
+      icon: <Link2 className="h-5 w-5 text-[#1ED760]" />,
       title: t('featureEcosystemTitle'),
       desc: t('featureEcosystemDesc'),
     },

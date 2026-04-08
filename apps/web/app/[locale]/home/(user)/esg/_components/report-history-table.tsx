@@ -26,7 +26,7 @@ function StatusBadge({ status }: { status: 'draft' | 'finalized' }) {
   return (
     <Badge
       variant="outline"
-      className="border-teal-200 bg-teal-50 text-[10px] text-teal-700 dark:border-teal-800 dark:bg-teal-950/30 dark:text-teal-300"
+      className="border-[#B8F5CE] bg-[#E8FFF0] text-[10px] text-[#1BC454] dark:border-[#15a045] dark:bg-[#0A1F1B]/30 dark:text-[#B8F5CE]"
     >
       {t('reportStatusDraft')}
     </Badge>

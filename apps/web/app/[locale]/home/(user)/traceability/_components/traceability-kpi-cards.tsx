@@ -125,7 +125,7 @@ export function TraceabilityKpiCards({
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <KpiCard
-        icon={<Boxes className="h-5 w-5 text-teal-600 dark:text-teal-400" />}
+        icon={<Boxes className="h-5 w-5 text-[#1ED760] dark:text-[#1ED760]" />}
         value={totalLots.toLocaleString('fr-FR')}
         label={<Trans i18nKey="blockchain:lotsTracked" />}
         subtitle={
@@ -135,7 +135,7 @@ export function TraceabilityKpiCards({
         }
         trend={lotsTrend}
         trendLabel={<Trans i18nKey="blockchain:vsLastMonth" />}
-        accentColor="bg-teal-500"
+        accentColor="bg-[#E8FFF0]0"
       />
 
       <KpiCard
@@ -171,7 +171,7 @@ export function TraceabilityKpiCards({
       />
 
       <KpiCard
-        icon={<Award className="h-5 w-5 text-teal-600 dark:text-teal-400" />}
+        icon={<Award className="h-5 w-5 text-[#1ED760] dark:text-[#1ED760]" />}
         value={certificates.toLocaleString('fr-FR')}
         label={<Trans i18nKey="blockchain:certificatesCard" />}
         subtitle={
@@ -189,7 +189,7 @@ export function TraceabilityKpiCards({
             <Trans i18nKey="blockchain:onChain" />
           </Badge>
         }
-        accentColor="bg-teal-500"
+        accentColor="bg-[#E8FFF0]0"
       />
     </div>
   );

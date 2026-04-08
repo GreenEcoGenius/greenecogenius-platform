@@ -64,7 +64,7 @@ const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
     icon: <Package className="h-3 w-3" />,
   },
   in_transit: {
-    color: 'bg-teal-100 text-teal-800',
+    color: 'bg-[#B8F5CE] text-[#15a045]',
     icon: <Package className="h-3 w-3" />,
   },
   completed: {

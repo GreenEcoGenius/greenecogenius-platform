@@ -19,15 +19,15 @@ export function TraceabilityEquivalences({
   const items = [
     {
       id: 'car',
-      icon: <Car size={24} strokeWidth={1.5} color="#0D9488" />,
+      icon: <Car size={24} strokeWidth={1.5} color="#1ED760" />,
       value: eq.carKm.toLocaleString('fr-FR'),
       label: <Trans i18nKey="blockchain:carKm" />,
       color:
-        'from-teal-50 to-teal-100/50 dark:from-teal-950/30 dark:to-teal-900/20',
+        'from-[#E8FFF0] to-[#B8F5CE]/50 dark:from-[#0A1F1B]/30 dark:to-[#0A1F1B]/20',
     },
     {
       id: 'tree',
-      icon: <TreePine size={24} strokeWidth={1.5} color="#0D9488" />,
+      icon: <TreePine size={24} strokeWidth={1.5} color="#1ED760" />,
       value: eq.trees.toLocaleString('fr-FR'),
       label: <Trans i18nKey="blockchain:treesPlanted" />,
       color:
@@ -35,7 +35,7 @@ export function TraceabilityEquivalences({
     },
     {
       id: 'home',
-      icon: <Home size={24} strokeWidth={1.5} color="#0D9488" />,
+      icon: <Home size={24} strokeWidth={1.5} color="#1ED760" />,
       value: eq.heatingYears.toLocaleString('fr-FR'),
       label: <Trans i18nKey="blockchain:heatingYears" />,
       color:
@@ -43,7 +43,7 @@ export function TraceabilityEquivalences({
     },
     {
       id: 'plane',
-      icon: <Plane size={24} strokeWidth={1.5} color="#0D9488" />,
+      icon: <Plane size={24} strokeWidth={1.5} color="#1ED760" />,
       value: eq.flights.toLocaleString('fr-FR'),
       label: <Trans i18nKey="blockchain:flightsParis" />,
       color:

@@ -280,7 +280,7 @@ async function PersonalAccountBillingPage() {
           {[
             {
               icon: (
-                <Link2 size={16} strokeWidth={1.5} className="text-teal-600" />
+                <Link2 size={16} strokeWidth={1.5} className="text-[#1ED760]" />
               ),
               label: t('tagBlockchainTraceability'),
             },
@@ -299,7 +299,7 @@ async function PersonalAccountBillingPage() {
                 <FileText
                   size={16}
                   strokeWidth={1.5}
-                  className="text-teal-600"
+                  className="text-[#1ED760]"
                 />
               ),
               label: t('tagPdfCertificate'),
@@ -319,7 +319,7 @@ async function PersonalAccountBillingPage() {
                 <Download
                   size={16}
                   strokeWidth={1.5}
-                  className="text-teal-600"
+                  className="text-[#1ED760]"
                 />
               ),
               label: t('tagExportPdfCsv'),

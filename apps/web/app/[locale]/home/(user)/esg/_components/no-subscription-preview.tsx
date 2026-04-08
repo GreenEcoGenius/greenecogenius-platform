@@ -76,8 +76,8 @@ export function NoSubscriptionPreview() {
                     {section.pct >= 90 ? (
                       <CheckCircle2 className="h-5 w-5 text-emerald-500" />
                     ) : (
-                      <div className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-teal-400">
-                        <span className="text-[10px] text-teal-500">!</span>
+                      <div className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-[#1ED760]">
+                        <span className="text-[10px] text-[#E8FFF0]0">!</span>
                       </div>
                     )}
                     <span className="text-sm font-medium">
@@ -126,11 +126,11 @@ export function NoSubscriptionPreview() {
                 <FileText className="h-4 w-4" />
                 CSRD / GRI
               </div>
-              <div className="flex items-center gap-2 rounded-full bg-teal-50 px-4 py-2 text-sm text-teal-700 dark:bg-teal-950/30 dark:text-teal-300">
+              <div className="flex items-center gap-2 rounded-full bg-[#E8FFF0] px-4 py-2 text-sm text-[#1BC454] dark:bg-[#0A1F1B]/30 dark:text-[#B8F5CE]">
                 <Lightbulb className="h-4 w-4" />
                 IA Recommendations
               </div>
-              <div className="flex items-center gap-2 rounded-full bg-teal-50 px-4 py-2 text-sm text-teal-700 dark:bg-teal-950/30 dark:text-teal-300">
+              <div className="flex items-center gap-2 rounded-full bg-[#E8FFF0] px-4 py-2 text-sm text-[#1BC454] dark:bg-[#0A1F1B]/30 dark:text-[#B8F5CE]">
                 <Shield className="h-4 w-4" />
                 Blockchain
               </div>

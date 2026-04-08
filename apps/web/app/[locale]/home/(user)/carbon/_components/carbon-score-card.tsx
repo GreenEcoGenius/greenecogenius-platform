@@ -26,7 +26,7 @@ const LEVEL_CONFIG: Record<
   bronze: {
     icon: <Medal className="h-4 w-4" strokeWidth={1.5} />,
     i18nKey: 'carbon:scoreBronze',
-    color: 'text-teal-700',
+    color: 'text-[#1BC454]',
   },
   argent: {
     icon: <Award className="h-4 w-4" strokeWidth={1.5} />,
@@ -36,12 +36,12 @@ const LEVEL_CONFIG: Record<
   or: {
     icon: <Trophy className="h-4 w-4" strokeWidth={1.5} />,
     i18nKey: 'carbon:scoreOr',
-    color: 'text-teal-500',
+    color: 'text-[#E8FFF0]0',
   },
   platine: {
     icon: <Gem className="h-4 w-4" strokeWidth={1.5} />,
     i18nKey: 'carbon:scorePlatine',
-    color: 'text-teal-500',
+    color: 'text-[#E8FFF0]0',
   },
 };
 
