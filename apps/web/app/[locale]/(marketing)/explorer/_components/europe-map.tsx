@@ -248,8 +248,8 @@ export function EuropeMap({ countryStats }: { countryStats: CountryStat[] }) {
             </p>
             <p className="text-primary text-xs font-medium">
               {hoveredVol > 1_000_000
-                ? `${(hoveredVol / 1_000_000).toFixed(1)} Mt/an`
-                : `${hoveredInfo.volume.toFixed(1)} Mt/an`}
+                ? `${(hoveredVol / 1_000_000).toFixed(1)} ${t('explorer.mtPerYear')}`
+                : `${hoveredInfo.volume.toFixed(1)} ${t('explorer.mtPerYear')}`}
             </p>
           </div>
         )}
@@ -257,7 +257,7 @@ export function EuropeMap({ countryStats }: { countryStats: CountryStat[] }) {
 
       {/* Legend */}
       <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs">
-        <span className="text-metal-500">Volume :</span>
+        <span className="text-metal-500">{t('explorer.volumeLabel')} :</span>
         {[
           { color: '#A7F3D0', label: '< 5 Mt' },
           { color: '#6EE7B7', label: '' },
@@ -276,7 +276,7 @@ export function EuropeMap({ countryStats }: { countryStats: CountryStat[] }) {
         ))}
         <span className="text-metal-400 ml-3 flex items-center gap-1">
           <div className="h-3 w-3 rounded-full bg-[#E2E8F0]" />
-          Hors UE
+          {t('explorer.outsideEU')}
         </span>
       </div>
     </div>

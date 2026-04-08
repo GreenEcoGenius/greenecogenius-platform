@@ -495,7 +495,7 @@ export function UsaMap({ stats }: { stats: NationalStat[] }) {
               {hoveredState.name}
             </p>
             <p className="text-primary text-xs font-medium">
-              {hoveredVolume.toFixed(1)} Mt/an
+              {hoveredVolume.toFixed(1)} {t('explorer.mtPerYear')}
             </p>
           </div>
         )}
@@ -503,7 +503,7 @@ export function UsaMap({ stats }: { stats: NationalStat[] }) {
 
       {/* Legend */}
       <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs">
-        <span className="text-metal-500">Volume :</span>
+        <span className="text-metal-500">{t('explorer.volumeLabel')} :</span>
         {[
           { color: '#D1FAE5', label: '< 1 Mt' },
           { color: '#6EE7B7', label: '' },

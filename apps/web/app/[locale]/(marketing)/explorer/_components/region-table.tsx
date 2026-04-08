@@ -28,12 +28,14 @@ export async function RegionTable({ stats }: { stats: RegionStat[] }) {
               {t('explorer.tableVolume')}
             </th>
             <th className="hidden px-4 py-3 text-right sm:table-cell">
-              Recyclage
+              {t('explorer.recyclingLabel')}
             </th>
             <th className="hidden px-4 py-3 text-right md:table-cell">
               {t('explorer.tablePrice')}
             </th>
-            <th className="px-4 py-3 text-right">Source</th>
+            <th className="px-4 py-3 text-right">
+              {t('explorer.sourceLabel')}
+            </th>
           </tr>
         </thead>
         <tbody className="divide-metal-chrome divide-y">

@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 
+import { useTranslations } from 'next-intl';
+
 import {
   CATEGORY_META,
   formatPrice,
@@ -20,12 +22,15 @@ export function MaterialCategoryCard({
   stat: NationalStat;
   zone?: Zone;
 }) {
+  const t = useTranslations('marketing');
   const meta = CATEGORY_META[stat.category];
 
   if (!meta) return null;
 
   const Icon = meta.icon;
   const catSlug = slugFromCategory(stat.category);
+  const materialName =
+    t.raw(`explorer.materialNames.${stat.category}`) ?? stat.category;
 
   const content = (
     <>
@@ -37,7 +42,7 @@ export function MaterialCategoryCard({
             <Icon className="h-5 w-5" />
           </div>
           <h3 className="text-metal-900 text-base font-semibold">
-            {stat.category}
+            {materialName}
           </h3>
         </div>
         {stat.data_source && <SourceBadge source={stat.data_source} />}
@@ -45,15 +50,21 @@ export function MaterialCategoryCard({
 
       <div className="text-metal-900 mb-1 text-2xl font-bold">
         {formatVolume(stat.annual_volume_tonnes)}
-        <span className="text-metal-400 text-sm font-normal">/an</span>
+        <span className="text-metal-400 text-sm font-normal">
+          {t('explorer.perYear')}
+        </span>
       </div>
 
       <div className="text-metal-500 mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs">
         {stat.recycling_rate > 0 && (
-          <span>Recyclage : {formatRate(stat.recycling_rate)}</span>
+          <span>
+            {t('explorer.recyclingLabel')} : {formatRate(stat.recycling_rate)}
+          </span>
         )}
         {stat.avg_price_per_tonne > 0 && (
-          <span>{formatPrice(stat.avg_price_per_tonne, stat.price_currency)}</span>
+          <span>
+            {formatPrice(stat.avg_price_per_tonne, stat.price_currency)}
+          </span>
         )}
       </div>
     </>

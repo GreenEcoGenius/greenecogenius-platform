@@ -473,6 +473,26 @@
     "sourcesFranceDesc": "Données officielles françaises sur les déchets et le recyclage",
     "sourcesEuropeDesc": "Statistiques européennes sur les déchets (règlement CE n°2150/2002)",
     "sourcesUsaDesc": "Facts and Figures about Materials, Waste and Recycling",
-    "sourcesLastUpdate": "Données actualisées annuellement. Sources : ADEME/SINOE (2021), Eurostat (2022), EPA (2021)."
+    "sourcesLastUpdate": "Données actualisées annuellement. Sources : ADEME/SINOE (2021), Eurostat (2022), EPA (2021).",
+    "normsListFrance": "Loi AGEC · Décret 5/9 flux · REP · CSRD",
+    "perYear": "/an",
+    "mtPerYear": "Mt/an",
+    "recyclingLabel": "Recyclage",
+    "recycled": "recyclé",
+    "recoveryLabel": "Valorisation",
+    "sourceLabel": "Source",
+    "volumeLabel": "Volume",
+    "outsideEU": "Hors UE",
+    "materialNames": {
+      "Plastiques": "Plastiques",
+      "Métaux": "Métaux",
+      "Papier-Carton": "Papier-Carton",
+      "Verre": "Verre",
+      "Bois": "Bois",
+      "DEEE": "DEEE",
+      "Textiles": "Textiles",
+      "Biodéchets": "Biodéchets",
+      "BTP": "BTP"
+    }
   }
 }

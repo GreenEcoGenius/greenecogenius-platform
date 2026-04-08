@@ -117,7 +117,7 @@ export default async function RegionDetailPage({ params }: PageProps) {
                 {regionName}
               </h1>
               <p className="text-metal-500 mt-1 text-sm">
-                {formatVolume(totalVolume)}/an · {stats.length}{' '}
+                {formatVolume(totalVolume)}{t('explorer.perYear')} · {stats.length}{' '}
                 {t('explorer.categoriesAvailable')}
               </p>
             </div>

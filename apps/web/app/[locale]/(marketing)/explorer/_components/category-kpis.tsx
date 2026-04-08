@@ -15,7 +15,7 @@ export async function CategoryKpis({ stat }: { stat: NationalStat }) {
     {
       icon: Scale,
       label: t('explorer.kpiVolume'),
-      value: `${formatVolume(stat.annual_volume_tonnes)}/an`,
+      value: `${formatVolume(stat.annual_volume_tonnes)}${t('explorer.perYear')}`,
     },
     {
       icon: Recycle,
@@ -24,7 +24,7 @@ export async function CategoryKpis({ stat }: { stat: NationalStat }) {
     },
     {
       icon: Leaf,
-      label: 'Valorisation',
+      label: t('explorer.recoveryLabel'),
       value: formatRate(stat.recovery_rate),
     },
     {
@@ -32,7 +32,7 @@ export async function CategoryKpis({ stat }: { stat: NationalStat }) {
       label: t('explorer.kpiPrice'),
       value: formatPrice(stat.avg_price_per_tonne, stat.price_currency),
     },
-    { icon: Factory, label: 'Source', value: stat.data_source },
+    { icon: Factory, label: t('explorer.sourceLabel'), value: stat.data_source },
   ];
 
   return (

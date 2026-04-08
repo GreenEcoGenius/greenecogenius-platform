@@ -118,14 +118,14 @@ export default async function CategoryDetailPage({ params }: PageProps) {
             </div>
             <div>
               <h1 className="text-metal-900 text-3xl font-bold sm:text-4xl">
-                {categoryName}{' '}
+                {t.raw(`explorer.materialNames.${categoryName}`) ?? categoryName}{' '}
                 <span className="text-metal-400 text-lg font-normal">
                   {t('explorer.inFrance')}
                 </span>
               </h1>
               <p className="text-metal-500 mt-1 text-sm">
-                {formatVolume(stat.annual_volume_tonnes)}/an ·{' '}
-                {stat.data_source} {stat.year}
+                {formatVolume(stat.annual_volume_tonnes)}
+                {t('explorer.perYear')} · {stat.data_source} {stat.year}
               </p>
             </div>
           </div>
@@ -177,8 +177,7 @@ export default async function CategoryDetailPage({ params }: PageProps) {
           <div className="flex flex-wrap items-center gap-3">
             <BookOpen className="text-metal-400 h-4 w-4" />
             <span className="text-metal-500 text-xs">
-              {t('explorer.normsApplicable')}: Loi AGEC · Décret 5/9 flux · REP
-              · CSRD
+              {t('explorer.normsApplicable')}: {t('explorer.normsListFrance')}
             </span>
             <span className="text-metal-300">|</span>
             <DataSourceBadge />

@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import { useTranslations } from 'next-intl';
+
 import { formatVolume, regionToSlug, type RegionStat } from './explorer-data';
 
 const VOLUME_COLORS = [
@@ -57,6 +59,7 @@ export function MaterialsMap({
   singleCategory?: string;
 }) {
   const router = useRouter();
+  const t = useTranslations('marketing');
   const [tooltip, setTooltip] = useState<{
     x: number;
     y: number;
@@ -129,7 +132,7 @@ export function MaterialsMap({
       </svg>
 
       <div className="mt-4 flex items-center justify-center gap-2 text-xs">
-        <span className="text-metal-500">Volume :</span>
+        <span className="text-metal-500">{t('explorer.volumeLabel')} :</span>
         {VOLUME_COLORS.map((step, i) => (
           <div key={i} className="flex items-center gap-1">
             <div

@@ -473,6 +473,26 @@
     "sourcesFranceDesc": "Official French data on waste and recycling",
     "sourcesEuropeDesc": "European waste statistics (Regulation EC 2150/2002)",
     "sourcesUsaDesc": "Facts and Figures about Materials, Waste and Recycling",
-    "sourcesLastUpdate": "Data updated annually. Sources: ADEME/SINOE (2021), Eurostat (2022), EPA (2021)."
+    "sourcesLastUpdate": "Data updated annually. Sources: ADEME/SINOE (2021), Eurostat (2022), EPA (2021).",
+    "normsListFrance": "AGEC Law · 5/9 streams Decree · EPR · CSRD",
+    "perYear": "/year",
+    "mtPerYear": "Mt/year",
+    "recyclingLabel": "Recycling",
+    "recycled": "recycled",
+    "recoveryLabel": "Recovery",
+    "sourceLabel": "Source",
+    "volumeLabel": "Volume",
+    "outsideEU": "Non-EU",
+    "materialNames": {
+      "Plastiques": "Plastics",
+      "Métaux": "Metals",
+      "Papier-Carton": "Paper & Cardboard",
+      "Verre": "Glass",
+      "Bois": "Wood",
+      "DEEE": "WEEE (Electrical & Electronic)",
+      "Textiles": "Textiles",
+      "Biodéchets": "Organic Waste",
+      "BTP": "Construction & Demolition"
+    }
   }
 }
