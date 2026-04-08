@@ -12,13 +12,13 @@ import type { DemoData } from '~/lib/demo/demo-data';
 
 function getBarColor(pct: number): string {
   if (pct >= 80) return 'bg-emerald-500';
-  if (pct >= 50) return 'bg-[#E8FFF0]0';
+  if (pct >= 50) return 'bg-[#E6F2ED]0';
   return 'bg-slate-400';
 }
 
 function getTextColor(pct: number): string {
   if (pct >= 80) return 'text-emerald-600';
-  if (pct >= 50) return 'text-[#1ED760]';
+  if (pct >= 50) return 'text-[#2D8C6A]';
   return 'text-slate-500';
 }
 

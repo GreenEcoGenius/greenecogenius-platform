@@ -16,8 +16,8 @@ export function SignatureStatusRow({
   return (
     <div className="flex items-center justify-between gap-3 rounded-lg border border-gray-100 bg-white p-3">
       <div className="flex min-w-0 items-center gap-3">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E8FFF0]">
-          <User className="h-4 w-4 text-[#1ED760]" strokeWidth={1.5} />
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E6F2ED]">
+          <User className="h-4 w-4 text-[#2D8C6A]" strokeWidth={1.5} />
         </div>
         <div className="min-w-0">
           <p className="text-xs font-medium uppercase tracking-wide text-gray-400">

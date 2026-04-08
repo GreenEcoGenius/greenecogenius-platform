@@ -202,7 +202,7 @@ function RadarChart({ scores }: { scores: { name: string; percentage: number }[]
       <polygon
         points={dataPoints.map((p) => `${p.x},${p.y}`).join(' ')}
         fill="rgba(13,148,136,0.2)"
-        stroke="#1ED760"
+        stroke="#2D8C6A"
         strokeWidth="2"
       />
       {scores.map((s, i) => {
@@ -214,7 +214,7 @@ function RadarChart({ scores }: { scores: { name: string; percentage: number }[]
         );
       })}
       {dataPoints.map((p, i) => (
-        <circle key={i} cx={p.x} cy={p.y} r="4" fill="#1ED760" />
+        <circle key={i} cx={p.x} cy={p.y} r="4" fill="#2D8C6A" />
       ))}
     </svg>
   );
@@ -275,7 +275,7 @@ export function DiagnosticWizard() {
         </div>
         <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
           <div
-            className="h-full rounded-full bg-[#E8FFF0]0 transition-all duration-300"
+            className="h-full rounded-full bg-[#E6F2ED]0 transition-all duration-300"
             style={{ width: `${((step + 1) / totalSteps) * 100}%` }}
           />
         </div>
@@ -298,7 +298,7 @@ export function DiagnosticWizard() {
                 <Card key={pillar.id}>
                   <CardContent className="p-4">
                     <div className="mb-2 flex items-center gap-2">
-                      <Icon className="h-5 w-5 text-[#1ED760]" strokeWidth={1.5} />
+                      <Icon className="h-5 w-5 text-[#2D8C6A]" strokeWidth={1.5} />
                       <h3 className="text-sm font-semibold">{getPillarName(pillar, locale)}</h3>
                     </div>
                     <p className="mb-2 text-xs text-gray-500">{getPillarDesc(pillar, locale)}</p>
@@ -325,7 +325,7 @@ export function DiagnosticWizard() {
           <div className="flex items-center gap-3">
             {(() => {
               const Icon = PILLAR_ICONS[currentPillar.icon] ?? Building2;
-              return <Icon className="h-6 w-6 text-[#1ED760]" strokeWidth={1.5} />;
+              return <Icon className="h-6 w-6 text-[#2D8C6A]" strokeWidth={1.5} />;
             })()}
             <div>
               <h2 className="text-lg font-bold text-gray-900">{getPillarName(currentPillar, locale)}</h2>
@@ -353,9 +353,9 @@ export function DiagnosticWizard() {
           {/* Score */}
           <Card>
             <CardContent className="flex flex-col items-center gap-3 py-8">
-              <div className="text-6xl font-bold text-[#1BC454]">{result.globalScore}</div>
+              <div className="text-6xl font-bold text-[#224E3F]">{result.globalScore}</div>
               <p className="text-sm text-gray-500">/ 100</p>
-              <Badge className="bg-[#E8FFF0]0 text-white">
+              <Badge className="bg-[#E6F2ED]0 text-white">
                 {t('level')} : {t(result.levelKey)}
               </Badge>
             </CardContent>
@@ -384,7 +384,7 @@ export function DiagnosticWizard() {
                   </div>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
                     <div
-                      className="h-full rounded-full bg-[#E8FFF0]0 transition-all"
+                      className="h-full rounded-full bg-[#E6F2ED]0 transition-all"
                       style={{ width: `${p.percentage}%` }}
                     />
                   </div>

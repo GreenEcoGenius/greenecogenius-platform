@@ -46,7 +46,7 @@ const fallbackInsights: Insight[] = [
   },
   {
     icon: AlertTriangle,
-    iconColor: 'text-[#E8FFF0]0',
+    iconColor: 'text-[#E6F2ED]0',
     title: 'Scope 3 en hausse (+8%)',
     description:
       'Les \u00e9missions li\u00e9es \u00e0 la cha\u00eene d\u2019approvisionnement ont augment\u00e9. Nous recommandons un audit fournisseurs pour identifier les postes les plus \u00e9metteurs.',
@@ -73,7 +73,7 @@ function parseInsights(content: string): Insight[] | null {
       };
       const colorMap: Record<string, string> = {
         trend: 'text-emerald-600',
-        alert: 'text-[#E8FFF0]0',
+        alert: 'text-[#E6F2ED]0',
         award: 'text-violet-600',
       };
       return parsed.map((item: Record<string, string>, i: number) => {

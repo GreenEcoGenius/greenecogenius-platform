@@ -322,12 +322,12 @@ const modalConfig: Record<
   contacter_transporteur: {
     title: 'Contacter le transporteur',
     description: 'Envoyer un message au transporteur pour obtenir un suivi.',
-    icon: <Truck className="h-5 w-5 text-[#1ED760]" />,
+    icon: <Truck className="h-5 w-5 text-[#2D8C6A]" />,
   },
   marquer_retarde: {
     title: 'Marquer comme retarde',
     description: 'Le lot sera marque comme retarde dans le systeme.',
-    icon: <AlertTriangle className="h-5 w-5 text-[#1ED760]" />,
+    icon: <AlertTriangle className="h-5 w-5 text-[#2D8C6A]" />,
   },
   emettre_certificats: {
     title: 'Emettre des certificats',

@@ -68,7 +68,7 @@ export function AIDiagnostic() {
         nameKey: 'domainStakeholders',
         score: 61,
         icon: Users,
-        color: 'bg-[#E8FFF0]0',
+        color: 'bg-[#E6F2ED]0',
       },
     ],
     [],
@@ -107,7 +107,7 @@ export function AIDiagnostic() {
       label: t('eligibleLabel'),
     },
     en_cours: {
-      badge: 'bg-[#B8F5CE] text-[#1BC454] dark:bg-[#0A1F1B]/30 dark:text-[#1ED760]',
+      badge: 'bg-[#C2DED1] text-[#224E3F] dark:bg-[#224E3F]/30 dark:text-[#2D8C6A]',
       label: t('inProgressLabel'),
     },
     non_eligible: {
@@ -246,13 +246,13 @@ export function AIDiagnostic() {
 
             {/* Improvements */}
             <div>
-              <h4 className="mb-2 text-sm font-semibold text-[#1BC454] dark:text-[#1ED760]">
+              <h4 className="mb-2 text-sm font-semibold text-[#224E3F] dark:text-[#2D8C6A]">
                 {t('improvements')}
               </h4>
               <ul className="space-y-1.5">
                 {defaultImprovements.map((k) => (
                   <li key={k} className="flex items-start gap-2 text-sm">
-                    <span className="mt-1 text-[#E8FFF0]0">-</span>
+                    <span className="mt-1 text-[#E6F2ED]0">-</span>
                     {t(k)}
                   </li>
                 ))}

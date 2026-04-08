@@ -137,7 +137,7 @@ function StatusIcon({ status }: { status: ItemStatus }) {
     case 'complete':
       return <CheckCircle2 className="h-4 w-4 text-emerald-500" />;
     case 'partial':
-      return <AlertTriangle className="h-4 w-4 text-[#E8FFF0]0" />;
+      return <AlertTriangle className="h-4 w-4 text-[#E6F2ED]0" />;
     case 'missing':
       return <XCircle className="h-4 w-4 text-emerald-800" />;
   }
@@ -145,13 +145,13 @@ function StatusIcon({ status }: { status: ItemStatus }) {
 
 function percentColor(percent: number): string {
   if (percent >= 80) return 'text-emerald-600';
-  if (percent >= 50) return 'text-[#1ED760]';
+  if (percent >= 50) return 'text-[#2D8C6A]';
   return 'text-emerald-800';
 }
 
 function barColor(percent: number): string {
   if (percent >= 80) return 'bg-emerald-500';
-  if (percent >= 50) return 'bg-[#E8FFF0]0';
+  if (percent >= 50) return 'bg-[#E6F2ED]0';
   return 'bg-emerald-800';
 }
 

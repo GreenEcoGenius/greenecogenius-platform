@@ -380,7 +380,7 @@ export function PricingContent({
 
       {/* ACCOMPAGNEMENT SUR MESURE */}
       <section className="container mx-auto px-4 pt-0 pb-16">
-        <div className="mx-auto max-w-3xl rounded-xl border border-[#B8F5CE] bg-[#E8FFF0] px-6 py-10 text-center">
+        <div className="mx-auto max-w-3xl rounded-xl border border-[#C2DED1] bg-[#E6F2ED] px-6 py-10 text-center">
           <h2 className="text-metal-900 text-xl font-semibold">
             <Trans i18nKey="pricingPage.customSupportTitle" />
           </h2>

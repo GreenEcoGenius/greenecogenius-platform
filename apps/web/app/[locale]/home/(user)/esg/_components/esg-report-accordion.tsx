@@ -35,12 +35,12 @@ const SOURCE_STYLES: Record<
   manual: {
     variant: 'outline',
     className:
-      'border-[#B8F5CE] text-[#1BC454] dark:border-[#1BC454] dark:text-[#B8F5CE]',
+      'border-[#C2DED1] text-[#224E3F] dark:border-[#224E3F] dark:text-[#C2DED1]',
   },
   blockchain: {
     variant: 'secondary',
     className:
-      'bg-[#B8F5CE] text-[#1BC454] border-[#B8F5CE] dark:bg-[#0A1F1B]/40 dark:text-[#B8F5CE] dark:border-[#15a045]',
+      'bg-[#C2DED1] text-[#224E3F] border-[#C2DED1] dark:bg-[#224E3F]/40 dark:text-[#C2DED1] dark:border-[#1A3D32]',
   },
 };
 
@@ -60,8 +60,8 @@ function getStatusIcon(status: SectionStatus, pct: number) {
     return <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-500" />;
   }
   return (
-    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[#1ED760]">
-      <span className="text-[10px] font-bold text-[#E8FFF0]0">!</span>
+    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[#2D8C6A]">
+      <span className="text-[10px] font-bold text-[#E6F2ED]0">!</span>
     </div>
   );
 }
@@ -108,7 +108,7 @@ export function ESGReportAccordion({
                     {section.id === 'methodology' && (
                       <Badge
                         variant="outline"
-                        className="border-[#B8F5CE] text-[10px] text-[#1ED760]"
+                        className="border-[#C2DED1] text-[10px] text-[#2D8C6A]"
                       >
                         <Sparkles className="mr-1 h-3 w-3" />
                         Auto
@@ -133,7 +133,7 @@ export function ESGReportAccordion({
                     </div>
                     <span
                       className={`min-w-[3rem] text-right text-sm font-semibold ${
-                        isComplete ? 'text-emerald-600' : 'text-[#1ED760]'
+                        isComplete ? 'text-emerald-600' : 'text-[#2D8C6A]'
                       }`}
                     >
                       {section.completionPct}%
@@ -168,7 +168,7 @@ export function ESGReportAccordion({
                               {field.complete ? (
                                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
                               ) : (
-                                <div className="h-3.5 w-3.5 rounded-full border-2 border-[#B8F5CE]" />
+                                <div className="h-3.5 w-3.5 rounded-full border-2 border-[#C2DED1]" />
                               )}
                               <span
                                 className={
@@ -220,7 +220,7 @@ export function ESGReportAccordion({
                     <div className="bg-muted h-1.5 w-full max-w-md overflow-hidden rounded-full">
                       <div
                         className={`h-full rounded-full transition-all duration-500 ${
-                          isComplete ? 'bg-emerald-500' : 'bg-[#E8FFF0]0'
+                          isComplete ? 'bg-emerald-500' : 'bg-[#E6F2ED]0'
                         }`}
                         style={{ width: `${section.completionPct}%` }}
                       />

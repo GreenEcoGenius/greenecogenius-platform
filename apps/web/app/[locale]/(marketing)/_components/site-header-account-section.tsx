@@ -26,7 +26,7 @@ export function SiteHeaderAccountSection({
           render={<Link href={pathsConfig.app.home}>Dashboard</Link>}
           variant="default"
           size="sm"
-          className="text-sm"
+          className="rounded-full text-sm"
         />
       </div>
     );

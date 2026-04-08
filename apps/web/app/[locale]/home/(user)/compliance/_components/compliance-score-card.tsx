@@ -26,14 +26,14 @@ export function ComplianceScoreCard({
     score >= 80
       ? 'text-emerald-600'
       : score >= 60
-        ? 'text-[#1ED760]'
+        ? 'text-[#2D8C6A]'
         : 'text-slate-600';
 
   const ringColor =
     score >= 80
       ? 'stroke-emerald-500'
       : score >= 60
-        ? 'stroke-[#E8FFF0]0'
+        ? 'stroke-[#E6F2ED]0'
         : 'stroke-slate-400';
 
   const circumference = 2 * Math.PI * 54;

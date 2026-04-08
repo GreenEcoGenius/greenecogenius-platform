@@ -133,7 +133,7 @@ export function BenchmarkCard() {
             </div>
             <div className="bg-muted h-3 overflow-hidden rounded-full">
               <div
-                className="h-full rounded-full bg-[#1ED760] transition-all duration-700"
+                className="h-full rounded-full bg-[#2D8C6A] transition-all duration-700"
                 style={{ width: `${sectorPct}%` }}
               />
             </div>

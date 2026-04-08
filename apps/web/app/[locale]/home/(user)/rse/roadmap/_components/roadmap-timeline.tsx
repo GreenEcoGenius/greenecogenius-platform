@@ -31,24 +31,24 @@ const STATUS_ICONS: Record<ActionStatus, React.ReactNode> = {
     <CheckCircle2 size={16} strokeWidth={1.5} className="text-emerald-500" />
   ),
   in_progress: (
-    <Loader2 size={16} strokeWidth={1.5} className="text-[#E8FFF0]0" />
+    <Loader2 size={16} strokeWidth={1.5} className="text-[#E6F2ED]0" />
   ),
   todo: <Square size={16} strokeWidth={1.5} className="text-slate-400" />,
 };
 
 const PILLAR_COLORS: Record<string, string> = {
-  governance: 'bg-[#B8F5CE] text-[#15a045] dark:bg-[#0A1F1B] dark:text-[#B8F5CE]',
+  governance: 'bg-[#C2DED1] text-[#1A3D32] dark:bg-[#224E3F] dark:text-[#C2DED1]',
   environment:
     'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300',
   social: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
   ethics: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
-  stakeholders: 'bg-[#E8FFF0] text-[#1BC454] dark:bg-[#0A1F1B] dark:text-[#B8F5CE]',
+  stakeholders: 'bg-[#E6F2ED] text-[#224E3F] dark:bg-[#224E3F] dark:text-[#C2DED1]',
 };
 
 const PRIORITY_STYLES: Record<ActionPriority, string> = {
   urgent: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
-  important: 'bg-[#B8F5CE] text-[#15a045] dark:bg-[#0A1F1B] dark:text-[#B8F5CE]',
-  quick_win: 'bg-[#B8F5CE] text-[#15a045] dark:bg-[#0A1F1B] dark:text-[#B8F5CE]',
+  important: 'bg-[#C2DED1] text-[#1A3D32] dark:bg-[#224E3F] dark:text-[#C2DED1]',
+  quick_win: 'bg-[#C2DED1] text-[#1A3D32] dark:bg-[#224E3F] dark:text-[#C2DED1]',
 };
 
 const PILLAR_LABELS: Record<string, string> = {

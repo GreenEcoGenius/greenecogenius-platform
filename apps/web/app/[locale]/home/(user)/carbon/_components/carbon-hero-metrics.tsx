@@ -59,12 +59,12 @@ export function CarbonHeroMetrics({
 }: CarbonHeroMetricsProps) {
   const cards = [
     {
-      icon: <Leaf className="h-5 w-5 text-[#1ED760]" />,
+      icon: <Leaf className="h-5 w-5 text-[#2D8C6A]" />,
       value: fmt(co2Avoided / 1000),
       unit: 't CO₂',
       labelKey: 'carbon:totalAvoided',
       descKey: 'carbon:totalAvoidedDesc',
-      color: 'text-[#1ED760]',
+      color: 'text-[#2D8C6A]',
       current: co2Avoided,
       previous: prevCo2Avoided,
     },

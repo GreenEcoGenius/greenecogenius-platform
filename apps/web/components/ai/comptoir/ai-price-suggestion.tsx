@@ -107,8 +107,8 @@ export function AIPriceSuggestion({
                 )}
                 {priceData.trend === 'down' && (
                   <>
-                    <TrendingDown className="h-3.5 w-3.5 text-[#1ED760]" />
-                    <span className="text-[#1ED760]">Baisse</span>
+                    <TrendingDown className="h-3.5 w-3.5 text-[#2D8C6A]" />
+                    <span className="text-[#2D8C6A]">Baisse</span>
                   </>
                 )}
                 {priceData.trend === 'stable' && (

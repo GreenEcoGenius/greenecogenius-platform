@@ -63,10 +63,10 @@ const alertConfig = {
     label: 'Critique',
   },
   warning: {
-    border: 'border-l-4 border-l-[#E8FFF0]0',
-    bg: 'bg-[#E8FFF0] dark:bg-[#0A1F1B]/20',
+    border: 'border-l-4 border-l-[#E6F2ED]0',
+    bg: 'bg-[#E6F2ED] dark:bg-[#224E3F]/20',
     icon: AlertTriangle,
-    iconColor: 'text-[#1ED760] dark:text-[#1ED760]',
+    iconColor: 'text-[#2D8C6A] dark:text-[#2D8C6A]',
     badgeVariant: 'outline' as const,
     label: 'Attention',
   },

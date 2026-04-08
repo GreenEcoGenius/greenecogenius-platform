@@ -1,14 +1,14 @@
 export const colors = {
   brand: {
-    primary: '#1ED760',
-    primaryHover: '#1BC454',
-    primaryLight: '#E8FFF0',
-    accent: '#1ED760',
-    accentHover: '#1BC454',
-    accentLight: '#E8FFF0',
+    primary: '#224E3F',
+    primaryHover: '#1A3D32',
+    primaryLight: '#E6F2ED',
+    accent: '#2D8C6A',
+    accentHover: '#224E3F',
+    accentLight: '#E6F2ED',
   },
   text: {
-    primary: '#0A1F1B',
+    primary: '#224E3F',
     secondary: '#5a6578',
     muted: '#8e99a8',
   },

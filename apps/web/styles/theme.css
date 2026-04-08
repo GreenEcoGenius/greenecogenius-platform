@@ -1,25 +1,25 @@
 /*
  * theme.css
  *
- * GreenEcoGenius — "Greenly Green" Design System
- * Primary #1ED760, dark #0A1F1B, tech cyan circuits, metallic silver
+ * GreenEcoGenius — "Greenly" Design System
+ * Primary #224E3F, medium #2D8C6A, light #E6F2ED
  */
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-brand: #1ED760;
-  --color-brand-hover: #1BC454;
-  --color-brand-light: #E8FFF0;
+  --color-brand: #224E3F;
+  --color-brand-hover: #1A3D32;
+  --color-brand-light: #E6F2ED;
 
   /* ── Primary ── */
-  --color-primary-50: #E8FFF0;
-  --color-primary-100: #B8F5CE;
-  --color-primary-500: #1ED760;
-  --color-primary-600: #1BC454;
-  --color-primary-700: #15a045;
-  --color-primary-900: #0A1F1B;
-  --color-primary-light: #E8FFF0;
-  --color-primary-hover: #1BC454;
+  --color-primary-50: #E6F2ED;
+  --color-primary-100: #C2DED1;
+  --color-primary-500: #2D8C6A;
+  --color-primary-600: #224E3F;
+  --color-primary-700: #1A3D32;
+  --color-primary-900: #0F2A22;
+  --color-primary-light: #E6F2ED;
+  --color-primary-hover: #1A3D32;
 
   /* ── Circuit — Blues tech ── */
   --color-circuit-cyan: #00d4ff;
@@ -32,10 +32,10 @@
   --color-circuit-500: #2eafcf;
   --color-circuit-700: #00d4ff;
 
-  /* ── Tech — Verts lumineux ── */
-  --color-tech-neon: #1ED760;
-  --color-tech-emerald: #1BC454;
-  --color-tech-mint: #B8F5CE;
+  /* ── Tech — Verts ── */
+  --color-tech-neon: #2D8C6A;
+  --color-tech-emerald: #224E3F;
+  --color-tech-mint: #C2DED1;
 
   /* ── Metal — Gris bleutes ── */
   --color-metal-frost: #dde5e8;
@@ -54,23 +54,23 @@
   --color-metal-900: #1a2332;
 
   /* KPI card gradients */
-  --color-kpi-teal: #1ED760;
-  --color-kpi-teal-dark: #1BC454;
-  --color-kpi-emerald: #1ED760;
-  --color-kpi-emerald-dark: #1BC454;
-  --color-kpi-green: #1ED760;
-  --color-kpi-green-dark: #1BC454;
+  --color-kpi-teal: #224E3F;
+  --color-kpi-teal-dark: #1A3D32;
+  --color-kpi-emerald: #224E3F;
+  --color-kpi-emerald-dark: #2D8C6A;
+  --color-kpi-green: #2D8C6A;
+  --color-kpi-green-dark: #224E3F;
 
   /* Indicators */
-  --color-indicator-success: #1ED760;
+  --color-indicator-success: #2D8C6A;
   --color-indicator-warning: #5bc4d6;
-  --color-indicator-error: #0A1F1B;
+  --color-indicator-error: #e24b4a;
   --color-indicator-info: #2eafcf;
   --color-indicator-purple: #534ab7;
 
   /* ── Semantic badge colors ── */
-  --color-badge-amber-bg: #E8FFF0;
-  --color-badge-amber-text: #0A1F1B;
+  --color-badge-amber-bg: #E6F2ED;
+  --color-badge-amber-text: #224E3F;
   --color-badge-purple-bg: #eeedfe;
   --color-badge-purple-text: #534ab7;
 
@@ -78,9 +78,9 @@
   --color-circuit-dark: #1a8ab0;
 
   /* Chart palette */
-  --color-chart-primary: #1ED760;
+  --color-chart-primary: #224E3F;
   --color-chart-circuit: #2eafcf;
-  --color-chart-neon: #1ED760;
+  --color-chart-neon: #2D8C6A;
   --color-chart-turquoise: #5bc4d6;
   --color-chart-amber: #5bc4d6;
 }
@@ -109,30 +109,29 @@
  * Light Mode
  */
 :root {
-  /* Page background = metal-50 */
   --background: #f4f6f8;
-  --foreground: #0A1F1B;
+  --foreground: #1a2332;
   --card: #ffffff;
-  --card-foreground: #0A1F1B;
+  --card-foreground: #1a2332;
   --popover: #ffffff;
-  --popover-foreground: #0A1F1B;
-  --primary: #1ED760;
+  --popover-foreground: #1a2332;
+  --primary: #224E3F;
   --primary-foreground: #ffffff;
   --secondary: #f4f6f8;
-  --secondary-foreground: #0A1F1B;
+  --secondary-foreground: #1a2332;
   --muted: #f4f6f8;
   --muted-foreground: #5a6578;
-  --accent: #E8FFF0;
-  --accent-foreground: #0A1F1B;
-  --destructive: #0A1F1B;
+  --accent: #E6F2ED;
+  --accent-foreground: #224E3F;
+  --destructive: #e24b4a;
   --border: #c8d0d8;
   --input: #c8d0d8;
-  --ring: #1ED760;
+  --ring: #224E3F;
 
   /* Charts */
-  --chart-1: #1ED760;
+  --chart-1: #224E3F;
   --chart-2: #2eafcf;
-  --chart-3: #1BC454;
+  --chart-3: #2D8C6A;
   --chart-4: #5bc4d6;
   --chart-5: #a0aab4;
 
@@ -140,13 +139,13 @@
 
   /* Sidebar — Light */
   --sidebar: #ffffff;
-  --sidebar-foreground: #0A1F1B;
-  --sidebar-primary: #1ED760;
+  --sidebar-foreground: #1a2332;
+  --sidebar-primary: #224E3F;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #E8FFF0;
-  --sidebar-accent-foreground: #0A1F1B;
+  --sidebar-accent: #E6F2ED;
+  --sidebar-accent-foreground: #224E3F;
   --sidebar-border: #e4e8ec;
-  --sidebar-ring: #1ED760;
+  --sidebar-ring: #224E3F;
 }
 
 /*
@@ -159,7 +158,7 @@
   --card-foreground: #f8fafc;
   --popover: #1e293b;
   --popover-foreground: #f8fafc;
-  --primary: #1ED760;
+  --primary: #2D8C6A;
   --primary-foreground: #ffffff;
   --secondary: #334155;
   --secondary-foreground: #f8fafc;
@@ -167,23 +166,23 @@
   --muted-foreground: #94a3b8;
   --accent: #334155;
   --accent-foreground: #f8fafc;
-  --destructive: #6ee7b7;
+  --destructive: #e24b4a;
   --border: #334155;
   --input: #334155;
-  --ring: #1ED760;
+  --ring: #2D8C6A;
 
-  --chart-1: #1ED760;
+  --chart-1: #2D8C6A;
   --chart-2: #2eafcf;
-  --chart-3: #1BC454;
+  --chart-3: #224E3F;
   --chart-4: #5bc4d6;
   --chart-5: #475569;
 
   --sidebar: #1e293b;
   --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #1ED760;
+  --sidebar-primary: #2D8C6A;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #334155;
   --sidebar-accent-foreground: #f8fafc;
   --sidebar-border: #334155;
-  --sidebar-ring: #1ED760;
+  --sidebar-ring: #2D8C6A;
 }

@@ -141,7 +141,7 @@ export function ImpactSimulator() {
                 <Line
                   type="monotone"
                   dataKey="target2030"
-                  stroke="#1BC454"
+                  stroke="#224E3F"
                   strokeWidth={2}
                   strokeDasharray="5 5"
                   dot={{ r: 4 }}
