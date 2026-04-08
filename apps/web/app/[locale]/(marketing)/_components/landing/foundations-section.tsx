@@ -38,11 +38,21 @@ const frameworkLogos: LogoItem[] = [
   { name: 'GRI', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/8eddffa9-ea2d-4c20-bbb1-20bb0e0a20e5.png', url: 'https://www.globalreporting.org' },
   { name: 'CSRD / ESRS', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/esrsicon1.png', url: 'https://finance.ec.europa.eu' },
   { name: 'B Corp', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Certified_B_Corporation_B_Corp_Logo_2022_Black_RGB.svg.png', url: 'https://www.bcorporation.net' },
-  { name: 'GreenTech', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/17dc64b5-7ac4-46cb-93f2-a074804f05ea.png', url: 'https://greentechinnovation.fr/' },
+  { name: 'GreenTech Innovation', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/17dc64b5-7ac4-46cb-93f2-a074804f05ea.png', url: 'https://greentechinnovation.fr/' },
   { name: 'NR (INR)', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/a22d5f61-e78e-459b-8839-efe5f1f833ae.png', url: 'https://institutnr.org' },
 ];
 
-function LogoCard({ logo }: { logo: LogoItem }) {
+/**
+ * Uniform logo card — all logos share the same visual height within a section.
+ * `logoClass` controls the fixed height so every card looks even.
+ */
+function LogoCard({
+  logo,
+  logoClass,
+}: {
+  logo: LogoItem;
+  logoClass: string;
+}) {
   return (
     <a
       href={logo.url}
@@ -56,7 +66,7 @@ function LogoCard({ logo }: { logo: LogoItem }) {
           alt={logo.name}
           width={200}
           height={80}
-          className="h-10 w-auto max-w-[80%] object-contain transition-transform duration-200 group-hover:scale-105 sm:h-12"
+          className={`w-auto max-w-[80%] object-contain transition-transform duration-200 group-hover:scale-105 ${logoClass}`}
           unoptimized
         />
       ) : (
@@ -69,11 +79,17 @@ function LogoCard({ logo }: { logo: LogoItem }) {
   );
 }
 
-function LogoGrid({ logos }: { logos: LogoItem[] }) {
+function LogoGrid({
+  logos,
+  logoClass,
+}: {
+  logos: LogoItem[];
+  logoClass: string;
+}) {
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
       {logos.map((logo) => (
-        <LogoCard key={logo.name} logo={logo} />
+        <LogoCard key={logo.name} logo={logo} logoClass={logoClass} />
       ))}
     </div>
   );
@@ -91,7 +107,7 @@ export function TechCarousel() {
             {t('landing.foundationsTech')}
           </p>
         </div>
-        <LogoGrid logos={techLogos} />
+        <LogoGrid logos={techLogos} logoClass="h-8 min-h-8 max-h-10" />
       </div>
     </section>
   );
@@ -109,7 +125,7 @@ export function SourcesCarousel() {
             {t('landing.foundationsSources')}
           </p>
         </div>
-        <LogoGrid logos={sourceLogos} />
+        <LogoGrid logos={sourceLogos} logoClass="h-8 min-h-8 max-h-10" />
       </div>
     </section>
   );
@@ -130,7 +146,7 @@ export function FrameworksCarousel() {
         <p className="text-metal-400 mb-6 text-center text-xs">
           {t('landing.foundationsFrameworksSub')}
         </p>
-        <LogoGrid logos={frameworkLogos} />
+        <LogoGrid logos={frameworkLogos} logoClass="h-10 min-h-10 max-h-12" />
       </div>
     </section>
   );
