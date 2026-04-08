@@ -7,7 +7,6 @@ import Link from 'next/link';
 import {
   ArrowRight,
   Award,
-  BadgeCheck,
   BarChart3,
   Blocks,
   Building2,
@@ -23,7 +22,6 @@ import {
   Phone,
   Recycle,
   Rocket,
-  Shield,
   Sparkles,
   Target,
   TrendingDown,
@@ -377,6 +375,28 @@ export function PricingContent({
         </div>
       </section>
 
+      {/* ACCOMPAGNEMENT SUR MESURE */}
+      <section className="container mx-auto px-4 pt-0 pb-16">
+        <div className="mx-auto max-w-3xl rounded-xl border border-teal-100 bg-teal-50 px-6 py-10 text-center">
+          <h2 className="text-metal-900 text-xl font-semibold">
+            <Trans i18nKey="pricingPage.customSupportTitle" />
+          </h2>
+          <p className="text-metal-600 mx-auto mt-2 max-w-lg text-sm">
+            <Trans i18nKey="pricingPage.customSupportSubtitle" />
+          </p>
+          <Button
+            className="bg-primary hover:bg-primary-hover mt-5 rounded-xl font-medium text-white"
+            render={
+              <Link href="/contact">
+                <Trans i18nKey="pricingPage.customSupportButton" />
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            }
+            nativeButton={false}
+          />
+        </div>
+      </section>
+
       {/* COMMISSION MARKETPLACE */}
       <section className="bg-metal-frost py-16">
         <div className="container mx-auto px-4">
@@ -429,59 +449,6 @@ export function PricingContent({
               </p>
             </div>
           )}
-        </div>
-      </section>
-
-      {/* SERVICES PREMIUM */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-metal-900 mb-2 text-center text-2xl font-bold">
-          <Trans i18nKey="pricingPage.servicesTitle" />
-        </h2>
-        <p className="text-metal-600 mb-8 text-center">
-          <Trans i18nKey="pricingPage.servicesSubtitle" />
-        </p>
-
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
-          {[
-            {
-              icon: <Shield className="h-8 w-8" />,
-              titleKey: 'pricingPage.service1Title',
-              priceKey: 'pricingPage.service1Price',
-              descKey: 'pricingPage.service1Desc',
-            },
-            {
-              icon: <BadgeCheck className="h-8 w-8" />,
-              titleKey: 'pricingPage.service2Title',
-              priceKey: 'pricingPage.service2Price',
-              descKey: 'pricingPage.service2Desc',
-            },
-            {
-              icon: <FileText className="h-8 w-8" />,
-              titleKey: 'pricingPage.service3Title',
-              priceKey: 'pricingPage.service3Price',
-              descKey: 'pricingPage.service3Desc',
-            },
-          ].map((service, i) => (
-            <Card
-              key={i}
-              className="border-metal-silver border text-center transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
-            >
-              <CardContent className="pt-6">
-                <div className="text-circuit-blue mx-auto mb-3">
-                  {service.icon}
-                </div>
-                <h3 className="text-metal-900 font-semibold">
-                  <Trans i18nKey={service.titleKey} />
-                </h3>
-                <p className="text-circuit-blue mt-2 text-lg font-bold">
-                  <Trans i18nKey={service.priceKey} />
-                </p>
-                <p className="text-metal-600 mt-2 text-sm">
-                  <Trans i18nKey={service.descKey} />
-                </p>
-              </CardContent>
-            </Card>
-          ))}
         </div>
       </section>
 
