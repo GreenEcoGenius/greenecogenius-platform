@@ -103,7 +103,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   className={
                     label.score >= label.threshold
                       ? 'border-green-200 text-green-700 dark:border-green-800 dark:text-green-400'
-                      : 'border-[#C2DED1] text-[#224E3F] dark:border-[#1A3D32] dark:text-[#2D8C6A]'
+                      : 'border-[#A8E6C8] text-[#1BAF6A] dark:border-[#159B5C] dark:text-[#1BAF6A]'
                   }
                 >
                   {label.score}/{label.threshold * 2.5}
@@ -125,7 +125,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   />
                   {/* Threshold marker */}
                   <div
-                    className="absolute top-0 h-full w-0.5 bg-emerald-700"
+                    className="absolute top-0 h-full w-0.5 bg-[#159B5C]"
                     style={{
                       left: `${(label.threshold / (label.threshold * 2.5)) * 100}%`,
                     }}
@@ -135,7 +135,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   <span className="text-muted-foreground">
                     Score: {label.score}
                   </span>
-                  <span className="text-emerald-700">
+                  <span className="text-[#159B5C]">
                     Seuil: {label.threshold}
                   </span>
                 </div>
@@ -170,8 +170,8 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
             )}
 
             {expanded && error && (
-              <div className="mt-3 rounded-md border border-emerald-200 bg-emerald-50 p-3 dark:border-emerald-800 dark:bg-emerald-950/20">
-                <p className="text-xs text-emerald-700">{error}</p>
+              <div className="mt-3 rounded-md border border-[#A8E6C8] bg-[#E8F8F0] p-3 dark:border-[#159B5C] dark:bg-[#0A5C35]/20">
+                <p className="text-xs text-[#159B5C]">{error}</p>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -231,7 +231,7 @@ export function AILabelSimulator({ className }: { className?: string }) {
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-base">
-              <Award className="h-5 w-5 text-[#2D8C6A]" />
+              <Award className="h-5 w-5 text-[#1BAF6A]" />
               Simulateur de labels
             </CardTitle>
             <AIPoweredBadge methodology="Multi-referentiel" />

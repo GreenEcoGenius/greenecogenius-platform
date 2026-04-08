@@ -127,7 +127,7 @@ export function CertificateIssuer({
   if (issued) {
     return (
       <div className="space-y-4">
-        <div className="flex items-center gap-2 text-emerald-600">
+        <div className="flex items-center gap-2 text-[#1BAF6A]">
           <CheckCircle className="h-5 w-5" />
           <span className="font-medium">
             {issued.length} certificat{issued.length > 1 ? 's' : ''} emis avec
@@ -143,7 +143,7 @@ export function CertificateIssuer({
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <Award className="h-4 w-4 text-emerald-600" />
+                  <Award className="h-4 w-4 text-[#1BAF6A]" />
                   <span className="text-sm font-medium">{cert.certNumber}</span>
                   <Badge variant="outline" className="text-[10px]">
                     {cert.lotId}
@@ -151,7 +151,7 @@ export function CertificateIssuer({
                 </div>
                 {cert.txHash && (
                   <div className="mt-1 flex items-center gap-1">
-                    <Shield className="h-3 w-3 text-emerald-500" />
+                    <Shield className="h-3 w-3 text-[#E8F8F0]0" />
                     <span className="text-muted-foreground text-[10px]">
                       Blockchain: {cert.txHash.slice(0, 10)}...
                     </span>

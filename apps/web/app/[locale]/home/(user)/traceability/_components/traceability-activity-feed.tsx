@@ -17,11 +17,11 @@ import type { MockActivity } from '~/lib/mock/traceability-mock-data';
 
 const ACTIVITY_ICONS: Record<string, React.ReactNode> = {
   lot_created: <Package className="h-4 w-4 text-blue-500" />,
-  lot_sold: <Package className="h-4 w-4 text-[#E6F2ED]0" />,
-  lot_in_transit: <Truck className="h-4 w-4 text-[#E6F2ED]0" />,
-  lot_delivered: <Truck className="h-4 w-4 text-emerald-500" />,
+  lot_sold: <Package className="h-4 w-4 text-[#E8F8F0]0" />,
+  lot_in_transit: <Truck className="h-4 w-4 text-[#E8F8F0]0" />,
+  lot_delivered: <Truck className="h-4 w-4 text-[#E8F8F0]0" />,
   certificate_issued: <Award className="h-4 w-4 text-green-600" />,
-  blockchain_recorded: <Blocks className="h-4 w-4 text-[#E6F2ED]0" />,
+  blockchain_recorded: <Blocks className="h-4 w-4 text-[#E8F8F0]0" />,
   co2_calculated: <Calculator className="h-4 w-4 text-green-500" />,
   esg_synced: <FileBarChart className="h-4 w-4 text-blue-500" />,
   lot_certified: <Award className="h-4 w-4 text-green-600" />,
@@ -29,15 +29,15 @@ const ACTIVITY_ICONS: Record<string, React.ReactNode> = {
 
 const SECTION_COLORS: Record<string, string> = {
   marketplace:
-    'bg-[#C2DED1] text-[#224E3F] dark:bg-[#224E3F]/40 dark:text-[#C2DED1]',
+    'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
   inventaire:
     'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  transport: 'bg-[#C2DED1] text-[#224E3F] dark:bg-[#224E3F]/40 dark:text-[#C2DED1]',
-  suivi: 'bg-[#C2DED1] text-[#224E3F] dark:bg-[#224E3F]/40 dark:text-[#C2DED1]',
+  transport: 'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
+  suivi: 'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
   certification:
     'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
   blockchain:
-    'bg-[#C2DED1] text-[#224E3F] dark:bg-[#224E3F]/40 dark:text-[#C2DED1]',
+    'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
   dashboard: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
 };
 
@@ -84,7 +84,7 @@ export function TraceabilityActivityFeed({
                   <Package className="h-4 w-4 text-gray-500" />
                 )}
               </div>
-              <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500 dark:border-gray-900" />
+              <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#E8F8F0]0 dark:border-gray-900" />
             </div>
 
             {/* Content */}

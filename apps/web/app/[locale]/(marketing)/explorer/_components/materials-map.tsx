@@ -10,7 +10,7 @@ const VOLUME_COLORS = [
   { max: 1_000_000, fill: '#D1FAE5' },
   { max: 5_000_000, fill: '#6EE7B7' },
   { max: 10_000_000, fill: '#34D399' },
-  { max: 50_000_000, fill: '#224E3F' },
+  { max: 50_000_000, fill: '#1BAF6A' },
   { max: Infinity, fill: '#064E3B' },
 ];
 

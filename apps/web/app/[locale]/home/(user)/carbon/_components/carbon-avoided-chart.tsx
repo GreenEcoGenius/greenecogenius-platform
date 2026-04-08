@@ -83,13 +83,13 @@ function CustomTooltip({
     <div className="rounded-lg border bg-white p-3 shadow-lg dark:bg-gray-900">
       <p className="mb-2 text-sm font-semibold">{label}</p>
       <div className="space-y-1 text-sm">
-        <p className="text-[#2D8C6A]">
+        <p className="text-[#1BAF6A]">
           {t('chartCO2Avoided')}: {fmtKg(avoidedVal)} kg
         </p>
-        <p className="text-[#E6F2ED]0">
+        <p className="text-[#E8F8F0]0">
           {t('chartCO2Transport')}: {fmtKg(transportVal)} kg
         </p>
-        <p className="font-semibold text-emerald-700">
+        <p className="font-semibold text-[#159B5C]">
           {t('chartNetBalance')}: {fmtKg(net)} kg
         </p>
       </div>
@@ -123,8 +123,8 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
           >
             <defs>
               <linearGradient id="tealGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#2D8C6A" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#2D8C6A" stopOpacity={0.02} />
+                <stop offset="5%" stopColor="#1BAF6A" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#1BAF6A" stopOpacity={0.02} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
@@ -153,7 +153,7 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
             <Area
               type="monotone"
               dataKey="co2_avoided"
-              stroke="#2D8C6A"
+              stroke="#1BAF6A"
               strokeWidth={2}
               fill="url(#tealGradient)"
               dot={false}
@@ -162,7 +162,7 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
             <Line
               type="monotone"
               dataKey="co2_transport"
-              stroke="#224E3F"
+              stroke="#1BAF6A"
               strokeWidth={2}
               strokeDasharray="6 3"
               dot={false}

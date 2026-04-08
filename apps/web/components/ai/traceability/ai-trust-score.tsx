@@ -22,8 +22,8 @@ function getScoreColor(score: number) {
   if (score > 80)
     return { stroke: '#22c55e', text: 'text-green-600', label: 'Excellent' };
   if (score >= 50)
-    return { stroke: '#2D8C6A', text: 'text-[#2D8C6A]', label: 'Moyen' };
-  return { stroke: '#065f46', text: 'text-emerald-800', label: 'Critique' };
+    return { stroke: '#1BAF6A', text: 'text-[#1BAF6A]', label: 'Moyen' };
+  return { stroke: '#065f46', text: 'text-[#159B5C]', label: 'Critique' };
 }
 
 function CircularScore({ score }: { score: number }) {
@@ -91,8 +91,8 @@ export function AITrustScore({ score, checks }: AITrustScoreProps) {
               score > 80
                 ? 'border-green-200 text-green-700 dark:border-green-800 dark:text-green-400'
                 : score >= 50
-                  ? 'border-[#C2DED1] text-[#224E3F] dark:border-[#1A3D32] dark:text-[#2D8C6A]'
-                  : 'border-emerald-200 text-emerald-800 dark:border-emerald-800 dark:text-emerald-400'
+                  ? 'border-[#A8E6C8] text-[#1BAF6A] dark:border-[#159B5C] dark:text-[#1BAF6A]'
+                  : 'border-[#A8E6C8] text-[#159B5C] dark:border-[#159B5C] dark:text-[#1BAF6A]'
             }`}
           >
             {label}
@@ -109,7 +109,7 @@ export function AITrustScore({ score, checks }: AITrustScoreProps) {
               {check.passed ? (
                 <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
               ) : (
-                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#E6F2ED]0" />
+                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#E8F8F0]0" />
               )}
               <div className="min-w-0">
                 <span className="font-medium">{check.label}</span>

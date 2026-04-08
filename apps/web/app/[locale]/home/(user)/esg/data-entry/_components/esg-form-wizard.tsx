@@ -303,7 +303,7 @@ export function ESGFormWizard({
                   isActive
                     ? 'bg-primary/10 text-primary font-semibold'
                     : isDone
-                      ? 'text-emerald-600'
+                      ? 'text-[#1BAF6A]'
                       : 'text-muted-foreground'
                 }`}
               >
@@ -315,7 +315,7 @@ export function ESGFormWizard({
               {i < STEPS.length - 1 && (
                 <div
                   className={`mx-1 h-0.5 w-4 flex-shrink-0 rounded ${
-                    isDone ? 'bg-emerald-500' : 'bg-muted'
+                    isDone ? 'bg-[#E8F8F0]0' : 'bg-muted'
                   }`}
                 />
               )}
@@ -329,7 +329,7 @@ export function ESGFormWizard({
         <span className="text-muted-foreground text-xs">
           {saveStatus === 'saving' && <Trans i18nKey="esg:saving" />}
           {saveStatus === 'saved' && (
-            <span className="text-emerald-600">
+            <span className="text-[#1BAF6A]">
               <Trans i18nKey="esg:autoSaved" />
             </span>
           )}
@@ -485,9 +485,9 @@ function SelectInput({
 
 function CO2Estimate({ value }: { value: number }) {
   return (
-    <div className="mt-4 flex items-center gap-2 rounded-lg border border-dashed border-emerald-300 bg-emerald-50 p-3 dark:border-emerald-800 dark:bg-emerald-950/30">
-      <Leaf className="h-4 w-4 text-emerald-600" />
-      <span className="text-sm font-medium text-emerald-700 dark:text-emerald-300">
+    <div className="mt-4 flex items-center gap-2 rounded-lg border border-dashed border-[#A8E6C8] bg-[#E8F8F0] p-3 dark:border-[#159B5C] dark:bg-[#0A5C35]/30">
+      <Leaf className="h-4 w-4 text-[#1BAF6A]" />
+      <span className="text-sm font-medium text-[#159B5C] dark:text-[#A8E6C8]">
         <Trans i18nKey="esg:estimated" />: {value.toFixed(1)} kg CO2e
       </span>
     </div>
@@ -818,15 +818,15 @@ function StepScope3({
       </div>
 
       {/* Platform data (read-only) */}
-      <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-950/30">
+      <div className="rounded-lg border border-[#A8E6C8] bg-[#E8F8F0] p-4 dark:border-[#159B5C] dark:bg-[#0A5C35]/30">
         <div className="mb-3 flex items-center gap-2">
-          <Factory className="h-5 w-5 text-emerald-600" />
-          <h4 className="font-semibold text-emerald-700 dark:text-emerald-300">
+          <Factory className="h-5 w-5 text-[#1BAF6A]" />
+          <h4 className="font-semibold text-[#159B5C] dark:text-[#A8E6C8]">
             <Trans i18nKey="esg:platformDataTitle" />
           </h4>
           <Badge
             variant={'outline'}
-            className="border-emerald-300 text-emerald-700 dark:border-emerald-700 dark:text-emerald-300"
+            className="border-[#A8E6C8] text-[#159B5C] dark:border-[#159B5C] dark:text-[#A8E6C8]"
           >
             <Trans i18nKey="esg:platformVerified" />
           </Badge>
@@ -837,7 +837,7 @@ function StepScope3({
             <span className="text-muted-foreground">
               <Trans i18nKey="esg:platformTonnes" />
             </span>
-            <p className="text-lg font-semibold text-emerald-700 dark:text-emerald-300">
+            <p className="text-lg font-semibold text-[#159B5C] dark:text-[#A8E6C8]">
               {formData.platform_tonnes_recycled.toFixed(1)} t
             </p>
           </div>
@@ -845,7 +845,7 @@ function StepScope3({
             <span className="text-muted-foreground">
               <Trans i18nKey="esg:platformCO2" />
             </span>
-            <p className="text-lg font-semibold text-emerald-700 dark:text-emerald-300">
+            <p className="text-lg font-semibold text-[#159B5C] dark:text-[#A8E6C8]">
               {formData.platform_co2_avoided.toFixed(1)} kg CO2e
             </p>
           </div>
@@ -853,7 +853,7 @@ function StepScope3({
             <span className="text-muted-foreground">
               <Trans i18nKey="esg:platformTx" />
             </span>
-            <p className="text-lg font-semibold text-emerald-700 dark:text-emerald-300">
+            <p className="text-lg font-semibold text-[#159B5C] dark:text-[#A8E6C8]">
               {formData.platform_transactions_count}
             </p>
           </div>
@@ -903,8 +903,8 @@ function StepSummary({
           label="Scope 1"
           value={scope1}
           max={maxScope}
-          color="bg-[#E6F2ED]0"
-          textColor="text-[#2D8C6A]"
+          color="bg-[#E8F8F0]0"
+          textColor="text-[#1BAF6A]"
         />
         <ScopeSummaryBar
           label="Scope 2"
@@ -917,8 +917,8 @@ function StepSummary({
           label="Scope 3"
           value={scope3}
           max={maxScope}
-          color="bg-[#E6F2ED]0"
-          textColor="text-[#2D8C6A]"
+          color="bg-[#E8F8F0]0"
+          textColor="text-[#1BAF6A]"
         />
       </div>
 
@@ -932,10 +932,10 @@ function StepSummary({
             <span className="font-bold">{total.toFixed(1)} kg CO2e</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-emerald-600">
+            <span className="text-[#1BAF6A]">
               <Trans i18nKey="esg:avoided" />
             </span>
-            <span className="font-bold text-emerald-600">
+            <span className="font-bold text-[#1BAF6A]">
               -{avoided.toFixed(1)} kg CO2e
             </span>
           </div>

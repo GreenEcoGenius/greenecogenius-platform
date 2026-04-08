@@ -280,7 +280,7 @@ async function PersonalAccountBillingPage() {
           {[
             {
               icon: (
-                <Link2 size={16} strokeWidth={1.5} className="text-[#2D8C6A]" />
+                <Link2 size={16} strokeWidth={1.5} className="text-[#1BAF6A]" />
               ),
               label: t('tagBlockchainTraceability'),
             },
@@ -289,7 +289,7 @@ async function PersonalAccountBillingPage() {
                 <Leaf
                   size={16}
                   strokeWidth={1.5}
-                  className="text-emerald-600"
+                  className="text-[#1BAF6A]"
                 />
               ),
               label: t('tagAutoCO2'),
@@ -299,7 +299,7 @@ async function PersonalAccountBillingPage() {
                 <FileText
                   size={16}
                   strokeWidth={1.5}
-                  className="text-[#2D8C6A]"
+                  className="text-[#1BAF6A]"
                 />
               ),
               label: t('tagPdfCertificate'),
@@ -309,7 +309,7 @@ async function PersonalAccountBillingPage() {
                 <BarChart3
                   size={16}
                   strokeWidth={1.5}
-                  className="text-emerald-600"
+                  className="text-[#1BAF6A]"
                 />
               ),
               label: t('tagCarbonDashboard'),
@@ -319,7 +319,7 @@ async function PersonalAccountBillingPage() {
                 <Download
                   size={16}
                   strokeWidth={1.5}
-                  className="text-[#2D8C6A]"
+                  className="text-[#1BAF6A]"
                 />
               ),
               label: t('tagExportPdfCsv'),

@@ -30,7 +30,7 @@ type CellValue = 'yes' | 'no' | 'partial' | 'na' | 'price';
 function CellIcon({ value, col }: { value: CellValue; col: string }) {
   if (value === 'price') {
     return (
-      <span className={`text-xs font-semibold ${col === 'geg' ? 'text-emerald-700' : 'text-metal-600'}`}>
+      <span className={`text-xs font-semibold ${col === 'geg' ? 'text-[#159B5C]' : 'text-metal-600'}`}>
         {PRICES[col]}
       </span>
     );
@@ -38,8 +38,8 @@ function CellIcon({ value, col }: { value: CellValue; col: string }) {
 
   if (value === 'yes') {
     return (
-      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100">
-        <Check className="h-4 w-4 text-emerald-600" strokeWidth={2.5} />
+      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#A8E6C8]">
+        <Check className="h-4 w-4 text-[#1BAF6A]" strokeWidth={2.5} />
       </span>
     );
   }
@@ -65,7 +65,7 @@ function CellIcon({ value, col }: { value: CellValue; col: string }) {
 
 function LegendDot({ type, label }: { type: 'yes' | 'partial' | 'no'; label: string }) {
   const styles = {
-    yes: 'bg-emerald-100 text-emerald-600',
+    yes: 'bg-[#A8E6C8] text-[#1BAF6A]',
     partial: 'bg-amber-100 text-amber-600',
     no: 'bg-red-50 text-red-400',
   };
@@ -119,7 +119,7 @@ export function ComparisonTable() {
                     key={col}
                     className={`px-4 py-4 text-center text-xs font-semibold tracking-wider uppercase ${
                       col === 'geg'
-                        ? 'bg-emerald-50 text-emerald-800'
+                        ? 'bg-[#E8F8F0] text-[#159B5C]'
                         : 'text-gray-500'
                     }`}
                   >
@@ -146,7 +146,7 @@ export function ComparisonTable() {
                   {columns.map((col) => (
                     <td
                       key={col}
-                      className={`px-4 py-3.5 text-center ${col === 'geg' ? 'bg-emerald-50/50' : ''}`}
+                      className={`px-4 py-3.5 text-center ${col === 'geg' ? 'bg-[#E8F8F0]/50' : ''}`}
                     >
                       <CellIcon value={row[col]} col={col} />
                     </td>
@@ -167,7 +167,7 @@ export function ComparisonTable() {
               <div className="grid grid-cols-4 gap-2 text-center">
                 {columns.map((col) => (
                   <div key={col}>
-                    <p className={`mb-1 text-[10px] font-medium ${col === 'geg' ? 'text-emerald-700' : 'text-metal-400'}`}>
+                    <p className={`mb-1 text-[10px] font-medium ${col === 'geg' ? 'text-[#159B5C]' : 'text-metal-400'}`}>
                       {col === 'geg'
                         ? 'GEG'
                         : col === 'internal'
@@ -190,9 +190,9 @@ export function ComparisonTable() {
         </div>
 
         {/* Differentiator callout */}
-        <div className="mt-8 rounded-xl border-l-4 border-l-emerald-700 bg-emerald-50 p-6">
+        <div className="mt-8 rounded-xl border-l-4 border-l-[#159B5C] bg-[#E8F8F0] p-6">
           <div className="flex items-start gap-3">
-            <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" />
+            <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-[#159B5C]" />
             <p className="text-metal-800 text-sm leading-relaxed">
               {t('landing.compCallout')}
             </p>

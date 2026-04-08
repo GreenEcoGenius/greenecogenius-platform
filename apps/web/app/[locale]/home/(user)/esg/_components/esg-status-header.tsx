@@ -42,7 +42,7 @@ export function EsgStatusHeader({
 
             <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
               <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                <CheckCircle2 className="h-4 w-4 text-[#E8F8F0]0" />
                 <span className="font-medium">{completionPct}%</span>{' '}
                 {t('complete')}
               </span>
@@ -57,7 +57,7 @@ export function EsgStatusHeader({
             <div className="mt-3 max-w-lg">
               <div className="bg-muted h-2 w-full overflow-hidden rounded-full">
                 <div
-                  className="h-full rounded-full bg-emerald-500 transition-all duration-700"
+                  className="h-full rounded-full bg-[#E8F8F0]0 transition-all duration-700"
                   style={{ width: `${completionPct}%` }}
                 />
               </div>

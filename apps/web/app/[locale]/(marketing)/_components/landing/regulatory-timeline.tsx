@@ -27,9 +27,9 @@ const URGENCY_STYLES = {
     icon: AlertTriangle,
   },
   future: {
-    bg: 'bg-emerald-50',
-    border: 'border-emerald-300',
-    text: 'text-emerald-700',
+    bg: 'bg-[#E8F8F0]',
+    border: 'border-[#A8E6C8]',
+    text: 'text-[#159B5C]',
     icon: Clock,
   },
 };

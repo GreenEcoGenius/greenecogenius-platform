@@ -41,7 +41,7 @@ export function SendForSignatureButton({
         type="button"
         disabled={isPending}
         onClick={() => execute({ transactionId })}
-        className="bg-[#2D8C6A] hover:bg-[#224E3F]"
+        className="bg-[#1BAF6A] hover:bg-[#1BAF6A]"
       >
         {isPending ? (
           <>

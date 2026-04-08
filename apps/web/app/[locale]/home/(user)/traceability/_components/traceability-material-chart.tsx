@@ -20,7 +20,7 @@ const MATERIAL_COLORS: Record<string, string> = {
   verre: '#06B6D4',
   textile: '#8B5CF6',
   organique: '#10B981',
-  papier: '#2D8C6A',
+  papier: '#1BAF6A',
 };
 
 const MATERIAL_LABELS: Record<string, string> = {

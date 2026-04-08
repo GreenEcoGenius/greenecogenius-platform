@@ -15,7 +15,7 @@ import { useTranslations } from 'next-intl';
 const STEPS = [
   { icon: PackagePlus, key: 'step1', color: 'bg-blue-50 text-blue-600' },
   { icon: Link2, key: 'step2', color: 'bg-purple-50 text-purple-600' },
-  { icon: BarChart3, key: 'step3', color: 'bg-emerald-50 text-emerald-600' },
+  { icon: BarChart3, key: 'step3', color: 'bg-[#E8F8F0] text-[#1BAF6A]' },
   { icon: FileText, key: 'step4', color: 'bg-amber-50 text-amber-700' },
 ];
 

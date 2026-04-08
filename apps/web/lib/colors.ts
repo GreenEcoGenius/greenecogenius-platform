@@ -1,20 +1,20 @@
 export const colors = {
   brand: {
-    primary: '#224E3F',
-    primaryHover: '#1A3D32',
-    primaryLight: '#E6F2ED',
-    accent: '#2D8C6A',
-    accentHover: '#224E3F',
-    accentLight: '#E6F2ED',
+    primary: '#1BAF6A',
+    primaryHover: '#159B5C',
+    primaryLight: '#E8F8F0',
+    accent: '#7EC845',
+    accentHover: '#6BB33A',
+    accentLight: '#F0F9E8',
   },
   text: {
-    primary: '#224E3F',
+    primary: '#111827',
     secondary: '#5a6578',
     muted: '#8e99a8',
   },
   surface: {
-    page: '#F5FAF5',
+    page: '#f4f6f8',
     card: '#FFFFFF',
-    border: '#D4DDD4',
+    border: '#c8d0d8',
   },
 } as const;

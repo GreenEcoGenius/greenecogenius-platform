@@ -33,7 +33,7 @@ const PRIORITY_CONFIG: Record<
   },
   important: {
     className:
-      'bg-[#C2DED1] text-[#1A3D32] dark:bg-[#224E3F]/40 dark:text-[#C2DED1] border-[#C2DED1]',
+      'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8] border-[#A8E6C8]',
     i18nKey: 'rse:important',
     icon: <Clock className="h-3 w-3" />,
   },
@@ -48,9 +48,9 @@ const PRIORITY_CONFIG: Record<
 const PILLAR_COLORS: Record<string, string> = {
   governance: '#6366F1',
   environment: '#10B981',
-  social: '#2D8C6A',
+  social: '#1BAF6A',
   ethics: '#8B5CF6',
-  stakeholders: '#224E3F',
+  stakeholders: '#1BAF6A',
 };
 
 export function RSEActionsList({ actions }: RSEActionsListProps) {
@@ -58,7 +58,7 @@ export function RSEActionsList({ actions }: RSEActionsListProps) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg">
-          <Zap className="h-5 w-5 text-[#E6F2ED]0" />
+          <Zap className="h-5 w-5 text-[#E8F8F0]0" />
           <Trans i18nKey="rse:actionsTitle" />
         </CardTitle>
       </CardHeader>

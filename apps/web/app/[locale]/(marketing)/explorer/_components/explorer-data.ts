@@ -38,8 +38,8 @@ export const CATEGORY_META: Record<
   },
   Verre: {
     icon: Wine,
-    color: 'text-emerald-600',
-    bgColor: 'bg-emerald-50',
+    color: 'text-[#1BAF6A]',
+    bgColor: 'bg-[#E8F8F0]',
     slug: 'verre',
   },
   Bois: {

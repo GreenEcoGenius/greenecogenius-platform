@@ -1,25 +1,29 @@
 /*
  * theme.css
  *
- * GreenEcoGenius — "Greenly" Design System
- * Primary #224E3F, medium #2D8C6A, light #E6F2ED
+ * GreenEcoGenius — Logo-based Design System
+ * Primary #1BAF6A (emerald arrows), Accent #7EC845 (lime leaves)
  */
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-brand: #224E3F;
-  --color-brand-hover: #1A3D32;
-  --color-brand-light: #E6F2ED;
+  --color-brand: #1BAF6A;
+  --color-brand-hover: #159B5C;
+  --color-brand-light: #E8F8F0;
 
   /* ── Primary ── */
-  --color-primary-50: #E6F2ED;
-  --color-primary-100: #C2DED1;
-  --color-primary-500: #2D8C6A;
-  --color-primary-600: #224E3F;
-  --color-primary-700: #1A3D32;
-  --color-primary-900: #0F2A22;
-  --color-primary-light: #E6F2ED;
-  --color-primary-hover: #1A3D32;
+  --color-primary-50: #E8F8F0;
+  --color-primary-100: #A8E6C8;
+  --color-primary-500: #1BAF6A;
+  --color-primary-600: #159B5C;
+  --color-primary-700: #118A50;
+  --color-primary-900: #0A5C35;
+  --color-primary-light: #E8F8F0;
+  --color-primary-hover: #159B5C;
+
+  /* ── Accent (lime vert du logo) ── */
+  --color-accent-green: #7EC845;
+  --color-accent-green-light: #F0F9E8;
 
   /* ── Circuit — Blues tech ── */
   --color-circuit-cyan: #00d4ff;
@@ -33,9 +37,9 @@
   --color-circuit-700: #00d4ff;
 
   /* ── Tech — Verts ── */
-  --color-tech-neon: #2D8C6A;
-  --color-tech-emerald: #224E3F;
-  --color-tech-mint: #C2DED1;
+  --color-tech-neon: #7EC845;
+  --color-tech-emerald: #1BAF6A;
+  --color-tech-mint: #A8E6C8;
 
   /* ── Metal — Gris bleutes ── */
   --color-metal-frost: #dde5e8;
@@ -54,23 +58,23 @@
   --color-metal-900: #1a2332;
 
   /* KPI card gradients */
-  --color-kpi-teal: #224E3F;
-  --color-kpi-teal-dark: #1A3D32;
-  --color-kpi-emerald: #224E3F;
-  --color-kpi-emerald-dark: #2D8C6A;
-  --color-kpi-green: #2D8C6A;
-  --color-kpi-green-dark: #224E3F;
+  --color-kpi-teal: #1BAF6A;
+  --color-kpi-teal-dark: #159B5C;
+  --color-kpi-emerald: #1BAF6A;
+  --color-kpi-emerald-dark: #159B5C;
+  --color-kpi-green: #1BAF6A;
+  --color-kpi-green-dark: #159B5C;
 
   /* Indicators */
-  --color-indicator-success: #2D8C6A;
-  --color-indicator-warning: #5bc4d6;
+  --color-indicator-success: #7EC845;
+  --color-indicator-warning: #f59e0b;
   --color-indicator-error: #e24b4a;
   --color-indicator-info: #2eafcf;
   --color-indicator-purple: #534ab7;
 
   /* ── Semantic badge colors ── */
-  --color-badge-amber-bg: #E6F2ED;
-  --color-badge-amber-text: #224E3F;
+  --color-badge-amber-bg: #E8F8F0;
+  --color-badge-amber-text: #111827;
   --color-badge-purple-bg: #eeedfe;
   --color-badge-purple-text: #534ab7;
 
@@ -78,11 +82,11 @@
   --color-circuit-dark: #1a8ab0;
 
   /* Chart palette */
-  --color-chart-primary: #224E3F;
+  --color-chart-primary: #1BAF6A;
   --color-chart-circuit: #2eafcf;
-  --color-chart-neon: #2D8C6A;
+  --color-chart-neon: #7EC845;
   --color-chart-turquoise: #5bc4d6;
-  --color-chart-amber: #5bc4d6;
+  --color-chart-amber: #f59e0b;
 }
 
 @utility container {
@@ -110,28 +114,28 @@
  */
 :root {
   --background: #f4f6f8;
-  --foreground: #1a2332;
+  --foreground: #111827;
   --card: #ffffff;
-  --card-foreground: #1a2332;
+  --card-foreground: #111827;
   --popover: #ffffff;
-  --popover-foreground: #1a2332;
-  --primary: #224E3F;
+  --popover-foreground: #111827;
+  --primary: #1BAF6A;
   --primary-foreground: #ffffff;
   --secondary: #f4f6f8;
-  --secondary-foreground: #1a2332;
+  --secondary-foreground: #111827;
   --muted: #f4f6f8;
   --muted-foreground: #5a6578;
-  --accent: #E6F2ED;
-  --accent-foreground: #224E3F;
+  --accent: #E8F8F0;
+  --accent-foreground: #111827;
   --destructive: #e24b4a;
   --border: #c8d0d8;
   --input: #c8d0d8;
-  --ring: #224E3F;
+  --ring: #1BAF6A;
 
   /* Charts */
-  --chart-1: #224E3F;
-  --chart-2: #2eafcf;
-  --chart-3: #2D8C6A;
+  --chart-1: #1BAF6A;
+  --chart-2: #7EC845;
+  --chart-3: #2eafcf;
   --chart-4: #5bc4d6;
   --chart-5: #a0aab4;
 
@@ -139,13 +143,13 @@
 
   /* Sidebar — Light */
   --sidebar: #ffffff;
-  --sidebar-foreground: #1a2332;
-  --sidebar-primary: #224E3F;
+  --sidebar-foreground: #111827;
+  --sidebar-primary: #1BAF6A;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #E6F2ED;
-  --sidebar-accent-foreground: #224E3F;
+  --sidebar-accent: #E8F8F0;
+  --sidebar-accent-foreground: #1BAF6A;
   --sidebar-border: #e4e8ec;
-  --sidebar-ring: #224E3F;
+  --sidebar-ring: #1BAF6A;
 }
 
 /*
@@ -158,7 +162,7 @@
   --card-foreground: #f8fafc;
   --popover: #1e293b;
   --popover-foreground: #f8fafc;
-  --primary: #2D8C6A;
+  --primary: #1BAF6A;
   --primary-foreground: #ffffff;
   --secondary: #334155;
   --secondary-foreground: #f8fafc;
@@ -169,20 +173,20 @@
   --destructive: #e24b4a;
   --border: #334155;
   --input: #334155;
-  --ring: #2D8C6A;
+  --ring: #1BAF6A;
 
-  --chart-1: #2D8C6A;
-  --chart-2: #2eafcf;
-  --chart-3: #224E3F;
+  --chart-1: #1BAF6A;
+  --chart-2: #7EC845;
+  --chart-3: #2eafcf;
   --chart-4: #5bc4d6;
   --chart-5: #475569;
 
   --sidebar: #1e293b;
   --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #2D8C6A;
+  --sidebar-primary: #1BAF6A;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #334155;
   --sidebar-accent-foreground: #f8fafc;
   --sidebar-border: #334155;
-  --sidebar-ring: #2D8C6A;
+  --sidebar-ring: #1BAF6A;
 }

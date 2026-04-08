@@ -68,7 +68,7 @@ export function AIDiagnostic() {
         nameKey: 'domainStakeholders',
         score: 61,
         icon: Users,
-        color: 'bg-[#E6F2ED]0',
+        color: 'bg-[#E8F8F0]0',
       },
     ],
     [],
@@ -107,12 +107,12 @@ export function AIDiagnostic() {
       label: t('eligibleLabel'),
     },
     en_cours: {
-      badge: 'bg-[#C2DED1] text-[#224E3F] dark:bg-[#224E3F]/30 dark:text-[#2D8C6A]',
+      badge: 'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/30 dark:text-[#1BAF6A]',
       label: t('inProgressLabel'),
     },
     non_eligible: {
       badge:
-        'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400',
+        'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#0A5C35]/30 dark:text-[#1BAF6A]',
       label: t('notEligibleLabel'),
     },
   };
@@ -136,7 +136,7 @@ export function AIDiagnostic() {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Shield className="h-5 w-5 text-emerald-600" />
+            <Shield className="h-5 w-5 text-[#1BAF6A]" />
             {t('aiDiagnosticTitle')}
           </CardTitle>
           <AIPoweredBadge methodology="ISO 26000" />
@@ -146,8 +146,8 @@ export function AIDiagnostic() {
       <CardContent>
         {!hasDiagnosed && !loading && (
           <div className="flex flex-col items-center gap-3 py-8 text-center">
-            <div className="rounded-full bg-emerald-50 p-4 dark:bg-emerald-950/30">
-              <Shield className="h-8 w-8 text-emerald-500" />
+            <div className="rounded-full bg-[#E8F8F0] p-4 dark:bg-[#0A5C35]/30">
+              <Shield className="h-8 w-8 text-[#E8F8F0]0" />
             </div>
             <div>
               <p className="text-sm font-medium">{t('aiDiagnosticFeature')}</p>
@@ -157,7 +157,7 @@ export function AIDiagnostic() {
             </div>
             <Button
               onClick={handleDiagnose}
-              className="bg-emerald-600 hover:bg-emerald-700"
+              className="bg-[#1BAF6A] hover:bg-[#159B5C]"
             >
               <Sparkles className="mr-2 h-4 w-4" />
               {t('aiDiagnosticRun')}
@@ -167,7 +167,7 @@ export function AIDiagnostic() {
 
         {loading && (
           <div className="py-6">
-            <p className="mb-4 text-center text-sm text-emerald-600">
+            <p className="mb-4 text-center text-sm text-[#1BAF6A]">
               {t('aiDiagnosticAnalyzing')}
             </p>
             <AILoadingState lines={5} />
@@ -175,8 +175,8 @@ export function AIDiagnostic() {
         )}
 
         {error && (
-          <div className="rounded-md border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-950/20">
-            <p className="text-sm text-emerald-700">{error}</p>
+          <div className="rounded-md border border-[#A8E6C8] bg-[#E8F8F0] p-4 dark:border-[#159B5C] dark:bg-[#0A5C35]/20">
+            <p className="text-sm text-[#159B5C]">{error}</p>
             <Button
               variant="outline"
               size="sm"
@@ -222,7 +222,7 @@ export function AIDiagnostic() {
 
             {/* AI response */}
             {response && (
-              <div className="rounded-md border bg-emerald-50/50 p-4 dark:bg-emerald-950/10">
+              <div className="rounded-md border bg-[#E8F8F0]/50 p-4 dark:bg-[#0A5C35]/10">
                 <p className="text-sm leading-relaxed whitespace-pre-wrap">
                   {response.content}
                 </p>
@@ -246,13 +246,13 @@ export function AIDiagnostic() {
 
             {/* Improvements */}
             <div>
-              <h4 className="mb-2 text-sm font-semibold text-[#224E3F] dark:text-[#2D8C6A]">
+              <h4 className="mb-2 text-sm font-semibold text-[#1BAF6A] dark:text-[#1BAF6A]">
                 {t('improvements')}
               </h4>
               <ul className="space-y-1.5">
                 {defaultImprovements.map((k) => (
                   <li key={k} className="flex items-start gap-2 text-sm">
-                    <span className="mt-1 text-[#E6F2ED]0">-</span>
+                    <span className="mt-1 text-[#E8F8F0]0">-</span>
                     {t(k)}
                   </li>
                 ))}

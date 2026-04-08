@@ -33,22 +33,22 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 };
 
 function getScoreColor(pct: number) {
-  if (pct >= 80) return 'text-emerald-600 dark:text-emerald-400';
-  if (pct >= 60) return 'text-[#2D8C6A] dark:text-[#2D8C6A]';
+  if (pct >= 80) return 'text-[#1BAF6A] dark:text-[#1BAF6A]';
+  if (pct >= 60) return 'text-[#1BAF6A] dark:text-[#1BAF6A]';
   return 'text-slate-600 dark:text-slate-400';
 }
 
 function getBarColor(pct: number) {
-  if (pct >= 80) return 'bg-emerald-500';
-  if (pct >= 60) return 'bg-[#E6F2ED]0';
+  if (pct >= 80) return 'bg-[#E8F8F0]0';
+  if (pct >= 60) return 'bg-[#E8F8F0]0';
   return 'bg-slate-500';
 }
 
 function getBgColor(pct: number) {
   if (pct >= 80)
-    return 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400';
+    return 'bg-[#E8F8F0] dark:bg-[#0A5C35]/30 text-[#1BAF6A] dark:text-[#1BAF6A]';
   if (pct >= 60)
-    return 'bg-[#E6F2ED] dark:bg-[#224E3F]/30 text-[#2D8C6A] dark:text-[#2D8C6A]';
+    return 'bg-[#E8F8F0] dark:bg-[#1BAF6A]/30 text-[#1BAF6A] dark:text-[#1BAF6A]';
   return 'bg-slate-50 dark:bg-slate-950/30 text-slate-600 dark:text-slate-400';
 }
 

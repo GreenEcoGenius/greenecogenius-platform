@@ -380,7 +380,7 @@ export function PricingContent({
 
       {/* ACCOMPAGNEMENT SUR MESURE */}
       <section className="container mx-auto px-4 pt-0 pb-16">
-        <div className="mx-auto max-w-3xl rounded-xl border border-[#C2DED1] bg-[#E6F2ED] px-6 py-10 text-center">
+        <div className="mx-auto max-w-3xl rounded-xl border border-[#A8E6C8] bg-[#E8F8F0] px-6 py-10 text-center">
           <h2 className="text-metal-900 text-xl font-semibold">
             <Trans i18nKey="pricingPage.customSupportTitle" />
           </h2>
@@ -634,12 +634,12 @@ function ComingSoonSection() {
             return (
               <div
                 key={feature.titleEn}
-                className="rounded-xl border border-gray-200 bg-white p-6 transition-colors hover:border-emerald-200"
+                className="rounded-xl border border-gray-200 bg-white p-6 transition-colors hover:border-[#A8E6C8]"
               >
                 <div className="mb-3 flex items-start justify-between">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E8F8F0]">
                     <Icon
-                      className="h-5 w-5 text-emerald-600"
+                      className="h-5 w-5 text-[#1BAF6A]"
                       strokeWidth={1.5}
                     />
                   </div>
@@ -674,7 +674,7 @@ function ComingSoonSection() {
           </p>
           <Link
             href="/contact"
-            className="text-sm font-medium text-emerald-600 hover:text-emerald-700"
+            className="text-sm font-medium text-[#1BAF6A] hover:text-[#159B5C]"
           >
             <Trans
               i18nKey="pricingPage.comingSoonContact"

@@ -17,7 +17,7 @@ function StatusBadge({ status }: { status: 'draft' | 'finalized' }) {
     return (
       <Badge
         variant="outline"
-        className="border-emerald-200 bg-emerald-50 text-[10px] text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-300"
+        className="border-[#A8E6C8] bg-[#E8F8F0] text-[10px] text-[#159B5C] dark:border-[#159B5C] dark:bg-[#0A5C35]/30 dark:text-[#A8E6C8]"
       >
         {t('reportStatusFinalized')}
       </Badge>
@@ -26,7 +26,7 @@ function StatusBadge({ status }: { status: 'draft' | 'finalized' }) {
   return (
     <Badge
       variant="outline"
-      className="border-[#C2DED1] bg-[#E6F2ED] text-[10px] text-[#224E3F] dark:border-[#1A3D32] dark:bg-[#224E3F]/30 dark:text-[#C2DED1]"
+      className="border-[#A8E6C8] bg-[#E8F8F0] text-[10px] text-[#1BAF6A] dark:border-[#159B5C] dark:bg-[#1BAF6A]/30 dark:text-[#A8E6C8]"
     >
       {t('reportStatusDraft')}
     </Badge>

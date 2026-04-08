@@ -34,7 +34,7 @@ export function ComplianceAlerts({ alerts }: { alerts: AlertItem[] }) {
               className={`rounded-lg border-l-4 p-4 ${
                 alert.urgency === 'urgent'
                   ? 'border-l-slate-500 bg-slate-50'
-                  : 'border-l-[#E6F2ED]0 bg-[#E6F2ED]'
+                  : 'border-l-[#E8F8F0]0 bg-[#E8F8F0]'
               }`}
             >
               <div className="flex items-start gap-3">
@@ -42,7 +42,7 @@ export function ComplianceAlerts({ alerts }: { alerts: AlertItem[] }) {
                   className={`mt-0.5 h-4 w-4 shrink-0 ${
                     alert.urgency === 'urgent'
                       ? 'text-slate-600'
-                      : 'text-[#2D8C6A]'
+                      : 'text-[#1BAF6A]'
                   }`}
                 />
                 <div className="flex-1">
@@ -54,7 +54,7 @@ export function ComplianceAlerts({ alerts }: { alerts: AlertItem[] }) {
                       }
                       className={
                         alert.urgency === 'warning'
-                          ? 'border-[#C2DED1] bg-[#C2DED1] text-[#224E3F]'
+                          ? 'border-[#A8E6C8] bg-[#A8E6C8] text-[#1BAF6A]'
                           : ''
                       }
                     >

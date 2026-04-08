@@ -9,9 +9,9 @@ interface RSEScoreGaugeProps {
 
 function getScoreColor(score: number): string {
   if (score <= 40) return '#94A3B8';
-  if (score <= 60) return '#224E3F';
-  if (score <= 80) return '#2D8C6A';
-  return '#224E3F';
+  if (score <= 60) return '#1BAF6A';
+  if (score <= 80) return '#1BAF6A';
+  return '#1BAF6A';
 }
 
 export function RSEScoreGauge({ score, level }: RSEScoreGaugeProps) {

@@ -35,7 +35,7 @@ export function MarketTrends({ stats }: { stats: NationalStat[] }) {
               <p className="text-metal-500 flex items-center gap-1 text-xs">
                 {formatVolume(stat.annual_volume_tonnes)}/an
                 {stat.recycling_rate > 0 && (
-                  <span className="text-emerald-600">
+                  <span className="text-[#1BAF6A]">
                     · {formatRate(stat.recycling_rate)} recyclé
                   </span>
                 )}

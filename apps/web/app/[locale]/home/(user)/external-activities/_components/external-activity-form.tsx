@@ -318,7 +318,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
 
         <div className="flex items-center justify-between gap-2">
           {success ? (
-            <p className="text-sm text-emerald-600">{t('form.saved')}</p>
+            <p className="text-sm text-[#1BAF6A]">{t('form.saved')}</p>
           ) : errorMessage ? (
             <p className="text-xs text-red-500">{errorMessage}</p>
           ) : (

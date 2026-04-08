@@ -39,7 +39,7 @@ export default async function Home() {
             {/* Colonne gauche — Texte */}
             <div className="text-center lg:text-left">
               <AnimateOnScroll animation="fade-up">
-                <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-sm font-medium text-emerald-700">
+                <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#A8E6C8] bg-[#E8F8F0] px-4 py-1.5 text-sm font-medium text-[#159B5C]">
                   <Sparkles className="h-4 w-4" strokeWidth={1.5} />
                   <span>{t('heroBadge')}</span>
                 </div>
@@ -55,7 +55,7 @@ export default async function Home() {
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
                   <Link
                     href="/auth/sign-up"
-                    className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 font-medium text-white transition-colors hover:bg-emerald-700 sm:w-auto"
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#1BAF6A] px-6 py-3 font-medium text-white transition-colors hover:bg-[#159B5C] sm:w-auto"
                   >
                     {t('heroCtaPrimary')}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" strokeWidth={1.5} />
@@ -70,15 +70,15 @@ export default async function Home() {
 
                 <div className="text-metal-500 mt-6 flex flex-wrap items-center justify-center gap-4 text-sm lg:justify-start">
                   <span className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    <span className="h-2 w-2 rounded-full bg-[#E8F8F0]0" />
                     {t('heroProof1')}
                   </span>
                   <span className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    <span className="h-2 w-2 rounded-full bg-[#E8F8F0]0" />
                     {t('heroProof2')}
                   </span>
                   <span className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    <span className="h-2 w-2 rounded-full bg-[#E8F8F0]0" />
                     {t('heroProof3')}
                   </span>
                 </div>

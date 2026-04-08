@@ -34,7 +34,7 @@ const STATUS_CONFIG: Record<
     variant: 'secondary',
     i18nKey: 'rse:inProgress',
     className:
-      'bg-[#C2DED1] text-[#1A3D32] dark:bg-[#224E3F]/40 dark:text-[#C2DED1] border-[#C2DED1]',
+      'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8] border-[#A8E6C8]',
   },
   not_started: {
     variant: 'outline',

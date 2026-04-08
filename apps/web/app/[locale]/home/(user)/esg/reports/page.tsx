@@ -82,8 +82,8 @@ function ReportCard({ report }: { report: ESGReport }) {
     <Card>
       <CardContent className="flex items-center justify-between p-6">
         <div className="flex items-center gap-4">
-          <div className="rounded-xl bg-emerald-50 p-3 dark:bg-emerald-950/30">
-            <FileText className="h-6 w-6 text-emerald-600" />
+          <div className="rounded-xl bg-[#E8F8F0] p-3 dark:bg-[#0A5C35]/30">
+            <FileText className="h-6 w-6 text-[#1BAF6A]" />
           </div>
           <div>
             <div className="flex items-center gap-2">

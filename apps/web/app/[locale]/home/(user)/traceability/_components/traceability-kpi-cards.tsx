@@ -64,7 +64,7 @@ function KpiCard({
           <span
             className={`inline-flex items-center gap-0.5 text-xs font-semibold ${
               isPositive
-                ? 'text-emerald-600 dark:text-emerald-400'
+                ? 'text-[#1BAF6A] dark:text-[#1BAF6A]'
                 : 'text-slate-600 dark:text-slate-400'
             }`}
           >
@@ -125,7 +125,7 @@ export function TraceabilityKpiCards({
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <KpiCard
-        icon={<Boxes className="h-5 w-5 text-[#2D8C6A] dark:text-[#2D8C6A]" />}
+        icon={<Boxes className="h-5 w-5 text-[#1BAF6A] dark:text-[#1BAF6A]" />}
         value={totalLots.toLocaleString('fr-FR')}
         label={<Trans i18nKey="blockchain:lotsTracked" />}
         subtitle={
@@ -135,7 +135,7 @@ export function TraceabilityKpiCards({
         }
         trend={lotsTrend}
         trendLabel={<Trans i18nKey="blockchain:vsLastMonth" />}
-        accentColor="bg-[#E6F2ED]0"
+        accentColor="bg-[#E8F8F0]0"
       />
 
       <KpiCard
@@ -171,7 +171,7 @@ export function TraceabilityKpiCards({
       />
 
       <KpiCard
-        icon={<Award className="h-5 w-5 text-[#2D8C6A] dark:text-[#2D8C6A]" />}
+        icon={<Award className="h-5 w-5 text-[#1BAF6A] dark:text-[#1BAF6A]" />}
         value={certificates.toLocaleString('fr-FR')}
         label={<Trans i18nKey="blockchain:certificatesCard" />}
         subtitle={
@@ -184,12 +184,12 @@ export function TraceabilityKpiCards({
         badge={
           <Badge
             variant="outline"
-            className="border-emerald-300 bg-emerald-50 text-emerald-700 dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400"
+            className="border-[#A8E6C8] bg-[#E8F8F0] text-[#159B5C] dark:border-[#159B5C] dark:bg-[#0A5C35]/40 dark:text-[#1BAF6A]"
           >
             <Trans i18nKey="blockchain:onChain" />
           </Badge>
         }
-        accentColor="bg-[#E6F2ED]0"
+        accentColor="bg-[#E8F8F0]0"
       />
     </div>
   );

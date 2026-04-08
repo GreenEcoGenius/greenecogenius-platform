@@ -446,7 +446,7 @@ export function AIChatPanel() {
                         <div className="whitespace-pre-wrap">
                           {msg.content}
                           {msg.streaming && msg.content && (
-                            <span className="bg-[#E6F2ED]0 ml-0.5 inline-block h-3.5 w-0.5 animate-pulse" />
+                            <span className="bg-[#E8F8F0]0 ml-0.5 inline-block h-3.5 w-0.5 animate-pulse" />
                           )}
                         </div>
                       </div>
@@ -620,7 +620,7 @@ export function AIChatPanel() {
                       <div className="whitespace-pre-wrap">
                         {msg.content}
                         {msg.streaming && msg.content && (
-                          <span className="bg-[#E6F2ED]0 ml-0.5 inline-block h-3.5 w-0.5 animate-pulse" />
+                          <span className="bg-[#E8F8F0]0 ml-0.5 inline-block h-3.5 w-0.5 animate-pulse" />
                         )}
                       </div>
                     </div>

@@ -45,7 +45,7 @@ export async function TransactionImpactPanel({
       icon: Cloud,
       label: t('impact.co2Avoided'),
       value: `${impact.co2_avoided_tonnes.toFixed(2)} tCO₂e`,
-      accent: 'text-emerald-700 bg-emerald-50',
+      accent: 'text-[#159B5C] bg-[#E8F8F0]',
     },
     {
       icon: Droplets,
@@ -69,9 +69,9 @@ export async function TransactionImpactPanel({
   ];
 
   return (
-    <div className="w-full max-w-2xl rounded-xl border border-emerald-200 bg-white p-6 shadow-sm">
+    <div className="w-full max-w-2xl rounded-xl border border-[#A8E6C8] bg-white p-6 shadow-sm">
       <div className="mb-4 flex items-center gap-2">
-        <Leaf className="h-5 w-5 text-emerald-600" strokeWidth={1.5} />
+        <Leaf className="h-5 w-5 text-[#1BAF6A]" strokeWidth={1.5} />
         <h3 className="text-lg font-semibold text-gray-900">
           {t('impact.title')}
         </h3>
@@ -133,7 +133,7 @@ export async function TransactionImpactPanel({
             <Badge
               key={n.norm_id}
               variant="secondary"
-              className="border-emerald-100 bg-emerald-50 text-emerald-700"
+              className="border-[#A8E6C8] bg-[#E8F8F0] text-[#159B5C]"
             >
               {n.norm_name}
             </Badge>
@@ -142,11 +142,11 @@ export async function TransactionImpactPanel({
       </div>
 
       {impact.score_before !== null && impact.score_after !== null ? (
-        <div className="mb-3 flex items-center justify-between rounded-lg bg-emerald-50 p-3">
-          <span className="text-sm font-medium text-emerald-800">
+        <div className="mb-3 flex items-center justify-between rounded-lg bg-[#E8F8F0] p-3">
+          <span className="text-sm font-medium text-[#159B5C]">
             {t('impact.complianceScore')}
           </span>
-          <span className="text-base font-semibold text-emerald-700">
+          <span className="text-base font-semibold text-[#159B5C]">
             {impact.score_before}% → {impact.score_after.toFixed(0)}% (+
             {impact.score_gain})
           </span>
@@ -163,7 +163,7 @@ export async function TransactionImpactPanel({
             href={blockchainUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-emerald-600 hover:underline"
+            className="text-[#1BAF6A] hover:underline"
           >
             {t('impact.verifyOnChain')}
           </a>

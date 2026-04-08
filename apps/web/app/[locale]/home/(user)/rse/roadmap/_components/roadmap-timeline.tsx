@@ -28,27 +28,27 @@ const STATUS_CYCLE: ActionStatus[] = ['todo', 'in_progress', 'done'];
 
 const STATUS_ICONS: Record<ActionStatus, React.ReactNode> = {
   done: (
-    <CheckCircle2 size={16} strokeWidth={1.5} className="text-emerald-500" />
+    <CheckCircle2 size={16} strokeWidth={1.5} className="text-[#E8F8F0]0" />
   ),
   in_progress: (
-    <Loader2 size={16} strokeWidth={1.5} className="text-[#E6F2ED]0" />
+    <Loader2 size={16} strokeWidth={1.5} className="text-[#E8F8F0]0" />
   ),
   todo: <Square size={16} strokeWidth={1.5} className="text-slate-400" />,
 };
 
 const PILLAR_COLORS: Record<string, string> = {
-  governance: 'bg-[#C2DED1] text-[#1A3D32] dark:bg-[#224E3F] dark:text-[#C2DED1]',
+  governance: 'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#1BAF6A] dark:text-[#A8E6C8]',
   environment:
-    'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300',
+    'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#0A5C35] dark:text-[#A8E6C8]',
   social: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
   ethics: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
-  stakeholders: 'bg-[#E6F2ED] text-[#224E3F] dark:bg-[#224E3F] dark:text-[#C2DED1]',
+  stakeholders: 'bg-[#E8F8F0] text-[#1BAF6A] dark:bg-[#1BAF6A] dark:text-[#A8E6C8]',
 };
 
 const PRIORITY_STYLES: Record<ActionPriority, string> = {
   urgent: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
-  important: 'bg-[#C2DED1] text-[#1A3D32] dark:bg-[#224E3F] dark:text-[#C2DED1]',
-  quick_win: 'bg-[#C2DED1] text-[#1A3D32] dark:bg-[#224E3F] dark:text-[#C2DED1]',
+  important: 'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#1BAF6A] dark:text-[#A8E6C8]',
+  quick_win: 'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#1BAF6A] dark:text-[#A8E6C8]',
 };
 
 const PILLAR_LABELS: Record<string, string> = {

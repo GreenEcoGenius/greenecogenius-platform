@@ -104,7 +104,7 @@ export function TechCarousel() {
     <section className="py-10 sm:py-14">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-center gap-2">
-          <Code2 className="h-5 w-5 text-[#2D8C6A]" strokeWidth={1.5} />
+          <Code2 className="h-5 w-5 text-[#1BAF6A]" strokeWidth={1.5} />
           <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
             {t('landing.foundationsTech')}
           </p>
@@ -122,7 +122,7 @@ export function SourcesCarousel() {
     <section className="py-10 sm:py-14">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-center gap-2">
-          <Database className="h-5 w-5 text-emerald-600" strokeWidth={1.5} />
+          <Database className="h-5 w-5 text-[#1BAF6A]" strokeWidth={1.5} />
           <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
             {t('landing.foundationsSources')}
           </p>

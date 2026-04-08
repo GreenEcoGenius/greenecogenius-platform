@@ -133,16 +133,16 @@ export function DocumentUploader({
       </label>
 
       {path && signedUrl ? (
-        <div className="flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50/50 p-3">
+        <div className="flex items-center gap-3 rounded-lg border border-[#A8E6C8] bg-[#E8F8F0]/50 p-3">
           <FileText
-            className="h-5 w-5 shrink-0 text-emerald-600"
+            className="h-5 w-5 shrink-0 text-[#1BAF6A]"
             strokeWidth={1.5}
           />
           <a
             href={signedUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="min-w-0 flex-1 truncate text-sm font-medium text-emerald-700 hover:underline"
+            className="min-w-0 flex-1 truncate text-sm font-medium text-[#159B5C] hover:underline"
           >
             {filename ?? 'Document'}
           </a>

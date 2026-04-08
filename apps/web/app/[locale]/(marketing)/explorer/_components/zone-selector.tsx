@@ -32,7 +32,7 @@ export function ZoneSelector({
             onClick={() => onChange(id)}
             className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
               isActive
-                ? 'bg-[#224E3F] text-white shadow-md'
+                ? 'bg-[#1BAF6A] text-white shadow-md'
                 : 'border border-gray-300 bg-white text-gray-600 hover:border-gray-400 hover:bg-gray-50'
             }`}
           >

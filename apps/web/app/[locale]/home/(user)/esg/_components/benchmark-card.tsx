@@ -114,7 +114,7 @@ export function BenchmarkCard() {
             </div>
             <div className="bg-muted h-3 overflow-hidden rounded-full">
               <div
-                className="h-full rounded-full bg-emerald-500 transition-all duration-700"
+                className="h-full rounded-full bg-[#E8F8F0]0 transition-all duration-700"
                 style={{ width: `${companyPct}%` }}
               />
             </div>
@@ -133,7 +133,7 @@ export function BenchmarkCard() {
             </div>
             <div className="bg-muted h-3 overflow-hidden rounded-full">
               <div
-                className="h-full rounded-full bg-[#2D8C6A] transition-all duration-700"
+                className="h-full rounded-full bg-[#1BAF6A] transition-all duration-700"
                 style={{ width: `${sectorPct}%` }}
               />
             </div>
@@ -142,7 +142,7 @@ export function BenchmarkCard() {
           {/* Comparison text */}
           <div className="border-t pt-3 text-center">
             <span
-              className={`text-lg font-bold ${isBelow ? 'text-emerald-600' : 'text-slate-600'}`}
+              className={`text-lg font-bold ${isBelow ? 'text-[#1BAF6A]' : 'text-slate-600'}`}
             >
               {Math.abs(data.comparison_pct)}%
             </span>{' '}

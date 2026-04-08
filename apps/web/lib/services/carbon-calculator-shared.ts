@@ -47,8 +47,8 @@ const STATUS_COLORS: Record<string, string> = {
   listed: '#A78BFA', // violet-400
   sold: '#FBBF24', // amber-400
   in_transit: '#FB923C', // orange-400
-  delivered: '#34D399', // emerald-400
-  certified: '#10B981', // emerald-500
+  delivered: '#34D399', // [#1BAF6A]
+  certified: '#10B981', // [#E8F8F0]0
 };
 
 const STATUS_LABELS: Record<string, string> = {

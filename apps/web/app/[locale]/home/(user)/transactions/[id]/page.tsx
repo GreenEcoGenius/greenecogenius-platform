@@ -84,11 +84,11 @@ function contractStatusBadge(status: string | null) {
     },
     fully_signed: {
       label: 'Signe par les deux parties',
-      className: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+      className: 'bg-[#E8F8F0] text-[#159B5C] border-[#A8E6C8]',
     },
     blockchain_certified: {
       label: 'Certifie blockchain',
-      className: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+      className: 'bg-[#E8F8F0] text-[#159B5C] border-[#A8E6C8]',
     },
     cancelled: {
       label: 'Annule',
@@ -199,7 +199,7 @@ async function TransactionDetailPage({ params }: Params) {
               <div className="mb-5 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <FileSignature
-                    className="h-5 w-5 text-[#2D8C6A]"
+                    className="h-5 w-5 text-[#1BAF6A]"
                     strokeWidth={1.5}
                   />
                   <h2 className="text-lg font-semibold text-gray-900">
@@ -263,7 +263,7 @@ async function TransactionDetailPage({ params }: Params) {
               ) : null}
 
               {tx.contract_status === 'blockchain_certified' ? (
-                <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800">
+                <div className="flex items-center gap-2 rounded-lg border border-[#A8E6C8] bg-[#E8F8F0] p-3 text-sm text-[#159B5C]">
                   <ShieldCheck className="h-4 w-4" strokeWidth={1.5} />
                   <span>
                     Transaction signee et certifiee sur Polygon. Le hash du
@@ -271,7 +271,7 @@ async function TransactionDetailPage({ params }: Params) {
                   </span>
                 </div>
               ) : tx.contract_status === 'fully_signed' ? (
-                <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800">
+                <div className="flex items-center gap-2 rounded-lg border border-[#A8E6C8] bg-[#E8F8F0] p-3 text-sm text-[#159B5C]">
                   <CheckCircle2 className="h-4 w-4" strokeWidth={1.5} />
                   <span>
                     Contrat signe par les deux parties. Ancrage blockchain en

@@ -31,15 +31,15 @@ function ScopeItem({ label, complete }: { label: string; complete: boolean }) {
   return (
     <div className="flex items-center gap-2 text-sm">
       {complete ? (
-        <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+        <CheckCircle2 className="h-4 w-4 text-[#E8F8F0]0" />
       ) : (
-        <AlertTriangle className="h-4 w-4 text-[#E6F2ED]0" />
+        <AlertTriangle className="h-4 w-4 text-[#E8F8F0]0" />
       )}
       <span className={complete ? '' : 'text-muted-foreground'}>{label}</span>
       <span
         className={cn(
           'ml-auto text-xs font-medium',
-          complete ? 'text-emerald-600' : 'text-[#E6F2ED]0',
+          complete ? 'text-[#1BAF6A]' : 'text-[#E8F8F0]0',
         )}
       >
         {complete ? 'Complet' : 'Incomplet'}
@@ -82,10 +82,10 @@ export function AIReportStatus({
               className={cn(
                 'h-full rounded-full transition-all',
                 autoFilledPercent >= 80
-                  ? 'bg-emerald-500'
+                  ? 'bg-[#E8F8F0]0'
                   : autoFilledPercent >= 50
-                    ? 'bg-[#E6F2ED]0'
-                    : 'bg-emerald-800',
+                    ? 'bg-[#E8F8F0]0'
+                    : 'bg-[#159B5C]',
               )}
               style={{ width: `${autoFilledPercent}%` }}
             />

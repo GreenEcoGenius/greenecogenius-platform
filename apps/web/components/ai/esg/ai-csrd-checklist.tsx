@@ -135,24 +135,24 @@ const fallbackSections: ChecklistSection[] = [
 function StatusIcon({ status }: { status: ItemStatus }) {
   switch (status) {
     case 'complete':
-      return <CheckCircle2 className="h-4 w-4 text-emerald-500" />;
+      return <CheckCircle2 className="h-4 w-4 text-[#E8F8F0]0" />;
     case 'partial':
-      return <AlertTriangle className="h-4 w-4 text-[#E6F2ED]0" />;
+      return <AlertTriangle className="h-4 w-4 text-[#E8F8F0]0" />;
     case 'missing':
-      return <XCircle className="h-4 w-4 text-emerald-800" />;
+      return <XCircle className="h-4 w-4 text-[#159B5C]" />;
   }
 }
 
 function percentColor(percent: number): string {
-  if (percent >= 80) return 'text-emerald-600';
-  if (percent >= 50) return 'text-[#2D8C6A]';
-  return 'text-emerald-800';
+  if (percent >= 80) return 'text-[#1BAF6A]';
+  if (percent >= 50) return 'text-[#1BAF6A]';
+  return 'text-[#159B5C]';
 }
 
 function barColor(percent: number): string {
-  if (percent >= 80) return 'bg-emerald-500';
-  if (percent >= 50) return 'bg-[#E6F2ED]0';
-  return 'bg-emerald-800';
+  if (percent >= 80) return 'bg-[#E8F8F0]0';
+  if (percent >= 50) return 'bg-[#E8F8F0]0';
+  return 'bg-[#159B5C]';
 }
 
 export function AICSRDChecklist({ className }: { className?: string }) {

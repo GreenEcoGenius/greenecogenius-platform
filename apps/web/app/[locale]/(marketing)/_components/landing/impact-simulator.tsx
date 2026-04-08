@@ -79,11 +79,11 @@ export function ImpactSimulator() {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="rounded-xl bg-emerald-50 p-4 text-center">
-                <p className="text-2xl font-bold text-emerald-700">
+              <div className="rounded-xl bg-[#E8F8F0] p-4 text-center">
+                <p className="text-2xl font-bold text-[#159B5C]">
                   {computed.co2.toLocaleString('fr-FR')}
                 </p>
-                <p className="text-xs text-emerald-600">
+                <p className="text-xs text-[#1BAF6A]">
                   tCO₂e {t('landing.avoided')}
                 </p>
               </div>
@@ -141,7 +141,7 @@ export function ImpactSimulator() {
                 <Line
                   type="monotone"
                   dataKey="target2030"
-                  stroke="#224E3F"
+                  stroke="#1BAF6A"
                   strokeWidth={2}
                   strokeDasharray="5 5"
                   dot={{ r: 4 }}
