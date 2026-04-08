@@ -9,6 +9,8 @@ interface LogoItem {
   name: string;
   src: string | null;
   url: string;
+  /** Override the section-level logoClass for this specific logo. */
+  sizeClass?: string;
 }
 
 const techLogos: LogoItem[] = [
@@ -16,10 +18,10 @@ const techLogos: LogoItem[] = [
   { name: 'Supabase', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/supabase.svg', url: 'https://supabase.com' },
   { name: 'Vercel', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/b3ed1049-ffc5-4fc8-ab50-67af7fe74f0b.png', url: 'https://vercel.com' },
   { name: 'Polygon', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Polygon_blockchain_logo.svg.png', url: 'https://polygon.technology' },
-  { name: 'Stripe', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Stripe_Logo,_revised_2016.svg.png', url: 'https://stripe.com' },
+  { name: 'Stripe', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Stripe_Logo,_revised_2016.svg.png', url: 'https://stripe.com', sizeClass: 'max-h-10' },
   { name: 'Anthropic', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Anthropic-Logo.wine.png', url: 'https://anthropic.com' },
   { name: 'GitHub', src: '/images/logos/github.svg', url: 'https://github.com' },
-  { name: 'Cursor', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Cursor_logo.svg.png', url: 'https://cursor.com' },
+  { name: 'Cursor', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Cursor_logo.svg.png', url: 'https://cursor.com', sizeClass: 'max-h-10' },
   { name: 'Alchemy', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/a5c0742e-793f-4358-9ab5-38221f77375e.png', url: 'https://www.alchemy.com' },
   { name: 'Docusign', src: 'https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/a31b8a42-d341-40c9-b0d8-a29ffbc45a41.png', url: 'https://www.docusign.com' },
 ];
@@ -66,7 +68,7 @@ function LogoCard({
           alt={logo.name}
           width={200}
           height={80}
-          className={`w-auto max-w-[80%] object-contain transition-transform duration-200 group-hover:scale-105 ${logoClass}`}
+          className={`w-auto max-w-[80%] object-contain transition-transform duration-200 group-hover:scale-105 ${logo.sizeClass ?? logoClass}`}
           unoptimized
         />
       ) : (
@@ -107,7 +109,7 @@ export function TechCarousel() {
             {t('landing.foundationsTech')}
           </p>
         </div>
-        <LogoGrid logos={techLogos} logoClass="h-8 min-h-8 max-h-10" />
+        <LogoGrid logos={techLogos} logoClass="h-12 max-h-14" />
       </div>
     </section>
   );
