@@ -31,7 +31,7 @@ import { Trans } from '@kit/ui/trans';
 
 import { buildListingPrompt } from '~/lib/config/flux-prompts';
 import { useFluxImage } from '~/lib/hooks/use-flux-image';
-import { useSubscription } from '~/lib/hooks/use-subscription';
+
 
 interface CreateListingFormProps {
   account: string;
@@ -89,8 +89,6 @@ export function CreateListingForm({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Flux AI
-  const { canAccess } = useSubscription();
-  const hasFlux = canAccess('flux_image_generation');
   const {
     generating: fluxGenerating,
     error: fluxError,
@@ -572,37 +570,37 @@ export function CreateListingForm({
                 </Button>
 
                 {/* Flux AI generation button */}
-                {hasFlux && (
-                  <>
-                    <span className="text-muted-foreground text-xs">
-                      <Trans i18nKey="marketplace.or" />
-                    </span>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={handleFluxGenerate}
-                      disabled={fluxGenerating}
-                      className="text-teal-600 hover:text-teal-700"
-                    >
-                      {fluxGenerating ? (
-                        <>
-                          <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
-                          <Trans i18nKey="marketplace.flux.generating" />
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="mr-1.5 h-4 w-4" />
-                          <Trans i18nKey="marketplace.flux.generate" />
-                        </>
-                      )}
-                    </Button>
-                  </>
-                )}
+                <span className="text-muted-foreground text-xs">
+                  <Trans i18nKey="marketplace.or" />
+                </span>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleFluxGenerate}
+                  disabled={fluxGenerating}
+                  className="text-teal-600 hover:text-teal-700"
+                >
+                  {fluxGenerating ? (
+                    <>
+                      <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
+                      <Trans i18nKey="marketplace.flux.generating" />
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="mr-1.5 h-4 w-4" />
+                      <Trans i18nKey="marketplace.flux.generate" />
+                    </>
+                  )}
+                </Button>
               </div>
 
               <p className="text-muted-foreground text-center text-xs">
                 <Trans i18nKey="marketplace.photoHint" />
+              </p>
+
+              <p className="text-center text-[11px] text-gray-400">
+                <Trans i18nKey="marketplace.flux.attribution" />
               </p>
 
               {fluxError && (

@@ -11,6 +11,7 @@ import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { BuyListingButton } from '~/home/_components/buy-listing-button';
+import { ListingImage } from '~/home/_components/listing-image';
 
 interface ListingDetailPageProps {
   params: Promise<{ id: string }>;
@@ -45,6 +46,21 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
   if (!listing) {
     notFound();
   }
+
+  // Fetch listing image
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: images } = await (client as any)
+    .from('listing_images')
+    .select('storage_path')
+    .eq('listing_id', id)
+    .order('position', { ascending: true })
+    .limit(1);
+
+  const listingImageUrl: string | null = images?.[0]?.storage_path ?? null;
+  const categorySlug: string | null =
+    (listing.material_categories as Record<string, unknown>)?.slug as string | null ?? null;
+  const categoryName: string | null =
+    (listing.material_categories as Record<string, unknown>)?.name_fr as string | null ?? null;
 
   const typeLabel =
     listing.listing_type === 'sell'
@@ -84,6 +100,13 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
       </div>
 
       <div className="mx-auto max-w-3xl">
+        <ListingImage
+          imageUrl={listingImageUrl}
+          categorySlug={categorySlug}
+          categoryName={categoryName}
+          title={listing.title}
+        />
+
         <div className="flex items-start justify-between">
           <div>
             <Badge>
