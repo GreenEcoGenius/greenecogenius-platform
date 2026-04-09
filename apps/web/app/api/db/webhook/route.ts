@@ -1,4 +1,6 @@
 import { getDatabaseWebhookHandlerService } from '@kit/database-webhooks';
+
+export const dynamic = 'force-dynamic';
 import { getServerMonitoringService } from '@kit/monitoring/server';
 import { enhanceRouteHandler } from '@kit/next/routes';
 

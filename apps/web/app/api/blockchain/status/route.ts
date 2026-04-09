@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
 export async function GET() {

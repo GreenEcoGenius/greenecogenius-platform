@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookies } from 'next/headers';
+
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 
 import { requireUser } from '@kit/supabase/require-user';

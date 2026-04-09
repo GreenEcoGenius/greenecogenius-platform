@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import * as z from 'zod';
 
+export const dynamic = 'force-dynamic';
+
 import { createAccountsApi } from '@kit/accounts/api';
 import { getProductPlanPair } from '@kit/billing';
 import { getBillingGatewayProvider } from '@kit/billing-gateway';

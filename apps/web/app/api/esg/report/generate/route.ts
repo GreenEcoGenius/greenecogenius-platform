@@ -1,4 +1,6 @@
 import { cookies } from 'next/headers';
+
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { requireUser } from '@kit/supabase/require-user';
