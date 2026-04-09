@@ -17,7 +17,7 @@ export const CardButton: React.FC<
     props: {
       ...props,
       className: cn(
-        'group hover:bg-secondary/20 active:bg-secondary active:bg-secondary/50 dark:shadow-primary/20 relative flex h-36 flex-col rounded-lg border transition-all hover:shadow-xs active:shadow-lg',
+        'group hover:bg-secondary/20 active:bg-secondary/50 dark:shadow-primary/20 relative flex h-36 flex-col rounded-xl border border-gray-100 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:shadow-lg',
         className,
       ),
       children,

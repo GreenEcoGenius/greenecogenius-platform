@@ -79,11 +79,11 @@ export function ImpactSimulator() {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="rounded-xl bg-[#E8F8F0] p-4 text-center">
-                <p className="text-2xl font-bold text-[#159B5C]">
+              <div className="rounded-xl bg-brand-light p-4 text-center">
+                <p className="text-2xl font-bold text-brand-600">
                   {computed.co2.toLocaleString('fr-FR')}
                 </p>
-                <p className="text-xs text-[#1BAF6A]">
+                <p className="text-xs text-brand">
                   tCO₂e {t('landing.avoided')}
                 </p>
               </div>
@@ -117,36 +117,47 @@ export function ImpactSimulator() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                 <XAxis dataKey="year" fontSize={12} />
                 <YAxis domain={[30, 70]} unit="%" fontSize={12} />
-                <Tooltip />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#111827',
+                    borderColor: 'transparent',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                    color: '#fff',
+                  }}
+                />
                 <Legend />
                 <Line
                   type="monotone"
                   dataKey="rate"
-                  stroke="#065F46"
+                  stroke="#1BAF6A"
                   strokeWidth={2}
                   dot={{ r: 4 }}
                   name="Taux recyclage"
                   connectNulls={false}
+                  animationDuration={800}
                 />
                 <Line
                   type="monotone"
                   dataKey="target2025"
-                  stroke="#F59E0B"
+                  stroke="#f59e0b"
                   strokeWidth={2}
                   strokeDasharray="5 5"
                   dot={{ r: 4 }}
                   name="Objectif 2025"
                   connectNulls={false}
+                  animationDuration={800}
                 />
                 <Line
                   type="monotone"
                   dataKey="target2030"
-                  stroke="#1BAF6A"
+                  stroke="#7EC845"
                   strokeWidth={2}
                   strokeDasharray="5 5"
                   dot={{ r: 4 }}
                   name="Objectif 2030"
                   connectNulls={false}
+                  animationDuration={800}
                 />
               </LineChart>
             </ResponsiveContainer>

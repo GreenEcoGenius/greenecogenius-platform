@@ -80,17 +80,17 @@ function CustomTooltip({
   const net = avoidedVal - transportVal;
 
   return (
-    <div className="rounded-lg border bg-white p-3 shadow-lg dark:bg-gray-900">
-      <p className="mb-2 text-sm font-semibold">{label}</p>
-      <div className="space-y-1 text-sm">
-        <p className="text-[#1BAF6A]">
-          {t('chartCO2Avoided')}: {fmtKg(avoidedVal)} kg
+    <div className="rounded-lg bg-gray-900 px-3 py-2 text-sm text-white shadow-lg">
+      <p className="mb-1.5 font-medium">{label}</p>
+      <div className="space-y-0.5">
+        <p className="text-gray-300">
+          {t('chartCO2Avoided')}: <span className="font-semibold text-white">{fmtKg(avoidedVal)} kg</span>
         </p>
-        <p className="text-[#E8F8F0]0">
-          {t('chartCO2Transport')}: {fmtKg(transportVal)} kg
+        <p className="text-gray-300">
+          {t('chartCO2Transport')}: <span className="font-semibold text-white">{fmtKg(transportVal)} kg</span>
         </p>
-        <p className="font-semibold text-[#159B5C]">
-          {t('chartNetBalance')}: {fmtKg(net)} kg
+        <p className="text-gray-300">
+          {t('chartNetBalance')}: <span className="font-semibold text-white">{fmtKg(net)} kg</span>
         </p>
       </div>
     </div>
@@ -158,15 +158,17 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
               fill="url(#tealGradient)"
               dot={false}
               activeDot={{ r: 5 }}
+              animationDuration={800}
             />
             <Line
               type="monotone"
               dataKey="co2_transport"
-              stroke="#1BAF6A"
+              stroke="#7EC845"
               strokeWidth={2}
               strokeDasharray="6 3"
               dot={false}
               activeDot={{ r: 4 }}
+              animationDuration={800}
             />
           </AreaChart>
         </ResponsiveContainer>

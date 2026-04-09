@@ -21,12 +21,15 @@ export const Header: React.FC<HeaderProps> = function ({
   ...props
 }) {
   const [visible, setVisible] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
     const onScroll = () => {
       const currentY = window.scrollY;
       const delta = currentY - lastScrollY.current;
+
+      setScrolled(currentY > 10);
 
       if (currentY < 100) {
         setVisible(true);
@@ -46,8 +49,11 @@ export const Header: React.FC<HeaderProps> = function ({
   return (
     <div
       className={cn(
-        'site-header border-metal-chrome dark:border-border/30 dark:bg-background fixed top-0 z-50 w-full border-b bg-white transition-transform duration-300 md:!translate-y-0',
+        'site-header dark:border-border/30 dark:bg-background fixed top-0 z-50 w-full transition-all duration-300 md:!translate-y-0',
         visible ? 'translate-y-0' : '-translate-y-full',
+        scrolled
+          ? 'bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200/50'
+          : 'bg-white border-b border-metal-chrome',
         className,
       )}
       {...props}

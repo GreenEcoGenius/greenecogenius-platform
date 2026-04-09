@@ -59,7 +59,7 @@ export async function StatsSection() {
                   <div className="bg-primary-light text-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl">
                     <Icon className="h-6 w-6" />
                   </div>
-                  <p className="text-4xl font-bold text-[#065F46] sm:text-5xl">
+                  <p className="text-4xl font-bold text-brand-900 sm:text-5xl">
                     <AnimatedCounter target={stat.value} />
                     {stat.suffix}
                   </p>

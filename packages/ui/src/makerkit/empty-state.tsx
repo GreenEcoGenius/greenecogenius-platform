@@ -10,7 +10,7 @@ const EmptyStateHeading: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
   ...props
 }) => (
   <h3
-    className={cn('text-lg font-medium tracking-tight', className)}
+    className={cn('text-lg font-semibold text-gray-600 tracking-tight', className)}
     {...props}
   />
 );
@@ -20,7 +20,7 @@ const EmptyStateText: React.FC<React.HTMLAttributes<HTMLParagraphElement>> = ({
   className,
   ...props
 }) => (
-  <p className={cn('text-muted-foreground text-sm', className)} {...props} />
+  <p className={cn('text-gray-400 text-sm max-w-sm', className)} {...props} />
 );
 EmptyStateText.displayName = 'EmptyStateText';
 
@@ -71,12 +71,12 @@ const EmptyState: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   return (
     <div
       className={cn(
-        'flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-xs',
+        'flex flex-1 items-center justify-center rounded-xl border border-dashed shadow-xs',
         className,
       )}
       {...props}
     >
-      <div className="flex flex-col items-center gap-1 text-center">
+      <div className="flex flex-col items-center gap-2 px-4 py-16 text-center">
         {media}
         {heading}
         {text}
@@ -94,7 +94,7 @@ const emptyMediaVariants = cva(
     variants: {
       variant: {
         default: 'bg-transparent',
-        icon: "bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-lg [&_svg:not([class*='size-'])]:size-6",
+        icon: "bg-gray-50 text-gray-300 flex size-16 shrink-0 items-center justify-center rounded-full [&_svg:not([class*='size-'])]:size-8",
       },
     },
     defaultVariants: {

@@ -128,7 +128,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
               borderBottom: '1px solid #E4E8EC',
               fontSize: 16,
               fontWeight: 600,
-              color: '#1D9E75',
+              color: '#1BAF6A',
               textDecoration: 'none',
             }}
           >
@@ -171,9 +171,9 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
               gap: 8,
               fontSize: 14,
               fontWeight: 600,
-              color: '#1D9E75',
+              color: '#1BAF6A',
               background: 'none',
-              border: '1.5px solid #1D9E75',
+              border: '1.5px solid #1BAF6A',
               borderRadius: 12,
               padding: '10px 18px',
               cursor: 'pointer',
@@ -205,13 +205,13 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
                 href={pathsConfig.auth.signUp}
                 onClick={() => setOpen(false)}
                 style={{
-                  backgroundColor: '#1D9E75',
+                  backgroundColor: '#1BAF6A',
                   color: '#ffffff',
-                  borderRadius: 8,
+                  borderRadius: 12,
                   padding: '12px 16px',
                   textAlign: 'center',
                   fontSize: 14,
-                  fontWeight: 500,
+                  fontWeight: 600,
                   textDecoration: 'none',
                 }}
               >
@@ -257,11 +257,11 @@ function SignOutButton({ onDone }: { onDone: () => void }) {
         justifyContent: 'center',
         gap: 8,
         fontSize: 14,
-        fontWeight: 500,
-        color: '#085041',
+        fontWeight: 600,
+        color: '#1BAF6A',
         background: 'none',
-        border: '1.5px solid #085041',
-        borderRadius: 8,
+        border: '1.5px solid #1BAF6A',
+        borderRadius: 12,
         padding: '12px 16px',
         cursor: 'pointer',
         opacity: signOut.isPending ? 0.5 : 1,

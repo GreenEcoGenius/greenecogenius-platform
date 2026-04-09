@@ -135,7 +135,7 @@ export function HeroVisual() {
         className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center"
       >
         {/* Central glow */}
-        <div className="absolute h-[220px] w-[220px] rounded-full bg-[#1D9E75]/15 blur-[80px] sm:h-[300px] sm:w-[300px]" />
+        <div className="absolute h-[220px] w-[220px] rounded-full bg-brand/15 blur-[80px] sm:h-[300px] sm:w-[300px]" />
 
         {/* Outer orbit */}
         <div

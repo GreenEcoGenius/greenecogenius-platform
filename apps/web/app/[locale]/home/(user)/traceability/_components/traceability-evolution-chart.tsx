@@ -78,10 +78,11 @@ export function TraceabilityEvolutionChart({
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: 'hsl(var(--card))',
-                borderColor: 'hsl(var(--border))',
+                backgroundColor: '#111827',
+                borderColor: 'transparent',
                 borderRadius: '8px',
                 fontSize: '12px',
+                color: '#fff',
               }}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               formatter={
@@ -104,19 +105,21 @@ export function TraceabilityEvolutionChart({
             <Bar
               yAxisId="lots"
               dataKey="lotsTracked"
-              fill="#14B8A6"
+              fill="#1BAF6A"
               radius={[4, 4, 0, 0]}
               barSize={28}
               opacity={0.85}
+              animationDuration={800}
             />
             <Line
               yAxisId="co2"
               type="monotone"
               dataKey="co2AvoidedTonnes"
-              stroke="#22C55E"
+              stroke="#7EC845"
               strokeWidth={2.5}
-              dot={{ r: 3, fill: '#22C55E' }}
+              dot={{ r: 3, fill: '#7EC845' }}
               activeDot={{ r: 5 }}
+              animationDuration={800}
             />
           </ComposedChart>
         </ResponsiveContainer>

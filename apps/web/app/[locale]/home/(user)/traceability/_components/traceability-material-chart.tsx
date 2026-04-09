@@ -13,14 +13,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
 
 const MATERIAL_COLORS: Record<string, string> = {
-  plastique: '#3B82F6',
-  metal: '#6B7280',
-  aluminium: '#A5B4FC',
-  bois: '#92400E',
-  verre: '#06B6D4',
-  textile: '#8B5CF6',
-  organique: '#10B981',
-  papier: '#1BAF6A',
+  plastique: '#1BAF6A',
+  metal: '#7EC845',
+  aluminium: '#2eafcf',
+  bois: '#6366f1',
+  verre: '#5bc4d6',
+  textile: '#f59e0b',
+  organique: '#10874E',
+  papier: '#a0aab4',
 };
 
 const MATERIAL_LABELS: Record<string, string> = {
@@ -74,6 +74,7 @@ export function TraceabilityMaterialChart({
               dataKey="value"
               nameKey="name"
               stroke="none"
+              animationDuration={800}
             >
               {chartData.map((entry) => (
                 <Cell
@@ -84,10 +85,11 @@ export function TraceabilityMaterialChart({
             </Pie>
             <Tooltip
               contentStyle={{
-                backgroundColor: 'hsl(var(--card))',
-                borderColor: 'hsl(var(--border))',
+                backgroundColor: '#111827',
+                borderColor: 'transparent',
                 borderRadius: '8px',
                 fontSize: '12px',
+                color: '#fff',
               }}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               formatter={(value: any) => {

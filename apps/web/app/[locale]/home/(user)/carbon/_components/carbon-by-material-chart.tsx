@@ -25,24 +25,24 @@ interface CarbonByMaterialChartProps {
 
 const MATERIAL_COLORS: Record<string, string> = {
   plastique: '#1BAF6A',
-  metal: '#1BAF6A',
-  bois: '#16A34A',
-  papier: '#94A3B8',
-  verre: '#D97706',
-  textile: '#1BAF6A',
+  metal: '#7EC845',
+  bois: '#6366f1',
+  papier: '#f59e0b',
+  verre: '#2eafcf',
+  textile: '#5bc4d6',
   deee: '#64748B',
-  organique: '#047857',
+  organique: '#10874E',
 };
 
 const FALLBACK_COLORS = [
   '#1BAF6A',
-  '#1BAF6A',
-  '#16A34A',
-  '#94A3B8',
-  '#D97706',
-  '#1BAF6A',
+  '#7EC845',
+  '#6366f1',
+  '#f59e0b',
+  '#2eafcf',
+  '#5bc4d6',
   '#64748B',
-  '#047857',
+  '#10874E',
 ];
 
 function getColor(category: string, index: number): string {
@@ -79,18 +79,20 @@ function CustomTooltip({
   if (!item) return null;
 
   return (
-    <div className="rounded-lg border bg-white p-3 shadow-lg dark:bg-gray-900">
-      <p className="mb-1 text-sm font-semibold capitalize">{item.category}</p>
-      <p className="text-sm">
-        {t('chartCO2Avoided')}: {fmtKg(item.co2_avoided)} kg
+    <div className="rounded-lg bg-gray-900 px-3 py-2 text-sm text-white shadow-lg">
+      <p className="mb-1 font-medium capitalize">{item.category}</p>
+      <p className="text-gray-300">
+        {t('chartCO2Avoided')}: <span className="font-semibold text-white">{fmtKg(item.co2_avoided)} kg</span>
       </p>
-      <p className="text-muted-foreground text-sm">
+      <p className="text-gray-300">
         {t('chartWeight')}:{' '}
-        {(item.weight / 1000).toLocaleString('fr-FR', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}{' '}
-        t
+        <span className="font-semibold text-white">
+          {(item.weight / 1000).toLocaleString('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}{' '}
+          t
+        </span>
       </p>
     </div>
   );
@@ -153,6 +155,7 @@ export function CarbonByMaterialChart({ data }: CarbonByMaterialChartProps) {
               nameKey="category"
               paddingAngle={2}
               label={false}
+              animationDuration={800}
             >
               {data.map((entry, index) => (
                 <Cell

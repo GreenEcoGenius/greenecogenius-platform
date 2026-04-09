@@ -10,6 +10,31 @@
   --color-brand: #1BAF6A;
   --color-brand-hover: #159B5C;
   --color-brand-light: #E8F8F0;
+  --color-brand-border: #A8E6C8;
+  --color-brand-50: #E8F8F0;
+  --color-brand-100: #C5EDDA;
+  --color-brand-200: #A8E6C8;
+  --color-brand-300: #6DD9A6;
+  --color-brand-400: #3DCA85;
+  --color-brand-500: #1BAF6A;
+  --color-brand-600: #159B5C;
+  --color-brand-700: #10874E;
+  --color-brand-800: #0C6B3E;
+  --color-brand-900: #08502F;
+
+  /* ── Brand Accent (lime vert du logo) ── */
+  --color-brand-accent: #7EC845;
+  --color-brand-accent-light: #F0F9E8;
+  --color-brand-accent-50: #F0F9E8;
+  --color-brand-accent-100: #DFF0CC;
+  --color-brand-accent-200: #C5E4A3;
+  --color-brand-accent-300: #A3D474;
+  --color-brand-accent-400: #7EC845;
+  --color-brand-accent-500: #6AB838;
+  --color-brand-accent-600: #56A02C;
+  --color-brand-accent-700: #438722;
+  --color-brand-accent-800: #336D1A;
+  --color-brand-accent-900: #245412;
 
   /* ── Primary ── */
   --color-primary-50: #E8F8F0;

@@ -45,7 +45,7 @@ export function HowItWorks() {
               onClick={() => setActive(i)}
               className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all ${
                 i === active
-                  ? 'bg-[#065F46] text-white shadow-md'
+                  ? 'bg-brand text-white shadow-md'
                   : 'border border-gray-300 bg-white text-gray-500'
               }`}
             >
