@@ -30,7 +30,7 @@
 }
 
 .markdoc p {
-  @apply mt-7 text-base/7 text-gray-700 dark:text-gray-300;
+  @apply mt-7 text-base/7 text-gray-700 text-justify dark:text-gray-300;
 }
 
 .markdoc li {
