@@ -26,11 +26,12 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
-.env
-.env.*
-!.env.production
-!.env.example
+# local env files — secrets
+.env.local
+.env*.local
+.env.development
+.env.test
+.env.cloud.backup
 *.backup
 
 # vercel
@@ -58,3 +59,4 @@ node-compile-cache/
 
 # supabase cli temp files
 supabase/.temp/
+.env*.local
