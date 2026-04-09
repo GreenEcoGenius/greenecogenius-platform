@@ -21,9 +21,9 @@ const links = {
   About: { label: 'marketing.about', path: '/about' },
   Solutions: { label: 'marketing.solutions', path: '/solutions' },
   Explorer: { label: 'marketing.explorerNav', path: '/explorer' },
+  Normes: { label: 'marketing.normes', path: '/normes' },
   Blog: { label: 'marketing.blog', path: '/blog' },
   Pricing: { label: 'marketing.pricing', path: '/pricing' },
-  Normes: { label: 'marketing.normes', path: '/normes' },
   Contact: { label: 'marketing.contact', path: '/contact' },
 };
 

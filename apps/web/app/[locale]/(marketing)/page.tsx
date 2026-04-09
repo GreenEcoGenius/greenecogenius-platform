@@ -12,6 +12,7 @@ import { FaqSection } from './_components/landing/faq-section';
 import { FrameworksCarousel, SourcesCarousel, TechCarousel } from './_components/landing/foundations-section';
 import { HowItWorks } from './_components/landing/how-it-works';
 import { ImpactSimulator } from './_components/landing/impact-simulator';
+import { LatestArticles } from './_components/landing/latest-articles';
 import { PricingPreview } from './_components/landing/pricing-preview';
 import { RegulatoryTimeline } from './_components/landing/regulatory-timeline';
 import { StatsSection } from './_components/landing/stats-section';
@@ -210,7 +211,12 @@ export default async function Home() {
       {/* ───── SECTION 9 — FAQ ───── */}
       <FaqSection />
 
-      {/* ───── SECTION 10 — NEWSLETTER ───── */}
+      {/* ───── SECTION 10 — ACTUALITÉS ───── */}
+      <Suspense fallback={<div className="py-28" />}>
+        <LatestArticles />
+      </Suspense>
+
+      {/* ───── SECTION 11 — NEWSLETTER ───── */}
       <section className="relative overflow-hidden py-20 sm:py-28">
         <Image
           src="/images/normes/circular-infinity-aerial.png"
