@@ -151,7 +151,7 @@ export class AuthPageObject {
   }) {
     const client = createClient(
       'http://127.0.0.1:54321',
-      'sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz',
+      'sb_secret_5qtJRXNI0owNMoFDjlqHlg_xVcAuUUN',
     );
 
     const { data, error } = await client.auth.admin.createUser({
