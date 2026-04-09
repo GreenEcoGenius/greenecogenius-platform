@@ -1,0 +1,85 @@
+{
+  "title": "Additional Data",
+  "description": "Enter your external activities to enrich your compliance score and prepare your ESG reports.",
+  "savedData": "Saved data",
+  "noDataYet": "No data saved yet.",
+  "addData": "Add data — {category}",
+  "categories": {
+    "governance": {
+      "label": "Governance",
+      "description": "Board composition, anti-corruption policies, code of conduct, CSR committee."
+    },
+    "social": {
+      "label": "Social & HR",
+      "description": "Headcount, training, diversity, working conditions, social dialogue."
+    },
+    "environment": {
+      "label": "Environment",
+      "description": "Water consumption, renewable energy, biodiversity, mobility."
+    },
+    "procurement": {
+      "label": "Procurement",
+      "description": "Local sourcing, supplier audits, responsible procurement policies."
+    },
+    "community": {
+      "label": "Community",
+      "description": "Patronage, volunteering, NGO partnerships, local actions."
+    }
+  },
+  "subcategories": {
+    "board_composition": "Board composition",
+    "anti_corruption": "Anti-corruption policy",
+    "code_of_conduct": "Code of conduct",
+    "esg_committee": "ESG / CSR committee",
+    "remuneration": "Remuneration policy",
+    "employee_count": "Headcount",
+    "training_rate": "Training rate",
+    "diversity": "Diversity and inclusion",
+    "working_conditions": "Working conditions",
+    "social_dialogue": "Social dialogue",
+    "water_consumption": "Water consumption",
+    "renewable_energy": "Renewable energy",
+    "biodiversity": "Biodiversity",
+    "zero_waste": "Zero-waste policy",
+    "mobility": "Mobility / fleet",
+    "local_purchasing": "Local purchasing",
+    "supplier_audit": "Supplier audits",
+    "responsible_procurement_policy": "Responsible procurement policy",
+    "esg_criteria": "ESG criteria in tenders",
+    "patronage": "Patronage",
+    "volunteering": "Employee volunteering",
+    "ngo_partnership": "NGO partnerships",
+    "local_action": "Local actions"
+  },
+  "form": {
+    "subcategory": "Subcategory",
+    "title": "Title",
+    "titlePlaceholder": "e.g. Code of conduct 2026",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe the activity, its context, its beneficiaries…",
+    "quantitativeValue": "Numeric value",
+    "quantitativeValuePlaceholder": "e.g. 42",
+    "quantitativeUnit": "Unit",
+    "quantitativeUnitPlaceholder": "e.g. %, m³, h, FTE",
+    "externalUrlLabel": "…or an external link",
+    "submit": "Add",
+    "submitting": "Saving…",
+    "saved": "Saved.",
+    "genericError": "Unable to save this entry right now."
+  },
+  "uploader": {
+    "label": "Supporting document (optional)",
+    "upload": "Upload a file",
+    "uploading": "Uploading…",
+    "constraints": "PDF, JPG, PNG, DOCX — max 10 MB",
+    "analyze": "Analyze with Genius",
+    "analyzing": "Analyzing…",
+    "remove": "Remove document",
+    "uploadFailed": "Upload failed",
+    "analysisFailed": "Analysis failed"
+  },
+  "list": {
+    "proofProvided": "Supporting document provided",
+    "externalLink": "External link"
+  }
+}

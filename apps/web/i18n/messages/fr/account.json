@@ -145,5 +145,12 @@
   "setEmailSuccessMessage": "Nous vous avons envoyé un e-mail pour confirmer votre adresse. Veuillez vérifier votre boîte de réception.",
   "setEmailLoading": "Définition de votre e-mail...",
   "setEmailError": "E-mail non défini. Veuillez réessayer",
-  "emailNotChanged": "Votre adresse e-mail n'a pas changé"
+  "emailNotChanged": "Votre adresse e-mail n'a pas changé",
+  "preferences": "Préférences",
+  "theme": "Thème",
+  "themeLight": "Clair",
+  "themeDark": "Sombre",
+  "themeAuto": "Auto",
+  "signOut": "Se déconnecter",
+  "signingOut": "Déconnexion..."
 }

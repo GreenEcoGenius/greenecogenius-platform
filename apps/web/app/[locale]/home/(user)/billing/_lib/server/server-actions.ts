@@ -30,7 +30,7 @@ export const createPersonalAccountCheckoutSession = authActionClient
     const client = getSupabaseServerClient();
     const service = createUserBillingService(client);
 
-    return await service.createCheckoutSession(data);
+    return service.createCheckoutSession(data);
   });
 
 /**

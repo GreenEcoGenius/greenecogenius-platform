@@ -6,14 +6,17 @@ import { redirect } from 'next/navigation';
 import * as z from 'zod';
 
 import { TeamAccountWorkspaceContextProvider } from '@kit/team-accounts/components';
-import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
+import { Page, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/sidebar';
 
-import { AppLogo } from '~/components/app-logo';
+import { ChatProvider } from '~/components/ai/chat-context';
+import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
+import { SidebarChatBridge } from '~/components/ai/sidebar-chat-bridge';
+import { AppHeader } from '~/components/layout/app-header';
+import { GlobalSearch } from '~/components/layout/global-search';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
 
 // local imports
-import { TeamAccountLayoutMobileNavigation } from './_components/team-account-layout-mobile-navigation';
 import { TeamAccountLayoutSidebar } from './_components/team-account-layout-sidebar';
 import { TeamAccountNavigationMenu } from './_components/team-account-navigation-menu';
 import { loadTeamWorkspace } from './_lib/server/team-account-workspace.loader';
@@ -56,32 +59,33 @@ async function SidebarLayout({
 
   return (
     <TeamAccountWorkspaceContextProvider value={data}>
-      <SidebarProvider defaultOpen={state.open}>
-        <Page style={'sidebar'}>
-          <PageNavigation>
-            <TeamAccountLayoutSidebar
-              account={account}
-              accountId={data.account.id}
-              accounts={accounts}
-              user={data.user}
-            />
-          </PageNavigation>
+      <ChatProvider>
+        <SidebarProvider defaultOpen={state.open}>
+          <SidebarChatBridge />
+          <AppHeader />
 
-          <PageMobileNavigation className={'flex items-center justify-between'}>
-            <AppLogo />
+          <div className="min-w-0 flex-1">
+            <Page
+              style={'sidebar'}
+              contentContainerClassName="mx-auto flex w-full min-w-0 flex-1 flex-col overflow-y-auto bg-inherit pt-20 md:pt-32"
+            >
+              <PageNavigation>
+                <TeamAccountLayoutSidebar
+                  account={account}
+                  accountId={data.account.id}
+                  accounts={accounts}
+                  user={data.user}
+                />
+              </PageNavigation>
 
-            <div className={'flex space-x-4'}>
-              <TeamAccountLayoutMobileNavigation
-                userId={data.user.id}
-                accounts={accounts}
-                account={account}
-              />
-            </div>
-          </PageMobileNavigation>
+              {children}
+            </Page>
+          </div>
+        </SidebarProvider>
 
-          {children}
-        </Page>
-      </SidebarProvider>
+        <GlobalAIAssistant />
+        <GlobalSearch />
+      </ChatProvider>
     </TeamAccountWorkspaceContextProvider>
   );
 }
@@ -96,13 +100,25 @@ function HeaderLayout({
 
   return (
     <TeamAccountWorkspaceContextProvider value={data}>
-      <Page style={'header'}>
-        <PageNavigation>
-          <TeamAccountNavigationMenu workspace={data} />
-        </PageNavigation>
+      <ChatProvider>
+        <AppHeader />
 
-        {children}
-      </Page>
+        <div className="min-w-0 flex-1">
+          <Page
+            style={'header'}
+            contentContainerClassName="flex flex-1 flex-col space-y-4 pt-20 md:pt-32"
+          >
+            <PageNavigation>
+              <TeamAccountNavigationMenu workspace={data} />
+            </PageNavigation>
+
+            {children}
+          </Page>
+        </div>
+
+        <GlobalAIAssistant />
+        <GlobalSearch />
+      </ChatProvider>
     </TeamAccountWorkspaceContextProvider>
   );
 }

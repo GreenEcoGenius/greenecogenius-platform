@@ -14,8 +14,15 @@ export async function generateMetadata() {
   };
 }
 
-async function ContactPage() {
+async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ subject?: string }>;
+}) {
   const t = await getTranslations('marketing');
+  const { subject } = await searchParams;
+
+  const defaultMessage = subject ? `[${subject}]\n\n` : undefined;
 
   return (
     <div>
@@ -27,20 +34,22 @@ async function ContactPage() {
         >
           <div
             className={
-              'flex w-full max-w-lg flex-col space-y-4 rounded-lg border p-8'
+              'border-metal-chrome flex w-full max-w-lg flex-col space-y-4 rounded-xl border bg-white p-8'
             }
           >
             <div>
               <Heading level={3}>
-                <Trans i18nKey={'marketing.contactHeading'} />
+                <span className="text-metal-900">
+                  <Trans i18nKey={'marketing.contactHeading'} />
+                </span>
               </Heading>
 
-              <p className={'text-muted-foreground'}>
+              <p className={'text-metal-600'}>
                 <Trans i18nKey={'marketing.contactSubheading'} />
               </p>
             </div>
 
-            <ContactForm />
+            <ContactForm defaultMessage={defaultMessage} />
           </div>
         </div>
       </div>

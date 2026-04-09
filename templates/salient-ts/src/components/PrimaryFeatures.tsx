@@ -1,16 +1,18 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import clsx from 'clsx'
+import { useEffect, useState } from 'react';
 
-import { Container } from '@/components/Container'
-import backgroundImage from '@/images/background-features.jpg'
-import screenshotExpenses from '@/images/screenshots/expenses.png'
-import screenshotPayroll from '@/images/screenshots/payroll.png'
-import screenshotReporting from '@/images/screenshots/reporting.png'
-import screenshotVatReturns from '@/images/screenshots/vat-returns.png'
+import Image from 'next/image';
+
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
+import clsx from 'clsx';
+
+import { Container } from '@/components/Container';
+import backgroundImage from '@/images/background-features.jpg';
+import screenshotExpenses from '@/images/screenshots/expenses.png';
+import screenshotPayroll from '@/images/screenshots/payroll.png';
+import screenshotReporting from '@/images/screenshots/reporting.png';
+import screenshotVatReturns from '@/images/screenshots/vat-returns.png';
 
 const features = [
   {
@@ -37,27 +39,27 @@ const features = [
       'Easily export your data into an Excel spreadsheet where you can do whatever the hell you want with it.',
     image: screenshotReporting,
   },
-]
+];
 
 export function PrimaryFeatures() {
   let [tabOrientation, setTabOrientation] = useState<'horizontal' | 'vertical'>(
     'horizontal',
-  )
+  );
 
   useEffect(() => {
-    let lgMediaQuery = window.matchMedia('(min-width: 1024px)')
+    let lgMediaQuery = window.matchMedia('(min-width: 1024px)');
 
     function onMediaQueryChange({ matches }: { matches: boolean }) {
-      setTabOrientation(matches ? 'vertical' : 'horizontal')
+      setTabOrientation(matches ? 'vertical' : 'horizontal');
     }
 
-    onMediaQueryChange(lgMediaQuery)
-    lgMediaQuery.addEventListener('change', onMediaQueryChange)
+    onMediaQueryChange(lgMediaQuery);
+    lgMediaQuery.addEventListener('change', onMediaQueryChange);
 
     return () => {
-      lgMediaQuery.removeEventListener('change', onMediaQueryChange)
-    }
-  }, [])
+      lgMediaQuery.removeEventListener('change', onMediaQueryChange);
+    };
+  }, []);
 
   return (
     <section
@@ -154,5 +156,5 @@ export function PrimaryFeatures() {
         </TabGroup>
       </Container>
     </section>
-  )
+  );
 }

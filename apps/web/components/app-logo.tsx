@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { cn } from '@kit/ui/utils';
@@ -9,16 +10,14 @@ export function LogoImage({
   width?: number;
 }) {
   return (
-    <span
-      className={cn(
-        'flex items-baseline gap-0 text-lg font-bold tracking-tight lg:text-xl',
-        className,
-      )}
-    >
-      <span className="text-[#064E3B] dark:text-[#D1FAE5]">Green</span>
-      <span className="text-[#059669] dark:text-[#6EE7B7]">Eco</span>
-      <span className="text-[#064E3B] dark:text-[#D1FAE5]">Genius</span>
-    </span>
+    <Image
+      src="/images/logo.png"
+      alt="GreenEcoGenius"
+      width={4232}
+      height={2362}
+      className={cn('h-24 w-auto md:h-28', className)}
+      priority
+    />
   );
 }
 
@@ -40,7 +39,7 @@ export function AppLogo({
       aria-label={label ?? 'GreenEcoGenius'}
       href={href ?? '/'}
       prefetch={true}
-      className="mx-auto md:mx-0"
+      className="flex-shrink-0"
     >
       <LogoImage className={className} />
     </Link>

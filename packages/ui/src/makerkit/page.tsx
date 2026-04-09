@@ -28,22 +28,25 @@ export function Page(props: PageProps) {
 }
 
 function PageWithSidebar(props: PageProps) {
-  const { Navigation, Children } = getSlotsFromPage(props);
+  const { Navigation, Children, MobileNavigation } = getSlotsFromPage(props);
 
   return (
     <div
-      className={cn('flex min-w-0 flex-1 overflow-x-hidden', props.className)}
+      className={cn('flex min-w-0 flex-1 lg:h-full lg:overflow-hidden', props.className)}
     >
       {Navigation}
 
       <div
+        data-scroll-root="true"
         className={
           props.contentContainerClassName ??
-          'mx-auto flex h-screen w-full min-w-0 flex-1 flex-col bg-inherit'
+          'mx-auto flex w-full min-w-0 flex-1 flex-col bg-white lg:overflow-y-auto lg:bg-inherit'
         }
       >
+        {MobileNavigation}
+
         <div
-          className={'bg-background flex min-w-0 flex-1 flex-col px-4 lg:px-0'}
+          className={'flex min-w-0 flex-1 flex-col px-4 lg:bg-background lg:px-0'}
         >
           {Children}
         </div>
@@ -60,7 +63,7 @@ export function PageMobileNavigation(
   return (
     <div
       className={cn(
-        'flex w-full items-center border-b px-4 py-2 lg:hidden lg:px-0',
+        'flex w-full items-center border-b px-4 py-3 lg:hidden lg:px-0',
         props.className,
       )}
     >
@@ -75,6 +78,7 @@ function PageWithHeader(props: PageProps) {
   return (
     <div className={cn('flex h-screen flex-1 flex-col', props.className)}>
       <div
+        data-scroll-root="true"
         className={
           props.contentContainerClassName ?? 'flex flex-1 flex-col space-y-4'
         }
@@ -107,9 +111,12 @@ export function PageBody(
     className?: string;
   }>,
 ) {
-  const className = cn('flex min-w-0 flex-1 flex-col lg:px-4', props.className);
+  const bodyClassName = cn(
+    'flex min-w-0 flex-1 flex-col pt-4 pb-4 lg:px-4 lg:pt-6',
+    props.className,
+  );
 
-  return <div className={className}>{props.children}</div>;
+  return <div className={bodyClassName}>{props.children}</div>;
 }
 
 export function PageNavigation(props: React.PropsWithChildren) {
@@ -153,7 +160,12 @@ export function PageHeader({
   description?: string | React.ReactNode;
 }>) {
   return (
-    <div className={cn('flex items-center justify-between py-4', className)}>
+    <div
+      className={cn(
+        'hidden items-center justify-between py-4 lg:flex',
+        className,
+      )}
+    >
       <div className={'flex flex-col gap-y-2'}>
         <div className="flex items-center gap-x-2.5">
           <SidebarTrigger className="text-muted-foreground hover:text-secondary-foreground h-4.5 w-4.5 cursor-pointer" />
@@ -161,10 +173,12 @@ export function PageHeader({
           <If condition={description}>
             <Separator
               orientation="vertical"
-              className="hidden h-4 w-px lg:group-data-[collapsible=icon]:block"
+              className="hidden h-4 w-px lg:block"
             />
 
-            <PageDescription>{description}</PageDescription>
+            <span className="hidden lg:block">
+              <PageDescription>{description}</PageDescription>
+            </span>
           </If>
         </div>
 

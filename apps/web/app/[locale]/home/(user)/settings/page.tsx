@@ -9,6 +9,8 @@ import featureFlagsConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { requireUserInServerComponent } from '~/lib/server/require-user-in-server-component';
 
+import { ProfileActions } from './_components/profile-actions';
+
 // Show email option if password, magic link, or OTP is enabled
 const showEmailOption =
   authConfig.providers.password ||
@@ -50,6 +52,10 @@ function PersonalAccountSettingsPage() {
         features={features}
         paths={paths}
         providers={providers}
+      />
+
+      <ProfileActions
+        enableThemeToggle={featureFlagsConfig.enableThemeToggle}
       />
     </div>
   );

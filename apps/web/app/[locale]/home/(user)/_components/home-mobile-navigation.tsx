@@ -49,7 +49,7 @@ export function HomeMobileNavigation(props: { workspace: UserWorkspace }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Menu className={'h-9'} />
+        <Menu className={'h-8 w-8'} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent sideOffset={10} className={'w-screen rounded-none'}>

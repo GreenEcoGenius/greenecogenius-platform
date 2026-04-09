@@ -20,6 +20,17 @@ const namespaces = [
   'billing',
   'marketing',
   'marketplace',
+  'wallet',
+  'carbon',
+  'pricing',
+  'pricingPage',
+  'esg',
+  'verify',
+  'blockchain',
+  'rse',
+  'compliance',
+  'externalActivities',
+  'dashboard',
 ] as const;
 
 const isDevelopment = process.env.NODE_ENV === 'development';

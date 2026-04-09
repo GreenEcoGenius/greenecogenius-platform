@@ -1,31 +1,32 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
+import Link from 'next/link';
+
 import {
   Popover,
   PopoverButton,
   PopoverBackdrop,
   PopoverPanel,
-} from '@headlessui/react'
-import clsx from 'clsx'
+} from '@headlessui/react';
+import clsx from 'clsx';
 
-import { Button } from '@/components/Button'
-import { Container } from '@/components/Container'
-import { Logo } from '@/components/Logo'
-import { NavLink } from '@/components/NavLink'
+import { Button } from '@/components/Button';
+import { Container } from '@/components/Container';
+import { Logo } from '@/components/Logo';
+import { NavLink } from '@/components/NavLink';
 
 function MobileNavLink({
   href,
   children,
 }: {
-  href: string
-  children: React.ReactNode
+  href: string;
+  children: React.ReactNode;
 }) {
   return (
     <PopoverButton as={Link} href={href} className="block w-full p-2">
       {children}
     </PopoverButton>
-  )
+  );
 }
 
 function MobileNavIcon({ open }: { open: boolean }) {
@@ -52,7 +53,7 @@ function MobileNavIcon({ open }: { open: boolean }) {
         )}
       />
     </svg>
-  )
+  );
 }
 
 function MobileNavigation() {
@@ -79,7 +80,7 @@ function MobileNavigation() {
         <MobileNavLink href="/login">Sign in</MobileNavLink>
       </PopoverPanel>
     </Popover>
-  )
+  );
 }
 
 export function Header() {
@@ -113,5 +114,5 @@ export function Header() {
         </nav>
       </Container>
     </header>
-  )
+  );
 }

@@ -7,8 +7,8 @@ import { cn } from '@kit/ui/utils';
 const animations = {
   'fade-up': 'translate-y-8 opacity-0',
   'fade-down': '-translate-y-8 opacity-0',
-  'fade-left': 'translate-x-8 opacity-0',
-  'fade-right': '-translate-x-8 opacity-0',
+  'fade-left': 'translate-x-6 opacity-0',
+  'fade-right': '-translate-x-6 opacity-0',
   'zoom-in': 'scale-95 opacity-0',
 };
 
@@ -51,8 +51,10 @@ export function AnimateOnScroll({
     <div
       ref={ref}
       className={cn(
-        'transition-all duration-700 ease-out',
-        isVisible ? 'translate-x-0 translate-y-0 scale-100 opacity-100' : animations[animation],
+        'transition-all duration-1000 ease-out',
+        isVisible
+          ? 'translate-x-0 translate-y-0 scale-100 opacity-100'
+          : animations[animation],
         className,
       )}
       style={{ transitionDelay: isVisible ? `${delay}ms` : '0ms' }}

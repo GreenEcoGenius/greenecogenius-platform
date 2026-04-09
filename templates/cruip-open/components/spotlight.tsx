@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import React, { useRef, useState, useEffect } from "react";
-import useMousePosition from "@/utils/useMousePosition";
+import React, { useRef, useState, useEffect } from 'react';
+
+import useMousePosition from '@/utils/useMousePosition';
 
 type SpotlightProps = {
   children: React.ReactNode;
@@ -10,7 +11,7 @@ type SpotlightProps = {
 
 export default function Spotlight({
   children,
-  className = "",
+  className = '',
 }: SpotlightProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mousePosition = useMousePosition();
@@ -29,10 +30,10 @@ export default function Spotlight({
 
   useEffect(() => {
     initContainer();
-    window.addEventListener("resize", initContainer);
+    window.addEventListener('resize', initContainer);
 
     return () => {
-      window.removeEventListener("resize", initContainer);
+      window.removeEventListener('resize', initContainer);
     };
   }, [boxes]);
 
@@ -62,8 +63,8 @@ export default function Spotlight({
             -(box.getBoundingClientRect().left - rect.left) + mouse.current.x;
           const boxY =
             -(box.getBoundingClientRect().top - rect.top) + mouse.current.y;
-          box.style.setProperty("--mouse-x", `${boxX}px`);
-          box.style.setProperty("--mouse-y", `${boxY}px`);
+          box.style.setProperty('--mouse-x', `${boxX}px`);
+          box.style.setProperty('--mouse-y', `${boxY}px`);
         });
       }
     }

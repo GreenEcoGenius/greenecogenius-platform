@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 
 import { ArrowDown, ArrowUp, Menu, TrendingUp } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import {
   Area,
   AreaChart,
@@ -40,6 +41,7 @@ import {
 } from '@kit/ui/table';
 
 export default function DashboardDemo() {
+  const t = useTranslations('marketplace');
   const mrr = useMemo(() => generateDemoData(), []);
   const netRevenue = useMemo(() => generateDemoData(), []);
   const fees = useMemo(() => generateDemoData(), []);
@@ -55,12 +57,12 @@ export default function DashboardDemo() {
         <Card>
           <CardHeader>
             <CardTitle className={'flex items-center gap-2.5'}>
-              <span>MRR</span>
+              <span>{t('dashboardMrr')}</span>
               <Trend trend={'up'}>20%</Trend>
             </CardTitle>
 
             <CardDescription>
-              <span>Monthly recurring revenue</span>
+              <span>{t('dashboardMrrDesc')}</span>
             </CardDescription>
 
             <div>
@@ -76,12 +78,12 @@ export default function DashboardDemo() {
         <Card>
           <CardHeader>
             <CardTitle className={'flex items-center gap-2.5'}>
-              <span>Revenue</span>
+              <span>{t('dashboardRevenue')}</span>
               <Trend trend={'up'}>12%</Trend>
             </CardTitle>
 
             <CardDescription>
-              <span>Total revenue including fees</span>
+              <span>{t('dashboardRevenueDesc')}</span>
             </CardDescription>
 
             <div>
@@ -97,12 +99,12 @@ export default function DashboardDemo() {
         <Card>
           <CardHeader>
             <CardTitle className={'flex items-center gap-2.5'}>
-              <span>Fees</span>
+              <span>{t('dashboardFees')}</span>
               <Trend trend={'up'}>9%</Trend>
             </CardTitle>
 
             <CardDescription>
-              <span>Total fees collected</span>
+              <span>{t('dashboardFeesDesc')}</span>
             </CardDescription>
 
             <div>
@@ -118,12 +120,12 @@ export default function DashboardDemo() {
         <Card>
           <CardHeader>
             <CardTitle className={'flex items-center gap-2.5'}>
-              <span>New Customers</span>
+              <span>{t('dashboardNewCustomers')}</span>
               <Trend trend={'down'}>-25%</Trend>
             </CardTitle>
 
             <CardDescription>
-              <span>Customers who signed up this month</span>
+              <span>{t('dashboardNewCustomersDesc')}</span>
             </CardDescription>
 
             <div>
@@ -144,8 +146,8 @@ export default function DashboardDemo() {
       <div>
         <Card>
           <CardHeader>
-            <CardTitle>Best Customers</CardTitle>
-            <CardDescription>Showing the top customers by MRR</CardDescription>
+            <CardTitle>{t('dashboardBestCustomers')}</CardTitle>
+            <CardDescription>{t('dashboardBestCustomersDesc')}</CardDescription>
           </CardHeader>
 
           <CardContent>
@@ -221,6 +223,8 @@ function Chart(
 }
 
 function CustomersTable() {
+  const t = useTranslations('marketplace');
+
   const customers = [
     {
       name: 'John Doe',
@@ -228,7 +232,7 @@ function CustomersTable() {
       plan: 'Pro',
       mrr: '$120.5',
       logins: 1020,
-      status: 'Healthy',
+      status: 'statusHealthy' as const,
       trend: 'up',
     },
     {
@@ -237,7 +241,7 @@ function CustomersTable() {
       plan: 'Basic',
       mrr: '$65.4',
       logins: 570,
-      status: 'Possible Churn',
+      status: 'statusPossibleChurn' as const,
       trend: 'stale',
     },
     {
@@ -246,7 +250,7 @@ function CustomersTable() {
       plan: 'Pro',
       mrr: '$500.1',
       logins: 2050,
-      status: 'Healthy',
+      status: 'statusHealthy' as const,
       trend: 'up',
     },
     {
@@ -255,7 +259,7 @@ function CustomersTable() {
       plan: 'Basic',
       mrr: '$10',
       logins: 50,
-      status: 'Churn',
+      status: 'statusChurn' as const,
       trend: 'down',
     },
     {
@@ -264,7 +268,7 @@ function CustomersTable() {
       plan: 'Pro',
       mrr: '$300.2',
       logins: 1520,
-      status: 'Healthy',
+      status: 'statusHealthy' as const,
       trend: 'up',
     },
     {
@@ -273,7 +277,7 @@ function CustomersTable() {
       plan: 'Pro',
       mrr: '$75.7',
       logins: 780,
-      status: 'Healthy',
+      status: 'statusHealthy' as const,
       trend: 'up',
     },
     {
@@ -282,7 +286,7 @@ function CustomersTable() {
       plan: 'Basic',
       mrr: '$50',
       logins: 320,
-      status: 'Possible Churn',
+      status: 'statusPossibleChurn' as const,
       trend: 'stale',
     },
     {
@@ -291,7 +295,7 @@ function CustomersTable() {
       plan: 'Pro',
       mrr: '$90.8',
       logins: 1260,
-      status: 'Healthy',
+      status: 'statusHealthy' as const,
       trend: 'up',
     },
     {
@@ -300,7 +304,7 @@ function CustomersTable() {
       plan: 'Basic',
       mrr: '$0',
       logins: 20,
-      status: 'Churn',
+      status: 'statusChurn' as const,
       trend: 'down',
     },
     {
@@ -309,97 +313,7 @@ function CustomersTable() {
       plan: 'Pro',
       mrr: '$145.3',
       logins: 1380,
-      status: 'Healthy',
-      trend: 'up',
-    },
-    {
-      name: 'James Martinez',
-      email: 'james@makerkit.dev',
-      plan: 'Pro',
-      mrr: '$120.5',
-      logins: 940,
-      status: 'Healthy',
-      trend: 'up',
-    },
-    {
-      name: 'Charlotte Ryan',
-      email: 'carlotte@makerkit.dev',
-      plan: 'Basic',
-      mrr: '$80.6',
-      logins: 460,
-      status: 'Possible Churn',
-      trend: 'stale',
-    },
-    {
-      name: 'Lucas Evans',
-      email: 'lucas@makerkit.dev',
-      plan: 'Pro',
-      mrr: '$210.3',
-      logins: 1850,
-      status: 'Healthy',
-      trend: 'up',
-    },
-    {
-      name: 'Sophia Wilson',
-      email: 'sophia@makerkit.dev',
-      plan: 'Basic',
-      mrr: '$10',
-      logins: 35,
-      status: 'Churn',
-      trend: 'down',
-    },
-    {
-      name: 'William Kelly',
-      email: 'will@makerkit.dev',
-      plan: 'Pro',
-      mrr: '$350.2',
-      logins: 1760,
-      status: 'Healthy',
-      trend: 'up',
-    },
-    {
-      name: 'Oliver Thomas',
-      email: 'olly@makerkit.dev',
-      plan: 'Pro',
-      mrr: '$145.6',
-      logins: 1350,
-      status: 'Healthy',
-      trend: 'up',
-    },
-    {
-      name: 'Samantha White',
-      email: 'sam@makerkit.dev',
-      plan: 'Basic',
-      mrr: '$60.3',
-      logins: 425,
-      status: 'Possible Churn',
-      trend: 'stale',
-    },
-    {
-      name: 'Benjamin Lewis',
-      email: 'ben@makerkit.dev',
-      plan: 'Pro',
-      mrr: '$175.8',
-      logins: 1600,
-      status: 'Healthy',
-      trend: 'up',
-    },
-    {
-      name: 'Zoe Harris',
-      email: 'zoe@makerkit.dev',
-      plan: 'Basic',
-      mrr: '$0',
-      logins: 18,
-      status: 'Churn',
-      trend: 'down',
-    },
-    {
-      name: 'Zachary Nelson',
-      email: 'zac@makerkit.dev',
-      plan: 'Pro',
-      mrr: '$255.9',
-      logins: 1785,
-      status: 'Healthy',
+      status: 'statusHealthy' as const,
       trend: 'up',
     },
   ];
@@ -408,11 +322,11 @@ function CustomersTable() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Customer</TableHead>
-          <TableHead>Plan</TableHead>
-          <TableHead>MRR</TableHead>
-          <TableHead>Logins</TableHead>
-          <TableHead>Status</TableHead>
+          <TableHead>{t('tableCustomer')}</TableHead>
+          <TableHead>{t('tablePlan')}</TableHead>
+          <TableHead>{t('tableMrr')}</TableHead>
+          <TableHead>{t('tableLogins')}</TableHead>
+          <TableHead>{t('tableStatus')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -429,7 +343,7 @@ function CustomersTable() {
             <TableCell>{customer.logins}</TableCell>
             <TableCell>
               <BadgeWithTrend trend={customer.trend}>
-                {customer.status}
+                {t(customer.status)}
               </BadgeWithTrend>
             </TableCell>
           </TableRow>
@@ -443,11 +357,11 @@ function BadgeWithTrend(props: React.PropsWithChildren<{ trend: string }>) {
   const className = useMemo(() => {
     switch (props.trend) {
       case 'up':
-        return 'text-green-500';
+        return 'text-brand';
       case 'down':
         return 'text-destructive';
       case 'stale':
-        return 'text-orange-500';
+        return 'text-amber-500';
     }
   }, [props.trend]);
 
@@ -477,11 +391,11 @@ function Trend(
   const Icon = useMemo(() => {
     switch (props.trend) {
       case 'up':
-        return <ArrowUp className={'h-3 w-3 text-green-500'} />;
+        return <ArrowUp className={'h-3 w-3 text-brand'} />;
       case 'down':
         return <ArrowDown className={'text-destructive h-3 w-3'} />;
       case 'stale':
-        return <Menu className={'h-3 w-3 text-orange-500'} />;
+        return <Menu className={'h-3 w-3 text-amber-500'} />;
     }
   }, [props.trend]);
 
@@ -498,6 +412,7 @@ function Trend(
 }
 
 export function VisitorsChart() {
+  const t = useTranslations('marketplace');
   const isMobile = useIsMobile();
 
   const chartData = useMemo(
@@ -599,7 +514,7 @@ export function VisitorsChart() {
 
   const chartConfig = {
     visitors: {
-      label: 'Visitors',
+      label: t('dashboardVisitors'),
     },
     desktop: {
       label: 'Desktop',
@@ -614,10 +529,8 @@ export function VisitorsChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Visitors</CardTitle>
-        <CardDescription>
-          Showing total visitors for the last 6 months
-        </CardDescription>
+        <CardTitle>{t('dashboardVisitors')}</CardTitle>
+        <CardDescription>{t('dashboardVisitorsDesc')}</CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -667,7 +580,6 @@ export function VisitorsChart() {
                 });
               }}
             />
-
             <ChartTooltip
               cursor={false}
               defaultIndex={isMobile ? -1 : 10}
@@ -684,7 +596,6 @@ export function VisitorsChart() {
                 />
               )}
             />
-
             <Area
               dataKey="mobile"
               type="natural"
@@ -707,10 +618,10 @@ export function VisitorsChart() {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 leading-none font-medium">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+              {t('dashboardTrendUp')} <TrendingUp className="h-4 w-4" />
             </div>
             <div className="text-muted-foreground flex items-center gap-2 leading-none">
-              January - June 2024
+              {t('dashboardPeriod')}
             </div>
           </div>
         </div>
@@ -720,6 +631,22 @@ export function VisitorsChart() {
 }
 
 export function PageViewsChart() {
+  const t = useTranslations('marketplace');
+
+  const chartConfig = {
+    views: {
+      label: t('dashboardPageViews'),
+    },
+    desktop: {
+      label: 'Desktop',
+      color: 'var(--chart-1)',
+    },
+    mobile: {
+      label: 'Mobile',
+      color: 'var(--chart-2)',
+    },
+  } satisfies ChartConfig;
+
   const [activeChart, setActiveChart] =
     useState<keyof typeof chartConfig>('desktop');
 
@@ -820,20 +747,6 @@ export function PageViewsChart() {
     [],
   );
 
-  const chartConfig = {
-    views: {
-      label: 'Page Views',
-    },
-    desktop: {
-      label: 'Desktop',
-      color: 'var(--chart-1)',
-    },
-    mobile: {
-      label: 'Mobile',
-      color: 'var(--chart-2)',
-    },
-  } satisfies ChartConfig;
-
   const total = useMemo(
     () => ({
       desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
@@ -846,11 +759,8 @@ export function PageViewsChart() {
     <Card>
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Page Views</CardTitle>
-
-          <CardDescription>
-            Showing total visitors for the last 3 months
-          </CardDescription>
+          <CardTitle>{t('dashboardPageViews')}</CardTitle>
+          <CardDescription>{t('dashboardPageViewsDesc')}</CardDescription>
         </div>
 
         <div className="flex">

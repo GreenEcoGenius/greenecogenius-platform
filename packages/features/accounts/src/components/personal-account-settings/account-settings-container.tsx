@@ -16,6 +16,7 @@ import { LoadingOverlay } from '@kit/ui/loading-overlay';
 import { Trans } from '@kit/ui/trans';
 
 import { usePersonalAccountData } from '../../hooks/use-personal-account-data';
+import { useUserWorkspace } from '../../hooks/use-user-workspace';
 import { AccountDangerZone } from './account-danger-zone';
 import { UpdateEmailFormContainer } from './email/update-email-form-container';
 import { LinkAccountsList } from './link-accounts';
@@ -43,7 +44,18 @@ export function PersonalAccountSettingsContainer(
   }>,
 ) {
   const supportsLanguageSelection = useSupportMultiLanguage();
-  const user = usePersonalAccountData(props.userId);
+  const { workspace } = useUserWorkspace();
+
+  const user = usePersonalAccountData(
+    props.userId,
+    workspace?.id
+      ? {
+          id: workspace.id,
+          name: workspace.name,
+          picture_url: workspace.picture_url,
+        }
+      : undefined,
+  );
 
   if (!user.data || user.isPending) {
     return <LoadingOverlay fullPage />;
@@ -88,23 +100,7 @@ export function PersonalAccountSettingsContainer(
         </CardContent>
       </Card>
 
-      <If condition={supportsLanguageSelection}>
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              <Trans i18nKey={'account.language'} />
-            </CardTitle>
-
-            <CardDescription>
-              <Trans i18nKey={'account.languageDescription'} />
-            </CardDescription>
-          </CardHeader>
-
-          <CardContent>
-            <LanguageSelector locales={routing.locales} />
-          </CardContent>
-        </Card>
-      </If>
+      {/* Language selection handled by the app header toggle */}
 
       <Card>
         <CardHeader>

@@ -12,6 +12,7 @@ import { createMiddlewareClient } from '@kit/supabase/middleware-client';
 import pathsConfig from '~/config/paths.config';
 
 const NEXT_ACTION_HEADER = 'next-action';
+const LOCALE_COOKIE = 'NEXT_LOCALE';
 
 export const config = {
   matcher: ['/((?!_next/static|_next/image|images|locales|assets|api/*).*)'],
@@ -26,9 +27,60 @@ const getUser = (request: NextRequest, response: NextResponse) => {
   return supabase.auth.getClaims();
 };
 
+/**
+ * Detect preferred locale from Vercel geo header.
+ * France = fr, everywhere else = en.
+ */
+function detectLocaleFromGeo(request: NextRequest): string {
+  const country = request.headers.get('x-vercel-ip-country');
+  return country === 'FR' ? 'fr' : 'en';
+}
+
 export default async function proxy(request: NextRequest) {
-  // run next-intl middleware first to get the i18n-aware response
-  const response = handleI18nRouting(request);
+  const pathname = request.nextUrl.pathname;
+  const strippedPath = pathname.replace(/^\/(fr|en)/, '');
+
+  const hasLocaleCookie = request.cookies.has(LOCALE_COOKIE);
+
+  if (!hasLocaleCookie) {
+    const geoLocale = detectLocaleFromGeo(request);
+    request.cookies.set(LOCALE_COOKIE, geoLocale);
+  }
+
+  // run next-intl middleware to get the i18n-aware response
+  let response = handleI18nRouting(request);
+
+  // Auth callback/confirm paths must never be visibly redirected — the extra
+  // round-trip can cause mobile browsers to drop the PKCE code-verifier cookie
+  // or session cookies.  Convert the redirect to an internal rewrite so the
+  // route handler runs in the same request cycle (identical to default-locale).
+  const isAuthExchange =
+    strippedPath.startsWith('/auth/callback') ||
+    strippedPath.startsWith('/auth/confirm');
+
+  if (isAuthExchange && response.status >= 300 && response.status < 400) {
+    const location = response.headers.get('location');
+
+    if (location) {
+      const target = new URL(location, request.url);
+      const rewrite = NextResponse.rewrite(target);
+
+      for (const cookie of response.cookies.getAll()) {
+        rewrite.cookies.set(cookie);
+      }
+
+      response = rewrite;
+    }
+  }
+
+  if (!hasLocaleCookie) {
+    const geoLocale = detectLocaleFromGeo(request);
+    response.cookies.set(LOCALE_COOKIE, geoLocale, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: 'lax',
+    });
+  }
 
   // apply secure headers on top of the i18n response
   const secureHeadersResponse = await createResponseWithSecureHeaders(response);

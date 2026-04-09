@@ -80,7 +80,12 @@ export default withBundleAnalyzer({
 
 /** @returns {import('next').NextConfig['images']} */
 function getImagesConfig() {
-  const remotePatterns = [];
+  const remotePatterns = [
+    {
+      protocol: 'https',
+      hostname: 'fnlenvefzwlncgorsmib.supabase.co',
+    },
+  ];
 
   if (SUPABASE_URL) {
     const hostname = new URL(SUPABASE_URL).hostname;

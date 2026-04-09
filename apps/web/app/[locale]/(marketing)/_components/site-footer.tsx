@@ -1,3 +1,5 @@
+import { ShieldCheck } from 'lucide-react';
+
 import { Footer } from '@kit/ui/marketing';
 import { Trans } from '@kit/ui/trans';
 
@@ -18,11 +20,22 @@ export function SiteFooter() {
           }}
         />
       }
+      securityBadge={
+        <span className="inline-flex items-center gap-1.5">
+          <ShieldCheck className="h-3.5 w-3.5" strokeWidth={1.5} />
+          <Trans i18nKey="marketing.footerSecurityBadge" />
+        </span>
+      }
       sections={[
         {
           heading: <Trans i18nKey="marketing.about" />,
           links: [
-            { href: '/blog', label: <Trans i18nKey="marketing.blog" /> },
+            {
+              href: '/solutions',
+              label: <Trans i18nKey="marketing.solutions" />,
+            },
+            { href: '/about', label: <Trans i18nKey="marketing.about" /> },
+            { href: '/normes', label: <Trans i18nKey="marketing.normes" /> },
             { href: '/contact', label: <Trans i18nKey="marketing.contact" /> },
           ],
         },
@@ -30,8 +43,16 @@ export function SiteFooter() {
           heading: <Trans i18nKey="marketing.product" />,
           links: [
             {
-              href: '/docs',
-              label: <Trans i18nKey="marketing.documentation" />,
+              href: '/explorer',
+              label: <Trans i18nKey="marketing.explorerNav" />,
+            },
+            {
+              href: '/pricing',
+              label: <Trans i18nKey="marketing.pricing" />,
+            },
+            {
+              href: '/faq',
+              label: <Trans i18nKey="marketing.faq" />,
             },
           ],
         },

@@ -1,22 +1,28 @@
 import {
+  Award,
+  ClipboardList,
   CreditCard,
+  FileBarChart,
   Home,
+  Leaf,
+  Link2,
   PackageSearch,
   Recycle,
+  ShieldCheck,
   User,
+  Wallet,
 } from 'lucide-react';
 import * as z from 'zod';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
 
-import featureFlagsConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 
 const iconClasses = 'w-4';
 
 const routes = [
   {
-    label: 'common.routes.application',
+    label: 'common.routes.platform',
     children: [
       {
         label: 'common.routes.home',
@@ -30,28 +36,61 @@ const routes = [
         Icon: <Recycle className={iconClasses} />,
       },
       {
-        label: 'common.routes.myListings',
-        path: '/home/my-listings',
-        Icon: <PackageSearch className={iconClasses} />,
+        label: 'common.routes.carbon',
+        path: '/home/carbon',
+        Icon: <Leaf className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.esg',
+        path: '/home/esg',
+        Icon: <FileBarChart className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.traceability',
+        path: '/home/traceability',
+        Icon: <Link2 className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.rse',
+        path: '/home/rse',
+        Icon: <Award className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.compliance',
+        path: '/home/compliance',
+        Icon: <ShieldCheck className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.externalActivities',
+        path: '/home/external-activities',
+        Icon: <ClipboardList className={iconClasses} />,
       },
     ],
   },
   {
-    label: 'common.routes.settings',
+    label: 'common.routes.myAccount',
     children: [
       {
         label: 'common.routes.profile',
         path: pathsConfig.app.personalAccountSettings,
         Icon: <User className={iconClasses} />,
       },
-      featureFlagsConfig.enablePersonalAccountBilling
-        ? {
-            label: 'common.routes.billing',
-            path: pathsConfig.app.personalAccountBilling,
-            Icon: <CreditCard className={iconClasses} />,
-          }
-        : undefined,
-    ].filter((route) => !!route),
+      {
+        label: 'common.routes.myListings',
+        path: '/home/my-listings',
+        Icon: <PackageSearch className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.wallet',
+        path: '/home/wallet',
+        Icon: <Wallet className={iconClasses} />,
+      },
+      {
+        label: 'common.routes.billing',
+        path: pathsConfig.app.personalAccountBilling,
+        Icon: <CreditCard className={iconClasses} />,
+      },
+    ],
   },
 ] satisfies z.output<typeof NavigationConfigSchema>['routes'];
 

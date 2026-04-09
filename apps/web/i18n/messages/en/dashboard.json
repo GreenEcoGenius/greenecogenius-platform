@@ -1,0 +1,18 @@
+{
+  "homeTitle": "Dashboard",
+  "homeDesc": "Overview of your environmental performance and compliance.",
+  "marketplaceTitle": "Circular Marketplace",
+  "marketplaceDesc": "B2B marketplace for recyclable materials. List, buy or collect.",
+  "carbonTitle": "Carbon Impact",
+  "carbonDesc": "Calculate your Scope 1, 2 and 3 emissions and track your reduction plan.",
+  "esgTitle": "ESG Reporting",
+  "esgDesc": "Generate your CSRD, GHG Protocol and GRI compliant report.",
+  "traceabilityTitle": "Blockchain Traceability",
+  "traceabilityDesc": "Your transactions certified on Polygon with verified CO₂ avoided.",
+  "rseTitle": "CSR & Labels",
+  "rseDesc": "Diagnostic structured according to ISO 26000 — assess your CSR maturity and label eligibility.",
+  "complianceTitle": "Compliance",
+  "complianceDesc": "Automatic assessment of your compliance across 37 environmental standards.",
+  "externalTitle": "External Activities",
+  "externalDesc": "Enter your external activities to enrich your compliance score."
+}

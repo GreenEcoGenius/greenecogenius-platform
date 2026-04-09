@@ -1,0 +1,85 @@
+{
+  "title": "Données complémentaires",
+  "description": "Renseignez vos activités extérieures à la plateforme pour enrichir votre score de conformité et préparer vos rapports ESG.",
+  "savedData": "Données enregistrées",
+  "noDataYet": "Aucune donnée enregistrée.",
+  "addData": "Ajouter une donnée — {category}",
+  "categories": {
+    "governance": {
+      "label": "Gouvernance",
+      "description": "Composition du conseil, politiques anti-corruption, code de conduite, comité RSE."
+    },
+    "social": {
+      "label": "Social & RH",
+      "description": "Effectifs, formation, diversité, conditions de travail, dialogue social."
+    },
+    "environment": {
+      "label": "Environnement",
+      "description": "Consommation d'eau, énergies renouvelables, biodiversité, mobilité."
+    },
+    "procurement": {
+      "label": "Achats",
+      "description": "Achats locaux, audits fournisseurs, politiques achats responsables."
+    },
+    "community": {
+      "label": "Communauté",
+      "description": "Mécénat, bénévolat, partenariats ONG, actions locales."
+    }
+  },
+  "subcategories": {
+    "board_composition": "Composition du conseil",
+    "anti_corruption": "Politique anti-corruption",
+    "code_of_conduct": "Code de conduite",
+    "esg_committee": "Comité RSE / ESG",
+    "remuneration": "Politique de rémunération",
+    "employee_count": "Effectifs",
+    "training_rate": "Taux de formation",
+    "diversity": "Diversité et inclusion",
+    "working_conditions": "Conditions de travail",
+    "social_dialogue": "Dialogue social",
+    "water_consumption": "Consommation d'eau",
+    "renewable_energy": "Énergie renouvelable",
+    "biodiversity": "Biodiversité",
+    "zero_waste": "Politique zéro déchet",
+    "mobility": "Mobilité / flotte",
+    "local_purchasing": "Achats locaux",
+    "supplier_audit": "Audit fournisseurs",
+    "responsible_procurement_policy": "Politique achats responsables",
+    "esg_criteria": "Critères ESG appels d'offres",
+    "patronage": "Mécénat",
+    "volunteering": "Bénévolat employés",
+    "ngo_partnership": "Partenariats ONG",
+    "local_action": "Actions locales"
+  },
+  "form": {
+    "subcategory": "Sous-catégorie",
+    "title": "Titre",
+    "titlePlaceholder": "Ex : Code de conduite 2026",
+    "description": "Description",
+    "descriptionPlaceholder": "Décrivez l'activité, son contexte, ses bénéficiaires…",
+    "quantitativeValue": "Valeur chiffrée",
+    "quantitativeValuePlaceholder": "Ex : 42",
+    "quantitativeUnit": "Unité",
+    "quantitativeUnitPlaceholder": "Ex : %, m³, h, ETP",
+    "externalUrlLabel": "…ou un lien externe",
+    "submit": "Ajouter",
+    "submitting": "Enregistrement…",
+    "saved": "Enregistré.",
+    "genericError": "Impossible d'enregistrer la donnée pour le moment."
+  },
+  "uploader": {
+    "label": "Pièce justificative (optionnel)",
+    "upload": "Uploader un fichier",
+    "uploading": "Envoi…",
+    "constraints": "PDF, JPG, PNG, DOCX — max 10 Mo",
+    "analyze": "Analyser avec Genius",
+    "analyzing": "Analyse…",
+    "remove": "Retirer le document",
+    "uploadFailed": "Upload échoué",
+    "analysisFailed": "Analyse échouée"
+  },
+  "list": {
+    "proofProvided": "Pièce justificative fournie",
+    "externalLink": "Lien externe"
+  }
+}

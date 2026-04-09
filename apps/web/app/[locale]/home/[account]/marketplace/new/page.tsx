@@ -38,10 +38,7 @@ async function NewListingPage({ params }: NewListingPageProps) {
       />
 
       <div className="mx-auto max-w-2xl">
-        <CreateListingForm
-          account={account}
-          categories={categories ?? []}
-        />
+        <CreateListingForm account={account} categories={categories ?? []} />
       </div>
     </PageBody>
   );

@@ -13,6 +13,7 @@ interface FooterProps extends React.HTMLAttributes<HTMLElement> {
   description: React.ReactNode;
   copyright: React.ReactNode;
   sections: FooterSection[];
+  securityBadge?: React.ReactNode;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -21,12 +22,15 @@ export const Footer: React.FC<FooterProps> = ({
   description,
   copyright,
   sections,
+  securityBadge,
   ...props
 }) => {
+  const visible = true;
+
   return (
     <footer
       className={cn(
-        'site-footer bg-muted/20 relative mt-auto w-full py-8 xl:py-16 2xl:py-20',
+        'site-footer border-metal-chrome bg-metal-50 relative mt-auto w-full border-t py-8 xl:py-16 2xl:py-20',
         className,
       )}
       {...props}
@@ -39,11 +43,7 @@ export const Footer: React.FC<FooterProps> = ({
 
               <div className="flex flex-col gap-y-4">
                 <div>
-                  <p className="text-muted-foreground text-sm">{description}</p>
-                </div>
-
-                <div className="text-muted-foreground flex text-xs">
-                  <p>{copyright}</p>
+                  <p className="text-metal-600 text-sm">{description}</p>
                 </div>
               </div>
             </div>
@@ -67,6 +67,14 @@ export const Footer: React.FC<FooterProps> = ({
             ))}
           </div>
         </div>
+
+        {/* Copyright — always last on mobile */}
+        <div className="border-metal-chrome text-metal-steel mt-8 border-t pt-6 text-xs">
+          <p>{copyright}</p>
+          {securityBadge ? (
+            <p className="mt-2 text-xs text-gray-400">{securityBadge}</p>
+          ) : null}
+        </div>
       </div>
     </footer>
   );
@@ -74,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({
 
 function FooterSectionHeading(props: React.PropsWithChildren) {
   return (
-    <span className="font-heading text-secondary-foreground/90 text-sm font-medium">
+    <span className="font-heading text-metal-900 text-sm font-medium">
       {props.children}
     </span>
   );
@@ -89,7 +97,7 @@ function FooterLink({
   children,
 }: React.PropsWithChildren<{ href: string }>) {
   return (
-    <li className="text-muted-foreground text-sm font-medium hover:underline [&>a]:transition-colors">
+    <li className="text-metal-600 hover:text-primary text-sm font-medium transition-colors [&>a]:transition-colors">
       <a href={href}>{children}</a>
     </li>
   );

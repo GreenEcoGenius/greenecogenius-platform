@@ -1,9 +1,118 @@
 /*
-* theme.css
-*
-* GreenEcoGenius — Deep Forest Light Theme
+ * theme.css
+ *
+ * GreenEcoGenius — Logo-based Design System
+ * Primary #1BAF6A (emerald arrows), Accent #7EC845 (lime leaves)
  */
 @custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-brand: #1BAF6A;
+  --color-brand-hover: #159B5C;
+  --color-brand-light: #E8F8F0;
+  --color-brand-border: #A8E6C8;
+  --color-brand-50: #E8F8F0;
+  --color-brand-100: #C5EDDA;
+  --color-brand-200: #A8E6C8;
+  --color-brand-300: #6DD9A6;
+  --color-brand-400: #3DCA85;
+  --color-brand-500: #1BAF6A;
+  --color-brand-600: #159B5C;
+  --color-brand-700: #10874E;
+  --color-brand-800: #0C6B3E;
+  --color-brand-900: #08502F;
+
+  /* ── Brand Accent (lime vert du logo) ── */
+  --color-brand-accent: #7EC845;
+  --color-brand-accent-light: #F0F9E8;
+  --color-brand-accent-50: #F0F9E8;
+  --color-brand-accent-100: #DFF0CC;
+  --color-brand-accent-200: #C5E4A3;
+  --color-brand-accent-300: #A3D474;
+  --color-brand-accent-400: #7EC845;
+  --color-brand-accent-500: #6AB838;
+  --color-brand-accent-600: #56A02C;
+  --color-brand-accent-700: #438722;
+  --color-brand-accent-800: #336D1A;
+  --color-brand-accent-900: #245412;
+
+  /* ── Primary ── */
+  --color-primary-50: #E8F8F0;
+  --color-primary-100: #A8E6C8;
+  --color-primary-500: #1BAF6A;
+  --color-primary-600: #159B5C;
+  --color-primary-700: #118A50;
+  --color-primary-900: #0A5C35;
+  --color-primary-light: #E8F8F0;
+  --color-primary-hover: #159B5C;
+
+  /* ── Accent (lime vert du logo) ── */
+  --color-accent-green: #7EC845;
+  --color-accent-green-light: #F0F9E8;
+
+  /* ── Circuit — Blues tech ── */
+  --color-circuit-cyan: #00d4ff;
+  --color-circuit-blue: #2eafcf;
+  --color-circuit-turquoise: #5bc4d6;
+  --color-circuit-ice: #a8e4f0;
+  --color-circuit-50: #e6f8ff;
+  --color-circuit-100: #a8e4f0;
+  --color-circuit-300: #5bc4d6;
+  --color-circuit-500: #2eafcf;
+  --color-circuit-700: #00d4ff;
+
+  /* ── Tech — Verts ── */
+  --color-tech-neon: #7EC845;
+  --color-tech-emerald: #1BAF6A;
+  --color-tech-mint: #A8E6C8;
+
+  /* ── Metal — Gris bleutes ── */
+  --color-metal-frost: #dde5e8;
+  --color-metal-chrome: #e4e8ec;
+  --color-metal-silver: #c8d0d8;
+  --color-metal-steel: #a0aab4;
+  --color-metal-50: #f4f6f8;
+  --color-metal-100: #e4e8ec;
+  --color-metal-200: #dde5e8;
+  --color-metal-300: #c8d0d8;
+  --color-metal-400: #a0aab4;
+  --color-metal-500: #8e99a8;
+  --color-metal-600: #5a6578;
+  --color-metal-700: #3d4a5c;
+  --color-metal-800: #2a3444;
+  --color-metal-900: #1a2332;
+
+  /* KPI card gradients */
+  --color-kpi-teal: #1BAF6A;
+  --color-kpi-teal-dark: #159B5C;
+  --color-kpi-emerald: #1BAF6A;
+  --color-kpi-emerald-dark: #159B5C;
+  --color-kpi-green: #1BAF6A;
+  --color-kpi-green-dark: #159B5C;
+
+  /* Indicators */
+  --color-indicator-success: #7EC845;
+  --color-indicator-warning: #f59e0b;
+  --color-indicator-error: #e24b4a;
+  --color-indicator-info: #2eafcf;
+  --color-indicator-purple: #534ab7;
+
+  /* ── Semantic badge colors ── */
+  --color-badge-amber-bg: #E8F8F0;
+  --color-badge-amber-text: #111827;
+  --color-badge-purple-bg: #eeedfe;
+  --color-badge-purple-text: #534ab7;
+
+  /* ── Circuit dark (for KPI gradients) ── */
+  --color-circuit-dark: #1a8ab0;
+
+  /* Chart palette */
+  --color-chart-primary: #1BAF6A;
+  --color-chart-circuit: #2eafcf;
+  --color-chart-neon: #7EC845;
+  --color-chart-turquoise: #5bc4d6;
+  --color-chart-amber: #f59e0b;
+}
 
 @utility container {
   @apply mx-auto px-4 lg:px-8 xl:max-w-[80rem];
@@ -14,82 +123,95 @@
     @apply border-border outline-ring/50;
   }
 
+  html {
+    overflow-x: clip;
+  }
+
   body {
     @apply bg-background text-foreground;
+    overflow-x: clip;
+    width: 100%;
   }
 }
 
 /*
- * Deep Forest Light — Light Mode
-  */
+ * Light Mode
+ */
 :root {
-  --background: #FAFDFB;
-  --foreground: #064E3B;
-  --card: #FFFFFF;
-  --card-foreground: #064E3B;
-  --popover: #FFFFFF;
-  --popover-foreground: #064E3B;
-  --primary: #065F46;
-  --primary-foreground: #ECFDF5;
-  --secondary: #ECFDF5;
-  --secondary-foreground: #064E3B;
-  --muted: #ECFDF5;
-  --muted-foreground: #6B7280;
-  --accent: #D1FAE5;
-  --accent-foreground: #064E3B;
-  --destructive: #DC2626;
-  --border: #D1FAE5;
-  --input: #A7F3D0;
-  --ring: #6EE7B7;
-  --chart-1: #059669;
-  --chart-2: #065F46;
-  --chart-3: #047857;
-  --chart-4: #2563EB;
-  --chart-5: #D97706;
-  --radius: 0.625rem;
-  --sidebar: #0F0F0F;
-  --sidebar-foreground: #D1FAE5;
-  --sidebar-primary: #6EE7B7;
-  --sidebar-primary-foreground: #064E3B;
-  --sidebar-accent: #1A1A1A;
-  --sidebar-accent-foreground: #D1FAE5;
-  --sidebar-border: #2D3A2E;
-  --sidebar-ring: #6EE7B7;
+  --background: #f4f6f8;
+  --foreground: #111827;
+  --card: #ffffff;
+  --card-foreground: #111827;
+  --popover: #ffffff;
+  --popover-foreground: #111827;
+  --primary: #1BAF6A;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f6f8;
+  --secondary-foreground: #111827;
+  --muted: #f4f6f8;
+  --muted-foreground: #5a6578;
+  --accent: #E8F8F0;
+  --accent-foreground: #111827;
+  --destructive: #e24b4a;
+  --border: #c8d0d8;
+  --input: #c8d0d8;
+  --ring: #1BAF6A;
+
+  /* Charts */
+  --chart-1: #1BAF6A;
+  --chart-2: #7EC845;
+  --chart-3: #2eafcf;
+  --chart-4: #5bc4d6;
+  --chart-5: #a0aab4;
+
+  --radius: 0.75rem;
+
+  /* Sidebar — Light */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #111827;
+  --sidebar-primary: #1BAF6A;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #E8F8F0;
+  --sidebar-accent-foreground: #1BAF6A;
+  --sidebar-border: #e4e8ec;
+  --sidebar-ring: #1BAF6A;
 }
 
 /*
- * Deep Forest Light — Dark Mode
-  */
+ * Dark Mode
+ */
 .dark {
-  --background: #0F0F0F;
-  --foreground: #D1FAE5;
-  --card: #1A1A1A;
-  --card-foreground: #D1FAE5;
-  --popover: #1A1A1A;
-  --popover-foreground: #D1FAE5;
-  --primary: #6EE7B7;
-  --primary-foreground: #0F0F0F;
-  --secondary: #2D3A2E;
-  --secondary-foreground: #D1FAE5;
-  --muted: #2D3A2E;
-  --muted-foreground: #6B7280;
-  --accent: #065F46;
-  --accent-foreground: #D1FAE5;
-  --destructive: #DC2626;
-  --border: #2D3A2E;
-  --input: #2D3A2E;
-  --ring: #6EE7B7;
-  --chart-1: #6EE7B7;
-  --chart-2: #059669;
-  --chart-3: #34D399;
-  --chart-4: #2563EB;
-  --chart-5: #D97706;
-  --sidebar: #0F0F0F;
-  --sidebar-foreground: #D1FAE5;
-  --sidebar-primary: #6EE7B7;
-  --sidebar-primary-foreground: #0F0F0F;
-  --sidebar-accent: #1A1A1A;
-  --sidebar-accent-foreground: #D1FAE5;
-  --sidebar-border: #2D3A2E;
-  --sidebar-ring: #6EE7B7;
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --popover: #1e293b;
+  --popover-foreground: #f8fafc;
+  --primary: #1BAF6A;
+  --primary-foreground: #ffffff;
+  --secondary: #334155;
+  --secondary-foreground: #f8fafc;
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+  --accent: #334155;
+  --accent-foreground: #f8fafc;
+  --destructive: #e24b4a;
+  --border: #334155;
+  --input: #334155;
+  --ring: #1BAF6A;
+
+  --chart-1: #1BAF6A;
+  --chart-2: #7EC845;
+  --chart-3: #2eafcf;
+  --chart-4: #5bc4d6;
+  --chart-5: #475569;
+
+  --sidebar: #1e293b;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #1BAF6A;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #334155;
+  --sidebar-accent-foreground: #f8fafc;
+  --sidebar-border: #334155;
+  --sidebar-ring: #1BAF6A;
 }

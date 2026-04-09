@@ -6,8 +6,7 @@ import { getTranslations } from 'next-intl/server';
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Button } from '@kit/ui/button';
-import { Heading } from '@kit/ui/heading';
-import { PageBody, PageHeader } from '@kit/ui/page';
+import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { ListingCard } from '~/home/_components/listing-card';
@@ -34,12 +33,6 @@ async function MyListingsPage() {
 
   return (
     <PageBody>
-      <PageHeader description="">
-        <Heading level={3}>
-          <Trans i18nKey={'common.routes.myListings'} />
-        </Heading>
-      </PageHeader>
-
       <div className="flex items-center justify-end">
         <Button
           render={
@@ -55,7 +48,12 @@ async function MyListingsPage() {
       {listings && listings.length > 0 ? (
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {listings.map((listing) => (
-            <ListingCard key={listing.id} listing={listing} account="" />
+            <ListingCard
+              key={listing.id}
+              listing={listing}
+              account=""
+              showDelete
+            />
           ))}
         </div>
       ) : (

@@ -23,7 +23,7 @@ export function TeamAccountLayoutSidebar(props: {
 
   return (
     <Sidebar variant="floating" collapsible={collapsible}>
-      <SidebarHeader className={'h-16 justify-center'}>
+      <SidebarHeader className={'mt-14 h-16 justify-center'}>
         <div className={'flex items-center justify-between gap-x-1'}>
           <WorkspaceDropdown
             user={user}

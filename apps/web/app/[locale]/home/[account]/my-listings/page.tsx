@@ -11,8 +11,9 @@ import { Button } from '@kit/ui/button';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
-import { TeamAccountLayoutPageHeader } from '../_components/team-account-layout-page-header';
 import { ListingCard } from '~/home/_components/listing-card';
+
+import { TeamAccountLayoutPageHeader } from '../_components/team-account-layout-page-header';
 
 interface MyListingsPageProps {
   params: Promise<{ account: string }>;
@@ -73,6 +74,7 @@ async function MyListingsPage({ params }: MyListingsPageProps) {
               key={listing.id}
               listing={listing}
               account={account}
+              showDelete
             />
           ))}
         </div>

@@ -1,21 +1,23 @@
-'use client'
+'use client';
 
-import { useId } from 'react'
-import Image, { type ImageProps } from 'next/image'
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import clsx from 'clsx'
+import { useId } from 'react';
 
-import { Container } from '@/components/Container'
-import screenshotContacts from '@/images/screenshots/contacts.png'
-import screenshotInventory from '@/images/screenshots/inventory.png'
-import screenshotProfitLoss from '@/images/screenshots/profit-loss.png'
+import Image, { type ImageProps } from 'next/image';
+
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
+import clsx from 'clsx';
+
+import { Container } from '@/components/Container';
+import screenshotContacts from '@/images/screenshots/contacts.png';
+import screenshotInventory from '@/images/screenshots/inventory.png';
+import screenshotProfitLoss from '@/images/screenshots/profit-loss.png';
 
 interface Feature {
-  name: React.ReactNode
-  summary: string
-  description: string
-  image: ImageProps['src']
-  icon: React.ComponentType
+  name: React.ReactNode;
+  summary: string;
+  description: string;
+  image: ImageProps['src'];
+  icon: React.ComponentType;
 }
 
 const features: Array<Feature> = [
@@ -26,7 +28,7 @@ const features: Array<Feature> = [
       'We talked about reporting in the section above but we needed three items here, so mentioning it one more time for posterity.',
     image: screenshotProfitLoss,
     icon: function ReportingIcon() {
-      let id = useId()
+      let id = useId();
       return (
         <>
           <defs>
@@ -50,7 +52,7 @@ const features: Array<Feature> = [
             strokeLinejoin="round"
           />
         </>
-      )
+      );
     },
   },
   {
@@ -78,7 +80,7 @@ const features: Array<Feature> = [
             fill="#fff"
           />
         </>
-      )
+      );
     },
   },
   {
@@ -101,10 +103,10 @@ const features: Array<Feature> = [
             fill="#fff"
           />
         </>
-      )
+      );
     },
   },
-]
+];
 
 function Feature({
   feature,
@@ -112,8 +114,8 @@ function Feature({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<'div'> & {
-  feature: Feature
-  isActive: boolean
+  feature: Feature;
+  isActive: boolean;
 }) {
   return (
     <div
@@ -138,12 +140,12 @@ function Feature({
       >
         {feature.name}
       </h3>
-      <p className="mt-2 font-display text-xl text-slate-900">
+      <p className="font-display mt-2 text-xl text-slate-900">
         {feature.summary}
       </p>
       <p className="mt-4 text-sm text-slate-600">{feature.description}</p>
     </div>
-  )
+  );
 }
 
 function FeaturesMobile() {
@@ -166,7 +168,7 @@ function FeaturesMobile() {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 function FeaturesDesktop() {
@@ -221,7 +223,7 @@ function FeaturesDesktop() {
         </>
       )}
     </TabGroup>
-  )
+  );
 }
 
 export function SecondaryFeatures() {
@@ -245,5 +247,5 @@ export function SecondaryFeatures() {
         <FeaturesDesktop />
       </Container>
     </section>
-  )
+  );
 }

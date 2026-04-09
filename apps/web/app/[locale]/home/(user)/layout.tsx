@@ -6,17 +6,20 @@ import { redirect } from 'next/navigation';
 import * as z from 'zod';
 
 import { UserWorkspaceContextProvider } from '@kit/accounts/components';
-import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
+import { Page, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/sidebar';
 
-import { AppLogo } from '~/components/app-logo';
+import { ChatProvider } from '~/components/ai/chat-context';
+import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
+import { SidebarChatBridge } from '~/components/ai/sidebar-chat-bridge';
+import { AppHeader } from '~/components/layout/app-header';
+import { GlobalSearch } from '~/components/layout/global-search';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
 
 // home imports
 import { HomeMenuNavigation } from './_components/home-menu-navigation';
-import { HomeMobileNavigation } from './_components/home-mobile-navigation';
 import { HomeSidebar } from './_components/home-sidebar';
 import { loadUserWorkspace } from './_lib/server/load-user-workspace';
 
@@ -46,19 +49,31 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
 
   return (
     <UserWorkspaceContextProvider value={workspace}>
-      <SidebarProvider defaultOpen={state.open}>
-        <Page style={'sidebar'}>
-          <PageNavigation>
-            <HomeSidebar workspace={workspace} />
-          </PageNavigation>
+      <ChatProvider>
+        <SidebarProvider defaultOpen={state.open}>
+          <SidebarChatBridge />
+          <AppHeader />
 
-          <PageMobileNavigation className={'flex items-center justify-between'}>
-            <MobileNavigation workspace={workspace} />
-          </PageMobileNavigation>
+          <div className="min-w-0 flex-1 lg:flex lg:h-dvh lg:flex-col">
+            <div className="min-h-0 flex-1 lg:flex lg:overflow-hidden">
+              <Page
+                style={'sidebar'}
+                contentContainerClassName="mx-auto flex w-full min-w-0 flex-1 flex-col bg-white pt-20 md:pt-24 lg:overflow-y-auto lg:bg-inherit"
+              >
+                <PageNavigation>
+                  <HomeSidebar workspace={workspace} />
+                </PageNavigation>
 
-          {children}
-        </Page>
-      </SidebarProvider>
+                {children}
+              </Page>
+
+              <GlobalAIAssistant />
+            </div>
+          </div>
+        </SidebarProvider>
+
+        <GlobalSearch />
+      </ChatProvider>
     </UserWorkspaceContextProvider>
   );
 }
@@ -70,32 +85,27 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
 
   return (
     <UserWorkspaceContextProvider value={workspace}>
-      <Page style={'header'}>
-        <PageNavigation>
-          <HomeMenuNavigation workspace={workspace} />
-        </PageNavigation>
+      <ChatProvider>
+        <AppHeader />
 
-        <PageMobileNavigation className={'flex items-center justify-between'}>
-          <MobileNavigation workspace={workspace} />
-        </PageMobileNavigation>
+        <div className="flex min-w-0 flex-1">
+          <Page
+            style={'header'}
+            contentContainerClassName="flex flex-1 flex-col space-y-4 pt-20 md:pt-32"
+          >
+            <PageNavigation>
+              <HomeMenuNavigation workspace={workspace} />
+            </PageNavigation>
 
-        {children}
-      </Page>
+            {children}
+          </Page>
+
+          <GlobalAIAssistant />
+        </div>
+
+        <GlobalSearch />
+      </ChatProvider>
     </UserWorkspaceContextProvider>
-  );
-}
-
-function MobileNavigation({
-  workspace,
-}: {
-  workspace: Awaited<ReturnType<typeof loadUserWorkspace>>;
-}) {
-  return (
-    <>
-      <AppLogo />
-
-      <HomeMobileNavigation workspace={workspace} />
-    </>
   );
 }
 

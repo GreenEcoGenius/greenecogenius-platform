@@ -11,8 +11,9 @@ import { Button } from '@kit/ui/button';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
-import { TeamAccountLayoutPageHeader } from '../_components/team-account-layout-page-header';
 import { ListingCard } from '~/home/_components/listing-card';
+
+import { TeamAccountLayoutPageHeader } from '../_components/team-account-layout-page-header';
 
 interface MarketplacePageProps {
   params: Promise<{ account: string }>;
@@ -45,7 +46,8 @@ async function MarketplacePage({ params }: MarketplacePageProps) {
 
       <div className="flex items-center justify-between">
         <p className="text-muted-foreground text-sm">
-          {listings?.length ?? 0} <Trans i18nKey="marketplace.listingsAvailable" />
+          {listings?.length ?? 0}{' '}
+          <Trans i18nKey="marketplace.listingsAvailable" />
         </p>
 
         <Button
@@ -62,11 +64,7 @@ async function MarketplacePage({ params }: MarketplacePageProps) {
       {listings && listings.length > 0 ? (
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {listings.map((listing) => (
-            <ListingCard
-              key={listing.id}
-              listing={listing}
-              account={account}
-            />
+            <ListingCard key={listing.id} listing={listing} account={account} />
           ))}
         </div>
       ) : (

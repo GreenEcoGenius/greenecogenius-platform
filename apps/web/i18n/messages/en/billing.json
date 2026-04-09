@@ -123,5 +123,29 @@
       "heading": "Your payment failed",
       "description": "Your payment failed. Please update your payment method."
     }
-  }
+  },
+  "trialInProgress": "Trial in progress",
+  "subscriptionActive": "Subscription active",
+  "currentPlan": "Current plan",
+  "planEssentielDefault": "Essential Plan",
+  "planAvanceDefault": "Advanced Plan",
+  "perMonthSuffix": "/month",
+  "manageSubscription": "Manage my subscription",
+  "includedEachTransactionTitle": "Included in every marketplace transaction",
+  "includedEachTransactionDesc": "Without a subscription, you already benefit from these features via the marketplace commission.",
+  "tagBlockchainTraceability": "Blockchain traceability",
+  "tagAutoCO2": "Automatic CO₂ calculation",
+  "tagPdfCertificate": "PDF certificate",
+  "tagCarbonDashboard": "Carbon dashboard",
+  "tagExportPdfCsv": "PDF/CSV export",
+  "faqTitle": "Frequently asked questions",
+  "faqIncludedQ": "What is included for free?",
+  "faqIncludedA": "Every transaction on Le Comptoir Circulaire includes blockchain traceability, CO₂ calculation, a PDF certificate and the carbon dashboard. Everything is covered by the marketplace commission.",
+  "faqTrialQ": "How does the free trial work?",
+  "faqTrialA": "14 days of full access to all features of your plan. No payment until the end of the trial period. Cancel anytime.",
+  "faqChangePlanQ": "Can I change plans at any time?",
+  "faqChangePlanA": "Yes, you can upgrade or downgrade at any time. The difference is prorated.",
+  "errorGeneric": "An error occurred",
+  "errorNoPaymentUrl": "No payment URL received",
+  "errorNetwork": "Network error. Please try again."
 }
