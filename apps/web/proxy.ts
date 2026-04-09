@@ -257,10 +257,7 @@ async function matchUrlPattern(url: string) {
 }
 
 function stripLocalePrefix(url: string): string {
-  return url.replace(
-    /^(https?:\/\/[^/]+)?\/(?:fr|en)(\/|$)/,
-    '$1/$2',
-  ) as string;
+  return url.replace(/^(https?:\/\/[^/]+)?\/(?:fr|en)(\/|$)/, '$1/$2') as string;
 }
 
 /**
