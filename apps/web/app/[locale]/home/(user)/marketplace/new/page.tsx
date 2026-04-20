@@ -14,7 +14,7 @@ export const generateMetadata = async () => {
 
 async function NewListingPage() {
   const client = getSupabaseServerClient();
-  await requireUser(client);
+  const user = await requireUser(client);
 
   const userId = user.data?.id;
 
