@@ -187,6 +187,61 @@ export function LegalDataTable({ rows }: { rows: [string, string][] }) {
 }
 
 /**
+ * Three-column cookie inventory table used by the cookie-policy page.
+ * Header row in the inverse forest tone, body rows in cream surface.
+ * Cookie name rendered in font-mono so technical identifiers stay
+ * legible.
+ */
+export function LegalCookieTable({
+  headers,
+  rows,
+}: {
+  headers: [string, string, string];
+  rows: [string, string, string][];
+}) {
+  return (
+    <div className="mt-4 not-prose overflow-hidden rounded-[--radius-enviro-xl] border border-[--color-enviro-cream-300] bg-white">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="bg-[--color-enviro-forest-900] text-[--color-enviro-fg-inverse]">
+            {headers.map((header) => (
+              <th
+                key={header}
+                scope="col"
+                className="px-4 py-3 text-left text-xs uppercase tracking-[0.04em] font-semibold font-[family-name:var(--font-enviro-mono)]"
+              >
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(([cookie, purpose, duration], i) => (
+            <tr
+              key={cookie}
+              className={cn(
+                'text-[--color-enviro-forest-900]',
+                i > 0 && 'border-t border-[--color-enviro-cream-300]',
+              )}
+            >
+              <td className="px-4 py-3 text-xs font-medium font-[family-name:var(--font-enviro-mono)]">
+                {cookie}
+              </td>
+              <td className="px-4 py-3 text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
+                {purpose}
+              </td>
+              <td className="whitespace-nowrap px-4 py-3 text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-mono)]">
+                {duration}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/**
  * Lime-bullet list used in `5. Services proposés`.
  */
 export function LegalBulletList({ items }: { items: string[] }) {
