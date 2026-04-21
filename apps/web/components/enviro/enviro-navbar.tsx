@@ -4,7 +4,6 @@ import { type ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import { Globe, Menu, X } from 'lucide-react';
 import { useLocale } from 'next-intl';
@@ -12,28 +11,6 @@ import { useLocale } from 'next-intl';
 import { cn } from '@kit/ui/utils';
 
 import { EnviroButton } from './enviro-button';
-
-/**
- * Compare a `pathname` against a link `href`, both stripped of the
- * locale prefix, and decide whether the link should render in its
- * "active" state.
- *
- * Rules:
- *  - exact match -> active.
- *  - href is "/" -> active only on the literal "/" pathname (not a
- *    descendant), otherwise every link would activate.
- *  - href is a non-root prefix of pathname -> active (e.g.
- *    `/blog/foo` activates `/blog`).
- */
-function isActive(pathname: string, href: string): boolean {
-  // Strip any leading locale segment ("/fr", "/en") for stable comparison.
-  const stripped = pathname.replace(/^\/(fr|en)(?=\/|$)/, '') || '/';
-
-  if (href === '/') return stripped === '/';
-  if (stripped === href) return true;
-
-  return stripped.startsWith(`${href}/`);
-}
 
 export interface EnviroNavbarLink {
   /** Internal href, e.g. `/about`. */
@@ -86,7 +63,6 @@ export function EnviroNavbar({
   mobileMenuLabel = 'Open menu',
   closeMenuLabel = 'Close menu',
 }: EnviroNavbarProps) {
-  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -121,23 +97,12 @@ export function EnviroNavbar({
 
   const isInverse = tone === 'forest' || tone === 'transparent';
 
-  const linkBaseClasses =
-    'relative inline-flex items-center gap-2 py-2 text-sm font-medium transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]';
-
-  const linkColorClasses = (active: boolean) =>
+  const linkClasses = cn(
+    'text-sm font-medium transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
     isInverse
-      ? cn(
-          'after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:rounded-full after:transition-all',
-          active
-            ? 'text-[--color-enviro-lime-300] after:bg-[--color-enviro-lime-300]'
-            : 'text-[--color-enviro-fg-inverse-muted] hover:text-[--color-enviro-lime-300] after:bg-transparent',
-        )
-      : cn(
-          'after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:rounded-full after:transition-all',
-          active
-            ? 'text-[--color-enviro-forest-900] after:bg-[--color-enviro-cta]'
-            : 'text-[--color-enviro-forest-700] hover:text-[--color-enviro-forest-900] after:bg-transparent',
-        );
+      ? 'text-[--color-enviro-fg-inverse-muted] hover:text-[--color-enviro-lime-300]'
+      : 'text-[--color-enviro-forest-700] hover:text-[--color-enviro-forest-900]',
+  );
 
   return (
     <header
@@ -156,26 +121,18 @@ export function EnviroNavbar({
         <div className="flex items-center gap-3">{brand}</div>
 
         <ul className="hidden items-center gap-7 md:flex">
-          {links.map((link) => {
-            const active = isActive(pathname, link.href);
-
-            return (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  aria-current={active ? 'page' : undefined}
-                  className={cn(linkBaseClasses, linkColorClasses(active))}
-                >
-                  {link.label}
-                  {link.badge ? (
-                    <span className="ml-2 rounded-full bg-[--color-enviro-lime-300] px-2 py-0.5 text-[10px] uppercase tracking-wide text-[--color-enviro-forest-900]">
-                      {link.badge}
-                    </span>
-                  ) : null}
-                </Link>
-              </li>
-            );
-          })}
+          {links.map((link) => (
+            <li key={link.href}>
+              <Link href={link.href} className={linkClasses}>
+                {link.label}
+                {link.badge ? (
+                  <span className="ml-2 rounded-full bg-[--color-enviro-lime-300] px-2 py-0.5 text-[10px] uppercase tracking-wide text-[--color-enviro-forest-900]">
+                    {link.badge}
+                  </span>
+                ) : null}
+              </Link>
+            </li>
+          ))}
         </ul>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -212,7 +169,6 @@ export function EnviroNavbar({
               showLocaleSwitcher={showLocaleSwitcher}
               localeSwitcherLabel={localeSwitcherLabel}
               closeMenuLabel={closeMenuLabel}
-              pathname={pathname}
               onClose={() => setOpen(false)}
             />,
             document.body,
@@ -233,7 +189,6 @@ interface MobileMenuProps
     | 'localeSwitcherLabel'
     | 'closeMenuLabel'
   > {
-  pathname: string;
   onClose: () => void;
 }
 
@@ -245,7 +200,6 @@ function MobileMenu({
   showLocaleSwitcher,
   localeSwitcherLabel,
   closeMenuLabel = 'Close menu',
-  pathname,
   onClose,
 }: MobileMenuProps) {
   return (
@@ -263,27 +217,17 @@ function MobileMenu({
       </div>
 
       <ul className="flex flex-col gap-1 px-5 py-6">
-        {links.map((link) => {
-          const active = isActive(pathname, link.href);
-
-          return (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                onClick={onClose}
-                aria-current={active ? 'page' : undefined}
-                className={cn(
-                  'block py-3 text-lg font-medium transition-colors',
-                  active
-                    ? 'text-[--color-enviro-lime-300]'
-                    : 'text-[--color-enviro-fg-inverse] hover:text-[--color-enviro-lime-300]',
-                )}
-              >
-                {link.label}
-              </Link>
-            </li>
-          );
-        })}
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              onClick={onClose}
+              className="block py-3 text-lg font-medium text-[--color-enviro-fg-inverse] hover:text-[--color-enviro-lime-300]"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
       </ul>
 
       <div className="mt-auto flex flex-col gap-3 border-t border-[--color-enviro-forest-700] px-5 py-6">
