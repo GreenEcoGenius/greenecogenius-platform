@@ -15,7 +15,12 @@ const NEXT_ACTION_HEADER = 'next-action';
 const LOCALE_COOKIE = 'NEXT_LOCALE';
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|images|locales|assets|api/*).*)'],
+  // `preview` is excluded so the Enviro template alias served via
+  // `next.config.mjs` rewrites bypasses i18n routing, auth checks and
+  // CSP headers. Same goes for `enviro` (the underlying static folder).
+  matcher: [
+    '/((?!_next/static|_next/image|images|locales|assets|preview|enviro|api/*).*)',
+  ],
 };
 
 // create i18n middleware once at module scope

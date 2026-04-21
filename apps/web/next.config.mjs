@@ -44,6 +44,7 @@ const config = {
     '/*': ['./content/**/*'],
   },
   redirects: getRedirects,
+  rewrites: getRewrites,
   turbopack: {
     resolveExtensions: ['.ts', '.tsx', '.js', '.jsx'],
     resolveAlias: getModulesAliases(),
@@ -126,6 +127,54 @@ async function getRedirects() {
       source: '/server-sitemap.xml',
       destination: '/sitemap.xml',
       permanent: true,
+    },
+  ];
+}
+
+/**
+ * Enviro template preview rewrites.
+ *
+ * Phase 2 of the Enviro adoption plan exposes the Webflow source under a
+ * cleaner alias (`/preview/enviro`) so designers and reviewers can browse the
+ * reference template alongside the Next.js implementation without leaving
+ * the project. The actual files live untouched under `apps/web/public/enviro`.
+ *
+ * The alias is enabled in development and Vercel preview deployments, and
+ * disabled in production by default. To force-disable it (or reactivate in
+ * a specific Vercel deploy), set `NEXT_PUBLIC_ENABLE_ENVIRO_PREVIEW`.
+ *
+ * Phase 9 cleanup: revisit this block before merging to `main`. The plan is
+ * either to remove it entirely once all Enviro pages are migrated, or to
+ * keep it gated behind an explicit env var for ongoing internal review.
+ */
+function isEnviroPreviewEnabled() {
+  const explicit = process.env.NEXT_PUBLIC_ENABLE_ENVIRO_PREVIEW;
+
+  if (explicit === 'true') return true;
+  if (explicit === 'false') return false;
+
+  // Default: enabled everywhere except Vercel production.
+  return process.env.VERCEL_ENV !== 'production';
+}
+
+/** @type {import('next').NextConfig['rewrites']} */
+async function getRewrites() {
+  if (!isEnviroPreviewEnabled()) {
+    return [];
+  }
+
+  return [
+    {
+      source: '/preview/enviro',
+      destination: '/enviro/index.html',
+    },
+    {
+      source: '/preview/enviro/',
+      destination: '/enviro/index.html',
+    },
+    {
+      source: '/preview/enviro/:path*',
+      destination: '/enviro/:path*',
     },
   ];
 }
