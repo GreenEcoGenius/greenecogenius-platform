@@ -322,6 +322,15 @@
   "solLabelsF3": "Suivi de progression et pré-audit automatisé",
   "solStartFree": "Commencer gratuitement",
   "solLearnMore": "En savoir plus",
+  "solHeroTag": "Nos solutions",
+  "solCompTag": "Comparatif",
+  "solCompTitle": "Pourquoi choisir GreenEcoGenius",
+  "solCompSub": "Une seule plateforme là où vos concurrents en utilisent trois.",
+  "solCtaTag": "Demandez une démo",
+  "solCtaTitle": "Voyez la plateforme à l'œuvre",
+  "solCtaSub": "Une démonstration de 30 minutes adaptée à votre secteur, vos volumes et vos obligations.",
+  "solCtaLabel": "Réserver une démo",
+  "solCtaSecondary": "Essayer gratuitement",
 
   "landing": {
     "heroCtaDemo": "Voir la démo",

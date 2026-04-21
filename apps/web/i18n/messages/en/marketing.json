@@ -322,6 +322,15 @@
   "solLabelsF3": "Progress tracking and automated pre-audit",
   "solStartFree": "Get started for free",
   "solLearnMore": "Learn more",
+  "solHeroTag": "Our solutions",
+  "solCompTag": "Comparison",
+  "solCompTitle": "Why choose GreenEcoGenius",
+  "solCompSub": "One platform where your competitors need three.",
+  "solCtaTag": "Book a demo",
+  "solCtaTitle": "See the platform in action",
+  "solCtaSub": "A 30 minute walkthrough tailored to your industry, your volumes and your obligations.",
+  "solCtaLabel": "Book a demo",
+  "solCtaSecondary": "Try for free",
 
   "landing": {
     "heroCtaDemo": "See the demo",

@@ -2,17 +2,25 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import {
-  ArrowRight,
   BarChart3,
   Leaf,
   Link2,
   Recycle,
   Shield,
   Sparkles,
+  type LucideIcon,
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
-import { AnimateOnScroll } from '../_components/animate-on-scroll';
+import { cn } from '@kit/ui/utils';
+
+import {
+  EnviroButton,
+  EnviroComparisonTable,
+  EnviroPageHero,
+  EnviroSectionHeader,
+} from '~/components/enviro';
+import { FadeInSection } from '~/components/enviro/animations/fade-in-section';
 
 export async function generateMetadata() {
   const t = await getTranslations('marketing');
@@ -23,16 +31,26 @@ export async function generateMetadata() {
   };
 }
 
+interface Solution {
+  id: string;
+  Icon: LucideIcon;
+  title: string;
+  subtitle: string;
+  description: string;
+  features: string[];
+  image: string;
+  href: string;
+}
+
 export default async function SolutionsPage() {
   const t = await getTranslations('marketing');
 
-  const SOLUTIONS = [
+  const solutions: Solution[] = [
     {
       id: 'marketplace',
-      icon: <Recycle className="h-7 w-7" strokeWidth={1.5} />,
+      Icon: Recycle,
       title: t('solMarketplaceTitle'),
       subtitle: t('solMarketplaceSub'),
-      badgeClass: 'bg-primary-light text-primary-500',
       description: t('solMarketplaceDesc'),
       features: [
         t('solMarketplaceF1'),
@@ -44,10 +62,9 @@ export default async function SolutionsPage() {
     },
     {
       id: 'traceability',
-      icon: <Link2 className="h-7 w-7" strokeWidth={1.5} />,
+      Icon: Link2,
       title: t('solTraceTitle'),
       subtitle: t('solTraceSub'),
-      badgeClass: 'bg-circuit-ice text-circuit-blue',
       description: t('solTraceDesc'),
       features: [t('solTraceF1'), t('solTraceF2'), t('solTraceF3')],
       image: '/images/normes/traceability-blockchain-chain.png',
@@ -55,10 +72,9 @@ export default async function SolutionsPage() {
     },
     {
       id: 'carbon',
-      icon: <Leaf className="h-7 w-7" strokeWidth={1.5} />,
+      Icon: Leaf,
       title: t('solCarbonTitle'),
       subtitle: t('solCarbonSub'),
-      badgeClass: 'bg-tech-mint text-tech-emerald',
       description: t('solCarbonDesc'),
       features: [t('solCarbonF1'), t('solCarbonF2'), t('solCarbonF3')],
       image: '/images/normes/carbon-counter-1000t.png',
@@ -66,10 +82,9 @@ export default async function SolutionsPage() {
     },
     {
       id: 'reporting',
-      icon: <BarChart3 className="h-7 w-7" strokeWidth={1.5} />,
+      Icon: BarChart3,
       title: t('solEsgTitle'),
       subtitle: t('solEsgSub'),
-      badgeClass: 'bg-badge-purple-bg text-badge-purple-text',
       description: t('solEsgDesc'),
       features: [t('solEsgF1'), t('solEsgF2'), t('solEsgF3')],
       image: '/images/normes/reporting-esg-meeting.png',
@@ -77,10 +92,9 @@ export default async function SolutionsPage() {
     },
     {
       id: 'compliance',
-      icon: <Shield className="h-7 w-7" strokeWidth={1.5} />,
+      Icon: Shield,
       title: t('solComplianceTitle'),
       subtitle: t('solComplianceSub'),
-      badgeClass: 'bg-badge-amber-bg text-badge-amber-text',
       description: t('solComplianceDesc'),
       features: [
         t('solComplianceF1'),
@@ -92,10 +106,9 @@ export default async function SolutionsPage() {
     },
     {
       id: 'labels',
-      icon: <Sparkles className="h-7 w-7" strokeWidth={1.5} />,
+      Icon: Sparkles,
       title: t('solLabelsTitle'),
       subtitle: t('solLabelsSub'),
-      badgeClass: 'bg-tech-mint text-tech-emerald',
       description: t('solLabelsDesc'),
       features: [t('solLabelsF1'), t('solLabelsF2'), t('solLabelsF3')],
       image:
@@ -104,120 +117,222 @@ export default async function SolutionsPage() {
     },
   ];
 
-  return (
-    <div>
-      <section className="bg-metal-50 relative overflow-hidden py-20 sm:py-28">
-        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <div className="bg-primary-light text-primary mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold">
-              <Sparkles className="h-4 w-4" />
-              {t('solBadge')}
-            </div>
-            <h1 className="text-metal-900 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-              {t('solTitle')}
-            </h1>
-            <p className="text-metal-600 mx-auto mt-4 max-w-2xl text-lg">
-              {t('solDesc')}
-            </p>
-          </AnimateOnScroll>
-        </div>
-      </section>
+  const compHeaders = [
+    t('landing.compHeaderFeature'),
+    t('landing.compHeaderGeg'),
+    t('landing.compHeaderGreenly'),
+    t('landing.compHeaderSweep'),
+    t('landing.compHeaderInternal'),
+  ];
+  const partial = t('landing.compYesPartial');
+  const compRows = [
+    {
+      feature: t('landing.comp_marketplace'),
+      cells: [true, false, false, false] as Array<boolean | string>,
+    },
+    {
+      feature: t('landing.comp_blockchain'),
+      cells: [true, false, false, false] as Array<boolean | string>,
+    },
+    {
+      feature: t('landing.comp_carbonScopes'),
+      cells: [true, true, true, partial] as Array<boolean | string>,
+    },
+    {
+      feature: t('landing.comp_csrdReport'),
+      cells: [true, true, true, false] as Array<boolean | string>,
+    },
+    {
+      feature: t('landing.comp_ademeBase'),
+      cells: [true, true, partial, false] as Array<boolean | string>,
+    },
+    {
+      feature: t('landing.comp_agecRep'),
+      cells: [true, partial, partial, false] as Array<boolean | string>,
+    },
+    {
+      feature: t('landing.comp_blockchainCerts'),
+      cells: [true, false, false, false] as Array<boolean | string>,
+    },
+    {
+      feature: t('landing.comp_csrLabels'),
+      cells: [true, false, partial, false] as Array<boolean | string>,
+    },
+    {
+      feature: t('landing.comp_apiWebhooks'),
+      cells: [true, true, true, false] as Array<boolean | string>,
+    },
+    {
+      feature: t('landing.comp_entryPrice'),
+      cells: [
+        t('landing.compPriceGeg'),
+        t('landing.compPriceGreenly'),
+        t('landing.compPriceSweep'),
+        t('landing.compPriceInternal'),
+      ] as Array<boolean | string>,
+    },
+  ];
 
-      {SOLUTIONS.map((solution, index) => {
+  return (
+    <div className="flex flex-col bg-[--color-enviro-cream-50] text-[--color-enviro-forest-900]">
+      {/* ────────────────── HERO ────────────────── */}
+      <EnviroPageHero
+        tag={t('solHeroTag')}
+        title={t('solTitle')}
+        subtitle={t('solDesc')}
+        tone="cream"
+        align="center"
+      />
+
+      {/* ────────────────── 6 SOLUTIONS (alternating) ────────────────── */}
+      {solutions.map((solution, index) => {
         const isEven = index % 2 === 0;
+        const altBg = !isEven;
 
         return (
           <section
             key={solution.id}
-            className={`py-16 sm:py-24 ${index % 2 === 1 ? 'bg-metal-50' : ''}`}
+            id={solution.id}
+            className={cn(
+              'py-20 lg:py-24',
+              altBg ? 'bg-white' : 'bg-[--color-enviro-cream-50]',
+            )}
           >
-            <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-              <div
-                className={`grid items-center gap-12 lg:grid-cols-2 ${isEven ? '' : 'lg:[direction:rtl]'}`}
-              >
-                <AnimateOnScroll
-                  animation={isEven ? 'fade-right' : 'fade-left'}
-                >
-                  <div className="relative overflow-hidden rounded-xl shadow-sm lg:[direction:ltr]">
+            <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+              <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+                <FadeInSection>
+                  <div
+                    className={cn(
+                      'relative aspect-[4/3] overflow-hidden rounded-[--radius-enviro-3xl] shadow-[--shadow-enviro-card]',
+                      isEven ? 'lg:order-1' : 'lg:order-2',
+                    )}
+                  >
                     <Image
                       src={solution.image}
                       alt={solution.title}
-                      width={800}
-                      height={500}
-                      className="w-full object-cover"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover"
                       unoptimized={solution.image.startsWith('http')}
                     />
                   </div>
-                </AnimateOnScroll>
+                </FadeInSection>
 
-                <div className="lg:[direction:ltr]">
-                  <AnimateOnScroll
-                    animation={isEven ? 'fade-left' : 'fade-right'}
-                    delay={100}
+                <FadeInSection delay={0.1}>
+                  <div
+                    className={cn(
+                      'flex flex-col gap-5',
+                      isEven ? 'lg:order-2' : 'lg:order-1',
+                    )}
                   >
-                    <div className="text-primary mb-4 inline-flex items-center gap-3">
-                      <div className="bg-primary-light rounded-xl p-3">
-                        {solution.icon}
-                      </div>
-                      <div>
-                        <p
-                          className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold tracking-wider uppercase ${solution.badgeClass}`}
-                        >
-                          {solution.subtitle}
-                        </p>
-                        <h2 className="text-metal-900 text-2xl font-bold sm:text-3xl">
-                          {solution.title}
-                        </h2>
-                      </div>
+                    <span className="inline-flex items-center gap-1 text-xs uppercase font-medium tracking-[0.08em] text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-mono)]">
+                      <span aria-hidden="true">[</span>
+                      <span className="px-1">{solution.subtitle}</span>
+                      <span aria-hidden="true">]</span>
+                    </span>
+
+                    <div className="flex items-start gap-4">
+                      <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]">
+                        <solution.Icon className="h-6 w-6" strokeWidth={1.5} />
+                      </span>
+                      <h2 className="text-3xl md:text-4xl font-semibold leading-tight tracking-tight font-[family-name:var(--font-enviro-display)]">
+                        {solution.title}
+                      </h2>
                     </div>
-                  </AnimateOnScroll>
 
-                  <AnimateOnScroll
-                    animation={isEven ? 'fade-left' : 'fade-right'}
-                    delay={200}
-                  >
-                    <p className="text-metal-600 text-base leading-relaxed">
+                    <p className="text-base md:text-lg leading-relaxed text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
                       {solution.description}
                     </p>
-                  </AnimateOnScroll>
 
-                  <AnimateOnScroll
-                    animation={isEven ? 'fade-left' : 'fade-right'}
-                    delay={300}
-                  >
-                    <ul className="mt-6 space-y-3">
+                    <ul className="mt-2 flex flex-col gap-3">
                       {solution.features.map((feature) => (
                         <li
                           key={feature}
-                          className="flex items-start gap-3 text-sm"
+                          className="flex items-start gap-3 text-sm text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]"
                         >
-                          <div className="bg-tech-mint mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full">
-                            <div className="bg-tech-neon h-1.5 w-1.5 rounded-full" />
-                          </div>
-                          <span className="text-metal-700">{feature}</span>
+                          <span
+                            aria-hidden="true"
+                            className="mt-1.5 inline-flex h-2 w-2 shrink-0 items-center justify-center rounded-[--radius-enviro-pill] bg-[--color-enviro-lime-400]"
+                          />
+                          <span>{feature}</span>
                         </li>
                       ))}
                     </ul>
-                  </AnimateOnScroll>
 
-                  <AnimateOnScroll
-                    animation={isEven ? 'fade-left' : 'fade-right'}
-                    delay={400}
-                  >
-                    <Link
-                      href={solution.href}
-                      className="bg-primary hover:bg-primary-hover mt-8 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:shadow-lg"
-                    >
-                      {t('solStartFree')}
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </AnimateOnScroll>
-                </div>
+                    <div className="mt-2">
+                      <Link href={solution.href}>
+                        <EnviroButton variant="primary" size="md">
+                          {t('solStartFree')}
+                        </EnviroButton>
+                      </Link>
+                    </div>
+                  </div>
+                </FadeInSection>
               </div>
             </div>
           </section>
         );
       })}
+
+      {/* ────────────────── COMPARISON ────────────────── */}
+      <section className="bg-white py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={t('solCompTag')}
+              title={t('solCompTitle')}
+              subtitle={t('solCompSub')}
+              tone="cream"
+              align="center"
+            />
+          </FadeInSection>
+
+          <div className="mt-12">
+            <EnviroComparisonTable
+              headers={compHeaders}
+              rows={compRows}
+              highlightColumnIndex={0}
+              tone="cream"
+            />
+          </div>
+
+          <p className="mt-4 text-center text-xs text-[--color-enviro-forest-600] font-[family-name:var(--font-enviro-sans)]">
+            {t('landing.compPriceDisclaimer')}
+          </p>
+        </div>
+      </section>
+
+      {/* ────────────────── CTA → DEMO ────────────────── */}
+      <section className="bg-[--color-enviro-forest-900] py-20 lg:py-28 text-[--color-enviro-fg-inverse]">
+        <div className="mx-auto w-full max-w-[--container-enviro-md] px-4 text-center lg:px-8">
+          <FadeInSection>
+            <span className="inline-flex items-center gap-1 text-xs uppercase font-medium tracking-[0.08em] text-[--color-enviro-lime-300] font-[family-name:var(--font-enviro-mono)]">
+              <span aria-hidden="true">[</span>
+              <span className="px-1">{t('solCtaTag')}</span>
+              <span aria-hidden="true">]</span>
+            </span>
+            <h2 className="mt-4 text-balance text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight font-[family-name:var(--font-enviro-display)]">
+              {t('solCtaTitle')}
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-base md:text-lg leading-relaxed text-[--color-enviro-fg-inverse-muted] font-[family-name:var(--font-enviro-sans)]">
+              {t('solCtaSub')}
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link href="/contact">
+                <EnviroButton variant="primary" size="lg" magnetic>
+                  <Sparkles className="h-4 w-4" strokeWidth={1.5} />
+                  {t('solCtaLabel')}
+                </EnviroButton>
+              </Link>
+              <Link href="/auth/sign-up">
+                <EnviroButton variant="outlineCream" size="lg">
+                  {t('solCtaSecondary')}
+                </EnviroButton>
+              </Link>
+            </div>
+          </FadeInSection>
+        </div>
+      </section>
     </div>
   );
 }
