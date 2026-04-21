@@ -34,7 +34,12 @@ interface AggregateData {
   externalCommunity: number;
 }
 
-type TFn = (key: string, values?: Record<string, unknown>) => string;
+// Compatible avec les translators next-intl. Les values sont les valeurs
+// d'interpolation (ICU) : string | number | Date.
+type TFn = (
+  key: string,
+  values?: Record<string, string | number | Date>,
+) => string;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const anyClient = (c: SupabaseClient) => c as any;
