@@ -34,6 +34,7 @@ const namespaces = [
   'enviroPreview',
   'normes',
   'blog',
+  'contact',
 ] as const;
 
 const isDevelopment = process.env.NODE_ENV === 'development';
