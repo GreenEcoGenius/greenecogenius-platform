@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import {
-  ArrowRight,
   BarChart3,
   Eye,
   Globe2,
@@ -13,13 +12,23 @@ import {
   Recycle,
   Shield,
   ShieldCheck,
+  Sparkles,
   Target,
+  Users,
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
-import appConfig from '~/config/app.config';
-
-import { AnimateOnScroll } from '../_components/animate-on-scroll';
+import {
+  EnviroButton,
+  EnviroCard,
+  EnviroCardBody,
+  EnviroCardHeader,
+  EnviroCardTitle,
+  EnviroPageHero,
+  EnviroSectionHeader,
+  EnviroTimeline,
+} from '~/components/enviro';
+import { FadeInSection } from '~/components/enviro/animations/fade-in-section';
 
 export async function generateMetadata() {
   const t = await getTranslations('marketing');
@@ -33,311 +42,462 @@ export async function generateMetadata() {
 export default async function AboutPage() {
   const t = await getTranslations('marketing');
 
+  const history = [
+    {
+      year: '2024',
+      title: t('aboutHistory2024Title'),
+      description: t('aboutHistory2024Description'),
+    },
+    {
+      year: '2025',
+      title: t('aboutHistory2025Title'),
+      description: t('aboutHistory2025Description'),
+    },
+    {
+      year: '2026',
+      title: t('aboutHistory2026Title'),
+      description: t('aboutHistory2026Description'),
+    },
+  ];
+
+  const values = [
+    {
+      icon: Recycle,
+      title: t('aboutValue1Title'),
+      description: t('aboutValue1Description'),
+    },
+    {
+      icon: Shield,
+      title: t('aboutValue2Title'),
+      description: t('aboutValue2Description'),
+    },
+    {
+      icon: BarChart3,
+      title: t('aboutValue3Title'),
+      description: t('aboutValue3Description'),
+    },
+  ];
+
+  const securityItems = [
+    {
+      icon: Shield,
+      title: t('aboutSecurityHostingTitle'),
+      text: t('aboutSecurityHostingText'),
+    },
+    {
+      icon: ShieldCheck,
+      title: t('aboutSecurityCertifiedTitle'),
+      text: t('aboutSecurityCertifiedText'),
+    },
+    {
+      icon: LinkIcon,
+      title: t('aboutSecurityBlockchainTitle'),
+      text: t('aboutSecurityBlockchainText'),
+    },
+    {
+      icon: Lock,
+      title: t('aboutSecurityEncryptionTitle'),
+      text: t('aboutSecurityEncryptionText'),
+    },
+    {
+      icon: Eye,
+      title: t('aboutSecurityAccessTitle'),
+      text: t('aboutSecurityAccessText'),
+    },
+  ];
+
   return (
-    <div className="flex flex-col">
-      {/* ───── HERO ───── */}
-      <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
-        <Image
-          src="/images/normes/reporting-esg-presentation.png"
-          alt=""
-          fill
-          className="object-cover"
-          priority
-          quality={90}
-        />
-        <div className="from-metal-900/80 via-metal-900/60 to-metal-900/40 absolute inset-0 bg-gradient-to-t" />
+    <div className="flex flex-col bg-[--color-enviro-cream-50] text-[--color-enviro-forest-900]">
+      {/* ────────────────────── HERO ────────────────────── */}
+      <EnviroPageHero
+        tag={t('aboutTag')}
+        title={t('aboutPageTitle')}
+        subtitle={t('aboutPageSubtitle')}
+        backgroundImage="/images/normes/reporting-esg-presentation.png"
+        backgroundImageAlt={t('aboutPageTitle')}
+        tone="forest"
+        align="center"
+      />
 
-        <div className="relative z-10 mx-auto max-w-4xl px-4 py-32 text-center sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
-              <Leaf className="h-4 w-4" />
-              {appConfig.name}
-            </span>
-          </AnimateOnScroll>
+      {/* ────────────────── MISSION + VISION ────────────────── */}
+      <section className="bg-[--color-enviro-cream-50] py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={t('aboutMissionTag')}
+              title={t('aboutMissionHeading')}
+              tone="cream"
+            />
+          </FadeInSection>
 
-          <AnimateOnScroll animation="fade-up" delay={100}>
-            <h1 className="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              {t('aboutPageTitle')}
-            </h1>
-          </AnimateOnScroll>
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            <FadeInSection delay={0}>
+              <EnviroCard variant="cream" radius="lg" hover="lift" padding="lg" className="h-full">
+                <EnviroCardHeader>
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]">
+                    <Target className="h-6 w-6" strokeWidth={1.5} />
+                  </span>
+                  <EnviroCardTitle>{t('aboutMissionHeading')}</EnviroCardTitle>
+                </EnviroCardHeader>
+                <EnviroCardBody className="text-base leading-relaxed text-[--color-enviro-forest-700]">
+                  {t('aboutMissionText')}
+                </EnviroCardBody>
+              </EnviroCard>
+            </FadeInSection>
 
-          <AnimateOnScroll animation="fade-up" delay={200}>
-            <p className="text-metal-silver mx-auto mt-6 max-w-2xl text-lg">
-              {t('aboutPageSubtitle')}
-            </p>
-          </AnimateOnScroll>
-        </div>
-
-        <div className="from-metal-50 absolute right-0 bottom-0 left-0 h-24 bg-gradient-to-t to-transparent" />
-      </section>
-
-      {/* ───── MISSION ───── */}
-      <section className="py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-start gap-12 lg:grid-cols-2">
-            <AnimateOnScroll animation="fade-right">
-              <div className="bg-primary-light text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
-                <Target className="h-8 w-8" />
-              </div>
-              <h2 className="text-metal-900 mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
-                {t('aboutMissionHeading')}
-              </h2>
-              <p className="text-metal-600 mt-6 text-lg leading-relaxed">
-                {t('aboutMissionText')}
-              </p>
-            </AnimateOnScroll>
-
-            <AnimateOnScroll animation="fade-left">
-              <div className="bg-circuit-ice text-circuit-blue flex h-16 w-16 items-center justify-center rounded-2xl">
-                <Lightbulb className="h-8 w-8" />
-              </div>
-              <h2 className="text-metal-900 mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
-                {t('aboutVisionHeading')}
-              </h2>
-              <p className="text-metal-600 mt-6 text-lg leading-relaxed">
-                {t('aboutVisionText')}
-              </p>
-            </AnimateOnScroll>
+            <FadeInSection delay={0.1}>
+              <EnviroCard variant="dark" radius="lg" hover="glow" padding="lg" className="h-full">
+                <EnviroCardHeader>
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-lime-300] text-[--color-enviro-forest-900]">
+                    <Lightbulb className="h-6 w-6" strokeWidth={1.5} />
+                  </span>
+                  <EnviroCardTitle className="text-[--color-enviro-fg-inverse]">
+                    {t('aboutVisionHeading')}
+                  </EnviroCardTitle>
+                </EnviroCardHeader>
+                <EnviroCardBody className="text-base leading-relaxed text-[--color-enviro-fg-inverse-muted]">
+                  {t('aboutVisionText')}
+                </EnviroCardBody>
+              </EnviroCard>
+            </FadeInSection>
           </div>
         </div>
       </section>
 
-      {/* ───── CLIMATE ───── */}
-      <section className="bg-metal-frost py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <AnimateOnScroll animation="fade-right">
-              <div className="overflow-hidden rounded-xl shadow-sm">
+      {/* ────────────────── HISTORY TIMELINE ────────────────── */}
+      <section className="bg-white py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={t('aboutHistoryTag')}
+              title={t('aboutHistoryTitle')}
+              subtitle={t('aboutHistorySub')}
+              tone="cream"
+            />
+          </FadeInSection>
+          <div className="mt-12">
+            <EnviroTimeline items={history} tone="cream" />
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────── VALUES ────────────────── */}
+      <section className="bg-[--color-enviro-cream-50] py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={t('aboutValuesTag')}
+              title={t('aboutValuesTitle')}
+              subtitle={t('aboutValuesSub')}
+              tone="cream"
+              align="center"
+            />
+          </FadeInSection>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {values.map((value, idx) => {
+              const Icon = value.icon;
+
+              return (
+                <FadeInSection key={idx} delay={idx * 0.08}>
+                  <EnviroCard
+                    variant="cream"
+                    radius="lg"
+                    hover="lift"
+                    padding="lg"
+                    className="h-full"
+                  >
+                    <EnviroCardHeader>
+                      <span className="inline-flex h-12 w-12 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-lime-300] text-[--color-enviro-forest-900]">
+                        <Icon className="h-6 w-6" strokeWidth={1.5} />
+                      </span>
+                      <EnviroCardTitle>{value.title}</EnviroCardTitle>
+                    </EnviroCardHeader>
+                    <EnviroCardBody className="text-sm leading-relaxed text-[--color-enviro-forest-700]">
+                      {value.description}
+                    </EnviroCardBody>
+                  </EnviroCard>
+                </FadeInSection>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────── CLIMATE (image + text) ────────────────── */}
+      <section className="bg-white py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            <FadeInSection>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[--radius-enviro-3xl] shadow-[--shadow-enviro-card]">
                 <Image
                   src="/images/hero-recycling-facility.png"
                   alt={t('altRecyclingFacility')}
-                  width={1024}
-                  height={585}
-                  className="h-full w-full object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
                 />
               </div>
-            </AnimateOnScroll>
+            </FadeInSection>
 
-            <AnimateOnScroll animation="fade-left">
-              <div className="bg-tech-mint text-tech-emerald flex h-16 w-16 items-center justify-center rounded-2xl">
-                <Globe2 className="h-8 w-8" />
+            <FadeInSection delay={0.1}>
+              <div className="flex flex-col gap-4">
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]">
+                  <Globe2 className="h-6 w-6" strokeWidth={1.5} />
+                </span>
+                <h2 className="text-3xl md:text-4xl font-semibold leading-tight tracking-tight font-[family-name:var(--font-enviro-display)]">
+                  {t('aboutClimateHeading')}
+                </h2>
+                <p className="text-base md:text-lg leading-relaxed text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
+                  {t('aboutClimateText')}
+                </p>
               </div>
-              <h2 className="text-metal-900 mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
-                {t('aboutClimateHeading')}
-              </h2>
-              <p className="text-metal-600 mt-6 text-lg leading-relaxed">
-                {t('aboutClimateText')}
-              </p>
-            </AnimateOnScroll>
+            </FadeInSection>
           </div>
         </div>
       </section>
 
-      {/* ───── GREENTECH ───── */}
-      <section className="py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <AnimateOnScroll
-              animation="fade-right"
-              className="order-2 lg:order-1"
-            >
-              <div className="bg-primary-light text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
-                <Recycle className="h-8 w-8" />
+      {/* ────────────────── GREENTECH (text + image, alternating) ────────────────── */}
+      <section className="bg-[--color-enviro-cream-50] py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            <FadeInSection delay={0.1}>
+              <div className="order-2 flex flex-col gap-4 lg:order-1">
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]">
+                  <Recycle className="h-6 w-6" strokeWidth={1.5} />
+                </span>
+                <h2 className="text-3xl md:text-4xl font-semibold leading-tight tracking-tight font-[family-name:var(--font-enviro-display)]">
+                  {t('aboutGreentechHeading')}
+                </h2>
+                <p className="text-base md:text-lg leading-relaxed text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
+                  {t('aboutGreentechText')}
+                </p>
               </div>
-              <h2 className="text-metal-900 mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
-                {t('aboutGreentechHeading')}
-              </h2>
-              <p className="text-metal-600 mt-6 text-lg leading-relaxed">
-                {t('aboutGreentechText')}
-              </p>
-            </AnimateOnScroll>
+            </FadeInSection>
 
-            <AnimateOnScroll
-              animation="fade-left"
-              className="order-1 lg:order-2"
-            >
-              <div className="overflow-hidden rounded-xl shadow-sm">
+            <FadeInSection>
+              <div className="relative order-1 aspect-[4/3] overflow-hidden rounded-[--radius-enviro-3xl] shadow-[--shadow-enviro-card] lg:order-2">
                 <Image
                   src="/images/greentech-energy.png"
-                  alt={t('altSortedMaterials')}
-                  width={1024}
-                  height={585}
-                  className="h-full w-full object-cover"
+                  alt={t('altGreentechEnergy')}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
                 />
               </div>
-            </AnimateOnScroll>
+            </FadeInSection>
           </div>
         </div>
       </section>
 
-      {/* ───── CSR & CARBON ───── */}
-      <section className="bg-metal-frost py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-2">
-            <AnimateOnScroll animation="fade-up">
-              <div className="border-metal-chrome rounded-2xl border bg-white p-8 sm:p-10">
-                <div className="bg-primary-light text-primary flex h-12 w-12 items-center justify-center rounded-xl">
-                  <BarChart3 className="h-6 w-6" />
-                </div>
-                <h3 className="text-metal-900 mt-6 text-2xl font-bold tracking-tight">
-                  {t('aboutCsrHeading')}
-                </h3>
-                <p className="text-metal-600 mt-4 text-lg leading-relaxed">
+      {/* ────────────────── CSR + CARBON (2 cards) ────────────────── */}
+      <section className="bg-white py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={t('aboutSectionsTag')}
+              title={t('aboutCsrHeading')}
+              tone="cream"
+            />
+          </FadeInSection>
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            <FadeInSection delay={0}>
+              <EnviroCard variant="cream" radius="lg" hover="lift" padding="lg" className="h-full">
+                <EnviroCardHeader>
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]">
+                    <BarChart3 className="h-6 w-6" strokeWidth={1.5} />
+                  </span>
+                  <EnviroCardTitle>{t('aboutCsrHeading')}</EnviroCardTitle>
+                </EnviroCardHeader>
+                <EnviroCardBody className="text-base leading-relaxed text-[--color-enviro-forest-700]">
                   {t('aboutCsrText')}
-                </p>
-              </div>
-            </AnimateOnScroll>
+                </EnviroCardBody>
+              </EnviroCard>
+            </FadeInSection>
 
-            <AnimateOnScroll animation="fade-up" delay={150}>
-              <div className="border-metal-chrome rounded-2xl border bg-white p-8 sm:p-10">
-                <div className="bg-tech-mint text-tech-emerald flex h-12 w-12 items-center justify-center rounded-xl">
-                  <Leaf className="h-6 w-6" />
-                </div>
-                <h3 className="text-metal-900 mt-6 text-2xl font-bold tracking-tight">
-                  {t('aboutCarbonHeading')}
-                </h3>
-                <p className="text-metal-600 mt-4 text-lg leading-relaxed">
+            <FadeInSection delay={0.1}>
+              <EnviroCard variant="cream" radius="lg" hover="lift" padding="lg" className="h-full">
+                <EnviroCardHeader>
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-lime-300] text-[--color-enviro-forest-900]">
+                    <Leaf className="h-6 w-6" strokeWidth={1.5} />
+                  </span>
+                  <EnviroCardTitle>{t('aboutCarbonHeading')}</EnviroCardTitle>
+                </EnviroCardHeader>
+                <EnviroCardBody className="text-base leading-relaxed text-[--color-enviro-forest-700]">
                   {t('aboutCarbonText')}
-                </p>
-              </div>
-            </AnimateOnScroll>
+                </EnviroCardBody>
+              </EnviroCard>
+            </FadeInSection>
           </div>
         </div>
       </section>
 
-      {/* ───── STRUCTURE ───── */}
-      <section className="bg-metal-50 py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <div className="mx-auto max-w-2xl text-center">
-              <Globe2 className="text-primary mx-auto h-10 w-10" />
-              <h2 className="text-metal-900 mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
-                {t('aboutStructureHeading')}
-              </h2>
-              <p className="text-metal-600 mt-4 text-lg">
-                {t('aboutStructureP1')}
-              </p>
-            </div>
-          </AnimateOnScroll>
+      {/* ────────────────── TEAM (founder) ────────────────── */}
+      <section className="bg-[--color-enviro-cream-50] py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={t('aboutTeamTag')}
+              title={t('aboutTeamTitle')}
+              subtitle={t('aboutTeamSub')}
+              tone="cream"
+              align="center"
+            />
+          </FadeInSection>
 
-          <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-2">
-            <AnimateOnScroll animation="fade-right">
-              <div className="rounded-2xl border bg-white p-8">
-                <h3 className="text-metal-900 text-xl font-bold">
-                  GreenEcoGenius OÜ
-                </h3>
-                <p className="text-primary mt-1 text-sm font-semibold">
-                  Tallinn, Estonia
-                </p>
-                <p className="text-metal-600 mt-4 leading-relaxed">
+          <FadeInSection delay={0.1}>
+            <div className="mx-auto mt-12 max-w-3xl">
+              <EnviroCard variant="cream" radius="lg" hover="lift" padding="lg">
+                <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">
+                  <span className="inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-[--radius-enviro-pill] bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]">
+                    <Users className="h-10 w-10" strokeWidth={1.5} />
+                  </span>
+                  <div className="flex flex-col gap-2">
+                    <p className="text-xs uppercase tracking-[0.08em] text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-mono)]">
+                      <span aria-hidden="true">[ </span>
+                      {t('aboutFounderRole')}
+                      <span aria-hidden="true"> ]</span>
+                    </p>
+                    <h3 className="text-2xl font-semibold tracking-tight font-[family-name:var(--font-enviro-display)]">
+                      {t('aboutFounderName')}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
+                      {t('aboutFounderBio')}
+                    </p>
+                  </div>
+                </div>
+              </EnviroCard>
+            </div>
+          </FadeInSection>
+        </div>
+      </section>
+
+      {/* ────────────────── STRUCTURE (2 entities) ────────────────── */}
+      <section className="bg-white py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={t('aboutStructureTag')}
+              title={t('aboutStructureHeading')}
+              subtitle={t('aboutStructureP1')}
+              tone="cream"
+              align="center"
+            />
+          </FadeInSection>
+
+          <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
+            <FadeInSection delay={0}>
+              <EnviroCard variant="cream" radius="lg" hover="lift" padding="lg" className="h-full">
+                <EnviroCardHeader>
+                  <EnviroCardTitle>GreenEcoGenius OÜ</EnviroCardTitle>
+                  <p className="text-sm font-semibold text-[--color-enviro-cta] font-[family-name:var(--font-enviro-mono)]">
+                    Tallinn, Estonia
+                  </p>
+                </EnviroCardHeader>
+                <EnviroCardBody className="text-sm leading-relaxed text-[--color-enviro-forest-700]">
                   {t('aboutStructureEU')}
-                </p>
-              </div>
-            </AnimateOnScroll>
-            <AnimateOnScroll animation="fade-left">
-              <div className="rounded-2xl border bg-white p-8">
-                <h3 className="text-metal-900 text-xl font-bold">
-                  GreenEcoGenius, Inc.
-                </h3>
-                <p className="text-primary mt-1 text-sm font-semibold">
-                  Delaware, USA
-                </p>
-                <p className="text-metal-600 mt-4 leading-relaxed">
+                </EnviroCardBody>
+              </EnviroCard>
+            </FadeInSection>
+
+            <FadeInSection delay={0.1}>
+              <EnviroCard variant="cream" radius="lg" hover="lift" padding="lg" className="h-full">
+                <EnviroCardHeader>
+                  <EnviroCardTitle>GreenEcoGenius, Inc.</EnviroCardTitle>
+                  <p className="text-sm font-semibold text-[--color-enviro-cta] font-[family-name:var(--font-enviro-mono)]">
+                    Delaware, USA
+                  </p>
+                </EnviroCardHeader>
+                <EnviroCardBody className="text-sm leading-relaxed text-[--color-enviro-forest-700]">
                   {t('aboutStructureUS')}
-                </p>
-              </div>
-            </AnimateOnScroll>
+                </EnviroCardBody>
+              </EnviroCard>
+            </FadeInSection>
           </div>
 
-          <AnimateOnScroll animation="fade-up" delay={200}>
-            <p className="text-metal-500 mx-auto mt-8 max-w-2xl text-center">
+          <FadeInSection delay={0.2}>
+            <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
               {t('aboutStructureFounder')}
             </p>
-          </AnimateOnScroll>
+          </FadeInSection>
         </div>
       </section>
 
-      {/* ───── SECURITY & DATA PROTECTION ───── */}
-      <section className="bg-slate-50 py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <div className="mx-auto max-w-2xl text-center">
-              <div className="bg-primary/10 text-primary mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl">
-                <ShieldCheck className="h-6 w-6" strokeWidth={1.5} />
-              </div>
-              <h2 className="text-metal-900 text-3xl font-bold tracking-tight sm:text-4xl">
-                {t('aboutSecurityHeading')}
-              </h2>
-              <p className="text-metal-600 mt-4 text-base sm:text-lg">
-                {t('aboutSecuritySubheading')}
-              </p>
-            </div>
-          </AnimateOnScroll>
+      {/* ────────────────── SECURITY ────────────────── */}
+      <section className="bg-[--color-enviro-cream-50] py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={t('aboutSecurityTag')}
+              title={t('aboutSecurityHeading')}
+              subtitle={t('aboutSecuritySubheading')}
+              tone="cream"
+              align="center"
+            />
+          </FadeInSection>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                icon: Shield,
-                title: t('aboutSecurityHostingTitle'),
-                text: t('aboutSecurityHostingText'),
-              },
-              {
-                icon: ShieldCheck,
-                title: t('aboutSecurityCertifiedTitle'),
-                text: t('aboutSecurityCertifiedText'),
-              },
-              {
-                icon: LinkIcon,
-                title: t('aboutSecurityBlockchainTitle'),
-                text: t('aboutSecurityBlockchainText'),
-              },
-              {
-                icon: Lock,
-                title: t('aboutSecurityEncryptionTitle'),
-                text: t('aboutSecurityEncryptionText'),
-              },
-              {
-                icon: Eye,
-                title: t('aboutSecurityAccessTitle'),
-                text: t('aboutSecurityAccessText'),
-              },
-            ].map(({ icon: Icon, title, text }) => (
-              <AnimateOnScroll key={title} animation="fade-up">
-                <div className="h-full rounded-2xl border border-slate-200 bg-white p-6 transition-shadow duration-200 hover:shadow-md">
-                  <div className="bg-primary/10 text-primary mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl">
-                    <Icon className="h-5 w-5" strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-metal-900 text-base font-semibold">
-                    {title}
-                  </h3>
-                  <p className="text-metal-600 mt-2 text-sm leading-relaxed">
-                    {text}
-                  </p>
-                </div>
-              </AnimateOnScroll>
-            ))}
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {securityItems.map((item, idx) => {
+              const Icon = item.icon;
+
+              return (
+                <FadeInSection key={idx} delay={idx * 0.05}>
+                  <EnviroCard
+                    variant="cream"
+                    radius="lg"
+                    hover="lift"
+                    padding="md"
+                    className="h-full"
+                  >
+                    <EnviroCardHeader>
+                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-[--radius-enviro-sm] bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]">
+                        <Icon className="h-5 w-5" strokeWidth={1.5} />
+                      </span>
+                      <EnviroCardTitle className="text-lg">
+                        {item.title}
+                      </EnviroCardTitle>
+                    </EnviroCardHeader>
+                    <EnviroCardBody className="text-sm leading-relaxed text-[--color-enviro-forest-700]">
+                      {item.text}
+                    </EnviroCardBody>
+                  </EnviroCard>
+                </FadeInSection>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ───── CTA ───── */}
-      <section className="from-metal-900 via-metal-800 to-metal-900 bg-gradient-to-r py-20 sm:py-28">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              {t('ctaHeading')}
+      {/* ────────────────── CTA → CONTACT ────────────────── */}
+      <section className="bg-[--color-enviro-forest-900] py-20 lg:py-28 text-[--color-enviro-fg-inverse]">
+        <div className="mx-auto w-full max-w-[--container-enviro-md] px-4 text-center lg:px-8">
+          <FadeInSection>
+            <span className="inline-flex items-center gap-1 text-xs uppercase font-medium tracking-[0.08em] text-[--color-enviro-lime-300] font-[family-name:var(--font-enviro-mono)]">
+              <span aria-hidden="true">[</span>
+              <span className="px-1">{t('aboutCtaTag')}</span>
+              <span aria-hidden="true">]</span>
+            </span>
+            <h2 className="mt-4 text-balance text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight font-[family-name:var(--font-enviro-display)]">
+              {t('aboutCtaTitle')}
             </h2>
-            <p className="text-metal-silver mt-4 text-lg">
-              {t('ctaSubheading')}
+            <p className="mx-auto mt-4 max-w-xl text-base md:text-lg leading-relaxed text-[--color-enviro-fg-inverse-muted] font-[family-name:var(--font-enviro-sans)]">
+              {t('aboutCtaSub')}
             </p>
-            <Link
-              href="/auth/sign-up"
-              className="group bg-primary hover:bg-primary-hover mt-10 inline-flex items-center justify-center rounded-xl px-8 py-4 text-sm font-semibold text-white transition-all duration-200 hover:shadow-xl"
-            >
-              {t('joinPlatform')}
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-          </AnimateOnScroll>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link href="/contact">
+                <EnviroButton variant="primary" size="lg" magnetic>
+                  <Sparkles className="h-4 w-4" strokeWidth={1.5} />
+                  {t('aboutCtaLabel')}
+                </EnviroButton>
+              </Link>
+              <Link href="/auth/sign-up">
+                <EnviroButton variant="outlineCream" size="lg">
+                  {t('joinPlatform')}
+                </EnviroButton>
+              </Link>
+            </div>
+          </FadeInSection>
         </div>
       </section>
     </div>
