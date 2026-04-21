@@ -43,7 +43,6 @@ async function UserHomePage() {
   const [
     { count: totalActive },
     { count: mySellCount },
-    { count: myBuyCount },
     { count: myCollectCount },
     { data: myListings },
     { data: carbonRows },
@@ -60,11 +59,6 @@ async function UserHomePage() {
       .select('*', { count: 'exact', head: true })
       .eq('account_id', userId)
       .eq('listing_type', 'sell'),
-    c
-      .from('listings')
-      .select('*', { count: 'exact', head: true })
-      .eq('account_id', userId)
-      .eq('listing_type', 'buy'),
     c
       .from('listings')
       .select('*', { count: 'exact', head: true })
@@ -124,10 +118,6 @@ async function UserHomePage() {
             icon={<Store className="h-6 w-6 text-white" />}
             metrics={[
               { label: t('dashboard.mySales'), value: `${mySellCount ?? 0}` },
-              {
-                label: t('dashboard.myPurchases'),
-                value: `${myBuyCount ?? 0}`,
-              },
               {
                 label: t('dashboard.collections'),
                 value: `${myCollectCount ?? 0}`,

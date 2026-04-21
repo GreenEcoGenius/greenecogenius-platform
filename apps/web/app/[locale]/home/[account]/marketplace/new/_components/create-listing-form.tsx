@@ -315,9 +315,6 @@ export function CreateListingForm({
             <SelectItem value="sell">
               <Trans i18nKey="marketplace.typeSell" />
             </SelectItem>
-            <SelectItem value="buy">
-              <Trans i18nKey="marketplace.typeBuy" />
-            </SelectItem>
             <SelectItem value="collect">
               <Trans i18nKey="marketplace.typeCollect" />
             </SelectItem>
