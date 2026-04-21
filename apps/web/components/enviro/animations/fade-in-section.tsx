@@ -41,8 +41,11 @@ export function FadeInSection({
 }: FadeInSectionProps) {
   const reducedMotion = useReducedMotionSafe();
 
+  // Initial / hidden state must be deterministic (independent of
+  // `reducedMotion`) so SSR and client first render produce identical
+  // markup. Reduced motion is honoured below via `transition.duration`.
   const variants: Variants = {
-    hidden: { opacity: 0, y: reducedMotion ? 0 : offset },
+    hidden: { opacity: 0, y: offset },
     visible: { opacity: 1, y: 0 },
   };
 

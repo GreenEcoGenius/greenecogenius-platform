@@ -75,8 +75,11 @@ export function StaggerItem({
 }: StaggerItemProps) {
   const reducedMotion = useReducedMotionSafe();
 
+  // Hidden state stays deterministic (independent of reducedMotion) so
+  // server and client initial render agree. Reduced motion is honoured
+  // via `transition.duration` below.
   const variants: Variants = {
-    hidden: { opacity: 0, y: reducedMotion ? 0 : offset },
+    hidden: { opacity: 0, y: offset },
     visible: {
       opacity: 1,
       y: 0,

@@ -35,15 +35,15 @@ export function PageTransition({
 }: PageTransitionProps) {
   const reducedMotion = useReducedMotionSafe();
 
+  // Initial / exit states stay deterministic (independent of
+  // `reducedMotion`) so SSR and the client agree. Reduced motion is
+  // honoured via `transition.duration`.
   return (
     <motion.div
       className={cn(className)}
-      initial={{
-        opacity: 0,
-        y: reducedMotion ? 0 : offset,
-      }}
+      initial={{ opacity: 0, y: offset }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: reducedMotion ? 0 : -offset }}
+      exit={{ opacity: 0, y: -offset }}
       transition={{
         duration: reducedMotion ? 0 : enviroDurations.base,
         ease: enviroEasesFramer.out,

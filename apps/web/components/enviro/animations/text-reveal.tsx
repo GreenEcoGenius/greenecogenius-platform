@@ -40,18 +40,16 @@ export function TextReveal({
 }: TextRevealProps) {
   const reducedMotion = useReducedMotionSafe();
 
-  if (reducedMotion) {
-    const StaticTag = as;
-
-    return <StaticTag className={cn(className)}>{text}</StaticTag>;
-  }
-
   const tokens = splitBy === 'words' ? text.split(' ') : Array.from(text);
 
+  // Variants are deterministic (no `reducedMotion` branching) so the
+  // server-rendered tree and the client first render produce identical
+  // markup. Reduced motion is honoured via `transition.duration` which
+  // collapses the animation to an instant snap when set.
   const containerVariants: Variants = {
     hidden: {},
     visible: {
-      transition: { staggerChildren: stagger },
+      transition: { staggerChildren: reducedMotion ? 0 : stagger },
     },
   };
 
@@ -61,7 +59,7 @@ export function TextReveal({
       opacity: 1,
       y: 0,
       transition: {
-        duration: enviroDurations.base,
+        duration: reducedMotion ? 0 : enviroDurations.base,
         ease: enviroEasesFramer.out,
       },
     },
