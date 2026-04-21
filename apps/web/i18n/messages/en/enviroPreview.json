@@ -1,0 +1,222 @@
+{
+  "page": {
+    "title": "Enviro Components",
+    "subtitle": "Visual reference for the Enviro design adoption",
+    "description": "This page is an internal reference. It exposes the 15 wrapper components and the 7 animation helpers built on top of @kit/ui and the enviro-* tokens (theme.css)."
+  },
+  "sections": {
+    "primitives": "Primitives",
+    "shell": "Page shell",
+    "content": "Page content",
+    "animations": "Animation helpers"
+  },
+  "demo": {
+    "buttonPrimary": "Continue",
+    "buttonSecondary": "Learn more",
+    "buttonGhost": "Cancel",
+    "buttonMagnetic": "Magnetic",
+    "cardCreamTitle": "Cream card",
+    "cardCreamBody": "Light surface for primary content. Tokens: bg cream-50, fg forest-900, card shadow.",
+    "cardDarkTitle": "Forest card",
+    "cardDarkBody": "Dark surface for inverse sections. Tokens: bg forest-900, fg white, lime accent.",
+    "cardLimeTitle": "Lime accent card",
+    "cardLimeBody": "Surface with light green accent for highlights and secondary CTAs.",
+    "cardGlassTitle": "Glass card",
+    "cardGlassBody": "Frosted glass surface, ideal over hero with background image.",
+    "sectionTag": "Demo",
+    "sectionTitle": "A consistent system, accessible components",
+    "sectionSubtitle": "Every component honors prefers-reduced-motion and uses namespaced CSS tokens.",
+    "heroTag": "Generic hero",
+    "heroTitle": "The soil still breathes",
+    "heroSubtitle": "EnviroHero component",
+    "heroDescription": "Full-bleed hero with fluid clamp title, AVIF background, dark gradient overlay, bracket badges and dual CTA.",
+    "heroCtaPrimary": "Discover",
+    "heroCtaSecondary": "Learn more",
+    "pageHeroTag": "Page hero",
+    "pageHeroTitle": "Secondary hero",
+    "pageHeroSubtitle": "For inner pages (about, pricing, contact, normes, faq)",
+    "stats": {
+      "tag": "Key figures",
+      "title": "The weight of the circular economy",
+      "subtitle": "Public sources aggregated: Eurostat, ADEME, EPA, FEDEREC.",
+      "stat1Value": "310",
+      "stat1Suffix": " Mt",
+      "stat1Label": "Industrial waste in France per year",
+      "stat1Source": "Source: ADEME 2023",
+      "stat2Value": "42",
+      "stat2Suffix": " %",
+      "stat2Label": "Municipal recycling rate in France",
+      "stat2Source": "Source: SINOE 2024",
+      "stat3Value": "150",
+      "stat3Suffix": " B€",
+      "stat3Label": "Size of the European circular economy market",
+      "stat3Source": "Source: Eurostat 2024",
+      "stat4Value": "11.5",
+      "stat4Suffix": " %",
+      "stat4Label": "Average EU circularity rate",
+      "stat4Source": "Source: Eurostat 2024"
+    },
+    "timeline": {
+      "tag": "Regulatory roadmap",
+      "title": "Milestones of the transition",
+      "items": {
+        "2024": {
+          "year": "2024",
+          "title": "AGEC Law",
+          "description": "Strengthened extended producer responsibility on new flows."
+        },
+        "2025Urgent": {
+          "year": "2025",
+          "title": "CSRD for large companies",
+          "description": "Mandatory sustainability reporting starting with fiscal year 2025.",
+          "badge": "Urgent"
+        },
+        "2026Urgent": {
+          "year": "2026",
+          "title": "CSRD extension to listed midcaps",
+          "description": "Extended scope to mid-sized listed companies on regulated markets.",
+          "badge": "Urgent"
+        },
+        "2030": {
+          "year": "2030",
+          "title": "Green Deal 2030 targets",
+          "description": "55 % emissions cut vs 1990, 70 % municipal waste recycling rate."
+        }
+      }
+    },
+    "comparison": {
+      "tag": "Comparison",
+      "title": "Why GreenEcoGenius",
+      "subtitle": "A synthetic view of the main differences against competing solutions.",
+      "headers": {
+        "feature": "Feature",
+        "geg": "GreenEcoGenius",
+        "alt1": "Solution A",
+        "alt2": "Solution B"
+      },
+      "rows": {
+        "marketplace": "Integrated B2B marketplace",
+        "blockchain": "On-chain traceability (Polygon)",
+        "ai": "Anthropic AI copilot",
+        "csrd": "Native CSRD reporting",
+        "labels": "42 ESG standards tracking",
+        "yes": "Included",
+        "no": "No"
+      }
+    },
+    "pricing": {
+      "tag": "Pricing",
+      "title": "One plan per organization size",
+      "subtitle": "Pricing card demo. Real cards are powered by billing.config.ts.",
+      "essential": {
+        "name": "Essential",
+        "price": "€149",
+        "period": "per month",
+        "description": "For SMBs starting their circular journey.",
+        "feature1": "B2B marketplace (read)",
+        "feature2": "5 included users",
+        "feature3": "Email support",
+        "feature4": "Access to documented standards",
+        "cta": "Get started"
+      },
+      "advanced": {
+        "name": "Advanced",
+        "price": "€449",
+        "period": "per month",
+        "description": "For structured midcaps with a dedicated CSR lead.",
+        "feature1": "Everything in Essential",
+        "feature2": "Marketplace read, write and signing",
+        "feature3": "Carbon assessment Scopes 1, 2 and 3",
+        "feature4": "AI-assisted CSRD reporting",
+        "feature5": "Blockchain traceability (5 lots per month)",
+        "cta": "Start trial",
+        "badge": "Most popular"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Custom",
+        "period": "",
+        "description": "For large groups and international corporations.",
+        "feature1": "Everything in Advanced",
+        "feature2": "Unlimited users and lots",
+        "feature3": "SLA and dedicated support",
+        "feature4": "Custom integrations",
+        "cta": "Contact us"
+      }
+    },
+    "faq": {
+      "tag": "Frequently asked",
+      "title": "You have questions, we have answers",
+      "items": {
+        "q1": {
+          "question": "How does blockchain traceability work?",
+          "answer": "Each lot gets a unique identifier recorded on the Polygon blockchain. Movements are timestamped and cryptographically signed, ensuring an immutable, publicly verifiable ledger."
+        },
+        "q2": {
+          "question": "Are my data hosted in Europe?",
+          "answer": "Yes. Our Supabase databases are hosted in the European region (Frankfurt). No personal or commercial data leaves the EU."
+        },
+        "q3": {
+          "question": "Can I cancel my subscription anytime?",
+          "answer": "Yes, with no fees. You keep access to your data and exports for 30 days after cancellation."
+        },
+        "q4": {
+          "question": "What integrations are available?",
+          "answer": "We integrate with Stripe for billing, Docusign for contract signing, Anthropic for the AI copilot, and we expose a documented REST API for custom integrations."
+        }
+      }
+    },
+    "blog": {
+      "tag": "News",
+      "title": "Latest articles",
+      "post1": {
+        "title": "CSRD: what changes in 2026",
+        "category": "Regulation",
+        "date": "March 12, 2026",
+        "excerpt": "Overview of the new sustainability reporting obligations applicable to midcaps starting in 2026."
+      },
+      "post2": {
+        "title": "How to trace your material flows on Polygon",
+        "category": "Blockchain",
+        "date": "February 28, 2026",
+        "excerpt": "Practical guide to register a lot, add steps and certify its final destination."
+      },
+      "post3": {
+        "title": "Scope 3 carbon assessment: where to start",
+        "category": "Carbon",
+        "date": "February 15, 2026",
+        "excerpt": "Step by step methodology to map your supply chain and estimate indirect emissions."
+      }
+    },
+    "logos": {
+      "tag": "Tech stack",
+      "title": "Built with proven tools"
+    },
+    "newsletter": {
+      "title": "Stay informed",
+      "subtitle": "Get our monthly analysis on circular economy, ESG standards and traceability.",
+      "placeholder": "your.email@company.com",
+      "cta": "Subscribe",
+      "consent": "By subscribing, you agree to receive our communications. One-click unsubscribe."
+    }
+  },
+  "animationsDemo": {
+    "fadeInTitle": "FadeInSection",
+    "fadeInBody": "Smooth fade in on scroll, disabled when prefers-reduced-motion is set.",
+    "staggerTitle": "StaggerContainer",
+    "staggerItem": "Sequential item",
+    "parallaxTitle": "ParallaxContainer",
+    "parallaxBody": "Scroll-driven offset, configurable intensity.",
+    "magneticTitle": "MagneticWrapper",
+    "magneticBody": "Follows the cursor within a defined radius.",
+    "textRevealTitle": "TextReveal",
+    "textRevealLine": "The soil still breathes.",
+    "counterTitle": "AnimatedCounter",
+    "transitionTitle": "PageTransition",
+    "transitionBody": "Wrapper used between pages, soft fade and gentle vertical slide."
+  },
+  "disabled": {
+    "title": "Preview disabled",
+    "body": "Set NEXT_PUBLIC_ENABLE_ENVIRO_PREVIEW=true to access this page."
+  }
+}

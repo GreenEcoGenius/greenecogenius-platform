@@ -47,6 +47,13 @@ const FeatureFlagsSchema = z.object({
    * Toggle via NEXT_PUBLIC_ENABLE_SMOOTH_SCROLL=true.
    */
   enableSmoothScroll: z.boolean().default(false),
+  /**
+   * Enables the Enviro components preview page (`/_preview/enviro-components`).
+   * Mirrors the production gating used by the `/preview/enviro` rewrite:
+   * default ON in development and Vercel preview, default OFF in Vercel
+   * production. Force toggle via NEXT_PUBLIC_ENABLE_ENVIRO_PREVIEW.
+   */
+  enableEnviroPreview: z.boolean().default(false),
 });
 
 const featuresFlagConfig = FeatureFlagsSchema.parse({
@@ -99,6 +106,10 @@ const featuresFlagConfig = FeatureFlagsSchema.parse({
   enableSmoothScroll: getBoolean(
     process.env.NEXT_PUBLIC_ENABLE_SMOOTH_SCROLL,
     false,
+  ),
+  enableEnviroPreview: getBoolean(
+    process.env.NEXT_PUBLIC_ENABLE_ENVIRO_PREVIEW,
+    process.env.VERCEL_ENV !== 'production',
   ),
 } satisfies z.output<typeof FeatureFlagsSchema>);
 

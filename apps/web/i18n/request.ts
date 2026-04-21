@@ -31,6 +31,7 @@ const namespaces = [
   'compliance',
   'externalActivities',
   'dashboard',
+  'enviroPreview',
 ] as const;
 
 const isDevelopment = process.env.NODE_ENV === 'development';

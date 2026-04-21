@@ -56,6 +56,7 @@
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-table": "catalog:",
     "@types/qrcode": "catalog:",
+    "class-variance-authority": "catalog:",
     "date-fns": "catalog:",
     "ethers": "^6.16.0",
     "framer-motion": "catalog:",
