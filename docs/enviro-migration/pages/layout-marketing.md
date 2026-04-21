@@ -243,6 +243,62 @@ the three new / modified files.
 
 ---
 
+## Troubleshooting
+
+### Turbopack stale cache after the Phase 5 hot-reload
+
+If `pnpm --filter web dev` started serving `/fr` (or any other locale-prefixed
+route) as **404** right after pulling Phase 5, that is a **Turbopack
+filesystem cache corruption**, not a code regression.
+
+**Symptom**: server logs show
+
+```
+GET /fr 404 in 6.0s (next.js: 2.5s, proxy.ts: 317ms, application-code: 3.2s)
+```
+
+with no Server Component error trace.
+
+**Why**: introducing the new `EnviroNavbar`, `SiteNavbarCtas` and
+`FooterNewsletterForm` client islands changes the
+Server Component ↔ Client Component boundary in
+`(marketing)/layout.tsx`. When Turbopack hot-reloads on top of an older
+graph it can land in a half-baked state and silently 404 the route.
+
+**Fix** (one of):
+
+```bash
+# Cleanest: full reset, takes ~1 minute on cold start.
+rm -rf apps/web/.next apps/web/node_modules/.cache
+pnpm --filter web dev
+
+# Lighter: only the Turbopack cache, the rest of .next is preserved.
+rm -rf apps/web/.next/cache apps/web/.next/types
+pnpm --filter web dev
+```
+
+Turbopack actually self-detects this error and prints
+
+```
+⚠ Turbopack's filesystem cache has been deleted because we previously
+  detected an internal error in Turbopack. Builds or page loads may be
+  slower as a result.
+```
+
+at the next start. After that warning, all routes are 200 again.
+
+**Prevention**: when the Phase boundary changes the Server↔Client
+component graph (Phase 5 did, Phase 6 will too), prefer to stop
+`pnpm dev`, run `rm -rf apps/web/.next/cache` and restart, instead of
+relying on hot-reload.
+
+**Production**: this is purely a Turbopack dev-server quirk. The
+production build (`pnpm --filter web build` then `pnpm start`) is fully
+deterministic; the same Phase 5 commit serves all 11 marketing routes
+at 200 with the expected SSR markup sizes (560 - 605 KB on `/fr`).
+
+---
+
 ## Visual checklist (manual)
 
 - [ ] **Same navbar + footer on every marketing page**: `/fr`, `/fr/about`, `/fr/solutions`, `/fr/explorer`, `/fr/normes`, `/fr/blog`, `/fr/pricing`.
