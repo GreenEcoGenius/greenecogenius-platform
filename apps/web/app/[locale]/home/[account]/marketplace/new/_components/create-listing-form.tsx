@@ -19,6 +19,7 @@ import { useSupabase } from '@kit/supabase/hooks/use-supabase';
 import { Button } from '@kit/ui/button';
 import { Input } from '@kit/ui/input';
 import { Label } from '@kit/ui/label';
+import { toast } from '@kit/ui/sonner';
 import {
   Select,
   SelectContent,
@@ -226,7 +227,15 @@ export function CreateListingForm({
           upsert: false,
         });
 
-      if (!uploadError) {
+      if (uploadError) {
+        // Photo upload a echoue. On logge et on montre une erreur claire a
+        // l'utilisateur, mais on laisse la creation de l'annonce continuer
+        // sans image (l'annonce reste valide).
+        console.error('[create-listing] photo upload failed', uploadError);
+        toast.error(
+          "L'ajout de la photo a echoue. L'annonce sera publiee sans image. Reessayez depuis la page detail.",
+        );
+      } else {
         const { data: publicUrl } = supabase.storage
           .from('generated-images')
           .getPublicUrl(`listings/${fileName}`);
@@ -257,11 +266,22 @@ export function CreateListingForm({
 
     // Save image as listing image
     if (inserted?.id && imagePath) {
-      await supabase.from('listing_images').insert({
-        listing_id: inserted.id,
-        storage_path: imagePath,
-        position: 0,
-      });
+      const { error: imgInsertError } = await supabase
+        .from('listing_images')
+        .insert({
+          listing_id: inserted.id,
+          storage_path: imagePath,
+          position: 0,
+        });
+      if (imgInsertError) {
+        console.error(
+          '[create-listing] listing_images insert failed',
+          imgInsertError,
+        );
+        toast.error(
+          "L'annonce est publiee mais l'association de l'image a echoue. Contactez le support si le probleme persiste.",
+        );
+      }
     }
 
     const redirectPath = account
