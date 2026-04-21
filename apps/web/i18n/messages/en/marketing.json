@@ -539,7 +539,7 @@
     "normsApplicable": "Applicable standards",
     "materialsIn": "Recyclable materials in",
     "regionMetaDesc": "Recyclable materials available in {region}: volumes, prices, trends by category. Public data from GEREP/ADEME.",
-    "catMetaDesc": "Recyclable {category} in France — {volume} t/year. Volumes by region, market prices, CO₂ savings potential.",
+    "catMetaDesc": "Recyclable {category} in France. Volumes by region, market prices, CO₂ savings potential.",
     "materialsAvailable": "Available materials",
     "categoriesAvailable": "material categories",
     "regionCategoriesSub": "Volumes based on official data from ADEME and FEDEREC.",

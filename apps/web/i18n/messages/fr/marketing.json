@@ -539,7 +539,7 @@
     "normsApplicable": "Normes applicables",
     "materialsIn": "Matières recyclables en",
     "regionMetaDesc": "Matières recyclables disponibles en {region} : volumes, prix, tendances par catégorie. Données publiques GEREP/ADEME.",
-    "catMetaDesc": "{category} recyclables en France — {volume} t/an. Volumes par région, prix du marché, CO₂ évitable.",
+    "catMetaDesc": "{category} recyclables en France. Volumes par région, prix du marché, CO₂ évitable.",
     "materialsAvailable": "Matières disponibles",
     "categoriesAvailable": "catégories de matières",
     "regionCategoriesSub": "Volumes basés sur les données officielles de l'ADEME et FEDEREC.",
