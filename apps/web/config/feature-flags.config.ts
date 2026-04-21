@@ -41,6 +41,12 @@ const FeatureFlagsSchema = z.object({
   enableTeamsOnly: z.boolean({
     error: 'Provide the variable NEXT_PUBLIC_ENABLE_TEAM_ACCOUNTS_ONLY',
   }),
+  /**
+   * Enables smooth scrolling powered by Lenis (Enviro shell).
+   * Defaults to false. Always honors `prefers-reduced-motion: reduce`.
+   * Toggle via NEXT_PUBLIC_ENABLE_SMOOTH_SCROLL=true.
+   */
+  enableSmoothScroll: z.boolean().default(false),
 });
 
 const featuresFlagConfig = FeatureFlagsSchema.parse({
@@ -88,6 +94,10 @@ const featuresFlagConfig = FeatureFlagsSchema.parse({
   ),
   enableTeamsOnly: getBoolean(
     process.env.NEXT_PUBLIC_ENABLE_TEAM_ACCOUNTS_ONLY,
+    false,
+  ),
+  enableSmoothScroll: getBoolean(
+    process.env.NEXT_PUBLIC_ENABLE_SMOOTH_SCROLL,
     false,
   ),
 } satisfies z.output<typeof FeatureFlagsSchema>);
