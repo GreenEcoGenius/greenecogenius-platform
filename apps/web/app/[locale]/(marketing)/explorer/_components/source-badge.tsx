@@ -1,3 +1,7 @@
+'use client';
+
+import type { MouseEvent } from 'react';
+
 const SOURCE_CONFIG: Record<
   string,
   { label: string; url: string; className: string }
@@ -39,6 +43,16 @@ const SOURCE_CONFIG: Record<
   },
 };
 
+/**
+ * Source attribution badge.
+ *
+ * Rendered as a `<button>` (NOT a `<a>`) so it can safely live inside other
+ * anchor parents (e.g. the Link wrapping `MaterialCategoryCard` in the FR
+ * zone). Clicking opens the data source in a new tab via `window.open`.
+ *
+ * The click is `preventDefault` + `stopPropagation` to avoid triggering the
+ * surrounding Link's navigation when the badge is clicked.
+ */
 export function SourceBadge({ source }: { source: string }) {
   const config = SOURCE_CONFIG[source] ?? {
     label: source,
@@ -46,14 +60,22 @@ export function SourceBadge({ source }: { source: string }) {
     className: 'bg-gray-50 text-gray-600 border-gray-200',
   };
 
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (config.url && config.url !== '#') {
+      window.open(config.url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
-    <a
-      href={config.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium transition-opacity hover:opacity-80 ${config.className}`}
+    <button
+      type="button"
+      onClick={handleClick}
+      className={`inline-flex cursor-pointer items-center rounded-full border px-2 py-0.5 text-[10px] font-medium transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[--color-enviro-lime-300] ${config.className}`}
     >
       {config.label}
-    </a>
+    </button>
   );
 }
