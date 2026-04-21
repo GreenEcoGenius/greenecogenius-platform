@@ -154,6 +154,39 @@ export function LegalInfoGrid({ items }: { items: [string, string][] }) {
 }
 
 /**
+ * Two-column data table used in privacy + cookies pages
+ * (RGPD obligations: nature des données, finalités, durées, etc.).
+ */
+export function LegalDataTable({ rows }: { rows: [string, string][] }) {
+  return (
+    <div className="mt-4 not-prose overflow-hidden rounded-[--radius-enviro-xl] border border-[--color-enviro-cream-300] bg-white">
+      <table className="w-full text-sm">
+        <tbody>
+          {rows.map(([label, value], i) => (
+            <tr
+              key={label}
+              className={
+                i > 0 ? 'border-t border-[--color-enviro-cream-300]' : undefined
+              }
+            >
+              <th
+                scope="row"
+                className="w-1/3 whitespace-nowrap bg-[--color-enviro-cream-50] px-4 py-3 text-left align-top font-medium text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-sans)]"
+              >
+                {label}
+              </th>
+              <td className="px-4 py-3 text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
+                {value}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/**
  * Lime-bullet list used in `5. Services proposés`.
  */
 export function LegalBulletList({ items }: { items: string[] }) {
