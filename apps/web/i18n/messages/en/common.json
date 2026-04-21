@@ -103,6 +103,8 @@
     "switchToFrench": "Switch to French"
   },
   "menu": "Menu",
+  "openMenu": "Open menu",
+  "closeMenu": "Close menu",
   "ai": {
     "title": "GreenEcoGenius Assistant",
     "open": "Open AI assistant",

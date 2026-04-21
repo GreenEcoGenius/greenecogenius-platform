@@ -41,6 +41,8 @@ interface EnviroNavbarProps {
   localeSwitcherLabel?: string;
   /** Aria label for the mobile menu trigger. */
   mobileMenuLabel?: string;
+  /** Aria label for the mobile menu close button. */
+  closeMenuLabel?: string;
 }
 
 /**
@@ -59,6 +61,7 @@ export function EnviroNavbar({
   className,
   localeSwitcherLabel,
   mobileMenuLabel = 'Open menu',
+  closeMenuLabel = 'Close menu',
 }: EnviroNavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -165,6 +168,7 @@ export function EnviroNavbar({
               ctaSecondary={ctaSecondary}
               showLocaleSwitcher={showLocaleSwitcher}
               localeSwitcherLabel={localeSwitcherLabel}
+              closeMenuLabel={closeMenuLabel}
               onClose={() => setOpen(false)}
             />,
             document.body,
@@ -183,6 +187,7 @@ interface MobileMenuProps
     | 'ctaSecondary'
     | 'showLocaleSwitcher'
     | 'localeSwitcherLabel'
+    | 'closeMenuLabel'
   > {
   onClose: () => void;
 }
@@ -194,6 +199,7 @@ function MobileMenu({
   ctaSecondary,
   showLocaleSwitcher,
   localeSwitcherLabel,
+  closeMenuLabel = 'Close menu',
   onClose,
 }: MobileMenuProps) {
   return (
@@ -203,7 +209,7 @@ function MobileMenu({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close menu"
+          aria-label={closeMenuLabel}
           className="rounded-[--radius-enviro-sm] p-2 text-[--color-enviro-fg-inverse]"
         >
           <X className="h-6 w-6" />
