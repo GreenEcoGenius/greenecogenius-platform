@@ -30,13 +30,14 @@ export function ZoneSelector({
             key={id}
             type="button"
             onClick={() => onChange(id)}
-            className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
+            aria-pressed={isActive}
+            className={`inline-flex items-center gap-2 rounded-[--radius-enviro-pill] border px-5 py-2.5 text-sm font-semibold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] font-[family-name:var(--font-enviro-sans)] ${
               isActive
-                ? 'bg-[#1BAF6A] text-white shadow-md'
-                : 'border border-gray-300 bg-white text-gray-600 hover:border-gray-400 hover:bg-gray-50'
+                ? 'border-[--color-enviro-forest-900] bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300] shadow-[--shadow-enviro-md]'
+                : 'border-[--color-enviro-cream-300] bg-[--color-enviro-cream-50] text-[--color-enviro-forest-700] hover:border-[--color-enviro-forest-700] hover:bg-white'
             }`}
           >
-            <Icon className="h-4 w-4" />
+            <Icon className="h-4 w-4" strokeWidth={1.5} />
             {t(`explorer.zone.${id}`)}
           </button>
         );
