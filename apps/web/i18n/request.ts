@@ -35,6 +35,7 @@ const namespaces = [
   'normes',
   'blog',
   'contact',
+  'faq',
 ] as const;
 
 const isDevelopment = process.env.NODE_ENV === 'development';
