@@ -1,17 +1,24 @@
 import Link from 'next/link';
 
-import { ArrowRight, BarChart3, FileText, Sparkles } from 'lucide-react';
+import {
+  ArrowRight,
+  BarChart3,
+  FileText,
+  Layers,
+  Link2,
+  Sparkles,
+} from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { Button } from '@kit/ui/button';
-import { Card, CardContent } from '@kit/ui/card';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
 
-import { SectionFooterImage } from '../_components/section-footer-image';
-import { SectionHeader } from '../_components/section-header';
+import { EnviroDashboardSectionHeader } from '~/components/enviro/dashboard';
+import { EnviroButton } from '~/components/enviro/enviro-button';
+import {
+  EnviroCard,
+  EnviroCardBody,
+} from '~/components/enviro/enviro-card';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('esg');
@@ -24,6 +31,8 @@ async function ESGPage() {
   const user = await requireUser(client);
   const userId = user.data?.id;
   const t = await getTranslations('esg');
+  const tDashboard = await getTranslations('dashboard');
+  const tCommon = await getTranslations('common');
 
   if (!userId) {
     return null;
@@ -31,97 +40,95 @@ async function ESGPage() {
 
   const features = [
     {
-      icon: '📋',
+      key: 'csrd',
+      icon: <Layers aria-hidden="true" className="h-5 w-5" />,
       title: t('featureCsrdTitle'),
       desc: t('featureCsrdDesc'),
     },
     {
-      icon: '🌍',
+      key: 'ghg',
+      icon: <BarChart3 aria-hidden="true" className="h-5 w-5" />,
       title: t('featureGhgTitle'),
       desc: t('featureGhgDesc'),
     },
     {
-      icon: '🤖',
+      key: 'ai',
+      icon: <Sparkles aria-hidden="true" className="h-5 w-5" />,
       title: t('featureAiTitle'),
       desc: t('featureAiDesc'),
     },
     {
-      icon: '⛓️',
+      key: 'blockchain',
+      icon: <Link2 aria-hidden="true" className="h-5 w-5" />,
       title: t('featureBlockchainTitle'),
       desc: t('featureBlockchainDesc'),
     },
   ];
 
   return (
-    <PageBody>
-      <SectionHeader titleKey="esgTitle" descKey="esgDesc" />
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.esg')}
+        title={tDashboard('esgTitle')}
+        subtitle={tDashboard('esgDesc')}
+      />
 
-      <div className="space-y-6">
-        <Card>
-          <CardContent className="flex flex-col items-center px-6 py-16 text-center">
-            <div className="bg-primary-light mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
-              <BarChart3 className="text-primary h-8 w-8" />
-            </div>
-            <h2 className="text-metal-900 text-2xl font-bold">
-              <Trans i18nKey="esg:emptyTitle" defaults="Reporting ESG" />
-            </h2>
-            <p className="text-metal-500 mx-auto mt-3 max-w-md text-sm leading-relaxed">
-              <Trans
-                i18nKey="esg:emptyDesc"
-                defaults="Générez votre rapport ESG conforme CSRD, GHG Protocol et GRI. Commencez par remplir vos données ou laissez la plateforme auto-remplir depuis vos transactions."
-              />
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button
-                variant="default"
-                size="sm"
-                render={<Link href="/home/esg/wizard" />}
-                nativeButton={false}
-              >
-                <Sparkles className="mr-2 h-4 w-4" />
-                <Trans
-                  i18nKey="esg:startWizard"
-                  defaults="Commencer le rapport"
-                />
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                render={<Link href="/home/carbon" />}
-                nativeButton={false}
-              >
-                <FileText className="mr-2 h-4 w-4" />
-                <Trans
-                  i18nKey="esg:viewCarbon"
-                  defaults="Voir l'impact carbone"
-                />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+      <EnviroCard variant="dark" hover="none" padding="lg">
+        <EnviroCardBody className="flex flex-col items-center gap-5 text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-[--radius-enviro-pill] bg-[--color-enviro-lime-300]/15 text-[--color-enviro-lime-300]">
+            <BarChart3 aria-hidden="true" className="h-8 w-8" />
+          </div>
+          <h2 className="text-balance text-2xl leading-tight font-semibold text-[--color-enviro-fg-inverse] font-[family-name:var(--font-enviro-display)]">
+            {t('emptyTitle')}
+          </h2>
+          <p className="mx-auto max-w-md text-sm leading-relaxed text-[--color-enviro-fg-inverse-muted]">
+            {t('emptyDesc')}
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <EnviroButton
+              variant="lime"
+              size="md"
+              magnetic
+              render={(buttonProps) => (
+                <Link {...buttonProps} href="/home/esg/wizard">
+                  <Sparkles aria-hidden="true" className="h-4 w-4" />
+                  {t('startWizard')}
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
+              )}
+            />
+            <EnviroButton
+              variant="outlineCream"
+              size="md"
+              render={(buttonProps) => (
+                <Link {...buttonProps} href="/home/carbon">
+                  <FileText aria-hidden="true" className="h-4 w-4" />
+                  {t('viewCarbon')}
+                </Link>
+              )}
+            />
+          </div>
+        </EnviroCardBody>
+      </EnviroCard>
 
-        {/* Features */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((f) => (
-            <Card key={f.title}>
-              <CardContent className="p-5">
-                <span className="text-2xl">{f.icon}</span>
-                <h3 className="text-metal-900 mt-2 text-sm font-semibold">
-                  {f.title}
-                </h3>
-                <p className="text-metal-500 mt-1 text-xs">{f.desc}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <SectionFooterImage
-          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-db261b47-d946-4d81-993d-cc45db4b6cb0.png"
-          alt="Reporting ESG"
-        />
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {features.map((f) => (
+          <EnviroCard key={f.key} variant="cream" hover="lift" padding="md">
+            <EnviroCardBody className="flex flex-col gap-2">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-lime-100] text-[--color-enviro-lime-700]">
+                {f.icon}
+              </span>
+              <h3 className="text-sm font-semibold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+                {f.title}
+              </h3>
+              <p className="text-xs text-[--color-enviro-forest-700]">
+                {f.desc}
+              </p>
+            </EnviroCardBody>
+          </EnviroCard>
+        ))}
       </div>
-    </PageBody>
+    </div>
   );
 }
 
