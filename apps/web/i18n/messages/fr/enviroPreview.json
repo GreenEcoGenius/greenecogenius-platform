@@ -218,5 +218,151 @@
   "disabled": {
     "title": "Aperçu désactivé",
     "body": "Activez NEXT_PUBLIC_ENABLE_ENVIRO_PREVIEW=true pour consulter cette page."
+  },
+  "dashboard": {
+    "page": {
+      "tag": "Dashboard components",
+      "title": "Composants Enviro Dashboard",
+      "subtitle": "12 composants pour le shell utilisateur",
+      "description": "Bibliothèque visuelle de la Phase 6.1.0. Ces composants alimenteront les 13 sections de /home avant l'injection du nouveau shell en Phase 6.1.1."
+    },
+    "shell": {
+      "tag": "Shell",
+      "title": "EnviroDashboardShell + Sidebar",
+      "subtitle": "Layout sidebar + main + topbar",
+      "viewport": "Aperçu shell complet (extrait, hauteur fixe)",
+      "viewportNote": "Le vrai shell sera injecté dans home/(user)/layout.tsx en Phase 6.1.1 et préservera ChatProvider + GlobalAIAssistant."
+    },
+    "sidebar": {
+      "brandLabel": "GreenEcoGenius",
+      "groupPlatform": "Plateforme",
+      "groupAccount": "Mon compte",
+      "linkHome": "Accueil",
+      "linkMarketplace": "Marketplace",
+      "linkCarbon": "Carbone",
+      "linkEsg": "Reporting ESG",
+      "linkTraceability": "Traçabilité",
+      "linkRse": "RSE & Labels",
+      "linkCompliance": "Conformité",
+      "linkExternal": "Données externes",
+      "linkProfile": "Profil",
+      "linkListings": "Mes annonces",
+      "linkWallet": "Portefeuille",
+      "linkBilling": "Facturation",
+      "collapseLabel": "Réduire la barre latérale",
+      "expandLabel": "Étendre la barre latérale"
+    },
+    "topbar": {
+      "searchPlaceholder": "Rechercher (Cmd+K)",
+      "notificationsLabel": "Notifications",
+      "geniusLabel": "Ouvrir Genius IA",
+      "userMenuLabel": "Menu utilisateur"
+    },
+    "userMenu": {
+      "displayName": "Camille Dupont",
+      "email": "camille@example.com",
+      "labelProfile": "Profil et préférences",
+      "labelBilling": "Facturation",
+      "labelLanguage": "Langue",
+      "labelSignOut": "Se déconnecter"
+    },
+    "breadcrumb": {
+      "tag": "Fil d'Ariane",
+      "demoHome": "Accueil",
+      "demoEsg": "Reporting ESG",
+      "demoCsrd": "CSRD"
+    },
+    "stat": {
+      "tag": "EnviroStatCard",
+      "title": "KPI cards (4 variantes)",
+      "subtitle": "Remplace KpiCard. Animation compteurs hydration-safe.",
+      "card1Label": "Annonces actives",
+      "card1Value": "184",
+      "card1Subtitle": "Marketplace",
+      "card1MetricA": "Mes ventes",
+      "card1MetricAValue": "12",
+      "card1MetricB": "Collectes",
+      "card1MetricBValue": "3",
+      "card1Cta": "Voir le marketplace",
+      "card2Label": "CO₂ évité",
+      "card2Value": "2.4",
+      "card2Suffix": " t",
+      "card2Subtitle": "Cumul 2026",
+      "card2MetricA": "Lots tracés",
+      "card2MetricAValue": "27",
+      "card2MetricB": "Tonnes recyclées",
+      "card2MetricBValue": "8.2",
+      "card3Label": "Conformité",
+      "card3Value": "82",
+      "card3Suffix": " %",
+      "card3Subtitle": "Score global",
+      "card3MetricA": "Normes conformes",
+      "card3MetricAValue": "31/37",
+      "card3Cta": "Voir le rapport",
+      "card4Label": "Solde portefeuille",
+      "card4Value": "12450",
+      "card4Suffix": " €",
+      "card4Subtitle": "Disponible"
+    },
+    "sectionHeader": {
+      "tag": "EnviroDashboardSectionHeader",
+      "title": "Header avec bracket et CTA",
+      "demoTag": "Carbone",
+      "demoTitle": "Bilan Scopes 1, 2 et 3",
+      "demoSubtitle": "Suivez vos émissions et exportez votre rapport en un clic.",
+      "demoCta": "Exporter le rapport"
+    },
+    "table": {
+      "tag": "EnviroDataTable",
+      "title": "Wrapper @kit/ui/table",
+      "subtitle": "Header forest, hover lime, lignes alternées.",
+      "colMaterial": "Matière",
+      "colType": "Type",
+      "colQuantity": "Quantité",
+      "colStatus": "Statut",
+      "row1Material": "Plastique HDPE",
+      "row1Type": "Vente",
+      "row1Quantity": "1.2 t",
+      "row1Status": "Actif",
+      "row2Material": "Acier inoxydable",
+      "row2Type": "Collecte",
+      "row2Quantity": "850 kg",
+      "row2Status": "Brouillon",
+      "row3Material": "Verre recyclé",
+      "row3Type": "Vente",
+      "row3Quantity": "3.4 t",
+      "row3Status": "Vendu"
+    },
+    "empty": {
+      "tag": "EnviroEmptyState",
+      "title": "État vide forest",
+      "demoTitle": "Aucune annonce pour le moment",
+      "demoBody": "Publiez votre première annonce sur le marketplace circulaire.",
+      "demoCta": "Publier une annonce"
+    },
+    "chart": {
+      "tag": "EnviroChartCard",
+      "title": "Wrapper Recharts",
+      "subtitle": "Palette GEG préservée à l'intérieur, header bracket Enviro à l'extérieur.",
+      "demoTitle": "CO₂ évité par mois",
+      "demoSubtitle": "Janvier à juin 2026",
+      "demoExport": "Exporter CSV",
+      "monthJan": "Jan",
+      "monthFeb": "Fév",
+      "monthMar": "Mar",
+      "monthApr": "Avr",
+      "monthMay": "Mai",
+      "monthJun": "Juin"
+    },
+    "chips": {
+      "tag": "EnviroFilterChips",
+      "title": "Filtres réutilisables",
+      "subtitle": "Extraction Phase 4 (faq, changelog, normes, explorer). Forest+lime active.",
+      "all": "Tout",
+      "metals": "Métaux",
+      "plastics": "Plastiques",
+      "glass": "Verre",
+      "wood": "Bois"
+    }
   }
 }

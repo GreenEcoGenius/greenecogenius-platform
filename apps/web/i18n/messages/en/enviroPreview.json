@@ -218,5 +218,151 @@
   "disabled": {
     "title": "Preview disabled",
     "body": "Set NEXT_PUBLIC_ENABLE_ENVIRO_PREVIEW=true to access this page."
+  },
+  "dashboard": {
+    "page": {
+      "tag": "Dashboard components",
+      "title": "Enviro Dashboard components",
+      "subtitle": "12 components for the user shell",
+      "description": "Phase 6.1.0 visual library. These components will power the 13 sections of /home before the new shell is injected in Phase 6.1.1."
+    },
+    "shell": {
+      "tag": "Shell",
+      "title": "EnviroDashboardShell + Sidebar",
+      "subtitle": "Layout sidebar + main + topbar",
+      "viewport": "Full shell preview (excerpt, fixed height)",
+      "viewportNote": "The real shell will be injected in home/(user)/layout.tsx in Phase 6.1.1 and will preserve ChatProvider + GlobalAIAssistant."
+    },
+    "sidebar": {
+      "brandLabel": "GreenEcoGenius",
+      "groupPlatform": "Platform",
+      "groupAccount": "My account",
+      "linkHome": "Home",
+      "linkMarketplace": "Marketplace",
+      "linkCarbon": "Carbon",
+      "linkEsg": "ESG reporting",
+      "linkTraceability": "Traceability",
+      "linkRse": "CSR & Labels",
+      "linkCompliance": "Compliance",
+      "linkExternal": "External data",
+      "linkProfile": "Profile",
+      "linkListings": "My listings",
+      "linkWallet": "Wallet",
+      "linkBilling": "Billing",
+      "collapseLabel": "Collapse sidebar",
+      "expandLabel": "Expand sidebar"
+    },
+    "topbar": {
+      "searchPlaceholder": "Search (Cmd+K)",
+      "notificationsLabel": "Notifications",
+      "geniusLabel": "Open Genius AI",
+      "userMenuLabel": "User menu"
+    },
+    "userMenu": {
+      "displayName": "Camille Dupont",
+      "email": "camille@example.com",
+      "labelProfile": "Profile and preferences",
+      "labelBilling": "Billing",
+      "labelLanguage": "Language",
+      "labelSignOut": "Sign out"
+    },
+    "breadcrumb": {
+      "tag": "Breadcrumb",
+      "demoHome": "Home",
+      "demoEsg": "ESG reporting",
+      "demoCsrd": "CSRD"
+    },
+    "stat": {
+      "tag": "EnviroStatCard",
+      "title": "KPI cards (4 variants)",
+      "subtitle": "Replaces KpiCard. Hydration-safe counter animation.",
+      "card1Label": "Active listings",
+      "card1Value": "184",
+      "card1Subtitle": "Marketplace",
+      "card1MetricA": "My sales",
+      "card1MetricAValue": "12",
+      "card1MetricB": "Pickups",
+      "card1MetricBValue": "3",
+      "card1Cta": "Open marketplace",
+      "card2Label": "CO₂ avoided",
+      "card2Value": "2.4",
+      "card2Suffix": " t",
+      "card2Subtitle": "2026 cumulative",
+      "card2MetricA": "Tracked lots",
+      "card2MetricAValue": "27",
+      "card2MetricB": "Tonnes recycled",
+      "card2MetricBValue": "8.2",
+      "card3Label": "Compliance",
+      "card3Value": "82",
+      "card3Suffix": " %",
+      "card3Subtitle": "Global score",
+      "card3MetricA": "Compliant standards",
+      "card3MetricAValue": "31/37",
+      "card3Cta": "View report",
+      "card4Label": "Wallet balance",
+      "card4Value": "12450",
+      "card4Suffix": " €",
+      "card4Subtitle": "Available"
+    },
+    "sectionHeader": {
+      "tag": "EnviroDashboardSectionHeader",
+      "title": "Header with bracket and CTA",
+      "demoTag": "Carbon",
+      "demoTitle": "Scopes 1, 2 and 3 assessment",
+      "demoSubtitle": "Track your emissions and export your report in one click.",
+      "demoCta": "Export report"
+    },
+    "table": {
+      "tag": "EnviroDataTable",
+      "title": "@kit/ui/table wrapper",
+      "subtitle": "Forest header, lime hover, alternating rows.",
+      "colMaterial": "Material",
+      "colType": "Type",
+      "colQuantity": "Quantity",
+      "colStatus": "Status",
+      "row1Material": "HDPE plastic",
+      "row1Type": "Sale",
+      "row1Quantity": "1.2 t",
+      "row1Status": "Active",
+      "row2Material": "Stainless steel",
+      "row2Type": "Pickup",
+      "row2Quantity": "850 kg",
+      "row2Status": "Draft",
+      "row3Material": "Recycled glass",
+      "row3Type": "Sale",
+      "row3Quantity": "3.4 t",
+      "row3Status": "Sold"
+    },
+    "empty": {
+      "tag": "EnviroEmptyState",
+      "title": "Forest empty state",
+      "demoTitle": "No listings yet",
+      "demoBody": "Publish your first listing on the circular marketplace.",
+      "demoCta": "Publish a listing"
+    },
+    "chart": {
+      "tag": "EnviroChartCard",
+      "title": "Recharts wrapper",
+      "subtitle": "GEG palette preserved inside, Enviro bracket header outside.",
+      "demoTitle": "CO₂ avoided per month",
+      "demoSubtitle": "January to June 2026",
+      "demoExport": "Export CSV",
+      "monthJan": "Jan",
+      "monthFeb": "Feb",
+      "monthMar": "Mar",
+      "monthApr": "Apr",
+      "monthMay": "May",
+      "monthJun": "Jun"
+    },
+    "chips": {
+      "tag": "EnviroFilterChips",
+      "title": "Reusable filters",
+      "subtitle": "Extraction from Phase 4 (faq, changelog, normes, explorer). Forest+lime active.",
+      "all": "All",
+      "metals": "Metals",
+      "plastics": "Plastics",
+      "glass": "Glass",
+      "wood": "Wood"
+    }
   }
 }
