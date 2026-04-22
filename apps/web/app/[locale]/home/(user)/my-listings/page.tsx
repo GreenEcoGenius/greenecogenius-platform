@@ -1,15 +1,18 @@
 import Link from 'next/link';
 
-import { Plus, Search } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { PackagePlus } from 'lucide-react';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { Button } from '@kit/ui/button';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
 
-import { ListingCard } from '~/home/_components/listing-card';
+import { EnviroDashboardSectionHeader } from '~/components/enviro/dashboard';
+import { EnviroButton } from '~/components/enviro/enviro-button';
+
+import {
+  MyListingsTable,
+  type MyListingRow,
+} from './_components/my-listings-table';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('common');
@@ -19,8 +22,10 @@ export const generateMetadata = async () => {
 
 async function MyListingsPage() {
   const client = getSupabaseServerClient();
-  const user = await requireUser(client);
+  const t = await getTranslations('marketplace');
+  const tCommon = await getTranslations('common');
 
+  const user = await requireUser(client);
   const userId = user.data?.id;
 
   const { data: listings } = userId
@@ -31,49 +36,66 @@ async function MyListingsPage() {
         .order('created_at', { ascending: false })
     : { data: [] };
 
-  return (
-    <PageBody>
-      <div className="flex items-center justify-end">
-        <Button
-          render={
-            <Link href="/home/marketplace/new">
-              <Plus className="mr-2 h-4 w-4" />
-              <Trans i18nKey="marketplace.createListing" />
-            </Link>
-          }
-          nativeButton={false}
-        />
-      </div>
+  const locale = await getLocale();
 
-      {listings && listings.length > 0 ? (
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {listings.map((listing) => (
-            <ListingCard
-              key={listing.id}
-              listing={listing}
-              account=""
-              showDelete
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="mt-12 flex flex-col items-center gap-4 text-center">
-          <Search className="text-muted-foreground h-12 w-12" />
-          <p className="text-muted-foreground">
-            <Trans i18nKey="marketplace.noOwnListings" />
-          </p>
-          <Button
-            render={
-              <Link href="/home/marketplace/new">
-                <Plus className="mr-2 h-4 w-4" />
-                <Trans i18nKey="marketplace.createFirstListing" />
+  // Project the rows down to a stable client-friendly shape so the
+  // <MyListingsTable> client component does not have to know about the
+  // wide listings row type returned by the Supabase generated types.
+  const rows: MyListingRow[] = (listings ?? []).map((l) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cat = (l as any).material_categories as
+      | { name?: string; name_fr?: string }
+      | null;
+
+    const categoryLabel = cat
+      ? locale === 'fr'
+        ? cat.name_fr ?? cat.name ?? null
+        : cat.name ?? cat.name_fr ?? null
+      : null;
+
+    return {
+      id: l.id as string,
+      title: (l.title as string) ?? '',
+      listing_type: (l.listing_type as string) ?? '',
+      status: (l.status as string) ?? '',
+      quantity:
+        l.quantity != null ? Number(l.quantity as number | string) : null,
+      unit: (l.unit as string) ?? null,
+      price_per_unit:
+        l.price_per_unit != null
+          ? Number(l.price_per_unit as number | string)
+          : null,
+      currency: (l.currency as string) ?? null,
+      location_city: (l.location_city as string) ?? null,
+      location_country: (l.location_country as string) ?? null,
+      created_at: (l.created_at as string) ?? null,
+      category_label: categoryLabel,
+    };
+  });
+
+  return (
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.marketplace')}
+        title={tCommon('routes.myListings')}
+        subtitle={t('myListingsSubtitle')}
+        actions={
+          <EnviroButton
+            variant="primary"
+            size="sm"
+            magnetic
+            render={(buttonProps) => (
+              <Link {...buttonProps} href="/home/marketplace/new">
+                <PackagePlus aria-hidden="true" className="h-4 w-4" />
+                {t('createListing')}
               </Link>
-            }
-            nativeButton={false}
+            )}
           />
-        </div>
-      )}
-    </PageBody>
+        }
+      />
+
+      <MyListingsTable listings={rows} />
+    </div>
   );
 }
 
