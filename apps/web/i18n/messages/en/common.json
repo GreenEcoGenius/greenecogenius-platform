@@ -220,7 +220,25 @@
     "externalActivities": "External Activities",
     "platform": "Platform",
     "myAccount": "My Account",
-    "landingPage": "Home"
+    "landingPage": "Home",
+    "pricing": "Pricing"
+  },
+  "enviroShell": {
+    "brandLabel": "GreenEcoGenius",
+    "sidebarLabel": "Primary navigation",
+    "sidebarCollapse": "Collapse sidebar",
+    "sidebarExpand": "Expand sidebar",
+    "sidebarCloseMobile": "Close menu",
+    "sidebarOpenMobile": "Open menu",
+    "topbarLabel": "Toolbar",
+    "geniusButton": "Genius",
+    "geniusAriaLabel": "Open Genius AI assistant",
+    "userMenuAriaLabel": "User menu",
+    "userMenuLanguage": "Language",
+    "userMenuSignOut": "Sign out",
+    "userMenuProfile": "Profile and preferences",
+    "userMenuBilling": "Billing",
+    "breadcrumbAriaLabel": "Breadcrumb"
   },
   "roles": {
     "owner": {

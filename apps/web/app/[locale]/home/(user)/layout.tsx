@@ -1,44 +1,36 @@
-import { use } from 'react';
-
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import * as z from 'zod';
+import { getTranslations } from 'next-intl/server';
 
 import { UserWorkspaceContextProvider } from '@kit/accounts/components';
-import { Page, PageNavigation } from '@kit/ui/page';
-import { SidebarProvider } from '@kit/ui/sidebar';
+import { SidebarProvider as KitSidebarProvider } from '@kit/ui/sidebar';
 
 import { ChatProvider } from '~/components/ai/chat-context';
 import { GlobalAIAssistant } from '~/components/ai/global-ai-assistant';
 import { SidebarChatBridge } from '~/components/ai/sidebar-chat-bridge';
-import { AppHeader } from '~/components/layout/app-header';
+import {
+  EnviroDashboardShell,
+  EnviroDashboardTopbar,
+  EnviroSidebarProvider,
+  ENVIRO_SIDEBAR_COOKIE_NAME,
+} from '~/components/enviro/dashboard';
 import { GlobalSearch } from '~/components/layout/global-search';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
-import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
 
-// home imports
-import { HomeMenuNavigation } from './_components/home-menu-navigation';
-import { HomeSidebar } from './_components/home-sidebar';
+import { UserNotifications } from './_components/user-notifications';
+import {
+  EnviroDashboardSidebar,
+  EnviroDynamicBreadcrumb,
+  EnviroTopbarActions,
+} from './_components/enviro-shell';
 import { loadUserWorkspace } from './_lib/server/load-user-workspace';
 
-function UserHomeLayout({ children }: React.PropsWithChildren) {
-  const state = use(getLayoutState());
-
-  if (state.style === 'sidebar') {
-    return <SidebarLayout>{children}</SidebarLayout>;
-  }
-
-  return <HeaderLayout>{children}</HeaderLayout>;
-}
-
-export default UserHomeLayout;
-
-async function SidebarLayout({ children }: React.PropsWithChildren) {
-  const [workspace, state] = await Promise.all([
+async function UserHomeLayout({ children }: React.PropsWithChildren) {
+  const [workspace, sidebarCollapsed] = await Promise.all([
     loadUserWorkspace().catch(() => null),
-    getLayoutState(),
+    readSidebarCollapsed(),
   ]);
 
   if (!workspace) {
@@ -47,30 +39,58 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
 
   await redirectIfTeamsOnly(workspace);
 
+  const tShell = await getTranslations('common.enviroShell');
+
+  // Derive the surface bits the user menu needs without leaking the
+  // workspace shape into a client component.
+  const userId = workspace.user.id;
+  const userEmail = workspace.user.email ?? null;
+  const accountName = workspace.workspace?.name ?? null;
+  const avatarUrl = workspace.workspace?.picture_url ?? null;
+  const displayName = accountName?.trim() || userEmail || 'User';
+  const initials = computeInitials(displayName);
+
   return (
     <UserWorkspaceContextProvider value={workspace}>
       <ChatProvider>
-        <SidebarProvider defaultOpen={state.open}>
-          <SidebarChatBridge />
-          <AppHeader />
+        {/*
+         * The legacy `SidebarChatBridge` (apps/web/components/ai/*, READ-ONLY)
+         * still depends on `useSidebar()` from `@kit/ui/sidebar`. We keep the
+         * kit `SidebarProvider` mounted as a no-op context so the bridge
+         * keeps working unchanged. The visible sidebar is owned by
+         * `EnviroSidebarProvider` below.
+         */}
+        <KitSidebarProvider defaultOpen={false}>
+          <EnviroSidebarProvider initialCollapsed={sidebarCollapsed}>
+            <SidebarChatBridge />
 
-          <div className="min-w-0 flex-1 lg:flex lg:h-dvh lg:flex-col">
-            <div className="min-h-0 flex-1 lg:flex lg:overflow-hidden">
-              <Page
-                style={'sidebar'}
-                contentContainerClassName="mx-auto flex w-full min-w-0 flex-1 flex-col bg-white pt-20 md:pt-24 lg:overflow-y-auto lg:bg-inherit"
-              >
-                <PageNavigation>
-                  <HomeSidebar workspace={workspace} />
-                </PageNavigation>
-
-                {children}
-              </Page>
-
-              <GlobalAIAssistant />
-            </div>
-          </div>
-        </SidebarProvider>
+            <EnviroDashboardShell
+              sidebar={<EnviroDashboardSidebar />}
+              topbar={
+                <EnviroDashboardTopbar
+                  mobileMenuLabel={tShell('sidebarOpenMobile')}
+                  leading={
+                    <EnviroDynamicBreadcrumb
+                      ariaLabel={tShell('breadcrumbAriaLabel')}
+                    />
+                  }
+                  trailing={
+                    <EnviroTopbarActions
+                      notifications={<UserNotifications userId={userId} />}
+                      userDisplayName={displayName}
+                      userEmail={userEmail}
+                      userInitials={initials}
+                      userAvatarUrl={avatarUrl}
+                    />
+                  }
+                />
+              }
+              rightDrawer={<GlobalAIAssistant />}
+            >
+              {children}
+            </EnviroDashboardShell>
+          </EnviroSidebarProvider>
+        </KitSidebarProvider>
 
         <GlobalSearch />
       </ChatProvider>
@@ -78,40 +98,13 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
   );
 }
 
-async function HeaderLayout({ children }: React.PropsWithChildren) {
-  const workspace = await loadUserWorkspace();
-
-  await redirectIfTeamsOnly(workspace);
-
-  return (
-    <UserWorkspaceContextProvider value={workspace}>
-      <ChatProvider>
-        <AppHeader />
-
-        <div className="flex min-w-0 flex-1">
-          <Page
-            style={'header'}
-            contentContainerClassName="flex flex-1 flex-col space-y-4 pt-20 md:pt-32"
-          >
-            <PageNavigation>
-              <HomeMenuNavigation workspace={workspace} />
-            </PageNavigation>
-
-            {children}
-          </Page>
-
-          <GlobalAIAssistant />
-        </div>
-
-        <GlobalSearch />
-      </ChatProvider>
-    </UserWorkspaceContextProvider>
-  );
-}
+export default UserHomeLayout;
 
 async function redirectIfTeamsOnly(
   workspace: Awaited<ReturnType<typeof loadUserWorkspace>>,
 ) {
+  if (!workspace) return;
+
   if (featuresFlagConfig.enableTeamsOnly) {
     const firstTeam = workspace.accounts[0];
 
@@ -132,26 +125,31 @@ async function redirectIfTeamsOnly(
   }
 }
 
-async function getLayoutState() {
+/**
+ * Read the persisted Enviro sidebar collapse state from the cookie set by
+ * `EnviroSidebarProvider`. Defaults to OPEN (collapsed = false) on first
+ * login per the Phase 6 audit decision.
+ */
+async function readSidebarCollapsed(): Promise<boolean> {
   const cookieStore = await cookies();
+  const cookie = cookieStore.get(ENVIRO_SIDEBAR_COOKIE_NAME);
+  return cookie?.value === '1';
+}
 
-  const LayoutStyleSchema = z.enum(['sidebar', 'header', 'custom']);
+/**
+ * Best-effort initials for the avatar fallback. Uses the first letters of
+ * the first two whitespace-separated tokens, falls back to the first two
+ * characters when there is a single token (typical for an email like
+ * "camille@example.com" -> "CA").
+ */
+function computeInitials(name: string): string {
+  const trimmed = name.trim();
+  if (!trimmed) return '';
 
-  const layoutStyleCookie = cookieStore.get('layout-style');
-  const sidebarOpenCookie = cookieStore.get('sidebar_state');
+  const tokens = trimmed.split(/\s+/);
+  if (tokens.length >= 2 && tokens[0] && tokens[1]) {
+    return (tokens[0][0]! + tokens[1][0]!).toUpperCase();
+  }
 
-  const sidebarOpen = sidebarOpenCookie
-    ? sidebarOpenCookie.value === 'true'
-    : !personalAccountNavigationConfig.sidebarCollapsed;
-
-  const parsedStyle = LayoutStyleSchema.safeParse(layoutStyleCookie?.value);
-
-  const style = parsedStyle.success
-    ? parsedStyle.data
-    : personalAccountNavigationConfig.style;
-
-  return {
-    open: sidebarOpen,
-    style,
-  };
+  return trimmed.slice(0, 2).toUpperCase();
 }
