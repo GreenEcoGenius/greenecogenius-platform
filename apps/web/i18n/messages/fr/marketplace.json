@@ -123,6 +123,8 @@
   "processing": "Traitement...",
   "paymentSuccess": "Paiement confirmé !",
   "paymentSuccessDesc": "Votre achat a été effectué avec succès. Le vendeur sera notifié de votre commande.",
+  "paymentMetaTitle": "Confirmation de paiement",
+  "paymentAccessContract": "Accéder au contrat de vente",
   "backToListing": "Voir l'annonce",
   "backToMarketplace": "Retour au Comptoir",
   "welcomeTitle": "Bonjour",

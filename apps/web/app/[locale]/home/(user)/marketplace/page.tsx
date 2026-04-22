@@ -1,25 +1,19 @@
 import Link from 'next/link';
 
-import {
-  Activity,
-  Leaf,
-  Package,
-  Plus,
-  Search,
-  TrendingUp,
-} from 'lucide-react';
+import { Activity, Inbox, Leaf, Package, Plus, TrendingUp } from 'lucide-react';
 import { getLocale, getTranslations } from 'next-intl/server';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { Badge } from '@kit/ui/badge';
-import { Button } from '@kit/ui/button';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
 
-import { ListingCard } from '~/home/_components/listing-card';
+import {
+  EnviroDashboardSectionHeader,
+  EnviroEmptyState,
+  EnviroStatCard,
+  EnviroStatCardGrid,
+} from '~/components/enviro/dashboard';
+import { EnviroButton } from '~/components/enviro/enviro-button';
 
-import { SectionFooterImage } from '../_components/section-footer-image';
-import { SectionHeader } from '../_components/section-header';
+import { EnviroListingCard } from './_components/enviro-listing-card';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('common');
@@ -30,6 +24,8 @@ export const generateMetadata = async () => {
 async function MarketplacePage() {
   const client = getSupabaseServerClient();
   const t = await getTranslations('marketplace');
+  const tDashboard = await getTranslations('dashboard');
+  const tCommon = await getTranslations('common');
   const locale = await getLocale();
 
   const { data: listings } = await client
@@ -54,106 +50,92 @@ async function MarketplacePage() {
           currency: 'EUR',
           maximumFractionDigits: 0,
         }).format(volumeEur)
-      : '—';
+      : '-';
 
   return (
-    <PageBody>
-      <SectionHeader titleKey="marketplaceTitle" descKey="marketplaceDesc" />
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.marketplace')}
+        title={tDashboard('marketplaceTitle')}
+        subtitle={tDashboard('marketplaceDesc')}
+        actions={
+          <EnviroButton
+            variant="primary"
+            size="sm"
+            magnetic
+            render={(buttonProps) => (
+              <Link {...buttonProps} href="/home/marketplace/new">
+                <Plus aria-hidden="true" className="h-4 w-4" />
+                {t('createListing')}
+              </Link>
+            )}
+          />
+        }
+      />
 
-      {/* KPI Cards */}
-      <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <MarketKpiCard
-          icon={<Package className="h-5 w-5 text-[#1b9e77]" />}
-          value={`${listingCount}`}
+      <EnviroStatCardGrid cols={4}>
+        <EnviroStatCard
+          variant="forest"
           label={t('kpiComptoir')}
+          value={listingCount}
+          icon={<Package aria-hidden="true" className="h-5 w-5" />}
         />
-        <MarketKpiCard
-          icon={<TrendingUp className="h-5 w-5 text-[#457b9d]" />}
-          value={volumeLabel}
+        <EnviroStatCard
+          variant="cream"
           label={t('kpiVolume')}
-        />
-        <MarketKpiCard
-          icon={<Activity className="h-5 w-5 text-[#e8943a]" />}
-          value="—"
-          label={t('kpiTransactions')}
-        />
-        <MarketKpiCard
-          icon={<Leaf className="h-5 w-5 text-[#2e8b6e]" />}
-          value="—"
-          label={t('kpiCO2Market')}
-        />
-      </div>
-
-      <div className="mt-6 flex items-center justify-end">
-        <Button
-          render={
-            <Link href="/home/marketplace/new">
-              <Plus className="mr-2 h-4 w-4" />
-              <Trans i18nKey="marketplace.createListing" />
-            </Link>
+          valueDisplay={
+            <span className="tabular-nums">{volumeLabel}</span>
           }
-          nativeButton={false}
+          icon={<TrendingUp aria-hidden="true" className="h-5 w-5" />}
         />
-      </div>
+        <EnviroStatCard
+          variant="cream"
+          label={t('kpiTransactions')}
+          valueDisplay={
+            <span className="tabular-nums">{sellerCount > 0 ? sellerCount : '-'}</span>
+          }
+          subtitle={t('totalSellers')}
+          icon={<Activity aria-hidden="true" className="h-5 w-5" />}
+        />
+        <EnviroStatCard
+          variant="lime"
+          label={t('kpiCO2Market')}
+          valueDisplay={<span className="tabular-nums">-</span>}
+          icon={<Leaf aria-hidden="true" className="h-5 w-5" />}
+        />
+      </EnviroStatCardGrid>
 
       {listingRows.length > 0 ? (
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {listingRows.map((listing) => (
-            <div key={listing.id} className="flex flex-col">
-              <ListingCard listing={listing} account="" />
-              <div className="bg-card -mt-1 flex items-center gap-1.5 rounded-b-lg border border-t-0 px-5 py-2 text-xs text-[#2e8b6e]">
-                <Leaf className="h-3 w-3" />
-                {t('co2AvoidedEstimated')}{' '}
-                {(((listing.quantity ?? 0) * 0.8) / 1000).toFixed(1)}t
-              </div>
-            </div>
+            <EnviroListingCard
+              key={listing.id}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              listing={listing as any}
+              showCo2Footer
+            />
           ))}
         </div>
       ) : (
-        <div className="mt-12 flex flex-col items-center gap-4 text-center">
-          <Search className="text-muted-foreground h-12 w-12" />
-          <p className="text-muted-foreground">
-            <Trans i18nKey="marketplace.noListings" />
-          </p>
-          <Button
-            render={
-              <Link href="/home/marketplace/new">
-                <Plus className="mr-2 h-4 w-4" />
-                <Trans i18nKey="marketplace.createFirstListing" />
-              </Link>
-            }
-            nativeButton={false}
-          />
-        </div>
+        <EnviroEmptyState
+          icon={<Package aria-hidden="true" className="h-7 w-7" />}
+          tag={tCommon('routes.marketplace')}
+          title={t('noListings')}
+          actions={
+            <EnviroButton
+              variant="primary"
+              size="sm"
+              magnetic
+              render={(buttonProps) => (
+                <Link {...buttonProps} href="/home/marketplace/new">
+                  <Plus aria-hidden="true" className="h-4 w-4" />
+                  {t('createFirstListing')}
+                </Link>
+              )}
+            />
+          }
+        />
       )}
-
-      <SectionFooterImage
-        src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/A_wide_cinematic_202604051229.png"
-        alt="Le Comptoir Circulaire"
-        className="object-[center_35%]"
-      />
-    </PageBody>
-  );
-}
-
-function MarketKpiCard({
-  icon,
-  value,
-  label,
-}: {
-  icon: React.ReactNode;
-  value: string;
-  label: string;
-}) {
-  return (
-    <div className="bg-card rounded-xl border p-5">
-      <div className="mb-2 flex items-center gap-2">
-        {icon}
-        <span className="text-muted-foreground text-xs font-medium">
-          {label}
-        </span>
-      </div>
-      <p className="text-2xl font-bold">{value}</p>
     </div>
   );
 }

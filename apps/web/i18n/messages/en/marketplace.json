@@ -123,6 +123,8 @@
   "processing": "Processing...",
   "paymentSuccess": "Payment confirmed!",
   "paymentSuccessDesc": "Your purchase was successful. The seller will be notified of your order.",
+  "paymentMetaTitle": "Payment confirmation",
+  "paymentAccessContract": "Open the sale contract",
   "backToListing": "View listing",
   "backToMarketplace": "Back to Marketplace",
   "welcomeTitle": "Hello",
