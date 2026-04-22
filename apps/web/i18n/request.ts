@@ -37,6 +37,7 @@ const namespaces = [
   'contact',
   'faq',
   'legal',
+  'changelog',
 ] as const;
 
 const isDevelopment = process.env.NODE_ENV === 'development';

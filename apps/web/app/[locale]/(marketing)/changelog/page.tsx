@@ -4,13 +4,20 @@ import type { Metadata } from 'next';
 
 import { getLocale, getTranslations } from 'next-intl/server';
 
-import { createCmsClient } from '@kit/cms';
+import { type Cms, createCmsClient } from '@kit/cms';
 import { getLogger } from '@kit/shared/logger';
-import { If } from '@kit/ui/if';
-import { Trans } from '@kit/ui/trans';
 
-import { SitePageHeader } from '../_components/site-page-header';
-import { ChangelogEntry } from './_components/changelog-entry';
+import {
+  EnviroPageHero,
+  EnviroSectionHeader,
+} from '~/components/enviro';
+import { FadeInSection } from '~/components/enviro/animations/fade-in-section';
+
+import {
+  type ChangelogClientEntry,
+  type ChangelogType,
+  ChangelogContent,
+} from './_components/changelog-content';
 import { ChangelogPagination } from './_components/changelog-pagination';
 
 interface ChangelogPageProps {
@@ -19,10 +26,19 @@ interface ChangelogPageProps {
 
 const CHANGELOG_ENTRIES_PER_PAGE = 50;
 
+const KNOWN_TYPES: readonly ChangelogType[] = [
+  'feat',
+  'fix',
+  'improvement',
+  'security',
+  'docs',
+  'chore',
+];
+
 export const generateMetadata = async (
   props: ChangelogPageProps,
 ): Promise<Metadata> => {
-  const t = await getTranslations('marketing');
+  const t = await getTranslations('changelog');
   const resolvedLanguage = await getLocale();
   const searchParams = await props.searchParams;
   const limit = CHANGELOG_ENTRIES_PER_PAGE;
@@ -33,8 +49,8 @@ export const generateMetadata = async (
   const { total } = await getContentItems(resolvedLanguage, limit, offset);
 
   return {
-    title: t('changelog'),
-    description: t('changelogSubtitle'),
+    title: t('metaTitle'),
+    description: t('metaDescription'),
     pagination: {
       previous: page > 0 ? `/changelog?page=${page - 1}` : undefined,
       next: offset + limit < total ? `/changelog?page=${page + 1}` : undefined,
@@ -65,8 +81,76 @@ const getContentItems = cache(
   },
 );
 
-async function ChangelogPage(props: ChangelogPageProps) {
-  const t = await getTranslations('marketing');
+/**
+ * Derive the entry "type" used by the chip filter from the entry tags.
+ * Falls back to "feat" so older entries published before the type
+ * convention still appear under the most useful filter.
+ *
+ * Recognised tag aliases:
+ *   feat / feature / new          -> feat
+ *   fix / bugfix / bug            -> fix
+ *   improvement / improve / perf  -> improvement
+ *   security                      -> security
+ *   docs / doc / documentation    -> docs
+ *   chore / maintenance           -> chore
+ */
+function deriveType(entry: Cms.ContentItem): ChangelogType {
+  for (const tag of entry.tags ?? []) {
+    const normalised = tag.slug?.toLowerCase() ?? tag.name?.toLowerCase() ?? '';
+
+    if (
+      KNOWN_TYPES.includes(normalised as ChangelogType) &&
+      normalised.length > 0
+    ) {
+      return normalised as ChangelogType;
+    }
+    if (['feature', 'new'].includes(normalised)) return 'feat';
+    if (['bug', 'bugfix'].includes(normalised)) return 'fix';
+    if (['improve', 'perf', 'performance'].includes(normalised)) {
+      return 'improvement';
+    }
+    if (['doc', 'documentation'].includes(normalised)) return 'docs';
+    if (['maintenance', 'refactor'].includes(normalised)) return 'chore';
+  }
+
+  return 'feat';
+}
+
+/**
+ * Try to extract a "version" string from the entry. Looks for a leading
+ * `v1.2.3`-style token in the title, then falls back to the first tag
+ * slug that looks like a version (`v\d`), then to nothing.
+ */
+function deriveVersion(entry: Cms.ContentItem): string | undefined {
+  const titleMatch = entry.title.match(/^(v\d+\.\d+(?:\.\d+)?)/i);
+  if (titleMatch) return titleMatch[1]!.toLowerCase();
+
+  const tagVersion = entry.tags?.find((tag) =>
+    /^v\d+\.\d+(?:\.\d+)?$/i.test(tag.slug ?? tag.name ?? ''),
+  );
+  if (tagVersion) return (tagVersion.slug ?? tagVersion.name).toLowerCase();
+
+  return undefined;
+}
+
+function toClientEntry(
+  entry: Cms.ContentItem,
+  index: number,
+): ChangelogClientEntry {
+  return {
+    id: entry.id,
+    slug: entry.slug,
+    title: entry.title,
+    description: entry.description,
+    publishedAt: entry.publishedAt,
+    type: deriveType(entry),
+    version: deriveVersion(entry),
+    highlight: index === 0,
+  };
+}
+
+export default async function ChangelogPage(props: ChangelogPageProps) {
+  const t = await getTranslations('changelog');
   const language = await getLocale();
   const searchParams = await props.searchParams;
 
@@ -80,39 +164,42 @@ async function ChangelogPage(props: ChangelogPageProps) {
     offset,
   );
 
+  const clientEntries = entries.map(toClientEntry);
+
   return (
-    <>
-      <SitePageHeader
-        title={t('changelog')}
-        subtitle={t('changelogSubtitle')}
+    <div className="flex flex-col bg-[--color-enviro-cream-50] text-[--color-enviro-forest-900]">
+      <EnviroPageHero
+        tag={t('heroTag')}
+        title={t('heroTitle')}
+        subtitle={t('heroSubtitle')}
+        tone="cream"
+        align="center"
       />
 
-      <div className="container flex max-w-4xl flex-col space-y-12 py-12">
-        <If
-          condition={entries.length > 0}
-          fallback={<Trans i18nKey="marketing.noChangelogEntries" />}
-        >
-          <div className="space-y-0">
-            {entries.map((entry, index) => {
-              return (
-                <ChangelogEntry
-                  key={entry.id}
-                  entry={entry}
-                  highlight={index === 0}
-                />
-              );
-            })}
-          </div>
+      <section className="bg-[--color-enviro-cream-50] py-16 lg:py-24">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={t('filtersTag')}
+              title={t('filtersTitle')}
+              tone="cream"
+              align="center"
+            />
+          </FadeInSection>
 
-          <ChangelogPagination
-            currentPage={page}
-            canGoToNextPage={offset + limit < total}
-            canGoToPreviousPage={page > 0}
-          />
-        </If>
-      </div>
-    </>
+          <ChangelogContent entries={clientEntries} />
+
+          {clientEntries.length > 0 ? (
+            <div className="mt-12 flex justify-center">
+              <ChangelogPagination
+                currentPage={page}
+                canGoToNextPage={offset + limit < total}
+                canGoToPreviousPage={page > 0}
+              />
+            </div>
+          ) : null}
+        </div>
+      </section>
+    </div>
   );
 }
-
-export default ChangelogPage;
