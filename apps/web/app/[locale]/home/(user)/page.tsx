@@ -2,26 +2,38 @@ import Link from 'next/link';
 
 import {
   ArrowRight,
+  Award,
   BarChart3,
   Bell,
+  ClipboardList,
   Leaf,
   Link2,
   Recycle,
-  Shield,
+  ShieldCheck,
   Sparkles,
   Store,
   TrendingUp,
 } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { Card, CardContent } from '@kit/ui/card';
-import { PageBody } from '@kit/ui/page';
 
-import { KpiCard, KpiCardGrid } from './_components/kpi-card';
-import { SectionFooterImage } from './_components/section-footer-image';
-import { SectionHeader } from './_components/section-header';
+import {
+  EnviroDashboardSectionHeader,
+  EnviroEmptyState,
+  EnviroStatCard,
+  EnviroStatCardGrid,
+} from '~/components/enviro/dashboard';
+import { EnviroButton } from '~/components/enviro/enviro-button';
+import {
+  EnviroCard,
+  EnviroCardBody,
+  EnviroCardHeader,
+} from '~/components/enviro/enviro-card';
+import { loadUserWorkspace } from './_lib/server/load-user-workspace';
+
+import { EnviroListingCard } from './marketplace/_components/enviro-listing-card';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('marketplace');
@@ -30,16 +42,31 @@ export const generateMetadata = async () => {
 
 async function UserHomePage() {
   const client = getSupabaseServerClient();
+  const t = await getTranslations('marketplace');
+  const tDashboard = await getTranslations('dashboard');
+  const tCommon = await getTranslations('common');
+  const locale = await getLocale();
+
   const user = await requireUser(client);
   const userId = user.data?.id;
 
   if (!userId) return null;
 
-  const t = await getTranslations('marketplace');
+  // Best-effort greeting derived from the workspace name (account display
+  // name) so it works for both personal and team-mode setups. We do not
+  // touch loadUserWorkspace which is a cached READ-ONLY loader.
+  let greetingName: string | null = null;
+  try {
+    const workspace = await loadUserWorkspace();
+    greetingName = workspace.workspace?.name?.trim()?.split(/\s+/)[0] ?? null;
+  } catch {
+    greetingName = null;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const c = client as any;
 
+  // Same 8 KPI Promise.all the legacy page issued. Byte-identical.
   const [
     { count: totalActive },
     { count: mySellCount },
@@ -104,234 +131,252 @@ async function UserHomePage() {
   const complianceScore =
     normsTotal > 0 ? Math.round((normsCompliant / normsTotal) * 100) : 0;
 
+  const greeting = greetingName
+    ? tDashboard('homeGreeting', { name: greetingName })
+    : tDashboard('homeGreetingFallback');
+
   return (
-    <PageBody>
-      <SectionHeader titleKey="homeTitle" descKey="homeDesc" />
-
-      <div className="space-y-8">
-        <KpiCardGrid>
-          <KpiCard
-            variant="teal"
-            title={t('dashboard.marketplace')}
-            value={`${totalActive ?? 0}`}
-            subtitle={t('dashboard.activeListings')}
-            icon={<Store className="h-6 w-6 text-white" />}
-            metrics={[
-              { label: t('dashboard.mySales'), value: `${mySellCount ?? 0}` },
-              {
-                label: t('dashboard.collections'),
-                value: `${myCollectCount ?? 0}`,
-              },
-            ]}
-            actionLabel={t('dashboard.leComptoir')}
-            actionHref="/home/marketplace"
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tDashboard('homeTitle')}
+        title={greeting}
+        subtitle={tDashboard('homeDesc')}
+        actions={
+          <EnviroButton
+            variant="primary"
+            size="sm"
+            magnetic
+            render={(buttonProps) => (
+              <Link {...buttonProps} href="/home/marketplace/new">
+                <Recycle aria-hidden="true" className="h-4 w-4" />
+                {t('createListing')}
+              </Link>
+            )}
           />
-          <KpiCard
-            variant="emerald"
-            title={t('dashboard.environmentalImpact')}
-            value={`${co2AvoidedT} t`}
-            subtitle={t('dashboard.co2Avoided')}
-            icon={<Leaf className="h-6 w-6 text-white" />}
-            metrics={[
-              {
-                label: t('dashboard.tonsRecycled'),
-                value: `${tonnesRecycledT} t`,
-              },
-              {
-                label: t('dashboard.tracedLots'),
-                value: `${blockchainCount ?? 0}`,
-              },
-              {
-                label: t('dashboard.circularityScore'),
-                value: `${certCount ?? 0} cert.`,
-              },
-            ]}
-            actionLabel={t('dashboard.carbonImpact')}
-            actionHref="/home/carbon"
-          />
-          <KpiCard
-            variant="green"
-            title={t('dashboard.compliance')}
-            value={normsTotal > 0 ? `${complianceScore}%` : '—'}
-            subtitle={t('dashboard.globalScore')}
-            icon={<Shield className="h-6 w-6 text-white" />}
-            metrics={[
-              {
-                label: t('dashboard.compliantStandards'),
-                value: normsTotal > 0 ? `${normsCompliant}/${normsTotal}` : '—',
-              },
-              { label: t('dashboard.rseScore'), value: '—' },
-              { label: t('dashboard.esgReporting'), value: '—' },
-            ]}
-            actionLabel={t('dashboard.complianceAction')}
-            actionHref="/home/compliance"
-          />
-        </KpiCardGrid>
+        }
+      />
 
-        {/* Content grid: Quick actions + Activity */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {/* Quick Actions */}
-          <div className="lg:col-span-2">
-            <Card>
-              <CardContent className="p-6">
-                <div className="mb-4 flex items-center justify-between">
-                  <h2 className="text-base font-semibold">
-                    <Sparkles className="text-circuit-cyan mr-2 inline h-4 w-4" />
-                    {t('dashboard.recommendedActions')}
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <ActionCard
-                    icon={<BarChart3 className="text-circuit-blue h-5 w-5" />}
-                    title={t('dashboard.completeScope3')}
-                    description={t('dashboard.completeScope3Desc')}
-                    href="/home/esg/wizard?step=3"
-                    badge={t('dashboard.highImpact')}
-                    badgeColor="bg-metal-frost text-metal-700"
-                  />
-                  <ActionCard
-                    icon={<Recycle className="text-primary h-5 w-5" />}
-                    title={t('dashboard.publishListing')}
-                    description={t('dashboard.publishListingDesc')}
-                    href="/home/marketplace/new"
-                    badge={t('dashboard.recommended')}
-                    badgeColor="bg-tech-mint text-tech-emerald"
-                  />
-                  <ActionCard
-                    icon={<TrendingUp className="text-tech-neon h-5 w-5" />}
-                    title={t('dashboard.improveRseScore')}
-                    description={t('dashboard.improveRseScoreDesc')}
-                    href="/home/rse/roadmap"
-                    badge={t('dashboard.highImpact')}
-                    badgeColor="bg-circuit-ice text-circuit-blue"
-                  />
-                  <ActionCard
-                    icon={<Link2 className="text-circuit-blue h-5 w-5" />}
-                    title={t('dashboard.issueCertificates')}
-                    description={t('dashboard.issueCertificatesDesc')}
-                    href="/home/traceability"
-                    badge={t('dashboard.fiveLots')}
-                    badgeColor="bg-circuit-ice text-circuit-blue"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Activity Feed */}
-          <div>
-            <Card>
-              <CardContent className="p-6">
-                <div className="mb-4 flex items-center justify-between">
-                  <h2 className="text-base font-semibold">
-                    <Bell className="text-metal-steel mr-2 inline h-4 w-4" />
-                    {t('dashboard.recentActivity')}
-                  </h2>
-                </div>
-
-                <div className="text-metal-500 flex flex-col items-center py-8 text-center text-sm">
-                  <Bell className="text-metal-300 mb-3 h-8 w-8" />
-                  <p>{t('dashboard.noActivityYet')}</p>
-                  <p className="text-metal-400 mt-1 text-xs">
-                    {t('dashboard.noActivityDesc')}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* My Listings */}
-        {myListings && myListings.length > 0 && (
-          <Card>
-            <CardContent className="p-6">
-              <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-base font-semibold">{t('myArticles')}</h2>
-                <Link
-                  href="/home/my-listings"
-                  className="text-primary flex items-center gap-1 text-sm font-medium hover:underline"
-                >
-                  {t('viewAll')} <ArrowRight className="h-3 w-3" />
-                </Link>
-              </div>
-
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-metal-chrome text-metal-700 border-b text-left text-xs font-semibold tracking-wider uppercase">
-                      <th className="pb-3">{t('materialLabel')}</th>
-                      <th className="pb-3">{t('typeLabel')}</th>
-                      <th className="pb-3">{t('quantityLabel')}</th>
-                      <th className="pb-3">{t('statusLabel')}</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y">
-                    {myListings.map((listing: Record<string, unknown>) => {
-                      const cat = listing.material_categories as Record<
-                        string,
-                        string
-                      > | null;
-                      return (
-                        <tr
-                          key={listing.id as string}
-                          className="hover:bg-metal-50"
-                        >
-                          <td className="py-3">
-                            <p className="font-medium">
-                              {listing.title as string}
-                            </p>
-                            <p className="text-metal-500 text-xs">
-                              {cat?.name_fr ?? cat?.name}
-                            </p>
-                          </td>
-                          <td className="py-3">
-                            <TypeBadge
-                              type={listing.listing_type as string}
-                              label={
-                                {
-                                  sell: t('dashboard.typeSell'),
-                                  buy: t('dashboard.typeBuy'),
-                                  collect: t('dashboard.typeCollect'),
-                                }[listing.listing_type as string] ??
-                                (listing.listing_type as string)
-                              }
-                            />
-                          </td>
-                          <td className="py-3 text-xs">
-                            {listing.quantity as number}{' '}
-                            {listing.unit as string}
-                          </td>
-                          <td className="py-3">
-                            <StatusBadge
-                              status={listing.status as string}
-                              label={
-                                {
-                                  active: t('dashboard.statusActive'),
-                                  draft: t('dashboard.statusDraft'),
-                                  sold: t('dashboard.statusSold'),
-                                  expired: t('dashboard.statusExpired'),
-                                }[listing.status as string] ??
-                                (listing.status as string)
-                              }
-                            />
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        <SectionFooterImage
-          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-691ab3f4-2772-42cc-ae8b-5f039dee20c9.png"
-          alt={t('dashboard.circularEconomy')}
+      <EnviroStatCardGrid cols={4}>
+        <EnviroStatCard
+          variant="forest"
+          label={t('dashboard.marketplace')}
+          value={totalActive ?? 0}
+          subtitle={t('dashboard.activeListings')}
+          icon={<Store aria-hidden="true" className="h-5 w-5" />}
+          metrics={[
+            {
+              label: t('dashboard.mySales'),
+              value: `${mySellCount ?? 0}`,
+            },
+            {
+              label: t('dashboard.collections'),
+              value: `${myCollectCount ?? 0}`,
+            },
+          ]}
+          actionLabel={t('dashboard.leComptoir')}
+          actionHref="/home/marketplace"
         />
+
+        <EnviroStatCard
+          variant="lime"
+          label={t('dashboard.environmentalImpact')}
+          value={co2AvoidedT}
+          fractionDigits={1}
+          suffix=" t"
+          subtitle={t('dashboard.co2Avoided')}
+          icon={<Leaf aria-hidden="true" className="h-5 w-5" />}
+          metrics={[
+            {
+              label: t('dashboard.tonsRecycled'),
+              value: `${tonnesRecycledT} t`,
+            },
+            {
+              label: t('dashboard.tracedLots'),
+              value: `${blockchainCount ?? 0}`,
+            },
+          ]}
+          actionLabel={t('dashboard.carbonImpact')}
+          actionHref="/home/carbon"
+        />
+
+        <EnviroStatCard
+          variant="cream"
+          label={t('dashboard.compliance')}
+          value={normsTotal > 0 ? complianceScore : undefined}
+          valueDisplay={normsTotal > 0 ? undefined : <span>-</span>}
+          suffix={normsTotal > 0 ? ' %' : undefined}
+          subtitle={t('dashboard.globalScore')}
+          icon={<ShieldCheck aria-hidden="true" className="h-5 w-5" />}
+          metrics={[
+            {
+              label: t('dashboard.compliantStandards'),
+              value:
+                normsTotal > 0 ? `${normsCompliant}/${normsTotal}` : '-',
+            },
+          ]}
+          actionLabel={t('dashboard.complianceAction')}
+          actionHref="/home/compliance"
+        />
+
+        <EnviroStatCard
+          variant="ember"
+          label={t('dashboard.tracedLots')}
+          value={blockchainCount ?? 0}
+          subtitle={t('dashboard.circularityScore')}
+          icon={<Link2 aria-hidden="true" className="h-5 w-5" />}
+          metrics={[
+            {
+              label: t('dashboard.tracedLots'),
+              value: `${certCount ?? 0}`,
+            },
+          ]}
+        />
+      </EnviroStatCardGrid>
+
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <EnviroCard
+          variant="cream"
+          hover="none"
+          padding="md"
+          className="lg:col-span-2"
+        >
+          <EnviroCardHeader>
+            <h2 className="inline-flex items-center gap-2 text-lg font-semibold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+              <Sparkles
+                aria-hidden="true"
+                className="h-4 w-4 text-[--color-enviro-cta]"
+              />
+              {t('dashboard.recommendedActions')}
+            </h2>
+          </EnviroCardHeader>
+          <EnviroCardBody className="grid grid-cols-1 gap-3 pt-4 sm:grid-cols-2">
+            <ActionCard
+              icon={<BarChart3 aria-hidden="true" className="h-4 w-4" />}
+              title={t('dashboard.completeScope3')}
+              description={t('dashboard.completeScope3Desc')}
+              href="/home/esg/wizard?step=3"
+              badge={t('dashboard.highImpact')}
+            />
+            <ActionCard
+              icon={<Recycle aria-hidden="true" className="h-4 w-4" />}
+              title={t('dashboard.publishListing')}
+              description={t('dashboard.publishListingDesc')}
+              href="/home/marketplace/new"
+              badge={t('dashboard.recommended')}
+            />
+            <ActionCard
+              icon={<Award aria-hidden="true" className="h-4 w-4" />}
+              title={t('dashboard.improveRseScore')}
+              description={t('dashboard.improveRseScoreDesc')}
+              href="/home/rse/roadmap"
+              badge={t('dashboard.highImpact')}
+            />
+            <ActionCard
+              icon={<Link2 aria-hidden="true" className="h-4 w-4" />}
+              title={t('dashboard.issueCertificates')}
+              description={t('dashboard.issueCertificatesDesc')}
+              href="/home/traceability"
+              badge={t('dashboard.fiveLots')}
+            />
+            <ActionCard
+              icon={<TrendingUp aria-hidden="true" className="h-4 w-4" />}
+              title={tDashboard('homeCtaCarbon')}
+              description={tDashboard('homeCtaCarbonDesc')}
+              href="/home/carbon/assessment"
+            />
+            <ActionCard
+              icon={<ClipboardList aria-hidden="true" className="h-4 w-4" />}
+              title={tCommon('routes.externalActivities')}
+              description={tDashboard('externalDesc')}
+              href="/home/external-activities"
+            />
+          </EnviroCardBody>
+        </EnviroCard>
+
+        <EnviroCard variant="cream" hover="none" padding="md">
+          <EnviroCardHeader>
+            <h2 className="inline-flex items-center gap-2 text-lg font-semibold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+              <Bell
+                aria-hidden="true"
+                className="h-4 w-4 text-[--color-enviro-forest-700]"
+              />
+              {t('dashboard.recentActivity')}
+            </h2>
+          </EnviroCardHeader>
+          <EnviroCardBody className="pt-4">
+            <EnviroEmptyState
+              icon={<Bell aria-hidden="true" className="h-7 w-7" />}
+              title={t('dashboard.noActivityYet')}
+              body={t('dashboard.noActivityDesc')}
+            />
+          </EnviroCardBody>
+        </EnviroCard>
       </div>
-    </PageBody>
+
+      {myListings && myListings.length > 0 ? (
+        <section className="flex flex-col gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="text-lg font-semibold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+              {tDashboard('homeMyListings')}
+            </h2>
+            <EnviroButton
+              variant="ghost"
+              size="sm"
+              render={(buttonProps) => (
+                <Link {...buttonProps} href="/home/my-listings">
+                  {tDashboard('homeViewAllListings')}
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
+              )}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {myListings.slice(0, 3).map((listing: Record<string, unknown>) => (
+              <EnviroListingCard
+                key={listing.id as string}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                listing={listing as any}
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      <EnviroCard variant="dark" hover="none" padding="lg">
+        <EnviroCardBody className="flex flex-col items-center gap-4 text-center md:flex-row md:items-center md:justify-between md:text-left">
+          <div className="flex flex-col gap-2 md:max-w-xl">
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[--color-enviro-lime-300] font-[family-name:var(--font-enviro-mono)]">
+              <span aria-hidden="true">[</span>
+              <span className="px-1">{tCommon('routes.carbon')}</span>
+              <span aria-hidden="true">]</span>
+            </span>
+            <h3 className="text-balance text-xl font-semibold leading-tight text-[--color-enviro-fg-inverse] font-[family-name:var(--font-enviro-display)] md:text-2xl">
+              {t('dashboard.environmentalImpact')}
+            </h3>
+            <p className="text-sm text-[--color-enviro-fg-inverse-muted]">
+              {tDashboard('carbonDesc')}
+            </p>
+          </div>
+          <EnviroButton
+            variant="lime"
+            size="md"
+            magnetic
+            render={(buttonProps) => (
+              <Link {...buttonProps} href="/home/carbon">
+                <Leaf aria-hidden="true" className="h-4 w-4" />
+                {t('dashboard.carbonImpact')}
+                <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              </Link>
+            )}
+          />
+        </EnviroCardBody>
+      </EnviroCard>
+
+      <p className="sr-only" aria-live="polite">
+        {locale}
+      </p>
+    </div>
   );
 }
 
@@ -341,67 +386,41 @@ function ActionCard({
   description,
   href,
   badge,
-  badgeColor,
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
   href: string;
-  badge: string;
-  badgeColor: string;
+  badge?: string;
 }) {
   return (
     <Link
       href={href}
-      className="group border-metal-chrome flex gap-3 rounded-xl border p-4 transition-all duration-200 hover:shadow-sm"
+      className="group flex gap-3 rounded-[--radius-enviro-md] border border-[--color-enviro-cream-300] bg-[--color-enviro-bg-elevated] p-4 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-[--color-enviro-lime-400] hover:shadow-[--shadow-enviro-sm] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-enviro-lime-300]/60"
     >
-      <div className="mt-0.5 shrink-0">{icon}</div>
+      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-[--radius-enviro-sm] bg-[--color-enviro-lime-100] text-[--color-enviro-lime-700]">
+        {icon}
+      </span>
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <p className="text-sm font-medium">{title}</p>
-          <span
-            className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${badgeColor}`}
-          >
-            {badge}
-          </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="text-sm font-semibold text-[--color-enviro-forest-900]">
+            {title}
+          </p>
+          {badge ? (
+            <span className="inline-flex items-center rounded-[--radius-enviro-pill] bg-[--color-enviro-lime-100] px-2 py-0.5 text-[10px] font-semibold text-[--color-enviro-lime-800]">
+              {badge}
+            </span>
+          ) : null}
         </div>
-        <p className="text-metal-500 mt-0.5 text-xs">{description}</p>
+        <p className="mt-0.5 text-xs text-[--color-enviro-forest-700]">
+          {description}
+        </p>
       </div>
-      <ArrowRight className="text-metal-steel h-4 w-4 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
+      <ArrowRight
+        aria-hidden="true"
+        className="h-4 w-4 shrink-0 text-[--color-enviro-forest-700] opacity-0 transition-opacity group-hover:opacity-100"
+      />
     </Link>
-  );
-}
-
-function TypeBadge({ type, label }: { type: string; label: string }) {
-  const styles: Record<string, string> = {
-    sell: 'bg-tech-mint text-tech-emerald',
-    buy: 'bg-circuit-ice text-circuit-blue',
-    collect: 'bg-badge-amber-bg text-badge-amber-text',
-  };
-
-  return (
-    <span
-      className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles[type] ?? ''}`}
-    >
-      {label}
-    </span>
-  );
-}
-
-function StatusBadge({ status, label }: { status: string; label: string }) {
-  const styles: Record<string, string> = {
-    active: 'bg-tech-mint text-tech-emerald',
-    draft: 'bg-metal-frost text-metal-steel',
-    sold: 'bg-circuit-ice text-circuit-blue',
-    expired: 'bg-metal-frost text-metal-steel',
-  };
-
-  return (
-    <span
-      className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles[status] ?? ''}`}
-    >
-      {label}
-    </span>
   );
 }
 
