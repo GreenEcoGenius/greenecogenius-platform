@@ -1,12 +1,13 @@
 import { ServerDataLoader } from '@makerkit/data-loader-supabase-nextjs';
+import { getTranslations } from 'next-intl/server';
 
 import { AdminAccountsTable } from '@kit/admin/components/admin-accounts-table';
 import { AdminCreateUserDialog } from '@kit/admin/components/admin-create-user-dialog';
 import { AdminGuard } from '@kit/admin/components/admin-guard';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
-import { Button } from '@kit/ui/button';
-import { PageBody, PageHeader } from '@kit/ui/page';
+
+import { EnviroDashboardSectionHeader } from '~/components/enviro/dashboard';
+import { EnviroButton } from '~/components/enviro/enviro-button';
 
 interface SearchParams {
   page?: string;
@@ -24,18 +25,30 @@ export const metadata = {
 
 async function AccountsPage(props: AdminAccountsPageProps) {
   const client = getSupabaseServerClient();
+  const t = await getTranslations('admin');
+
   const searchParams = await props.searchParams;
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
 
   return (
-    <PageBody>
-      <PageHeader description={<AppBreadcrumbs />}>
-        <div className="flex justify-end">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={t('tag')}
+        title={t('accountsTitle')}
+        subtitle={t('accountsSubtitle')}
+        actions={
           <AdminCreateUserDialog>
-            <Button data-test="admin-create-user-button">Create User</Button>
+            <EnviroButton
+              variant="primary"
+              size="sm"
+              magnetic
+              data-test="admin-create-user-button"
+            >
+              {t('createUser')}
+            </EnviroButton>
           </AdminCreateUserDialog>
-        </div>
-      </PageHeader>
+        }
+      />
 
       <ServerDataLoader
         table={'accounts'}
@@ -70,7 +83,7 @@ async function AccountsPage(props: AdminAccountsPageProps) {
           );
         }}
       </ServerDataLoader>
-    </PageBody>
+    </div>
   );
 }
 

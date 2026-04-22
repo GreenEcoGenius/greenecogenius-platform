@@ -27,6 +27,13 @@ interface EnviroSidebarProps {
   expandLabel?: string;
   /** Already-translated aria-label for the close-mobile button. */
   closeLabel?: string;
+  /**
+   * Accent color applied to group headings. `lime` (default) for the user
+   * dashboard, `ember` for the super-admin segment. Pair with the matching
+   * `accent` prop on each `EnviroSidebarNavItem` so active states stay
+   * consistent.
+   */
+  accent?: 'lime' | 'ember';
   /** Forwarded for layout overrides. */
   className?: string;
 }
@@ -50,11 +57,17 @@ export function EnviroSidebar({
   collapseLabel = 'Collapse sidebar',
   expandLabel = 'Expand sidebar',
   closeLabel = 'Close',
+  accent = 'lime',
   className,
 }: EnviroSidebarProps) {
   const { collapsed, toggle, mobileOpen, setMobileOpen } = useEnviroSidebar();
 
   const widthVar = collapsed ? SIDEBAR_WIDTH_COLLAPSED : SIDEBAR_WIDTH_EXPANDED;
+
+  const accentHeadingClass =
+    accent === 'ember'
+      ? 'text-[--color-enviro-ember-300]/70'
+      : 'text-[--color-enviro-lime-300]/70';
 
   return (
     <>
@@ -98,7 +111,12 @@ export function EnviroSidebar({
             {groups.map((group, index) => (
               <li key={index}>
                 {!collapsed ? (
-                  <h2 className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-[--color-enviro-lime-300]/70 font-[family-name:var(--font-enviro-mono)]">
+                  <h2
+                    className={cn(
+                      'mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.12em] font-[family-name:var(--font-enviro-mono)]',
+                      accentHeadingClass,
+                    )}
+                  >
                     {group.heading}
                   </h2>
                 ) : null}

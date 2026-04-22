@@ -1,0 +1,19 @@
+{
+  "title": "Super Admin",
+  "tag": "Administration",
+  "brandLabel": "GreenEcoGenius",
+  "groupAdmin": "Super Admin",
+  "navDashboard": "Dashboard",
+  "navAccounts": "Accounts",
+  "dashboardTitle": "Overview",
+  "dashboardSubtitle": "Platform-wide statistics and monitoring.",
+  "accountsTitle": "Accounts",
+  "accountsSubtitle": "Manage personal accounts and organizations.",
+  "createUser": "Create user",
+  "accountTitle": "Account {name}",
+  "backToAccounts": "Back to accounts",
+  "menuOpenLabel": "Open admin menu",
+  "menuCloseLabel": "Close admin menu",
+  "sidebarCollapseLabel": "Collapse sidebar",
+  "sidebarExpandLabel": "Expand sidebar"
+}

@@ -24,6 +24,12 @@ interface EnviroSidebarNavItemProps {
   highlightMatch?: string;
   /** Optional badge displayed on the right (only when expanded). */
   badge?: ReactNode;
+  /**
+   * Active state accent. `lime` (default) for the user dashboard,
+   * `ember` for the super-admin segment so the two contexts read as
+   * visually distinct surfaces while sharing the same forest sidebar.
+   */
+  accent?: 'lime' | 'ember';
   /** Forwarded for layout overrides. */
   className?: string;
 }
@@ -56,11 +62,26 @@ export function EnviroSidebarNavItem({
   icon,
   highlightMatch,
   badge,
+  accent = 'lime',
   className,
 }: EnviroSidebarNavItemProps) {
   const pathname = usePathname();
   const { collapsed, setMobileOpen } = useEnviroSidebar();
   const active = matches(pathname, href, highlightMatch);
+
+  // Accent maps cover ring (focus), text (active), and indicator bar.
+  const accentText =
+    accent === 'ember'
+      ? 'text-[--color-enviro-ember-300]'
+      : 'text-[--color-enviro-lime-300]';
+  const accentBar =
+    accent === 'ember'
+      ? 'bg-[--color-enviro-ember-300]'
+      : 'bg-[--color-enviro-lime-300]';
+  const accentRing =
+    accent === 'ember'
+      ? 'focus-visible:ring-[--color-enviro-ember-300]/60'
+      : 'focus-visible:ring-[--color-enviro-lime-300]/60';
 
   return (
     <Link
@@ -69,9 +90,10 @@ export function EnviroSidebarNavItem({
       onClick={() => setMobileOpen(false)}
       title={collapsed ? undefined : undefined}
       className={cn(
-        'group/nav-item relative flex items-center gap-3 rounded-[--radius-enviro-md] px-3 py-2 text-sm font-medium transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-enviro-lime-300]/60',
+        'group/nav-item relative flex items-center gap-3 rounded-[--radius-enviro-md] px-3 py-2 text-sm font-medium transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-none focus-visible:ring-2',
+        accentRing,
         active
-          ? 'bg-white/[0.06] text-[--color-enviro-lime-300]'
+          ? cn('bg-white/[0.06]', accentText)
           : 'text-[--color-enviro-fg-inverse-muted] hover:bg-white/[0.04] hover:text-[--color-enviro-fg-inverse]',
         collapsed && 'justify-center px-2',
         className,
@@ -80,14 +102,17 @@ export function EnviroSidebarNavItem({
       {active ? (
         <span
           aria-hidden="true"
-          className="absolute left-0 top-1/2 h-6 w-[3px] -translate-y-1/2 rounded-r-full bg-[--color-enviro-lime-300]"
+          className={cn(
+            'absolute left-0 top-1/2 h-6 w-[3px] -translate-y-1/2 rounded-r-full',
+            accentBar,
+          )}
         />
       ) : null}
 
       <span
         className={cn(
           'flex h-5 w-5 shrink-0 items-center justify-center [&>svg]:h-4 [&>svg]:w-4',
-          active && 'text-[--color-enviro-lime-300]',
+          active && accentText,
         )}
       >
         {icon}
