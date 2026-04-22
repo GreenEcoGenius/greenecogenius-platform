@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { PersonalAccountSettingsContainer } from '@kit/accounts/personal-account-settings';
 
+import { EnviroDashboardSectionHeader } from '~/components/enviro/dashboard';
 import authConfig from '~/config/auth.config';
 import featureFlagsConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
@@ -11,7 +12,6 @@ import { requireUserInServerComponent } from '~/lib/server/require-user-in-serve
 
 import { ProfileActions } from './_components/profile-actions';
 
-// Show email option if password, magic link, or OTP is enabled
 const showEmailOption =
   authConfig.providers.password ||
   authConfig.providers.magicLink ||
@@ -42,21 +42,32 @@ export const generateMetadata = async () => {
   };
 };
 
-function PersonalAccountSettingsPage() {
-  const user = use(requireUserInServerComponent());
+async function PersonalAccountSettingsPage() {
+  const tAccount = await getTranslations('account');
+  const tCommon = await getTranslations('common');
+
+  const user = await requireUserInServerComponent();
 
   return (
-    <div className={'flex w-full flex-1 flex-col lg:max-w-2xl'}>
-      <PersonalAccountSettingsContainer
-        userId={user.id}
-        features={features}
-        paths={paths}
-        providers={providers}
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.profile')}
+        title={tAccount('settingsTab')}
+        subtitle={tAccount('accountTabDescription')}
       />
 
-      <ProfileActions
-        enableThemeToggle={featureFlagsConfig.enableThemeToggle}
-      />
+      <div className="flex w-full flex-1 flex-col gap-8">
+        <PersonalAccountSettingsContainer
+          userId={user.id}
+          features={features}
+          paths={paths}
+          providers={providers}
+        />
+
+        <ProfileActions
+          enableThemeToggle={featureFlagsConfig.enableThemeToggle}
+        />
+      </div>
     </div>
   );
 }
