@@ -5,8 +5,7 @@ import { useState } from 'react';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { Button } from '@kit/ui/button';
-import { Trans } from '@kit/ui/trans';
+import { EnviroButton } from '~/components/enviro/enviro-button';
 
 export function SubscribeClientButton({
   planId,
@@ -16,6 +15,7 @@ export function SubscribeClientButton({
   variant: 'default' | 'outline';
 }) {
   const t = useTranslations('billing');
+  const tPricing = useTranslations('pricingPage');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,23 +51,28 @@ export function SubscribeClientButton({
   };
 
   return (
-    <div className="mt-6">
-      <Button
-        variant={variant}
-        className="w-full"
+    <div className="mt-6 flex flex-col gap-2">
+      <EnviroButton
+        type="button"
+        variant={variant === 'default' ? 'primary' : 'secondary'}
+        size="md"
+        magnetic={variant === 'default'}
         onClick={handleClick}
         disabled={loading}
+        className="w-full"
       >
         {loading ? (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />
         ) : (
-          <ArrowRight className="mr-2 h-4 w-4" />
+          <ArrowRight aria-hidden="true" className="h-4 w-4" />
         )}
-        <Trans i18nKey="pricingPage.startTrial" />
-      </Button>
-      {error && (
-        <p className="mt-2 text-center text-sm text-slate-500">{error}</p>
-      )}
+        {tPricing('startTrial')}
+      </EnviroButton>
+      {error ? (
+        <p className="text-center text-sm text-[--color-enviro-ember-700]">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -95,14 +100,17 @@ export function ManageClientButton() {
   };
 
   return (
-    <Button
-      variant="outline"
+    <EnviroButton
+      type="button"
+      variant="secondary"
       size="sm"
       onClick={handleClick}
       disabled={loading}
     >
-      {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+      {loading ? (
+        <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />
+      ) : null}
       {t('manageSubscription')}
-    </Button>
+    </EnviroButton>
   );
 }

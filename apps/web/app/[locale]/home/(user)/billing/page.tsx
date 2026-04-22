@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 import {
-  ArrowRight,
   BadgeCheck,
   BarChart3,
   Building2,
@@ -13,15 +12,18 @@ import {
   Sparkles,
   Zap,
 } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
-import { Badge } from '@kit/ui/badge';
-import { Button } from '@kit/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
+import { cn } from '@kit/ui/utils';
 
+import { EnviroDashboardSectionHeader } from '~/components/enviro/dashboard';
+import { EnviroButton } from '~/components/enviro/enviro-button';
+import {
+  EnviroCard,
+  EnviroCardBody,
+  EnviroCardHeader,
+} from '~/components/enviro/enviro-card';
 import { requireUserInServerComponent } from '~/lib/server/require-user-in-server-component';
 
 import {
@@ -42,7 +44,7 @@ const essentielFeatures = [
   'pricingPage.featAutoFill',
   'pricingPage.feat50Lots',
   'pricingPage.featEmailSupport',
-];
+] as const;
 
 const avanceFeatures = [
   'pricingPage.featScope123',
@@ -52,7 +54,7 @@ const avanceFeatures = [
   'pricingPage.featBenchmarking',
   'pricingPage.featApiAccess',
   'pricingPage.featPrioritySupport',
-];
+] as const;
 
 const enterpriseFeatures = [
   'pricingPage.featErpIntegration',
@@ -60,33 +62,33 @@ const enterpriseFeatures = [
   'pricingPage.featAuditLabel',
   'pricingPage.featAccountManager',
   'pricingPage.featSla',
-];
-
-function formatPrice(cents: number): string {
-  return Math.round(cents / 100).toLocaleString('fr-FR');
-}
+] as const;
 
 async function PersonalAccountBillingPage() {
   const user = await requireUserInServerComponent();
   const adminClient = getSupabaseServerAdminClient();
   const t = await getTranslations('billing');
+  const tCommon = await getTranslations('common');
+  const tAccount = await getTranslations('account');
+  const tPricing = await getTranslations('pricingPage');
+  const locale = await getLocale();
 
-  // Fetch plans
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: plans } = await (adminClient as any)
-    .from('subscription_plans')
-    .select('*')
-    .eq('is_active', true)
-    .order('sort_order');
+  const c = adminClient as any;
 
-  // Fetch current subscription
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: currentSub } = await (adminClient as any)
-    .from('organization_subscriptions')
-    .select('*, subscription_plans(name, display_name)')
-    .eq('account_id', user.id)
-    .in('status', ['active', 'trialing'])
-    .single();
+  const [{ data: plans }, { data: currentSub }] = await Promise.all([
+    c
+      .from('subscription_plans')
+      .select('*')
+      .eq('is_active', true)
+      .order('sort_order'),
+    c
+      .from('organization_subscriptions')
+      .select('*, subscription_plans(name, display_name)')
+      .eq('account_id', user.id)
+      .in('status', ['active', 'trialing'])
+      .single(),
+  ]);
 
   const essentiel = (plans ?? []).find(
     (p: Record<string, unknown>) => p.name === 'essentiel',
@@ -95,271 +97,330 @@ async function PersonalAccountBillingPage() {
     (p: Record<string, unknown>) => p.name === 'avance',
   );
 
-  const currentPlan = currentSub?.subscription_plans?.name;
+  const currentPlan = currentSub?.subscription_plans?.name as
+    | string
+    | undefined;
+
+  const formatPrice = (cents: number) =>
+    new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0,
+    }).format(cents / 100);
 
   return (
-    <PageBody>
-      {/* Current subscription banner */}
-      {currentSub && (
-        <Card className="mb-6 border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950">
-          <CardContent className="flex items-center justify-between py-4">
-            <div className="flex items-center gap-3">
-              <BadgeCheck className="h-6 w-6 text-green-600" />
-              <div>
-                <p className="font-semibold">
-                  Plan {currentSub.subscription_plans?.display_name}
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  {currentSub.status === 'trialing'
-                    ? t('trialInProgress')
-                    : t('subscriptionActive')}
-                </p>
-              </div>
-            </div>
-            <ManageButton />
-          </CardContent>
-        </Card>
-      )}
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.billing')}
+        title={tAccount('billingTab')}
+        subtitle={t('subscriptionTabSubheading')}
+        actions={currentSub ? <ManageClientButton /> : undefined}
+      />
 
-      {/* Plans grid */}
-      <div className="mt-4 grid grid-cols-1 gap-6 pt-4 md:grid-cols-3">
-        {/* ESSENTIEL */}
-        <Card
-          className={`flex flex-col ${currentPlan === 'essentiel' ? 'border-primary ring-primary/20 ring-2' : ''}`}
-        >
-          <CardHeader className="text-center">
-            <div className="mb-2 flex items-center justify-center gap-2">
-              <Zap className="h-5 w-5 text-green-600" />
-              <CardTitle>
-                {essentiel?.display_name ?? t('planEssentielDefault')}
-              </CardTitle>
+      {currentSub ? (
+        <div className="flex flex-col gap-3 rounded-[--radius-enviro-md] border border-[--color-enviro-lime-200] bg-[--color-enviro-lime-50] px-5 py-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-3">
+            <BadgeCheck
+              aria-hidden="true"
+              className="h-6 w-6 text-[--color-enviro-lime-700]"
+            />
+            <div>
+              <p className="font-semibold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+                {currentSub.subscription_plans?.display_name}
+              </p>
+              <p className="text-sm text-[--color-enviro-forest-700]">
+                {currentSub.status === 'trialing'
+                  ? t('trialInProgress')
+                  : t('subscriptionActive')}
+              </p>
             </div>
-            {currentPlan === 'essentiel' && (
-              <Badge className="mx-auto bg-green-600 text-white">
-                {t('currentPlan')}
-              </Badge>
-            )}
-            <div className="mt-3">
-              <span className="text-3xl font-bold">
-                {essentiel ? formatPrice(essentiel.monthly_price) : '149'}€
-              </span>
-              <span className="text-muted-foreground">{t('perMonthSuffix')}</span>
-            </div>
-          </CardHeader>
-          <CardContent className="flex flex-1 flex-col">
-            <ul className="flex-1 space-y-2">
-              {essentielFeatures.map((feat) => (
-                <li key={feat} className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
-                  <span className="text-sm">
-                    <Trans i18nKey={feat} />
-                  </span>
-                </li>
-              ))}
-            </ul>
-            {currentPlan !== 'essentiel' && (
+          </div>
+        </div>
+      ) : null}
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <PlanCard
+          tone={currentPlan === 'essentiel' ? 'highlight' : 'default'}
+          icon={
+            <Zap
+              aria-hidden="true"
+              className="h-5 w-5 text-[--color-enviro-lime-700]"
+            />
+          }
+          name={essentiel?.display_name ?? t('planEssentielDefault')}
+          price={
+            essentiel
+              ? formatPrice(essentiel.monthly_price)
+              : formatPrice(14900)
+          }
+          priceSuffix={t('perMonthSuffix')}
+          features={[...essentielFeatures]}
+          tPricing={tPricing}
+          isCurrent={currentPlan === 'essentiel'}
+          currentLabel={t('currentPlan')}
+          ctaSlot={
+            currentPlan !== 'essentiel' ? (
               <SubscribeButton
                 planId={essentiel?.id}
                 disabled={!!currentPlan}
                 variant="outline"
+                fallbackLabel={tPricing('startTrial')}
               />
-            )}
-          </CardContent>
-        </Card>
+            ) : null
+          }
+        />
 
-        {/* AVANCÉ */}
-        <Card
-          className={`flex flex-col ${currentPlan === 'avance' ? 'border-primary ring-primary/20 ring-2' : 'border-primary shadow-lg'}`}
-        >
-          <CardHeader className="text-center">
-            <div className="mb-2 flex items-center justify-center gap-2">
-              <BarChart3 className="text-primary h-5 w-5" />
-              <CardTitle>
-                {avance?.display_name ?? t('planAvanceDefault')}
-              </CardTitle>
-              {!currentPlan && (
-                <Badge className="animate-pulse bg-green-600 text-white">
-                  <Sparkles className="mr-1 h-3 w-3" />
-                  <Trans i18nKey="pricingPage.popular" />
-                </Badge>
-              )}
-              {currentPlan === 'avance' && (
-                <Badge className="bg-green-600 text-white">
-                  {t('currentPlan')}
-                </Badge>
-              )}
-            </div>
-            <div className="mt-3">
-              <span className="text-3xl font-bold">
-                {avance ? formatPrice(avance.monthly_price) : '449'}€
-              </span>
-              <span className="text-muted-foreground">{t('perMonthSuffix')}</span>
-            </div>
-          </CardHeader>
-          <CardContent className="flex flex-1 flex-col">
-            <p className="text-muted-foreground mb-3 text-xs italic">
-              <Trans i18nKey="pricingPage.everythingEssentiel" />
-            </p>
-            <ul className="flex-1 space-y-2">
-              {avanceFeatures.map((feat) => (
-                <li key={feat} className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
-                  <span className="text-sm">
-                    <Trans i18nKey={feat} />
-                  </span>
-                </li>
-              ))}
-            </ul>
-            {currentPlan !== 'avance' && (
+        <PlanCard
+          tone={currentPlan === 'avance' ? 'highlight' : 'featured'}
+          icon={
+            <BarChart3
+              aria-hidden="true"
+              className="h-5 w-5 text-[--color-enviro-cta]"
+            />
+          }
+          name={avance?.display_name ?? t('planAvanceDefault')}
+          price={
+            avance ? formatPrice(avance.monthly_price) : formatPrice(44900)
+          }
+          priceSuffix={t('perMonthSuffix')}
+          intro={tPricing('everythingEssentiel')}
+          features={[...avanceFeatures]}
+          tPricing={tPricing}
+          isCurrent={currentPlan === 'avance'}
+          currentLabel={t('currentPlan')}
+          popularLabel={!currentPlan ? tPricing('popular') : undefined}
+          ctaSlot={
+            currentPlan !== 'avance' ? (
               <SubscribeButton
                 planId={avance?.id}
                 disabled={false}
                 variant="default"
+                fallbackLabel={tPricing('startTrial')}
               />
-            )}
-          </CardContent>
-        </Card>
+            ) : null
+          }
+        />
 
-        {/* ENTERPRISE */}
-        <Card className="flex flex-col">
-          <CardHeader className="text-center">
-            <div className="mb-2 flex items-center justify-center gap-2">
-              <Building2 className="h-5 w-5" />
-              <CardTitle>Enterprise</CardTitle>
-            </div>
-            <div className="mt-3">
-              <span className="text-2xl font-bold">
-                <Trans i18nKey="pricingPage.onQuote" />
-              </span>
-            </div>
-          </CardHeader>
-          <CardContent className="flex flex-1 flex-col">
-            <p className="text-muted-foreground mb-3 text-xs italic">
-              <Trans i18nKey="pricingPage.everythingAvance" />
-            </p>
-            <ul className="flex-1 space-y-2">
-              {enterpriseFeatures.map((feat) => (
-                <li key={feat} className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
-                  <span className="text-sm">
-                    <Trans i18nKey={feat} />
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <Button
-              variant="secondary"
-              className="mt-6 w-full"
-              render={
-                <Link href="mailto:contact@greenecogenius.tech">
-                  <Trans i18nKey="pricingPage.contactSales" />
-                </Link>
-              }
-              nativeButton={false}
+        <PlanCard
+          tone="default"
+          icon={
+            <Building2
+              aria-hidden="true"
+              className="h-5 w-5 text-[--color-enviro-forest-700]"
             />
-          </CardContent>
-        </Card>
+          }
+          name="Enterprise"
+          priceDisplay={tPricing('onQuote')}
+          intro={tPricing('everythingAvance')}
+          features={[...enterpriseFeatures]}
+          tPricing={tPricing}
+          ctaSlot={
+            <EnviroButton
+              variant="secondary"
+              size="md"
+              className="mt-6 w-full"
+              render={(buttonProps) => (
+                <Link
+                  {...buttonProps}
+                  href="mailto:contact@greenecogenius.tech"
+                >
+                  {tPricing('contactSales')}
+                </Link>
+              )}
+            />
+          }
+        />
       </div>
 
-      {/* Manage subscription */}
-      {currentSub && (
-        <div className="mt-6">
-          <ManageButton />
-        </div>
-      )}
+      <EnviroCard variant="cream" hover="none" padding="md">
+        <EnviroCardHeader>
+          <h3 className="text-center text-lg font-semibold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+            {t('includedEachTransactionTitle')}
+          </h3>
+        </EnviroCardHeader>
+        <EnviroCardBody className="flex flex-col gap-5 pt-4">
+          <p className="text-center text-sm text-[--color-enviro-forest-700]">
+            {t('includedEachTransactionDesc')}
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {[
+              {
+                key: 'tagBlockchainTraceability',
+                icon: <Link2 aria-hidden="true" className="h-3.5 w-3.5" />,
+              },
+              {
+                key: 'tagAutoCO2',
+                icon: <Leaf aria-hidden="true" className="h-3.5 w-3.5" />,
+              },
+              {
+                key: 'tagPdfCertificate',
+                icon: <FileText aria-hidden="true" className="h-3.5 w-3.5" />,
+              },
+              {
+                key: 'tagCarbonDashboard',
+                icon: <BarChart3 aria-hidden="true" className="h-3.5 w-3.5" />,
+              },
+              {
+                key: 'tagExportPdfCsv',
+                icon: <Download aria-hidden="true" className="h-3.5 w-3.5" />,
+              },
+            ].map((tag) => (
+              <span
+                key={tag.key}
+                className="inline-flex items-center gap-1.5 rounded-[--radius-enviro-pill] border border-[--color-enviro-lime-200] bg-[--color-enviro-bg-elevated] px-3 py-1 text-xs font-medium text-[--color-enviro-forest-900]"
+              >
+                <span className="text-[--color-enviro-lime-700]">
+                  {tag.icon}
+                </span>
+                {t(tag.key)}
+              </span>
+            ))}
+          </div>
+        </EnviroCardBody>
+      </EnviroCard>
 
-      {/* Bottom section — included with marketplace */}
-      <div className="mt-10 rounded-xl border border-green-200 bg-green-50/50 p-6 dark:border-green-900 dark:bg-green-950/30">
-        <h3 className="mb-3 text-center text-lg font-semibold">
-          {t('includedEachTransactionTitle')}
+      <section className="flex flex-col gap-4">
+        <h3 className="text-lg font-semibold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+          {t('faqTitle')}
         </h3>
-        <p className="text-muted-foreground mb-4 text-center text-sm">
-          {t('includedEachTransactionDesc')}
-        </p>
-        <div className="flex flex-wrap justify-center gap-3">
+        <div className="flex flex-col gap-3">
           {[
-            {
-              icon: (
-                <Link2 size={16} strokeWidth={1.5} className="text-[#1BAF6A]" />
-              ),
-              label: t('tagBlockchainTraceability'),
-            },
-            {
-              icon: (
-                <Leaf
-                  size={16}
-                  strokeWidth={1.5}
-                  className="text-[#1BAF6A]"
-                />
-              ),
-              label: t('tagAutoCO2'),
-            },
-            {
-              icon: (
-                <FileText
-                  size={16}
-                  strokeWidth={1.5}
-                  className="text-[#1BAF6A]"
-                />
-              ),
-              label: t('tagPdfCertificate'),
-            },
-            {
-              icon: (
-                <BarChart3
-                  size={16}
-                  strokeWidth={1.5}
-                  className="text-[#1BAF6A]"
-                />
-              ),
-              label: t('tagCarbonDashboard'),
-            },
-            {
-              icon: (
-                <Download
-                  size={16}
-                  strokeWidth={1.5}
-                  className="text-[#1BAF6A]"
-                />
-              ),
-              label: t('tagExportPdfCsv'),
-            },
-          ].map((tag) => (
-            <span
-              key={tag.label}
-              className="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-white px-3 py-1.5 text-sm dark:border-green-800 dark:bg-green-950"
+            { q: 'faqIncludedQ', a: 'faqIncludedA' },
+            { q: 'faqTrialQ', a: 'faqTrialA' },
+            { q: 'faqChangePlanQ', a: 'faqChangePlanA' },
+          ].map((item) => (
+            <details
+              key={item.q}
+              className="group rounded-[--radius-enviro-md] border border-[--color-enviro-cream-300] bg-[--color-enviro-bg-elevated] open:bg-[--color-enviro-cream-50]"
             >
-              {tag.icon} {tag.label}
-            </span>
+              <summary className="flex cursor-pointer items-center justify-between px-5 py-3 text-sm font-medium text-[--color-enviro-forest-900] marker:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-enviro-lime-300]/60">
+                {t(item.q)}
+                <span
+                  aria-hidden="true"
+                  className="ml-3 text-[--color-enviro-forest-700] transition-transform group-open:rotate-45"
+                >
+                  +
+                </span>
+              </summary>
+              <div className="px-5 pb-4 text-sm text-[--color-enviro-forest-700]">
+                {t(item.a)}
+              </div>
+            </details>
           ))}
         </div>
-      </div>
+      </section>
+    </div>
+  );
+}
 
-      {/* FAQ */}
-      <div className="mt-8 space-y-4">
-        <h3 className="text-lg font-semibold">{t('faqTitle')}</h3>
-        <div className="space-y-3">
-          <div className="rounded-lg border p-4">
-            <p className="font-medium">{t('faqIncludedQ')}</p>
-            <p className="text-muted-foreground mt-1 text-sm">
-              {t('faqIncludedA')}
-            </p>
+interface PlanCardProps {
+  tone: 'default' | 'highlight' | 'featured';
+  icon: React.ReactNode;
+  name: React.ReactNode;
+  price?: string;
+  priceDisplay?: React.ReactNode;
+  priceSuffix?: string;
+  intro?: React.ReactNode;
+  features: string[];
+  tPricing: (key: string) => string;
+  isCurrent?: boolean;
+  currentLabel?: string;
+  popularLabel?: string;
+  ctaSlot?: React.ReactNode;
+}
+
+function PlanCard({
+  tone,
+  icon,
+  name,
+  price,
+  priceDisplay,
+  priceSuffix,
+  intro,
+  features,
+  tPricing,
+  isCurrent,
+  currentLabel,
+  popularLabel,
+  ctaSlot,
+}: PlanCardProps) {
+  const ringClass =
+    tone === 'highlight'
+      ? 'ring-2 ring-[--color-enviro-lime-400] border-[--color-enviro-lime-400]'
+      : tone === 'featured'
+        ? 'border-[--color-enviro-cta] shadow-[--shadow-enviro-lg]'
+        : '';
+
+  return (
+    <EnviroCard
+      variant="cream"
+      hover="none"
+      padding="md"
+      className={cn('flex flex-col', ringClass)}
+    >
+      <EnviroCardHeader>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <div className="flex items-center justify-center gap-2">
+            {icon}
+            <h3 className="text-base font-semibold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+              {name}
+            </h3>
           </div>
-          <div className="rounded-lg border p-4">
-            <p className="font-medium">{t('faqTrialQ')}</p>
-            <p className="text-muted-foreground mt-1 text-sm">
-              {t('faqTrialA')}
-            </p>
-          </div>
-          <div className="rounded-lg border p-4">
-            <p className="font-medium">{t('faqChangePlanQ')}</p>
-            <p className="text-muted-foreground mt-1 text-sm">
-              {t('faqChangePlanA')}
-            </p>
+
+          {isCurrent && currentLabel ? (
+            <span className="inline-flex items-center rounded-[--radius-enviro-pill] bg-[--color-enviro-lime-300] px-2.5 py-0.5 text-[11px] font-semibold text-[--color-enviro-forest-900]">
+              {currentLabel}
+            </span>
+          ) : popularLabel ? (
+            <span className="inline-flex items-center gap-1 rounded-[--radius-enviro-pill] bg-[--color-enviro-cta] px-2.5 py-0.5 text-[11px] font-semibold text-[--color-enviro-cta-fg]">
+              <Sparkles aria-hidden="true" className="h-3 w-3" />
+              {popularLabel}
+            </span>
+          ) : null}
+
+          <div className="mt-2">
+            {priceDisplay ? (
+              <span className="text-2xl font-bold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+                {priceDisplay}
+              </span>
+            ) : (
+              <>
+                <span className="text-3xl font-bold text-[--color-enviro-forest-900] tabular-nums font-[family-name:var(--font-enviro-display)]">
+                  {price}
+                </span>
+                {priceSuffix ? (
+                  <span className="text-sm text-[--color-enviro-forest-700]">
+                    {priceSuffix}
+                  </span>
+                ) : null}
+              </>
+            )}
           </div>
         </div>
-      </div>
-    </PageBody>
+      </EnviroCardHeader>
+      <EnviroCardBody className="flex flex-1 flex-col pt-5">
+        {intro ? (
+          <p className="mb-3 text-xs italic text-[--color-enviro-forest-700]">
+            {intro}
+          </p>
+        ) : null}
+        <ul className="flex flex-1 flex-col gap-2">
+          {features.map((feat) => (
+            <li
+              key={feat}
+              className="flex items-start gap-2 text-sm text-[--color-enviro-forest-900]"
+            >
+              <Check
+                aria-hidden="true"
+                className="mt-0.5 h-4 w-4 shrink-0 text-[--color-enviro-lime-700]"
+              />
+              <span>{tPricing(feat.replace('pricingPage.', ''))}</span>
+            </li>
+          ))}
+        </ul>
+        {ctaSlot}
+      </EnviroCardBody>
+    </EnviroCard>
   );
 }
 
@@ -367,24 +428,28 @@ function SubscribeButton({
   planId,
   disabled,
   variant,
+  fallbackLabel,
 }: {
   planId?: string;
   disabled: boolean;
   variant: 'default' | 'outline';
+  fallbackLabel: string;
 }) {
   if (!planId || disabled) {
     return (
-      <Button variant={variant} className="mt-6 w-full" disabled>
-        <Trans i18nKey="pricingPage.startTrial" />
-      </Button>
+      <EnviroButton
+        type="button"
+        variant={variant === 'default' ? 'primary' : 'secondary'}
+        size="md"
+        className="mt-6 w-full"
+        disabled
+      >
+        {fallbackLabel}
+      </EnviroButton>
     );
   }
 
-  return <SubscribeClientButton planId={planId!} variant={variant} />;
-}
-
-function ManageButton() {
-  return <ManageClientButton />;
+  return <SubscribeClientButton planId={planId} variant={variant} />;
 }
 
 export default PersonalAccountBillingPage;
