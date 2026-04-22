@@ -80,6 +80,7 @@
   },
   "list": {
     "proofProvided": "Supporting document provided",
-    "externalLink": "External link"
+    "externalLink": "External link",
+    "deleteAria": "Delete this activity"
   }
 }

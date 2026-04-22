@@ -80,6 +80,7 @@
   },
   "list": {
     "proofProvided": "Pièce justificative fournie",
-    "externalLink": "Lien externe"
+    "externalLink": "Lien externe",
+    "deleteAria": "Supprimer cette activité"
   }
 }
