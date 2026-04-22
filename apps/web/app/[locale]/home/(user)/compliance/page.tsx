@@ -1,19 +1,23 @@
 import Link from 'next/link';
 
-import { ArrowRight, RefreshCw, Shield, Zap } from 'lucide-react';
+import { ArrowRight, Shield, Zap } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { Button } from '@kit/ui/button';
-import { Card, CardContent } from '@kit/ui/card';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
 
+import {
+  EnviroDashboardSectionHeader,
+  EnviroStatCard,
+  EnviroStatCardGrid,
+} from '~/components/enviro/dashboard';
+import { EnviroButton } from '~/components/enviro/enviro-button';
+import {
+  EnviroCard,
+  EnviroCardBody,
+} from '~/components/enviro/enviro-card';
 import { NORMS_DATABASE } from '~/lib/data/norms-database';
 
-import { SectionFooterImage } from '../_components/section-footer-image';
-import { SectionHeader } from '../_components/section-header';
 import { ComplianceAlerts } from './_components/compliance-alerts';
 import { CompliancePillarCards } from './_components/compliance-pillar-cards';
 import { ComplianceScoreCard } from './_components/compliance-score-card';
@@ -28,13 +32,15 @@ export const generateMetadata = async () => {
 
 async function CompliancePage() {
   const client = getSupabaseServerClient();
+  const t = await getTranslations('compliance');
+  const tDashboard = await getTranslations('dashboard');
+  const tCommon = await getTranslations('common');
+
   const user = await requireUser(client);
   const userId = user.data?.id;
-  const t = await getTranslations('compliance');
 
   if (!userId) return null;
 
-  // Fetch real compliance data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: complianceRows } = await (client as any)
     .from('account_norm_compliance')
@@ -43,7 +49,8 @@ async function CompliancePage() {
 
   // Norms under the "data" pillar (RGPD, ISO 27001, SOC 2, NIS2, Label NR)
   // concern the platform itself, not the client's ecological compliance.
-  // They are hidden from the client dashboard — 37 norms instead of 42.
+  // They are hidden from the client dashboard so the score is computed
+  // over 37 norms instead of 42.
   const CLIENT_NORMS = NORMS_DATABASE.filter((n) => n.pillar !== 'data');
   const clientNormIds = new Set(CLIENT_NORMS.map((n) => n.id));
 
@@ -60,60 +67,46 @@ async function CompliancePage() {
 
   if (!hasComplianceData) {
     return (
-      <PageBody>
-        <SectionHeader titleKey="complianceTitle" descKey="complianceDesc" />
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+        <EnviroDashboardSectionHeader
+          tag={tCommon('routes.compliance')}
+          title={tDashboard('complianceTitle')}
+          subtitle={tDashboard('complianceDesc')}
+        />
 
-        <div className="space-y-6">
-          <Card>
-            <CardContent className="flex flex-col items-center px-6 py-16 text-center">
-              <div className="bg-primary-light mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
-                <Shield className="text-primary h-8 w-8" />
-              </div>
-              <h2 className="text-metal-900 text-2xl font-bold">
-                <Trans
-                  i18nKey="compliance:emptyTitle"
-                  defaults="Conformité réglementaire"
-                />
-              </h2>
-              <p className="text-metal-500 mx-auto mt-3 max-w-md text-sm leading-relaxed">
-                <Trans
-                  i18nKey="compliance:emptyDesc"
-                  defaults="Publiez une annonce ou réalisez une transaction sur Le Comptoir Circulaire. La plateforme évaluera automatiquement votre conformité aux 37 normes environnementales et RSE."
-                />
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <RecalculateButton />
-                <Button
-                  variant="outline"
-                  size="sm"
-                  render={<Link href="/home/marketplace/new" />}
-                  nativeButton={false}
-                >
-                  <Zap className="mr-2 h-4 w-4" />
-                  <Trans
-                    i18nKey="compliance:publishListing"
-                    defaults="Publier une annonce"
-                  />
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+        <EnviroCard variant="dark" hover="none" padding="lg">
+          <EnviroCardBody className="flex flex-col items-center gap-5 text-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-[--radius-enviro-pill] bg-[--color-enviro-lime-300]/15 text-[--color-enviro-lime-300]">
+              <Shield aria-hidden="true" className="h-8 w-8" />
+            </div>
+            <h2 className="text-balance text-2xl leading-tight font-semibold text-[--color-enviro-fg-inverse] font-[family-name:var(--font-enviro-display)]">
+              {t('emptyTitle')}
+            </h2>
+            <p className="mx-auto max-w-md text-sm leading-relaxed text-[--color-enviro-fg-inverse-muted]">
+              {t('emptyDesc')}
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <RecalculateButton />
+              <EnviroButton
+                variant="outlineCream"
+                size="md"
+                render={(buttonProps) => (
+                  <Link {...buttonProps} href="/home/marketplace/new">
+                    <Zap aria-hidden="true" className="h-4 w-4" />
+                    {t('publishListing')}
+                    <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  </Link>
+                )}
+              />
+            </div>
+          </EnviroCardBody>
+        </EnviroCard>
 
-          <RegulatoryWatch />
-
-          <SectionFooterImage
-            src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-3ce44a5d-32c4-45eb-8b93-1c560b509a71.png"
-            alt="Conformite"
-          />
-        </div>
-      </PageBody>
+        <RegulatoryWatch />
+      </div>
     );
   }
 
-  // Aggregate stats (score is computed over the full client catalog of 37
-  // norms, not only the rows present in the compliance table, so an empty
-  // account correctly reports 0/37 = 0%).
   const totalClientNorms = CLIENT_NORMS.length;
   const compliantCount = rows.filter((r) => r.status === 'compliant').length;
   const nonCompliantCount = rows.filter(
@@ -124,7 +117,6 @@ async function CompliancePage() {
     : 0;
   const alertCount = nonCompliantCount;
 
-  // Build pillar aggregation from real data (excluding the "data" pillar)
   const pillarMap = new Map<
     string,
     { compliant: number; total: number; norms: string[] }
@@ -159,7 +151,6 @@ async function CompliancePage() {
     norms: val.norms,
   }));
 
-  // Build norm rows for the table
   const normRows = CLIENT_NORMS.map((norm) => {
     const row = rows.find((r) => r.norm_id === norm.id);
     return {
@@ -175,7 +166,6 @@ async function CompliancePage() {
     };
   });
 
-  // Alert items: only non-compliant norms (not partial or not_evaluated)
   const alertItems = rows
     .filter((r) => r.status === 'non_compliant')
     .map((r) => {
@@ -201,36 +191,71 @@ async function CompliancePage() {
     : undefined;
 
   return (
-    <PageBody>
-      <SectionHeader titleKey="complianceTitle" descKey="complianceDesc" />
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.compliance')}
+        title={tDashboard('complianceTitle')}
+        subtitle={tDashboard('complianceDesc')}
+        actions={<RecalculateButton />}
+      />
 
-      <div className="space-y-8">
-        <div className="flex items-center justify-end">
-          <RecalculateButton />
-        </div>
-
-        <ComplianceScoreCard
-          score={score}
-          normsCompliant={compliantCount}
-          normsTotal={totalClientNorms}
-          alerts={alertCount}
-          lastUpdate={lastEvaluated}
+      <EnviroStatCardGrid cols={4}>
+        <EnviroStatCard
+          variant="forest"
+          label={t('globalScore')}
+          value={score}
+          suffix=" %"
+          subtitle={
+            lastEvaluated
+              ? t('lastUpdateOn', { date: lastEvaluated })
+              : undefined
+          }
+          icon={<Shield aria-hidden="true" className="h-5 w-5" />}
         />
-
-        <CompliancePillarCards pillars={pillars} />
-
-        <NormStatusTable norms={normRows} />
-
-        {alertItems.length > 0 && <ComplianceAlerts alerts={alertItems} />}
-
-        <RegulatoryWatch />
-
-        <SectionFooterImage
-          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-3ce44a5d-32c4-45eb-8b93-1c560b509a71.png"
-          alt="Conformite"
+        <EnviroStatCard
+          variant="lime"
+          label={t('normsCompliant')}
+          valueDisplay={
+            <span className="tabular-nums">
+              {compliantCount}/{totalClientNorms}
+            </span>
+          }
+          subtitle={t('subtitleClientNorms')}
         />
-      </div>
-    </PageBody>
+        <EnviroStatCard
+          variant="cream"
+          label={t('alertsLabel')}
+          value={alertCount}
+          subtitle={t('alertsSubtitle')}
+        />
+        <EnviroStatCard
+          variant="cream"
+          label={t('pillarsLabel')}
+          valueDisplay={
+            <span className="tabular-nums">{pillars.length}</span>
+          }
+          subtitle={t('pillarsSubtitle')}
+        />
+      </EnviroStatCardGrid>
+
+      <ComplianceScoreCard
+        score={score}
+        normsCompliant={compliantCount}
+        normsTotal={totalClientNorms}
+        alerts={alertCount}
+        lastUpdate={lastEvaluated}
+      />
+
+      <CompliancePillarCards pillars={pillars} />
+
+      <NormStatusTable norms={normRows} />
+
+      {alertItems.length > 0 ? (
+        <ComplianceAlerts alerts={alertItems} />
+      ) : null}
+
+      <RegulatoryWatch />
+    </div>
   );
 }
 
