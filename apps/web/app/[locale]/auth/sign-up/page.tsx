@@ -3,10 +3,9 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
 import { SignUpMethodsContainer } from '@kit/auth/sign-up';
-import { Button } from '@kit/ui/button';
-import { Heading } from '@kit/ui/heading';
-import { Trans } from '@kit/ui/trans';
 
+import { EnviroAuthHeading } from '~/components/enviro/auth';
+import { EnviroButton } from '~/components/enviro/enviro-button';
 import authConfig from '~/config/auth.config';
 import pathsConfig from '~/config/paths.config';
 
@@ -24,17 +23,15 @@ const paths = {
 };
 
 async function SignUpPage() {
+  const t = await getTranslations('auth');
+
   return (
     <>
-      <div className={'flex flex-col items-center gap-1'}>
-        <Heading level={4} className={'tracking-tight'}>
-          <Trans i18nKey={'auth.signUpHeading'} />
-        </Heading>
-
-        <p className={'text-metal-600 text-sm'}>
-          <Trans i18nKey={'auth.signUpSubheading'} />
-        </p>
-      </div>
+      <EnviroAuthHeading
+        tag={t('signUp')}
+        title={t('signUpHeading')}
+        subtitle={t('signUpSubheading')}
+      />
 
       <SignUpMethodsContainer
         providers={authConfig.providers}
@@ -43,16 +40,15 @@ async function SignUpPage() {
         captchaSiteKey={authConfig.captchaTokenSiteKey}
       />
 
-      <div className={'flex justify-center'}>
-        <Button
-          render={
-            <Link href={pathsConfig.auth.signIn} prefetch={true}>
-              <Trans i18nKey={'auth.alreadyHaveAnAccount'} />
+      <div className="flex justify-center">
+        <EnviroButton
+          variant="ghost"
+          size="sm"
+          render={(buttonProps) => (
+            <Link {...buttonProps} href={pathsConfig.auth.signIn} prefetch>
+              {t('alreadyHaveAnAccount')}
             </Link>
-          }
-          variant={'link'}
-          size={'sm'}
-          nativeButton={false}
+          )}
         />
       </div>
     </>

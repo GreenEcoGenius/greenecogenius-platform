@@ -7,6 +7,7 @@ import { getSafeRedirectPath } from '@kit/shared/utils';
 import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
+import { EnviroAuthHeading } from '~/components/enviro/auth';
 import pathsConfig from '~/config/paths.config';
 
 interface Props {
@@ -41,13 +42,23 @@ async function VerifyPage(props: Props) {
   const nextPath = (await props.searchParams).next;
   const redirectPath = getSafeRedirectPath(nextPath, pathsConfig.app.home);
 
+  const t = await getTranslations('auth');
+
   return (
-    <MultiFactorChallengeContainer
-      userId={data.claims.sub}
-      paths={{
-        redirectPath,
-      }}
-    />
+    <>
+      <EnviroAuthHeading
+        tag={t('signIn')}
+        title={t('verifyTitle')}
+        subtitle={t('verifySubtitle')}
+      />
+
+      <MultiFactorChallengeContainer
+        userId={data.claims.sub}
+        paths={{
+          redirectPath,
+        }}
+      />
+    </>
   );
 }
 

@@ -4,10 +4,9 @@ import { getTranslations } from 'next-intl/server';
 
 import { SignInMethodsContainer } from '@kit/auth/sign-in';
 import { getSafeRedirectPath } from '@kit/shared/utils';
-import { Button } from '@kit/ui/button';
-import { Heading } from '@kit/ui/heading';
-import { Trans } from '@kit/ui/trans';
 
+import { EnviroAuthHeading } from '~/components/enviro/auth';
+import { EnviroButton } from '~/components/enviro/enviro-button';
 import authConfig from '~/config/auth.config';
 import pathsConfig from '~/config/paths.config';
 
@@ -27,6 +26,7 @@ export const generateMetadata = async () => {
 
 async function SignInPage({ searchParams }: SignInPageProps) {
   const { next } = await searchParams;
+  const t = await getTranslations('auth');
 
   const paths = {
     callback: pathsConfig.auth.callback,
@@ -36,15 +36,11 @@ async function SignInPage({ searchParams }: SignInPageProps) {
 
   return (
     <>
-      <div className={'flex flex-col items-center gap-1'}>
-        <Heading level={4} className={'tracking-tight'}>
-          <Trans i18nKey={'auth.signInHeading'} />
-        </Heading>
-
-        <p className={'text-metal-600 text-sm'}>
-          <Trans i18nKey={'auth.signInSubheading'} />
-        </p>
-      </div>
+      <EnviroAuthHeading
+        tag={t('signIn')}
+        title={t('signInHeading')}
+        subtitle={t('signInSubheading')}
+      />
 
       <SignInMethodsContainer
         paths={paths}
@@ -52,16 +48,15 @@ async function SignInPage({ searchParams }: SignInPageProps) {
         captchaSiteKey={authConfig.captchaTokenSiteKey}
       />
 
-      <div className={'flex justify-center'}>
-        <Button
-          nativeButton={false}
-          variant={'link'}
-          size={'sm'}
-          render={
-            <Link href={pathsConfig.auth.signUp} prefetch={true}>
-              <Trans i18nKey={'auth.doNotHaveAccountYet'} />
+      <div className="flex justify-center">
+        <EnviroButton
+          variant="ghost"
+          size="sm"
+          render={(buttonProps) => (
+            <Link {...buttonProps} href={pathsConfig.auth.signUp} prefetch>
+              {t('doNotHaveAccountYet')}
             </Link>
-          }
+          )}
         />
       </div>
     </>
