@@ -10,9 +10,6 @@ import {
   Tooltip,
 } from 'recharts';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
-import { Trans } from '@kit/ui/trans';
-
 interface MaterialData {
   category: string;
   co2_avoided: number;
@@ -136,14 +133,7 @@ export function CarbonByMaterialChart({ data }: CarbonByMaterialChartProps) {
   const total = data.reduce((sum, d) => sum + d.co2_avoided, 0);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg">
-          <Trans i18nKey="carbon:byMaterial" />
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={280}>
+    <ResponsiveContainer width="100%" height={280}>
           <PieChart>
             <Pie
               data={data}
@@ -173,9 +163,7 @@ export function CarbonByMaterialChart({ data }: CarbonByMaterialChartProps) {
                 <span className="text-sm capitalize">{value}</span>
               )}
             />
-          </PieChart>
-        </ResponsiveContainer>
-      </CardContent>
-    </Card>
+    </PieChart>
+    </ResponsiveContainer>
   );
 }
