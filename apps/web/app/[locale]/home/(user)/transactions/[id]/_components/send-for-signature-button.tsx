@@ -6,8 +6,9 @@ import { useRouter } from 'next/navigation';
 
 import { FileSignature, Loader2 } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
+import { useTranslations } from 'next-intl';
 
-import { Button } from '@kit/ui/button';
+import { EnviroButton } from '~/components/enviro/enviro-button';
 
 import { sendContractForSignature } from '../../_lib/server/server-actions';
 
@@ -16,6 +17,7 @@ export function SendForSignatureButton({
 }: {
   transactionId: string;
 }) {
+  const t = useTranslations('transactions.actions');
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
@@ -26,37 +28,35 @@ export function SendForSignatureButton({
     },
     onError: ({ error: e }) => {
       setError(
-        String(
-          e.serverError ??
-            e.thrownError?.message ??
-            'Impossible de generer le contrat.',
-        ),
+        String(e.serverError ?? e.thrownError?.message ?? t('sendError')),
       );
     },
   });
 
   return (
     <div className="flex flex-col gap-2">
-      <Button
+      <EnviroButton
         type="button"
+        variant="primary"
+        size="md"
+        magnetic
         disabled={isPending}
         onClick={() => execute({ transactionId })}
-        className="bg-[#1BAF6A] hover:bg-[#1BAF6A]"
       >
         {isPending ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Generation du contrat…
+            <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />
+            {t('sending')}
           </>
         ) : (
           <>
-            <FileSignature className="mr-2 h-4 w-4" strokeWidth={1.5} />
-            Generer et envoyer pour signature
+            <FileSignature aria-hidden="true" className="h-4 w-4" />
+            {t('send')}
           </>
         )}
-      </Button>
+      </EnviroButton>
       {error ? (
-        <p className="text-xs text-red-500">{error}</p>
+        <p className="text-xs text-[--color-enviro-ember-700]">{error}</p>
       ) : null}
     </div>
   );
