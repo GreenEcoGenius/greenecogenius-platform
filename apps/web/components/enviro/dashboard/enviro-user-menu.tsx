@@ -2,6 +2,8 @@
 
 import type { ReactNode } from 'react';
 
+import Link from 'next/link';
+
 import { ChevronDown, Globe, LogOut } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
@@ -140,18 +142,20 @@ export function EnviroUserMenu({
         {items.map((item, index) => (
           <DropdownMenuItem
             key={index}
-            asChild
-            className="rounded-[--radius-enviro-sm] px-2 py-2 text-sm text-[--color-enviro-forest-900] focus:bg-[--color-enviro-lime-100] focus:text-[--color-enviro-forest-900]"
-          >
-            <a href={item.href} className="flex items-center gap-2">
-              {item.icon ? (
-                <span className="flex h-4 w-4 items-center justify-center text-[--color-enviro-forest-700]">
-                  {item.icon}
-                </span>
-              ) : null}
-              <span>{item.label}</span>
-            </a>
-          </DropdownMenuItem>
+            render={
+              <Link
+                href={item.href}
+                className="flex items-center gap-2 rounded-[--radius-enviro-sm] px-2 py-2 text-sm text-[--color-enviro-forest-900] focus:bg-[--color-enviro-lime-100] focus:text-[--color-enviro-forest-900]"
+              >
+                {item.icon ? (
+                  <span className="flex h-4 w-4 items-center justify-center text-[--color-enviro-forest-700]">
+                    {item.icon}
+                  </span>
+                ) : null}
+                <span>{item.label}</span>
+              </Link>
+            }
+          />
         ))}
 
         <DropdownMenuSeparator className="my-1 h-px bg-[--color-enviro-cream-200]" />

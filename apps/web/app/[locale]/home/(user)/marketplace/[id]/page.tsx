@@ -171,7 +171,7 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
 
         <div className="flex flex-col gap-4 lg:col-span-2">
           {listing.price_per_unit !== null && listing.price_per_unit > 0 ? (
-            <EnviroCard variant="forest" hover="none" padding="md">
+            <EnviroCard variant="dark" hover="none" padding="md">
               <EnviroCardBody>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[--color-enviro-fg-inverse-muted] font-[family-name:var(--font-enviro-mono)]">
                   {t('pricePerUnit')}
