@@ -1,19 +1,36 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
   ArrowDownLeft,
   ArrowUpRight,
   CheckCircle,
   Clock,
+  Inbox,
   Package,
   XCircle,
 } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 
-import { Badge } from '@kit/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
-import { Trans } from '@kit/ui/trans';
+import { cn } from '@kit/ui/utils';
+
+import {
+  EnviroCard,
+  EnviroCardBody,
+  EnviroCardHeader,
+  EnviroCardTitle,
+} from '~/components/enviro/enviro-card';
+import {
+  EnviroDataTable,
+  EnviroEmptyState,
+  EnviroFilterChips,
+  EnviroTableBody,
+  EnviroTableCell,
+  EnviroTableHead,
+  EnviroTableHeader,
+  EnviroTableRow,
+} from '~/components/enviro/dashboard';
 
 import { ConfirmDeliveryButton } from './confirm-delivery-button';
 
@@ -39,164 +56,192 @@ interface TransactionHistoryProps {
   buyerTransactions: Transaction[];
 }
 
-function formatCents(cents: number): string {
-  return (cents / 100).toLocaleString('fr-FR', {
-    style: 'currency',
-    currency: 'EUR',
-  });
-}
+type Tab = 'sales' | 'purchases';
 
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString('fr-FR', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  });
-}
-
-const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
-  pending_payment: {
-    color: 'bg-gray-100 text-gray-800',
-    icon: <Clock className="h-3 w-3" />,
-  },
-  paid: {
-    color: 'bg-blue-100 text-blue-800',
-    icon: <Package className="h-3 w-3" />,
-  },
-  in_transit: {
-    color: 'bg-[#A8E6C8] text-[#159B5C]',
-    icon: <Package className="h-3 w-3" />,
-  },
-  completed: {
-    color: 'bg-green-100 text-green-800',
-    icon: <CheckCircle className="h-3 w-3" />,
-  },
-  refunded: {
-    color: 'bg-slate-100 text-slate-800',
-    icon: <XCircle className="h-3 w-3" />,
-  },
-  cancelled: {
-    color: 'bg-slate-100 text-slate-800',
-    icon: <XCircle className="h-3 w-3" />,
-  },
+const STATUS_ICON: Record<string, React.ReactNode> = {
+  pending_payment: <Clock aria-hidden="true" className="h-3 w-3" />,
+  paid: <Package aria-hidden="true" className="h-3 w-3" />,
+  in_transit: <Package aria-hidden="true" className="h-3 w-3" />,
+  completed: <CheckCircle aria-hidden="true" className="h-3 w-3" />,
+  refunded: <XCircle aria-hidden="true" className="h-3 w-3" />,
+  cancelled: <XCircle aria-hidden="true" className="h-3 w-3" />,
 };
 
-function TransactionRow({
-  tx,
-  role,
-}: {
-  tx: Transaction;
-  role: 'seller' | 'buyer';
-}) {
-  const config = statusConfig[tx.status] ?? statusConfig['pending_payment']!;
-
-  return (
-    <div className="flex items-center justify-between border-b py-3 last:border-0">
-      <div className="flex items-center gap-3">
-        <div
-          className={`rounded-full p-2 ${role === 'seller' ? 'bg-green-100' : 'bg-blue-100'}`}
-        >
-          {role === 'seller' ? (
-            <ArrowDownLeft className="h-4 w-4 text-green-600" />
-          ) : (
-            <ArrowUpRight className="h-4 w-4 text-blue-600" />
-          )}
-        </div>
-        <div>
-          <p className="text-sm font-medium">
-            {tx.listings?.title ?? 'Listing'}
-          </p>
-          <p className="text-muted-foreground text-xs">
-            {formatDate(tx.created_at)}
-          </p>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-3">
-        <Badge variant="outline" className={config.color}>
-          <span className="mr-1">{config.icon}</span>
-          <Trans i18nKey={`wallet.status.${tx.status}`} />
-        </Badge>
-
-        <div className="text-right">
-          <p className="text-sm font-semibold">
-            {role === 'seller'
-              ? `+${formatCents(tx.seller_amount)}`
-              : `-${formatCents(tx.total_amount)}`}
-          </p>
-          {role === 'seller' && tx.platform_fee > 0 && (
-            <p className="text-muted-foreground text-xs">
-              <Trans i18nKey="wallet.feeDeducted" />{' '}
-              {formatCents(tx.platform_fee)}
-            </p>
-          )}
-        </div>
-
-        {role === 'buyer' && tx.status === 'paid' && (
-          <ConfirmDeliveryButton transactionId={tx.id} />
-        )}
-      </div>
-    </div>
-  );
-}
+const STATUS_TONE: Record<string, string> = {
+  pending_payment:
+    'bg-[--color-enviro-cream-100] text-[--color-enviro-forest-700]',
+  paid: 'bg-[--color-enviro-forest-100] text-[--color-enviro-forest-700]',
+  in_transit:
+    'bg-[--color-enviro-lime-100] text-[--color-enviro-lime-800]',
+  completed: 'bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]',
+  refunded:
+    'bg-[--color-enviro-cream-100] text-[--color-enviro-forest-700]',
+  cancelled:
+    'bg-[--color-enviro-ember-100] text-[--color-enviro-ember-700]',
+};
 
 export function TransactionHistory({
   sellerTransactions,
   buyerTransactions,
 }: TransactionHistoryProps) {
-  const [tab, setTab] = useState<'sales' | 'purchases'>('sales');
+  const t = useTranslations('wallet');
+  const locale = useLocale();
+  const [tab, setTab] = useState<Tab>('sales');
 
   const transactions = tab === 'sales' ? sellerTransactions : buyerTransactions;
-  const role = tab === 'sales' ? 'seller' : 'buyer';
+  const role: 'seller' | 'buyer' = tab === 'sales' ? 'seller' : 'buyer';
+
+  const formatAmount = useMemo(
+    () => (cents: number, currency: string) => {
+      try {
+        return new Intl.NumberFormat(locale, {
+          style: 'currency',
+          currency: currency || 'EUR',
+        }).format(cents / 100);
+      } catch {
+        return `${(cents / 100).toFixed(2)} ${currency || 'EUR'}`;
+      }
+    },
+    [locale],
+  );
+
+  const formatDate = (dateStr: string) => {
+    return new Date(dateStr).toLocaleDateString(locale, {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+  };
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>
-            <Trans i18nKey="wallet.transactions" />
-          </CardTitle>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setTab('sales')}
-              className={`rounded-md px-3 py-1 text-sm ${
-                tab === 'sales'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted text-muted-foreground'
-              }`}
-            >
-              <Trans i18nKey="wallet.sales" /> ({sellerTransactions.length})
-            </button>
-            <button
-              onClick={() => setTab('purchases')}
-              className={`rounded-md px-3 py-1 text-sm ${
-                tab === 'purchases'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted text-muted-foreground'
-              }`}
-            >
-              <Trans i18nKey="wallet.purchases" /> ({buyerTransactions.length})
-            </button>
-          </div>
+    <EnviroCard variant="cream" hover="none" padding="md">
+      <EnviroCardHeader>
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <EnviroCardTitle className="text-lg">
+            {t('transactions')}
+          </EnviroCardTitle>
+          <EnviroFilterChips
+            ariaLabel={t('transactions')}
+            value={tab}
+            onChange={(next) => setTab(next as Tab)}
+            items={[
+              {
+                value: 'sales',
+                label: t('sales'),
+                count: sellerTransactions.length,
+              },
+              {
+                value: 'purchases',
+                label: t('purchases'),
+                count: buyerTransactions.length,
+              },
+            ]}
+          />
         </div>
-      </CardHeader>
-      <CardContent>
+      </EnviroCardHeader>
+
+      <EnviroCardBody className="pt-5">
         {transactions.length === 0 ? (
-          <p className="text-muted-foreground py-8 text-center">
-            <Trans
-              i18nKey={
-                tab === 'sales' ? 'wallet.noSales' : 'wallet.noPurchases'
-              }
-            />
-          </p>
+          <EnviroEmptyState
+            icon={<Inbox aria-hidden="true" className="h-7 w-7" />}
+            title={tab === 'sales' ? t('noSales') : t('noPurchases')}
+          />
         ) : (
-          <div>
-            {transactions.map((tx) => (
-              <TransactionRow key={tx.id} tx={tx} role={role} />
-            ))}
-          </div>
+          <EnviroDataTable>
+            <EnviroTableHeader>
+              <EnviroTableRow>
+                <EnviroTableHead>
+                  <span className="sr-only">{t('direction')}</span>
+                </EnviroTableHead>
+                <EnviroTableHead>{t('listing')}</EnviroTableHead>
+                <EnviroTableHead>{t('date')}</EnviroTableHead>
+                <EnviroTableHead>{t('statusLabel')}</EnviroTableHead>
+                <EnviroTableHead>{t('amount')}</EnviroTableHead>
+                <EnviroTableHead>
+                  <span className="sr-only">{t('actions')}</span>
+                </EnviroTableHead>
+              </EnviroTableRow>
+            </EnviroTableHeader>
+            <EnviroTableBody>
+              {transactions.map((tx) => (
+                <EnviroTableRow key={tx.id}>
+                  <EnviroTableCell>
+                    <span
+                      className={cn(
+                        'inline-flex h-7 w-7 items-center justify-center rounded-[--radius-enviro-pill]',
+                        role === 'seller'
+                          ? 'bg-[--color-enviro-lime-100] text-[--color-enviro-lime-800]'
+                          : 'bg-[--color-enviro-forest-100] text-[--color-enviro-forest-700]',
+                      )}
+                      aria-hidden="true"
+                    >
+                      {role === 'seller' ? (
+                        <ArrowDownLeft className="h-4 w-4" />
+                      ) : (
+                        <ArrowUpRight className="h-4 w-4" />
+                      )}
+                    </span>
+                  </EnviroTableCell>
+                  <EnviroTableCell className="font-medium text-[--color-enviro-forest-900]">
+                    {tx.listings?.title ?? t('listing')}
+                  </EnviroTableCell>
+                  <EnviroTableCell className="text-xs text-[--color-enviro-forest-700]">
+                    {formatDate(tx.created_at)}
+                  </EnviroTableCell>
+                  <EnviroTableCell>
+                    <StatusPill status={tx.status} t={t} />
+                  </EnviroTableCell>
+                  <EnviroTableCell className="text-right tabular-nums">
+                    <div className="flex flex-col items-end">
+                      <span className="font-semibold text-[--color-enviro-forest-900]">
+                        {role === 'seller'
+                          ? `+${formatAmount(tx.seller_amount, tx.currency)}`
+                          : `-${formatAmount(tx.total_amount, tx.currency)}`}
+                      </span>
+                      {role === 'seller' && tx.platform_fee > 0 ? (
+                        <span className="text-[11px] text-[--color-enviro-forest-700]">
+                          {t('feeDeducted')}{' '}
+                          {formatAmount(tx.platform_fee, tx.currency)}
+                        </span>
+                      ) : null}
+                    </div>
+                  </EnviroTableCell>
+                  <EnviroTableCell>
+                    {role === 'buyer' && tx.status === 'paid' ? (
+                      <ConfirmDeliveryButton transactionId={tx.id} />
+                    ) : null}
+                  </EnviroTableCell>
+                </EnviroTableRow>
+              ))}
+            </EnviroTableBody>
+          </EnviroDataTable>
         )}
-      </CardContent>
-    </Card>
+      </EnviroCardBody>
+    </EnviroCard>
+  );
+}
+
+function StatusPill({
+  status,
+  t,
+}: {
+  status: string;
+  t: ReturnType<typeof useTranslations>;
+}) {
+  const tone =
+    STATUS_TONE[status] ??
+    'bg-[--color-enviro-cream-100] text-[--color-enviro-forest-700]';
+  const icon = STATUS_ICON[status] ?? STATUS_ICON.pending_payment;
+
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center gap-1 rounded-[--radius-enviro-pill] px-2 py-0.5 text-[11px] font-semibold',
+        tone,
+      )}
+    >
+      {icon}
+      {t(`status.${status}`)}
+    </span>
   );
 }

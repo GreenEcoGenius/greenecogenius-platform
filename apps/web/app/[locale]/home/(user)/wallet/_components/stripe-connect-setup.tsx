@@ -9,10 +9,17 @@ import {
   ShieldAlert,
   Wallet,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-import { Button } from '@kit/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
-import { Trans } from '@kit/ui/trans';
+import { cn } from '@kit/ui/utils';
+
+import { EnviroButton } from '~/components/enviro/enviro-button';
+import {
+  EnviroCard,
+  EnviroCardBody,
+  EnviroCardHeader,
+  EnviroCardTitle,
+} from '~/components/enviro/enviro-card';
 
 interface StripeConnectSetupProps {
   connectedAccount: {
@@ -26,6 +33,7 @@ interface StripeConnectSetupProps {
 export function StripeConnectSetup({
   connectedAccount,
 }: StripeConnectSetupProps) {
+  const t = useTranslations('wallet');
   const [loading, setLoading] = useState(false);
 
   const startOnboarding = async () => {
@@ -79,75 +87,138 @@ export function StripeConnectSetup({
     }
   };
 
-  // No account yet
   if (!connectedAccount) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Wallet className="h-5 w-5" />
-            <Trans i18nKey="wallet.stripeSetup" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-4">
-            <Trans i18nKey="wallet.stripeSetupDesc" />
-          </p>
-          <Button onClick={startOnboarding} disabled={loading}>
+      <SetupCard
+        tone="cream"
+        icon={
+          <Wallet
+            aria-hidden="true"
+            className="h-5 w-5 text-[--color-enviro-forest-700]"
+          />
+        }
+        title={t('stripeSetup')}
+        body={t('stripeSetupDesc')}
+        action={
+          <EnviroButton
+            type="button"
+            variant="primary"
+            size="sm"
+            magnetic
+            onClick={startOnboarding}
+            disabled={loading}
+          >
             {loading ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />
             ) : (
-              <Wallet className="mr-2 h-4 w-4" />
+              <Wallet aria-hidden="true" className="h-4 w-4" />
             )}
-            <Trans i18nKey="wallet.activatePayments" />
-          </Button>
-        </CardContent>
-      </Card>
+            {t('activatePayments')}
+          </EnviroButton>
+        }
+      />
     );
   }
 
-  // Onboarding incomplete
   if (!connectedAccount.onboardingComplete) {
     return (
-      <Card className="border-[#A8E6C8] bg-[#E8F8F0] dark:border-[#1BAF6A] dark:bg-[#1BAF6A]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <ShieldAlert className="h-5 w-5 text-[#1BAF6A]" />
-            <Trans i18nKey="wallet.onboardingPending" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-4">
-            <Trans i18nKey="wallet.onboardingPendingDesc" />
-          </p>
-          <Button onClick={refreshOnboarding} disabled={loading}>
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            <Trans i18nKey="wallet.completeOnboarding" />
-          </Button>
-        </CardContent>
-      </Card>
+      <SetupCard
+        tone="ember"
+        icon={
+          <ShieldAlert
+            aria-hidden="true"
+            className="h-5 w-5 text-[--color-enviro-ember-600]"
+          />
+        }
+        title={t('onboardingPending')}
+        body={t('onboardingPendingDesc')}
+        action={
+          <EnviroButton
+            type="button"
+            variant="primary"
+            size="sm"
+            onClick={refreshOnboarding}
+            disabled={loading}
+          >
+            {loading ? (
+              <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />
+            ) : null}
+            {t('completeOnboarding')}
+          </EnviroButton>
+        }
+      />
     );
   }
 
-  // Fully set up
   return (
-    <Card className="border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <BadgeCheck className="h-5 w-5 text-green-600" />
-          <Trans i18nKey="wallet.accountVerified" />
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground mb-4">
-          <Trans i18nKey="wallet.accountVerifiedDesc" />
-        </p>
-        <Button variant="outline" onClick={openDashboard} disabled={loading}>
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          <ExternalLink className="mr-2 h-4 w-4" />
-          <Trans i18nKey="wallet.manageDashboard" />
-        </Button>
-      </CardContent>
-    </Card>
+    <SetupCard
+      tone="lime"
+      icon={
+        <BadgeCheck
+          aria-hidden="true"
+          className="h-5 w-5 text-[--color-enviro-lime-700]"
+        />
+      }
+      title={t('accountVerified')}
+      body={t('accountVerifiedDesc')}
+      action={
+        <EnviroButton
+          type="button"
+          variant="secondary"
+          size="sm"
+          onClick={openDashboard}
+          disabled={loading}
+        >
+          {loading ? (
+            <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />
+          ) : (
+            <ExternalLink aria-hidden="true" className="h-4 w-4" />
+          )}
+          {t('manageDashboard')}
+        </EnviroButton>
+      }
+    />
+  );
+}
+
+function SetupCard({
+  tone,
+  icon,
+  title,
+  body,
+  action,
+}: {
+  tone: 'cream' | 'ember' | 'lime';
+  icon: React.ReactNode;
+  title: React.ReactNode;
+  body: React.ReactNode;
+  action: React.ReactNode;
+}) {
+  const accent = {
+    cream: '',
+    ember:
+      'border-[--color-enviro-ember-200] bg-[--color-enviro-ember-50] text-[--color-enviro-forest-900]',
+    lime:
+      'border-[--color-enviro-lime-200] bg-[--color-enviro-lime-50] text-[--color-enviro-forest-900]',
+  }[tone];
+
+  return (
+    <EnviroCard
+      variant="cream"
+      hover="none"
+      padding="md"
+      className={cn(accent)}
+    >
+      <EnviroCardHeader>
+        <EnviroCardTitle className="flex items-center gap-2 text-lg">
+          {icon}
+          {title}
+        </EnviroCardTitle>
+      </EnviroCardHeader>
+      <EnviroCardBody className="flex flex-col gap-4 pt-4">
+        <p className="text-sm text-[--color-enviro-forest-700]">{body}</p>
+        <div>{action}</div>
+      </EnviroCardBody>
+    </EnviroCard>
   );
 }

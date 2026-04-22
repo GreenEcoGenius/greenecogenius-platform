@@ -5,8 +5,7 @@ import { useState } from 'react';
 import { CheckCircle, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { Button } from '@kit/ui/button';
-import { Trans } from '@kit/ui/trans';
+import { EnviroButton } from '~/components/enviro/enviro-button';
 
 interface ConfirmDeliveryButtonProps {
   transactionId: string;
@@ -46,26 +45,27 @@ export function ConfirmDeliveryButton({
 
   if (confirmed) {
     return (
-      <span className="flex items-center gap-1 text-sm text-green-600">
-        <CheckCircle className="h-4 w-4" />
-        <Trans i18nKey="wallet.deliveryConfirmed" />
+      <span className="inline-flex items-center gap-1 text-xs font-semibold text-[--color-enviro-lime-700]">
+        <CheckCircle aria-hidden="true" className="h-3.5 w-3.5" />
+        {t('deliveryConfirmed')}
       </span>
     );
   }
 
   return (
-    <Button
+    <EnviroButton
+      type="button"
+      variant="secondary"
       size="sm"
-      variant="outline"
       onClick={handleConfirm}
       disabled={loading}
     >
       {loading ? (
-        <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+        <Loader2 aria-hidden="true" className="h-3.5 w-3.5 animate-spin" />
       ) : (
-        <CheckCircle className="mr-1 h-3 w-3" />
+        <CheckCircle aria-hidden="true" className="h-3.5 w-3.5" />
       )}
-      <Trans i18nKey="wallet.confirmDelivery" />
-    </Button>
+      {t('confirmDelivery')}
+    </EnviroButton>
   );
 }

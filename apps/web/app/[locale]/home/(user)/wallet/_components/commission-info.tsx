@@ -3,9 +3,14 @@
 import { useEffect, useState } from 'react';
 
 import { Info, Tag } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
-import { Trans } from '@kit/ui/trans';
+import {
+  EnviroCard,
+  EnviroCardBody,
+  EnviroCardHeader,
+  EnviroCardTitle,
+} from '~/components/enviro/enviro-card';
 
 interface CommissionTier {
   min: number;
@@ -22,15 +27,9 @@ interface CommissionConfig {
   is_active: boolean;
 }
 
-function formatCents(cents: number): string {
-  return (cents / 100).toLocaleString('fr-FR', {
-    style: 'currency',
-    currency: 'EUR',
-    maximumFractionDigits: 0,
-  });
-}
-
 export function CommissionInfo() {
+  const t = useTranslations('wallet');
+  const locale = useLocale();
   const [configs, setConfigs] = useState<CommissionConfig[]>([]);
 
   useEffect(() => {
@@ -49,62 +48,79 @@ export function CommissionInfo() {
   const isPromo =
     activeConfig.commission_type === 'flat' && activeConfig.valid_until;
 
+  const formatCurrency = (cents: number) =>
+    new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0,
+    }).format(cents / 100);
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Tag className="h-5 w-5" />
-          <Trans i18nKey="wallet.commissionTitle" />
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+    <EnviroCard variant="cream" hover="none" padding="md">
+      <EnviroCardHeader>
+        <EnviroCardTitle className="flex items-center gap-2 text-lg">
+          <Tag
+            aria-hidden="true"
+            className="h-5 w-5 text-[--color-enviro-forest-700]"
+          />
+          {t('commissionTitle')}
+        </EnviroCardTitle>
+      </EnviroCardHeader>
+      <EnviroCardBody className="pt-4">
         {isPromo ? (
-          <div className="space-y-3">
-            <div className="flex items-start gap-2 rounded-lg bg-green-50 p-3 dark:bg-green-950">
-              <Info className="mt-0.5 h-4 w-4 text-green-600" />
-              <div>
-                <p className="text-sm font-medium text-green-800 dark:text-green-200">
-                  <Trans i18nKey="wallet.promoActive" />
-                </p>
-                <p className="text-sm text-green-700 dark:text-green-300">
-                  {(Number(activeConfig.flat_rate) * 100).toFixed(0)}%{' '}
-                  <Trans i18nKey="wallet.promoFlat" />
-                </p>
-                <p className="text-muted-foreground mt-1 text-xs">
-                  <Trans i18nKey="wallet.promoUntil" />{' '}
-                  {new Date(activeConfig.valid_until!).toLocaleDateString(
-                    'fr-FR',
-                    { day: '2-digit', month: 'long', year: 'numeric' },
-                  )}
-                </p>
-              </div>
+          <div className="flex items-start gap-3 rounded-[--radius-enviro-md] border border-[--color-enviro-lime-200] bg-[--color-enviro-lime-50] px-4 py-3">
+            <Info
+              aria-hidden="true"
+              className="mt-0.5 h-4 w-4 shrink-0 text-[--color-enviro-lime-700]"
+            />
+            <div className="flex flex-col gap-1">
+              <p className="text-sm font-semibold text-[--color-enviro-lime-800]">
+                {t('promoActive')}
+              </p>
+              <p className="text-sm text-[--color-enviro-forest-900]">
+                <span className="font-semibold tabular-nums">
+                  {(Number(activeConfig.flat_rate) * 100).toFixed(0)}%
+                </span>{' '}
+                {t('promoFlat')}
+              </p>
+              <p className="text-xs text-[--color-enviro-forest-700]">
+                {t('promoUntil')}{' '}
+                {new Date(activeConfig.valid_until!).toLocaleDateString(
+                  locale,
+                  { day: '2-digit', month: 'long', year: 'numeric' },
+                )}
+              </p>
             </div>
           </div>
         ) : activeConfig.commission_type === 'degressive' ? (
-          <div className="space-y-3">
-            <p className="text-muted-foreground text-sm">
-              <Trans i18nKey="wallet.degressiveDesc" />
+          <div className="flex flex-col gap-3">
+            <p className="text-sm text-[--color-enviro-forest-700]">
+              {t('degressiveDesc')}
             </p>
-            <div className="overflow-hidden rounded-lg border">
-              <table className="w-full text-sm">
-                <thead className="bg-muted">
+            <div className="overflow-hidden rounded-[--radius-enviro-md] border border-[--color-enviro-cream-300]">
+              <table className="w-full text-sm font-[family-name:var(--font-enviro-sans)]">
+                <thead className="bg-[--color-enviro-forest-900]">
                   <tr>
-                    <th className="px-3 py-2 text-left font-medium">
-                      <Trans i18nKey="wallet.tierRange" />
+                    <th className="px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[--color-enviro-fg-inverse-muted] font-[family-name:var(--font-enviro-mono)]">
+                      {t('tierRange')}
                     </th>
-                    <th className="px-3 py-2 text-right font-medium">
-                      <Trans i18nKey="wallet.tierRate" />
+                    <th className="px-3 py-2 text-right text-[11px] font-semibold uppercase tracking-[0.06em] text-[--color-enviro-fg-inverse-muted] font-[family-name:var(--font-enviro-mono)]">
+                      {t('tierRate')}
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {(activeConfig.tiers as CommissionTier[]).map((tier, i) => (
-                    <tr key={i} className="border-t">
-                      <td className="px-3 py-2">
-                        {formatCents(tier.min)} —{' '}
-                        {tier.max ? formatCents(tier.max) : '∞'}
+                    <tr
+                      key={i}
+                      className="border-t border-[--color-enviro-cream-200] even:bg-[--color-enviro-cream-50]"
+                    >
+                      <td className="px-3 py-2 tabular-nums text-[--color-enviro-forest-900]">
+                        {formatCurrency(tier.min)}
+                        {' to '}
+                        {tier.max ? formatCurrency(tier.max) : '∞'}
                       </td>
-                      <td className="px-3 py-2 text-right font-semibold">
+                      <td className="px-3 py-2 text-right font-semibold tabular-nums text-[--color-enviro-forest-900]">
                         {(tier.rate * 100).toFixed(0)}%
                       </td>
                     </tr>
@@ -114,7 +130,7 @@ export function CommissionInfo() {
             </div>
           </div>
         ) : null}
-      </CardContent>
-    </Card>
+      </EnviroCardBody>
+    </EnviroCard>
   );
 }
