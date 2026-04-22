@@ -437,15 +437,15 @@ async function ChartCardSection() {
         }
         height={240}
       >
-        <div className="flex h-full items-end gap-3 px-2 pt-4 pb-8">
+        <div className="flex h-full items-stretch gap-3 px-2 pt-4 pb-2">
           {months.map((m) => (
             <div
               key={m.key}
-              className="flex flex-1 flex-col items-center gap-2"
+              className="flex h-full flex-1 flex-col items-center justify-end gap-2"
             >
               <div
-                className="w-full rounded-t-[--radius-enviro-sm] bg-gradient-to-t from-[--color-enviro-lime-400] to-[--color-enviro-lime-300]"
-                style={{ height: `${m.value * 100}%` }}
+                className="w-full rounded-t-[--radius-enviro-sm] bg-gradient-to-t from-[--color-enviro-lime-500] via-[--color-enviro-lime-400] to-[--color-enviro-lime-300] shadow-[--shadow-enviro-sm]"
+                style={{ minHeight: 4, height: `${Math.round(m.value * 100)}%` }}
                 aria-hidden="true"
               />
               <span className="text-[10px] font-medium text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-mono)]">
