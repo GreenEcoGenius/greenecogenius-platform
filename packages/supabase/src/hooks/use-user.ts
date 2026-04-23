@@ -13,7 +13,9 @@ export function useUser(initialData?: JWTUserData | null) {
     const response = await requireUser(client);
 
     if (response.error) {
-      return undefined;
+      // React Query forbids `undefined` as a query result; return `null`
+      // so the cache stays consistent and consumers branch on falsy.
+      return null;
     }
 
     return response.data;
