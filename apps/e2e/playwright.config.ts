@@ -60,8 +60,10 @@ export default defineConfig({
   testIgnore,
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:3000',
+    /* Base URL to use in actions like `await page.goto('/')`. Override via
+     * PLAYWRIGHT_BASE_URL env var (used by Phase 9.1 smoke runs against
+     * the Vercel preview URL). */
+    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3000',
 
     // take a screenshot when a test fails
     screenshot: 'only-on-failure',
