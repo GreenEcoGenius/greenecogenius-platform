@@ -160,7 +160,7 @@ function renderCell(
             : 'bg-[--color-enviro-cream-200] text-[--color-enviro-forest-700]',
         )}
       >
-        <Minus className="h-3.5 w-3.5" />
+        <Minus aria-hidden="true" className="h-3.5 w-3.5" />
       </span>
     );
   }

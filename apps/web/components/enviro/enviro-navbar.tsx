@@ -194,11 +194,11 @@ export function EnviroNavbar({
           onClick={() => setOpen(true)}
           aria-label={mobileMenuLabel}
           className={cn(
-            'inline-flex items-center justify-center rounded-[--radius-enviro-sm] p-2 md:hidden',
+            'inline-flex items-center justify-center rounded-[--radius-enviro-sm] p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-enviro-lime-300]/60 md:hidden',
             isInverse ? 'text-[--color-enviro-fg-inverse]' : 'text-[--color-enviro-forest-900]',
           )}
         >
-          <Menu className="h-6 w-6" />
+          <Menu aria-hidden="true" className="h-6 w-6" />
         </button>
       </nav>
 
@@ -256,9 +256,9 @@ function MobileMenu({
           type="button"
           onClick={onClose}
           aria-label={closeMenuLabel}
-          className="rounded-[--radius-enviro-sm] p-2 text-[--color-enviro-fg-inverse]"
+          className="rounded-[--radius-enviro-sm] p-2 text-[--color-enviro-fg-inverse] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-enviro-lime-300]/60"
         >
-          <X className="h-6 w-6" />
+          <X aria-hidden="true" className="h-6 w-6" />
         </button>
       </div>
 
@@ -324,7 +324,7 @@ function LocaleSwitcher({
       onClick={handleSwitch}
       aria-label={ariaLabel}
     >
-      <Globe className="h-4 w-4" />
+      <Globe aria-hidden="true" className="h-4 w-4" />
       <span className="uppercase">{next}</span>
     </EnviroButton>
   );
