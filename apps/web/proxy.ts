@@ -20,8 +20,11 @@ export const config = {
   // i18n routing, auth checks and CSP headers. The trailing slash is
   // critical: without it, real Next.js routes like `/enviro-components`
   // would also match and be silently 404'd.
+  // `sitemap.xml` and `robots.txt` are root-level Metadata Routes that must
+  // not receive a locale prefix — otherwise next-intl 307s them to
+  // `/fr/sitemap.xml` which resolves to 404.
   matcher: [
-    '/((?!_next/static|_next/image|images|locales|assets|preview/|enviro/|api/*).*)',
+    '/((?!_next/static|_next/image|images|locales|assets|preview/|enviro/|api/*|sitemap\\.xml|robots\\.txt).*)',
   ],
 };
 

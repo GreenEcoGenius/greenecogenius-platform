@@ -121,7 +121,7 @@ export function LegalSection({
   className?: string;
 }) {
   return (
-    <section id={id} className={cn('mt-12 first:mt-0', className)}>
+    <section className={cn('mt-12 first:mt-0', className)}>
       <h2 id={id} className="text-2xl font-semibold leading-tight tracking-tight">
         {title}
       </h2>

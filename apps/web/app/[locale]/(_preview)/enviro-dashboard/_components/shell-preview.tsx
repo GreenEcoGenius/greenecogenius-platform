@@ -221,6 +221,7 @@ function ShellPreviewInner({ labels }: ShellPreviewProps) {
             type="button"
             onClick={toggle}
             aria-expanded={!collapsed}
+            aria-label={collapsed ? labels.expandLabel : labels.collapseLabel}
             className={cn(
               'flex w-full items-center gap-2 rounded-[--radius-enviro-md] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-[--color-enviro-fg-inverse-muted] transition-colors duration-200 hover:bg-white/[0.04] hover:text-[--color-enviro-fg-inverse]',
               collapsed && 'justify-center px-2',
@@ -228,11 +229,7 @@ function ShellPreviewInner({ labels }: ShellPreviewProps) {
             )}
           >
             <span aria-hidden="true">{collapsed ? '»' : '«'}</span>
-            {!collapsed ? (
-              <span>
-                {collapsed ? labels.expandLabel : labels.collapseLabel}
-              </span>
-            ) : null}
+            {!collapsed ? <span>{labels.collapseLabel}</span> : null}
           </button>
         </div>
       </div>
