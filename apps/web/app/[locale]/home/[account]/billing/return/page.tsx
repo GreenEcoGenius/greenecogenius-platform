@@ -35,7 +35,7 @@ async function ReturnCheckoutSessionPage({ searchParams }: SessionPageProps) {
 
   return (
     <>
-      <div className={'fixed top-48 left-0 z-50 mx-auto w-full'}>
+      <div className="fixed top-48 left-0 z-50 mx-auto w-full">
         <BillingSessionStatus
           redirectPath={'../billing'}
           customerEmail={customerEmail ?? ''}
@@ -51,12 +51,7 @@ export default ReturnCheckoutSessionPage;
 
 function BlurryBackdrop() {
   return (
-    <div
-      className={
-        'bg-background/30 fixed top-0 left-0 w-full backdrop-blur-sm' +
-        ' !m-0 h-full'
-      }
-    />
+    <div className="fixed left-0 top-0 !m-0 h-full w-full bg-[--color-enviro-cream-50]/80 backdrop-blur-sm" />
   );
 }
 
@@ -76,8 +71,6 @@ async function loadCheckoutSession(sessionId: string) {
 
   const checkoutToken = session.isSessionOpen ? session.checkoutToken : null;
 
-  // otherwise - we show the user the return page
-  // and display the details of the session
   return {
     status: session.status,
     customerEmail: session.customer.email,

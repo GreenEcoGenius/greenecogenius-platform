@@ -7,21 +7,17 @@ import {
   AccountMembersTable,
   InviteMembersDialogContainer,
 } from '@kit/team-accounts/components';
-import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
-import { Button } from '@kit/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@kit/ui/card';
 import { If } from '@kit/ui/if';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
 
-// local imports
-import { TeamAccountLayoutPageHeader } from '../_components/team-account-layout-page-header';
+import { EnviroDashboardSectionHeader } from '~/components/enviro/dashboard';
+import { EnviroButton } from '~/components/enviro/enviro-button';
+import {
+  EnviroCard,
+  EnviroCardBody,
+  EnviroCardHeader,
+  EnviroCardTitle,
+} from '~/components/enviro/enviro-card';
+
 import { loadMembersPageData } from './_lib/server/members-page.loader';
 
 interface TeamAccountMembersPageProps {
@@ -40,6 +36,8 @@ export const generateMetadata = async () => {
 async function TeamAccountMembersPage({ params }: TeamAccountMembersPageProps) {
   const client = getSupabaseServerClient();
   const slug = (await params).account;
+  const tCommon = await getTranslations('common');
+  const tTeams = await getTranslations('teams');
 
   const [members, invitations, canAddMember, { user, account }] =
     await loadMembersPageData(client, slug);
@@ -51,80 +49,66 @@ async function TeamAccountMembersPage({ params }: TeamAccountMembersPageProps) {
   const currentUserRoleHierarchy = account.role_hierarchy_level;
 
   return (
-    <PageBody>
-      <TeamAccountLayoutPageHeader
-        title={<Trans i18nKey={'common.routes.members'} />}
-        description={<AppBreadcrumbs />}
-        account={account.slug}
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.settings')}
+        title={tCommon('accountMembers')}
+        subtitle={tCommon('membersTabDescription')}
+        actions={
+          <If condition={canManageInvitations && canAddMember}>
+            <InviteMembersDialogContainer
+              userRoleHierarchy={currentUserRoleHierarchy}
+              accountSlug={account.slug}
+            >
+              <EnviroButton
+                variant="primary"
+                size="sm"
+                data-test="invite-members-form-trigger"
+              >
+                <PlusCircle aria-hidden="true" className="h-4 w-4" />
+                <span>{tTeams('inviteMembersButton')}</span>
+              </EnviroButton>
+            </InviteMembersDialogContainer>
+          </If>
+        }
       />
 
-      <div className={'flex w-full max-w-4xl flex-col space-y-4 pb-32'}>
-        <Card>
-          <CardHeader className={'flex flex-row justify-between'}>
-            <div className={'flex flex-col space-y-1.5'}>
-              <CardTitle>
-                <Trans i18nKey={'common.accountMembers'} />
-              </CardTitle>
+      <EnviroCard variant="cream" hover="none" padding="md">
+        <EnviroCardHeader>
+          <EnviroCardTitle>{tCommon('accountMembers')}</EnviroCardTitle>
+        </EnviroCardHeader>
 
-              <CardDescription>
-                <Trans i18nKey={'common.membersTabDescription'} />
-              </CardDescription>
-            </div>
+        <EnviroCardBody className="mt-4">
+          <AccountMembersTable
+            userRoleHierarchy={currentUserRoleHierarchy}
+            currentUserId={user.id}
+            currentAccountId={account.id}
+            members={members}
+            isPrimaryOwner={isPrimaryOwner}
+            canManageRoles={canManageRoles}
+          />
+        </EnviroCardBody>
+      </EnviroCard>
 
-            <If condition={canManageInvitations && canAddMember}>
-              <InviteMembersDialogContainer
-                userRoleHierarchy={currentUserRoleHierarchy}
-                accountSlug={account.slug}
-              >
-                <Button size={'sm'} data-test={'invite-members-form-trigger'}>
-                  <PlusCircle className={'w-4'} />
+      <EnviroCard variant="cream" hover="none" padding="md">
+        <EnviroCardHeader>
+          <EnviroCardTitle>
+            {tTeams('pendingInvitesHeading')}
+          </EnviroCardTitle>
+        </EnviroCardHeader>
 
-                  <span>
-                    <Trans i18nKey={'teams.inviteMembersButton'} />
-                  </span>
-                </Button>
-              </InviteMembersDialogContainer>
-            </If>
-          </CardHeader>
-
-          <CardContent>
-            <AccountMembersTable
-              userRoleHierarchy={currentUserRoleHierarchy}
-              currentUserId={user.id}
-              currentAccountId={account.id}
-              members={members}
-              isPrimaryOwner={isPrimaryOwner}
-              canManageRoles={canManageRoles}
-            />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className={'flex flex-row justify-between'}>
-            <div className={'flex flex-col space-y-1.5'}>
-              <CardTitle>
-                <Trans i18nKey={'teams.pendingInvitesHeading'} />
-              </CardTitle>
-
-              <CardDescription>
-                <Trans i18nKey={'teams.pendingInvitesDescription'} />
-              </CardDescription>
-            </div>
-          </CardHeader>
-
-          <CardContent>
-            <AccountInvitationsTable
-              permissions={{
-                canUpdateInvitation: canManageRoles,
-                canRemoveInvitation: canManageRoles,
-                currentUserRoleHierarchy,
-              }}
-              invitations={invitations}
-            />
-          </CardContent>
-        </Card>
-      </div>
-    </PageBody>
+        <EnviroCardBody className="mt-4">
+          <AccountInvitationsTable
+            permissions={{
+              canUpdateInvitation: canManageRoles,
+              canRemoveInvitation: canManageRoles,
+              currentUserRoleHierarchy,
+            }}
+            invitations={invitations}
+          />
+        </EnviroCardBody>
+      </EnviroCard>
+    </div>
   );
 }
 

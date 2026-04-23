@@ -7,16 +7,11 @@ import {
   CurrentSubscriptionCard,
 } from '@kit/billing-gateway/components';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
-import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { If } from '@kit/ui/if';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
-import { cn } from '@kit/ui/utils';
 
+import { EnviroDashboardSectionHeader } from '~/components/enviro/dashboard';
 import billingConfig from '~/config/billing.config';
 
-// local imports
-import { TeamAccountLayoutPageHeader } from '../_components/team-account-layout-page-header';
 import { loadTeamAccountBillingPage } from '../_lib/server/team-account-billing-page.loader';
 import { loadTeamWorkspace } from '../_lib/server/team-account-workspace.loader';
 import { TeamAccountCheckoutForm } from './_components/team-account-checkout-form';
@@ -37,6 +32,10 @@ export const generateMetadata = async () => {
 
 async function TeamAccountBillingPage({ params }: TeamAccountBillingPageProps) {
   const account = (await params).account;
+  const tCommon = await getTranslations('common');
+  const tTeams = await getTranslations('teams');
+  const tBilling = await getTranslations('billing');
+
   const workspace = await loadTeamWorkspace(account);
   const accountId = workspace.account.id;
 
@@ -62,18 +61,22 @@ async function TeamAccountBillingPage({ params }: TeamAccountBillingPageProps) {
   const shouldShowBillingPortal = canManageBilling && customerId;
 
   return (
-    <PageBody>
-      <TeamAccountLayoutPageHeader
-        account={account}
-        title={<Trans i18nKey={'common.routes.billing'} />}
-        description={<AppBreadcrumbs />}
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.settings')}
+        title={tTeams('billing.pageTitle')}
       />
 
-      <div className={cn(`flex max-w-2xl flex-col space-y-4`)}>
+      <div className="flex flex-col space-y-4">
         <If condition={!hasBillingData}>
           <If
             condition={canManageBilling}
-            fallback={<CannotManageBillingAlert />}
+            fallback={
+              <CannotManageBillingAlert
+                title={tBilling('cannotManageBillingAlertTitle')}
+                description={tBilling('cannotManageBillingAlertDescription')}
+              />
+            }
           >
             <TeamAccountCheckoutForm
               customerId={customerId}
@@ -110,24 +113,26 @@ async function TeamAccountBillingPage({ params }: TeamAccountBillingPageProps) {
           <TeamBillingPortalForm accountId={accountId} slug={account} />
         ) : null}
       </div>
-    </PageBody>
+    </div>
   );
 }
 
 export default TeamAccountBillingPage;
 
-function CannotManageBillingAlert() {
+function CannotManageBillingAlert({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
   return (
     <Alert variant={'warning'}>
-      <TriangleAlert className={'h-4'} />
+      <TriangleAlert aria-hidden="true" className="h-4 w-4" />
 
-      <AlertTitle>
-        <Trans i18nKey={'billing.cannotManageBillingAlertTitle'} />
-      </AlertTitle>
+      <AlertTitle>{title}</AlertTitle>
 
-      <AlertDescription>
-        <Trans i18nKey={'billing.cannotManageBillingAlertDescription'} />
-      </AlertDescription>
+      <AlertDescription>{description}</AlertDescription>
     </Alert>
   );
 }
