@@ -44,6 +44,7 @@ async function SignUpPage() {
         <EnviroButton
           variant="ghost"
           size="sm"
+          nativeButton={false}
           render={
             <Link href={pathsConfig.auth.signIn} prefetch>
               {t('alreadyHaveAnAccount')}

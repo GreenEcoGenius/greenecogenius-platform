@@ -83,6 +83,7 @@ function SignInButton(props: { signInPath: string }) {
       size="md"
       magnetic
       className="w-full"
+      nativeButton={false}
       render={
         <Link href={props.signInPath}>
           <Trans i18nKey="auth.signIn" />

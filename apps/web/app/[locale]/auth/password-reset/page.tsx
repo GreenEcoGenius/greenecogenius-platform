@@ -36,6 +36,7 @@ async function PasswordResetPage() {
         <EnviroButton
           variant="ghost"
           size="sm"
+          nativeButton={false}
           render={
             <Link href={signIn}>
               {t('passwordRecoveredQuestion')}

@@ -52,6 +52,7 @@ async function SignInPage({ searchParams }: SignInPageProps) {
         <EnviroButton
           variant="ghost"
           size="sm"
+          nativeButton={false}
           render={
             <Link href={pathsConfig.auth.signUp} prefetch>
               {t('doNotHaveAccountYet')}
