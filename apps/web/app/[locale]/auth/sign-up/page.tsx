@@ -44,11 +44,11 @@ async function SignUpPage() {
         <EnviroButton
           variant="ghost"
           size="sm"
-          render={(buttonProps) => (
-            <Link {...buttonProps} href={pathsConfig.auth.signIn} prefetch>
+          render={
+            <Link href={pathsConfig.auth.signIn} prefetch>
               {t('alreadyHaveAnAccount')}
             </Link>
-          )}
+          }
         />
       </div>
     </>

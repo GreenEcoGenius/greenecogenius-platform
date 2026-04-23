@@ -83,11 +83,11 @@ function SignInButton(props: { signInPath: string }) {
       size="md"
       magnetic
       className="w-full"
-      render={(buttonProps) => (
-        <Link {...buttonProps} href={props.signInPath}>
+      render={
+        <Link href={props.signInPath}>
           <Trans i18nKey="auth.signIn" />
         </Link>
-      )}
+      }
     />
   );
 }

@@ -36,11 +36,11 @@ async function PasswordResetPage() {
         <EnviroButton
           variant="ghost"
           size="sm"
-          render={(buttonProps) => (
-            <Link {...buttonProps} href={signIn}>
+          render={
+            <Link href={signIn}>
               {t('passwordRecoveredQuestion')}
             </Link>
-          )}
+          }
         />
       </div>
     </>
