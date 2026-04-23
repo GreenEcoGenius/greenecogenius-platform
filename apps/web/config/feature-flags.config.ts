@@ -41,6 +41,19 @@ const FeatureFlagsSchema = z.object({
   enableTeamsOnly: z.boolean({
     error: 'Provide the variable NEXT_PUBLIC_ENABLE_TEAM_ACCOUNTS_ONLY',
   }),
+  /**
+   * Enables smooth scrolling powered by Lenis (Enviro shell).
+   * Defaults to false. Always honors `prefers-reduced-motion: reduce`.
+   * Toggle via NEXT_PUBLIC_ENABLE_SMOOTH_SCROLL=true.
+   */
+  enableSmoothScroll: z.boolean().default(false),
+  /**
+   * Enables the Enviro components preview page (`/_preview/enviro-components`).
+   * Mirrors the production gating used by the `/preview/enviro` rewrite:
+   * default ON in development and Vercel preview, default OFF in Vercel
+   * production. Force toggle via NEXT_PUBLIC_ENABLE_ENVIRO_PREVIEW.
+   */
+  enableEnviroPreview: z.boolean().default(false),
 });
 
 const featuresFlagConfig = FeatureFlagsSchema.parse({
@@ -89,6 +102,14 @@ const featuresFlagConfig = FeatureFlagsSchema.parse({
   enableTeamsOnly: getBoolean(
     process.env.NEXT_PUBLIC_ENABLE_TEAM_ACCOUNTS_ONLY,
     false,
+  ),
+  enableSmoothScroll: getBoolean(
+    process.env.NEXT_PUBLIC_ENABLE_SMOOTH_SCROLL,
+    false,
+  ),
+  enableEnviroPreview: getBoolean(
+    process.env.NEXT_PUBLIC_ENABLE_ENVIRO_PREVIEW,
+    process.env.VERCEL_ENV !== 'production',
   ),
 } satisfies z.output<typeof FeatureFlagsSchema>);
 

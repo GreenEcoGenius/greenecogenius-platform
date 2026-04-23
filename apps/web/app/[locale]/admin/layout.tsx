@@ -1,12 +1,14 @@
-import { use } from 'react';
-
 import { cookies } from 'next/headers';
 
-import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
-import { SidebarProvider } from '@kit/ui/sidebar';
+import { getTranslations } from 'next-intl/server';
 
-import { AdminSidebar } from '~/admin/_components/admin-sidebar';
-import { AdminMobileNavigation } from '~/admin/_components/mobile-navigation';
+import { EnviroAdminShell } from '~/components/enviro/admin';
+import {
+  ENVIRO_SIDEBAR_COOKIE_NAME,
+  EnviroSidebarProvider,
+} from '~/components/enviro/dashboard';
+
+import { EnviroAdminSidebar } from './_components/enviro-admin-sidebar';
 
 export const metadata = {
   title: `Super Admin`,
@@ -14,31 +16,32 @@ export const metadata = {
 
 export const dynamic = 'force-dynamic';
 
-export default function AdminLayout(props: React.PropsWithChildren) {
-  const state = use(getLayoutState());
+export default async function AdminLayout(props: React.PropsWithChildren) {
+  const [collapsed, t] = await Promise.all([
+    readSidebarCollapsed(),
+    getTranslations('admin'),
+  ]);
 
   return (
-    <SidebarProvider defaultOpen={state.open}>
-      <Page style={'sidebar'}>
-        <PageNavigation>
-          <AdminSidebar />
-        </PageNavigation>
-
-        <PageMobileNavigation>
-          <AdminMobileNavigation />
-        </PageMobileNavigation>
-
+    <EnviroSidebarProvider initialCollapsed={collapsed}>
+      <EnviroAdminShell
+        sidebar={<EnviroAdminSidebar />}
+        mobileMenuLabel={t('menuOpenLabel')}
+        topbarLabel={t('tag')}
+      >
         {props.children}
-      </Page>
-    </SidebarProvider>
+      </EnviroAdminShell>
+    </EnviroSidebarProvider>
   );
 }
 
-async function getLayoutState() {
+/**
+ * Read the same cookie used by the user dashboard so the collapsed state
+ * is shared when an operator switches between /home and /admin in the
+ * same session. Defaults to OPEN (collapsed = false) on first visit.
+ */
+async function readSidebarCollapsed(): Promise<boolean> {
   const cookieStore = await cookies();
-  const sidebarOpenCookie = cookieStore.get('sidebar_state');
-
-  return {
-    open: sidebarOpenCookie?.value === 'true',
-  };
+  const cookie = cookieStore.get(ENVIRO_SIDEBAR_COOKIE_NAME);
+  return cookie?.value === '1';
 }

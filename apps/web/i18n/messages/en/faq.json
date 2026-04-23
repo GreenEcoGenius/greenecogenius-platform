@@ -1,0 +1,116 @@
+{
+  "metaTitle": "Frequently asked questions",
+  "metaDescription": "Every answer about the circular marketplace, blockchain traceability, CSRD reporting, billing and GDPR compliance.",
+  "heroTag": "FAQ",
+  "heroTitle": "Frequently asked questions",
+  "heroSubtitle": "The most asked questions from our users and prospects, grouped by topic.",
+  "filtersTag": "Categories",
+  "filtersTitle": "Find the answer faster",
+  "themeAll": "All",
+  "themeGeneral": "General",
+  "themeProduct": "Product",
+  "themeBilling": "Billing",
+  "themeTechnical": "Technical",
+  "themeRgpd": "GDPR",
+  "themeAllDescription": "Every question, in user journey order.",
+  "themeGeneralDescription": "Overview, positioning, value proposition and comparisons.",
+  "themeProductDescription": "Marketplace, blockchain traceability, carbon assessment, ESG reporting.",
+  "themeBillingDescription": "Pricing, subscriptions, commissions, free trial, payment.",
+  "themeTechnicalDescription": "Stack, API integrations, infrastructure, performance, security.",
+  "themeRgpdDescription": "Hosting, user rights, sub-processors, EU transfers.",
+  "general": {
+    "q1": {
+      "question": "What exactly is GreenEcoGenius?",
+      "answer": "A B2B platform that brings three pillars together in a single product: a B2B circular marketplace (Le Comptoir Circulaire), an on-chain blockchain traceability layer (Polygon Mainnet), and an AI-powered ESG / CSRD reporting engine (Anthropic + ADEME Base Carbone)."
+    },
+    "q2": {
+      "question": "Which companies is the platform built for?",
+      "answer": "SMBs, midcaps and large groups operating in industry, construction, retail, logistics and services. Any organisation subject to CSRD obligations or willing to monetise its material flows fits GreenEcoGenius."
+    },
+    "q3": {
+      "question": "Are we concerned by CSRD in 2025?",
+      "answer": "Companies above 250 employees and 40 M€ turnover are subject to CSRD from FY 2025. Listed midcaps follow in 2026. Even when out of scope, anticipating gives a competitive edge and prepares your value chain."
+    },
+    "q4": {
+      "question": "How does GreenEcoGenius compare to Greenly or Sweep?",
+      "answer": "Greenly and Sweep do carbon reporting only. GreenEcoGenius does that, plus more: integrated B2B marketplace, immutable blockchain traceability, on-chain PDF certificates, label eligibility (B Corp, NR, Lucie). One platform where your competitors need three."
+    }
+  },
+  "product": {
+    "q1": {
+      "question": "How does Le Comptoir Circulaire work?",
+      "answer": "You publish your recyclable material lots. Our Smart Matching algorithm suggests the most relevant buyers based on material, volume and location. Docusign electronic signature secures the transaction, and the avoided CO₂ calculation is automatic."
+    },
+    "q2": {
+      "question": "Is the blockchain traceability really immutable?",
+      "answer": "Each lot gets a unique identifier recorded on Polygon Mainnet via a SHA-256 hash. The hash is public and verifiable by anyone via /verify or Polygonscan. Only the hash is on-chain, your data stays in our GDPR infrastructure."
+    },
+    "q3": {
+      "question": "Which reports can I export?",
+      "answer": "Carbon assessment Scopes 1, 2 and 3 GHG Protocol compliant, CSRD/ESRS E1 to E5 audit-ready report, blockchain PDF certificates with QR code, CSR diagnostic with score on 6 pillars. All as PDF + CSV downloads."
+    },
+    "q4": {
+      "question": "Which 42 standards are integrated?",
+      "answer": "ISO 14001, ISO 26000, ISO 59014:2024, GHG Protocol, GRI Standards, CSRD/ESRS E1 to E5, TCFD, B Corp, GreenTech Innovation, NR Label (INR), Lucie 26000 Label, ADEME Base Carbone, Eurostat, AGEC Score, EcoVadis, and 27 more sector regulations."
+    }
+  },
+  "billing": {
+    "q1": {
+      "question": "Is there a free trial?",
+      "answer": "Yes, a 14-day free trial on Essential and Advanced plans, no credit card required to start. You can cancel anytime during the trial without any charge."
+    },
+    "q2": {
+      "question": "What are the plan prices?",
+      "answer": "Essential at €149/month (SMBs up to 50 employees). Advanced at €449/month (midcaps 50 to 500 employees, most popular). Enterprise on quote (large groups 500+). 17% discount on annual billing."
+    },
+    "q3": {
+      "question": "Is there a marketplace transaction fee?",
+      "answer": "Yes, tiered: 8% up to €10,000, 5% from €10,000 to €50,000, 3% above €50,000. The fee includes blockchain traceability, carbon calculation and PDF certificate. No mandatory subscription to use the marketplace."
+    },
+    "q4": {
+      "question": "Which payment methods do you accept?",
+      "answer": "Credit card (Stripe), SEPA direct debit, bank transfer for Enterprise accounts. Every invoice is available in your billing area and exportable as PDF."
+    }
+  },
+  "technical": {
+    "q1": {
+      "question": "Do you have an API?",
+      "answer": "Yes, in the Enterprise plan. Documented REST API, webhooks for events (transaction, signature, blockchain certification), TypeScript SDK. Native SAP, Sage and Oracle integrations on the 2027 roadmap."
+    },
+    "q2": {
+      "question": "What is your infrastructure?",
+      "answer": "Vercel hosting (Next.js 15 frontend) and Supabase (PostgreSQL + Auth + Storage + Realtime) in Frankfurt region (EU). Polygon Mainnet via Alchemy. Mailer Resend or custom SMTP. Anthropic Claude AI (Sonnet and Opus depending on plan)."
+    },
+    "q3": {
+      "question": "How do you guarantee availability?",
+      "answer": "99.9% SLA guaranteed for Enterprise accounts (max 8h45 downtime per year). Real-time monitoring via Datadog, automatic alerts, public status on status.greenecogenius.tech. Daily automatic backups."
+    },
+    "q4": {
+      "question": "Can I integrate enterprise SSO?",
+      "answer": "Yes, in the Enterprise plan. SAML 2.0 SSO, OIDC, Microsoft Entra (ex Azure AD), Google Workspace, Okta. SCIM provisioning available on request."
+    }
+  },
+  "rgpd": {
+    "q1": {
+      "question": "Does my data stay in the European Union?",
+      "answer": "Yes, fully. Supabase storage in Frankfurt region (Germany), Vercel CDN in EU, EU SMTP mailer. No personal or commercial data leaves the EU. GDPR and Schrems II compliant."
+    },
+    "q2": {
+      "question": "How do I exercise my GDPR rights?",
+      "answer": "All GDPR rights are accessible from your user area: right to access (export), right to rectification, right to erasure, right to portability, right to object. Reply within 30 days max, within 7 days for Enterprise accounts."
+    },
+    "q3": {
+      "question": "Who are your GDPR sub-processors?",
+      "answer": "Complete and up-to-date list available in the Privacy Policy: Supabase Inc. (hosting), Vercel Inc. (frontend), Stripe Payments Europe (billing), Anthropic (AI), Datadog (observability). DPAs signed with each one."
+    },
+    "q4": {
+      "question": "What does the Polygon blockchain store?",
+      "answer": "Only a SHA-256 hash of the lot, its internal identifier and a timestamp. No personal data, no company name, no price. The hash is public but allows no re-identification. Full data stays in the GDPR Supabase database."
+    }
+  },
+  "ctaTag": "Did not find your answer?",
+  "ctaTitle": "Our team replies",
+  "ctaSubtitle": "A sector-specific question, a particular use case, a legal topic: we take the time to answer.",
+  "ctaLabel": "Contact us",
+  "ctaSecondary": "See our solutions"
+}

@@ -1,12 +1,15 @@
 import Link from 'next/link';
 
 import { CheckCircle, FileSignature } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { Button } from '@kit/ui/button';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
 
+import { EnviroButton } from '~/components/enviro/enviro-button';
+import {
+  EnviroCard,
+  EnviroCardBody,
+} from '~/components/enviro/enviro-card';
 import { TransactionImpactPanel } from '~/home/_components/transaction-impact-panel';
 
 interface ConfirmationPageProps {
@@ -15,7 +18,8 @@ interface ConfirmationPageProps {
 }
 
 export async function generateMetadata() {
-  return { title: 'Confirmation de paiement' };
+  const t = await getTranslations('marketplace');
+  return { title: t('paymentMetaTitle') };
 }
 
 async function ConfirmationPage({
@@ -25,6 +29,7 @@ async function ConfirmationPage({
   const { id } = await params;
   const { transaction_id: transactionId } = await searchParams;
   const client = getSupabaseServerClient();
+  const t = await getTranslations('marketplace');
 
   const { data: listing } = await client
     .from('listings')
@@ -32,7 +37,6 @@ async function ConfirmationPage({
     .eq('id', id)
     .single();
 
-  // Normalise quantity to tonnes (schema stores kg or tonnes in `unit`)
   const quantity = Number(listing?.quantity ?? 0);
   const volumeTonnes =
     listing?.unit === 'tonnes' || listing?.unit === 't'
@@ -44,62 +48,75 @@ async function ConfirmationPage({
     '';
 
   return (
-    <PageBody>
-      <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 py-12 text-center">
-        <CheckCircle className="text-primary h-16 w-16" strokeWidth={1.5} />
-
-        <h1 className="text-2xl font-bold">
-          <Trans i18nKey="marketplace.paymentSuccess" />
-        </h1>
-
-        <p className="text-muted-foreground">
-          <Trans i18nKey="marketplace.paymentSuccessDesc" />
-        </p>
-
-        {material && volumeTonnes > 0 ? (
-          <TransactionImpactPanel
-            material={material}
-            volumeTonnes={volumeTonnes}
-          />
-        ) : null}
-
-        <div className="flex flex-wrap justify-center gap-3">
-          {transactionId ? (
-            <Button
-              className="bg-[#1BAF6A] hover:bg-[#1BAF6A]"
-              nativeButton={false}
-              render={
-                <Link href={`/home/transactions/${transactionId}`}>
-                  <FileSignature
-                    className="mr-1.5 h-4 w-4"
-                    strokeWidth={1.5}
-                  />
-                  Acceder au contrat de vente
-                </Link>
-              }
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroCard variant="cream" hover="none" padding="lg">
+        <EnviroCardBody className="flex flex-col items-center gap-5 text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-[--radius-enviro-pill] bg-[--color-enviro-lime-100]">
+            <CheckCircle
+              aria-hidden="true"
+              className="h-9 w-9 text-[--color-enviro-lime-700]"
+              strokeWidth={1.5}
             />
-          ) : null}
-          <Button
-            variant="outline"
-            render={
-              <Link href={`/home/marketplace/${id}`}>
-                <Trans i18nKey="marketplace.backToListing" />
-              </Link>
-            }
-            nativeButton={false}
-          />
-          <Button
-            variant="outline"
-            render={
-              <Link href="/home/marketplace">
-                <Trans i18nKey="marketplace.backToMarketplace" />
-              </Link>
-            }
-            nativeButton={false}
-          />
-        </div>
-      </div>
-    </PageBody>
+          </div>
+
+          <h1 className="text-balance text-2xl font-semibold leading-tight text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)] md:text-3xl">
+            {t('paymentSuccess')}
+          </h1>
+
+          <p className="max-w-md text-sm text-[--color-enviro-forest-700] md:text-base">
+            {t('paymentSuccessDesc')}
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            {transactionId ? (
+              <EnviroButton
+                variant="primary"
+                size="md"
+                magnetic
+                render={(buttonProps) => (
+                  <Link
+                    {...buttonProps}
+                    href={`/home/transactions/${transactionId}`}
+                  >
+                    <FileSignature
+                      aria-hidden="true"
+                      className="h-4 w-4"
+                      strokeWidth={1.5}
+                    />
+                    {t('paymentAccessContract')}
+                  </Link>
+                )}
+              />
+            ) : null}
+            <EnviroButton
+              variant="secondary"
+              size="md"
+              render={(buttonProps) => (
+                <Link {...buttonProps} href={`/home/marketplace/${id}`}>
+                  {t('backToListing')}
+                </Link>
+              )}
+            />
+            <EnviroButton
+              variant="ghost"
+              size="md"
+              render={(buttonProps) => (
+                <Link {...buttonProps} href="/home/marketplace">
+                  {t('backToMarketplace')}
+                </Link>
+              )}
+            />
+          </div>
+        </EnviroCardBody>
+      </EnviroCard>
+
+      {material && volumeTonnes > 0 ? (
+        <TransactionImpactPanel
+          material={material}
+          volumeTonnes={volumeTonnes}
+        />
+      ) : null}
+    </div>
   );
 }
 

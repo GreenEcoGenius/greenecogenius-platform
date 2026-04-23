@@ -1,6 +1,13 @@
 {
   "homeTitle": "Tableau de bord",
   "homeDesc": "Vue d'ensemble de votre performance environnementale et de votre conformité.",
+  "homeGreeting": "Bonjour {name}",
+  "homeGreetingFallback": "Bienvenue",
+  "homeQuickActions": "Actions rapides",
+  "homeMyListings": "Mes annonces récentes",
+  "homeViewAllListings": "Voir toutes mes annonces",
+  "homeCtaCarbon": "Calculer mon empreinte carbone",
+  "homeCtaCarbonDesc": "Déclenchez votre prochain bilan en quelques minutes.",
   "marketplaceTitle": "Le Comptoir Circulaire",
   "marketplaceDesc": "Marketplace B2B de matières recyclables. Publiez, achetez ou mettez en collecte.",
   "carbonTitle": "Impact Carbone",

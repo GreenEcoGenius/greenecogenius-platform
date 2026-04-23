@@ -1,13 +1,11 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import Image from 'next/image';
-import Link from 'next/link';
 
 import {
   Award,
-  ChevronRight,
   Download,
   FileText,
   Globe,
@@ -18,9 +16,13 @@ import {
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Badge } from '@kit/ui/badge';
-import { Button } from '@kit/ui/button';
 import { cn } from '@kit/ui/utils';
 
+import { FadeInSection } from '~/components/enviro/animations/fade-in-section';
+import {
+  StaggerContainer,
+  StaggerItem,
+} from '~/components/enviro/animations/stagger-container';
 import {
   NORMS_DATABASE,
   PRIORITY_COLORS,
@@ -29,8 +31,6 @@ import {
   type Norm,
   type NormPillar,
 } from '~/lib/data/norms-database';
-
-// ── Tab definitions ──
 
 interface TabDef {
   id: string;
@@ -49,44 +49,44 @@ const TAB_DEFS: Array<{
 }> = [
   {
     id: 'circular_economy',
-    labelKey: 'normesTabCircular',
+    labelKey: 'tabCircular',
     count: 11,
-    icon: <Recycle className="h-4 w-4" />,
+    icon: <Recycle className="h-4 w-4" strokeWidth={1.5} />,
     pillar: 'circular_economy',
   },
   {
     id: 'carbon',
-    labelKey: 'normesTabCarbon',
+    labelKey: 'tabCarbon',
     count: 7,
-    icon: <Globe className="h-4 w-4" />,
+    icon: <Globe className="h-4 w-4" strokeWidth={1.5} />,
     pillar: 'carbon',
   },
   {
     id: 'reporting',
-    labelKey: 'normesTabReporting',
+    labelKey: 'tabReporting',
     count: 9,
-    icon: <FileText className="h-4 w-4" />,
+    icon: <FileText className="h-4 w-4" strokeWidth={1.5} />,
     pillar: 'reporting',
   },
   {
     id: 'traceability',
-    labelKey: 'normesTabTraceability',
+    labelKey: 'tabTraceability',
     count: 6,
-    icon: <LinkIcon className="h-4 w-4" />,
+    icon: <LinkIcon className="h-4 w-4" strokeWidth={1.5} />,
     pillar: 'traceability',
   },
   {
     id: 'data',
-    labelKey: 'normesTabData',
+    labelKey: 'tabData',
     count: 5,
-    icon: <Shield className="h-4 w-4" />,
+    icon: <Shield className="h-4 w-4" strokeWidth={1.5} />,
     pillar: 'data',
   },
   {
     id: 'labels',
-    labelKey: 'normesTabLabels',
+    labelKey: 'tabLabels',
     count: 4,
-    icon: <Award className="h-4 w-4" />,
+    icon: <Award className="h-4 w-4" strokeWidth={1.5} />,
     pillar: 'labels',
   },
 ];
@@ -100,92 +100,73 @@ const PILLAR_HERO: Record<NormPillar, string> = {
   labels: '/images/normes/labels-csrd-mobile-v2.png',
 };
 
-// ── Animated norm card with PDF download ──
-
 function NormCard({
   norm,
-  index,
   locale,
+  downloadLabel,
+  onChainLabel,
 }: {
   norm: Norm;
-  index: number;
   locale: string;
+  downloadLabel: string;
+  onChainLabel: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setVisible(true);
-          obs.unobserve(el);
-        }
-      },
-      { threshold: 0.1 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
   return (
     <div
-      ref={ref}
       className={cn(
-        'group border-metal-silver rounded-xl border bg-white p-5 transition-all duration-700',
-        visible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0',
-        'hover:-translate-y-1 hover:shadow-lg',
+        'group/norm-card flex flex-col rounded-[--radius-enviro-xl] border border-[--color-enviro-cream-300] bg-white p-5 shadow-[--shadow-enviro-card] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[--color-enviro-forest-700] hover:shadow-[--shadow-enviro-lg]',
       )}
-      style={{ transitionDelay: `${index * 60}ms` }}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <p className="text-primary text-xs font-bold tracking-wider uppercase">
+          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[--color-enviro-cta] font-[family-name:var(--font-enviro-mono)]">
             {norm.reference}
           </p>
-          <h4 className="text-metal-900 mt-1 text-sm leading-snug font-semibold">
+          <h3 className="mt-1 text-sm leading-snug font-semibold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
             {norm.title}
-          </h4>
+          </h3>
         </div>
         <Badge
-          className={`shrink-0 text-[10px] ${PRIORITY_COLORS[norm.priority]}`}
+          className={cn(
+            'shrink-0 text-[10px] font-medium font-[family-name:var(--font-enviro-mono)]',
+            PRIORITY_COLORS[norm.priority],
+          )}
         >
           {norm.priorityLabel}
         </Badge>
       </div>
 
-      <p className="text-metal-600 mt-3 line-clamp-3 text-xs leading-relaxed">
+      <p className="mt-3 line-clamp-3 text-xs leading-relaxed text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
         {norm.description}
       </p>
 
-      <div className="mt-4 flex flex-wrap items-center gap-2 text-[10px]">
-        <span className="bg-metal-frost text-metal-600 rounded-full px-2 py-0.5 font-medium">
+      <div className="mt-4 flex flex-wrap items-center gap-2 text-[10px] font-[family-name:var(--font-enviro-mono)]">
+        <span className="rounded-[--radius-enviro-pill] bg-[--color-enviro-cream-100] px-2 py-0.5 font-medium text-[--color-enviro-forest-700]">
           {norm.typeLabel}
         </span>
-        <span className="text-metal-500">{norm.statusLabel}</span>
-        {norm.blockchainVerified && (
-          <span className="border-circuit-cyan/30 bg-circuit-cyan/10 text-circuit-cyan rounded-full border px-2 py-0.5 font-medium">
-            On-chain
+        <span className="text-[--color-enviro-forest-600]">{norm.statusLabel}</span>
+        {norm.blockchainVerified ? (
+          <span className="rounded-[--radius-enviro-pill] border border-[--color-enviro-lime-400] bg-[--color-enviro-lime-300]/30 px-2 py-0.5 font-medium text-[--color-enviro-forest-900]">
+            {onChainLabel}
           </span>
-        )}
+        ) : null}
       </div>
 
-      <div className="border-metal-chrome mt-3 flex items-end justify-between border-t pt-3">
-        <p className="text-primary text-[11px] leading-relaxed">
+      <div className="mt-auto flex items-end justify-between gap-2 border-t border-[--color-enviro-cream-300] pt-3">
+        <p className="text-[11px] leading-relaxed text-[--color-enviro-cta] font-[family-name:var(--font-enviro-sans)]">
           {norm.gegApplication}
         </p>
         <button
           type="button"
-          onClick={() =>
+          onClick={() => {
             window.open(
               `/api/normes/pdf?id=${norm.id}&locale=${locale}`,
               '_blank',
-            )
-          }
-          className="text-metal-steel hover:bg-metal-frost hover:text-primary ml-2 shrink-0 rounded-xl p-1.5 transition-colors"
-          title="Telecharger le PDF"
+              'noopener,noreferrer',
+            );
+          }}
+          aria-label={downloadLabel}
+          className="ml-2 shrink-0 rounded-[--radius-enviro-md] p-1.5 text-[--color-enviro-forest-600] transition-colors hover:bg-[--color-enviro-cream-100] hover:text-[--color-enviro-cta]"
         >
           <Download className="h-4 w-4" strokeWidth={1.5} />
         </button>
@@ -194,14 +175,20 @@ function NormCard({
   );
 }
 
-// ── Pillar tab content ──
-
 function PillarContent({
   pillar,
   locale,
+  downloadLabel,
+  onChainLabel,
+  labelsPreparationTitle,
+  labelsPreparationDesc,
 }: {
   pillar: NormPillar;
   locale: string;
+  downloadLabel: string;
+  onChainLabel: string;
+  labelsPreparationTitle: string;
+  labelsPreparationDesc: string;
 }) {
   const pillarInfo = getLocalizedPillarInfo(locale);
   const info = pillarInfo[pillar];
@@ -214,61 +201,88 @@ function PillarContent({
   return (
     <div>
       <div className="relative h-64 overflow-hidden sm:h-80">
-        <Image src={heroImage} alt={info.label} fill className="object-cover" />
-        <div className="from-metal-900/80 via-metal-900/30 absolute inset-0 bg-gradient-to-t to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
-          <p className="text-circuit-cyan text-xs font-semibold tracking-widest uppercase">
-            {norms.length} {isFr ? 'normes integrees' : 'integrated standards'}
-          </p>
-          <h2 className="mt-2 text-3xl font-bold text-white sm:text-4xl">
-            {info.label}
-          </h2>
-          <p className="text-metal-silver mt-2 max-w-xl text-sm">
-            {info.description}
-          </p>
+        <Image
+          src={heroImage}
+          alt={info.label}
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[linear-gradient(to_top,rgba(6,50,50,0.95),rgba(6,50,50,0.4)_60%,transparent)]"
+        />
+        <div className="absolute inset-x-0 bottom-0 px-4 py-6 sm:px-8 sm:py-10 lg:px-12">
+          <div className="mx-auto w-full max-w-[--container-enviro-xl]">
+            <p className="text-xs font-medium uppercase tracking-[0.08em] text-[--color-enviro-lime-300] font-[family-name:var(--font-enviro-mono)]">
+              <span aria-hidden="true">[</span>
+              <span className="px-1">
+                {norms.length}{' '}
+                {isFr ? 'normes intégrées' : 'integrated standards'}
+              </span>
+              <span aria-hidden="true">]</span>
+            </p>
+            <h2 className="mt-2 text-balance text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight text-[--color-enviro-fg-inverse] font-[family-name:var(--font-enviro-display)]">
+              {info.label}
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm sm:text-base leading-relaxed text-[--color-enviro-fg-inverse-muted] font-[family-name:var(--font-enviro-sans)]">
+              {info.description}
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {norms.map((norm, i) => (
-            <NormCard key={norm.id} norm={norm} index={i} locale={locale} />
+      <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 py-12 sm:px-6 lg:px-8">
+        <StaggerContainer
+          className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+          stagger={0.06}
+        >
+          {norms.map((norm) => (
+            <StaggerItem key={norm.id}>
+              <NormCard
+                norm={norm}
+                locale={locale}
+                downloadLabel={downloadLabel}
+                onChainLabel={onChainLabel}
+              />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
-        {pillar === 'labels' && (
-          <div className="from-primary to-primary-hover mt-8 rounded-2xl bg-gradient-to-br p-6 text-white sm:p-8">
-            <h3 className="text-lg font-bold">
-              Préparation aux labels reconnus
-            </h3>
-            <p className="mt-2 text-sm text-white/80">
-              GreenEcoGenius vous aide à préparer votre candidature aux labels
-              reconnus du marché : B Corp, GreenTech Innovation, Label Lucie
-              26000, Label Numérique Responsable et EcoVadis. Nous sommes un
-              outil de préparation, pas un organisme de certification.
-            </p>
-          </div>
-        )}
+        {pillar === 'labels' ? (
+          <FadeInSection>
+            <div className="mt-10 rounded-[--radius-enviro-3xl] bg-[--color-enviro-forest-900] p-6 text-[--color-enviro-fg-inverse] sm:p-8">
+              <h3 className="text-lg font-semibold font-[family-name:var(--font-enviro-display)]">
+                {labelsPreparationTitle}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-[--color-enviro-fg-inverse-muted] font-[family-name:var(--font-enviro-sans)]">
+                {labelsPreparationDesc}
+              </p>
+            </div>
+          </FadeInSection>
+        ) : null}
       </div>
     </div>
   );
 }
 
-// ── Main tabbed component ──
-
 export function NormsTabbedContent() {
-  const t = useTranslations('marketing');
+  const t = useTranslations('normes');
   const locale = useLocale();
   const [activeTab, setActiveTab] = useState('circular_economy');
   const tabBarRef = useRef<HTMLDivElement>(null);
 
-  const TABS: TabDef[] = TAB_DEFS.map((td) => ({
-    id: td.id,
-    label: t(td.labelKey),
-    count: td.count,
-    icon: td.icon,
-    pillar: td.pillar,
-  }));
+  const TABS: TabDef[] = useMemo(
+    () =>
+      TAB_DEFS.map((td) => ({
+        id: td.id,
+        label: t(td.labelKey),
+        count: td.count,
+        icon: td.icon,
+        pillar: td.pillar,
+      })),
+    [t],
+  );
 
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
@@ -278,8 +292,7 @@ export function NormsTabbedContent() {
       );
       if (matched) setActiveTab(matched.id);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [TABS]);
 
   const handleTabChange = useCallback((tabId: string) => {
     setActiveTab(tabId);
@@ -293,47 +306,71 @@ export function NormsTabbedContent() {
 
   const activeTabDef = TABS.find((tab) => tab.id === activeTab);
 
+  const downloadLabel = t('downloadPdf');
+  const onChainLabel = t('onChain');
+  const labelsPreparationTitle = t('labelsPreparation');
+  const labelsPreparationDesc = t('labelsPreparationDesc');
+
   return (
     <>
       <div
         ref={tabBarRef}
-        className="border-metal-chrome sticky top-[64px] z-30 border-b bg-white/95 backdrop-blur-sm"
+        className="sticky top-[64px] z-30 border-b border-[--color-enviro-cream-300] bg-[--color-enviro-cream-50]/95 backdrop-blur-sm"
       >
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="scrollbar-none -mb-px flex gap-0 overflow-x-auto">
-            {TABS.map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => handleTabChange(tab.id)}
-                className={cn(
-                  'flex shrink-0 items-center gap-1.5 border-b-2 px-4 py-3 text-sm font-medium transition-colors',
-                  activeTab === tab.id
-                    ? 'border-primary text-primary'
-                    : 'text-metal-500 hover:border-metal-300 hover:text-metal-700 border-transparent',
-                )}
-              >
-                {tab.label}
-                {tab.count !== undefined && (
-                  <span
-                    className={cn(
-                      'text-[11px]',
-                      activeTab === tab.id ? 'text-primary' : 'text-metal-400',
-                    )}
-                  >
-                    ({tab.count})
-                  </span>
-                )}
-              </button>
-            ))}
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 sm:px-6 lg:px-8">
+          <div
+            className="scrollbar-none flex gap-2 overflow-x-auto py-3"
+            role="tablist"
+          >
+            {TABS.map((tab) => {
+              const isActive = activeTab === tab.id;
+
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => handleTabChange(tab.id)}
+                  className={cn(
+                    'inline-flex shrink-0 items-center gap-2 rounded-[--radius-enviro-pill] border px-4 py-2 text-sm font-medium transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] font-[family-name:var(--font-enviro-sans)]',
+                    isActive
+                      ? 'border-[--color-enviro-forest-900] bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300] shadow-[--shadow-enviro-md]'
+                      : 'border-[--color-enviro-cream-300] bg-white text-[--color-enviro-forest-700] hover:border-[--color-enviro-forest-700] hover:bg-[--color-enviro-cream-100]',
+                  )}
+                >
+                  {tab.icon}
+                  <span>{tab.label}</span>
+                  {tab.count !== undefined ? (
+                    <span
+                      className={cn(
+                        'text-[11px]',
+                        isActive
+                          ? 'text-[--color-enviro-lime-300]'
+                          : 'text-[--color-enviro-forest-600]',
+                      )}
+                    >
+                      {tab.count}
+                    </span>
+                  ) : null}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      <div className="min-h-[60vh]">
-        {activeTabDef?.pillar && (
-          <PillarContent pillar={activeTabDef.pillar} locale={locale} />
-        )}
+      <div className="min-h-[60vh] bg-[--color-enviro-cream-50]">
+        {activeTabDef?.pillar ? (
+          <PillarContent
+            pillar={activeTabDef.pillar}
+            locale={locale}
+            downloadLabel={downloadLabel}
+            onChainLabel={onChainLabel}
+            labelsPreparationTitle={labelsPreparationTitle}
+            labelsPreparationDesc={labelsPreparationDesc}
+          />
+        ) : null}
       </div>
     </>
   );

@@ -15,7 +15,14 @@ const NEXT_ACTION_HEADER = 'next-action';
 const LOCALE_COOKIE = 'NEXT_LOCALE';
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|images|locales|assets|api/*).*)'],
+  // `preview/` and `enviro/` are excluded (with trailing slash) so the
+  // Enviro template alias served via `next.config.mjs` rewrites bypasses
+  // i18n routing, auth checks and CSP headers. The trailing slash is
+  // critical: without it, real Next.js routes like `/enviro-components`
+  // would also match and be silently 404'd.
+  matcher: [
+    '/((?!_next/static|_next/image|images|locales|assets|preview/|enviro/|api/*).*)',
+  ],
 };
 
 // create i18n middleware once at module scope

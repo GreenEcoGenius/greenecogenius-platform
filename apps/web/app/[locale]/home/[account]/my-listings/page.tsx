@@ -6,14 +6,14 @@ import { Plus, Search } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
-import { Button } from '@kit/ui/button';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
+
+import {
+  EnviroDashboardSectionHeader,
+  EnviroEmptyState,
+} from '~/components/enviro/dashboard';
+import { EnviroButton } from '~/components/enviro/enviro-button';
 
 import { ListingCard } from '~/home/_components/listing-card';
-
-import { TeamAccountLayoutPageHeader } from '../_components/team-account-layout-page-header';
 
 interface MyListingsPageProps {
   params: Promise<{ account: string }>;
@@ -28,6 +28,8 @@ export const generateMetadata = async () => {
 async function MyListingsPage({ params }: MyListingsPageProps) {
   const account = use(params).account;
   const client = getSupabaseServerClient();
+  const t = await getTranslations('marketplace');
+  const tCommon = await getTranslations('common');
 
   const { data: accountData } = await client
     .from('accounts')
@@ -43,33 +45,34 @@ async function MyListingsPage({ params }: MyListingsPageProps) {
         .order('created_at', { ascending: false })
     : { data: [] };
 
+  const rows = listings ?? [];
+
   return (
-    <PageBody>
-      <TeamAccountLayoutPageHeader
-        account={account}
-        title={<Trans i18nKey={'common.routes.myListings'} />}
-        description={<AppBreadcrumbs />}
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.application')}
+        title={tCommon('routes.myListings')}
+        subtitle={`${rows.length} ${t('totalListings')}`}
+        actions={
+          <EnviroButton
+            variant="primary"
+            size="sm"
+            render={(buttonProps) => (
+              <Link
+                {...buttonProps}
+                href={`/home/${account}/marketplace/new`}
+              >
+                <Plus aria-hidden="true" className="h-4 w-4" />
+                {t('createListing')}
+              </Link>
+            )}
+          />
+        }
       />
 
-      <div className="flex items-center justify-between">
-        <p className="text-muted-foreground text-sm">
-          {listings?.length ?? 0} <Trans i18nKey="marketplace.totalListings" />
-        </p>
-
-        <Button
-          render={
-            <Link href={`/home/${account}/marketplace/new`}>
-              <Plus className="mr-2 h-4 w-4" />
-              <Trans i18nKey="marketplace.createListing" />
-            </Link>
-          }
-          nativeButton={false}
-        />
-      </div>
-
-      {listings && listings.length > 0 ? (
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {listings.map((listing) => (
+      {rows.length > 0 ? (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {rows.map((listing) => (
             <ListingCard
               key={listing.id}
               listing={listing}
@@ -79,23 +82,27 @@ async function MyListingsPage({ params }: MyListingsPageProps) {
           ))}
         </div>
       ) : (
-        <div className="mt-12 flex flex-col items-center gap-4 text-center">
-          <Search className="text-muted-foreground h-12 w-12" />
-          <p className="text-muted-foreground">
-            <Trans i18nKey="marketplace.noOwnListings" />
-          </p>
-          <Button
-            render={
-              <Link href={`/home/${account}/marketplace/new`}>
-                <Plus className="mr-2 h-4 w-4" />
-                <Trans i18nKey="marketplace.createFirstListing" />
-              </Link>
-            }
-            nativeButton={false}
-          />
-        </div>
+        <EnviroEmptyState
+          icon={<Search aria-hidden="true" className="h-10 w-10" />}
+          title={t('noOwnListings')}
+          actions={
+            <EnviroButton
+              variant="primary"
+              size="sm"
+              render={(buttonProps) => (
+                <Link
+                  {...buttonProps}
+                  href={`/home/${account}/marketplace/new`}
+                >
+                  <Plus aria-hidden="true" className="h-4 w-4" />
+                  {t('createFirstListing')}
+                </Link>
+              )}
+            />
+          }
+        />
       )}
-    </PageBody>
+    </div>
   );
 }
 

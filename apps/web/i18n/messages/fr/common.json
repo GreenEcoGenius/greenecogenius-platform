@@ -103,6 +103,8 @@
     "switchToFrench": "Passer en français"
   },
   "menu": "Menu",
+  "openMenu": "Ouvrir le menu",
+  "closeMenu": "Fermer le menu",
   "ai": {
     "title": "Assistant GreenEcoGenius",
     "open": "Ouvrir l'assistant IA",
@@ -218,7 +220,25 @@
     "externalActivities": "Données complémentaires",
     "platform": "Plateforme",
     "myAccount": "Mon Compte",
-    "landingPage": "Accueil"
+    "landingPage": "Accueil",
+    "pricing": "Tarifs"
+  },
+  "enviroShell": {
+    "brandLabel": "GreenEcoGenius",
+    "sidebarLabel": "Navigation principale",
+    "sidebarCollapse": "Réduire la barre latérale",
+    "sidebarExpand": "Étendre la barre latérale",
+    "sidebarCloseMobile": "Fermer le menu",
+    "sidebarOpenMobile": "Ouvrir le menu",
+    "topbarLabel": "Barre d'outils",
+    "geniusButton": "Genius",
+    "geniusAriaLabel": "Ouvrir l'assistant Genius IA",
+    "userMenuAriaLabel": "Menu utilisateur",
+    "userMenuLanguage": "Langue",
+    "userMenuSignOut": "Se déconnecter",
+    "userMenuProfile": "Profil et préférences",
+    "userMenuBilling": "Facturation",
+    "breadcrumbAriaLabel": "Fil d'Ariane"
   },
   "roles": {
     "owner": {

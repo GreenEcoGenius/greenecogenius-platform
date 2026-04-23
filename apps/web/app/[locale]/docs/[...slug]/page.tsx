@@ -3,8 +3,11 @@ import { cache } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { getTranslations } from 'next-intl/server';
+
 import { ContentRenderer, createCmsClient } from '@kit/cms';
-import { cn } from '@kit/ui/utils';
+
+import { EnviroDocsProse, EnviroDocsTOC } from '~/components/enviro/docs';
 
 const getPageBySlug = cache(pageLoader);
 
@@ -39,6 +42,7 @@ export async function generateMetadata({
 async function DocumentationPage({ params }: DocumentationPageProps) {
   const slug = (await params).slug.join('/');
   const page = await getPageBySlug(slug);
+  const t = await getTranslations('docs');
 
   if (!page) {
     notFound();
@@ -47,32 +51,28 @@ async function DocumentationPage({ params }: DocumentationPageProps) {
   const description = page?.description ?? '';
 
   return (
-    <div className={'container flex flex-1 flex-col gap-y-4'}>
-      <div className={'flex flex-1'}>
-        <div className="relative mx-auto max-w-3xl flex-1 flex-col overflow-x-hidden">
-          <article
-            className={cn('mx-auto h-full w-full flex-1 gap-y-12 pt-4 pb-36')}
-          >
-            <section className={'mt-4 flex flex-col gap-y-1 pb-4'}>
-              <h1
-                className={
-                  'text-foreground text-3xl font-semibold tracking-tighter'
-                }
-              >
-                {page.title}
-              </h1>
+    <div className="relative mx-auto flex w-full max-w-7xl gap-10 px-4 py-10 md:px-6 md:py-14">
+      <article className="min-w-0 flex-1">
+        <header className="flex flex-col gap-3 border-b border-[--color-enviro-cream-200] pb-6">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-mono)]">
+            [ {t('header.breadcrumbDocs')} ]
+          </span>
+          <h1 className="text-3xl font-bold leading-tight text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)] md:text-4xl">
+            {page.title}
+          </h1>
+          {description ? (
+            <p className="max-w-2xl text-base text-[--color-enviro-forest-700]">
+              {description}
+            </p>
+          ) : null}
+        </header>
 
-              <h2 className={'text-secondary-foreground/80 text-lg'}>
-                {description}
-              </h2>
-            </section>
+        <EnviroDocsProse className="mt-2 pb-24">
+          <ContentRenderer content={page.content} />
+        </EnviroDocsProse>
+      </article>
 
-            <div className={'markdoc'}>
-              <ContentRenderer content={page.content} />
-            </div>
-          </article>
-        </div>
-      </div>
+      <EnviroDocsTOC heading={t('article.tableOfContents')} />
     </div>
   );
 }

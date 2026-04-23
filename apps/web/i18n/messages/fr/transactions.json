@@ -1,0 +1,46 @@
+{
+  "tag": "Comptoir Circulaire",
+  "title": "Transaction {ref}",
+  "metaTitle": "Transaction {ref}",
+  "backToMarketplace": "Retour au Comptoir",
+  "contractCard": {
+    "title": "Contrat de vente",
+    "reference": "Référence",
+    "paymentStatus": "Statut de paiement",
+    "expiresOn": "Expire le",
+    "noContract": "Aucun contrat n'a encore été généré. Une fois le paiement confirmé, vous pouvez générer le contrat et l'envoyer aux deux parties pour signature électronique via DocuSign."
+  },
+  "parties": {
+    "seller": "Vendeur",
+    "buyer": "Acheteur",
+    "sellerFallback": "Vendeur",
+    "buyerFallback": "Acheteur"
+  },
+  "signature": {
+    "signed": "Signé",
+    "pending": "En attente"
+  },
+  "actions": {
+    "send": "Générer et envoyer pour signature",
+    "sending": "Génération du contrat…",
+    "sendError": "Impossible de générer le contrat.",
+    "downloadOriginal": "Contrat original",
+    "downloadSigned": "Contrat signé"
+  },
+  "alerts": {
+    "blockchainCertified": "Transaction signée et certifiée sur Polygon. Le hash du contrat est ancré on-chain.",
+    "fullySigned": "Contrat signé par les deux parties. Ancrage blockchain en cours."
+  },
+  "status": {
+    "not_started": "Contrat non généré",
+    "contract_generated": "Contrat généré",
+    "pending_signatures": "En attente de signature",
+    "seller_signed": "Vendeur a signé",
+    "buyer_signed": "Acheteur a signé",
+    "fully_signed": "Signé par les deux parties",
+    "blockchain_certified": "Certifié blockchain",
+    "cancelled": "Annulé",
+    "expired": "Expiré"
+  },
+  "materialFallback": "Matière recyclable"
+}

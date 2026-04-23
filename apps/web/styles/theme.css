@@ -112,6 +112,224 @@
   --color-chart-neon: #7EC845;
   --color-chart-turquoise: #5bc4d6;
   --color-chart-amber: #f59e0b;
+
+  /* ──────────────────────────────────────────────────────────────────────────
+   * ENVIRO DESIGN TOKENS (append-only, namespaced `enviro-*`)
+   * Source: apps/web/public/enviro/css/erviss-greenecogenius-fantastic-site.webflow.css
+   * Mirror TS: apps/web/lib/enviro-tokens.ts
+   * Phase: 1 — extraction (no consumer yet)
+   * ──────────────────────────────────────────────────────────────────────── */
+
+  /* Forest scale — derived from --primary-color #063232 / --green-100 #1f4646 / --dark-gray #2b5151 */
+  --color-enviro-forest-50: #ecf8f8;
+  --color-enviro-forest-100: #cfe6e6;
+  --color-enviro-forest-200: #9fcdcd;
+  --color-enviro-forest-300: #6fb3b3;
+  --color-enviro-forest-400: #4a8f8f;
+  --color-enviro-forest-500: #346868;
+  --color-enviro-forest-600: #2b5151;
+  --color-enviro-forest-700: #1f4646;
+  --color-enviro-forest-800: #103535;
+  --color-enviro-forest-900: #063232;
+  --color-enviro-forest-950: #021c1c;
+
+  /* Lime / sage scale — derived from --green-light-color #c2df93 */
+  --color-enviro-lime-50: #f4faea;
+  --color-enviro-lime-100: #e6f4d2;
+  --color-enviro-lime-200: #d4eaae;
+  --color-enviro-lime-300: #c2df93;
+  --color-enviro-lime-400: #a9cf6c;
+  --color-enviro-lime-500: #8fbf4a;
+  --color-enviro-lime-600: #729b35;
+  --color-enviro-lime-700: #57752a;
+  --color-enviro-lime-800: #3f5620;
+  --color-enviro-lime-900: #2b3b18;
+
+  /* Ember scale — derived from --secondary-color #e3572b (CTA orange) */
+  --color-enviro-ember-50: #fdeee7;
+  --color-enviro-ember-100: #fbd4c1;
+  --color-enviro-ember-200: #f7ad8b;
+  --color-enviro-ember-300: #f08458;
+  --color-enviro-ember-400: #ea6c3c;
+  --color-enviro-ember-500: #e3572b;
+  --color-enviro-ember-600: #c1431d;
+  --color-enviro-ember-700: #9a3517;
+  --color-enviro-ember-800: #6f2611;
+  --color-enviro-ember-900: #4a190b;
+
+  /* Cream / sky neutrals — derived from --sky-blue-color #ecf8f8 / --off-white-color #e5e5e5 */
+  --color-enviro-cream-50: #f7fbfb;
+  --color-enviro-cream-100: #ecf8f8;
+  --color-enviro-cream-200: #e5e5e5;
+  --color-enviro-cream-300: #d4d4d4;
+  --color-enviro-cream-400: #a3a3a3;
+  --color-enviro-cream-500: #737373;
+
+  /* Pure tokens */
+  --color-enviro-white: #ffffff;
+  --color-enviro-black: #000000;
+  --color-enviro-overlay-strong: rgba(0, 0, 0, 0.9);
+  --color-enviro-overlay-soft: rgba(6, 50, 50, 0);
+  --color-enviro-text-on-dark: rgba(255, 255, 255, 0.7); /* maps --off-white-text-color */
+
+  /* Semantic surfaces (light + dark hero contexts) */
+  --color-enviro-bg: #ecf8f8;
+  --color-enviro-bg-elevated: #ffffff;
+  --color-enviro-bg-inverse: #063232;
+  --color-enviro-bg-inverse-elevated: #1f4646;
+  --color-enviro-fg: #063232;
+  --color-enviro-fg-muted: #2b5151;
+  --color-enviro-fg-inverse: #ffffff;
+  --color-enviro-fg-inverse-muted: rgba(255, 255, 255, 0.7);
+  --color-enviro-border: #d4d4d4;
+  --color-enviro-border-strong: #2b5151;
+  --color-enviro-border-on-dark: rgba(255, 255, 255, 0.12);
+
+  /* Semantic accent + CTA */
+  --color-enviro-accent: #c2df93;
+  --color-enviro-accent-fg: #063232;
+  --color-enviro-cta: #e3572b;
+  --color-enviro-cta-hover: #c1431d;
+  --color-enviro-cta-fg: #ffffff;
+
+  /* Typography — Inter (loaded via next/font/google in lib/fonts.ts) */
+  --font-enviro-display: var(--font-enviro-display), 'Inter', system-ui, sans-serif;
+  --font-enviro-sans: var(--font-enviro-sans), 'Inter', system-ui, sans-serif;
+  --font-enviro-mono: ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, monospace;
+
+  /* Type scale (raw, mirrors --_typography---font-size--display-* from Webflow) */
+  --text-enviro-xs: 12px;
+  --text-enviro-sm: 14px;
+  --text-enviro-base: 16px;
+  --text-enviro-md: 18px;
+  --text-enviro-lg: 20px;
+  --text-enviro-xl: 22px;
+  --text-enviro-2xl: 24px;
+  --text-enviro-3xl: 28px;
+  --text-enviro-4xl: 32px;
+  --text-enviro-5xl: 40px;
+  --text-enviro-6xl: 48px;
+  --text-enviro-7xl: 64px;
+  --text-enviro-8xl: 98px;
+  --text-enviro-9xl: 170px;
+
+  /* Fluid display sizes (hero / section headers) */
+  --text-enviro-display-sm: clamp(2rem, 4vw + 1rem, 3rem);
+  --text-enviro-display-md: clamp(2.5rem, 6vw + 1rem, 4.5rem);
+  --text-enviro-display-lg: clamp(3rem, 8vw + 1rem, 6.5rem);
+  --text-enviro-display-xl: clamp(3.5rem, 10vw + 1rem, 9rem);
+  --text-enviro-display-2xl: clamp(4rem, 12vw + 1rem, 10.625rem);
+
+  /* Line-heights (mirrors --_typography---line-height--*) */
+  --leading-enviro-tight: 1;
+  --leading-enviro-snug: 1.1;
+  --leading-enviro-display: 1.2;
+  --leading-enviro-base: 1.3;
+  --leading-enviro-relaxed: 1.4;
+  --leading-enviro-loose: 1.5;
+
+  /* Letter-spacing */
+  --tracking-enviro-tight: -1px;
+  --tracking-enviro-display: -0.02em;
+  --tracking-enviro-normal: 0;
+  --tracking-enviro-wide: 0.04em;
+  --tracking-enviro-bracket: 0.08em; /* for bracket tags `[ Services ]` */
+
+  /* Font weights */
+  --font-weight-enviro-normal: 400;
+  --font-weight-enviro-medium: 500;
+  --font-weight-enviro-semibold: 600;
+  --font-weight-enviro-bold: 700;
+  --font-weight-enviro-display: 800;
+
+  /* Radii (mirrors --_size---border-radius--*) */
+  --radius-enviro-xs: 8px;
+  --radius-enviro-sm: 10px;
+  --radius-enviro-md: 12px;
+  --radius-enviro-lg: 16px;
+  --radius-enviro-xl: 20px;
+  --radius-enviro-2xl: 25px;
+  --radius-enviro-3xl: 30px;
+  --radius-enviro-4xl: 32px;
+  --radius-enviro-5xl: 40px;
+  --radius-enviro-6xl: 50px;
+  --radius-enviro-pill: 999px;
+
+  /* Spacings (semantic — for sections, gaps, paddings) */
+  --space-enviro-1: 6px;
+  --space-enviro-2: 8px;
+  --space-enviro-3: 10px;
+  --space-enviro-4: 12px;
+  --space-enviro-5: 16px;
+  --space-enviro-6: 20px;
+  --space-enviro-7: 24px;
+  --space-enviro-8: 30px;
+  --space-enviro-9: 32px;
+  --space-enviro-10: 40px;
+  --space-enviro-11: 48px;
+  --space-enviro-12: 56px;
+  --space-enviro-13: 64px;
+  --space-enviro-14: 80px;
+  --space-enviro-15: 110px;
+
+  /* Section vertical rhythm */
+  --section-enviro-y-sm: 48px;
+  --section-enviro-y-md: 80px;
+  --section-enviro-y-lg: 110px;
+  --section-enviro-y-xl: 160px;
+
+  /* Container max-widths */
+  --container-enviro-sm: 640px;
+  --container-enviro-md: 1024px;
+  --container-enviro-lg: 1280px;
+  --container-enviro-xl: 1440px;
+
+  /* Shadows — derived from Enviro card / elevated surface patterns */
+  --shadow-enviro-sm: 0 1px 2px rgba(6, 50, 50, 0.06);
+  --shadow-enviro-md: 0 4px 12px rgba(6, 50, 50, 0.08);
+  --shadow-enviro-lg: 0 12px 32px rgba(6, 50, 50, 0.12);
+  --shadow-enviro-xl: 0 24px 64px rgba(6, 50, 50, 0.18);
+  --shadow-enviro-card: 0 2px 8px rgba(6, 50, 50, 0.06), 0 0 0 1px rgba(6, 50, 50, 0.04);
+  --shadow-enviro-elevated: 0 16px 48px rgba(6, 50, 50, 0.16);
+  --shadow-enviro-glow-lime: 0 0 0 4px rgba(194, 223, 147, 0.35);
+  --shadow-enviro-glow-ember: 0 0 0 4px rgba(227, 87, 43, 0.35);
+  --shadow-enviro-focus: 0 0 0 3px rgba(194, 223, 147, 0.6);
+  --shadow-enviro-inset-card: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+
+  /* Easings (motion design — used by Framer Motion + GSAP via lib/enviro-tokens.ts) */
+  --ease-enviro-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-enviro-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-enviro-in-out: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-enviro-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-enviro-linear: cubic-bezier(0, 0, 1, 1);
+
+  /* Durations */
+  --duration-enviro-fast: 150ms;
+  --duration-enviro-base: 300ms;
+  --duration-enviro-slow: 600ms;
+  --duration-enviro-slower: 900ms;
+  --duration-enviro-slowest: 1400ms;
+
+  /* Composite transitions (matches Webflow `transition: ... .3s`) */
+  --transition-enviro-base: all var(--duration-enviro-base) var(--ease-enviro-out);
+  --transition-enviro-color: color var(--duration-enviro-base) var(--ease-enviro-out), background-color var(--duration-enviro-base) var(--ease-enviro-out), border-color var(--duration-enviro-base) var(--ease-enviro-out);
+  --transition-enviro-transform: transform var(--duration-enviro-base) var(--ease-enviro-out);
+
+  /* Gradients */
+  --gradient-enviro-hero-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(6, 50, 50, 0) 50%, rgba(0, 0, 0, 0.9) 100%);
+  --gradient-enviro-cream: linear-gradient(135deg, #f7fbfb 0%, #ecf8f8 100%);
+  --gradient-enviro-forest: linear-gradient(180deg, #063232 0%, #1f4646 100%);
+  --gradient-enviro-ember-cta: linear-gradient(135deg, #e3572b 0%, #c1431d 100%);
+  --gradient-enviro-lime-soft: linear-gradient(135deg, rgba(194, 223, 147, 0.2) 0%, rgba(194, 223, 147, 0) 100%);
+
+  /* Z-index scale (consistent layering for Enviro shell + dropdowns) */
+  --z-enviro-base: 0;
+  --z-enviro-raised: 10;
+  --z-enviro-sticky: 30;
+  --z-enviro-overlay: 40;
+  --z-enviro-modal: 50;
+  --z-enviro-popover: 60;
+  --z-enviro-toast: 70;
 }
 
 @utility container {

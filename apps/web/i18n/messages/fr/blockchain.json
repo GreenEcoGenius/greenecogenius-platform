@@ -68,5 +68,17 @@
   "statusSold": "Vendu",
   "statusInTransit": "En transit",
   "statusDelivered": "Livré",
-  "statusCertified": "Certifié"
+  "statusCertified": "Certifié",
+  "emptyTitle": "Traçabilité blockchain",
+  "emptyDesc": "Vos transactions sur Le Comptoir Circulaire sont automatiquement tracées sur la blockchain. Publiez ou achetez un lot pour commencer à construire votre historique de traçabilité.",
+  "publishLot": "Publier un lot",
+  "browseMarketplace": "Le Comptoir Circulaire",
+  "featureLots": "Lots tracés",
+  "featureLotsDesc": "Chaque transaction est enregistrée avec un hash blockchain unique",
+  "featureCO2": "CO₂ évité",
+  "featureCO2Desc": "Calcul automatique de l'impact carbone de chaque lot recyclé",
+  "featureTonnes": "Tonnes recyclées",
+  "featureTonnesDesc": "Suivi précis des volumes de matières recyclées",
+  "featureCerts": "Certificats",
+  "featureCertsDesc": "Certificats de traçabilité générés automatiquement"
 }

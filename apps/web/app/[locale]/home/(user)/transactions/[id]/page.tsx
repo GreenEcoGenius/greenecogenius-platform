@@ -8,14 +8,19 @@ import {
   FileSignature,
   ShieldCheck,
 } from 'lucide-react';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { Badge } from '@kit/ui/badge';
-import { Button } from '@kit/ui/button';
-import { Card, CardContent } from '@kit/ui/card';
-import { PageBody, PageHeader } from '@kit/ui/page';
+import { cn } from '@kit/ui/utils';
 
+import { EnviroDashboardSectionHeader } from '~/components/enviro/dashboard';
+import { EnviroButton } from '~/components/enviro/enviro-button';
+import {
+  EnviroCard,
+  EnviroCardBody,
+  EnviroCardHeader,
+} from '~/components/enviro/enviro-card';
 import { ContractSignatureService } from '~/lib/signature/contract-signature-service';
 
 import { SendForSignatureButton } from './_components/send-for-signature-button';
@@ -30,7 +35,8 @@ interface Params {
 
 export async function generateMetadata({ params }: Params) {
   const { id } = await params;
-  return { title: `Transaction ${id.slice(0, 8)}` };
+  const t = await getTranslations('transactions');
+  return { title: t('metaTitle', { ref: id.slice(0, 8) }) };
 }
 
 interface TransactionView {
@@ -60,56 +66,34 @@ interface TransactionView {
   } | null;
 }
 
-function contractStatusBadge(status: string | null) {
-  const map: Record<string, { label: string; className: string }> = {
-    not_started: {
-      label: 'Contrat non genere',
-      className: 'bg-gray-100 text-gray-700 border-gray-200',
-    },
-    contract_generated: {
-      label: 'Contrat genere',
-      className: 'bg-blue-50 text-blue-700 border-blue-200',
-    },
-    pending_signatures: {
-      label: 'En attente de signature',
-      className: 'bg-amber-50 text-amber-700 border-amber-200',
-    },
-    seller_signed: {
-      label: 'Vendeur a signe',
-      className: 'bg-amber-50 text-amber-700 border-amber-200',
-    },
-    buyer_signed: {
-      label: 'Acheteur a signe',
-      className: 'bg-amber-50 text-amber-700 border-amber-200',
-    },
-    fully_signed: {
-      label: 'Signe par les deux parties',
-      className: 'bg-[#E8F8F0] text-[#159B5C] border-[#A8E6C8]',
-    },
-    blockchain_certified: {
-      label: 'Certifie blockchain',
-      className: 'bg-[#E8F8F0] text-[#159B5C] border-[#A8E6C8]',
-    },
-    cancelled: {
-      label: 'Annule',
-      className: 'bg-red-50 text-red-700 border-red-200',
-    },
-    expired: {
-      label: 'Expire',
-      className: 'bg-red-50 text-red-700 border-red-200',
-    },
-  };
-  const entry = map[status ?? 'not_started'] ?? map.not_started!;
-  return (
-    <Badge variant="outline" className={entry.className}>
-      {entry.label}
-    </Badge>
-  );
-}
+const STATUS_TONE: Record<string, string> = {
+  not_started:
+    'border-[--color-enviro-cream-300] bg-[--color-enviro-cream-100] text-[--color-enviro-forest-700]',
+  contract_generated:
+    'border-[--color-enviro-forest-200] bg-[--color-enviro-forest-100] text-[--color-enviro-forest-700]',
+  pending_signatures:
+    'border-[--color-enviro-ember-200] bg-[--color-enviro-ember-50] text-[--color-enviro-ember-700]',
+  seller_signed:
+    'border-[--color-enviro-ember-200] bg-[--color-enviro-ember-50] text-[--color-enviro-ember-700]',
+  buyer_signed:
+    'border-[--color-enviro-ember-200] bg-[--color-enviro-ember-50] text-[--color-enviro-ember-700]',
+  fully_signed:
+    'border-[--color-enviro-lime-200] bg-[--color-enviro-lime-100] text-[--color-enviro-lime-800]',
+  blockchain_certified:
+    'border-[--color-enviro-lime-200] bg-[--color-enviro-lime-100] text-[--color-enviro-lime-800]',
+  cancelled:
+    'border-[--color-enviro-ember-200] bg-[--color-enviro-ember-100] text-[--color-enviro-ember-700]',
+  expired:
+    'border-[--color-enviro-ember-200] bg-[--color-enviro-ember-100] text-[--color-enviro-ember-700]',
+};
 
 async function TransactionDetailPage({ params }: Params) {
   const { id } = await params;
   const client = getSupabaseServerClient();
+  const t = await getTranslations('transactions');
+  const tStatus = await getTranslations('transactions.status');
+  const locale = await getLocale();
+
   const { data: user, error: authError } = await requireUser(client);
   if (authError || !user) {
     redirect('/auth/sign-in');
@@ -135,15 +119,10 @@ async function TransactionDetailPage({ params }: Params) {
 
   const tx = txData as TransactionView;
 
-  if (
-    tx.buyer_account_id !== user.id &&
-    tx.seller_account_id !== user.id
-  ) {
+  if (tx.buyer_account_id !== user.id && tx.seller_account_id !== user.id) {
     notFound();
   }
 
-  // Load counterparty identities (the other side of the transaction) so we
-  // can render their name in the signature card.
   const { data: parties } = await any_(client)
     .from('accounts')
     .select('id, name')
@@ -154,10 +133,11 @@ async function TransactionDetailPage({ params }: Params) {
     partyById.set(p.id, p.name);
   }
 
-  const sellerName = partyById.get(tx.seller_account_id) ?? 'Vendeur';
-  const buyerName = partyById.get(tx.buyer_account_id) ?? 'Acheteur';
+  const sellerName =
+    partyById.get(tx.seller_account_id) ?? t('parties.sellerFallback');
+  const buyerName =
+    partyById.get(tx.buyer_account_id) ?? t('parties.buyerFallback');
 
-  // Short-lived signed URLs for download buttons.
   const [unsignedUrl, signedUrl] = await Promise.all([
     ContractSignatureService.getSignedUrl(client, tx.contract_pdf_path),
     ContractSignatureService.getSignedUrl(client, tx.contract_signed_pdf_path),
@@ -169,166 +149,175 @@ async function TransactionDetailPage({ params }: Params) {
     !tx.signature_envelope_id;
 
   const material =
-    tx.listings?.material_categories?.name_fr ??
-    tx.listings?.material_categories?.name ??
-    'Matiere recyclable';
+    (locale === 'fr'
+      ? tx.listings?.material_categories?.name_fr ??
+        tx.listings?.material_categories?.name
+      : tx.listings?.material_categories?.name ??
+        tx.listings?.material_categories?.name_fr) ?? t('materialFallback');
+
+  const subtitle = `${material} - ${tx.listings?.quantity ?? 0} ${tx.listings?.unit ?? ''}`.trim();
 
   return (
-    <>
-      <PageHeader
-        title={`Transaction ${tx.contract_id ?? tx.id.slice(0, 8)}`}
-        description={`${material} — ${tx.listings?.quantity ?? 0} ${tx.listings?.unit ?? ''}`}
-      >
-        <Button
-          variant="outline"
-          size="sm"
-          nativeButton={false}
-          render={
-            <Link href="/home/marketplace">
-              <ArrowLeft className="mr-1.5 h-4 w-4" strokeWidth={1.5} />
-              Retour au Comptoir
-            </Link>
-          }
-        />
-      </PageHeader>
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={t('tag')}
+        title={t('title', { ref: tx.contract_id ?? tx.id.slice(0, 8) })}
+        subtitle={subtitle}
+        actions={
+          <EnviroButton
+            variant="secondary"
+            size="sm"
+            render={(buttonProps) => (
+              <Link {...buttonProps} href="/home/marketplace">
+                <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+                {t('backToMarketplace')}
+              </Link>
+            )}
+          />
+        }
+      />
 
-      <PageBody>
-        <div className="mx-auto max-w-3xl space-y-6">
-          <Card>
-            <CardContent className="p-6">
-              <div className="mb-5 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <FileSignature
-                    className="h-5 w-5 text-[#1BAF6A]"
-                    strokeWidth={1.5}
-                  />
-                  <h2 className="text-lg font-semibold text-gray-900">
-                    Contrat de vente
-                  </h2>
-                </div>
-                {contractStatusBadge(tx.contract_status)}
-              </div>
-
-              <div className="mb-5 grid gap-2 text-sm text-gray-600">
-                <div className="flex justify-between">
-                  <span>Reference</span>
-                  <span className="font-medium text-gray-900">
-                    {tx.contract_id ?? '—'}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Statut de paiement</span>
-                  <span className="font-medium capitalize text-gray-900">
-                    {tx.status.replace(/_/g, ' ')}
-                  </span>
-                </div>
-                {tx.contract_expires_at ? (
-                  <div className="flex justify-between">
-                    <span>Expire le</span>
-                    <span className="font-medium text-gray-900">
-                      {new Date(tx.contract_expires_at).toLocaleDateString(
-                        'fr-FR',
-                      )}
-                    </span>
-                  </div>
-                ) : null}
-              </div>
-
-              {tx.signature_envelope_id ? (
-                <div className="mb-5 space-y-2">
-                  <SignatureStatusRow
-                    role="Vendeur"
-                    name={sellerName}
-                    signed={tx.seller_signed}
-                    signedAt={tx.seller_signed_at}
-                  />
-                  <SignatureStatusRow
-                    role="Acheteur"
-                    name={buyerName}
-                    signed={tx.buyer_signed}
-                    signedAt={tx.buyer_signed_at}
-                  />
-                </div>
-              ) : (
-                <p className="mb-5 rounded-lg bg-gray-50 p-3 text-sm text-gray-500">
-                  Aucun contrat n&apos;a encore ete genere. Une fois le
-                  paiement confirme, vous pouvez generer le contrat et
-                  l&apos;envoyer aux deux parties pour signature electronique
-                  via DocuSign.
-                </p>
+      <EnviroCard variant="cream" hover="none" padding="md">
+        <EnviroCardHeader>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <FileSignature
+                aria-hidden="true"
+                className="h-5 w-5 text-[--color-enviro-forest-700]"
+                strokeWidth={1.5}
+              />
+              <h2 className="text-lg font-semibold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+                {t('contractCard.title')}
+              </h2>
+            </div>
+            <span
+              className={cn(
+                'inline-flex items-center rounded-[--radius-enviro-pill] border px-2.5 py-0.5 text-[11px] font-semibold',
+                STATUS_TONE[tx.contract_status ?? 'not_started'] ??
+                  STATUS_TONE.not_started,
               )}
+            >
+              {tStatus(tx.contract_status ?? 'not_started')}
+            </span>
+          </div>
+        </EnviroCardHeader>
 
-              {canSend ? (
-                <SendForSignatureButton transactionId={tx.id} />
+        <EnviroCardBody className="flex flex-col gap-5 pt-5">
+          <dl className="grid gap-2 text-sm text-[--color-enviro-forest-700]">
+            <div className="flex justify-between">
+              <dt>{t('contractCard.reference')}</dt>
+              <dd className="font-medium text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-mono)]">
+                {tx.contract_id ?? '-'}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt>{t('contractCard.paymentStatus')}</dt>
+              <dd className="font-medium capitalize text-[--color-enviro-forest-900]">
+                {tx.status.replace(/_/g, ' ')}
+              </dd>
+            </div>
+            {tx.contract_expires_at ? (
+              <div className="flex justify-between">
+                <dt>{t('contractCard.expiresOn')}</dt>
+                <dd className="font-medium text-[--color-enviro-forest-900] tabular-nums">
+                  {new Date(tx.contract_expires_at).toLocaleDateString(locale)}
+                </dd>
+              </div>
+            ) : null}
+          </dl>
+
+          {tx.signature_envelope_id ? (
+            <div className="flex flex-col gap-2">
+              <SignatureStatusRow
+                role="seller"
+                name={sellerName}
+                signed={tx.seller_signed}
+                signedAt={tx.seller_signed_at}
+              />
+              <SignatureStatusRow
+                role="buyer"
+                name={buyerName}
+                signed={tx.buyer_signed}
+                signedAt={tx.buyer_signed_at}
+              />
+            </div>
+          ) : (
+            <p className="rounded-[--radius-enviro-md] border border-dashed border-[--color-enviro-cream-300] bg-[--color-enviro-cream-50] p-3 text-sm text-[--color-enviro-forest-700]">
+              {t('contractCard.noContract')}
+            </p>
+          )}
+
+          {canSend ? <SendForSignatureButton transactionId={tx.id} /> : null}
+
+          {tx.contract_status === 'blockchain_certified' ? (
+            <div className="flex items-center gap-2 rounded-[--radius-enviro-md] border border-[--color-enviro-lime-200] bg-[--color-enviro-lime-50] p-3 text-sm text-[--color-enviro-lime-800]">
+              <ShieldCheck
+                aria-hidden="true"
+                className="h-4 w-4 shrink-0"
+                strokeWidth={1.5}
+              />
+              <span>{t('alerts.blockchainCertified')}</span>
+            </div>
+          ) : tx.contract_status === 'fully_signed' ? (
+            <div className="flex items-center gap-2 rounded-[--radius-enviro-md] border border-[--color-enviro-lime-200] bg-[--color-enviro-lime-50] p-3 text-sm text-[--color-enviro-lime-800]">
+              <CheckCircle2
+                aria-hidden="true"
+                className="h-4 w-4 shrink-0"
+                strokeWidth={1.5}
+              />
+              <span>{t('alerts.fullySigned')}</span>
+            </div>
+          ) : null}
+
+          {(unsignedUrl || signedUrl) && (
+            <div className="flex flex-wrap gap-2">
+              {unsignedUrl ? (
+                <EnviroButton
+                  variant="secondary"
+                  size="sm"
+                  render={(buttonProps) => (
+                    <a
+                      {...buttonProps}
+                      href={unsignedUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Download
+                        aria-hidden="true"
+                        className="h-3.5 w-3.5"
+                        strokeWidth={1.5}
+                      />
+                      {t('actions.downloadOriginal')}
+                    </a>
+                  )}
+                />
               ) : null}
-
-              {tx.contract_status === 'blockchain_certified' ? (
-                <div className="flex items-center gap-2 rounded-lg border border-[#A8E6C8] bg-[#E8F8F0] p-3 text-sm text-[#159B5C]">
-                  <ShieldCheck className="h-4 w-4" strokeWidth={1.5} />
-                  <span>
-                    Transaction signee et certifiee sur Polygon. Le hash du
-                    contrat est ancre on-chain.
-                  </span>
-                </div>
-              ) : tx.contract_status === 'fully_signed' ? (
-                <div className="flex items-center gap-2 rounded-lg border border-[#A8E6C8] bg-[#E8F8F0] p-3 text-sm text-[#159B5C]">
-                  <CheckCircle2 className="h-4 w-4" strokeWidth={1.5} />
-                  <span>
-                    Contrat signe par les deux parties. Ancrage blockchain en
-                    cours.
-                  </span>
-                </div>
+              {signedUrl ? (
+                <EnviroButton
+                  variant="secondary"
+                  size="sm"
+                  render={(buttonProps) => (
+                    <a
+                      {...buttonProps}
+                      href={signedUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Download
+                        aria-hidden="true"
+                        className="h-3.5 w-3.5"
+                        strokeWidth={1.5}
+                      />
+                      {t('actions.downloadSigned')}
+                    </a>
+                  )}
+                />
               ) : null}
-
-              {(unsignedUrl || signedUrl) && (
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {unsignedUrl ? (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      nativeButton={false}
-                      render={
-                        <a
-                          href={unsignedUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Download
-                            className="mr-1.5 h-3.5 w-3.5"
-                            strokeWidth={1.5}
-                          />
-                          Contrat original
-                        </a>
-                      }
-                    />
-                  ) : null}
-                  {signedUrl ? (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      nativeButton={false}
-                      render={
-                        <a
-                          href={signedUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Download
-                            className="mr-1.5 h-3.5 w-3.5"
-                            strokeWidth={1.5}
-                          />
-                          Contrat signe
-                        </a>
-                      }
-                    />
-                  ) : null}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      </PageBody>
-    </>
+            </div>
+          )}
+        </EnviroCardBody>
+      </EnviroCard>
+    </div>
   );
 }
 

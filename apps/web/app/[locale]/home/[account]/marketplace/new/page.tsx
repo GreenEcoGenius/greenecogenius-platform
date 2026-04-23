@@ -3,11 +3,9 @@ import { use } from 'react';
 import { getTranslations } from 'next-intl/server';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
 
-import { TeamAccountLayoutPageHeader } from '../../_components/team-account-layout-page-header';
+import { EnviroDashboardSectionHeader } from '~/components/enviro/dashboard';
+
 import { CreateListingForm } from './_components/create-listing-form';
 
 interface NewListingPageProps {
@@ -23,6 +21,8 @@ export const generateMetadata = async () => {
 async function NewListingPage({ params }: NewListingPageProps) {
   const account = use(params).account;
   const client = getSupabaseServerClient();
+  const t = await getTranslations('marketplace');
+  const tCommon = await getTranslations('common');
 
   const { data: categories } = await client
     .from('material_categories')
@@ -30,17 +30,14 @@ async function NewListingPage({ params }: NewListingPageProps) {
     .order('name_fr');
 
   return (
-    <PageBody>
-      <TeamAccountLayoutPageHeader
-        account={account}
-        title={<Trans i18nKey={'marketplace.createListing'} />}
-        description={<AppBreadcrumbs />}
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.marketplace')}
+        title={t('createListing')}
       />
 
-      <div className="mx-auto max-w-2xl">
-        <CreateListingForm account={account} categories={categories ?? []} />
-      </div>
-    </PageBody>
+      <CreateListingForm account={account} categories={categories ?? []} />
+    </div>
   );
 }
 

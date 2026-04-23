@@ -2,12 +2,9 @@ import { use } from 'react';
 
 import { getTranslations } from 'next-intl/server';
 
-import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
+import { EnviroDashboardSectionHeader } from '~/components/enviro/dashboard';
 
 import { DashboardDemo } from './_components/dashboard-demo';
-import { TeamAccountLayoutPageHeader } from './_components/team-account-layout-page-header';
 
 interface TeamAccountHomePageProps {
   params: Promise<{ account: string }>;
@@ -24,17 +21,24 @@ export const generateMetadata = async () => {
 
 function TeamAccountHomePage({ params }: TeamAccountHomePageProps) {
   const account = use(params).account;
+  void account;
 
   return (
-    <PageBody>
-      <TeamAccountLayoutPageHeader
-        account={account}
-        title={<Trans i18nKey={'common.routes.dashboard'} />}
-        description={<AppBreadcrumbs />}
-      />
-
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <PageHeader />
       <DashboardDemo />
-    </PageBody>
+    </div>
+  );
+}
+
+async function PageHeader() {
+  const tCommon = await getTranslations('common');
+
+  return (
+    <EnviroDashboardSectionHeader
+      tag={tCommon('routes.application')}
+      title={tCommon('routes.dashboard')}
+    />
   );
 }
 

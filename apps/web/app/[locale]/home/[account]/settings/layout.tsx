@@ -1,10 +1,8 @@
-import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
+import { getTranslations } from 'next-intl/server';
 
+import { EnviroDashboardSectionHeader } from '~/components/enviro/dashboard';
 import featuresFlagConfig from '~/config/feature-flags.config';
 
-import { TeamAccountLayoutPageHeader } from '../_components/team-account-layout-page-header';
 import { SettingsSubNavigation } from './_components/settings-sub-navigation';
 
 interface SettingsLayoutProps {
@@ -14,25 +12,22 @@ interface SettingsLayoutProps {
 
 async function SettingsLayout({ children, params }: SettingsLayoutProps) {
   const { account } = await params;
+  const tCommon = await getTranslations('common');
+  const tTeams = await getTranslations('teams');
 
   return (
-    <PageBody>
-      <div>
-        <TeamAccountLayoutPageHeader
-          account={account}
-          title={<Trans i18nKey={'teams.settings.pageTitle'} />}
-          description={<AppBreadcrumbs />}
-        />
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.application')}
+        title={tTeams('settings.pageTitle')}
+      />
 
-        {featuresFlagConfig.enableTeamsOnly && (
-          <div className="mb-8">
-            <SettingsSubNavigation account={account} />
-          </div>
-        )}
-      </div>
+      {featuresFlagConfig.enableTeamsOnly ? (
+        <SettingsSubNavigation account={account} />
+      ) : null}
 
       {children}
-    </PageBody>
+    </div>
   );
 }
 

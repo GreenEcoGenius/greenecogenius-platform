@@ -1,0 +1,368 @@
+{
+  "page": {
+    "title": "Composants Enviro",
+    "subtitle": "Bibliothèque visuelle de la migration vers le design Enviro",
+    "description": "Cette page sert de référence interne. Elle expose les 15 composants wrappers et les 7 helpers d'animation construits à partir de @kit/ui et des tokens enviro-* (theme.css)."
+  },
+  "sections": {
+    "primitives": "Primitives",
+    "shell": "Shell de page",
+    "content": "Contenus de page",
+    "animations": "Helpers d'animation"
+  },
+  "demo": {
+    "buttonPrimary": "Continuer",
+    "buttonSecondary": "En savoir plus",
+    "buttonGhost": "Annuler",
+    "buttonMagnetic": "Magnétique",
+    "cardCreamTitle": "Carte cream",
+    "cardCreamBody": "Surface claire pour les contenus principaux. Tokens : bg cream-50, fg forest-900, ombre card.",
+    "cardDarkTitle": "Carte forest",
+    "cardDarkBody": "Surface sombre pour les sections inversées. Tokens : bg forest-900, fg blanc, accent lime.",
+    "cardLimeTitle": "Carte accent lime",
+    "cardLimeBody": "Surface avec accent vert clair pour les highlights et les CTA secondaires.",
+    "cardGlassTitle": "Carte glass",
+    "cardGlassBody": "Surface en verre dépoli, idéale par dessus les hero avec image de fond.",
+    "sectionTag": "Démonstration",
+    "sectionTitle": "Une charte cohérente, des composants accessibles",
+    "sectionSubtitle": "Tous les composants respectent prefers-reduced-motion et utilisent des tokens CSS namespacés.",
+    "heroTag": "Hero générique",
+    "heroTitle": "Le sol respire encore",
+    "heroSubtitle": "Composant EnviroHero",
+    "heroDescription": "Hero plein écran, titre fluide en clamp, image AVIF en fond, overlay gradient sombre, badges bracket et double CTA.",
+    "heroCtaPrimary": "Découvrir",
+    "heroCtaSecondary": "En savoir plus",
+    "pageHeroTag": "Page hero",
+    "pageHeroTitle": "Hero secondaire",
+    "pageHeroSubtitle": "Pour les pages internes (about, pricing, contact, normes, faq)",
+    "stats": {
+      "tag": "Chiffres clés",
+      "title": "Le poids de l'économie circulaire",
+      "subtitle": "Sources publiques agrégées : Eurostat, ADEME, EPA, FEDEREC.",
+      "stat1Value": "310",
+      "stat1Suffix": " Mt",
+      "stat1Label": "Déchets industriels en France par an",
+      "stat1Source": "Source : ADEME 2023",
+      "stat2Value": "42",
+      "stat2Suffix": " %",
+      "stat2Label": "Taux de recyclage municipal en France",
+      "stat2Source": "Source : SINOE 2024",
+      "stat3Value": "150",
+      "stat3Suffix": " Mds€",
+      "stat3Label": "Taille du marché européen de l'économie circulaire",
+      "stat3Source": "Source : Eurostat 2024",
+      "stat4Value": "11.5",
+      "stat4Suffix": " %",
+      "stat4Label": "Taux de circularité moyen UE",
+      "stat4Source": "Source : Eurostat 2024"
+    },
+    "timeline": {
+      "tag": "Calendrier réglementaire",
+      "title": "Les jalons de la transition",
+      "items": {
+        "2024": {
+          "year": "2024",
+          "title": "Loi AGEC",
+          "description": "Renforcement de la responsabilité élargie du producteur sur les nouveaux flux."
+        },
+        "2025Urgent": {
+          "year": "2025",
+          "title": "CSRD pour les grandes entreprises",
+          "description": "Obligation de reporting de durabilité dès l'exercice 2025.",
+          "badge": "Urgent"
+        },
+        "2026Urgent": {
+          "year": "2026",
+          "title": "Extension CSRD aux ETI cotées",
+          "description": "Extension du périmètre aux ETI cotées sur les marchés réglementés.",
+          "badge": "Urgent"
+        },
+        "2030": {
+          "year": "2030",
+          "title": "Objectifs 2030 du Pacte Vert",
+          "description": "Réduction de 55 % des émissions vs 1990, recyclage à 70 % des déchets municipaux."
+        }
+      }
+    },
+    "comparison": {
+      "tag": "Comparatif",
+      "title": "Pourquoi GreenEcoGenius",
+      "subtitle": "Vue synthétique des principales différences face aux solutions concurrentes.",
+      "headers": {
+        "feature": "Fonctionnalité",
+        "geg": "GreenEcoGenius",
+        "alt1": "Solution A",
+        "alt2": "Solution B"
+      },
+      "rows": {
+        "marketplace": "Marketplace B2B intégrée",
+        "blockchain": "Traçabilité on-chain (Polygon)",
+        "ai": "Copilote IA Anthropic",
+        "csrd": "Reporting CSRD natif",
+        "labels": "Suivi de 42 normes ESG",
+        "yes": "Inclus",
+        "no": "Non"
+      }
+    },
+    "pricing": {
+      "tag": "Tarifs",
+      "title": "Une formule par taille d'organisation",
+      "subtitle": "Démonstration des cartes de pricing. Les vraies cartes sont alimentées par billing.config.ts.",
+      "essential": {
+        "name": "Essentiel",
+        "price": "149 €",
+        "period": "par mois",
+        "description": "Pour les TPE et PME démarrant leur démarche circulaire.",
+        "feature1": "Marketplace B2B (lecture)",
+        "feature2": "5 utilisateurs inclus",
+        "feature3": "Support email",
+        "feature4": "Accès aux normes documentées",
+        "cta": "Commencer"
+      },
+      "advanced": {
+        "name": "Avancé",
+        "price": "449 €",
+        "period": "par mois",
+        "description": "Pour les ETI structurées avec un référent RSE dédié.",
+        "feature1": "Tout l'Essentiel",
+        "feature2": "Marketplace en lecture, écriture et signature",
+        "feature3": "Bilan carbone Scopes 1, 2 et 3",
+        "feature4": "Reporting CSRD assisté par IA",
+        "feature5": "Traçabilité blockchain (5 lots par mois)",
+        "cta": "Démarrer l'essai",
+        "badge": "Plus populaire"
+      },
+      "enterprise": {
+        "name": "Entreprise",
+        "price": "Sur mesure",
+        "period": "",
+        "description": "Pour les grands comptes et groupes internationaux.",
+        "feature1": "Tout l'Avancé",
+        "feature2": "Utilisateurs et lots illimités",
+        "feature3": "SLA et support dédié",
+        "feature4": "Intégrations sur mesure",
+        "cta": "Nous contacter"
+      }
+    },
+    "faq": {
+      "tag": "Questions fréquentes",
+      "title": "Vous avez des questions, on a les réponses",
+      "items": {
+        "q1": {
+          "question": "Comment fonctionne la traçabilité blockchain ?",
+          "answer": "Chaque lot reçoit un identifiant unique enregistré sur la blockchain Polygon. Les mouvements sont horodatés et signés cryptographiquement, garantissant un registre immuable consultable publiquement."
+        },
+        "q2": {
+          "question": "Mes données sont-elles hébergées en Europe ?",
+          "answer": "Oui. Nos bases Supabase sont hébergées dans la région européenne (Frankfurt). Aucune donnée personnelle ou commerciale ne quitte l'UE."
+        },
+        "q3": {
+          "question": "Puis-je résilier mon abonnement à tout moment ?",
+          "answer": "Oui, sans frais. Vous gardez l'accès à vos données et à l'export pendant 30 jours après la résiliation."
+        },
+        "q4": {
+          "question": "Quelles sont les intégrations disponibles ?",
+          "answer": "Nous nous intégrons à Stripe pour la facturation, Docusign pour la signature des contrats, Anthropic pour le copilote IA, et nous proposons une API REST documentée pour les intégrations sur mesure."
+        }
+      }
+    },
+    "blog": {
+      "tag": "Actualités",
+      "title": "Derniers articles",
+      "post1": {
+        "title": "CSRD : ce qui change en 2026",
+        "category": "Réglementation",
+        "date": "12 mars 2026",
+        "excerpt": "Tour d'horizon des nouvelles obligations de reporting de durabilité applicables aux ETI dès 2026."
+      },
+      "post2": {
+        "title": "Comment tracer ses flux matières sur Polygon",
+        "category": "Blockchain",
+        "date": "28 février 2026",
+        "excerpt": "Guide pratique pour enregistrer un lot, ajouter des étapes et certifier sa destination finale."
+      },
+      "post3": {
+        "title": "Bilan carbone Scope 3 : par où commencer",
+        "category": "Carbone",
+        "date": "15 février 2026",
+        "excerpt": "Méthodologie pas à pas pour cartographier votre chaîne d'approvisionnement et estimer vos émissions indirectes."
+      }
+    },
+    "logos": {
+      "tag": "Stack technique",
+      "title": "Construit avec des outils éprouvés"
+    },
+    "newsletter": {
+      "title": "Restez informé",
+      "subtitle": "Recevez chaque mois nos analyses sur l'économie circulaire, les normes ESG et la traçabilité.",
+      "placeholder": "votre.email@entreprise.com",
+      "cta": "S'abonner",
+      "consent": "En vous inscrivant, vous acceptez de recevoir nos communications. Désinscription en un clic."
+    }
+  },
+  "animationsDemo": {
+    "fadeInTitle": "FadeInSection",
+    "fadeInBody": "Apparition douce au scroll, désactivée si prefers-reduced-motion.",
+    "staggerTitle": "StaggerContainer",
+    "staggerItem": "Item séquentiel",
+    "parallaxTitle": "ParallaxContainer",
+    "parallaxBody": "Décalage en fonction du scroll, intensité contrôlable.",
+    "magneticTitle": "MagneticWrapper",
+    "magneticBody": "Suit le curseur dans un rayon défini.",
+    "textRevealTitle": "TextReveal",
+    "textRevealLine": "Le sol respire encore.",
+    "counterTitle": "AnimatedCounter",
+    "transitionTitle": "PageTransition",
+    "transitionBody": "Wrapper utilisé entre les pages, fondu et léger glissement vertical."
+  },
+  "disabled": {
+    "title": "Aperçu désactivé",
+    "body": "Activez NEXT_PUBLIC_ENABLE_ENVIRO_PREVIEW=true pour consulter cette page."
+  },
+  "dashboard": {
+    "page": {
+      "tag": "Dashboard components",
+      "title": "Composants Enviro Dashboard",
+      "subtitle": "12 composants pour le shell utilisateur",
+      "description": "Bibliothèque visuelle de la Phase 6.1.0. Ces composants alimenteront les 13 sections de /home avant l'injection du nouveau shell en Phase 6.1.1."
+    },
+    "shell": {
+      "tag": "Shell",
+      "title": "EnviroDashboardShell + Sidebar",
+      "subtitle": "Layout sidebar + main + topbar",
+      "viewport": "Aperçu shell complet (extrait, hauteur fixe)",
+      "viewportNote": "Le vrai shell sera injecté dans home/(user)/layout.tsx en Phase 6.1.1 et préservera ChatProvider + GlobalAIAssistant."
+    },
+    "sidebar": {
+      "brandLabel": "GreenEcoGenius",
+      "groupPlatform": "Plateforme",
+      "groupAccount": "Mon compte",
+      "linkHome": "Accueil",
+      "linkMarketplace": "Marketplace",
+      "linkCarbon": "Carbone",
+      "linkEsg": "Reporting ESG",
+      "linkTraceability": "Traçabilité",
+      "linkRse": "RSE & Labels",
+      "linkCompliance": "Conformité",
+      "linkExternal": "Données externes",
+      "linkProfile": "Profil",
+      "linkListings": "Mes annonces",
+      "linkWallet": "Portefeuille",
+      "linkBilling": "Facturation",
+      "collapseLabel": "Réduire la barre latérale",
+      "expandLabel": "Étendre la barre latérale"
+    },
+    "topbar": {
+      "searchPlaceholder": "Rechercher (Cmd+K)",
+      "notificationsLabel": "Notifications",
+      "geniusLabel": "Ouvrir Genius IA",
+      "userMenuLabel": "Menu utilisateur"
+    },
+    "userMenu": {
+      "displayName": "Camille Dupont",
+      "email": "camille@example.com",
+      "labelProfile": "Profil et préférences",
+      "labelBilling": "Facturation",
+      "labelLanguage": "Langue",
+      "labelSignOut": "Se déconnecter"
+    },
+    "breadcrumb": {
+      "tag": "Fil d'Ariane",
+      "demoHome": "Accueil",
+      "demoEsg": "Reporting ESG",
+      "demoCsrd": "CSRD"
+    },
+    "stat": {
+      "tag": "EnviroStatCard",
+      "title": "KPI cards (4 variantes)",
+      "subtitle": "Remplace KpiCard. Animation compteurs hydration-safe.",
+      "card1Label": "Annonces actives",
+      "card1Value": "184",
+      "card1Subtitle": "Marketplace",
+      "card1MetricA": "Mes ventes",
+      "card1MetricAValue": "12",
+      "card1MetricB": "Collectes",
+      "card1MetricBValue": "3",
+      "card1Cta": "Voir le marketplace",
+      "card2Label": "CO₂ évité",
+      "card2Value": "2.4",
+      "card2Suffix": " t",
+      "card2Subtitle": "Cumul 2026",
+      "card2MetricA": "Lots tracés",
+      "card2MetricAValue": "27",
+      "card2MetricB": "Tonnes recyclées",
+      "card2MetricBValue": "8.2",
+      "card3Label": "Conformité",
+      "card3Value": "82",
+      "card3Suffix": " %",
+      "card3Subtitle": "Score global",
+      "card3MetricA": "Normes conformes",
+      "card3MetricAValue": "31/37",
+      "card3Cta": "Voir le rapport",
+      "card4Label": "Solde portefeuille",
+      "card4Value": "12450",
+      "card4Suffix": " €",
+      "card4Subtitle": "Disponible"
+    },
+    "sectionHeader": {
+      "tag": "EnviroDashboardSectionHeader",
+      "title": "Header avec bracket et CTA",
+      "demoTag": "Carbone",
+      "demoTitle": "Bilan Scopes 1, 2 et 3",
+      "demoSubtitle": "Suivez vos émissions et exportez votre rapport en un clic.",
+      "demoCta": "Exporter le rapport"
+    },
+    "table": {
+      "tag": "EnviroDataTable",
+      "title": "Wrapper @kit/ui/table",
+      "subtitle": "Header forest, hover lime, lignes alternées.",
+      "colMaterial": "Matière",
+      "colType": "Type",
+      "colQuantity": "Quantité",
+      "colStatus": "Statut",
+      "row1Material": "Plastique HDPE",
+      "row1Type": "Vente",
+      "row1Quantity": "1.2 t",
+      "row1Status": "Actif",
+      "row2Material": "Acier inoxydable",
+      "row2Type": "Collecte",
+      "row2Quantity": "850 kg",
+      "row2Status": "Brouillon",
+      "row3Material": "Verre recyclé",
+      "row3Type": "Vente",
+      "row3Quantity": "3.4 t",
+      "row3Status": "Vendu"
+    },
+    "empty": {
+      "tag": "EnviroEmptyState",
+      "title": "État vide forest",
+      "demoTitle": "Aucune annonce pour le moment",
+      "demoBody": "Publiez votre première annonce sur le marketplace circulaire.",
+      "demoCta": "Publier une annonce"
+    },
+    "chart": {
+      "tag": "EnviroChartCard",
+      "title": "Wrapper Recharts",
+      "subtitle": "Palette GEG préservée à l'intérieur, header bracket Enviro à l'extérieur.",
+      "demoTitle": "CO₂ évité par mois",
+      "demoSubtitle": "Janvier à juin 2026",
+      "demoExport": "Exporter CSV",
+      "monthJan": "Jan",
+      "monthFeb": "Fév",
+      "monthMar": "Mar",
+      "monthApr": "Avr",
+      "monthMay": "Mai",
+      "monthJun": "Juin"
+    },
+    "chips": {
+      "tag": "EnviroFilterChips",
+      "title": "Filtres réutilisables",
+      "subtitle": "Extraction Phase 4 (faq, changelog, normes, explorer). Forest+lime active.",
+      "all": "Tout",
+      "metals": "Métaux",
+      "plastics": "Plastiques",
+      "glass": "Verre",
+      "wood": "Bois"
+    }
+  }
+}

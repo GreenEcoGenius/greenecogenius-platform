@@ -1,9 +1,9 @@
 export const dynamic = 'force-dynamic';
 
-import { Sparkles } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
-import { AnimateOnScroll } from '../_components/animate-on-scroll';
+import { EnviroPageHero } from '~/components/enviro';
+import { FadeInSection } from '~/components/enviro/animations/fade-in-section';
 
 import { DataSourceBadge } from './_components/data-source-badge';
 import { ExplorerContent } from './_components/explorer-content';
@@ -165,27 +165,21 @@ export default async function ExplorerPage() {
   }));
 
   return (
-    <div>
-      {/* Hero */}
-      <section className="bg-metal-50 relative overflow-hidden py-20 sm:py-28">
-        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
-            <div className="bg-primary-light text-primary mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold">
-              <Sparkles className="h-4 w-4" />
-              {t('explorer.badge')}
-            </div>
-            <h1 className="text-metal-900 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-              {t('explorer.heroTitle')}
-            </h1>
-            <p className="text-metal-600 mx-auto mt-4 max-w-2xl text-lg">
-              {t('explorer.heroSubtitle')}
-            </p>
-            <div className="mt-4">
-              <DataSourceBadge />
-            </div>
-          </AnimateOnScroll>
-        </div>
-      </section>
+    <div className="flex flex-col bg-[--color-enviro-cream-50] text-[--color-enviro-forest-900]">
+      {/* Hero: Enviro re-skin, data fetching above remains untouched. */}
+      <EnviroPageHero
+        tag={t('explorer.badge')}
+        title={t('explorer.heroTitle')}
+        subtitle={t('explorer.heroSubtitle')}
+        tone="cream"
+        align="center"
+      />
+
+      <div className="mx-auto -mt-6 mb-6 flex justify-center">
+        <FadeInSection>
+          <DataSourceBadge />
+        </FadeInSection>
+      </div>
 
       <ExplorerContent
         franceStats={franceStats}
@@ -196,10 +190,10 @@ export default async function ExplorerPage() {
       />
 
       <section className="pb-16">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-up">
+        <div className="mx-auto max-w-[--container-enviro-xl] px-4 sm:px-6 lg:px-8">
+          <FadeInSection>
             <PublicCTA />
-          </AnimateOnScroll>
+          </FadeInSection>
         </div>
       </section>
 

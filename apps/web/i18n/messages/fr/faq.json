@@ -1,0 +1,116 @@
+{
+  "metaTitle": "Foire aux questions",
+  "metaDescription": "Toutes les réponses sur la marketplace circulaire, la traçabilité blockchain, le reporting CSRD, la facturation et la conformité RGPD.",
+  "heroTag": "FAQ",
+  "heroTitle": "Foire aux questions",
+  "heroSubtitle": "Les réponses les plus demandées par nos utilisateurs et nos prospects, regroupées par thème.",
+  "filtersTag": "Catégories",
+  "filtersTitle": "Trouvez la réponse plus vite",
+  "themeAll": "Toutes",
+  "themeGeneral": "Général",
+  "themeProduct": "Produit",
+  "themeBilling": "Facturation",
+  "themeTechnical": "Technique",
+  "themeRgpd": "RGPD",
+  "themeAllDescription": "Toutes les questions, dans l'ordre du parcours utilisateur.",
+  "themeGeneralDescription": "Présentation, positionnement, valeur ajoutée et comparaisons.",
+  "themeProductDescription": "Marketplace, traçabilité blockchain, bilan carbone, reporting ESG.",
+  "themeBillingDescription": "Tarifs, abonnements, commissions, essai gratuit, paiement.",
+  "themeTechnicalDescription": "Stack, intégrations API, infrastructure, performances, sécurité.",
+  "themeRgpdDescription": "Hébergement, droits des utilisateurs, sous-traitance, transferts UE.",
+  "general": {
+    "q1": {
+      "question": "Qu'est-ce que GreenEcoGenius exactement ?",
+      "answer": "Une plateforme B2B qui réunit trois piliers en un seul produit : une marketplace circulaire B2B (Le Comptoir Circulaire), une traçabilité blockchain on-chain (Polygon Mainnet) et un moteur de reporting ESG / CSRD assisté par IA (Anthropic + ADEME Base Carbone)."
+    },
+    "q2": {
+      "question": "Pour quelles entreprises est conçue la plateforme ?",
+      "answer": "Pour les TPE/PME, ETI et grands groupes opérant dans l'industrie, le BTP, la grande distribution, la logistique et les services. Tout secteur soumis à des obligations CSRD ou souhaitant valoriser ses flux matières trouve sa place sur GreenEcoGenius."
+    },
+    "q3": {
+      "question": "Sommes-nous concernés par la CSRD en 2025 ?",
+      "answer": "Les entreprises de plus de 250 salariés et 40 M€ de chiffre d'affaires sont soumises à la CSRD dès l'exercice 2025. Les ETI cotées suivent en 2026. Même hors périmètre, anticiper donne un avantage concurrentiel et prépare votre chaîne de valeur."
+    },
+    "q4": {
+      "question": "Comment GreenEcoGenius se positionne face à Greenly ou Sweep ?",
+      "answer": "Greenly et Sweep font du reporting carbone uniquement. GreenEcoGenius fait ça, et bien plus : marketplace B2B intégrée, traçabilité blockchain immuable, certificats PDF on-chain, éligibilité labels (B Corp, NR, Lucie). Une seule plateforme là où vos concurrents en utilisent trois."
+    }
+  },
+  "product": {
+    "q1": {
+      "question": "Comment fonctionne Le Comptoir Circulaire ?",
+      "answer": "Vous publiez vos lots de matières recyclables. Notre algorithme Smart Matching propose les acheteurs les plus pertinents selon le matériau, le volume et la localisation. La signature électronique Docusign sécurise la transaction, et le calcul CO₂ évité est automatique."
+    },
+    "q2": {
+      "question": "La traçabilité blockchain est-elle vraiment immuable ?",
+      "answer": "Chaque lot reçoit un identifiant unique enregistré sur la blockchain Polygon Mainnet via un hash SHA-256. Le hash est public et vérifiable par n'importe qui via /verify ou Polygonscan. Seul le hash est on-chain, vos données restent dans notre infrastructure RGPD."
+    },
+    "q3": {
+      "question": "Quels rapports puis-je exporter ?",
+      "answer": "Bilan carbone Scopes 1, 2 et 3 conforme GHG Protocol, rapport CSRD/ESRS E1 à E5 prêt pour audit, certificats blockchain PDF avec QR code, diagnostic RSE avec score sur 6 piliers. Tout en PDF + CSV téléchargeables."
+    },
+    "q4": {
+      "question": "Quelles 42 normes sont intégrées ?",
+      "answer": "ISO 14001, ISO 26000, ISO 59014:2024, GHG Protocol, GRI Standards, CSRD/ESRS E1 à E5, TCFD, B Corp, GreenTech Innovation, Label NR (INR), Label Lucie 26000, ADEME Base Carbone, Eurostat, Score AGEC, EcoVadis, et 27 autres réglementations sectorielles."
+    }
+  },
+  "billing": {
+    "q1": {
+      "question": "Existe-t-il un essai gratuit ?",
+      "answer": "Oui, 14 jours d'essai gratuit sur les plans Essentiel et Avancé, sans carte bancaire requise pour démarrer. Vous pouvez annuler à tout moment pendant l'essai sans aucun débit."
+    },
+    "q2": {
+      "question": "Quels sont les tarifs des plans ?",
+      "answer": "Essentiel à 149 €/mois (TPE/PME jusqu'à 50 salariés). Avancé à 449 €/mois (ETI 50 à 500 salariés, plus populaire). Enterprise sur devis (grands groupes 500+). Réduction de 17% sur la facturation annuelle."
+    },
+    "q3": {
+      "question": "Y a-t-il une commission sur les transactions marketplace ?",
+      "answer": "Oui, dégressive : 8% jusqu'à 10 000 €, 5% de 10 000 à 50 000 €, 3% au-delà de 50 000 €. La commission inclut la traçabilité blockchain, le calcul carbone et le certificat PDF. Aucun abonnement obligatoire pour utiliser la marketplace."
+    },
+    "q4": {
+      "question": "Quels moyens de paiement acceptez-vous ?",
+      "answer": "Carte bancaire (Stripe), prélèvement SEPA, virement bancaire pour les comptes Enterprise. Toutes les factures sont accessibles dans votre espace facturation et exportables en PDF."
+    }
+  },
+  "technical": {
+    "q1": {
+      "question": "Avez-vous une API ?",
+      "answer": "Oui, dans le plan Enterprise. API REST documentée, webhooks pour les événements (transaction, signature, certification blockchain), SDK TypeScript. Intégrations natives SAP, Sage et Oracle prévues sur la roadmap 2027."
+    },
+    "q2": {
+      "question": "Quelle est votre infrastructure ?",
+      "answer": "Hébergement Vercel (frontend Next.js 15) et Supabase (PostgreSQL + Auth + Storage + Realtime) en région Frankfurt (UE). Blockchain Polygon Mainnet via Alchemy. Mailer Resend ou SMTP custom. IA Anthropic Claude (Sonnet et Opus selon le plan)."
+    },
+    "q3": {
+      "question": "Comment garantissez-vous la disponibilité ?",
+      "answer": "SLA 99.9 % garanti pour les comptes Enterprise (downtime maximum 8h45 par an). Monitoring temps réel via Datadog, alertes automatiques, statut public sur status.greenecogenius.tech. Backups quotidiens automatiques."
+    },
+    "q4": {
+      "question": "Puis-je intégrer un SSO d'entreprise ?",
+      "answer": "Oui, dans le plan Enterprise. SSO SAML 2.0, OIDC, Microsoft Entra (ex Azure AD), Google Workspace, Okta. Provisioning SCIM disponible sur demande."
+    }
+  },
+  "rgpd": {
+    "q1": {
+      "question": "Mes données restent-elles dans l'Union Européenne ?",
+      "answer": "Oui, intégralement. Stockage Supabase région Frankfurt (Allemagne), CDN Vercel UE, mailer SMTP UE. Aucune donnée personnelle ou commerciale ne sort de l'UE. Conforme RGPD et au règlement Schrems II."
+    },
+    "q2": {
+      "question": "Comment exercer mes droits RGPD ?",
+      "answer": "Tous les droits RGPD sont accessibles depuis votre espace utilisateur : droit d'accès (export), droit de rectification, droit à l'effacement, droit à la portabilité, droit d'opposition. Réponse sous 30 jours maximum, sous 7 jours pour les comptes Enterprise."
+    },
+    "q3": {
+      "question": "Qui sont vos sous-traitants RGPD ?",
+      "answer": "Liste complète et à jour disponible dans la Politique de confidentialité : Supabase Inc. (hébergement), Vercel Inc. (frontend), Stripe Payments Europe (facturation), Anthropic (IA), Datadog (observabilité). DPA signés avec chacun."
+    },
+    "q4": {
+      "question": "Que stocke la blockchain Polygon ?",
+      "answer": "Uniquement un hash SHA-256 du lot, son identifiant interne et un horodatage. Aucune donnée personnelle, aucun nom d'entreprise, aucun prix. Le hash est public mais ne permet aucune ré-identification. Les données complètes restent dans la base Supabase RGPD."
+    }
+  },
+  "ctaTag": "Pas trouvé votre réponse ?",
+  "ctaTitle": "Notre équipe vous répond",
+  "ctaSubtitle": "Une question spécifique à votre secteur, un cas d'usage particulier, un sujet juridique : on prend le temps d'y répondre.",
+  "ctaLabel": "Nous contacter",
+  "ctaSecondary": "Voir nos solutions"
+}

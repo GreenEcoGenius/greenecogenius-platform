@@ -1,0 +1,30 @@
+{
+  "title": "Documentation",
+  "subtitle": "GreenEcoGenius guides, references and technical resources.",
+  "metaTitle": "Documentation",
+  "metaDescription": "GreenEcoGenius technical documentation and guides for developers and integrators.",
+
+  "sidebar": {
+    "title": "Documentation",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "searchPlaceholder": "Search the documentation",
+    "emptyState": "No article available"
+  },
+
+  "header": {
+    "breadcrumbHome": "Home",
+    "breadcrumbDocs": "Documentation",
+    "backToSite": "Back to site"
+  },
+
+  "article": {
+    "tableOfContents": "On this page",
+    "lastUpdated": "Updated on",
+    "readingTime": "{minutes} min read",
+    "previousArticle": "Previous article",
+    "nextArticle": "Next article",
+    "editOnGithub": "Suggest an edit",
+    "notFound": "Article not found"
+  }
+}

@@ -10,9 +10,6 @@ import {
   BarChart3,
   Blocks,
   Building2,
-  Check,
-  ChevronDown,
-  FileBarChart,
   FileText,
   Globe,
   Leaf,
@@ -23,17 +20,31 @@ import {
   Recycle,
   Rocket,
   Sparkles,
-  Target,
-  TrendingDown,
   Users,
   Zap,
   type LucideIcon,
 } from 'lucide-react';
 
-import { Badge } from '@kit/ui/badge';
-import { Button } from '@kit/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
+import { cn } from '@kit/ui/utils';
+
+import {
+  EnviroButton,
+  EnviroCard,
+  EnviroCardBody,
+  EnviroCardHeader,
+  EnviroCardTitle,
+  EnviroComparisonTable,
+  EnviroFaq,
+  EnviroPageHero,
+  EnviroPricingCard,
+  EnviroSectionHeader,
+} from '~/components/enviro';
+import { FadeInSection } from '~/components/enviro/animations/fade-in-section';
+import {
+  StaggerContainer,
+  StaggerItem,
+} from '~/components/enviro/animations/stagger-container';
 
 interface Plan {
   id: string;
@@ -66,7 +77,7 @@ function formatPrice(cents: number): string {
   return Math.round(cents / 100).toLocaleString('fr-FR');
 }
 
-const essentielFeatures = [
+const ESSENTIEL_FEATURE_KEYS = [
   'pricingPage.featScope12',
   'pricingPage.featGuidedForm',
   'pricingPage.featGhgReport',
@@ -81,7 +92,7 @@ const essentielFeatures = [
   'pricingPage.featEmailSupport',
 ];
 
-const avanceFeatures = [
+const AVANCE_FEATURE_KEYS = [
   'pricingPage.featScope123',
   'pricingPage.featCsrdReport',
   'pricingPage.featReductionPlan',
@@ -98,7 +109,7 @@ const avanceFeatures = [
   'pricingPage.featPrioritySupport',
 ];
 
-const enterpriseFeatures = [
+const ENTERPRISE_FEATURE_KEYS = [
   'pricingPage.featGeniusUnlimited',
   'pricingPage.featCustomReports',
   'pricingPage.featApiAccess',
@@ -109,12 +120,85 @@ const enterpriseFeatures = [
   'pricingPage.featPriorityVisio',
 ];
 
-const faqKeys = [
+const FAQ_KEYS = [
   'pricingPage.faq1',
   'pricingPage.faq2',
   'pricingPage.faq3',
   'pricingPage.faq4',
   'pricingPage.faq5',
+] as const;
+
+const INCLUDED_TAGS = [
+  { icon: Link2, key: 'pricingPage.tagBlockchain' },
+  { icon: Leaf, key: 'pricingPage.tagCO2' },
+  { icon: FileText, key: 'pricingPage.tagCertificate' },
+  { icon: BarChart3, key: 'pricingPage.tagDashboard' },
+  { icon: ArrowRight, key: 'pricingPage.tagExport' },
+] as const;
+
+const COMMISSION_TIERS = [
+  { rate: '8%', range: 'pricingPage.tier1Range', icon: Recycle },
+  { rate: '5%', range: 'pricingPage.tier2Range', icon: Globe },
+  { rate: '3%', range: 'pricingPage.tier3Range', icon: Sparkles },
+] as const;
+
+interface ComingSoonFeature {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  timeline: string;
+}
+
+const COMING_SOON: ComingSoonFeature[] = [
+  {
+    icon: BarChart3,
+    title: 'Benchmarking sectoriel',
+    description:
+      "Comparez vos performances carbone et circulaires avec votre secteur d'activité.",
+    timeline: 'Q4 2026',
+  },
+  {
+    icon: Zap,
+    title: 'Matching IA acheteur-vendeur',
+    description:
+      "Algorithme intelligent qui connecte automatiquement les vendeurs et acheteurs de matières recyclables.",
+    timeline: 'Q4 2026',
+  },
+  {
+    icon: Blocks,
+    title: 'Intégration ERP native (SAP, Oracle, Sage)',
+    description:
+      "Connectez votre ERP pour synchroniser automatiquement les données de déchets et achats.",
+    timeline: '2027',
+  },
+  {
+    icon: Building2,
+    title: 'Reporting multi-sites et multi-filiales',
+    description:
+      "Consolidez les données de tous vos sites et filiales dans un seul dashboard.",
+    timeline: '2027',
+  },
+  {
+    icon: Award,
+    title: 'Préparation aux labels reconnus',
+    description:
+      "Accompagnement à la candidature aux labels reconnus : B Corp, GreenTech Innovation, Lucie 26000, NR, EcoVadis.",
+    timeline: '2027',
+  },
+  {
+    icon: Leaf,
+    title: 'Accompagnement crédits carbone',
+    description:
+      "Accédez aux marchés de crédits carbone et monétisez vos réductions d'émissions vérifiées.",
+    timeline: '2027',
+  },
+  {
+    icon: Palette,
+    title: 'Rapports white-label personnalisables',
+    description:
+      'Générez des rapports aux couleurs de votre entreprise pour vos clients et parties prenantes.',
+    timeline: '2027',
+  },
 ];
 
 export function PricingContent({
@@ -122,7 +206,6 @@ export function PricingContent({
   commissionConfigs,
 }: PricingContentProps) {
   const [annual, setAnnual] = useState(false);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const essentiel = plans.find((p) => p.name === 'essentiel');
   const avance = plans.find((p) => p.name === 'avance');
@@ -131,559 +214,575 @@ export function PricingContent({
     (c) => c.is_active && c.commission_type === 'flat' && c.valid_until,
   );
 
-  return (
-    <div className="flex flex-col">
-      {/* HERO */}
-      <section className="container mx-auto px-4 py-12 text-center lg:py-20">
-        <h1 className="font-heading text-metal-900 mx-auto max-w-3xl text-4xl font-bold tracking-tight lg:text-5xl">
-          <Trans i18nKey="pricingPage.heroTitle" />
-        </h1>
-        <p className="text-metal-600 mx-auto mt-4 max-w-2xl text-lg">
-          <Trans i18nKey="pricingPage.heroSubtitle" />
-        </p>
-        <p className="text-primary mt-3 text-sm">
-          <Trans i18nKey="pricingPage.heroNote" />
-        </p>
+  const essentielMonthly = essentiel
+    ? formatPrice(
+        annual
+          ? Math.round(essentiel.annual_price! / 12)
+          : essentiel.monthly_price!,
+      )
+    : '149';
+  const avanceMonthly = avance
+    ? formatPrice(
+        annual ? Math.round(avance.annual_price! / 12) : avance.monthly_price!,
+      )
+    : '449';
 
-        {/* TOGGLE */}
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <span
-            className={`text-sm font-medium ${!annual ? 'text-metal-900' : 'text-metal-500'}`}
-          >
-            <Trans i18nKey="pricingPage.monthly" />
-          </span>
-          <button
-            role="switch"
-            aria-checked={annual}
-            aria-label="Facturation annuelle"
-            onClick={() => setAnnual(!annual)}
-            className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${annual ? 'bg-primary' : 'bg-metal-frost'}`}
-          >
-            <span
-              className={`inline-block h-5 w-5 rounded-full bg-white shadow-sm transition-transform ${annual ? 'translate-x-6' : 'translate-x-1'}`}
-            />
-          </button>
-          <span
-            className={`text-sm font-medium ${annual ? 'text-metal-900' : 'text-metal-500'}`}
-          >
-            <Trans i18nKey="pricingPage.annual" />
-          </span>
-          {annual && (
-            <Badge
-              variant="secondary"
-              className="bg-tech-mint text-tech-emerald"
+  const essentielAnnualHint =
+    annual && essentiel?.annual_price
+      ? `${formatPrice(essentiel.annual_price)} €/an`
+      : undefined;
+  const avanceAnnualHint =
+    annual && avance?.annual_price
+      ? `${formatPrice(avance.annual_price)} €/an`
+      : undefined;
+
+  return (
+    <div className="flex flex-col bg-[--color-enviro-cream-50] text-[--color-enviro-forest-900]">
+      {/* HERO */}
+      <EnviroPageHero
+        tag={<Trans i18nKey="pricingPage.heroTag" />}
+        title={<Trans i18nKey="pricingPage.heroTitle" />}
+        subtitle={<Trans i18nKey="pricingPage.heroSubtitle" />}
+        tone="cream"
+        align="center"
+        ctas={
+          <p className="text-sm text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
+            <Trans i18nKey="pricingPage.heroNote" />
+          </p>
+        }
+      />
+
+      {/* TOGGLE Mensuel / Annuel */}
+      <section className="bg-[--color-enviro-cream-50] py-8">
+        <div className="mx-auto flex w-full max-w-[--container-enviro-md] flex-col items-center gap-4 px-4 lg:px-8">
+          <div className="inline-flex items-center gap-1 rounded-[--radius-enviro-pill] border border-[--color-enviro-cream-300] bg-white p-1 shadow-[--shadow-enviro-sm]">
+            <button
+              type="button"
+              onClick={() => setAnnual(false)}
+              aria-pressed={!annual}
+              className={cn(
+                'rounded-[--radius-enviro-pill] px-5 py-2 text-sm font-medium transition-colors duration-200 font-[family-name:var(--font-enviro-sans)]',
+                !annual
+                  ? 'bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]'
+                  : 'text-[--color-enviro-forest-700] hover:bg-[--color-enviro-cream-100]',
+              )}
             >
-              -17%
-            </Badge>
-          )}
+              <Trans i18nKey="pricingPage.monthly" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setAnnual(true)}
+              aria-pressed={annual}
+              className={cn(
+                'inline-flex items-center gap-2 rounded-[--radius-enviro-pill] px-5 py-2 text-sm font-medium transition-colors duration-200 font-[family-name:var(--font-enviro-sans)]',
+                annual
+                  ? 'bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]'
+                  : 'text-[--color-enviro-forest-700] hover:bg-[--color-enviro-cream-100]',
+              )}
+            >
+              <Trans i18nKey="pricingPage.annual" />
+              <span className="rounded-[--radius-enviro-pill] bg-[--color-enviro-lime-300] px-2 py-0.5 text-[10px] font-semibold uppercase text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-mono)]">
+                -17%
+              </span>
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* INCLUDED BANNER */}
-      <section className="border-metal-chrome bg-circuit-ice/20 border-y py-8">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-metal-900 mb-4 text-lg font-semibold">
-            <Trans i18nKey="pricingPage.includedTitle" />
-          </h2>
-          <div className="flex flex-wrap justify-center gap-3">
-            {[
-              {
-                icon: <Link2 className="h-4 w-4" />,
-                key: 'pricingPage.tagBlockchain',
-              },
-              { icon: <Leaf className="h-4 w-4" />, key: 'pricingPage.tagCO2' },
-              {
-                icon: <FileText className="h-4 w-4" />,
-                key: 'pricingPage.tagCertificate',
-              },
-              {
-                icon: <BarChart3 className="h-4 w-4" />,
-                key: 'pricingPage.tagDashboard',
-              },
-              {
-                icon: <ArrowRight className="h-4 w-4" />,
-                key: 'pricingPage.tagExport',
-              },
-            ].map((tag, i) => (
-              <span
-                key={i}
-                className="border-circuit-turquoise/30 text-circuit-blue inline-flex items-center gap-1.5 rounded-full border bg-white px-3 py-1.5 text-sm"
-              >
-                {tag.icon}
-                <Trans i18nKey={tag.key} />
-              </span>
-            ))}
-          </div>
+      {/* INCLUDED EVERYWHERE */}
+      <section className="bg-white py-12 lg:py-16">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <p className="text-center text-xs uppercase tracking-[0.08em] text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-mono)]">
+              <span aria-hidden="true">[ </span>
+              <Trans i18nKey="pricingPage.includedTag" />
+              <span aria-hidden="true"> ]</span>
+            </p>
+            <h2 className="mt-3 text-center text-2xl md:text-3xl font-semibold leading-tight tracking-tight text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+              <Trans i18nKey="pricingPage.includedTitle" />
+            </h2>
+          </FadeInSection>
+
+          <StaggerContainer
+            className="mt-8 flex flex-wrap justify-center gap-3"
+            stagger={0.05}
+          >
+            {INCLUDED_TAGS.map((tag) => {
+              const Icon = tag.icon;
+
+              return (
+                <StaggerItem key={tag.key}>
+                  <span className="inline-flex items-center gap-2 rounded-[--radius-enviro-pill] border border-[--color-enviro-cream-300] bg-[--color-enviro-cream-50] px-4 py-2 text-sm text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-sans)]">
+                    <Icon
+                      className="h-4 w-4 text-[--color-enviro-cta]"
+                      strokeWidth={1.5}
+                    />
+                    <Trans i18nKey={tag.key} />
+                  </span>
+                </StaggerItem>
+              );
+            })}
+          </StaggerContainer>
         </div>
       </section>
 
       {/* PLANS */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 pt-4 md:grid-cols-3">
-          {/* ESSENTIEL */}
-          <Card className="border-metal-silver flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
-            <CardHeader className="text-center">
-              <div className="mb-2 flex items-center justify-center gap-2">
-                <Zap className="text-primary h-5 w-5" />
-                <CardTitle>{essentiel?.display_name ?? 'Essentiel'}</CardTitle>
-              </div>
-              <p className="text-metal-600 text-sm">
-                <Trans i18nKey="pricingPage.essentielTarget" />
-              </p>
-              <div className="mt-4">
-                <span className="text-metal-900 text-4xl font-bold">
-                  {essentiel
-                    ? formatPrice(
-                        annual
-                          ? Math.round(essentiel.annual_price! / 12)
-                          : essentiel.monthly_price!,
-                      )
-                    : '149'}
-                  €
-                </span>
-                <span className="text-metal-500">/mois</span>
-                {annual && essentiel?.annual_price && (
-                  <p className="text-metal-500 mt-1 text-sm">
-                    {formatPrice(essentiel.annual_price)}€/an
-                  </p>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent className="flex flex-1 flex-col">
-              <ul className="flex-1 space-y-3">
-                {essentielFeatures.map((feat) => (
-                  <li key={feat} className="flex items-start gap-2">
-                    <Check className="text-tech-neon mt-0.5 h-4 w-4 shrink-0" />
-                    <span className="text-metal-700 text-sm">
-                      <Trans i18nKey={feat} />
+      <section className="bg-[--color-enviro-cream-50] py-16 lg:py-20">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={<Trans i18nKey="pricingPage.plansTag" />}
+              title={<Trans i18nKey="pricingPage.heroTitle" />}
+              tone="cream"
+              align="center"
+            />
+          </FadeInSection>
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+            <EnviroPricingCard
+              name={essentiel?.display_name ?? 'Essentiel'}
+              price={`${essentielMonthly} €`}
+              period={annual ? '/mois (facturé annuellement)' : '/mois'}
+              description={
+                <span className="block">
+                  <Trans i18nKey="pricingPage.essentielTarget" />
+                  {essentielAnnualHint ? (
+                    <span className="mt-1 block text-xs text-[--color-enviro-forest-600] font-[family-name:var(--font-enviro-mono)]">
+                      {essentielAnnualHint}
                     </span>
-                  </li>
-                ))}
-              </ul>
-              <Button
-                variant="outline"
-                className="border-metal-silver text-metal-700 hover:bg-metal-chrome mt-6 w-full rounded-xl"
-                render={
-                  <Link href="/home/billing">
+                  ) : null}
+                </span>
+              }
+              features={ESSENTIEL_FEATURE_KEYS.map((k) => (
+                <Trans key={k} i18nKey={k} />
+              ))}
+              cta={
+                <Link href="/home/billing" className="block">
+                  <EnviroButton variant="secondary" size="md" className="w-full">
                     <Trans i18nKey="pricingPage.startTrial" />
-                  </Link>
-                }
-                nativeButton={false}
-              />
-            </CardContent>
-          </Card>
-
-          {/* AVANCE */}
-          <Card className="border-circuit-cyan shadow-circuit-ice/30 flex scale-[1.02] flex-col border-2 shadow-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
-            <CardHeader className="text-center">
-              <div className="mb-2 flex items-center justify-center gap-2">
-                <BarChart3 className="text-primary h-5 w-5" />
-                <CardTitle>{avance?.display_name ?? 'Avance'}</CardTitle>
-                <Badge className="bg-circuit-cyan text-metal-900 font-semibold">
-                  <Sparkles className="mr-1 h-3 w-3" />
-                  <Trans i18nKey="pricingPage.popular" />
-                </Badge>
-              </div>
-              <p className="text-metal-600 text-sm">
-                <Trans i18nKey="pricingPage.avanceTarget" />
-              </p>
-              <div className="mt-4">
-                <span className="text-metal-900 text-4xl font-bold">
-                  {avance
-                    ? formatPrice(
-                        annual
-                          ? Math.round(avance.annual_price! / 12)
-                          : avance.monthly_price!,
-                      )
-                    : '449'}
-                  €
-                </span>
-                <span className="text-metal-500">/mois</span>
-                {annual && avance?.annual_price && (
-                  <p className="text-metal-500 mt-1 text-sm">
-                    {formatPrice(avance.annual_price)}€/an
-                  </p>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent className="flex flex-1 flex-col">
-              <p className="text-metal-500 mb-3 text-xs italic">
-                <Trans i18nKey="pricingPage.everythingEssentiel" />
-              </p>
-              <ul className="flex-1 space-y-3">
-                {avanceFeatures.map((feat) => (
-                  <li key={feat} className="flex items-start gap-2">
-                    <Check className="text-tech-neon mt-0.5 h-4 w-4 shrink-0" />
-                    <span className="text-metal-700 text-sm">
-                      <Trans i18nKey={feat} />
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <Button className="bg-primary hover:bg-primary-hover mt-6 w-full rounded-xl">
-                <Link href="/home/billing" className="flex items-center gap-2">
-                  <Trans i18nKey="pricingPage.startTrial" />
-                  <ArrowRight className="h-4 w-4" />
+                  </EnviroButton>
                 </Link>
-              </Button>
-            </CardContent>
-          </Card>
+              }
+              variant="default"
+            />
 
-          {/* ENTERPRISE */}
-          <Card className="border-metal-silver bg-metal-frost flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
-            <CardHeader className="text-center">
-              <div className="mb-2 flex items-center justify-center gap-2">
-                <Building2 className="text-metal-700 h-5 w-5" />
-                <CardTitle>Enterprise</CardTitle>
-              </div>
-              <p className="text-metal-600 text-sm">
-                <Trans i18nKey="pricingPage.enterpriseTarget" />
-              </p>
-              <div className="mt-4">
-                <span className="text-metal-900 text-3xl font-bold">
-                  <Trans i18nKey="pricingPage.onQuote" />
-                </span>
-              </div>
-            </CardHeader>
-            <CardContent className="flex flex-1 flex-col">
-              <p className="text-metal-500 mb-3 text-xs italic">
-                <Trans i18nKey="pricingPage.everythingAvance" />
-              </p>
-              <ul className="flex-1 space-y-3">
-                {enterpriseFeatures.map((feat) => (
-                  <li key={feat} className="flex items-start gap-2">
-                    <Check className="text-tech-neon mt-0.5 h-4 w-4 shrink-0" />
-                    <span className="text-metal-700 text-sm">
-                      <Trans i18nKey={feat} />
+            <EnviroPricingCard
+              name={avance?.display_name ?? 'Avancé'}
+              price={`${avanceMonthly} €`}
+              period={annual ? '/mois (facturé annuellement)' : '/mois'}
+              description={
+                <span className="block">
+                  <Trans i18nKey="pricingPage.avanceTarget" />
+                  {avanceAnnualHint ? (
+                    <span className="mt-1 block text-xs text-[--color-enviro-fg-inverse-muted] font-[family-name:var(--font-enviro-mono)]">
+                      {avanceAnnualHint}
                     </span>
-                  </li>
-                ))}
-              </ul>
-              <Button
-                variant="secondary"
-                className="border-metal-silver bg-metal-frost text-metal-700 hover:bg-metal-chrome mt-6 w-full rounded-xl border"
-                render={
-                  <Link href="/contact?subject=Demande+Plan+Enterprise">
-                    <Users className="mr-2 h-4 w-4" />
+                  ) : null}
+                </span>
+              }
+              features={[
+                <span key="hint" className="block italic">
+                  <Trans i18nKey="pricingPage.everythingEssentiel" />
+                </span>,
+                ...AVANCE_FEATURE_KEYS.map((k) => <Trans key={k} i18nKey={k} />),
+              ]}
+              cta={
+                <Link href="/home/billing" className="block">
+                  <EnviroButton variant="primary" size="md" className="w-full">
+                    <Trans i18nKey="pricingPage.startTrial" />
+                  </EnviroButton>
+                </Link>
+              }
+              badge={<Trans i18nKey="pricingPage.popular" />}
+              variant="popular"
+            />
+
+            <EnviroPricingCard
+              name="Enterprise"
+              price={<Trans i18nKey="pricingPage.onQuote" />}
+              description={<Trans i18nKey="pricingPage.enterpriseTarget" />}
+              features={[
+                <span key="hint" className="block italic">
+                  <Trans i18nKey="pricingPage.everythingAvance" />
+                </span>,
+                ...ENTERPRISE_FEATURE_KEYS.map((k) => (
+                  <Trans key={k} i18nKey={k} />
+                )),
+              ]}
+              cta={
+                <Link
+                  href="/contact?subject=Demande+Plan+Enterprise"
+                  className="block"
+                >
+                  <EnviroButton variant="primary" size="md" className="w-full">
+                    <Users className="h-4 w-4" strokeWidth={1.5} />
                     <Trans i18nKey="pricingPage.contactSales" />
-                  </Link>
-                }
-                nativeButton={false}
-              />
-              <p className="mt-2 text-center text-xs text-gray-400">
-                <Trans i18nKey="pricingPage.responseTime" />
-              </p>
-            </CardContent>
-          </Card>
+                  </EnviroButton>
+                </Link>
+              }
+              variant="enterprise"
+            />
+          </div>
+
+          <p className="mt-6 text-center text-xs text-[--color-enviro-forest-600] font-[family-name:var(--font-enviro-sans)]">
+            <Trans i18nKey="pricingPage.responseTime" />
+          </p>
         </div>
       </section>
 
-      {/* ACCOMPAGNEMENT SUR MESURE */}
-      <section className="container mx-auto px-4 pt-0 pb-16">
-        <div className="mx-auto max-w-3xl rounded-xl border border-[#A8E6C8] bg-[#E8F8F0] px-6 py-10 text-center">
-          <h2 className="text-metal-900 text-xl font-semibold">
-            <Trans i18nKey="pricingPage.customSupportTitle" />
-          </h2>
-          <p className="text-metal-600 mx-auto mt-2 max-w-lg text-sm">
-            <Trans i18nKey="pricingPage.customSupportSubtitle" />
-          </p>
-          <Button
-            className="bg-primary hover:bg-primary-hover mt-5 rounded-xl font-medium text-white"
-            render={
-              <Link href="/contact">
-                <Trans i18nKey="pricingPage.customSupportButton" />
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            }
-            nativeButton={false}
-          />
+      {/* CUSTOM SUPPORT */}
+      <section className="bg-white py-12 lg:py-16">
+        <div className="mx-auto w-full max-w-[--container-enviro-md] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroCard variant="lime" radius="lg" hover="lift" padding="lg">
+              <EnviroCardHeader>
+                <EnviroCardTitle>
+                  <Trans i18nKey="pricingPage.customSupportTitle" />
+                </EnviroCardTitle>
+              </EnviroCardHeader>
+              <EnviroCardBody>
+                <p className="text-sm leading-relaxed text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
+                  <Trans i18nKey="pricingPage.customSupportSubtitle" />
+                </p>
+                <div className="mt-5">
+                  <Link href="/contact">
+                    <EnviroButton variant="primary" size="md" magnetic>
+                      <Trans i18nKey="pricingPage.customSupportButton" />
+                      <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
+                    </EnviroButton>
+                  </Link>
+                </div>
+              </EnviroCardBody>
+            </EnviroCard>
+          </FadeInSection>
         </div>
       </section>
 
       {/* COMMISSION MARKETPLACE */}
-      <section className="bg-metal-frost py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-metal-900 mb-2 text-center text-2xl font-bold">
-            <Trans i18nKey="pricingPage.commissionTitle" />
-          </h2>
-          <p className="text-metal-600 mb-8 text-center">
-            <Trans i18nKey="pricingPage.commissionSubtitle" />
-          </p>
+      <section className="bg-[--color-enviro-cream-50] py-16 lg:py-24">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={<Trans i18nKey="pricingPage.commissionTag" />}
+              title={<Trans i18nKey="pricingPage.commissionTitle" />}
+              subtitle={<Trans i18nKey="pricingPage.commissionSubtitle" />}
+              tone="cream"
+              align="center"
+            />
+          </FadeInSection>
 
-          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
-            {[
-              {
-                rate: '8%',
-                range: 'pricingPage.tier1Range',
-                icon: <Recycle className="h-6 w-6" />,
-              },
-              {
-                rate: '5%',
-                range: 'pricingPage.tier2Range',
-                icon: <TrendingDown className="h-6 w-6" />,
-              },
-              {
-                rate: '3%',
-                range: 'pricingPage.tier3Range',
-                icon: <Globe className="h-6 w-6" />,
-              },
-            ].map((tier, i) => (
-              <Card key={i} className="border-metal-silver text-center">
-                <CardContent className="pt-6">
-                  <div className="text-circuit-blue mx-auto mb-3">
-                    {tier.icon}
-                  </div>
-                  <p className="text-circuit-cyan text-3xl font-bold">
-                    {tier.rate}
-                  </p>
-                  <p className="text-metal-500 mt-1 text-sm">
-                    <Trans i18nKey={tier.range} />
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <StaggerContainer
+            className="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3"
+            stagger={0.08}
+          >
+            {COMMISSION_TIERS.map((tier) => {
+              const Icon = tier.icon;
 
-          {activePromo && (
-            <div className="border-tech-neon/30 bg-tech-neon/10 mt-6 rounded-xl border p-4 text-center">
-              <p className="text-tech-emerald font-semibold">
-                <Sparkles className="mr-1 inline h-4 w-4" />
+              return (
+                <StaggerItem key={tier.range}>
+                  <EnviroCard
+                    variant="cream"
+                    radius="lg"
+                    hover="lift"
+                    padding="md"
+                    className="text-center"
+                  >
+                    <span className="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]">
+                      <Icon className="h-5 w-5" strokeWidth={1.5} />
+                    </span>
+                    <p className="text-3xl font-bold text-[--color-enviro-cta] font-[family-name:var(--font-enviro-display)]">
+                      {tier.rate}
+                    </p>
+                    <p className="mt-1 text-sm text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-mono)]">
+                      <Trans i18nKey={tier.range} />
+                    </p>
+                  </EnviroCard>
+                </StaggerItem>
+              );
+            })}
+          </StaggerContainer>
+
+          {activePromo ? (
+            <FadeInSection delay={0.2}>
+              <div className="mx-auto mt-6 max-w-3xl rounded-[--radius-enviro-xl] border border-[--color-enviro-lime-400] bg-[--color-enviro-lime-300]/40 p-4 text-center text-sm font-medium text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-sans)]">
+                <Sparkles
+                  className="mr-2 inline h-4 w-4"
+                  strokeWidth={1.5}
+                />
                 <Trans i18nKey="pricingPage.promoLaunch" />
-              </p>
-            </div>
-          )}
+              </div>
+            </FadeInSection>
+          ) : null}
+        </div>
+      </section>
+
+      {/* DETAILED COMPARISON */}
+      <section className="bg-white py-16 lg:py-24">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={<Trans i18nKey="pricingPage.comparisonTag" />}
+              title={<Trans i18nKey="pricingPage.comparisonTitle" />}
+              subtitle={<Trans i18nKey="pricingPage.comparisonSub" />}
+              tone="cream"
+              align="center"
+            />
+          </FadeInSection>
+
+          <div className="mt-12">
+            <ComparisonTable />
+          </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="bg-metal-50 py-16">
-        <div className="container mx-auto max-w-3xl px-4">
-          <h2 className="text-metal-900 mb-8 text-center text-2xl font-bold">
-            <Trans i18nKey="pricingPage.faqTitle" />
-          </h2>
+      <section className="bg-[--color-enviro-cream-50] py-16 lg:py-24">
+        <div className="mx-auto w-full max-w-[--container-enviro-md] px-4 lg:px-8">
+          <FadeInSection>
+            <EnviroSectionHeader
+              tag={<Trans i18nKey="pricingPage.faqTag" />}
+              title={<Trans i18nKey="pricingPage.faqTitle" />}
+              tone="cream"
+              align="center"
+            />
+          </FadeInSection>
 
-          <div className="space-y-3">
-            {faqKeys.map((key, i) => (
-              <div
-                key={i}
-                className="border-metal-chrome rounded-xl border bg-white"
-              >
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="flex w-full items-center justify-between p-4 text-left"
-                >
-                  <span className="text-metal-900 pr-4 font-medium">
-                    <Trans i18nKey={`${key}Q`} />
-                  </span>
-                  <ChevronDown
-                    className={`text-circuit-blue h-5 w-5 shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`}
-                  />
-                </button>
-                {openFaq === i && (
-                  <div className="border-metal-chrome text-metal-600 border-t px-4 pt-3 pb-4 text-sm">
-                    <Trans i18nKey={`${key}A`} />
-                  </div>
-                )}
-              </div>
-            ))}
+          <div className="mt-12">
+            <EnviroFaq
+              tone="cream"
+              items={FAQ_KEYS.map((k, idx) => ({
+                value: `q${idx + 1}`,
+                question: <Trans i18nKey={`${k}Q`} />,
+                answer: <Trans i18nKey={`${k}A`} />,
+              }))}
+            />
           </div>
         </div>
       </section>
 
       {/* COMING SOON */}
-      <ComingSoonSection />
+      <section className="bg-white py-16 lg:py-24">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <FadeInSection>
+            <div className="mx-auto mb-6 inline-flex w-full justify-center">
+              <span className="inline-flex items-center gap-2 rounded-[--radius-enviro-pill] border border-[--color-enviro-cream-300] bg-[--color-enviro-cream-50] px-3 py-1 text-xs font-medium text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-mono)]">
+                <Rocket className="h-4 w-4" strokeWidth={1.5} />
+                Roadmap 2026 - 2027
+              </span>
+            </div>
+            <EnviroSectionHeader
+              tag={<Trans i18nKey="pricingPage.comingSoonTag" />}
+              title={
+                <Trans
+                  i18nKey="pricingPage.comingSoonTitle"
+                  defaults="Prochainement sur la plateforme"
+                />
+              }
+              subtitle={
+                <Trans
+                  i18nKey="pricingPage.comingSoonSubtitle"
+                  defaults="Nous construisons en continu. Voici les fonctionnalités en cours de développement."
+                />
+              }
+              tone="cream"
+              align="center"
+            />
+          </FadeInSection>
+
+          <StaggerContainer
+            className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+            stagger={0.06}
+          >
+            {COMING_SOON.map((feature) => {
+              const Icon = feature.icon;
+              const isQuarter = feature.timeline.startsWith('Q');
+
+              return (
+                <StaggerItem key={feature.title}>
+                  <EnviroCard
+                    variant="cream"
+                    radius="lg"
+                    hover="lift"
+                    padding="md"
+                    className="h-full"
+                  >
+                    <div className="mb-3 flex items-start justify-between gap-3">
+                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-forest-900] text-[--color-enviro-lime-300]">
+                        <Icon className="h-5 w-5" strokeWidth={1.5} />
+                      </span>
+                      <span
+                        className={cn(
+                          'rounded-[--radius-enviro-pill] border px-2 py-1 text-xs font-medium font-[family-name:var(--font-enviro-mono)]',
+                          isQuarter
+                            ? 'border-[--color-enviro-cta] bg-[--color-enviro-ember-50] text-[--color-enviro-ember-700]'
+                            : 'border-[--color-enviro-cream-300] bg-white text-[--color-enviro-forest-600]',
+                        )}
+                      >
+                        {feature.timeline}
+                      </span>
+                    </div>
+                    <EnviroCardHeader>
+                      <EnviroCardTitle className="text-base">
+                        {feature.title}
+                      </EnviroCardTitle>
+                    </EnviroCardHeader>
+                    <EnviroCardBody className="text-sm leading-relaxed text-[--color-enviro-forest-700]">
+                      {feature.description}
+                    </EnviroCardBody>
+                  </EnviroCard>
+                </StaggerItem>
+              );
+            })}
+          </StaggerContainer>
+
+          <FadeInSection delay={0.2}>
+            <p className="mt-12 text-center text-sm text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
+              <Trans
+                i18nKey="pricingPage.comingSoonInterested"
+                defaults="Une fonctionnalité vous intéresse particulièrement ?"
+              />{' '}
+              <Link
+                href="/contact"
+                className="font-medium text-[--color-enviro-cta] underline underline-offset-4 hover:text-[--color-enviro-cta-hover]"
+              >
+                <Trans
+                  i18nKey="pricingPage.comingSoonContact"
+                  defaults="Contactez-nous pour en discuter"
+                />
+              </Link>
+            </p>
+          </FadeInSection>
+        </div>
+      </section>
 
       {/* FOOTER CTA */}
-      <section className="relative overflow-hidden py-16 text-white">
-        <img
-          src="/images/normes/saas-carbon-dark.png"
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="from-metal-900/70 via-metal-800/60 to-metal-900/80 absolute inset-0 bg-gradient-to-b" />
-        <div className="relative container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-white">
-            <Trans i18nKey="pricingPage.ctaTitle" />
-          </h2>
-          <p className="text-metal-silver mx-auto mt-4 max-w-xl">
-            <Trans i18nKey="pricingPage.ctaSubtitle" />
-          </p>
-          <Button
-            size="lg"
-            className="bg-primary hover:bg-primary-hover mt-8 rounded-xl font-semibold text-white"
-            render={
+      <section className="bg-[--color-enviro-forest-900] py-20 lg:py-28 text-[--color-enviro-fg-inverse]">
+        <div className="mx-auto w-full max-w-[--container-enviro-md] px-4 text-center lg:px-8">
+          <FadeInSection>
+            <span className="inline-flex items-center gap-1 text-xs uppercase font-medium tracking-[0.08em] text-[--color-enviro-lime-300] font-[family-name:var(--font-enviro-mono)]">
+              <span aria-hidden="true">[</span>
+              <span className="px-1">
+                <Trans i18nKey="pricingPage.ctaTag" />
+              </span>
+              <span aria-hidden="true">]</span>
+            </span>
+            <h2 className="mt-4 text-balance text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight font-[family-name:var(--font-enviro-display)]">
+              <Trans i18nKey="pricingPage.ctaTitle" />
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-base md:text-lg leading-relaxed text-[--color-enviro-fg-inverse-muted] font-[family-name:var(--font-enviro-sans)]">
+              <Trans i18nKey="pricingPage.ctaSubtitle" />
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link href="/home/billing">
-                <Trans i18nKey="pricingPage.ctaButton" />
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <EnviroButton variant="primary" size="lg" magnetic>
+                  <Trans i18nKey="pricingPage.ctaButton" />
+                  <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
+                </EnviroButton>
               </Link>
-            }
-            nativeButton={false}
-          />
-          <div className="text-metal-steel mt-6 flex items-center justify-center gap-6 text-sm">
-            <span className="flex items-center gap-1">
-              <Mail className="h-4 w-4" />
-              contact@greenecogenius.tech
-            </span>
-            <span className="flex items-center gap-1">
-              <Phone className="h-4 w-4" />
-              +33 7 83 32 42 74
-            </span>
-          </div>
+              <Link href="/solutions">
+                <EnviroButton variant="outlineCream" size="lg">
+                  <Trans i18nKey="pricingPage.ctaSecondary" />
+                </EnviroButton>
+              </Link>
+            </div>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-[--color-enviro-fg-inverse-muted] font-[family-name:var(--font-enviro-sans)]">
+              <span className="inline-flex items-center gap-2">
+                <Mail className="h-4 w-4" strokeWidth={1.5} />
+                contact@greenecogenius.tech
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Phone className="h-4 w-4" strokeWidth={1.5} />
+                +33 7 83 32 42 74
+              </span>
+            </div>
+          </FadeInSection>
         </div>
       </section>
     </div>
   );
 }
 
-/* ─── Coming Soon Section ─── */
-
-interface ComingSoonFeature {
-  icon: LucideIcon;
-  titleFr: string;
-  titleEn: string;
-  descFr: string;
-  descEn: string;
-  timeline: string;
-}
-
-const COMING_SOON: ComingSoonFeature[] = [
-  {
-    icon: BarChart3,
-    titleFr: 'Benchmarking sectoriel',
-    titleEn: 'Industry benchmarking',
-    descFr: "Comparez vos performances carbone et circulaires avec votre secteur d'activite.",
-    descEn: 'Compare your carbon and circular performance with your industry peers.',
-    timeline: 'Q4 2026',
-  },
-  {
-    icon: Zap,
-    titleFr: 'Matching IA acheteur-vendeur',
-    titleEn: 'AI buyer-seller matching',
-    descFr: 'Algorithme intelligent qui connecte automatiquement les vendeurs et acheteurs de matieres recyclables.',
-    descEn: 'Smart algorithm that automatically connects recyclable material sellers and buyers.',
-    timeline: 'Q4 2026',
-  },
-  {
-    icon: Blocks,
-    titleFr: 'Integration ERP native (SAP, Oracle, Sage)',
-    titleEn: 'Native ERP integration (SAP, Oracle, Sage)',
-    descFr: 'Connectez votre ERP pour synchroniser automatiquement les donnees de dechets et achats.',
-    descEn: 'Connect your ERP to automatically sync waste and procurement data.',
-    timeline: '2027',
-  },
-  {
-    icon: Building2,
-    titleFr: 'Reporting multi-sites / multi-filiales',
-    titleEn: 'Multi-site / subsidiary reporting',
-    descFr: 'Consolidez les donnees de tous vos sites et filiales dans un seul dashboard.',
-    descEn: 'Consolidate data from all your sites and subsidiaries in one dashboard.',
-    timeline: '2027',
-  },
-  {
-    icon: Award,
-    titleFr: 'Préparation aux labels reconnus',
-    titleEn: 'Preparation for recognized labels',
-    descFr: 'Accompagnement à la candidature aux labels reconnus : B Corp, GreenTech Innovation, Label Lucie 26000, Label Numérique Responsable, EcoVadis.',
-    descEn: 'Support for applying to recognized labels: B Corp, GreenTech Innovation, Label Lucie 26000, Label Numérique Responsable, EcoVadis.',
-    timeline: '2027',
-  },
-  {
-    icon: Leaf,
-    titleFr: 'Accompagnement credits carbone',
-    titleEn: 'Carbon credits support',
-    descFr: "Accedez aux marches de credits carbone et monetisez vos reductions d'emissions verifiees.",
-    descEn: 'Access carbon credit markets and monetize your verified emission reductions.',
-    timeline: '2027',
-  },
-  {
-    icon: Palette,
-    titleFr: 'Rapports white-label personnalisables',
-    titleEn: 'Customizable white-label reports',
-    descFr: 'Generez des rapports aux couleurs de votre entreprise pour vos clients et parties prenantes.',
-    descEn: 'Generate reports in your company branding for your clients and stakeholders.',
-    timeline: '2027',
-  },
-];
-
-function ComingSoonSection() {
+function ComparisonTable() {
   return (
-    <section className="bg-slate-50 py-20">
-      <div className="container mx-auto max-w-6xl px-4">
-        <div className="mb-12 text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-sm font-medium text-amber-700">
-            <Rocket className="h-4 w-4" strokeWidth={1.5} />
-            Roadmap 2026 — 2027
-          </div>
-          <h2 className="text-metal-900 text-3xl font-bold">
-            <Trans
-              i18nKey="pricingPage.comingSoonTitle"
-              defaults="Prochainement sur la plateforme"
-            />
-          </h2>
-          <p className="text-metal-500 mx-auto mt-3 max-w-2xl text-lg">
-            <Trans
-              i18nKey="pricingPage.comingSoonSubtitle"
-              defaults="Nous construisons en continu. Voici les fonctionnalites en cours de developpement."
-            />
-          </p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {COMING_SOON.map((feature) => {
-            const Icon = feature.icon;
-            return (
-              <div
-                key={feature.titleEn}
-                className="rounded-xl border border-gray-200 bg-white p-6 transition-colors hover:border-[#A8E6C8]"
-              >
-                <div className="mb-3 flex items-start justify-between">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E8F8F0]">
-                    <Icon
-                      className="h-5 w-5 text-[#1BAF6A]"
-                      strokeWidth={1.5}
-                    />
-                  </div>
-                  <span
-                    className={`rounded-full border px-2 py-1 text-xs font-medium ${
-                      feature.timeline.startsWith('Q')
-                        ? 'border-amber-200 bg-amber-50 text-amber-700'
-                        : 'border-gray-200 bg-gray-50 text-gray-600'
-                    }`}
-                  >
-                    {feature.timeline}
-                  </span>
-                </div>
-                <h3 className="text-metal-900 mb-2 font-semibold">
-                  <Trans
-                    i18nKey={`pricingPage.cs_${feature.titleEn.replace(/[^a-zA-Z]/g, '_').toLowerCase()}`}
-                    defaults={feature.titleFr}
-                  />
-                </h3>
-                <p className="text-metal-500 text-sm">{feature.descFr}</p>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="mt-12 text-center">
-          <p className="text-metal-400 text-sm">
-            <Trans
-              i18nKey="pricingPage.comingSoonInterested"
-              defaults="Une fonctionnalite vous interesse particulierement ?"
-            />
-          </p>
-          <Link
-            href="/contact"
-            className="text-sm font-medium text-[#1BAF6A] hover:text-[#159B5C]"
-          >
-            <Trans
-              i18nKey="pricingPage.comingSoonContact"
-              defaults="Contactez-nous pour en discuter"
-            />{' '}
-            <ArrowRight className="ml-1 inline h-3 w-3" />
-          </Link>
-        </div>
-      </div>
-    </section>
+    <EnviroComparisonTable
+      headers={[
+        <Trans key="h0" i18nKey="pricingPage.compFeature" />,
+        <Trans key="h1" i18nKey="pricingPage.compEssentiel" />,
+        <Trans key="h2" i18nKey="pricingPage.compAvance" />,
+        <Trans key="h3" i18nKey="pricingPage.compEnterprise" />,
+      ]}
+      highlightColumnIndex={1}
+      tone="cream"
+      rows={[
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_marketplace" />,
+          cells: [
+            <Trans key="e" i18nKey="pricingPage.compEssentielMarketplace" />,
+            <Trans key="a" i18nKey="pricingPage.compAvanceMarketplace" />,
+            <Trans key="x" i18nKey="pricingPage.compEnterpriseMarketplace" />,
+          ] as Array<boolean | React.ReactNode>,
+        },
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_traceability" />,
+          cells: [
+            <Trans key="e" i18nKey="pricingPage.compEssentielTrace" />,
+            <Trans key="a" i18nKey="pricingPage.compAvanceTrace" />,
+            <Trans key="x" i18nKey="pricingPage.compEnterpriseTrace" />,
+          ] as Array<boolean | React.ReactNode>,
+        },
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_carbonScope" />,
+          cells: [
+            <Trans key="e" i18nKey="pricingPage.compEssentielScope" />,
+            <Trans key="a" i18nKey="pricingPage.compAvanceScope" />,
+            <Trans key="x" i18nKey="pricingPage.compEnterpriseScope" />,
+          ] as Array<boolean | React.ReactNode>,
+        },
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_csrd" />,
+          cells: [false, true, true],
+        },
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_genius" />,
+          cells: [
+            <Trans key="e" i18nKey="pricingPage.compEssentielGenius" />,
+            <Trans key="a" i18nKey="pricingPage.compAvanceGenius" />,
+            <Trans key="x" i18nKey="pricingPage.compEnterpriseGenius" />,
+          ] as Array<boolean | React.ReactNode>,
+        },
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_support" />,
+          cells: [
+            <Trans key="e" i18nKey="pricingPage.compEssentielSupport" />,
+            <Trans key="a" i18nKey="pricingPage.compAvanceSupport" />,
+            <Trans key="x" i18nKey="pricingPage.compEnterpriseSupport" />,
+          ] as Array<boolean | React.ReactNode>,
+        },
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_labels" />,
+          cells: [false, true, true],
+        },
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_api" />,
+          cells: [false, false, true],
+        },
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_users" />,
+          cells: [false, false, true],
+        },
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_onboarding" />,
+          cells: [false, false, true],
+        },
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_accountManager" />,
+          cells: [false, false, true],
+        },
+        {
+          feature: <Trans i18nKey="pricingPage.compRow_sla" />,
+          cells: [false, false, true],
+        },
+      ]}
+    />
   );
 }

@@ -1,6 +1,13 @@
 {
   "homeTitle": "Dashboard",
   "homeDesc": "Overview of your environmental performance and compliance.",
+  "homeGreeting": "Hello {name}",
+  "homeGreetingFallback": "Welcome",
+  "homeQuickActions": "Quick actions",
+  "homeMyListings": "My recent listings",
+  "homeViewAllListings": "View all my listings",
+  "homeCtaCarbon": "Compute my carbon footprint",
+  "homeCtaCarbonDesc": "Kick off your next assessment in just a few minutes.",
   "marketplaceTitle": "Circular Marketplace",
   "marketplaceDesc": "B2B marketplace for recyclable materials. List, buy or collect.",
   "carbonTitle": "Carbon Impact",

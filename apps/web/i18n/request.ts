@@ -31,6 +31,16 @@ const namespaces = [
   'compliance',
   'externalActivities',
   'dashboard',
+  'enviroPreview',
+  'normes',
+  'blog',
+  'contact',
+  'faq',
+  'legal',
+  'changelog',
+  'transactions',
+  'admin',
+  'docs',
 ] as const;
 
 const isDevelopment = process.env.NODE_ENV === 'development';

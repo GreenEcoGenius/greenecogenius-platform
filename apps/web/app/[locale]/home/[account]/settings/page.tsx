@@ -42,7 +42,7 @@ async function TeamAccountSettingsPage(props: TeamAccountSettingsPageProps) {
   };
 
   return (
-    <div className={'flex max-w-2xl flex-1 flex-col'}>
+    <div className="flex w-full flex-1 flex-col">
       <TeamAccountSettingsContainer
         account={account}
         paths={paths}

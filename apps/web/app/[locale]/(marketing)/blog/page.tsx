@@ -2,17 +2,20 @@ import { cache } from 'react';
 
 import type { Metadata } from 'next';
 
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getFormatter, getLocale, getTranslations } from 'next-intl/server';
 
-import { createCmsClient } from '@kit/cms';
+import { type Cms, createCmsClient } from '@kit/cms';
 import { getLogger } from '@kit/shared/logger';
 import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
 
-// local imports
-import { SitePageHeader } from '../_components/site-page-header';
+import { EnviroBlogCard, EnviroPageHero } from '~/components/enviro';
+import {
+  StaggerContainer,
+  StaggerItem,
+} from '~/components/enviro/animations/stagger-container';
+
 import { BlogPagination } from './_components/blog-pagination';
-import { PostPreview } from './_components/post-preview';
 
 interface BlogPageProps {
   searchParams: Promise<{ page?: string }>;
@@ -23,7 +26,7 @@ const BLOG_POSTS_PER_PAGE = 10;
 export const generateMetadata = async (
   props: BlogPageProps,
 ): Promise<Metadata> => {
-  const t = await getTranslations('marketing');
+  const t = await getTranslations('blog');
   const resolvedLanguage = await getLocale();
   const searchParams = await props.searchParams;
   const limit = BLOG_POSTS_PER_PAGE;
@@ -34,8 +37,8 @@ export const generateMetadata = async (
   const { total } = await getContentItems(resolvedLanguage, limit, offset);
 
   return {
-    title: t('blog'),
-    description: t('blogSubtitle'),
+    title: t('title'),
+    description: t('subtitle'),
     pagination: {
       previous: page > 0 ? `/blog?page=${page - 1}` : undefined,
       next: offset + limit < total ? `/blog?page=${page + 1}` : undefined,
@@ -67,8 +70,9 @@ const getContentItems = cache(
 );
 
 async function BlogPage(props: BlogPageProps) {
-  const t = await getTranslations('marketing');
+  const t = await getTranslations('blog');
   const language = await getLocale();
+  const formatter = await getFormatter();
   const searchParams = await props.searchParams;
 
   const limit = BLOG_POSTS_PER_PAGE;
@@ -82,39 +86,81 @@ async function BlogPage(props: BlogPageProps) {
   );
 
   return (
-    <>
-      <SitePageHeader title={t('blog')} subtitle={t('blogSubtitle')} />
+    <div className="flex flex-col bg-[--color-enviro-cream-50] text-[--color-enviro-forest-900]">
+      <EnviroPageHero
+        tag={t('heroTag')}
+        title={t('title')}
+        subtitle={t('subtitle')}
+        tone="cream"
+        align="center"
+      />
 
-      <div className={'container flex flex-col space-y-6 py-8'}>
-        <If
-          condition={posts.length > 0}
-          fallback={<Trans i18nKey="marketing.noPosts" />}
-        >
-          <PostsGridList>
-            {posts.map((post, idx) => {
-              return <PostPreview key={idx} post={post} />;
-            })}
-          </PostsGridList>
+      <section className="bg-[--color-enviro-cream-50] py-16 lg:py-20">
+        <div className="mx-auto w-full max-w-[--container-enviro-xl] px-4 lg:px-8">
+          <If
+            condition={posts.length > 0}
+            fallback={
+              <p className="py-20 text-center text-base text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-sans)]">
+                <Trans i18nKey="blog.noPosts" />
+              </p>
+            }
+          >
+            <StaggerContainer
+              className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+              stagger={0.08}
+            >
+              {posts.map((post) => (
+                <StaggerItem key={post.slug}>
+                  <BlogTeaserCard
+                    post={post}
+                    categoryLabel={t('categoryTag')}
+                    formattedDate={formatter.dateTime(
+                      new Date(post.publishedAt),
+                      {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      },
+                    )}
+                  />
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
 
-          <div>
-            <BlogPagination
-              currentPage={page}
-              canGoToNextPage={offset + limit < total}
-              canGoToPreviousPage={page > 0}
-            />
-          </div>
-        </If>
-      </div>
-    </>
+            <div className="mt-12 flex justify-center">
+              <BlogPagination
+                currentPage={page}
+                canGoToNextPage={offset + limit < total}
+                canGoToPreviousPage={page > 0}
+              />
+            </div>
+          </If>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function BlogTeaserCard({
+  post,
+  categoryLabel,
+  formattedDate,
+}: {
+  post: Cms.ContentItem;
+  categoryLabel: string;
+  formattedDate: string;
+}) {
+  return (
+    <EnviroBlogCard
+      href={`/blog/${post.slug}`}
+      category={categoryLabel}
+      title={post.title}
+      excerpt={post.description ?? undefined}
+      date={formattedDate}
+      image={post.image ?? undefined}
+      imageAlt={post.title}
+    />
   );
 }
 
 export default BlogPage;
-
-function PostsGridList({ children }: React.PropsWithChildren) {
-  return (
-    <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2 md:gap-x-2 md:gap-y-12 lg:grid-cols-3">
-      {children}
-    </div>
-  );
-}

@@ -1,15 +1,20 @@
 import Link from 'next/link';
 
 import { Download, FileText } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { Badge } from '@kit/ui/badge';
-import { Button } from '@kit/ui/button';
-import { Card, CardContent } from '@kit/ui/card';
-import { PageBody } from '@kit/ui/page';
-import { Trans } from '@kit/ui/trans';
+
+import {
+  EnviroDashboardSectionHeader,
+  EnviroEmptyState,
+} from '~/components/enviro/dashboard';
+import { EnviroButton } from '~/components/enviro/enviro-button';
+import {
+  EnviroCard,
+  EnviroCardBody,
+} from '~/components/enviro/enviro-card';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('esg');
@@ -29,6 +34,10 @@ interface ESGReport {
 
 async function ESGReportsPage() {
   const client = getSupabaseServerClient();
+  const t = await getTranslations('esg');
+  const tCommon = await getTranslations('common');
+  const locale = await getLocale();
+
   const user = await requireUser(client);
   const userId = user.data?.id;
 
@@ -46,88 +55,121 @@ async function ESGReportsPage() {
   const reportList: ESGReport[] = (reports ?? []) as ESGReport[];
 
   return (
-    <PageBody>
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+      <EnviroDashboardSectionHeader
+        tag={tCommon('routes.esg')}
+        title={t('reportsTitle')}
+      />
+
       {reportList.length === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
-            <div className="bg-muted rounded-full p-4">
-              <FileText className="text-muted-foreground h-8 w-8" />
-            </div>
-            <p className="text-muted-foreground max-w-md text-sm">
-              <Trans i18nKey="esg:noReports" />
-            </p>
-            <Button
-              render={
-                <Link href="/home/esg/data-entry">
-                  <Trans i18nKey="esg:dataEntry" />
+        <EnviroEmptyState
+          icon={<FileText aria-hidden="true" className="h-7 w-7" />}
+          title={t('noReports')}
+          actions={
+            <EnviroButton
+              variant="primary"
+              size="sm"
+              magnetic
+              render={(buttonProps) => (
+                <Link {...buttonProps} href="/home/esg/data-entry">
+                  {t('dataEntry')}
                 </Link>
-              }
-              nativeButton={false}
+              )}
             />
-          </CardContent>
-        </Card>
+          }
+        />
       ) : (
-        <div className="grid gap-4">
+        <div className="flex flex-col gap-3">
           {reportList.map((report) => (
-            <ReportCard key={report.id} report={report} />
+            <ReportRow
+              key={report.id}
+              report={report}
+              t={t}
+              locale={locale}
+            />
           ))}
         </div>
       )}
-    </PageBody>
+    </div>
   );
 }
 
-function ReportCard({ report }: { report: ESGReport }) {
+function ReportRow({
+  report,
+  t,
+  locale,
+}: {
+  report: ESGReport;
+  t: (key: string) => string;
+  locale: string;
+}) {
   return (
-    <Card>
-      <CardContent className="flex items-center justify-between p-6">
+    <EnviroCard variant="cream" hover="lift" padding="md">
+      <EnviroCardBody className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-4">
-          <div className="rounded-xl bg-[#E8F8F0] p-3 dark:bg-[#0A5C35]/30">
-            <FileText className="h-6 w-6 text-[#1BAF6A]" />
+          <div className="flex h-11 w-11 items-center justify-center rounded-[--radius-enviro-md] bg-[--color-enviro-lime-100]">
+            <FileText
+              aria-hidden="true"
+              className="h-5 w-5 text-[--color-enviro-lime-700]"
+            />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-semibold">
-                <Trans i18nKey="esg:reportYear" />: {report.reporting_year}
+          <div className="flex flex-col gap-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm font-semibold text-[--color-enviro-forest-900] font-[family-name:var(--font-enviro-display)]">
+                {t('reportYear')}: {report.reporting_year}
               </span>
-              <Badge variant={'outline'}>{report.report_type}</Badge>
+              <span className="inline-flex items-center rounded-[--radius-enviro-pill] border border-[--color-enviro-cream-300] px-2 py-0.5 text-[11px] font-semibold text-[--color-enviro-forest-700] font-[family-name:var(--font-enviro-mono)]">
+                {report.report_type}
+              </span>
             </div>
-            <div className="text-muted-foreground mt-1 text-sm">
-              <Trans i18nKey="esg:reportEmissions" />:{' '}
-              {report.total_emissions?.toFixed(0) ?? '—'} kg CO2e
-            </div>
+            <p className="text-xs text-[--color-enviro-forest-700]">
+              {t('reportEmissions')}:{' '}
+              <span className="tabular-nums font-medium text-[--color-enviro-forest-900]">
+                {report.total_emissions != null
+                  ? report.total_emissions.toFixed(0)
+                  : '-'}{' '}
+                kg CO2e
+              </span>
+            </p>
+            <p className="text-[11px] text-[--color-enviro-forest-700]/70">
+              {new Date(report.created_at).toLocaleDateString(locale)}
+            </p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <Badge variant={report.status === 'ready' ? 'default' : 'outline'}>
-            {report.status === 'ready' ? (
-              <Trans i18nKey="esg:reportReady" />
-            ) : (
-              <Trans i18nKey="esg:reportPending" />
-            )}
-          </Badge>
+          <span
+            className={
+              report.status === 'ready'
+                ? 'inline-flex items-center rounded-[--radius-enviro-pill] bg-[--color-enviro-lime-100] px-2.5 py-0.5 text-[11px] font-semibold text-[--color-enviro-lime-800]'
+                : 'inline-flex items-center rounded-[--radius-enviro-pill] bg-[--color-enviro-cream-100] px-2.5 py-0.5 text-[11px] font-semibold text-[--color-enviro-forest-700]'
+            }
+          >
+            {report.status === 'ready'
+              ? t('reportReady')
+              : t('reportPending')}
+          </span>
 
-          {report.file_url && (
-            <Button
-              variant="outline"
+          {report.file_url ? (
+            <EnviroButton
+              variant="secondary"
               size="sm"
-              render={
+              render={(buttonProps) => (
                 <a
+                  {...buttonProps}
                   href={report.file_url}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Download className="mr-1 h-4 w-4" />
-                  <Trans i18nKey="esg:downloadReport" />
+                  <Download aria-hidden="true" className="h-4 w-4" />
+                  {t('downloadReport')}
                 </a>
-              }
-              nativeButton={false}
+              )}
             />
-          )}
+          ) : null}
         </div>
-      </CardContent>
-    </Card>
+      </EnviroCardBody>
+    </EnviroCard>
   );
 }
 

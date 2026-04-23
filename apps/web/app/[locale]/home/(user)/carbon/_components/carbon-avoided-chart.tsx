@@ -13,9 +13,6 @@ import {
   YAxis,
 } from 'recharts';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
-import { Trans } from '@kit/ui/trans';
-
 interface MonthlyData {
   month: string;
   co2_avoided: number;
@@ -109,14 +106,7 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
   }));
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg">
-          <Trans i18nKey="carbon:chartTitle" />
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={300}>
           <AreaChart
             data={chartData}
             margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
@@ -170,9 +160,7 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
               activeDot={{ r: 4 }}
               animationDuration={800}
             />
-          </AreaChart>
-        </ResponsiveContainer>
-      </CardContent>
-    </Card>
+      </AreaChart>
+    </ResponsiveContainer>
   );
 }
