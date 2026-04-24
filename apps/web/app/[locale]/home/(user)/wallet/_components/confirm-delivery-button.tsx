@@ -46,7 +46,7 @@ export function ConfirmDeliveryButton({
 
   if (confirmed) {
     return (
-      <span className="flex items-center gap-1 text-sm text-green-600">
+      <span className="flex items-center gap-1 text-sm text-verdure-600">
         <CheckCircle className="h-4 w-4" />
         <Trans i18nKey="wallet.deliveryConfirmed" />
       </span>

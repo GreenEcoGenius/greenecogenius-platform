@@ -408,10 +408,10 @@
     "foundationsFrameworksSub": "Notre plateforme structure vos données selon ces cadres reconnus"
   },
 
-  "explorerNav": "Explorateur",
+  "explorerNav": "Observatoire",
   "explorer": {
     "badge": "Données Open Data",
-    "heroTitle": "Explorateur mondial de matières recyclables",
+    "heroTitle": "Observatoire mondial des matières recyclables",
     "heroSubtitle": "France, Europe UE-27 et États-Unis — volumes, prix et tendances par catégorie de matière. Données publiques ADEME, GEREP, Eurostat, EPA.",
     "metaTitle": "Matières recyclables — France, Europe, USA | GreenEcoGenius",
     "metaDesc": "Explorez les matières recyclables en France, Europe et aux États-Unis : plastiques, métaux, papier, verre, bois, textile, biodéchets. Données ADEME, Eurostat, EPA. Volumes et tendances.",
@@ -449,7 +449,7 @@
     "ctaSellerTitle": "Vous vendez du recyclable ?",
     "ctaSellerDesc": "Publiez votre lot gratuitement — des acheteurs vous cherchent.",
     "ctaPublishLot": "Publier un lot",
-    "backToExplorer": "Retour à l'explorateur",
+    "backToExplorer": "Retour à l'Observatoire",
     "inFrance": "en France",
     "subtypesTitle": "Répartition par sous-type",
     "regionBreakdown": "Répartition par région",

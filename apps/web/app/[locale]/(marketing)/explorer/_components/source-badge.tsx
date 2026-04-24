@@ -20,12 +20,12 @@ const SOURCE_CONFIG: Record<
   Federec: {
     label: 'FEDEREC',
     url: 'https://federec.com/',
-    className: 'bg-green-50 text-green-700 border-green-200',
+    className: 'bg-verdure-50 text-verdure-700 border-verdure-200',
   },
   'Federec 2024': {
     label: 'FEDEREC',
     url: 'https://federec.com/',
-    className: 'bg-green-50 text-green-700 border-green-200',
+    className: 'bg-verdure-50 text-verdure-700 border-verdure-200',
   },
   Eurostat: {
     label: 'Eurostat',

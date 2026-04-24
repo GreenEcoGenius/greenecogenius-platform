@@ -256,9 +256,9 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
         {/* Section 1 - Hero Badge */}
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="relative">
-            <div className="absolute inset-0 animate-pulse rounded-full bg-green-400/20 blur-xl" />
-            <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-green-100 dark:bg-green-950">
-              <CheckCircle2 className="h-14 w-14 text-green-600 dark:text-green-400" />
+            <div className="absolute inset-0 animate-pulse rounded-full bg-verdure-400/20 blur-xl" />
+            <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-verdure-100 dark:bg-verdure-950">
+              <CheckCircle2 className="h-14 w-14 text-verdure-600 dark:text-verdure-400" />
             </div>
           </div>
 
@@ -274,7 +274,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
           {chainIntegrity ? (
             <Badge
               variant="default"
-              className="bg-green-600 text-white hover:bg-green-700"
+              className="bg-verdure-600 text-white hover:bg-verdure-700"
             >
               <ShieldCheck className="mr-1 h-4 w-4" />
               Chaîne intègre
@@ -344,7 +344,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                 </p>
                 <div className="mt-1">
                   {chainIntegrity ? (
-                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-green-700 dark:text-green-400">
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-verdure-700 dark:text-verdure-400">
                       <ShieldCheck className="h-4 w-4" />
                       Vérifiée
                     </span>
@@ -405,9 +405,9 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
 
         {/* Section 4 - Carbon Impact */}
         {co2Avoided > 0 && (
-          <Card className="border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950">
+          <Card className="border-verdure-200 bg-verdure-50 dark:border-verdure-900 dark:bg-verdure-950">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-green-800 dark:text-green-200">
+              <CardTitle className="flex items-center gap-2 text-verdure-800 dark:text-verdure-200">
                 <Leaf className="h-5 w-5" />
                 Impact Carbone
               </CardTitle>
@@ -417,7 +417,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                 <CarbonStat
                   value={formatKg(co2Avoided)}
                   label="CO₂ évité (recyclage vs vierge)"
-                  color="text-green-700 dark:text-green-300"
+                  color="text-verdure-700 dark:text-verdure-300"
                 />
                 <CarbonStat
                   value={formatKg(co2Transport)}
@@ -427,13 +427,13 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                 <CarbonStat
                   value={formatKg(co2Net)}
                   label="Bénéfice net"
-                  color="text-green-800 dark:text-green-200"
+                  color="text-verdure-800 dark:text-verdure-200"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4 border-t border-green-200 pt-4 dark:border-green-800">
+              <div className="grid grid-cols-2 gap-4 border-t border-verdure-200 pt-4 dark:border-verdure-800">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-green-700 dark:text-green-300">
+                  <p className="text-2xl font-bold text-verdure-700 dark:text-verdure-300">
                     {treesEquiv.toLocaleString('fr-FR')}
                   </p>
                   <p className="text-muted-foreground text-sm">
@@ -441,7 +441,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                   </p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-green-700 dark:text-green-300">
+                  <p className="text-2xl font-bold text-verdure-700 dark:text-verdure-300">
                     {carKmEquiv.toLocaleString('fr-FR')}
                   </p>
                   <p className="text-muted-foreground text-sm">
@@ -450,7 +450,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                 </div>
               </div>
 
-              <p className="text-center text-xs text-green-700/70 dark:text-green-400/70">
+              <p className="text-center text-xs text-verdure-700/70 dark:text-verdure-400/70">
                 Méthode : ADEME Base Carbone 2024
               </p>
             </CardContent>
@@ -469,7 +469,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
             <CardContent>
               <div className="relative ml-4 space-y-0">
                 {/* Connecting line */}
-                <div className="absolute top-2 bottom-2 left-0 w-0.5 bg-green-200 dark:bg-green-800" />
+                <div className="absolute top-2 bottom-2 left-0 w-0.5 bg-verdure-200 dark:bg-verdure-800" />
 
                 {timeline.map((event, index) => (
                   <div
@@ -480,8 +480,8 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                     <div
                       className={`relative z-10 mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full ${
                         index === timeline.length - 1
-                          ? 'bg-green-600'
-                          : 'bg-background border-2 border-green-400'
+                          ? 'bg-verdure-600'
+                          : 'bg-background border-2 border-verdure-400'
                       }`}
                     >
                       {index === timeline.length - 1 && (

@@ -28,27 +28,27 @@ const STATUS_CYCLE: ActionStatus[] = ['todo', 'in_progress', 'done'];
 
 const STATUS_ICONS: Record<ActionStatus, React.ReactNode> = {
   done: (
-    <CheckCircle2 size={16} strokeWidth={1.5} className="text-[#E8F8F0]0" />
+    <CheckCircle2 size={16} strokeWidth={1.5} className="text-[#E6F7EF]0" />
   ),
   in_progress: (
-    <Loader2 size={16} strokeWidth={1.5} className="text-[#E8F8F0]0" />
+    <Loader2 size={16} strokeWidth={1.5} className="text-[#E6F7EF]0" />
   ),
   todo: <Square size={16} strokeWidth={1.5} className="text-slate-400" />,
 };
 
 const PILLAR_COLORS: Record<string, string> = {
-  governance: 'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#1BAF6A] dark:text-[#A8E6C8]',
+  governance: 'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#00A86B] dark:text-[#8FDAB5]',
   environment:
-    'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#0A5C35] dark:text-[#A8E6C8]',
-  social: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+    'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#004428] dark:text-[#8FDAB5]',
+  social: 'bg-verdure-100 text-verdure-800 dark:bg-verdure-900 dark:text-verdure-300',
   ethics: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
-  stakeholders: 'bg-[#E8F8F0] text-[#1BAF6A] dark:bg-[#1BAF6A] dark:text-[#A8E6C8]',
+  stakeholders: 'bg-[#E6F7EF] text-[#00A86B] dark:bg-[#00A86B] dark:text-[#8FDAB5]',
 };
 
 const PRIORITY_STYLES: Record<ActionPriority, string> = {
   urgent: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
-  important: 'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#1BAF6A] dark:text-[#A8E6C8]',
-  quick_win: 'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#1BAF6A] dark:text-[#A8E6C8]',
+  important: 'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#00A86B] dark:text-[#8FDAB5]',
+  quick_win: 'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#00A86B] dark:text-[#8FDAB5]',
 };
 
 const PILLAR_LABELS: Record<string, string> = {

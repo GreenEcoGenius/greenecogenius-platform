@@ -38,8 +38,8 @@ export const CATEGORY_META: Record<
   },
   Verre: {
     icon: Wine,
-    color: 'text-[#1BAF6A]',
-    bgColor: 'bg-[#E8F8F0]',
+    color: 'text-[#00A86B]',
+    bgColor: 'bg-[#E6F7EF]',
     slug: 'verre',
   },
   Bois: {
@@ -62,8 +62,8 @@ export const CATEGORY_META: Record<
   },
   Biodéchets: {
     icon: Recycle,
-    color: 'text-green-700',
-    bgColor: 'bg-green-50',
+    color: 'text-verdure-700',
+    bgColor: 'bg-verdure-50',
     slug: 'biodechets',
   },
   BTP: {

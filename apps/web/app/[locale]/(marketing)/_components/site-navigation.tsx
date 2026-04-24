@@ -129,7 +129,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
               borderBottom: '1px solid #E4E8EC',
               fontSize: 16,
               fontWeight: 600,
-              color: '#1BAF6A',
+              color: '#00A86B',
               textDecoration: 'none',
             }}
           >
@@ -172,9 +172,9 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
               gap: 8,
               fontSize: 14,
               fontWeight: 600,
-              color: '#1BAF6A',
+              color: '#00A86B',
               background: 'none',
-              border: '1.5px solid #1BAF6A',
+              border: '1.5px solid #00A86B',
               borderRadius: 12,
               padding: '10px 18px',
               cursor: 'pointer',
@@ -206,7 +206,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
                 href={pathsConfig.auth.signUp}
                 onClick={() => setOpen(false)}
                 style={{
-                  backgroundColor: '#1BAF6A',
+                  backgroundColor: '#00A86B',
                   color: '#ffffff',
                   borderRadius: 12,
                   padding: '12px 16px',
@@ -259,9 +259,9 @@ function SignOutButton({ onDone }: { onDone: () => void }) {
         gap: 8,
         fontSize: 14,
         fontWeight: 600,
-        color: '#1BAF6A',
+        color: '#00A86B',
         background: 'none',
-        border: '1.5px solid #1BAF6A',
+        border: '1.5px solid #00A86B',
         borderRadius: 12,
         padding: '12px 16px',
         cursor: 'pointer',

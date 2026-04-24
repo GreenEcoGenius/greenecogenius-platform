@@ -92,7 +92,7 @@ export function CertificatesList({ certificates }: CertificatesListProps) {
                   })}{' '}
                   t
                 </TableCell>
-                <TableCell className="text-right text-green-600">
+                <TableCell className="text-right text-verdure-600">
                   {cert.co2_avoided.toLocaleString('fr-FR', {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,

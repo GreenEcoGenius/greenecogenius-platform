@@ -312,28 +312,28 @@ const modalConfig: Record<
   corriger: {
     title: 'Corriger le poids',
     description: 'Modifier le poids enregistre pour ce lot.',
-    icon: <Pencil className="h-5 w-5 text-[#159B5C]" />,
+    icon: <Pencil className="h-5 w-5 text-[#008F5A]" />,
   },
   signaler: {
     title: 'Signaler un ecart',
     description: 'Envoyer un signalement au vendeur concernant cet ecart.',
-    icon: <AlertTriangle className="h-5 w-5 text-[#159B5C]" />,
+    icon: <AlertTriangle className="h-5 w-5 text-[#008F5A]" />,
   },
   contacter_transporteur: {
     title: 'Contacter le transporteur',
     description: 'Envoyer un message au transporteur pour obtenir un suivi.',
-    icon: <Truck className="h-5 w-5 text-[#1BAF6A]" />,
+    icon: <Truck className="h-5 w-5 text-[#00A86B]" />,
   },
   marquer_retarde: {
     title: 'Marquer comme retarde',
     description: 'Le lot sera marque comme retarde dans le systeme.',
-    icon: <AlertTriangle className="h-5 w-5 text-[#1BAF6A]" />,
+    icon: <AlertTriangle className="h-5 w-5 text-[#00A86B]" />,
   },
   emettre_certificats: {
     title: 'Emettre des certificats',
     description:
       'Selectionnez et emettez des certificats de tracabilite pour les lots eligibles.',
-    icon: <CheckCircle className="h-5 w-5 text-[#E8F8F0]0" />,
+    icon: <CheckCircle className="h-5 w-5 text-[#E6F7EF]0" />,
   },
 };
 
@@ -394,7 +394,7 @@ export function AlertActionModal({
 
         {success ? (
           <div className="flex flex-col items-center gap-2 py-6">
-            <CheckCircle className="h-10 w-10 text-[#E8F8F0]0" />
+            <CheckCircle className="h-10 w-10 text-[#E6F7EF]0" />
             <p className="text-sm font-medium">Action effectuee avec succes</p>
           </div>
         ) : (

@@ -101,10 +101,10 @@ async function PersonalAccountBillingPage() {
     <PageBody>
       {/* Current subscription banner */}
       {currentSub && (
-        <Card className="mb-6 border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950">
+        <Card className="mb-6 border-verdure-200 bg-verdure-50 dark:border-verdure-900 dark:bg-verdure-950">
           <CardContent className="flex items-center justify-between py-4">
             <div className="flex items-center gap-3">
-              <BadgeCheck className="h-6 w-6 text-green-600" />
+              <BadgeCheck className="h-6 w-6 text-verdure-600" />
               <div>
                 <p className="font-semibold">
                   Plan {currentSub.subscription_plans?.display_name}
@@ -129,13 +129,13 @@ async function PersonalAccountBillingPage() {
         >
           <CardHeader className="text-center">
             <div className="mb-2 flex items-center justify-center gap-2">
-              <Zap className="h-5 w-5 text-green-600" />
+              <Zap className="h-5 w-5 text-verdure-600" />
               <CardTitle>
                 {essentiel?.display_name ?? t('planEssentielDefault')}
               </CardTitle>
             </div>
             {currentPlan === 'essentiel' && (
-              <Badge className="mx-auto bg-green-600 text-white">
+              <Badge className="mx-auto bg-verdure-600 text-white">
                 {t('currentPlan')}
               </Badge>
             )}
@@ -150,7 +150,7 @@ async function PersonalAccountBillingPage() {
             <ul className="flex-1 space-y-2">
               {essentielFeatures.map((feat) => (
                 <li key={feat} className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-verdure-600" />
                   <span className="text-sm">
                     <Trans i18nKey={feat} />
                   </span>
@@ -178,13 +178,13 @@ async function PersonalAccountBillingPage() {
                 {avance?.display_name ?? t('planAvanceDefault')}
               </CardTitle>
               {!currentPlan && (
-                <Badge className="animate-pulse bg-green-600 text-white">
+                <Badge className="animate-pulse bg-verdure-600 text-white">
                   <Sparkles className="mr-1 h-3 w-3" />
                   <Trans i18nKey="pricingPage.popular" />
                 </Badge>
               )}
               {currentPlan === 'avance' && (
-                <Badge className="bg-green-600 text-white">
+                <Badge className="bg-verdure-600 text-white">
                   {t('currentPlan')}
                 </Badge>
               )}
@@ -203,7 +203,7 @@ async function PersonalAccountBillingPage() {
             <ul className="flex-1 space-y-2">
               {avanceFeatures.map((feat) => (
                 <li key={feat} className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-verdure-600" />
                   <span className="text-sm">
                     <Trans i18nKey={feat} />
                   </span>
@@ -240,7 +240,7 @@ async function PersonalAccountBillingPage() {
             <ul className="flex-1 space-y-2">
               {enterpriseFeatures.map((feat) => (
                 <li key={feat} className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-verdure-600" />
                   <span className="text-sm">
                     <Trans i18nKey={feat} />
                   </span>
@@ -269,7 +269,7 @@ async function PersonalAccountBillingPage() {
       )}
 
       {/* Bottom section — included with marketplace */}
-      <div className="mt-10 rounded-xl border border-green-200 bg-green-50/50 p-6 dark:border-green-900 dark:bg-green-950/30">
+      <div className="mt-10 rounded-xl border border-verdure-200 bg-verdure-50/50 p-6 dark:border-verdure-900 dark:bg-verdure-950/30">
         <h3 className="mb-3 text-center text-lg font-semibold">
           {t('includedEachTransactionTitle')}
         </h3>
@@ -280,7 +280,7 @@ async function PersonalAccountBillingPage() {
           {[
             {
               icon: (
-                <Link2 size={16} strokeWidth={1.5} className="text-[#1BAF6A]" />
+                <Link2 size={16} strokeWidth={1.5} className="text-[#00A86B]" />
               ),
               label: t('tagBlockchainTraceability'),
             },
@@ -289,7 +289,7 @@ async function PersonalAccountBillingPage() {
                 <Leaf
                   size={16}
                   strokeWidth={1.5}
-                  className="text-[#1BAF6A]"
+                  className="text-[#00A86B]"
                 />
               ),
               label: t('tagAutoCO2'),
@@ -299,7 +299,7 @@ async function PersonalAccountBillingPage() {
                 <FileText
                   size={16}
                   strokeWidth={1.5}
-                  className="text-[#1BAF6A]"
+                  className="text-[#00A86B]"
                 />
               ),
               label: t('tagPdfCertificate'),
@@ -309,7 +309,7 @@ async function PersonalAccountBillingPage() {
                 <BarChart3
                   size={16}
                   strokeWidth={1.5}
-                  className="text-[#1BAF6A]"
+                  className="text-[#00A86B]"
                 />
               ),
               label: t('tagCarbonDashboard'),
@@ -319,7 +319,7 @@ async function PersonalAccountBillingPage() {
                 <Download
                   size={16}
                   strokeWidth={1.5}
-                  className="text-[#1BAF6A]"
+                  className="text-[#00A86B]"
                 />
               ),
               label: t('tagExportPdfCsv'),
@@ -327,7 +327,7 @@ async function PersonalAccountBillingPage() {
           ].map((tag) => (
             <span
               key={tag.label}
-              className="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-white px-3 py-1.5 text-sm dark:border-green-800 dark:bg-green-950"
+              className="inline-flex items-center gap-1.5 rounded-full border border-verdure-200 bg-white px-3 py-1.5 text-sm dark:border-verdure-800 dark:bg-verdure-950"
             >
               {tag.icon} {tag.label}
             </span>

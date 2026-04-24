@@ -105,7 +105,7 @@ export function TraceabilityEvolutionChart({
             <Bar
               yAxisId="lots"
               dataKey="lotsTracked"
-              fill="#1BAF6A"
+              fill="#00A86B"
               radius={[4, 4, 0, 0]}
               barSize={28}
               opacity={0.85}
@@ -115,9 +115,9 @@ export function TraceabilityEvolutionChart({
               yAxisId="co2"
               type="monotone"
               dataKey="co2AvoidedTonnes"
-              stroke="#7EC845"
+              stroke="#8BC53F"
               strokeWidth={2.5}
-              dot={{ r: 3, fill: '#7EC845' }}
+              dot={{ r: 3, fill: '#8BC53F' }}
               activeDot={{ r: 5 }}
               animationDuration={800}
             />

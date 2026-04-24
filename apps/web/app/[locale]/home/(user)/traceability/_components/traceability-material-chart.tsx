@@ -13,14 +13,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
 
 const MATERIAL_COLORS: Record<string, string> = {
-  plastique: '#1BAF6A',
-  metal: '#7EC845',
-  aluminium: '#2eafcf',
+  plastique: '#00A86B',
+  metal: '#8BC53F',
+  aluminium: '#6B7380',
   bois: '#6366f1',
-  verre: '#5bc4d6',
+  verre: '#9BA3AD',
   textile: '#f59e0b',
-  organique: '#10874E',
-  papier: '#a0aab4',
+  organique: '#007649',
+  papier: '#DDE2E7',
 };
 
 const MATERIAL_LABELS: Record<string, string> = {

@@ -130,7 +130,7 @@ export function ImpactSimulator() {
                 <Line
                   type="monotone"
                   dataKey="rate"
-                  stroke="#1BAF6A"
+                  stroke="#00A86B"
                   strokeWidth={2}
                   dot={{ r: 4 }}
                   name="Taux recyclage"
@@ -151,7 +151,7 @@ export function ImpactSimulator() {
                 <Line
                   type="monotone"
                   dataKey="target2030"
-                  stroke="#7EC845"
+                  stroke="#8BC53F"
                   strokeWidth={2}
                   strokeDasharray="5 5"
                   dot={{ r: 4 }}

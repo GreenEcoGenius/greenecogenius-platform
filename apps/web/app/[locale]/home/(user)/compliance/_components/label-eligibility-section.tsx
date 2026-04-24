@@ -22,14 +22,14 @@ export async function LabelEligibilitySection({
       <CardContent className="p-4 sm:p-6">
         <div className="mb-4 flex flex-col gap-2 sm:mb-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
-            <Award className="h-5 w-5 shrink-0 text-[#1BAF6A]" strokeWidth={1.5} />
+            <Award className="h-5 w-5 shrink-0 text-[#00A86B]" strokeWidth={1.5} />
             <h2 className="text-lg font-semibold text-gray-900 sm:text-xl">
               {t('labelSectionTitle')}
             </h2>
           </div>
           <Badge
             variant="secondary"
-            className="w-fit border-[#A8E6C8] bg-[#E8F8F0] text-[#159B5C]"
+            className="w-fit border-[#8FDAB5] bg-[#E6F7EF] text-[#008F5A]"
           >
             {t('labelsAccessible', {
               eligible: eligibleCount,
@@ -52,7 +52,7 @@ export async function LabelEligibilitySection({
                   <p className="text-[11px] text-gray-500 sm:text-xs">{l.organism}</p>
                 </div>
                 {l.eligible ? (
-                  <Badge className="shrink-0 border-[#A8E6C8] bg-[#E8F8F0] text-[11px] text-[#159B5C] sm:text-xs">
+                  <Badge className="shrink-0 border-[#8FDAB5] bg-[#E6F7EF] text-[11px] text-[#008F5A] sm:text-xs">
                     {t('eligible')}
                   </Badge>
                 ) : (
@@ -74,7 +74,7 @@ export async function LabelEligibilitySection({
                   <div
                     className={`h-full transition-all ${
                       l.coverage >= 80
-                        ? 'bg-[#E8F8F0]0'
+                        ? 'bg-[#E6F7EF]0'
                         : l.coverage >= 50
                           ? 'bg-amber-500'
                           : 'bg-gray-300'
@@ -94,7 +94,7 @@ export async function LabelEligibilitySection({
                   {l.criteria_met.map((c) => (
                     <li
                       key={`met-${c}`}
-                      className="flex items-start gap-1.5 text-[#159B5C]"
+                      className="flex items-start gap-1.5 text-[#008F5A]"
                     >
                       <Check
                         className="mt-0.5 h-3 w-3 shrink-0"

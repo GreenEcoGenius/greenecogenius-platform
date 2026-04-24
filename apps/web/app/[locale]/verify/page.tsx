@@ -73,8 +73,8 @@ export default async function VerifyLandingPage({
         <section className="border-b px-4 py-16 md:py-24">
           <div className="mx-auto max-w-2xl text-center">
             <div className="mb-6 flex justify-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-950">
-                <ShieldCheck className="h-8 w-8 text-green-600 dark:text-green-400" />
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-verdure-100 dark:bg-verdure-950">
+                <ShieldCheck className="h-8 w-8 text-verdure-600 dark:text-verdure-400" />
               </div>
             </div>
 
@@ -152,7 +152,7 @@ export default async function VerifyLandingPage({
         </section>
 
         {/* Global Stats */}
-        <section className="border-t bg-green-50 px-4 py-16 dark:bg-green-950/30">
+        <section className="border-t bg-verdure-50 px-4 py-16 dark:bg-verdure-950/30">
           <div className="mx-auto max-w-4xl">
             <h2 className="mb-10 text-center text-2xl font-bold">
               Transparence & Confiance
@@ -162,17 +162,17 @@ export default async function VerifyLandingPage({
               <StatCard
                 value={totalCertificates.toLocaleString('fr-FR')}
                 label="certificats émis"
-                icon={<ShieldCheck className="h-6 w-6 text-green-600" />}
+                icon={<ShieldCheck className="h-6 w-6 text-verdure-600" />}
               />
               <StatCard
                 value={Math.round(totalTonnes).toLocaleString('fr-FR')}
                 label="tonnes tracées"
-                icon={<Blocks className="h-6 w-6 text-green-600" />}
+                icon={<Blocks className="h-6 w-6 text-verdure-600" />}
               />
               <StatCard
                 value={Math.round(totalCO2Avoided).toLocaleString('fr-FR')}
                 label="tonnes CO₂ évitées"
-                icon={<Leaf className="h-6 w-6 text-green-600" />}
+                icon={<Leaf className="h-6 w-6 text-verdure-600" />}
               />
             </div>
           </div>
@@ -207,7 +207,7 @@ function HowItWorksStep({
   return (
     <Card>
       <CardContent className="flex flex-col items-center gap-4 p-6 text-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-400">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-verdure-100 text-verdure-700 dark:bg-verdure-950 dark:text-verdure-400">
           {icon}
         </div>
         <div className="bg-muted text-muted-foreground flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold">
@@ -229,10 +229,10 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <Card className="border-green-200 dark:border-green-800">
+    <Card className="border-verdure-200 dark:border-verdure-800">
       <CardContent className="flex flex-col items-center gap-2 p-6 text-center">
         {icon}
-        <p className="text-3xl font-bold text-green-700 dark:text-green-300">
+        <p className="text-3xl font-bold text-verdure-700 dark:text-verdure-300">
           {value}
         </p>
         <p className="text-muted-foreground text-sm">{label}</p>

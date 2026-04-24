@@ -279,7 +279,7 @@ export function PricingContent({
               <div className="mb-2 flex items-center justify-center gap-2">
                 <BarChart3 className="text-primary h-5 w-5" />
                 <CardTitle>{avance?.display_name ?? 'Avance'}</CardTitle>
-                <Badge className="bg-circuit-cyan text-metal-900 font-semibold">
+                <Badge className="bg-leaf-500 text-leaf-900 font-semibold">
                   <Sparkles className="mr-1 h-3 w-3" />
                   <Trans i18nKey="pricingPage.popular" />
                 </Badge>
@@ -380,7 +380,7 @@ export function PricingContent({
 
       {/* ACCOMPAGNEMENT SUR MESURE */}
       <section className="container mx-auto px-4 pt-0 pb-16">
-        <div className="mx-auto max-w-3xl rounded-xl border border-[#A8E6C8] bg-[#E8F8F0] px-6 py-10 text-center">
+        <div className="mx-auto max-w-3xl rounded-xl border border-[#8FDAB5] bg-[#E6F7EF] px-6 py-10 text-center">
           <h2 className="text-metal-900 text-xl font-semibold">
             <Trans i18nKey="pricingPage.customSupportTitle" />
           </h2>
@@ -496,11 +496,11 @@ export function PricingContent({
       {/* FOOTER CTA */}
       <section className="relative overflow-hidden py-16 text-white">
         <img
-          src="/images/normes/saas-carbon-dark.png"
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/GPT%20Images%202.0/image%20(1).png"
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="from-metal-900/70 via-metal-800/60 to-metal-900/80 absolute inset-0 bg-gradient-to-b" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/65 to-black/80" />
         <div className="relative container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white">
             <Trans i18nKey="pricingPage.ctaTitle" />
@@ -634,12 +634,12 @@ function ComingSoonSection() {
             return (
               <div
                 key={feature.titleEn}
-                className="rounded-xl border border-gray-200 bg-white p-6 transition-colors hover:border-[#A8E6C8]"
+                className="rounded-xl border border-gray-200 bg-white p-6 transition-colors hover:border-[#8FDAB5]"
               >
                 <div className="mb-3 flex items-start justify-between">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E8F8F0]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E6F7EF]">
                     <Icon
-                      className="h-5 w-5 text-[#1BAF6A]"
+                      className="h-5 w-5 text-[#00A86B]"
                       strokeWidth={1.5}
                     />
                   </div>
@@ -674,7 +674,7 @@ function ComingSoonSection() {
           </p>
           <Link
             href="/contact"
-            className="text-sm font-medium text-[#1BAF6A] hover:text-[#159B5C]"
+            className="text-sm font-medium text-[#00A86B] hover:text-[#008F5A]"
           >
             <Trans
               i18nKey="pricingPage.comingSoonContact"

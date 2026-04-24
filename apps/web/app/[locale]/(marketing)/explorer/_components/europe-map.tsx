@@ -164,7 +164,7 @@ function getCountryColor(volumeMt: number): string {
   if (volumeMt > 100) return '#064E3B';
   if (volumeMt > 50) return '#065F46';
   if (volumeMt > 30) return '#047857';
-  if (volumeMt > 15) return '#1BAF6A';
+  if (volumeMt > 15) return '#00A86B';
   if (volumeMt > 8) return '#34D399';
   if (volumeMt > 3) return '#6EE7B7';
   if (volumeMt > 0) return '#A7F3D0';
@@ -263,7 +263,7 @@ export function EuropeMap({ countryStats }: { countryStats: CountryStat[] }) {
           { color: '#A7F3D0', label: '< 5 Mt' },
           { color: '#6EE7B7', label: '' },
           { color: '#34D399', label: '' },
-          { color: '#1BAF6A', label: '' },
+          { color: '#00A86B', label: '' },
           { color: '#065F46', label: '' },
           { color: '#064E3B', label: '> 100 Mt' },
         ].map((item, i) => (

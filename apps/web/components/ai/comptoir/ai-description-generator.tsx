@@ -73,7 +73,7 @@ export function AIDescriptionGenerator({
         <div className="flex items-center justify-between">
           <AIPoweredBadge methodology="R\u00e9daction" />
           {applied && (
-            <span className="inline-flex items-center gap-1 text-xs text-green-600">
+            <span className="inline-flex items-center gap-1 text-xs text-verdure-600">
               <Check className="h-3 w-3" />
               Appliqu\u00e9e
             </span>

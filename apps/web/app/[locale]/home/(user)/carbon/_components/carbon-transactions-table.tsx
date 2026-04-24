@@ -90,10 +90,10 @@ export function CarbonTransactionsTable({
                     maximumFractionDigits: 3,
                   })}
                 </td>
-                <td className="px-4 py-3 text-right whitespace-nowrap text-green-600">
+                <td className="px-4 py-3 text-right whitespace-nowrap text-verdure-600">
                   {fmt(tx.co2_avoided)} kg
                 </td>
-                <td className="px-4 py-3 text-right whitespace-nowrap text-[#E8F8F0]0">
+                <td className="px-4 py-3 text-right whitespace-nowrap text-[#E6F7EF]0">
                   {fmt(tx.co2_transport)} kg
                 </td>
                 <td className="px-4 py-3 text-right font-medium whitespace-nowrap">

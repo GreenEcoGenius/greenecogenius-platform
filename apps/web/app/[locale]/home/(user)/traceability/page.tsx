@@ -121,8 +121,8 @@ async function TraceabilityPage() {
         </div>
 
         <SectionFooterImage
-          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-a5aace78-d0fe-4b7d-865b-181946fc2f34.png"
-          alt="Tracabilite"
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/GPT%20Images%202.0/ChatGPT%20Image%2024%20avr.%202026,%2001_04_23.png"
+          alt="GreenEcoGenius Traceability Blockchain"
         />
       </div>
     </PageBody>

@@ -39,22 +39,22 @@ async function RSEPage() {
 
   const features = [
     {
-      icon: <BarChart3 className="h-5 w-5 text-[#1BAF6A]" />,
+      icon: <BarChart3 className="h-5 w-5 text-[#00A86B]" />,
       title: t('featureScoreTitle'),
       desc: t('featureScoreDesc'),
     },
     {
-      icon: <Award className="h-5 w-5 text-[#1BAF6A]" />,
+      icon: <Award className="h-5 w-5 text-[#00A86B]" />,
       title: t('featureLabelsTitle'),
       desc: t('featureLabelsDesc'),
     },
     {
-      icon: <Target className="h-5 w-5 text-[#1BAF6A]" />,
+      icon: <Target className="h-5 w-5 text-[#00A86B]" />,
       title: t('featureActionPlanTitle'),
       desc: t('featureActionPlanDesc'),
     },
     {
-      icon: <Link2 className="h-5 w-5 text-[#1BAF6A]" />,
+      icon: <Link2 className="h-5 w-5 text-[#00A86B]" />,
       title: t('featureEcosystemTitle'),
       desc: t('featureEcosystemDesc'),
     },
@@ -122,6 +122,7 @@ async function RSEPage() {
         <SectionFooterImage
           src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-f30939eb-48c4-46f7-ad85-99b7f3c11c45.png"
           alt="RSE et Labels"
+          className="object-top"
         />
       </div>
     </PageBody>

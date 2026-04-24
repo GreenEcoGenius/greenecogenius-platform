@@ -26,7 +26,7 @@ const STATUS_CONFIG: Record<
 > = {
   compliant: {
     icon: CheckCircle,
-    className: 'bg-[#A8E6C8] text-[#159B5C]',
+    className: 'bg-[#8FDAB5] text-[#008F5A]',
     i18nKey: 'compliance:statusCompliant',
   },
   partial: {

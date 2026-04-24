@@ -58,21 +58,21 @@
   }
 }
 
-/* === GreenEcoGenius — Blockchain Frost Design System === */
+/* === GreenEcoGenius — Emerald + Cloud Design System === */
 :root {
-  --brand-primary: #1BAF6A;
-  --brand-primary-hover: #159B5C;
-  --brand-primary-light: #E8F8F0;
+  --brand-primary: #00A86B;
+  --brand-primary-hover: #008F5A;
+  --brand-primary-light: #E6F7EF;
   --text-primary: #111827;
-  --text-secondary: #5a6578;
-  --text-tertiary: #8e99a8;
-  --bg-page: #f4f6f8;
-  --bg-secondary: #dde5e8;
+  --text-secondary: #4B5260;
+  --text-tertiary: #6B7380;
+  --bg-page: #FAFBFC;
+  --bg-secondary: #F5F7F9;
   --bg-card: #ffffff;
-  --bg-hover: #e4e8ec;
-  --border-default: #c8d0d8;
-  --border-light: #e4e8ec;
-  --indicator-success: #3ddc84;
+  --bg-hover: #E6F7EF;
+  --border-default: #ECEFF2;
+  --border-light: #F5F7F9;
+  --indicator-success: #8BC53F;
   --indicator-warning: #ef9f27;
   --indicator-error: #e24b4a;
   --indicator-info: #2eafcf;

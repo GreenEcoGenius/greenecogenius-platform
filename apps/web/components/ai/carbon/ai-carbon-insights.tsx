@@ -38,7 +38,7 @@ const CARBON_PROMPT =
 const fallbackInsights: Insight[] = [
   {
     icon: TrendingUp,
-    iconColor: 'text-[#1BAF6A]',
+    iconColor: 'text-[#00A86B]',
     title: 'Tendance positive sur le Scope 1',
     description:
       'Vos \u00e9missions directes ont diminu\u00e9 de 12% par rapport au trimestre pr\u00e9c\u00e9dent. La transition vers des v\u00e9hicules \u00e9lectriques contribue significativement \u00e0 cette r\u00e9duction.',
@@ -46,7 +46,7 @@ const fallbackInsights: Insight[] = [
   },
   {
     icon: AlertTriangle,
-    iconColor: 'text-[#E8F8F0]0',
+    iconColor: 'text-[#E6F7EF]0',
     title: 'Scope 3 en hausse (+8%)',
     description:
       'Les \u00e9missions li\u00e9es \u00e0 la cha\u00eene d\u2019approvisionnement ont augment\u00e9. Nous recommandons un audit fournisseurs pour identifier les postes les plus \u00e9metteurs.',
@@ -72,15 +72,15 @@ function parseInsights(content: string): Insight[] | null {
         award: Award,
       };
       const colorMap: Record<string, string> = {
-        trend: 'text-[#1BAF6A]',
-        alert: 'text-[#E8F8F0]0',
+        trend: 'text-[#00A86B]',
+        alert: 'text-[#E6F7EF]0',
         award: 'text-violet-600',
       };
       return parsed.map((item: Record<string, string>, i: number) => {
         const type = item.type ?? ['trend', 'alert', 'award'][i % 3]!;
         return {
           icon: iconMap[type] ?? TrendingUp,
-          iconColor: colorMap[type] ?? 'text-[#1BAF6A]',
+          iconColor: colorMap[type] ?? 'text-[#00A86B]',
           title: item.title ?? '',
           description: item.description ?? '',
           action: item.action ?? 'En savoir plus',

@@ -38,7 +38,7 @@ export function NoSubscriptionPreview() {
             </div>
             <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
               <span className="flex items-center gap-1">
-                <CheckCircle2 className="h-4 w-4 text-[#E8F8F0]0" />
+                <CheckCircle2 className="h-4 w-4 text-[#E6F7EF]0" />
                 72% complete
               </span>
               <span className="text-muted-foreground">
@@ -48,7 +48,7 @@ export function NoSubscriptionPreview() {
             <div className="mt-3 max-w-lg">
               <div className="bg-muted h-2 overflow-hidden rounded-full">
                 <div
-                  className="h-full rounded-full bg-[#E8F8F0]0"
+                  className="h-full rounded-full bg-[#E6F7EF]0"
                   style={{ width: '72%' }}
                 />
               </div>
@@ -74,10 +74,10 @@ export function NoSubscriptionPreview() {
                 >
                   <div className="flex items-center gap-3">
                     {section.pct >= 90 ? (
-                      <CheckCircle2 className="h-5 w-5 text-[#E8F8F0]0" />
+                      <CheckCircle2 className="h-5 w-5 text-[#E6F7EF]0" />
                     ) : (
-                      <div className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-[#1BAF6A]">
-                        <span className="text-[10px] text-[#E8F8F0]0">!</span>
+                      <div className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-[#00A86B]">
+                        <span className="text-[10px] text-[#E6F7EF]0">!</span>
                       </div>
                     )}
                     <span className="text-sm font-medium">
@@ -118,7 +118,7 @@ export function NoSubscriptionPreview() {
               </h3>
             </div>
             <div className="flex flex-wrap justify-center gap-3">
-              <div className="flex items-center gap-2 rounded-full bg-[#E8F8F0] px-4 py-2 text-sm text-[#159B5C] dark:bg-[#0A5C35]/30 dark:text-[#A8E6C8]">
+              <div className="flex items-center gap-2 rounded-full bg-[#E6F7EF] px-4 py-2 text-sm text-[#008F5A] dark:bg-[#004428]/30 dark:text-[#8FDAB5]">
                 <ClipboardList className="h-4 w-4" />
                 Scope 1/2/3
               </div>
@@ -126,11 +126,11 @@ export function NoSubscriptionPreview() {
                 <FileText className="h-4 w-4" />
                 CSRD / GRI
               </div>
-              <div className="flex items-center gap-2 rounded-full bg-[#E8F8F0] px-4 py-2 text-sm text-[#1BAF6A] dark:bg-[#1BAF6A]/30 dark:text-[#A8E6C8]">
+              <div className="flex items-center gap-2 rounded-full bg-[#E6F7EF] px-4 py-2 text-sm text-[#00A86B] dark:bg-[#00A86B]/30 dark:text-[#8FDAB5]">
                 <Lightbulb className="h-4 w-4" />
                 IA Recommendations
               </div>
-              <div className="flex items-center gap-2 rounded-full bg-[#E8F8F0] px-4 py-2 text-sm text-[#1BAF6A] dark:bg-[#1BAF6A]/30 dark:text-[#A8E6C8]">
+              <div className="flex items-center gap-2 rounded-full bg-[#E6F7EF] px-4 py-2 text-sm text-[#00A86B] dark:bg-[#00A86B]/30 dark:text-[#8FDAB5]">
                 <Shield className="h-4 w-4" />
                 Blockchain
               </div>

@@ -238,14 +238,14 @@ async function CarbonPage() {
           <Card>
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-[#E8F8F0] p-2 dark:bg-[#1BAF6A]/30">
-                  <Flame className="h-5 w-5 text-[#1BAF6A]" />
+                <div className="rounded-lg bg-[#E6F7EF] p-2 dark:bg-[#00A86B]/30">
+                  <Flame className="h-5 w-5 text-[#00A86B]" />
                 </div>
                 <div className="flex-1">
                   <p className="text-muted-foreground text-xs">
                     <Trans i18nKey="carbon:scope1" />
                   </p>
-                  <p className="text-2xl font-bold text-[#1BAF6A]">
+                  <p className="text-2xl font-bold text-[#00A86B]">
                     {mockScope1}
                     <span className="ml-1 text-sm font-normal text-gray-500">
                       t
@@ -276,14 +276,14 @@ async function CarbonPage() {
           <Card>
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-[#E8F8F0] p-2 dark:bg-[#0A5C35]/30">
-                  <Zap className="h-5 w-5 text-[#1BAF6A]" />
+                <div className="rounded-lg bg-[#E6F7EF] p-2 dark:bg-[#004428]/30">
+                  <Zap className="h-5 w-5 text-[#00A86B]" />
                 </div>
                 <div className="flex-1">
                   <p className="text-muted-foreground text-xs">
                     <Trans i18nKey="carbon:scope2" />
                   </p>
-                  <p className="text-2xl font-bold text-[#1BAF6A]">
+                  <p className="text-2xl font-bold text-[#00A86B]">
                     {mockScope2}
                     <span className="ml-1 text-sm font-normal text-gray-500">
                       t
@@ -311,17 +311,17 @@ async function CarbonPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-[#A8E6C8] dark:border-[#159B5C]">
+          <Card className="border-[#8FDAB5] dark:border-[#008F5A]">
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-green-50 p-2 dark:bg-green-950/30">
-                  <Link2 className="h-5 w-5 text-green-600" />
+                <div className="rounded-lg bg-verdure-50 p-2 dark:bg-verdure-950/30">
+                  <Link2 className="h-5 w-5 text-verdure-600" />
                 </div>
                 <div className="flex-1">
                   <p className="text-muted-foreground text-xs">
                     <Trans i18nKey="carbon:scope3" />
                   </p>
-                  <p className="text-2xl font-bold text-green-600">
+                  <p className="text-2xl font-bold text-verdure-600">
                     {mockScope3}
                     <span className="ml-1 text-sm font-normal text-gray-500">
                       t
@@ -333,7 +333,7 @@ async function CarbonPage() {
                     </p>
                     <Badge
                       variant="outline"
-                      className="border-[#A8E6C8] text-[10px] text-green-600"
+                      className="border-[#8FDAB5] text-[10px] text-verdure-600"
                     >
                       73% <Trans i18nKey="carbon:scope3Auto" />
                     </Badge>
@@ -381,17 +381,17 @@ async function CarbonPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-[#A8E6C8] bg-[#E8F8F0]/50 dark:border-[#159B5C] dark:bg-[#0A5C35]/20">
+          <Card className="border-[#8FDAB5] bg-[#E6F7EF]/50 dark:border-[#008F5A] dark:bg-[#004428]/20">
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-[#A8E6C8] p-2 dark:bg-[#0A5C35]/40">
-                  <Leaf className="h-5 w-5 text-[#1BAF6A]" />
+                <div className="rounded-lg bg-[#8FDAB5] p-2 dark:bg-[#004428]/40">
+                  <Leaf className="h-5 w-5 text-[#00A86B]" />
                 </div>
                 <div className="flex-1">
                   <p className="text-muted-foreground text-xs">
                     <Trans i18nKey="carbon:totalAvoided" />
                   </p>
-                  <p className="text-2xl font-bold text-[#1BAF6A]">
+                  <p className="text-2xl font-bold text-[#00A86B]">
                     {(totalAvoided / 1000).toFixed(1)}
                     <span className="ml-1 text-sm font-normal text-gray-500">
                       t
@@ -460,24 +460,24 @@ function ScopeProgressSection() {
       labelKey: 'carbon:scope1Desc',
       progress: 0,
       status: 'partial' as const,
-      color: 'bg-[#E8F8F0]0',
-      bgColor: 'bg-[#A8E6C8] dark:bg-[#1BAF6A]/30',
+      color: 'bg-[#E6F7EF]0',
+      bgColor: 'bg-[#8FDAB5] dark:bg-[#00A86B]/30',
     },
     {
       name: 'Scope 2',
       labelKey: 'carbon:scope2Desc',
       progress: 0,
       status: 'partial' as const,
-      color: 'bg-[#E8F8F0]0',
-      bgColor: 'bg-[#A8E6C8] dark:bg-[#0A5C35]/30',
+      color: 'bg-[#E6F7EF]0',
+      bgColor: 'bg-[#8FDAB5] dark:bg-[#004428]/30',
     },
     {
       name: 'Scope 3',
       labelKey: 'carbon:scope3Desc',
       progress: 0,
       status: 'auto' as const,
-      color: 'bg-green-500',
-      bgColor: 'bg-green-100 dark:bg-green-950/30',
+      color: 'bg-verdure-500',
+      bgColor: 'bg-verdure-100 dark:bg-verdure-950/30',
     },
   ];
 
@@ -514,14 +514,14 @@ function ScopeProgressSection() {
                   {scope.status === 'auto' ? (
                     <Badge
                       variant="outline"
-                      className="border-[#A8E6C8] text-xs text-[#1BAF6A]"
+                      className="border-[#8FDAB5] text-xs text-[#00A86B]"
                     >
                       <Trans i18nKey="carbon:autoFilled" />
                     </Badge>
                   ) : (
                     <Badge
                       variant="outline"
-                      className="border-[#A8E6C8] text-xs text-[#1BAF6A]"
+                      className="border-[#8FDAB5] text-xs text-[#00A86B]"
                     >
                       <Trans i18nKey="carbon:toComplete" />
                     </Badge>

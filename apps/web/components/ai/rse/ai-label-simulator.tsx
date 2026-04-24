@@ -53,8 +53,8 @@ const labelCards: LabelCard[] = [
     id: 'greentech',
     name: 'GreenTech Innovation',
     icon: Leaf,
-    color: 'text-green-600',
-    bgColor: 'bg-green-50 dark:bg-green-950/30',
+    color: 'text-verdure-600',
+    bgColor: 'bg-verdure-50 dark:bg-verdure-950/30',
     status: 'Eligible',
     detail:
       "Criteres d'innovation verte satisfaits. Impact environnemental positif mesurable detecte.",
@@ -102,8 +102,8 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   variant="outline"
                   className={
                     label.score >= label.threshold
-                      ? 'border-green-200 text-green-700 dark:border-green-800 dark:text-green-400'
-                      : 'border-[#A8E6C8] text-[#1BAF6A] dark:border-[#159B5C] dark:text-[#1BAF6A]'
+                      ? 'border-verdure-200 text-verdure-700 dark:border-verdure-800 dark:text-verdure-400'
+                      : 'border-[#8FDAB5] text-[#00A86B] dark:border-[#008F5A] dark:text-[#00A86B]'
                   }
                 >
                   {label.score}/{label.threshold * 2.5}
@@ -125,7 +125,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   />
                   {/* Threshold marker */}
                   <div
-                    className="absolute top-0 h-full w-0.5 bg-[#159B5C]"
+                    className="absolute top-0 h-full w-0.5 bg-[#008F5A]"
                     style={{
                       left: `${(label.threshold / (label.threshold * 2.5)) * 100}%`,
                     }}
@@ -135,7 +135,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   <span className="text-muted-foreground">
                     Score: {label.score}
                   </span>
-                  <span className="text-[#159B5C]">
+                  <span className="text-[#008F5A]">
                     Seuil: {label.threshold}
                   </span>
                 </div>
@@ -170,8 +170,8 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
             )}
 
             {expanded && error && (
-              <div className="mt-3 rounded-md border border-[#A8E6C8] bg-[#E8F8F0] p-3 dark:border-[#159B5C] dark:bg-[#0A5C35]/20">
-                <p className="text-xs text-[#159B5C]">{error}</p>
+              <div className="mt-3 rounded-md border border-[#8FDAB5] bg-[#E6F7EF] p-3 dark:border-[#008F5A] dark:bg-[#004428]/20">
+                <p className="text-xs text-[#008F5A]">{error}</p>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -231,7 +231,7 @@ export function AILabelSimulator({ className }: { className?: string }) {
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-base">
-              <Award className="h-5 w-5 text-[#1BAF6A]" />
+              <Award className="h-5 w-5 text-[#00A86B]" />
               Simulateur de labels
             </CardTitle>
             <AIPoweredBadge methodology="Multi-referentiel" />
