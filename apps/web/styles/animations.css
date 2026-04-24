@@ -1,0 +1,38 @@
+/*
+ * animations.css
+ *
+ * Premium scroll + gradient animations for marketing pages.
+ * Transform and opacity only. Respects prefers-reduced-motion.
+ */
+
+@keyframes gradient-flow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.gradient-text-verdure-leaf {
+  background: linear-gradient(
+    90deg,
+    var(--color-verdure-500),
+    var(--color-leaf-500),
+    var(--color-verdure-500)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradient-flow 8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-text-verdure-leaf {
+    animation: none;
+    background-position: 0% 50%;
+  }
+}

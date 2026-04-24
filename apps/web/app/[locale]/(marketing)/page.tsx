@@ -46,7 +46,9 @@ export default async function Home() {
                 </div>
 
                 <h1 className="text-metal-900 text-3xl font-bold leading-[1.15] tracking-tight sm:text-4xl lg:text-[2.5rem] xl:text-5xl">
-                  {t('heroTitle')}
+                  <span className="gradient-text-verdure-leaf">
+                    {t('heroTitle')}
+                  </span>
                 </h1>
 
                 <p className="text-metal-600 mx-auto mt-6 max-w-xl text-base leading-relaxed lg:mx-0 lg:text-lg">
