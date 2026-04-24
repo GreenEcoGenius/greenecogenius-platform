@@ -20,10 +20,10 @@ interface AITrustScoreProps {
 
 function getScoreColor(score: number) {
   if (score > 80)
-    return { stroke: '#22c55e', text: 'text-green-600', label: 'Excellent' };
+    return { stroke: '#22c55e', text: 'text-verdure-600', label: 'Excellent' };
   if (score >= 50)
-    return { stroke: '#1BAF6A', text: 'text-[#1BAF6A]', label: 'Moyen' };
-  return { stroke: '#065f46', text: 'text-[#159B5C]', label: 'Critique' };
+    return { stroke: '#00A86B', text: 'text-[#00A86B]', label: 'Moyen' };
+  return { stroke: '#065f46', text: 'text-[#008F5A]', label: 'Critique' };
 }
 
 function CircularScore({ score }: { score: number }) {
@@ -74,7 +74,7 @@ export function AITrustScore({ score, checks }: AITrustScoreProps) {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base">
-            <ShieldCheck className="h-5 w-5 text-green-600" />
+            <ShieldCheck className="h-5 w-5 text-verdure-600" />
             Score de confiance
           </CardTitle>
           <AIPoweredBadge />
@@ -89,10 +89,10 @@ export function AITrustScore({ score, checks }: AITrustScoreProps) {
             variant="outline"
             className={`text-xs ${
               score > 80
-                ? 'border-green-200 text-green-700 dark:border-green-800 dark:text-green-400'
+                ? 'border-verdure-200 text-verdure-700 dark:border-verdure-800 dark:text-verdure-400'
                 : score >= 50
-                  ? 'border-[#A8E6C8] text-[#1BAF6A] dark:border-[#159B5C] dark:text-[#1BAF6A]'
-                  : 'border-[#A8E6C8] text-[#159B5C] dark:border-[#159B5C] dark:text-[#1BAF6A]'
+                  ? 'border-[#8FDAB5] text-[#00A86B] dark:border-[#008F5A] dark:text-[#00A86B]'
+                  : 'border-[#8FDAB5] text-[#008F5A] dark:border-[#008F5A] dark:text-[#00A86B]'
             }`}
           >
             {label}
@@ -107,9 +107,9 @@ export function AITrustScore({ score, checks }: AITrustScoreProps) {
               className="flex items-start gap-2 rounded-md border p-2.5 text-sm"
             >
               {check.passed ? (
-                <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
+                <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-verdure-500" />
               ) : (
-                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#E8F8F0]0" />
+                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#E6F7EF]0" />
               )}
               <div className="min-w-0">
                 <span className="font-medium">{check.label}</span>
@@ -127,14 +127,14 @@ export function AITrustScore({ score, checks }: AITrustScoreProps) {
         <div className="flex flex-wrap gap-2 border-t pt-4">
           <Badge
             variant="outline"
-            className="border-green-200 text-green-700 dark:border-green-800 dark:text-green-400"
+            className="border-verdure-200 text-verdure-700 dark:border-verdure-800 dark:text-verdure-400"
           >
             <CheckCircle className="mr-1 h-3 w-3" />
             ISO 59014
           </Badge>
           <Badge
             variant="outline"
-            className="border-green-200 text-green-700 dark:border-green-800 dark:text-green-400"
+            className="border-verdure-200 text-verdure-700 dark:border-verdure-800 dark:text-verdure-400"
           >
             <CheckCircle className="mr-1 h-3 w-3" />
             Decret tracabilite

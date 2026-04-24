@@ -66,7 +66,7 @@ export function AIPriceSuggestion({
   const priceData = response ? parsePriceData(response.content) : null;
 
   return (
-    <Card className="border-green-200 bg-green-50/50 dark:border-green-900 dark:bg-green-950/20">
+    <Card className="border-verdure-200 bg-verdure-50/50 dark:border-verdure-900 dark:bg-verdure-950/20">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm font-medium">
@@ -83,11 +83,11 @@ export function AIPriceSuggestion({
           <div className="space-y-3">
             {/* Price range */}
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-green-700 dark:text-green-400">
+              <span className="text-2xl font-bold text-verdure-700 dark:text-verdure-400">
                 {priceData.low.toLocaleString('fr-FR')} {priceData.currency}
               </span>
-              <ArrowRight className="h-4 w-4 text-green-600" />
-              <span className="text-2xl font-bold text-green-700 dark:text-green-400">
+              <ArrowRight className="h-4 w-4 text-verdure-600" />
+              <span className="text-2xl font-bold text-verdure-700 dark:text-verdure-400">
                 {priceData.high.toLocaleString('fr-FR')} {priceData.currency}
               </span>
             </div>
@@ -101,14 +101,14 @@ export function AIPriceSuggestion({
               <div className="flex items-center gap-1 text-xs">
                 {priceData.trend === 'up' && (
                   <>
-                    <TrendingUp className="h-3.5 w-3.5 text-green-600" />
-                    <span className="text-green-600">Hausse</span>
+                    <TrendingUp className="h-3.5 w-3.5 text-verdure-600" />
+                    <span className="text-verdure-600">Hausse</span>
                   </>
                 )}
                 {priceData.trend === 'down' && (
                   <>
-                    <TrendingDown className="h-3.5 w-3.5 text-[#1BAF6A]" />
-                    <span className="text-[#1BAF6A]">Baisse</span>
+                    <TrendingDown className="h-3.5 w-3.5 text-[#00A86B]" />
+                    <span className="text-[#00A86B]">Baisse</span>
                   </>
                 )}
                 {priceData.trend === 'stable' && (
@@ -122,7 +122,7 @@ export function AIPriceSuggestion({
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full border-green-300 text-green-700 hover:bg-green-100 dark:border-green-800 dark:text-green-400 dark:hover:bg-green-950"
+                className="w-full border-verdure-300 text-verdure-700 hover:bg-verdure-100 dark:border-verdure-800 dark:text-verdure-400 dark:hover:bg-verdure-950"
                 onClick={() => {
                   const midPrice = Math.round(
                     (priceData.low + priceData.high) / 2,
@@ -137,7 +137,7 @@ export function AIPriceSuggestion({
         )}
 
         {!loading && response && !priceData && (
-          <p className="text-sm text-green-800 dark:text-green-200">
+          <p className="text-sm text-verdure-800 dark:text-verdure-200">
             {response.content}
           </p>
         )}

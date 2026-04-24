@@ -1,116 +1,155 @@
 /*
  * theme.css
  *
- * GreenEcoGenius — Logo-based Design System
- * Primary #1BAF6A (emerald arrows), Accent #7EC845 (lime leaves)
+ * GreenEcoGenius — Emerald + Cloud Design System
+ * Primary verdure #00A86B (GEG emerald logo), Cloud #FAFBFC (off-white)
  */
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-brand: #1BAF6A;
-  --color-brand-hover: #159B5C;
-  --color-brand-light: #E8F8F0;
-  --color-brand-border: #A8E6C8;
-  --color-brand-50: #E8F8F0;
-  --color-brand-100: #C5EDDA;
-  --color-brand-200: #A8E6C8;
-  --color-brand-300: #6DD9A6;
-  --color-brand-400: #3DCA85;
-  --color-brand-500: #1BAF6A;
-  --color-brand-600: #159B5C;
-  --color-brand-700: #10874E;
-  --color-brand-800: #0C6B3E;
-  --color-brand-900: #08502F;
+  /* ── Verdure (emerald ring, pivot 500 = #00A86B, GEG logo) ── */
+  --color-verdure-50: #E6F7EF;
+  --color-verdure-100: #C1EBD6;
+  --color-verdure-200: #8FDAB5;
+  --color-verdure-300: #5DC893;
+  --color-verdure-400: #2EB77A;
+  --color-verdure-500: #00A86B;
+  --color-verdure-600: #008F5A;
+  --color-verdure-700: #007649;
+  --color-verdure-800: #005C38;
+  --color-verdure-900: #004428;
+  --color-verdure-950: #002B19;
 
-  /* ── Brand Accent (lime vert du logo) ── */
-  --color-brand-accent: #7EC845;
-  --color-brand-accent-light: #F0F9E8;
-  --color-brand-accent-50: #F0F9E8;
-  --color-brand-accent-100: #DFF0CC;
-  --color-brand-accent-200: #C5E4A3;
-  --color-brand-accent-300: #A3D474;
-  --color-brand-accent-400: #7EC845;
-  --color-brand-accent-500: #6AB838;
-  --color-brand-accent-600: #56A02C;
-  --color-brand-accent-700: #438722;
-  --color-brand-accent-800: #336D1A;
-  --color-brand-accent-900: #245412;
+  /* ── Leaf (lime accent, pivot 500 = #8BC53F, GEG logo leaf) ── */
+  --color-leaf-50: #F4FAE8;
+  --color-leaf-100: #E4F3C9;
+  --color-leaf-200: #CCE89A;
+  --color-leaf-300: #B3DC6B;
+  --color-leaf-400: #9DD056;
+  --color-leaf-500: #8BC53F;
+  --color-leaf-600: #6DA82E;
+  --color-leaf-700: #568622;
+  --color-leaf-800: #40651A;
+  --color-leaf-900: #2D4812;
+  --color-leaf-950: #1C2F0B;
 
-  /* ── Primary ── */
-  --color-primary-50: #E8F8F0;
-  --color-primary-100: #A8E6C8;
-  --color-primary-500: #1BAF6A;
-  --color-primary-600: #159B5C;
-  --color-primary-700: #118A50;
-  --color-primary-900: #0A5C35;
-  --color-primary-light: #E8F8F0;
-  --color-primary-hover: #159B5C;
+  /* ── Cloud (off-white + clean neutrals, pivot 50 = #FAFBFC) ── */
+  --color-cloud-50: #FAFBFC;
+  --color-cloud-100: #F5F7F9;
+  --color-cloud-200: #ECEFF2;
+  --color-cloud-300: #DDE2E7;
+  --color-cloud-400: #C5CCD4;
+  --color-cloud-500: #9BA3AD;
+  --color-cloud-600: #6B7380;
+  --color-cloud-700: #4B5260;
+  --color-cloud-800: #2E3340;
+  --color-cloud-900: #1A1D26;
 
-  /* ── Accent (lime vert du logo) ── */
-  --color-accent-green: #7EC845;
-  --color-accent-green-light: #F0F9E8;
+  /* ── Brand aliases (verdure) ── */
+  --color-brand: #00A86B;
+  --color-brand-hover: #008F5A;
+  --color-brand-light: #E6F7EF;
+  --color-brand-border: #8FDAB5;
+  --color-brand-50: #E6F7EF;
+  --color-brand-100: #C1EBD6;
+  --color-brand-200: #8FDAB5;
+  --color-brand-300: #5DC893;
+  --color-brand-400: #2EB77A;
+  --color-brand-500: #00A86B;
+  --color-brand-600: #008F5A;
+  --color-brand-700: #007649;
+  --color-brand-800: #005C38;
+  --color-brand-900: #004428;
 
-  /* ── Circuit — Blues tech ── */
-  --color-circuit-cyan: #00d4ff;
-  --color-circuit-blue: #2eafcf;
-  --color-circuit-turquoise: #5bc4d6;
-  --color-circuit-ice: #a8e4f0;
-  --color-circuit-50: #e6f8ff;
-  --color-circuit-100: #a8e4f0;
-  --color-circuit-300: #5bc4d6;
-  --color-circuit-500: #2eafcf;
-  --color-circuit-700: #00d4ff;
+  /* ── Brand Accent (leaf lime from GEG logo) ── */
+  --color-brand-accent: #8BC53F;
+  --color-brand-accent-light: #F4FAE8;
+  --color-brand-accent-50: #F4FAE8;
+  --color-brand-accent-100: #E4F3C9;
+  --color-brand-accent-200: #CCE89A;
+  --color-brand-accent-300: #B3DC6B;
+  --color-brand-accent-400: #9DD056;
+  --color-brand-accent-500: #8BC53F;
+  --color-brand-accent-600: #6DA82E;
+  --color-brand-accent-700: #568622;
+  --color-brand-accent-800: #40651A;
+  --color-brand-accent-900: #2D4812;
 
-  /* ── Tech — Verts ── */
-  --color-tech-neon: #7EC845;
-  --color-tech-emerald: #1BAF6A;
-  --color-tech-mint: #A8E6C8;
+  /* ── Primary (alias to verdure) ── */
+  --color-primary-50: #E6F7EF;
+  --color-primary-100: #C1EBD6;
+  --color-primary-500: #00A86B;
+  --color-primary-600: #008F5A;
+  --color-primary-700: #007649;
+  --color-primary-900: #004428;
+  --color-primary-light: #E6F7EF;
+  --color-primary-hover: #008F5A;
 
-  /* ── Metal — Gris bleutes ── */
-  --color-metal-frost: #dde5e8;
-  --color-metal-chrome: #e4e8ec;
-  --color-metal-silver: #c8d0d8;
-  --color-metal-steel: #a0aab4;
-  --color-metal-50: #f4f6f8;
-  --color-metal-100: #e4e8ec;
-  --color-metal-200: #dde5e8;
-  --color-metal-300: #c8d0d8;
-  --color-metal-400: #a0aab4;
-  --color-metal-500: #8e99a8;
-  --color-metal-600: #5a6578;
-  --color-metal-700: #3d4a5c;
-  --color-metal-800: #2a3444;
-  --color-metal-900: #1a2332;
+  /* ── Accent (green alias) ── */
+  --color-accent-green: #8BC53F;
+  --color-accent-green-light: #F4FAE8;
+
+  /* ── Circuit — neutralised to cloud neutrals ── */
+  --color-circuit-cyan: #6B7380;
+  --color-circuit-blue: #4B5260;
+  --color-circuit-turquoise: #C5CCD4;
+  --color-circuit-ice: #F5F7F9;
+  --color-circuit-50: #FAFBFC;
+  --color-circuit-100: #F5F7F9;
+  --color-circuit-300: #C5CCD4;
+  --color-circuit-500: #4B5260;
+  --color-circuit-700: #2E3340;
+
+  /* ── Tech — verdure + leaf ── */
+  --color-tech-neon: #8BC53F;
+  --color-tech-emerald: #00A86B;
+  --color-tech-mint: #C1EBD6;
+
+  /* ── Metal — aligned to cloud neutrals ── */
+  --color-metal-frost: #F5F7F9;
+  --color-metal-chrome: #FAFBFC;
+  --color-metal-silver: #DDE2E7;
+  --color-metal-steel: #6B7380;
+  --color-metal-50: #FAFBFC;
+  --color-metal-100: #F5F7F9;
+  --color-metal-200: #ECEFF2;
+  --color-metal-300: #DDE2E7;
+  --color-metal-400: #C5CCD4;
+  --color-metal-500: #9BA3AD;
+  --color-metal-600: #6B7380;
+  --color-metal-700: #4B5260;
+  --color-metal-800: #2E3340;
+  --color-metal-900: #1A1D26;
 
   /* KPI card gradients */
-  --color-kpi-teal: #1BAF6A;
-  --color-kpi-teal-dark: #159B5C;
-  --color-kpi-emerald: #1BAF6A;
-  --color-kpi-emerald-dark: #159B5C;
-  --color-kpi-green: #1BAF6A;
-  --color-kpi-green-dark: #159B5C;
+  --color-kpi-teal: #00A86B;
+  --color-kpi-teal-dark: #007649;
+  --color-kpi-emerald: #00A86B;
+  --color-kpi-emerald-dark: #007649;
+  --color-kpi-green: #00A86B;
+  --color-kpi-green-dark: #007649;
 
-  /* Indicators */
-  --color-indicator-success: #7EC845;
+  /* Indicators (keep semantic meaning) */
+  --color-indicator-success: #8BC53F;
   --color-indicator-warning: #f59e0b;
   --color-indicator-error: #e24b4a;
   --color-indicator-info: #2eafcf;
   --color-indicator-purple: #534ab7;
 
   /* ── Semantic badge colors ── */
-  --color-badge-amber-bg: #E8F8F0;
+  --color-badge-amber-bg: #E6F7EF;
   --color-badge-amber-text: #111827;
   --color-badge-purple-bg: #eeedfe;
   --color-badge-purple-text: #534ab7;
 
   /* ── Circuit dark (for KPI gradients) ── */
-  --color-circuit-dark: #1a8ab0;
+  --color-circuit-dark: #2E3340;
 
-  /* Chart palette */
-  --color-chart-primary: #1BAF6A;
-  --color-chart-circuit: #2eafcf;
-  --color-chart-neon: #7EC845;
-  --color-chart-turquoise: #5bc4d6;
+  /* Chart palette (verdure + leaf + cloud neutrals) */
+  --color-chart-primary: #00A86B;
+  --color-chart-circuit: #6B7380;
+  --color-chart-neon: #8BC53F;
+  --color-chart-turquoise: #C5CCD4;
   --color-chart-amber: #f59e0b;
 }
 
@@ -138,43 +177,43 @@
  * Light Mode
  */
 :root {
-  --background: #f4f6f8;
+  --background: #FAFBFC;
   --foreground: #111827;
   --card: #ffffff;
   --card-foreground: #111827;
   --popover: #ffffff;
   --popover-foreground: #111827;
-  --primary: #1BAF6A;
+  --primary: #00A86B;
   --primary-foreground: #ffffff;
-  --secondary: #f4f6f8;
+  --secondary: #F5F7F9;
   --secondary-foreground: #111827;
-  --muted: #f4f6f8;
-  --muted-foreground: #5a6578;
-  --accent: #E8F8F0;
-  --accent-foreground: #111827;
+  --muted: #F5F7F9;
+  --muted-foreground: #4B5260;
+  --accent: #E6F7EF;
+  --accent-foreground: #00A86B;
   --destructive: #e24b4a;
-  --border: #c8d0d8;
-  --input: #c8d0d8;
-  --ring: #1BAF6A;
+  --border: #ECEFF2;
+  --input: #ECEFF2;
+  --ring: #00A86B;
 
   /* Charts */
-  --chart-1: #1BAF6A;
-  --chart-2: #7EC845;
-  --chart-3: #2eafcf;
-  --chart-4: #5bc4d6;
-  --chart-5: #a0aab4;
+  --chart-1: #00A86B;
+  --chart-2: #8BC53F;
+  --chart-3: #6B7380;
+  --chart-4: #C5CCD4;
+  --chart-5: #DDE2E7;
 
   --radius: 0.75rem;
 
   /* Sidebar — Light */
   --sidebar: #ffffff;
   --sidebar-foreground: #111827;
-  --sidebar-primary: #1BAF6A;
+  --sidebar-primary: #00A86B;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #E8F8F0;
-  --sidebar-accent-foreground: #1BAF6A;
-  --sidebar-border: #e4e8ec;
-  --sidebar-ring: #1BAF6A;
+  --sidebar-accent: #E6F7EF;
+  --sidebar-accent-foreground: #00A86B;
+  --sidebar-border: #ECEFF2;
+  --sidebar-ring: #00A86B;
 }
 
 /*
@@ -187,7 +226,7 @@
   --card-foreground: #f8fafc;
   --popover: #1e293b;
   --popover-foreground: #f8fafc;
-  --primary: #1BAF6A;
+  --primary: #00A86B;
   --primary-foreground: #ffffff;
   --secondary: #334155;
   --secondary-foreground: #f8fafc;
@@ -198,20 +237,20 @@
   --destructive: #e24b4a;
   --border: #334155;
   --input: #334155;
-  --ring: #1BAF6A;
+  --ring: #00A86B;
 
-  --chart-1: #1BAF6A;
-  --chart-2: #7EC845;
-  --chart-3: #2eafcf;
-  --chart-4: #5bc4d6;
+  --chart-1: #00A86B;
+  --chart-2: #8BC53F;
+  --chart-3: #6B7380;
+  --chart-4: #C5CCD4;
   --chart-5: #475569;
 
   --sidebar: #1e293b;
   --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #1BAF6A;
+  --sidebar-primary: #00A86B;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #334155;
   --sidebar-accent-foreground: #f8fafc;
   --sidebar-border: #334155;
-  --sidebar-ring: #1BAF6A;
+  --sidebar-ring: #00A86B;
 }

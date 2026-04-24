@@ -28,13 +28,13 @@ const STATUS_CONFIG: Record<
     variant: 'default',
     i18nKey: 'rse:eligible',
     className:
-      'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300 border-green-200',
+      'bg-verdure-100 text-verdure-800 dark:bg-verdure-900/40 dark:text-verdure-300 border-verdure-200',
   },
   in_progress: {
     variant: 'secondary',
     i18nKey: 'rse:inProgress',
     className:
-      'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8] border-[#A8E6C8]',
+      'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5] border-[#8FDAB5]',
   },
   not_started: {
     variant: 'outline',

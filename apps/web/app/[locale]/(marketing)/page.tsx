@@ -40,7 +40,7 @@ export default async function Home() {
             {/* Colonne gauche — Texte */}
             <div className="text-center lg:text-left">
               <AnimateOnScroll animation="fade-up">
-                <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#A8E6C8] bg-[#E8F8F0] px-4 py-1.5 text-sm font-medium text-[#159B5C]">
+                <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#8FDAB5] bg-[#E6F7EF] px-4 py-1.5 text-sm font-medium text-[#008F5A]">
                   <Sparkles className="h-4 w-4" strokeWidth={1.5} />
                   <span>{t('heroBadge')}</span>
                 </div>
@@ -56,7 +56,7 @@ export default async function Home() {
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
                   <Link
                     href="/auth/sign-up"
-                    className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#1BAF6A] px-6 py-3 font-medium text-white transition-colors hover:bg-[#159B5C] sm:w-auto"
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#00A86B] px-6 py-3 font-medium text-white transition-colors hover:bg-[#008F5A] sm:w-auto"
                   >
                     {t('heroCtaPrimary')}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" strokeWidth={1.5} />
@@ -71,15 +71,15 @@ export default async function Home() {
 
                 <div className="text-metal-500 mt-6 flex flex-wrap items-center justify-center gap-4 text-sm lg:justify-start">
                   <span className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-[#E8F8F0]0" />
+                    <span className="h-2 w-2 rounded-full bg-[#E6F7EF]0" />
                     {t('heroProof1')}
                   </span>
                   <span className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-[#E8F8F0]0" />
+                    <span className="h-2 w-2 rounded-full bg-[#E6F7EF]0" />
                     {t('heroProof2')}
                   </span>
                   <span className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-[#E8F8F0]0" />
+                    <span className="h-2 w-2 rounded-full bg-[#E6F7EF]0" />
                     {t('heroProof3')}
                   </span>
                 </div>
@@ -92,10 +92,10 @@ export default async function Home() {
               <div className="mx-auto max-w-md lg:hidden">
                 <div className="overflow-hidden rounded-2xl shadow-2xl">
                   <Image
-                    src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/GEG.png"
-                    alt="GreenEcoGenius Platform Dashboard"
-                    width={2800}
-                    height={1800}
+                    src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/GPT%20Images%202.0/ChatGPT%20Image%2024%20avr.%202026,%2001_00_07.png"
+                    alt="GreenEcoGenius Industrial Recycling Warehouse"
+                    width={1672}
+                    height={941}
                     className="h-auto w-full"
                     priority
                     unoptimized
@@ -106,10 +106,10 @@ export default async function Home() {
               <div className="relative hidden lg:block">
                 <div className="ml-8 w-[115%] overflow-hidden rounded-2xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.25)] xl:ml-12 xl:w-[118%]">
                   <Image
-                    src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/Home%20Page/GEG.png"
-                    alt="GreenEcoGenius Platform Dashboard"
-                    width={2800}
-                    height={1800}
+                    src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/GPT%20Images%202.0/ChatGPT%20Image%2024%20avr.%202026,%2001_00_07.png"
+                    alt="GreenEcoGenius Industrial Recycling Warehouse"
+                    width={1672}
+                    height={941}
                     className="h-auto w-full object-contain"
                     priority
                     unoptimized
@@ -153,8 +153,8 @@ export default async function Home() {
           <div className="mt-16 grid gap-8 md:grid-cols-3 lg:mt-20">
             <AnimateOnScroll animation="fade-up" delay={0}>
               <PillarCard
-                image="/images/sorted-materials.png"
-                imageAlt="Sorted recyclable materials warehouse"
+                image="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/GPT%20Images%202.0/image.png"
+                imageAlt="GreenEcoGenius Circular Economy Ecosystem"
                 icon={<Recycle className="h-5 w-5" />}
                 badge={t('landing.pillar1Badge')}
                 title={t('feature1Title')}
@@ -165,8 +165,8 @@ export default async function Home() {
             </AnimateOnScroll>
             <AnimateOnScroll animation="fade-up" delay={150}>
               <PillarCard
-                image="/images/blockchain-tablet.png"
-                imageAlt="Blockchain traceability on tablet"
+                image="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/GPT%20Images%202.0/ChatGPT%20Image%2024%20avr.%202026,%2001_04_23.png"
+                imageAlt="GreenEcoGenius Blockchain Traceability Workspace"
                 icon={<Shield className="h-5 w-5" />}
                 badge={t('landing.pillar2Badge')}
                 title={t('feature2Title')}
@@ -177,8 +177,8 @@ export default async function Home() {
             </AnimateOnScroll>
             <AnimateOnScroll animation="fade-up" delay={300}>
               <PillarCard
-                image="/images/team-csr-reporting.png"
-                imageAlt="Team working on CSR reporting"
+                image="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/GPT%20Images%202.0/ChatGPT%20Image%2024%20avr.%202026,%2000_57_25.png"
+                imageAlt="GreenEcoGenius Carbon and ESG Reporting Platform"
                 icon={<Bot className="h-5 w-5" />}
                 badge={t('landing.pillar3Badge')}
                 title={t('feature3Title')}

@@ -766,11 +766,11 @@ export const DEMO_DATA = {
     level: 'Intermédiaire',
     lastEval: '2026-03-15',
     pillars: [
-      { name: 'governance', score: 68, norm: 'ISO 26000 §6', color: '#1BAF6A' },
-      { name: 'environment', score: 89, norm: 'ISO 14001', color: '#1BAF6A' },
+      { name: 'governance', score: 68, norm: 'ISO 26000 §6', color: '#00A86B' },
+      { name: 'environment', score: 89, norm: 'ISO 14001', color: '#00A86B' },
       { name: 'social', score: 52, norm: 'SA8000', color: '#94A3B8' },
       { name: 'ethics', score: 76, norm: 'ISO 37001', color: '#16A34A' },
-      { name: 'stakeholders', score: 48, norm: 'AA1000', color: '#1BAF6A' },
+      { name: 'stakeholders', score: 48, norm: 'AA1000', color: '#00A86B' },
     ],
     labels: [
       {
@@ -799,7 +799,7 @@ export const DEMO_DATA = {
         score: 74,
         threshold: 80,
         status: 'in_progress',
-        color: '#1BAF6A',
+        color: '#00A86B',
       },
       {
         name: 'EcoVadis',

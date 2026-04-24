@@ -42,7 +42,7 @@ export function MarketTrends({ stats }: { stats: NationalStat[] }) {
                   {formatVolume(stat.annual_volume_tonnes)}
                   {t('explorer.perYear')}
                   {stat.recycling_rate > 0 && (
-                    <span className="text-[#1BAF6A]">
+                    <span className="text-[#00A86B]">
                       · {formatRate(stat.recycling_rate)}{' '}
                       {t('explorer.recycled')}
                     </span>

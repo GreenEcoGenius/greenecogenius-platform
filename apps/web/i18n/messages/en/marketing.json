@@ -408,10 +408,10 @@
     "foundationsFrameworksSub": "Our platform structures your data according to these recognized frameworks"
   },
 
-  "explorerNav": "Explorer",
+  "explorerNav": "Observatory",
   "explorer": {
     "badge": "Open Data",
-    "heroTitle": "Global Recyclable Materials Explorer",
+    "heroTitle": "Global Recyclable Materials Observatory",
     "heroSubtitle": "France, EU-27 and United States — volumes, prices and trends by material category. Public data from ADEME, GEREP, Eurostat, EPA.",
     "metaTitle": "Recyclable Materials — France, Europe, USA | GreenEcoGenius",
     "metaDesc": "Explore recyclable materials in France, Europe and the United States: plastics, metals, paper, glass, wood, textile, bio-waste. ADEME, Eurostat, EPA data. Volumes and trends.",
@@ -449,7 +449,7 @@
     "ctaSellerTitle": "Selling recyclable materials?",
     "ctaSellerDesc": "Publish your lot for free — buyers are looking for you.",
     "ctaPublishLot": "Publish a lot",
-    "backToExplorer": "Back to explorer",
+    "backToExplorer": "Back to Observatory",
     "inFrance": "in France",
     "subtypesTitle": "Breakdown by subtype",
     "regionBreakdown": "Breakdown by region",

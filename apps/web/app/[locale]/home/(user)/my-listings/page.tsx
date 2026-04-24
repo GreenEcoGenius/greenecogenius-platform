@@ -26,7 +26,9 @@ async function MyListingsPage() {
   const { data: listings } = userId
     ? await client
         .from('listings')
-        .select('*, material_categories(*)')
+        .select(
+          '*, material_categories(*), listing_images(storage_path, position)',
+        )
         .eq('account_id', userId)
         .order('created_at', { ascending: false })
     : { data: [] };
@@ -47,14 +49,24 @@ async function MyListingsPage() {
 
       {listings && listings.length > 0 ? (
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {listings.map((listing) => (
-            <ListingCard
-              key={listing.id}
-              listing={listing}
-              account=""
-              showDelete
-            />
-          ))}
+          {listings.map((listing) => {
+            const images = ((listing as Record<string, unknown>).listing_images ??
+              []) as Array<{ storage_path: string; position: number | null }>;
+            const sortedImages = [...images].sort(
+              (a, b) => (a.position ?? 0) - (b.position ?? 0),
+            );
+            const firstImage = sortedImages[0]?.storage_path ?? null;
+            return (
+              <ListingCard
+                key={listing.id}
+                listing={listing}
+                account=""
+                showDelete
+                imageUrl={firstImage}
+                imageCount={images.length}
+              />
+            );
+          })}
         </div>
       ) : (
         <div className="mt-12 flex flex-col items-center gap-4 text-center">

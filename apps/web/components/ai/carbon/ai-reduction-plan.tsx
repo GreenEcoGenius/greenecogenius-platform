@@ -132,7 +132,7 @@ export function AIReductionPlan({ className }: { className?: string }) {
               return (
                 <div key={index} className="bg-muted/40 rounded-lg border p-4">
                   <div className="flex items-start gap-3">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#A8E6C8] text-[#159B5C] dark:bg-[#0A5C35] dark:text-[#1BAF6A]">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#8FDAB5] text-[#008F5A] dark:bg-[#004428] dark:text-[#00A86B]">
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="flex-1 space-y-2">
@@ -149,13 +149,13 @@ export function AIReductionPlan({ className }: { className?: string }) {
                           <span className="text-muted-foreground">
                             Impact potentiel
                           </span>
-                          <span className="font-medium text-[#1BAF6A]">
+                          <span className="font-medium text-[#00A86B]">
                             -{action.impactPercent}%
                           </span>
                         </div>
                         <div className="bg-muted h-2 overflow-hidden rounded-full">
                           <div
-                            className="h-full rounded-full bg-[#E8F8F0]0 transition-all"
+                            className="h-full rounded-full bg-[#E6F7EF]0 transition-all"
                             style={{ width: `${action.impactPercent}%` }}
                           />
                         </div>
@@ -165,7 +165,7 @@ export function AIReductionPlan({ className }: { className?: string }) {
                         <div className="flex gap-4">
                           <span className="text-muted-foreground">
                             \u00c9conomie:{' '}
-                            <span className="font-medium text-[#1BAF6A]">
+                            <span className="font-medium text-[#00A86B]">
                               {action.co2Savings}
                             </span>
                           </span>

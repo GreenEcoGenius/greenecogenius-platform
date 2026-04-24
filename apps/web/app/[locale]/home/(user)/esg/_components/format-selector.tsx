@@ -52,7 +52,7 @@ export function FormatSelector({
                 onClick={() => !isLocked && setSelectedFormat(fmt.id)}
                 className={`relative rounded-lg border p-3 text-left transition-all ${
                   isSelected
-                    ? 'border-[#E8F8F0]0 bg-[#E8F8F0]/50 ring-1 ring-[#E8F8F0]0 dark:bg-[#0A5C35]/20'
+                    ? 'border-[#E6F7EF]0 bg-[#E6F7EF]/50 ring-1 ring-[#E6F7EF]0 dark:bg-[#004428]/20'
                     : isLocked
                       ? 'cursor-not-allowed opacity-50'
                       : 'hover:border-gray-300 dark:hover:border-gray-600'
@@ -60,7 +60,7 @@ export function FormatSelector({
               >
                 {isSelected && (
                   <div className="absolute top-2 right-2">
-                    <Check className="h-4 w-4 text-[#1BAF6A]" />
+                    <Check className="h-4 w-4 text-[#00A86B]" />
                   </div>
                 )}
                 {isLocked && (

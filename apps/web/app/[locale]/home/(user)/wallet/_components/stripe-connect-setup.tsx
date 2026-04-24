@@ -109,10 +109,10 @@ export function StripeConnectSetup({
   // Onboarding incomplete
   if (!connectedAccount.onboardingComplete) {
     return (
-      <Card className="border-[#A8E6C8] bg-[#E8F8F0] dark:border-[#1BAF6A] dark:bg-[#1BAF6A]">
+      <Card className="border-[#8FDAB5] bg-[#E6F7EF] dark:border-[#00A86B] dark:bg-[#00A86B]">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <ShieldAlert className="h-5 w-5 text-[#1BAF6A]" />
+            <ShieldAlert className="h-5 w-5 text-[#00A86B]" />
             <Trans i18nKey="wallet.onboardingPending" />
           </CardTitle>
         </CardHeader>
@@ -131,10 +131,10 @@ export function StripeConnectSetup({
 
   // Fully set up
   return (
-    <Card className="border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950">
+    <Card className="border-verdure-200 bg-verdure-50 dark:border-verdure-900 dark:bg-verdure-950">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <BadgeCheck className="h-5 w-5 text-green-600" />
+          <BadgeCheck className="h-5 w-5 text-verdure-600" />
           <Trans i18nKey="wallet.accountVerified" />
         </CardTitle>
       </CardHeader>

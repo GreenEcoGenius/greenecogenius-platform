@@ -39,7 +39,7 @@ export async function StatsSection() {
   const t = await getTranslations('marketing');
 
   return (
-    <section className="bg-[#ECFDF5] py-20 sm:py-28">
+    <section className="bg-cloud-100 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll animation="fade-up">
           <h2 className="text-metal-900 mb-4 text-center text-3xl font-bold sm:text-4xl">

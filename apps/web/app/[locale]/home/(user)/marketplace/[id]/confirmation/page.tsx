@@ -66,7 +66,7 @@ async function ConfirmationPage({
         <div className="flex flex-wrap justify-center gap-3">
           {transactionId ? (
             <Button
-              className="bg-[#1BAF6A] hover:bg-[#1BAF6A]"
+              className="bg-[#00A86B] hover:bg-[#00A86B]"
               nativeButton={false}
               render={
                 <Link href={`/home/transactions/${transactionId}`}>

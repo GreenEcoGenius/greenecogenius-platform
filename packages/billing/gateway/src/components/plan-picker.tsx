@@ -447,7 +447,7 @@ function PlanDetails({
                     className={'flex items-center gap-x-2'}
                     variant={'outline'}
                   >
-                    <CheckCircle className={'h-3 w-3 text-green-500'} />
+                    <CheckCircle className={'h-3 w-3 text-verdure-500'} />
 
                     <span className={'text-muted-foreground'}>
                       <Trans i18nKey={item} defaults={item} />

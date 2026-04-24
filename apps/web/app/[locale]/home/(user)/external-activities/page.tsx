@@ -109,7 +109,7 @@ async function ExternalActivitiesPage() {
                   <Icon className="h-4 w-4" strokeWidth={1.5} />
                   <span className="hidden sm:inline">{label}</span>
                   {count > 0 ? (
-                    <span className="ml-1 rounded-full bg-[#A8E6C8] px-1.5 text-xs text-[#159B5C]">
+                    <span className="ml-1 rounded-full bg-[#8FDAB5] px-1.5 text-xs text-[#008F5A]">
                       {count}
                     </span>
                   ) : null}
@@ -184,7 +184,7 @@ async function ExternalActivitiesPage() {
                                     href={docHref}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="mt-2 inline-flex items-center gap-1.5 text-xs text-[#159B5C] hover:underline"
+                                    className="mt-2 inline-flex items-center gap-1.5 text-xs text-[#008F5A] hover:underline"
                                   >
                                     <FileText
                                       className="h-3.5 w-3.5"
@@ -196,7 +196,7 @@ async function ExternalActivitiesPage() {
                                   </a>
                                 ) : null}
                                 {r.verified && !docHref ? (
-                                  <span className="mt-1 inline-block rounded-full bg-[#E8F8F0] px-2 py-0.5 text-[10px] font-medium text-[#159B5C]">
+                                  <span className="mt-1 inline-block rounded-full bg-[#E6F7EF] px-2 py-0.5 text-[10px] font-medium text-[#008F5A]">
                                     {t('list.proofProvided')}
                                   </span>
                                 ) : null}

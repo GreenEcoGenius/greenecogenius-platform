@@ -81,7 +81,7 @@ function StatusBadge({ regulation }: { regulation: Regulation }) {
   switch (regulation.status) {
     case 'conforme':
       return (
-        <span className="inline-flex items-center gap-1 text-xs text-[#1BAF6A] dark:text-[#1BAF6A]">
+        <span className="inline-flex items-center gap-1 text-xs text-[#00A86B] dark:text-[#00A86B]">
           <CheckCircle2 className="h-3.5 w-3.5" />
           Conforme
           {regulation.method && (
@@ -93,7 +93,7 @@ function StatusBadge({ regulation }: { regulation: Regulation }) {
       );
     case 'partiel':
       return (
-        <span className="inline-flex items-center gap-1 text-xs text-[#1BAF6A] dark:text-[#1BAF6A]">
+        <span className="inline-flex items-center gap-1 text-xs text-[#00A86B] dark:text-[#00A86B]">
           <AlertTriangle className="h-3.5 w-3.5" />
           Partiel{regulation.detail ? ` (${regulation.detail})` : ''}
         </span>

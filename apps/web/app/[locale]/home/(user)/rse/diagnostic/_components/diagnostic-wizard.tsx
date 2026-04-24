@@ -70,7 +70,7 @@ function ScaleQuestion({
       <div className="mb-3 flex items-start justify-between gap-2">
         <p className="text-sm font-medium text-gray-900">{getLabel(question, locale)}</p>
         {question.auto_from && (
-          <Badge variant="outline" className="shrink-0 border-[#A8E6C8] bg-[#E8F8F0] text-[10px] text-[#159B5C]">
+          <Badge variant="outline" className="shrink-0 border-[#8FDAB5] bg-[#E6F7EF] text-[10px] text-[#008F5A]">
             Auto
           </Badge>
         )}
@@ -98,7 +98,7 @@ function ScaleQuestion({
               key={opt.value}
               className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 text-sm transition-colors ${
                 value === opt.value
-                  ? 'border-[#A8E6C8] bg-[#E8F8F0] text-[#159B5C]'
+                  ? 'border-[#8FDAB5] bg-[#E6F7EF] text-[#008F5A]'
                   : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
               }`}
             >
@@ -108,7 +108,7 @@ function ScaleQuestion({
                 value={opt.value}
                 checked={value === opt.value}
                 onChange={() => onChange(opt.value)}
-                className="accent-[#1BAF6A]"
+                className="accent-[#00A86B]"
               />
               <span className="flex-1">{locale === 'fr' ? opt.label_fr : opt.label_en}</span>
               <span className="text-xs text-gray-400">{opt.value}/{question.max_score}</span>
@@ -127,7 +127,7 @@ function ScaleQuestion({
               key={opt.val}
               className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border p-3 text-sm font-medium transition-colors ${
                 value === opt.val
-                  ? 'border-[#A8E6C8] bg-[#E8F8F0] text-[#159B5C]'
+                  ? 'border-[#8FDAB5] bg-[#E6F7EF] text-[#008F5A]'
                   : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
               }`}
             >
@@ -137,7 +137,7 @@ function ScaleQuestion({
                 value={opt.val}
                 checked={value === opt.val}
                 onChange={() => onChange(opt.val)}
-                className="accent-[#1BAF6A]"
+                className="accent-[#00A86B]"
               />
               {opt.lbl}
             </label>
@@ -148,7 +148,7 @@ function ScaleQuestion({
       {question.type === 'text' && (
         <input
           type="text"
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#A8E6C8] focus:ring-1 focus:ring-[#A8E6C8]"
+          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#8FDAB5] focus:ring-1 focus:ring-[#8FDAB5]"
           placeholder={locale === 'fr' ? 'Votre reponse...' : 'Your answer...'}
           onChange={(e) => onChange(Number(e.target.value) || 0)}
         />
@@ -202,7 +202,7 @@ function RadarChart({ scores }: { scores: { name: string; percentage: number }[]
       <polygon
         points={dataPoints.map((p) => `${p.x},${p.y}`).join(' ')}
         fill="rgba(13,148,136,0.2)"
-        stroke="#1BAF6A"
+        stroke="#00A86B"
         strokeWidth="2"
       />
       {scores.map((s, i) => {
@@ -214,7 +214,7 @@ function RadarChart({ scores }: { scores: { name: string; percentage: number }[]
         );
       })}
       {dataPoints.map((p, i) => (
-        <circle key={i} cx={p.x} cy={p.y} r="4" fill="#1BAF6A" />
+        <circle key={i} cx={p.x} cy={p.y} r="4" fill="#00A86B" />
       ))}
     </svg>
   );
@@ -275,7 +275,7 @@ export function DiagnosticWizard() {
         </div>
         <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
           <div
-            className="h-full rounded-full bg-[#E8F8F0]0 transition-all duration-300"
+            className="h-full rounded-full bg-[#E6F7EF]0 transition-all duration-300"
             style={{ width: `${((step + 1) / totalSteps) * 100}%` }}
           />
         </div>
@@ -298,14 +298,14 @@ export function DiagnosticWizard() {
                 <Card key={pillar.id}>
                   <CardContent className="p-4">
                     <div className="mb-2 flex items-center gap-2">
-                      <Icon className="h-5 w-5 text-[#1BAF6A]" strokeWidth={1.5} />
+                      <Icon className="h-5 w-5 text-[#00A86B]" strokeWidth={1.5} />
                       <h3 className="text-sm font-semibold">{getPillarName(pillar, locale)}</h3>
                     </div>
                     <p className="mb-2 text-xs text-gray-500">{getPillarDesc(pillar, locale)}</p>
                     <div className="flex items-center gap-2 text-xs text-gray-400">
                       <span>{scoredQ.length} questions</span>
                       {autoQ.length > 0 && (
-                        <Badge variant="outline" className="border-[#A8E6C8] bg-[#E8F8F0] text-[10px] text-[#159B5C]">
+                        <Badge variant="outline" className="border-[#8FDAB5] bg-[#E6F7EF] text-[10px] text-[#008F5A]">
                           {autoQ.length} auto
                         </Badge>
                       )}
@@ -325,7 +325,7 @@ export function DiagnosticWizard() {
           <div className="flex items-center gap-3">
             {(() => {
               const Icon = PILLAR_ICONS[currentPillar.icon] ?? Building2;
-              return <Icon className="h-6 w-6 text-[#1BAF6A]" strokeWidth={1.5} />;
+              return <Icon className="h-6 w-6 text-[#00A86B]" strokeWidth={1.5} />;
             })()}
             <div>
               <h2 className="text-lg font-bold text-gray-900">{getPillarName(currentPillar, locale)}</h2>
@@ -353,9 +353,9 @@ export function DiagnosticWizard() {
           {/* Score */}
           <Card>
             <CardContent className="flex flex-col items-center gap-3 py-8">
-              <div className="text-6xl font-bold text-[#1BAF6A]">{result.globalScore}</div>
+              <div className="text-6xl font-bold text-[#00A86B]">{result.globalScore}</div>
               <p className="text-sm text-gray-500">/ 100</p>
-              <Badge className="bg-[#E8F8F0]0 text-white">
+              <Badge className="bg-[#E6F7EF]0 text-white">
                 {t('level')} : {t(result.levelKey)}
               </Badge>
             </CardContent>
@@ -384,7 +384,7 @@ export function DiagnosticWizard() {
                   </div>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
                     <div
-                      className="h-full rounded-full bg-[#E8F8F0]0 transition-all"
+                      className="h-full rounded-full bg-[#E6F7EF]0 transition-all"
                       style={{ width: `${p.percentage}%` }}
                     />
                   </div>

@@ -123,8 +123,8 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
           >
             <defs>
               <linearGradient id="tealGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#1BAF6A" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#1BAF6A" stopOpacity={0.02} />
+                <stop offset="5%" stopColor="#00A86B" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#00A86B" stopOpacity={0.02} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
@@ -153,7 +153,7 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
             <Area
               type="monotone"
               dataKey="co2_avoided"
-              stroke="#1BAF6A"
+              stroke="#00A86B"
               strokeWidth={2}
               fill="url(#tealGradient)"
               dot={false}
@@ -163,7 +163,7 @@ export function CarbonAvoidedChart({ data }: CarbonAvoidedChartProps) {
             <Line
               type="monotone"
               dataKey="co2_transport"
-              stroke="#7EC845"
+              stroke="#8BC53F"
               strokeWidth={2}
               strokeDasharray="6 3"
               dot={false}

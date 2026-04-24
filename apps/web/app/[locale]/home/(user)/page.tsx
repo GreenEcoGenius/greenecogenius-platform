@@ -327,7 +327,7 @@ async function UserHomePage() {
         )}
 
         <SectionFooterImage
-          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-691ab3f4-2772-42cc-ae8b-5f039dee20c9.png"
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/GPT%20Images%202.0/image%20(1).png"
           alt={t('dashboard.circularEconomy')}
         />
       </div>

@@ -65,12 +65,12 @@ export function EsgKpiCards({ data }: { data: DemoData['esg']['kpi'] }) {
         iconBgClass="bg-slate-50 dark:bg-slate-950/30"
       />
       <KpiCard
-        icon={<Leaf className="h-5 w-5 text-[#1BAF6A]" />}
+        icon={<Leaf className="h-5 w-5 text-[#00A86B]" />}
         label={t('co2Avoided')}
         value={`${data.co2AvoidedT} t`}
         sub={t('viaRecycling')}
         href="/home/traceability"
-        iconBgClass="bg-[#E8F8F0] dark:bg-[#0A5C35]/30"
+        iconBgClass="bg-[#E6F7EF] dark:bg-[#004428]/30"
       />
       <KpiCard
         icon={<FileCheck className="h-5 w-5 text-blue-600" />}
@@ -80,12 +80,12 @@ export function EsgKpiCards({ data }: { data: DemoData['esg']['kpi'] }) {
         iconBgClass="bg-blue-50 dark:bg-blue-950/30"
       />
       <KpiCard
-        icon={<LinkIcon className="h-5 w-5 text-[#1BAF6A]" />}
+        icon={<LinkIcon className="h-5 w-5 text-[#00A86B]" />}
         label={t('blockchainProofs')}
         value={`${data.blockchainProofs} hash`}
         sub={t('verifiedOnChain')}
         href="https://polygonscan.com"
-        iconBgClass="bg-[#E8F8F0] dark:bg-[#1BAF6A]/30"
+        iconBgClass="bg-[#E6F7EF] dark:bg-[#00A86B]/30"
       />
     </div>
   );

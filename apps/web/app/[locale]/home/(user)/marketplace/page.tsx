@@ -34,7 +34,7 @@ async function MarketplacePage() {
 
   const { data: listings } = await client
     .from('listings')
-    .select('*, material_categories(*)')
+    .select('*, material_categories(*), listing_images(storage_path, position)')
     .eq('status', 'active')
     .order('created_at', { ascending: false })
     .limit(50);
@@ -63,7 +63,7 @@ async function MarketplacePage() {
       {/* KPI Cards */}
       <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <MarketKpiCard
-          icon={<Package className="h-5 w-5 text-[#1b9e77]" />}
+          icon={<Package className="h-5 w-5 text-[#00A86B]" />}
           value={`${listingCount}`}
           label={t('kpiComptoir')}
         />
@@ -98,16 +98,29 @@ async function MarketplacePage() {
 
       {listingRows.length > 0 ? (
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {listingRows.map((listing) => (
-            <div key={listing.id} className="flex flex-col">
-              <ListingCard listing={listing} account="" />
-              <div className="bg-card -mt-1 flex items-center gap-1.5 rounded-b-lg border border-t-0 px-5 py-2 text-xs text-[#2e8b6e]">
-                <Leaf className="h-3 w-3" />
-                {t('co2AvoidedEstimated')}{' '}
-                {(((listing.quantity ?? 0) * 0.8) / 1000).toFixed(1)}t
+          {listingRows.map((listing) => {
+            const images = ((listing as Record<string, unknown>).listing_images ??
+              []) as Array<{ storage_path: string; position: number | null }>;
+            const sortedImages = [...images].sort(
+              (a, b) => (a.position ?? 0) - (b.position ?? 0),
+            );
+            const firstImage = sortedImages[0]?.storage_path ?? null;
+            return (
+              <div key={listing.id} className="flex flex-col">
+                <ListingCard
+                  listing={listing}
+                  account=""
+                  imageUrl={firstImage}
+                  imageCount={images.length}
+                />
+                <div className="bg-card -mt-1 flex items-center gap-1.5 rounded-b-lg border border-t-0 px-5 py-2 text-xs text-[#2e8b6e]">
+                  <Leaf className="h-3 w-3" />
+                  {t('co2AvoidedEstimated')}{' '}
+                  {(((listing.quantity ?? 0) * 0.8) / 1000).toFixed(1)}t
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div className="mt-12 flex flex-col items-center gap-4 text-center">

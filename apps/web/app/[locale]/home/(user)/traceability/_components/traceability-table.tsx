@@ -13,14 +13,14 @@ const CONTRACT_ADDRESS = '0x9EB83c7Acd57E228Cc3f9316eC4f27ce1fE94cF6';
 const STATUS_BADGE_STYLES: Record<string, string> = {
   created: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
   qualified: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  listed: 'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
-  sold: 'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
+  listed: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
+  sold: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   in_transit:
-    'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
+    'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   delivered:
-    'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#0A5C35]/40 dark:text-[#A8E6C8]',
+    'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#004428]/40 dark:text-[#8FDAB5]',
   certified:
-    'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300',
+    'bg-verdure-100 text-verdure-800 dark:bg-verdure-900/40 dark:text-verdure-300',
 };
 
 const STATUS_I18N: Record<string, string> = {
@@ -35,8 +35,8 @@ const STATUS_I18N: Record<string, string> = {
 
 const SOURCE_BADGE_STYLES: Record<string, string> = {
   marketplace:
-    'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
-  collecte: 'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
+    'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
+  collecte: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   import: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
 };
 
@@ -161,7 +161,7 @@ export function TraceabilityTable({ lots }: TraceabilityTableProps) {
                 <td className="px-4 py-3 text-xs">
                   {lot.buyerName ?? '\u2014'}
                 </td>
-                <td className="px-4 py-3 text-right font-mono text-xs text-green-600 dark:text-green-400">
+                <td className="px-4 py-3 text-right font-mono text-xs text-verdure-600 dark:text-verdure-400">
                   {formatCo2(lot.co2AvoidedKg)}
                 </td>
                 <td className="px-4 py-3">

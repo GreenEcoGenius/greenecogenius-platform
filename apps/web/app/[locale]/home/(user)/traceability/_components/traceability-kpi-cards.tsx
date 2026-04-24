@@ -64,7 +64,7 @@ function KpiCard({
           <span
             className={`inline-flex items-center gap-0.5 text-xs font-semibold ${
               isPositive
-                ? 'text-[#1BAF6A] dark:text-[#1BAF6A]'
+                ? 'text-[#00A86B] dark:text-[#00A86B]'
                 : 'text-slate-600 dark:text-slate-400'
             }`}
           >
@@ -125,7 +125,7 @@ export function TraceabilityKpiCards({
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <KpiCard
-        icon={<Boxes className="h-5 w-5 text-[#1BAF6A] dark:text-[#1BAF6A]" />}
+        icon={<Boxes className="h-5 w-5 text-[#00A86B] dark:text-[#00A86B]" />}
         value={totalLots.toLocaleString('fr-FR')}
         label={<Trans i18nKey="blockchain:lotsTracked" />}
         subtitle={
@@ -135,11 +135,11 @@ export function TraceabilityKpiCards({
         }
         trend={lotsTrend}
         trendLabel={<Trans i18nKey="blockchain:vsLastMonth" />}
-        accentColor="bg-[#E8F8F0]0"
+        accentColor="bg-[#E6F7EF]0"
       />
 
       <KpiCard
-        icon={<Leaf className="h-5 w-5 text-green-600 dark:text-green-400" />}
+        icon={<Leaf className="h-5 w-5 text-verdure-600 dark:text-verdure-400" />}
         value={`${co2AvoidedTonnes.toLocaleString('fr-FR')}t`}
         label={<Trans i18nKey="blockchain:co2AvoidedCard" />}
         subtitle={
@@ -151,7 +151,7 @@ export function TraceabilityKpiCards({
         trendLabel={<Trans i18nKey="blockchain:vsLastMonth" />}
         linkHref="/home/carbon"
         linkLabel={<Trans i18nKey="blockchain:co2AvoidedCard" />}
-        accentColor="bg-green-500"
+        accentColor="bg-verdure-500"
       />
 
       <KpiCard
@@ -171,7 +171,7 @@ export function TraceabilityKpiCards({
       />
 
       <KpiCard
-        icon={<Award className="h-5 w-5 text-[#1BAF6A] dark:text-[#1BAF6A]" />}
+        icon={<Award className="h-5 w-5 text-[#00A86B] dark:text-[#00A86B]" />}
         value={certificates.toLocaleString('fr-FR')}
         label={<Trans i18nKey="blockchain:certificatesCard" />}
         subtitle={
@@ -184,12 +184,12 @@ export function TraceabilityKpiCards({
         badge={
           <Badge
             variant="outline"
-            className="border-[#A8E6C8] bg-[#E8F8F0] text-[#159B5C] dark:border-[#159B5C] dark:bg-[#0A5C35]/40 dark:text-[#1BAF6A]"
+            className="border-[#8FDAB5] bg-[#E6F7EF] text-[#008F5A] dark:border-[#008F5A] dark:bg-[#004428]/40 dark:text-[#00A86B]"
           >
             <Trans i18nKey="blockchain:onChain" />
           </Badge>
         }
-        accentColor="bg-[#E8F8F0]0"
+        accentColor="bg-[#E6F7EF]0"
       />
     </div>
   );

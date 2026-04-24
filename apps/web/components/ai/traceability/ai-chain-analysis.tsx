@@ -75,8 +75,8 @@ export function AIChainAnalysis({ lotId, lotData }: AIChainAnalysisProps) {
         )}
 
         {error && (
-          <div className="rounded-md border border-[#A8E6C8] bg-[#E8F8F0] p-4 dark:border-[#159B5C] dark:bg-[#0A5C35]/20">
-            <p className="text-sm text-[#159B5C]">{error}</p>
+          <div className="rounded-md border border-[#8FDAB5] bg-[#E6F7EF] p-4 dark:border-[#008F5A] dark:bg-[#004428]/20">
+            <p className="text-sm text-[#008F5A]">{error}</p>
             <Button
               variant="outline"
               size="sm"

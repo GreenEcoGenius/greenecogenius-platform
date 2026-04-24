@@ -9,7 +9,7 @@ import { cn } from '@kit/ui/utils';
 export type KpiVariant = 'teal' | 'emerald' | 'green';
 
 const VARIANT_CLASSES: Record<KpiVariant, string> = {
-  teal: 'from-circuit-blue to-circuit-dark',
+  teal: 'from-primary-500 to-primary-600',
   emerald: 'from-primary-500 to-primary-600',
   green: 'from-tech-emerald to-primary-700',
 };

@@ -11,14 +11,14 @@ import { Card, CardContent } from '@kit/ui/card';
 import type { DemoData } from '~/lib/demo/demo-data';
 
 function getBarColor(pct: number): string {
-  if (pct >= 80) return 'bg-[#E8F8F0]0';
-  if (pct >= 50) return 'bg-[#E8F8F0]0';
+  if (pct >= 80) return 'bg-[#E6F7EF]0';
+  if (pct >= 50) return 'bg-[#E6F7EF]0';
   return 'bg-slate-400';
 }
 
 function getTextColor(pct: number): string {
-  if (pct >= 80) return 'text-[#1BAF6A]';
-  if (pct >= 50) return 'text-[#1BAF6A]';
+  if (pct >= 80) return 'text-[#00A86B]';
+  if (pct >= 50) return 'text-[#00A86B]';
   return 'text-slate-500';
 }
 

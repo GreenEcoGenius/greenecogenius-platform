@@ -59,7 +59,7 @@ export function PreAuditButton() {
     <button
       onClick={handleClick}
       disabled={loading}
-      className="inline-flex items-center rounded-md bg-[#1BAF6A] px-4 py-2 text-sm font-medium text-white hover:bg-[#159B5C] disabled:cursor-not-allowed disabled:opacity-60"
+      className="inline-flex items-center rounded-md bg-[#00A86B] px-4 py-2 text-sm font-medium text-white hover:bg-[#008F5A] disabled:cursor-not-allowed disabled:opacity-60"
     >
       {loading ? (
         <Loader2 className="mr-1 inline-block h-4 w-4 animate-spin" />

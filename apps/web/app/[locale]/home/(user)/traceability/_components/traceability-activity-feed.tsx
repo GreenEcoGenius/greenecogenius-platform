@@ -17,27 +17,27 @@ import type { MockActivity } from '~/lib/mock/traceability-mock-data';
 
 const ACTIVITY_ICONS: Record<string, React.ReactNode> = {
   lot_created: <Package className="h-4 w-4 text-blue-500" />,
-  lot_sold: <Package className="h-4 w-4 text-[#E8F8F0]0" />,
-  lot_in_transit: <Truck className="h-4 w-4 text-[#E8F8F0]0" />,
-  lot_delivered: <Truck className="h-4 w-4 text-[#E8F8F0]0" />,
-  certificate_issued: <Award className="h-4 w-4 text-green-600" />,
-  blockchain_recorded: <Blocks className="h-4 w-4 text-[#E8F8F0]0" />,
-  co2_calculated: <Calculator className="h-4 w-4 text-green-500" />,
+  lot_sold: <Package className="h-4 w-4 text-[#E6F7EF]0" />,
+  lot_in_transit: <Truck className="h-4 w-4 text-[#E6F7EF]0" />,
+  lot_delivered: <Truck className="h-4 w-4 text-[#E6F7EF]0" />,
+  certificate_issued: <Award className="h-4 w-4 text-verdure-600" />,
+  blockchain_recorded: <Blocks className="h-4 w-4 text-[#E6F7EF]0" />,
+  co2_calculated: <Calculator className="h-4 w-4 text-verdure-500" />,
   esg_synced: <FileBarChart className="h-4 w-4 text-blue-500" />,
-  lot_certified: <Award className="h-4 w-4 text-green-600" />,
+  lot_certified: <Award className="h-4 w-4 text-verdure-600" />,
 };
 
 const SECTION_COLORS: Record<string, string> = {
   marketplace:
-    'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
+    'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   inventaire:
     'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  transport: 'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
-  suivi: 'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
+  transport: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
+  suivi: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   certification:
-    'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
+    'bg-verdure-100 text-verdure-700 dark:bg-verdure-900/40 dark:text-verdure-300',
   blockchain:
-    'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/40 dark:text-[#A8E6C8]',
+    'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   dashboard: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
 };
 
@@ -84,7 +84,7 @@ export function TraceabilityActivityFeed({
                   <Package className="h-4 w-4 text-gray-500" />
                 )}
               </div>
-              <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#E8F8F0]0 dark:border-gray-900" />
+              <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#E6F7EF]0 dark:border-gray-900" />
             </div>
 
             {/* Content */}

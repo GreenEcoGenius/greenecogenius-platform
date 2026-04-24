@@ -49,7 +49,7 @@ export function CarbonEquivalences({ co2Avoided }: CarbonEquivalencesProps) {
         {equivalences.map((eq) => (
           <Card key={eq.labelKey}>
             <CardContent className="flex flex-col items-center gap-2 p-5">
-              <div className="text-[#1BAF6A]">{eq.icon}</div>
+              <div className="text-[#00A86B]">{eq.icon}</div>
               <div className="text-2xl font-bold">
                 {typeof eq.value === 'number'
                   ? eq.value.toLocaleString('fr-FR')

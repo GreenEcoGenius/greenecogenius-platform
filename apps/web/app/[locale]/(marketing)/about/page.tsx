@@ -321,8 +321,14 @@ export default async function AboutPage() {
       </section>
 
       {/* ───── CTA ───── */}
-      <section className="from-metal-900 via-metal-800 to-metal-900 bg-gradient-to-r py-20 sm:py-28">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <img
+          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/GPT%20Images%202.0/ChatGPT%20Image%2024%20avr.%202026,%2001_45_35.png"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/65 to-black/80" />
+        <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               {t('ctaHeading')}

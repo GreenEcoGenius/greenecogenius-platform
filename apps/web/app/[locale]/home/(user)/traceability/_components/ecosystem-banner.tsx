@@ -33,14 +33,14 @@ export function EcosystemBanner({
       value: transactionsThisMonth,
       labelKey: 'blockchain:ecosystemComptoir' as const,
       href: '/home/marketplace',
-      color: 'text-[#1BAF6A] dark:text-[#1BAF6A]',
+      color: 'text-[#00A86B] dark:text-[#00A86B]',
     },
     {
       icon: Leaf,
       value: `${co2Tonnes}t`,
       labelKey: 'blockchain:ecosystemCarbon' as const,
       href: '/home/carbon',
-      color: 'text-green-700 dark:text-green-400',
+      color: 'text-verdure-700 dark:text-verdure-400',
     },
     {
       icon: FileBarChart,
@@ -54,15 +54,15 @@ export function EcosystemBanner({
       value: blockchainHashes,
       labelKey: 'blockchain:ecosystemBlockchain' as const,
       href: '/home/traceability',
-      color: 'text-[#1BAF6A] dark:text-[#1BAF6A]',
+      color: 'text-[#00A86B] dark:text-[#00A86B]',
     },
   ];
 
   return (
-    <div className="rounded-xl border border-[#A8E6C8] bg-gradient-to-r from-[#E8F8F0]/80 to-[#E8F8F0]/80 px-6 py-4 dark:border-[#159B5C]/40 dark:from-[#0A5C35]/30 dark:to-[#1BAF6A]/30">
+    <div className="rounded-xl border border-[#8FDAB5] bg-gradient-to-r from-[#E6F7EF]/80 to-[#E6F7EF]/80 px-6 py-4 dark:border-[#008F5A]/40 dark:from-[#004428]/30 dark:to-[#00A86B]/30">
       <div className="mb-2 flex items-center gap-2">
-        <ArrowRightLeft className="h-4 w-4 text-[#1BAF6A] dark:text-[#1BAF6A]" />
-        <span className="text-xs font-semibold tracking-wider text-[#159B5C] uppercase dark:text-[#1BAF6A]">
+        <ArrowRightLeft className="h-4 w-4 text-[#00A86B] dark:text-[#00A86B]" />
+        <span className="text-xs font-semibold tracking-wider text-[#008F5A] uppercase dark:text-[#00A86B]">
           <Trans i18nKey="blockchain:ecosystemBanner" />
         </span>
       </div>

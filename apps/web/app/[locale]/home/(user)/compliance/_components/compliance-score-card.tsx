@@ -24,16 +24,16 @@ export function ComplianceScoreCard({
 }: ComplianceScoreCardProps) {
   const scoreColor =
     score >= 80
-      ? 'text-[#1BAF6A]'
+      ? 'text-[#00A86B]'
       : score >= 60
-        ? 'text-[#1BAF6A]'
+        ? 'text-[#00A86B]'
         : 'text-slate-600';
 
   const ringColor =
     score >= 80
-      ? 'stroke-[#E8F8F0]0'
+      ? 'stroke-[#E6F7EF]0'
       : score >= 60
-        ? 'stroke-[#E8F8F0]0'
+        ? 'stroke-[#E6F7EF]0'
         : 'stroke-slate-400';
 
   const circumference = 2 * Math.PI * 54;
@@ -89,13 +89,13 @@ export function ComplianceScoreCard({
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-3 rounded-lg bg-[#E8F8F0] p-3 dark:bg-[#0A5C35]/30">
-                <CheckCircle2 className="h-5 w-5 text-[#1BAF6A]" />
+              <div className="flex items-center gap-3 rounded-lg bg-[#E6F7EF] p-3 dark:bg-[#004428]/30">
+                <CheckCircle2 className="h-5 w-5 text-[#00A86B]" />
                 <div>
-                  <p className="text-lg font-bold text-[#159B5C] dark:text-[#1BAF6A]">
+                  <p className="text-lg font-bold text-[#008F5A] dark:text-[#00A86B]">
                     {normsCompliant}/{normsTotal}
                   </p>
-                  <p className="text-xs text-[#1BAF6A] dark:text-[#1BAF6A]">
+                  <p className="text-xs text-[#00A86B] dark:text-[#00A86B]">
                     <Trans i18nKey="compliance:normsVerified" />
                   </p>
                 </div>

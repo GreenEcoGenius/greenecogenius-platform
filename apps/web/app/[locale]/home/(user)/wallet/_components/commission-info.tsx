@@ -60,13 +60,13 @@ export function CommissionInfo() {
       <CardContent>
         {isPromo ? (
           <div className="space-y-3">
-            <div className="flex items-start gap-2 rounded-lg bg-green-50 p-3 dark:bg-green-950">
-              <Info className="mt-0.5 h-4 w-4 text-green-600" />
+            <div className="flex items-start gap-2 rounded-lg bg-verdure-50 p-3 dark:bg-verdure-950">
+              <Info className="mt-0.5 h-4 w-4 text-verdure-600" />
               <div>
-                <p className="text-sm font-medium text-green-800 dark:text-green-200">
+                <p className="text-sm font-medium text-verdure-800 dark:text-verdure-200">
                   <Trans i18nKey="wallet.promoActive" />
                 </p>
-                <p className="text-sm text-green-700 dark:text-green-300">
+                <p className="text-sm text-verdure-700 dark:text-verdure-300">
                   {(Number(activeConfig.flat_rate) * 100).toFixed(0)}%{' '}
                   <Trans i18nKey="wallet.promoFlat" />
                 </p>

@@ -55,7 +55,7 @@ export function AIDiagnostic() {
         nameKey: 'domainEnvironment',
         score: 85,
         icon: Leaf,
-        color: 'bg-green-500',
+        color: 'bg-verdure-500',
       },
       { nameKey: 'domainSocial', score: 68, icon: Heart, color: 'bg-pink-500' },
       {
@@ -68,7 +68,7 @@ export function AIDiagnostic() {
         nameKey: 'domainStakeholders',
         score: 61,
         icon: Users,
-        color: 'bg-[#E8F8F0]0',
+        color: 'bg-[#E6F7EF]0',
       },
     ],
     [],
@@ -103,16 +103,16 @@ export function AIDiagnostic() {
   const statusConfig = {
     eligible: {
       badge:
-        'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+        'bg-verdure-100 text-verdure-700 dark:bg-verdure-900/30 dark:text-verdure-400',
       label: t('eligibleLabel'),
     },
     en_cours: {
-      badge: 'bg-[#A8E6C8] text-[#1BAF6A] dark:bg-[#1BAF6A]/30 dark:text-[#1BAF6A]',
+      badge: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/30 dark:text-[#00A86B]',
       label: t('inProgressLabel'),
     },
     non_eligible: {
       badge:
-        'bg-[#A8E6C8] text-[#159B5C] dark:bg-[#0A5C35]/30 dark:text-[#1BAF6A]',
+        'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#004428]/30 dark:text-[#00A86B]',
       label: t('notEligibleLabel'),
     },
   };
@@ -136,7 +136,7 @@ export function AIDiagnostic() {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Shield className="h-5 w-5 text-[#1BAF6A]" />
+            <Shield className="h-5 w-5 text-[#00A86B]" />
             {t('aiDiagnosticTitle')}
           </CardTitle>
           <AIPoweredBadge methodology="ISO 26000" />
@@ -146,8 +146,8 @@ export function AIDiagnostic() {
       <CardContent>
         {!hasDiagnosed && !loading && (
           <div className="flex flex-col items-center gap-3 py-8 text-center">
-            <div className="rounded-full bg-[#E8F8F0] p-4 dark:bg-[#0A5C35]/30">
-              <Shield className="h-8 w-8 text-[#E8F8F0]0" />
+            <div className="rounded-full bg-[#E6F7EF] p-4 dark:bg-[#004428]/30">
+              <Shield className="h-8 w-8 text-[#E6F7EF]0" />
             </div>
             <div>
               <p className="text-sm font-medium">{t('aiDiagnosticFeature')}</p>
@@ -157,7 +157,7 @@ export function AIDiagnostic() {
             </div>
             <Button
               onClick={handleDiagnose}
-              className="bg-[#1BAF6A] hover:bg-[#159B5C]"
+              className="bg-[#00A86B] hover:bg-[#008F5A]"
             >
               <Sparkles className="mr-2 h-4 w-4" />
               {t('aiDiagnosticRun')}
@@ -167,7 +167,7 @@ export function AIDiagnostic() {
 
         {loading && (
           <div className="py-6">
-            <p className="mb-4 text-center text-sm text-[#1BAF6A]">
+            <p className="mb-4 text-center text-sm text-[#00A86B]">
               {t('aiDiagnosticAnalyzing')}
             </p>
             <AILoadingState lines={5} />
@@ -175,8 +175,8 @@ export function AIDiagnostic() {
         )}
 
         {error && (
-          <div className="rounded-md border border-[#A8E6C8] bg-[#E8F8F0] p-4 dark:border-[#159B5C] dark:bg-[#0A5C35]/20">
-            <p className="text-sm text-[#159B5C]">{error}</p>
+          <div className="rounded-md border border-[#8FDAB5] bg-[#E6F7EF] p-4 dark:border-[#008F5A] dark:bg-[#004428]/20">
+            <p className="text-sm text-[#008F5A]">{error}</p>
             <Button
               variant="outline"
               size="sm"
@@ -222,7 +222,7 @@ export function AIDiagnostic() {
 
             {/* AI response */}
             {response && (
-              <div className="rounded-md border bg-[#E8F8F0]/50 p-4 dark:bg-[#0A5C35]/10">
+              <div className="rounded-md border bg-[#E6F7EF]/50 p-4 dark:bg-[#004428]/10">
                 <p className="text-sm leading-relaxed whitespace-pre-wrap">
                   {response.content}
                 </p>
@@ -231,13 +231,13 @@ export function AIDiagnostic() {
 
             {/* Strengths */}
             <div>
-              <h4 className="mb-2 text-sm font-semibold text-green-700 dark:text-green-400">
+              <h4 className="mb-2 text-sm font-semibold text-verdure-700 dark:text-verdure-400">
                 {t('strengths')}
               </h4>
               <ul className="space-y-1.5">
                 {defaultStrengths.map((k) => (
                   <li key={k} className="flex items-start gap-2 text-sm">
-                    <span className="mt-1 text-green-500">+</span>
+                    <span className="mt-1 text-verdure-500">+</span>
                     {t(k)}
                   </li>
                 ))}
@@ -246,13 +246,13 @@ export function AIDiagnostic() {
 
             {/* Improvements */}
             <div>
-              <h4 className="mb-2 text-sm font-semibold text-[#1BAF6A] dark:text-[#1BAF6A]">
+              <h4 className="mb-2 text-sm font-semibold text-[#00A86B] dark:text-[#00A86B]">
                 {t('improvements')}
               </h4>
               <ul className="space-y-1.5">
                 {defaultImprovements.map((k) => (
                   <li key={k} className="flex items-start gap-2 text-sm">
-                    <span className="mt-1 text-[#E8F8F0]0">-</span>
+                    <span className="mt-1 text-[#E6F7EF]0">-</span>
                     {t(k)}
                   </li>
                 ))}
