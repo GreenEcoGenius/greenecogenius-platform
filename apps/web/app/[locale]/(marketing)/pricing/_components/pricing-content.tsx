@@ -35,6 +35,8 @@ import { Button } from '@kit/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@kit/ui/card';
 import { Trans } from '@kit/ui/trans';
 
+import { ParallaxBackground } from '../../_components/parallax-background';
+
 interface Plan {
   id: string;
   name: string;
@@ -494,14 +496,11 @@ export function PricingContent({
       <ComingSoonSection />
 
       {/* FOOTER CTA */}
-      <section className="relative overflow-hidden py-16 text-white">
-        <img
-          src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/GPT%20Images%202.0/image%20(1).png"
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/65 to-black/80" />
-        <div className="relative container mx-auto px-4 text-center">
+      <ParallaxBackground
+        imageUrl="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/GPT%20Images%202.0/image%20(1).png"
+        className="py-16 text-white"
+      >
+        <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white">
             <Trans i18nKey="pricingPage.ctaTitle" />
           </h2>
@@ -530,7 +529,7 @@ export function PricingContent({
             </span>
           </div>
         </div>
-      </section>
+      </ParallaxBackground>
     </div>
   );
 }

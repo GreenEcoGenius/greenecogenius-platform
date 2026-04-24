@@ -19,22 +19,14 @@ export function AnimatedCounter({
     const el = ref.current;
     if (!el) return;
 
-    function animateCount() {
-      const start = performance.now();
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
 
-      function update(now: number) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-
-        setCount(Math.round(eased * target));
-
-        if (progress < 1) {
-          requestAnimationFrame(update);
-        }
-      }
-
-      requestAnimationFrame(update);
+    if (prefersReducedMotion) {
+      setCount(target);
+      hasAnimated.current = true;
+      return;
     }
 
     const observer = new IntersectionObserver(
