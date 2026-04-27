@@ -1,0 +1,59 @@
+{
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Submit",
+    "magicLink": "Magic link via email",
+    "noAccount": "No account?",
+    "haveAccount": "Already registered?",
+    "createAccount": "Create your account",
+    "signingIn": "Signing in...",
+    "creating": "Creating...",
+    "emailSent": "Email sent",
+    "checkInbox": "Check your inbox to confirm your registration"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "logout": "Sign out",
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "teams": "Teams",
+    "settings": "Settings"
+  },
+  "home": {
+    "greeting": "Hello",
+    "overview": "Overview",
+    "modules": "Active modules",
+    "esgScore": "ESG Score",
+    "co2Saved": "CO₂ saved",
+    "recycling": "Recycling",
+    "certifications": "Certifications"
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "preferences": "Preferences",
+    "support": "Support",
+    "profile": "Profile",
+    "security": "Security",
+    "notifications": "Notifications",
+    "language": "Language",
+    "terms": "Terms of service",
+    "help": "Help & contact"
+  },
+  "teams": {
+    "title": "Teams",
+    "subtitle": "Multi-tenant accounts",
+    "empty": "No teams yet. Create your first team to collaborate."
+  }
+}
