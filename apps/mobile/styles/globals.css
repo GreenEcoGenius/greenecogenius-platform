@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@theme {
+  --color-brand-forest: #0A2F1F;
+  --color-brand-cream: #F5F5F0;
+  --color-brand-frost: #B8D4E3;
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 158 60% 11%;
+  --primary: 158 60% 11%;
+  --primary-foreground: 60 10% 95%;
+}
+
+.dark {
+  --background: 158 60% 8%;
+  --foreground: 60 10% 95%;
+  --primary: 60 10% 95%;
+  --primary-foreground: 158 60% 11%;
+}
+
+html, body {
+  height: 100%;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* iOS safe areas */
+.safe-top { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }

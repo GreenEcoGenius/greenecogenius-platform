@@ -1,0 +1,13 @@
+{
+  "auth": {
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "email": "Email",
+    "password": "Mot de passe",
+    "submit": "Valider"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue"
+  }
+}
