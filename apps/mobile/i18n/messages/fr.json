@@ -34,6 +34,7 @@
     "dashboard": "Dashboard",
     "genius": "Genius",
     "teams": "Équipes",
+    "carbon": "Carbone",
     "settings": "Réglages"
   },
   "home": {
@@ -87,5 +88,23 @@
     },
     "newChat": "Nouvelle conversation",
     "clearConfirm": "Effacer la conversation actuelle ?"
+  },
+  "carbon": {
+    "title": "Carbone",
+    "subtitle": "Suivi de votre empreinte CO₂",
+    "tabComptoir": "Comptoir",
+    "tabBilan": "Bilan",
+    "comingSoonRecords": "Aucune transaction carbone pour le moment.",
+    "comingSoonEsg": "Aucun bilan ESG pour le moment.",
+    "co2AvoidedUnit": "kgCO₂e",
+    "statCo2": "CO₂ évité",
+    "statRecycled": "Recyclé",
+    "statRecords": "Lots",
+    "loading": "Chargement…",
+    "retry": "Réessayer",
+    "emptyRecords": "Aucune transaction carbone",
+    "emptyRecordsHint": "Vos transactions du Comptoir Circulaire apparaîtront ici une fois enregistrées.",
+    "recentTitle": "Transactions récentes",
+    "refresh": "Rafraîchir"
   }
 }

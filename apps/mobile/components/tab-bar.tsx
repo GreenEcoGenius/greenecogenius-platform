@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { Home, BarChart3, Sparkles, Users, Settings } from 'lucide-react';
+import { Home, BarChart3, Sparkles, Leaf, Settings } from 'lucide-react';
 
 export function TabBar() {
   const pathname = usePathname();
@@ -13,7 +13,7 @@ export function TabBar() {
     { href: '/home', label: t('home'), icon: Home },
     { href: '/dashboard', label: t('dashboard'), icon: BarChart3 },
     { href: '/genius', label: t('genius'), icon: Sparkles, prominent: true },
-    { href: '/teams', label: t('teams'), icon: Users },
+    { href: '/carbon', label: t('carbon'), icon: Leaf },
     { href: '/settings', label: t('settings'), icon: Settings },
   ];
 

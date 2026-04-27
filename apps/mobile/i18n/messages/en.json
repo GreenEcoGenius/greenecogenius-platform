@@ -34,6 +34,7 @@
     "dashboard": "Dashboard",
     "genius": "Genius",
     "teams": "Teams",
+    "carbon": "Carbon",
     "settings": "Settings"
   },
   "home": {
@@ -87,5 +88,23 @@
     },
     "newChat": "New conversation",
     "clearConfirm": "Clear current conversation?"
+  },
+  "carbon": {
+    "title": "Carbon",
+    "subtitle": "Track your CO₂ footprint",
+    "tabComptoir": "Marketplace",
+    "tabBilan": "Report",
+    "comingSoonRecords": "No carbon transactions yet.",
+    "comingSoonEsg": "No ESG report yet.",
+    "co2AvoidedUnit": "kgCO₂e",
+    "statCo2": "CO₂ avoided",
+    "statRecycled": "Recycled",
+    "statRecords": "Lots",
+    "loading": "Loading…",
+    "retry": "Retry",
+    "emptyRecords": "No carbon transactions",
+    "emptyRecordsHint": "Your Marketplace transactions will appear here once recorded.",
+    "recentTitle": "Recent transactions",
+    "refresh": "Refresh"
   }
 }
