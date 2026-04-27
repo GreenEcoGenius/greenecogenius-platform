@@ -105,6 +105,19 @@
     "emptyRecords": "Aucune transaction carbone",
     "emptyRecordsHint": "Vos transactions du Comptoir Circulaire apparaîtront ici une fois enregistrées.",
     "recentTitle": "Transactions récentes",
-    "refresh": "Rafraîchir"
+    "refresh": "Rafraîchir",
+    "reportingYear": "Année",
+    "totalEmissions": "Émissions totales",
+    "scope1Label": "Émissions directes",
+    "scope1Desc": "Combustion (gaz, fuel) et autres émissions directes",
+    "scope2Label": "Énergie achetée",
+    "scope2Desc": "Électricité, chauffage et vapeur",
+    "scope3Label": "Émissions indirectes",
+    "scope3Desc": "Déplacements, achats, déchets, télétravail",
+    "platformAvoidedTitle": "CO₂ évité via plateforme",
+    "platformAvoidedDesc": "Grâce à vos transactions Comptoir Circulaire",
+    "esgFootnote": "Estimations basées sur les facteurs ADEME 2024. Calcul officiel disponible sur la version web.",
+    "emptyEsg": "Aucun bilan ESG",
+    "emptyEsgHint": "Renseignez vos données ESG sur la version web pour générer votre bilan annuel."
   }
 }

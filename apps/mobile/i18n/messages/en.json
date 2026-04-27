@@ -105,6 +105,19 @@
     "emptyRecords": "No carbon transactions",
     "emptyRecordsHint": "Your Marketplace transactions will appear here once recorded.",
     "recentTitle": "Recent transactions",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "reportingYear": "Year",
+    "totalEmissions": "Total emissions",
+    "scope1Label": "Direct emissions",
+    "scope1Desc": "Combustion (gas, fuel) and other direct emissions",
+    "scope2Label": "Purchased energy",
+    "scope2Desc": "Electricity, heating and steam",
+    "scope3Label": "Indirect emissions",
+    "scope3Desc": "Travel, purchases, waste, remote work",
+    "platformAvoidedTitle": "CO₂ avoided via platform",
+    "platformAvoidedDesc": "Thanks to your Marketplace transactions",
+    "esgFootnote": "Estimates based on ADEME 2024 factors. Official calculation available on the web app.",
+    "emptyEsg": "No ESG report",
+    "emptyEsgHint": "Enter your ESG data on the web app to generate your annual report."
   }
 }
