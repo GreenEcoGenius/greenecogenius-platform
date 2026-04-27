@@ -1,54 +1,77 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Leaf, TrendingUp, Recycle, Award } from 'lucide-react';
 import { AuthGuard } from '~/components/auth-guard';
+import { AppShell } from '~/components/app-shell';
 import { supabase } from '~/lib/supabase-client';
 
 function HomeContent() {
-  const router = useRouter();
-  const [user, setUser] = useState<{ email?: string } | null>(null);
+  const [user, setUser] = useState<{ email?: string; id?: string } | null>(null);
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user);
-    });
+    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
   }, []);
 
-  async function handleSignOut() {
-    await supabase.auth.signOut();
-    router.replace('/auth/sign-in');
-  }
+  const stats = [
+    { label: 'Score ESG', value: '87', delta: '+4', icon: Leaf, color: '#B8D4E3' },
+    { label: 'CO₂ évité', value: '2.4t', delta: '+12%', icon: TrendingUp, color: '#F5F5F0' },
+    { label: 'Recyclage', value: '94%', delta: '+2%', icon: Recycle, color: '#B8D4E3' },
+    { label: 'Certifs', value: '7', delta: 'B-Corp', icon: Award, color: '#F5F5F0' },
+  ];
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#0A2F1F] px-6 py-8">
-      <header className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-[#F5F5F0]">GreenEcoGenius</h1>
-          <p className="mt-1 text-xs text-[#F5F5F0]/60">{user?.email}</p>
-        </div>
-        <button
-          onClick={handleSignOut}
-          className="rounded-lg border border-[#F5F5F0]/20 px-3 py-1.5 text-xs text-[#F5F5F0]"
-        >
-          Déconnexion
-        </button>
-      </header>
-      <main className="flex-1 space-y-4">
-        <div className="rounded-xl border border-[#F5F5F0]/10 bg-[#F5F5F0]/5 p-5">
-          <h2 className="font-semibold text-[#F5F5F0]">Dashboard</h2>
-          <p className="mt-2 text-sm text-[#F5F5F0]/60">
-            Bienvenue dans la version mobile. Les modules circular economy, blockchain,
-            et ESG arrivent dans les prochains sprints.
-          </p>
-        </div>
-        <div className="rounded-xl border border-[#F5F5F0]/10 bg-[#F5F5F0]/5 p-5">
-          <h2 className="font-semibold text-[#F5F5F0]">Statut connexion</h2>
-          <p className="mt-2 text-sm text-[#F5F5F0]/60">API : {process.env.NEXT_PUBLIC_API_URL}</p>
-          <p className="text-sm text-[#F5F5F0]/60">Plateforme : iOS native</p>
-        </div>
-      </main>
-    </div>
+    <AppShell
+      title="Bonjour"
+      subtitle={user?.email}
+    >
+      <div className="space-y-6">
+        <section>
+          <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#F5F5F0]/50">
+            Vue d&apos;ensemble
+          </h2>
+          <div className="grid grid-cols-2 gap-3">
+            {stats.map(({ label, value, delta, icon: Icon, color }) => (
+              <div
+                key={label}
+                className="rounded-2xl border border-[#F5F5F0]/10 bg-[#F5F5F0]/[0.03] p-4"
+              >
+                <Icon className="mb-3 h-5 w-5" style={{ color }} />
+                <div className="text-2xl font-bold text-[#F5F5F0]">{value}</div>
+                <div className="mt-0.5 flex items-center justify-between">
+                  <span className="text-xs text-[#F5F5F0]/60">{label}</span>
+                  <span className="text-xs font-medium text-[#B8D4E3]">{delta}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#F5F5F0]/50">
+            Modules actifs
+          </h2>
+          <div className="space-y-2">
+            {[
+              { name: 'Circular Economy', desc: 'Traçabilité produits' },
+              { name: 'Blockchain Ledger', desc: 'Polygon network' },
+              { name: 'ESG Reporting', desc: 'CSRD compliant' },
+            ].map((mod) => (
+              <div
+                key={mod.name}
+                className="flex items-center justify-between rounded-xl border border-[#F5F5F0]/10 bg-[#F5F5F0]/[0.03] px-4 py-3"
+              >
+                <div>
+                  <div className="text-sm font-semibold text-[#F5F5F0]">{mod.name}</div>
+                  <div className="text-xs text-[#F5F5F0]/60">{mod.desc}</div>
+                </div>
+                <div className="h-2 w-2 rounded-full bg-[#B8D4E3]" />
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </AppShell>
   );
 }
 

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Toaster } from 'sonner';
+import { CapacitorInit } from '~/components/capacitor-init';
 import '~/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -33,9 +34,12 @@ export default async function RootLayout({
 
   return (
     <html lang="fr" className="dark">
-      <body className="min-h-screen safe-top safe-bottom bg-[#0A2F1F] text-[#F5F5F0]">
+      <body className="min-h-screen bg-[#0A2F1F] text-[#F5F5F0] antialiased">
+        <CapacitorInit />
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <div className="min-h-screen pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+            {children}
+          </div>
           <Toaster theme="dark" position="top-center" richColors />
         </NextIntlClientProvider>
       </body>
