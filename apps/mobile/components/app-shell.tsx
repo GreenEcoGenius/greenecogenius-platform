@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { TabBar } from './tab-bar';
@@ -24,10 +24,18 @@ export function AppShell({
 }: AppShellProps) {
   const router = useRouter();
 
+  // Ensure scanner body class is cleaned up on every page (defensive)
+  useEffect(() => {
+    document.querySelector('body')?.classList.remove('barcode-scanner-active');
+  }, []);
+
   return (
     <div className="fixed inset-0 flex flex-col bg-[#0A2F1F] overflow-hidden">
-      <header className="shrink-0 border-b border-[#F5F5F0]/10 bg-[#0A2F1F]" style={{ paddingTop: "env(safe-area-inset-top)" }}>
-        <div className="flex items-center justify-between gap-3 px-4 py-1.5">
+      <header
+        className="shrink-0 border-b border-[#F5F5F0]/10 bg-[#0A2F1F]"
+        style={{ paddingTop: "max(8px, calc(env(safe-area-inset-top) - 18px))" }}
+      >
+        <div className="flex items-center justify-between gap-3 px-4 py-1">
           <div className="flex flex-1 items-center gap-2 min-w-0">
             {showBack ? (
               <button
@@ -38,9 +46,9 @@ export function AppShell({
               </button>
             ) : null}
             <div className="min-w-0 flex-1">
-              <h1 className="truncate text-lg font-bold text-[#F5F5F0]">{title}</h1>
+              <h1 className="truncate text-base font-bold leading-tight text-[#F5F5F0]">{title}</h1>
               {subtitle ? (
-                <p className="truncate text-xs text-[#F5F5F0]/60">{subtitle}</p>
+                <p className="truncate text-[11px] leading-tight text-[#F5F5F0]/60">{subtitle}</p>
               ) : null}
             </div>
           </div>
