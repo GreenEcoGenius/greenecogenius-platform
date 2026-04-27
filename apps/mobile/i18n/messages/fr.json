@@ -4,10 +4,56 @@
     "signUp": "S'inscrire",
     "email": "Email",
     "password": "Mot de passe",
-    "submit": "Valider"
+    "submit": "Valider",
+    "magicLink": "Magic link par email",
+    "noAccount": "Pas de compte ?",
+    "haveAccount": "Déjà inscrit ?",
+    "createAccount": "Créer votre compte",
+    "signingIn": "Connexion...",
+    "creating": "Création...",
+    "emailSent": "Email envoyé",
+    "checkInbox": "Vérifiez vos mails pour confirmer votre inscription"
   },
   "common": {
     "loading": "Chargement...",
-    "error": "Une erreur est survenue"
+    "error": "Une erreur est survenue",
+    "logout": "Déconnexion",
+    "back": "Retour",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "confirm": "Confirmer"
+  },
+  "nav": {
+    "home": "Accueil",
+    "dashboard": "Dashboard",
+    "teams": "Équipes",
+    "settings": "Réglages"
+  },
+  "home": {
+    "greeting": "Bonjour",
+    "overview": "Vue d'ensemble",
+    "modules": "Modules actifs",
+    "esgScore": "Score ESG",
+    "co2Saved": "CO₂ évité",
+    "recycling": "Recyclage",
+    "certifications": "Certifs"
+  },
+  "settings": {
+    "title": "Réglages",
+    "account": "Compte",
+    "preferences": "Préférences",
+    "support": "Support",
+    "profile": "Profil",
+    "security": "Sécurité",
+    "notifications": "Notifications",
+    "language": "Langue",
+    "terms": "Conditions générales",
+    "help": "Aide & contact"
+  },
+  "teams": {
+    "title": "Équipes",
+    "subtitle": "Multi-tenant accounts",
+    "empty": "Aucune équipe pour le moment. Créez votre première équipe pour collaborer."
   }
 }
