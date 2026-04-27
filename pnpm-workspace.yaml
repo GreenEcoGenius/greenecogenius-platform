@@ -4,6 +4,7 @@ packages:
   - tooling/*
 
 catalog:
+  '@capacitor/device': ^7.0.5
   '@faker-js/faker': ^10.4.0
   '@hookform/resolvers': ^5.2.2
   '@keystatic/core': 0.5.49

@@ -7,6 +7,11 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.4"
+  }
   graphql_public: {
     Tables: {
       [_ in never]: never
@@ -34,6 +39,67 @@ export type Database = {
   }
   public: {
     Tables: {
+      account_norm_compliance: {
+        Row: {
+          account_id: string
+          created_at: string | null
+          evidence_data: Json | null
+          evidence_summary: string | null
+          id: string
+          last_evaluated_at: string | null
+          norm_id: string
+          status: string
+          updated_at: string | null
+          verification_method: string | null
+        }
+        Insert: {
+          account_id: string
+          created_at?: string | null
+          evidence_data?: Json | null
+          evidence_summary?: string | null
+          id?: string
+          last_evaluated_at?: string | null
+          norm_id: string
+          status?: string
+          updated_at?: string | null
+          verification_method?: string | null
+        }
+        Update: {
+          account_id?: string
+          created_at?: string | null
+          evidence_data?: Json | null
+          evidence_summary?: string | null
+          id?: string
+          last_evaluated_at?: string | null
+          norm_id?: string
+          status?: string
+          updated_at?: string | null
+          verification_method?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "account_norm_compliance_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "account_norm_compliance_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "account_norm_compliance_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       accounts: {
         Row: {
           created_at: string | null
@@ -184,6 +250,265 @@ export type Database = {
           },
         ]
       }
+      blockchain_records: {
+        Row: {
+          block_number: number | null
+          created_at: string | null
+          geolocation_trail: Json | null
+          hashed_data: Json
+          id: string
+          is_verified: boolean | null
+          listing_id: string
+          previous_hash: string | null
+          record_hash: string
+          transaction_id: string
+          verification_timestamp: string | null
+        }
+        Insert: {
+          block_number?: number | null
+          created_at?: string | null
+          geolocation_trail?: Json | null
+          hashed_data: Json
+          id?: string
+          is_verified?: boolean | null
+          listing_id: string
+          previous_hash?: string | null
+          record_hash: string
+          transaction_id: string
+          verification_timestamp?: string | null
+        }
+        Update: {
+          block_number?: number | null
+          created_at?: string | null
+          geolocation_trail?: Json | null
+          hashed_data?: Json
+          id?: string
+          is_verified?: boolean | null
+          listing_id?: string
+          previous_hash?: string | null
+          record_hash?: string
+          transaction_id?: string
+          verification_timestamp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blockchain_records_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blockchain_records_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      carbon_emission_factors: {
+        Row: {
+          created_at: string | null
+          id: string
+          incineration_factor: number
+          is_active: boolean | null
+          landfill_factor: number
+          material_category: string
+          material_subcategory: string | null
+          recycling_process_factor: number
+          source: string | null
+          source_year: number | null
+          updated_at: string | null
+          virgin_production_factor: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          incineration_factor: number
+          is_active?: boolean | null
+          landfill_factor: number
+          material_category: string
+          material_subcategory?: string | null
+          recycling_process_factor: number
+          source?: string | null
+          source_year?: number | null
+          updated_at?: string | null
+          virgin_production_factor: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          incineration_factor?: number
+          is_active?: boolean | null
+          landfill_factor?: number
+          material_category?: string
+          material_subcategory?: string | null
+          recycling_process_factor?: number
+          source?: string | null
+          source_year?: number | null
+          updated_at?: string | null
+          virgin_production_factor?: number
+        }
+        Relationships: []
+      }
+      carbon_records: {
+        Row: {
+          account_id: string
+          calculated_at: string | null
+          calculation_method: string | null
+          co2_avoided: number | null
+          co2_landfill_avoided: number | null
+          co2_net_benefit: number | null
+          co2_recycling_process: number | null
+          co2_transport: number | null
+          co2_virgin_production: number | null
+          created_at: string | null
+          destination_location: string | null
+          distance_km: number | null
+          emission_factor_id: string | null
+          id: string
+          material_category: string
+          material_subcategory: string | null
+          origin_location: string | null
+          transaction_id: string
+          transport_factor_id: string | null
+          transport_mode: string | null
+          weight_tonnes: number
+        }
+        Insert: {
+          account_id: string
+          calculated_at?: string | null
+          calculation_method?: string | null
+          co2_avoided?: number | null
+          co2_landfill_avoided?: number | null
+          co2_net_benefit?: number | null
+          co2_recycling_process?: number | null
+          co2_transport?: number | null
+          co2_virgin_production?: number | null
+          created_at?: string | null
+          destination_location?: string | null
+          distance_km?: number | null
+          emission_factor_id?: string | null
+          id?: string
+          material_category: string
+          material_subcategory?: string | null
+          origin_location?: string | null
+          transaction_id: string
+          transport_factor_id?: string | null
+          transport_mode?: string | null
+          weight_tonnes: number
+        }
+        Update: {
+          account_id?: string
+          calculated_at?: string | null
+          calculation_method?: string | null
+          co2_avoided?: number | null
+          co2_landfill_avoided?: number | null
+          co2_net_benefit?: number | null
+          co2_recycling_process?: number | null
+          co2_transport?: number | null
+          co2_virgin_production?: number | null
+          created_at?: string | null
+          destination_location?: string | null
+          distance_km?: number | null
+          emission_factor_id?: string | null
+          id?: string
+          material_category?: string
+          material_subcategory?: string | null
+          origin_location?: string | null
+          transaction_id?: string
+          transport_factor_id?: string | null
+          transport_mode?: string | null
+          weight_tonnes?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "carbon_records_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "carbon_records_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "carbon_records_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "carbon_records_emission_factor_id_fkey"
+            columns: ["emission_factor_id"]
+            isOneToOne: false
+            referencedRelation: "carbon_emission_factors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "carbon_records_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_transactions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "carbon_records_transport_factor_id_fkey"
+            columns: ["transport_factor_id"]
+            isOneToOne: false
+            referencedRelation: "transport_emission_factors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      commission_config: {
+        Row: {
+          commission_type: string
+          created_at: string | null
+          description: string | null
+          flat_rate: number | null
+          id: string
+          is_active: boolean | null
+          name: string
+          tiers: Json | null
+          updated_at: string | null
+          valid_from: string | null
+          valid_until: string | null
+        }
+        Insert: {
+          commission_type?: string
+          created_at?: string | null
+          description?: string | null
+          flat_rate?: number | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          tiers?: Json | null
+          updated_at?: string | null
+          valid_from?: string | null
+          valid_until?: string | null
+        }
+        Update: {
+          commission_type?: string
+          created_at?: string | null
+          description?: string | null
+          flat_rate?: number | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          tiers?: Json | null
+          updated_at?: string | null
+          valid_from?: string | null
+          valid_until?: string | null
+        }
+        Relationships: []
+      }
       config: {
         Row: {
           billing_provider: Database["public"]["Enums"]["billing_provider"]
@@ -202,6 +527,200 @@ export type Database = {
           enable_account_billing?: boolean
           enable_team_account_billing?: boolean
           enable_team_accounts?: boolean
+        }
+        Relationships: []
+      }
+      esg_emission_factors: {
+        Row: {
+          category: string
+          country: string | null
+          created_at: string | null
+          emission_factor: number
+          factor_name: string
+          id: string
+          scope: number
+          source: string | null
+          source_year: number | null
+          subcategory: string
+          unit: string
+        }
+        Insert: {
+          category: string
+          country?: string | null
+          created_at?: string | null
+          emission_factor: number
+          factor_name: string
+          id?: string
+          scope: number
+          source?: string | null
+          source_year?: number | null
+          subcategory: string
+          unit: string
+        }
+        Update: {
+          category?: string
+          country?: string | null
+          created_at?: string | null
+          emission_factor?: number
+          factor_name?: string
+          id?: string
+          scope?: number
+          source?: string | null
+          source_year?: number | null
+          subcategory?: string
+          unit?: string
+        }
+        Relationships: []
+      }
+      esg_reports: {
+        Row: {
+          account_id: string
+          created_at: string | null
+          emissions_per_employee: number | null
+          esg_data_id: string
+          generated_at: string | null
+          id: string
+          net_emissions: number | null
+          recommendations: Json | null
+          report_status: string | null
+          report_title: string | null
+          report_type: string
+          report_url: string | null
+          report_year: number
+          total_avoided_via_platform: number | null
+          total_emissions: number | null
+          total_scope1: number | null
+          total_scope2: number | null
+          total_scope3: number | null
+        }
+        Insert: {
+          account_id: string
+          created_at?: string | null
+          emissions_per_employee?: number | null
+          esg_data_id: string
+          generated_at?: string | null
+          id?: string
+          net_emissions?: number | null
+          recommendations?: Json | null
+          report_status?: string | null
+          report_title?: string | null
+          report_type?: string
+          report_url?: string | null
+          report_year: number
+          total_avoided_via_platform?: number | null
+          total_emissions?: number | null
+          total_scope1?: number | null
+          total_scope2?: number | null
+          total_scope3?: number | null
+        }
+        Update: {
+          account_id?: string
+          created_at?: string | null
+          emissions_per_employee?: number | null
+          esg_data_id?: string
+          generated_at?: string | null
+          id?: string
+          net_emissions?: number | null
+          recommendations?: Json | null
+          report_status?: string | null
+          report_title?: string | null
+          report_type?: string
+          report_url?: string | null
+          report_year?: number
+          total_avoided_via_platform?: number | null
+          total_emissions?: number | null
+          total_scope1?: number | null
+          total_scope2?: number | null
+          total_scope3?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "esg_reports_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "esg_reports_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "esg_reports_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "esg_reports_esg_data_id_fkey"
+            columns: ["esg_data_id"]
+            isOneToOne: false
+            referencedRelation: "org_esg_data"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      external_activities: {
+        Row: {
+          account_id: string
+          category: string
+          created_at: string | null
+          date_end: string | null
+          date_start: string | null
+          description: string | null
+          document_path: string | null
+          document_url: string | null
+          id: string
+          norms_impacted: string[] | null
+          qualitative_value: string | null
+          quantitative_unit: string | null
+          quantitative_value: number | null
+          subcategory: string
+          title: string
+          updated_at: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          account_id: string
+          category: string
+          created_at?: string | null
+          date_end?: string | null
+          date_start?: string | null
+          description?: string | null
+          document_path?: string | null
+          document_url?: string | null
+          id?: string
+          norms_impacted?: string[] | null
+          qualitative_value?: string | null
+          quantitative_unit?: string | null
+          quantitative_value?: number | null
+          subcategory: string
+          title: string
+          updated_at?: string | null
+          verified?: boolean | null
+        }
+        Update: {
+          account_id?: string
+          category?: string
+          created_at?: string | null
+          date_end?: string | null
+          date_start?: string | null
+          description?: string | null
+          document_path?: string | null
+          document_url?: string | null
+          id?: string
+          norms_impacted?: string[] | null
+          qualitative_value?: string | null
+          quantitative_unit?: string | null
+          quantitative_value?: number | null
+          subcategory?: string
+          title?: string
+          updated_at?: string | null
+          verified?: boolean | null
         }
         Relationships: []
       }
@@ -320,6 +839,7 @@ export type Database = {
           quantity: number
           status: string
           title: string
+          transport_price: number | null
           unit: string
           updated_at: string | null
         }
@@ -340,6 +860,7 @@ export type Database = {
           quantity: number
           status?: string
           title: string
+          transport_price?: number | null
           unit?: string
           updated_at?: string | null
         }
@@ -360,6 +881,7 @@ export type Database = {
           quantity?: number
           status?: string
           title?: string
+          transport_price?: number | null
           unit?: string
           updated_at?: string | null
         }
@@ -394,6 +916,225 @@ export type Database = {
           },
         ]
       }
+      marketplace_config: {
+        Row: {
+          commission_rate: number
+          currency: string
+          escrow_release_delay_hours: number
+          id: string
+          min_payout_amount: number
+          updated_at: string | null
+        }
+        Insert: {
+          commission_rate?: number
+          currency?: string
+          escrow_release_delay_hours?: number
+          id?: string
+          min_payout_amount?: number
+          updated_at?: string | null
+        }
+        Update: {
+          commission_rate?: number
+          currency?: string
+          escrow_release_delay_hours?: number
+          id?: string
+          min_payout_amount?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      marketplace_transactions: {
+        Row: {
+          blockchain_hash: string | null
+          buyer_account_id: string
+          buyer_signed: boolean
+          buyer_signed_at: string | null
+          cancelled_at: string | null
+          carbon_record_id: string | null
+          commission_config_id: string | null
+          commission_rate: number
+          contract_expires_at: string | null
+          contract_id: string | null
+          contract_pdf_path: string | null
+          contract_sent_at: string | null
+          contract_signed_pdf_path: string | null
+          contract_signed_pdf_sha256: string | null
+          contract_status: string | null
+          created_at: string | null
+          currency: string
+          delivered_at: string | null
+          delivery_confirmed_at: string | null
+          delivery_status: string
+          funds_released_at: string | null
+          id: string
+          in_transit_at: string | null
+          listing_id: string
+          paid_at: string | null
+          payment_status: string
+          platform_fee: number
+          seller_account_id: string
+          seller_amount: number
+          seller_signed: boolean
+          seller_signed_at: string | null
+          shipped_at: string | null
+          signature_envelope_id: string | null
+          signature_provider: string | null
+          status: string
+          stripe_charge_id: string | null
+          stripe_payment_intent_id: string | null
+          stripe_transfer_id: string | null
+          total_amount: number
+          traceability_certificate_url: string | null
+          transport_amount: number
+          updated_at: string | null
+        }
+        Insert: {
+          blockchain_hash?: string | null
+          buyer_account_id: string
+          buyer_signed?: boolean
+          buyer_signed_at?: string | null
+          cancelled_at?: string | null
+          carbon_record_id?: string | null
+          commission_config_id?: string | null
+          commission_rate?: number
+          contract_expires_at?: string | null
+          contract_id?: string | null
+          contract_pdf_path?: string | null
+          contract_sent_at?: string | null
+          contract_signed_pdf_path?: string | null
+          contract_signed_pdf_sha256?: string | null
+          contract_status?: string | null
+          created_at?: string | null
+          currency?: string
+          delivered_at?: string | null
+          delivery_confirmed_at?: string | null
+          delivery_status?: string
+          funds_released_at?: string | null
+          id?: string
+          in_transit_at?: string | null
+          listing_id: string
+          paid_at?: string | null
+          payment_status?: string
+          platform_fee: number
+          seller_account_id: string
+          seller_amount: number
+          seller_signed?: boolean
+          seller_signed_at?: string | null
+          shipped_at?: string | null
+          signature_envelope_id?: string | null
+          signature_provider?: string | null
+          status?: string
+          stripe_charge_id?: string | null
+          stripe_payment_intent_id?: string | null
+          stripe_transfer_id?: string | null
+          total_amount: number
+          traceability_certificate_url?: string | null
+          transport_amount?: number
+          updated_at?: string | null
+        }
+        Update: {
+          blockchain_hash?: string | null
+          buyer_account_id?: string
+          buyer_signed?: boolean
+          buyer_signed_at?: string | null
+          cancelled_at?: string | null
+          carbon_record_id?: string | null
+          commission_config_id?: string | null
+          commission_rate?: number
+          contract_expires_at?: string | null
+          contract_id?: string | null
+          contract_pdf_path?: string | null
+          contract_sent_at?: string | null
+          contract_signed_pdf_path?: string | null
+          contract_signed_pdf_sha256?: string | null
+          contract_status?: string | null
+          created_at?: string | null
+          currency?: string
+          delivered_at?: string | null
+          delivery_confirmed_at?: string | null
+          delivery_status?: string
+          funds_released_at?: string | null
+          id?: string
+          in_transit_at?: string | null
+          listing_id?: string
+          paid_at?: string | null
+          payment_status?: string
+          platform_fee?: number
+          seller_account_id?: string
+          seller_amount?: number
+          seller_signed?: boolean
+          seller_signed_at?: string | null
+          shipped_at?: string | null
+          signature_envelope_id?: string | null
+          signature_provider?: string | null
+          status?: string
+          stripe_charge_id?: string | null
+          stripe_payment_intent_id?: string | null
+          stripe_transfer_id?: string | null
+          total_amount?: number
+          traceability_certificate_url?: string | null
+          transport_amount?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketplace_transactions_buyer_account_id_fkey"
+            columns: ["buyer_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_transactions_buyer_account_id_fkey"
+            columns: ["buyer_account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_transactions_buyer_account_id_fkey"
+            columns: ["buyer_account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_transactions_commission_config_id_fkey"
+            columns: ["commission_config_id"]
+            isOneToOne: false
+            referencedRelation: "commission_config"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_transactions_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_transactions_seller_account_id_fkey"
+            columns: ["seller_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_transactions_seller_account_id_fkey"
+            columns: ["seller_account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_transactions_seller_account_id_fkey"
+            columns: ["seller_account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       material_categories: {
         Row: {
           created_at: string | null
@@ -418,6 +1159,168 @@ export type Database = {
           name?: string
           name_fr?: string
           slug?: string
+        }
+        Relationships: []
+      }
+      material_sources: {
+        Row: {
+          annual_volume_tonnes: number | null
+          category: string
+          country: string
+          created_at: string | null
+          data_source: string
+          data_source_url: string | null
+          department: string | null
+          id: string
+          last_updated: string | null
+          latitude: number | null
+          longitude: number | null
+          name: string
+          price_currency: string | null
+          price_per_tonne: number | null
+          price_trend: string | null
+          region: string
+          source_type: string | null
+          subcategory: string | null
+        }
+        Insert: {
+          annual_volume_tonnes?: number | null
+          category: string
+          country?: string
+          created_at?: string | null
+          data_source: string
+          data_source_url?: string | null
+          department?: string | null
+          id?: string
+          last_updated?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          price_currency?: string | null
+          price_per_tonne?: number | null
+          price_trend?: string | null
+          region: string
+          source_type?: string | null
+          subcategory?: string | null
+        }
+        Update: {
+          annual_volume_tonnes?: number | null
+          category?: string
+          country?: string
+          created_at?: string | null
+          data_source?: string
+          data_source_url?: string | null
+          department?: string | null
+          id?: string
+          last_updated?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          price_currency?: string | null
+          price_per_tonne?: number | null
+          price_trend?: string | null
+          region?: string
+          source_type?: string | null
+          subcategory?: string | null
+        }
+        Relationships: []
+      }
+      material_stats_by_region: {
+        Row: {
+          annual_volume_tonnes: number | null
+          avg_price_per_tonne: number | null
+          category: string
+          country: string
+          created_at: string | null
+          data_source: string
+          data_source_url: string | null
+          id: string
+          price_currency: string | null
+          recovery_rate: number | null
+          recycling_rate: number | null
+          region: string
+          year: number
+        }
+        Insert: {
+          annual_volume_tonnes?: number | null
+          avg_price_per_tonne?: number | null
+          category: string
+          country: string
+          created_at?: string | null
+          data_source: string
+          data_source_url?: string | null
+          id?: string
+          price_currency?: string | null
+          recovery_rate?: number | null
+          recycling_rate?: number | null
+          region: string
+          year: number
+        }
+        Update: {
+          annual_volume_tonnes?: number | null
+          avg_price_per_tonne?: number | null
+          category?: string
+          country?: string
+          created_at?: string | null
+          data_source?: string
+          data_source_url?: string | null
+          id?: string
+          price_currency?: string | null
+          recovery_rate?: number | null
+          recycling_rate?: number | null
+          region?: string
+          year?: number
+        }
+        Relationships: []
+      }
+      material_stats_national: {
+        Row: {
+          annual_volume_tonnes: number | null
+          avg_price_per_tonne: number | null
+          category: string
+          country: string
+          country_code: string
+          created_at: string | null
+          data_source: string
+          data_source_url: string | null
+          id: string
+          landfill_rate: number | null
+          price_currency: string | null
+          recovery_rate: number | null
+          recycling_rate: number | null
+          year: number
+        }
+        Insert: {
+          annual_volume_tonnes?: number | null
+          avg_price_per_tonne?: number | null
+          category: string
+          country: string
+          country_code: string
+          created_at?: string | null
+          data_source: string
+          data_source_url?: string | null
+          id?: string
+          landfill_rate?: number | null
+          price_currency?: string | null
+          recovery_rate?: number | null
+          recycling_rate?: number | null
+          year: number
+        }
+        Update: {
+          annual_volume_tonnes?: number | null
+          avg_price_per_tonne?: number | null
+          category?: string
+          country?: string
+          country_code?: string
+          created_at?: string | null
+          data_source?: string
+          data_source_url?: string | null
+          id?: string
+          landfill_rate?: number | null
+          price_currency?: string | null
+          recovery_rate?: number | null
+          recycling_rate?: number | null
+          year?: number
         }
         Relationships: []
       }
@@ -642,6 +1545,259 @@ export type Database = {
           },
         ]
       }
+      org_esg_data: {
+        Row: {
+          account_id: string
+          created_at: string | null
+          id: string
+          industry_sector: string | null
+          nb_employees: number | null
+          office_surface_m2: number | null
+          platform_co2_avoided: number | null
+          platform_tonnes_recycled: number | null
+          platform_transactions_count: number | null
+          reporting_period: string | null
+          reporting_year: number
+          scope1_fuel_liters: number | null
+          scope1_fuel_type: string | null
+          scope1_natural_gas_kwh: number | null
+          scope1_other_kg_co2: number | null
+          scope2_electricity_kwh: number | null
+          scope2_electricity_source: string | null
+          scope2_heating_kwh: number | null
+          scope3_business_travel_km: number | null
+          scope3_commuting_avg_km: number | null
+          scope3_commuting_employees: number | null
+          scope3_purchased_goods_eur: number | null
+          scope3_travel_mode: string | null
+          scope3_waste_tonnes: number | null
+          submitted_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          account_id: string
+          created_at?: string | null
+          id?: string
+          industry_sector?: string | null
+          nb_employees?: number | null
+          office_surface_m2?: number | null
+          platform_co2_avoided?: number | null
+          platform_tonnes_recycled?: number | null
+          platform_transactions_count?: number | null
+          reporting_period?: string | null
+          reporting_year: number
+          scope1_fuel_liters?: number | null
+          scope1_fuel_type?: string | null
+          scope1_natural_gas_kwh?: number | null
+          scope1_other_kg_co2?: number | null
+          scope2_electricity_kwh?: number | null
+          scope2_electricity_source?: string | null
+          scope2_heating_kwh?: number | null
+          scope3_business_travel_km?: number | null
+          scope3_commuting_avg_km?: number | null
+          scope3_commuting_employees?: number | null
+          scope3_purchased_goods_eur?: number | null
+          scope3_travel_mode?: string | null
+          scope3_waste_tonnes?: number | null
+          submitted_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          account_id?: string
+          created_at?: string | null
+          id?: string
+          industry_sector?: string | null
+          nb_employees?: number | null
+          office_surface_m2?: number | null
+          platform_co2_avoided?: number | null
+          platform_tonnes_recycled?: number | null
+          platform_transactions_count?: number | null
+          reporting_period?: string | null
+          reporting_year?: number
+          scope1_fuel_liters?: number | null
+          scope1_fuel_type?: string | null
+          scope1_natural_gas_kwh?: number | null
+          scope1_other_kg_co2?: number | null
+          scope2_electricity_kwh?: number | null
+          scope2_electricity_source?: string | null
+          scope2_heating_kwh?: number | null
+          scope3_business_travel_km?: number | null
+          scope3_commuting_avg_km?: number | null
+          scope3_commuting_employees?: number | null
+          scope3_purchased_goods_eur?: number | null
+          scope3_travel_mode?: string | null
+          scope3_waste_tonnes?: number | null
+          submitted_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "org_esg_data_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "org_esg_data_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "org_esg_data_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      org_sustainability_kpis: {
+        Row: {
+          account_id: string
+          created_at: string | null
+          id: string
+          net_emissions_kg: number | null
+          period_end: string
+          period_start: string
+          period_type: string | null
+          tonnes_recycled: number | null
+          total_avoided_kg: number | null
+          total_emissions_kg: number | null
+          transactions_count: number | null
+        }
+        Insert: {
+          account_id: string
+          created_at?: string | null
+          id?: string
+          net_emissions_kg?: number | null
+          period_end: string
+          period_start: string
+          period_type?: string | null
+          tonnes_recycled?: number | null
+          total_avoided_kg?: number | null
+          total_emissions_kg?: number | null
+          transactions_count?: number | null
+        }
+        Update: {
+          account_id?: string
+          created_at?: string | null
+          id?: string
+          net_emissions_kg?: number | null
+          period_end?: string
+          period_start?: string
+          period_type?: string | null
+          tonnes_recycled?: number | null
+          total_avoided_kg?: number | null
+          total_emissions_kg?: number | null
+          transactions_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "org_sustainability_kpis_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "org_sustainability_kpis_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "org_sustainability_kpis_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organization_subscriptions: {
+        Row: {
+          account_id: string
+          billing_cycle: string | null
+          cancelled_at: string | null
+          created_at: string | null
+          current_period_end: string | null
+          current_period_start: string | null
+          id: string
+          plan_id: string
+          status: string | null
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          traced_lots_this_month: number | null
+          trial_ends_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          account_id: string
+          billing_cycle?: string | null
+          cancelled_at?: string | null
+          created_at?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_id: string
+          status?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          traced_lots_this_month?: number | null
+          trial_ends_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          account_id?: string
+          billing_cycle?: string | null
+          cancelled_at?: string | null
+          created_at?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_id?: string
+          status?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          traced_lots_this_month?: number | null
+          trial_ends_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_subscriptions_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_subscriptions_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_subscriptions_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_subscriptions_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       role_permissions: {
         Row: {
           id: number
@@ -682,6 +1838,67 @@ export type Database = {
           name?: string
         }
         Relationships: []
+      }
+      stripe_connected_accounts: {
+        Row: {
+          account_id: string
+          business_type: string | null
+          charges_enabled: boolean | null
+          country: string | null
+          created_at: string | null
+          id: string
+          onboarding_complete: boolean | null
+          payouts_enabled: boolean | null
+          stripe_account_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          account_id: string
+          business_type?: string | null
+          charges_enabled?: boolean | null
+          country?: string | null
+          created_at?: string | null
+          id?: string
+          onboarding_complete?: boolean | null
+          payouts_enabled?: boolean | null
+          stripe_account_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          account_id?: string
+          business_type?: string | null
+          charges_enabled?: boolean | null
+          country?: string | null
+          created_at?: string | null
+          id?: string
+          onboarding_complete?: boolean | null
+          payouts_enabled?: boolean | null
+          stripe_account_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stripe_connected_accounts_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: true
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stripe_connected_accounts_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: true
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stripe_connected_accounts_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: true
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       subscription_items: {
         Row: {
@@ -732,6 +1949,66 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      subscription_plans: {
+        Row: {
+          annual_price: number | null
+          created_at: string | null
+          display_name: string
+          id: string
+          includes_advanced_dashboard: boolean | null
+          includes_api_access: boolean | null
+          includes_dedicated_support: boolean | null
+          includes_erp_integration: boolean | null
+          is_active: boolean | null
+          max_traced_lots_per_month: number | null
+          monthly_price: number | null
+          name: string
+          pillar: string
+          sort_order: number | null
+          stripe_price_id_annual: string | null
+          stripe_price_id_monthly: string | null
+          stripe_product_id: string | null
+        }
+        Insert: {
+          annual_price?: number | null
+          created_at?: string | null
+          display_name: string
+          id?: string
+          includes_advanced_dashboard?: boolean | null
+          includes_api_access?: boolean | null
+          includes_dedicated_support?: boolean | null
+          includes_erp_integration?: boolean | null
+          is_active?: boolean | null
+          max_traced_lots_per_month?: number | null
+          monthly_price?: number | null
+          name: string
+          pillar?: string
+          sort_order?: number | null
+          stripe_price_id_annual?: string | null
+          stripe_price_id_monthly?: string | null
+          stripe_product_id?: string | null
+        }
+        Update: {
+          annual_price?: number | null
+          created_at?: string | null
+          display_name?: string
+          id?: string
+          includes_advanced_dashboard?: boolean | null
+          includes_api_access?: boolean | null
+          includes_dedicated_support?: boolean | null
+          includes_erp_integration?: boolean | null
+          is_active?: boolean | null
+          max_traced_lots_per_month?: number | null
+          monthly_price?: number | null
+          name?: string
+          pillar?: string
+          sort_order?: number | null
+          stripe_price_id_annual?: string | null
+          stripe_price_id_monthly?: string | null
+          stripe_product_id?: string | null
+        }
+        Relationships: []
       }
       subscriptions: {
         Row: {
@@ -813,6 +2090,253 @@ export type Database = {
           },
         ]
       }
+      traceability_certificates: {
+        Row: {
+          blockchain_hash: string | null
+          blockchain_record_id: string
+          carbon_record_id: string
+          certificate_number: string
+          certificate_url: string | null
+          co2_avoided: number | null
+          created_at: string | null
+          expires_at: string | null
+          id: string
+          issued_at: string | null
+          issued_to_account_id: string
+          material_summary: string | null
+          transaction_id: string
+          weight_tonnes: number | null
+        }
+        Insert: {
+          blockchain_hash?: string | null
+          blockchain_record_id: string
+          carbon_record_id: string
+          certificate_number: string
+          certificate_url?: string | null
+          co2_avoided?: number | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          issued_at?: string | null
+          issued_to_account_id: string
+          material_summary?: string | null
+          transaction_id: string
+          weight_tonnes?: number | null
+        }
+        Update: {
+          blockchain_hash?: string | null
+          blockchain_record_id?: string
+          carbon_record_id?: string
+          certificate_number?: string
+          certificate_url?: string | null
+          co2_avoided?: number | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          issued_at?: string | null
+          issued_to_account_id?: string
+          material_summary?: string | null
+          transaction_id?: string
+          weight_tonnes?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "traceability_certificates_blockchain_record_id_fkey"
+            columns: ["blockchain_record_id"]
+            isOneToOne: false
+            referencedRelation: "blockchain_records"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "traceability_certificates_carbon_record_id_fkey"
+            columns: ["carbon_record_id"]
+            isOneToOne: false
+            referencedRelation: "carbon_records"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "traceability_certificates_issued_to_account_id_fkey"
+            columns: ["issued_to_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "traceability_certificates_issued_to_account_id_fkey"
+            columns: ["issued_to_account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "traceability_certificates_issued_to_account_id_fkey"
+            columns: ["issued_to_account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "traceability_certificates_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transaction_events: {
+        Row: {
+          actor_account_id: string | null
+          actor_role: string | null
+          created_at: string | null
+          event_type: string
+          id: string
+          metadata: Json | null
+          transaction_id: string
+        }
+        Insert: {
+          actor_account_id?: string | null
+          actor_role?: string | null
+          created_at?: string | null
+          event_type: string
+          id?: string
+          metadata?: Json | null
+          transaction_id: string
+        }
+        Update: {
+          actor_account_id?: string | null
+          actor_role?: string | null
+          created_at?: string | null
+          event_type?: string
+          id?: string
+          metadata?: Json | null
+          transaction_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transaction_events_actor_account_id_fkey"
+            columns: ["actor_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transaction_events_actor_account_id_fkey"
+            columns: ["actor_account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transaction_events_actor_account_id_fkey"
+            columns: ["actor_account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transaction_events_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transport_emission_factors: {
+        Row: {
+          created_at: string | null
+          emission_factor: number
+          id: string
+          is_active: boolean | null
+          source: string | null
+          transport_mode: string
+          vehicle_type: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          emission_factor: number
+          id?: string
+          is_active?: boolean | null
+          source?: string | null
+          transport_mode: string
+          vehicle_type?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          emission_factor?: number
+          id?: string
+          is_active?: boolean | null
+          source?: string | null
+          transport_mode?: string
+          vehicle_type?: string | null
+        }
+        Relationships: []
+      }
+      wallet_balances: {
+        Row: {
+          account_id: string
+          available_balance: number
+          currency: string
+          id: string
+          pending_balance: number
+          total_commission_paid: number
+          total_earned: number
+          total_fees_paid: number
+          total_transactions: number
+          total_withdrawn: number
+          updated_at: string | null
+        }
+        Insert: {
+          account_id: string
+          available_balance?: number
+          currency?: string
+          id?: string
+          pending_balance?: number
+          total_commission_paid?: number
+          total_earned?: number
+          total_fees_paid?: number
+          total_transactions?: number
+          total_withdrawn?: number
+          updated_at?: string | null
+        }
+        Update: {
+          account_id?: string
+          available_balance?: number
+          currency?: string
+          id?: string
+          pending_balance?: number
+          total_commission_paid?: number
+          total_earned?: number
+          total_fees_paid?: number
+          total_transactions?: number
+          total_withdrawn?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wallet_balances_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: true
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "wallet_balances_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: true
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "wallet_balances_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: true
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       user_account_workspace: {
@@ -857,6 +2381,20 @@ export type Database = {
           invited_by: string
         }
         Returns: Database["public"]["Tables"]["invitations"]["Row"][]
+      }
+      calculate_commission: {
+        Args: { p_amount_cents: number; p_config_override?: string }
+        Returns: {
+          commission_amount: number
+          commission_rate: number
+          config_id: string
+          config_name: string
+          seller_amount: number
+        }[]
+      }
+      calculate_transaction_carbon: {
+        Args: { p_transaction_id: string }
+        Returns: string
       }
       can_action_account_member: {
         Args: { target_team_account_id: string; target_user_id: string }
@@ -915,6 +2453,10 @@ export type Database = {
           isOneToOne: true
           isSetofReturn: false
         }
+      }
+      generate_blockchain_record: {
+        Args: { p_transaction_id: string }
+        Returns: string
       }
       get_account_invitations: {
         Args: { account_slug: string }
@@ -981,6 +2523,10 @@ export type Database = {
           target_user_id: string
         }
         Returns: boolean
+      }
+      increment_wallet_pending: {
+        Args: { p_account_id: string; p_amount: number }
+        Returns: undefined
       }
       is_aal2: { Args: never; Returns: boolean }
       is_account_owner: { Args: { account_id: string }; Returns: boolean }
@@ -1222,101 +2768,6 @@ export type Database = {
         }
         Relationships: []
       }
-      iceberg_namespaces: {
-        Row: {
-          bucket_name: string
-          catalog_id: string
-          created_at: string
-          id: string
-          metadata: Json
-          name: string
-          updated_at: string
-        }
-        Insert: {
-          bucket_name: string
-          catalog_id: string
-          created_at?: string
-          id?: string
-          metadata?: Json
-          name: string
-          updated_at?: string
-        }
-        Update: {
-          bucket_name?: string
-          catalog_id?: string
-          created_at?: string
-          id?: string
-          metadata?: Json
-          name?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "iceberg_namespaces_catalog_id_fkey"
-            columns: ["catalog_id"]
-            isOneToOne: false
-            referencedRelation: "buckets_analytics"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      iceberg_tables: {
-        Row: {
-          bucket_name: string
-          catalog_id: string
-          created_at: string
-          id: string
-          location: string
-          name: string
-          namespace_id: string
-          remote_table_id: string | null
-          shard_id: string | null
-          shard_key: string | null
-          updated_at: string
-        }
-        Insert: {
-          bucket_name: string
-          catalog_id: string
-          created_at?: string
-          id?: string
-          location: string
-          name: string
-          namespace_id: string
-          remote_table_id?: string | null
-          shard_id?: string | null
-          shard_key?: string | null
-          updated_at?: string
-        }
-        Update: {
-          bucket_name?: string
-          catalog_id?: string
-          created_at?: string
-          id?: string
-          location?: string
-          name?: string
-          namespace_id?: string
-          remote_table_id?: string | null
-          shard_id?: string | null
-          shard_key?: string | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "iceberg_tables_catalog_id_fkey"
-            columns: ["catalog_id"]
-            isOneToOne: false
-            referencedRelation: "buckets_analytics"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "iceberg_tables_namespace_id_fkey"
-            columns: ["namespace_id"]
-            isOneToOne: false
-            referencedRelation: "iceberg_namespaces"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       migrations: {
         Row: {
           executed_at: string | null
@@ -1398,6 +2849,7 @@ export type Database = {
           id: string
           in_progress_size: number
           key: string
+          metadata: Json | null
           owner_id: string | null
           upload_signature: string
           user_metadata: Json | null
@@ -1409,6 +2861,7 @@ export type Database = {
           id: string
           in_progress_size?: number
           key: string
+          metadata?: Json | null
           owner_id?: string | null
           upload_signature: string
           user_metadata?: Json | null
@@ -1420,6 +2873,7 @@ export type Database = {
           id?: string
           in_progress_size?: number
           key?: string
+          metadata?: Json | null
           owner_id?: string | null
           upload_signature?: string
           user_metadata?: Json | null
@@ -1538,6 +2992,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      allow_any_operation: {
+        Args: { expected_operations: string[] }
+        Returns: boolean
+      }
+      allow_only_operation: {
+        Args: { expected_operation: string }
+        Returns: boolean
+      }
       can_insert_object: {
         Args: { bucketid: string; metadata: Json; name: string; owner: string }
         Returns: undefined
@@ -1816,4 +3278,3 @@ export const Constants = {
     },
   },
 } as const
-
