@@ -39,10 +39,20 @@ function ScanContent() {
     void startScan();
 
     return () => {
+      restoreWebview();
       void stopScan();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function restoreWebview() {
+    const body = document.body;
+    if (!body) return;
+    body.classList.remove('barcode-scanner-active');
+    // Wipe any inline transparent background that might have leaked
+    body.style.background = '';
+    body.style.backgroundColor = '';
+  }
 
   async function startScan() {
     try {
@@ -73,8 +83,7 @@ function ScanContent() {
       const result = await BarcodeScanner.scan();
       const value = result.barcodes?.[0]?.rawValue;
 
-      // Restore webview
-      document.querySelector('body')?.classList.remove('barcode-scanner-active');
+      restoreWebview();
       setScanning(false);
 
       if (value) {
@@ -88,7 +97,7 @@ function ScanContent() {
       const msg = err instanceof Error ? err.message : 'Scan failed';
       setPermError(msg);
       setScanning(false);
-      document.querySelector('body')?.classList.remove('barcode-scanner-active');
+      restoreWebview();
     }
   }
 
@@ -98,9 +107,10 @@ function ScanContent() {
         '@capacitor-mlkit/barcode-scanning'
       );
       await BarcodeScanner.stopScan();
-      document.querySelector('body')?.classList.remove('barcode-scanner-active');
     } catch {
       // noop
+    } finally {
+      restoreWebview();
     }
   }
 

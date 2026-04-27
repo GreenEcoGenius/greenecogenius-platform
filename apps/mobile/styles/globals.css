@@ -46,7 +46,7 @@ html {
 body {
   min-height: 100vh;
   min-height: -webkit-fill-available;
-  background: hsl(var(--background));
+  background-color: #0A2F1F;
   color: hsl(var(--foreground));
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
   font-feature-settings: 'cv11', 'ss01';
