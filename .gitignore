@@ -60,3 +60,7 @@ node-compile-cache/
 # supabase cli temp files
 supabase/.temp/
 .env*.local
+
+# iCloud sync duplicates
+apps/mobile/ios/App/App/config [0-9]*.xml
+
