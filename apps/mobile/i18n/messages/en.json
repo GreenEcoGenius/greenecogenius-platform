@@ -54,10 +54,16 @@
     "support": "Support",
     "profile": "Profile",
     "security": "Security",
+    "securitySubtitle": "Password and authentication",
     "notifications": "Notifications",
+    "notificationsSubtitle": "Alerts and preferences",
     "language": "Language",
     "terms": "Terms of service",
-    "help": "Help & contact"
+    "termsSubtitle": "Legal notice and TOS",
+    "help": "Help & contact",
+    "helpSubtitle": "Assistance and support",
+    "comingSoon": "Coming soon",
+    "comingSoonHint": "This section will be enabled in a future update."
   },
   "teams": {
     "title": "Teams",

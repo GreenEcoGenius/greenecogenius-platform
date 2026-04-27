@@ -43,8 +43,8 @@ function SettingsContent() {
       title: t('account'),
       items: [
         { icon: User, label: t('profile'), value: email ?? '' },
-        { icon: Lock, label: t('security') },
-        { icon: Bell, label: t('notifications') },
+        { icon: Lock, label: t('security'), href: '/settings/security' },
+        { icon: Bell, label: t('notifications'), href: '/settings/notifications' },
       ],
     },
     {
@@ -56,8 +56,8 @@ function SettingsContent() {
     {
       title: t('support'),
       items: [
-        { icon: FileText, label: t('terms') },
-        { icon: CircleHelp, label: t('help') },
+        { icon: FileText, label: t('terms'), href: '/settings/terms' },
+        { icon: CircleHelp, label: t('help'), href: '/settings/support' },
       ],
     },
     {

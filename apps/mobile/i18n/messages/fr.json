@@ -54,10 +54,16 @@
     "support": "Support",
     "profile": "Profil",
     "security": "Sécurité",
+    "securitySubtitle": "Mot de passe et authentification",
     "notifications": "Notifications",
+    "notificationsSubtitle": "Alertes et préférences",
     "language": "Langue",
     "terms": "Conditions générales",
-    "help": "Aide & contact"
+    "termsSubtitle": "Mentions légales et CGU",
+    "help": "Aide & contact",
+    "helpSubtitle": "Assistance et support",
+    "comingSoon": "Bientôt disponible",
+    "comingSoonHint": "Cette section sera activée dans une prochaine mise à jour."
   },
   "teams": {
     "title": "Équipes",
