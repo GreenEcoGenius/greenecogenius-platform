@@ -31,11 +31,8 @@ export function AppShell({
 
   return (
     <div className="fixed inset-0 flex flex-col bg-[#0A2F1F] overflow-hidden">
-      <header
-        className="shrink-0 border-b border-[#F5F5F0]/10 bg-[#0A2F1F]"
-        style={{ paddingTop: "max(8px, calc(env(safe-area-inset-top) - 18px))" }}
-      >
-        <div className="flex items-center justify-between gap-3 px-4 py-1">
+      <header className="shrink-0 border-b border-[#F5F5F0]/10 bg-[#0A2F1F] pt-[env(safe-area-inset-top)]">
+        <div className="flex items-center justify-between gap-3 px-4 py-1.5">
           <div className="flex flex-1 items-center gap-2 min-w-0">
             {showBack ? (
               <button

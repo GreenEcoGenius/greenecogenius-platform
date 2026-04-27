@@ -83,9 +83,18 @@ function SettingsContent() {
       j > 0 ? 'border-t border-[#F5F5F0]/10' : ''
     }`;
     if (item.href) {
-      return <Link key={item.label} href={item.href} className={className}>{inner}</Link>;
+      return (
+        <button
+          key={item.label}
+          type="button"
+          onClick={() => router.push(item.href!)}
+          className={className}
+        >
+          {inner}
+        </button>
+      );
     }
-    return <button key={item.label} onClick={item.onClick} className={className}>{inner}</button>;
+    return <button key={item.label} type="button" onClick={item.onClick} className={className}>{inner}</button>;
   }
 
   return (

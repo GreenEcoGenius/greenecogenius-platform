@@ -19,20 +19,20 @@ export function TabBar() {
 
   return (
     <nav className="z-50 border-t border-[#F5F5F0]/10 bg-[#0A2F1F]/90 backdrop-blur-xl">
-      <div className="flex items-center justify-around pb-[env(safe-area-inset-bottom)] pt-2">
+      <div className="flex items-center justify-around pb-[env(safe-area-inset-bottom)] pt-0">
         {tabs.map(({ href, label, icon: Icon, prominent }) => {
           const active = pathname === href || pathname?.startsWith(`${href}/`);
           return (
             <Link
               key={href}
               href={href}
-              className={`flex flex-1 flex-col items-center gap-1 py-2 transition-colors ${
+              className={`flex flex-1 flex-col items-center gap-0.5 py-0.5 transition-colors ${
                 active ? 'text-[#F5F5F0]' : 'text-[#F5F5F0]/50'
               }`}
             >
               {prominent ? (
                 <span
-                  className={`flex h-9 w-9 items-center justify-center rounded-full transition-all ${
+                  className={`flex h-8 w-8 items-center justify-center rounded-full transition-all ${
                     active
                       ? 'bg-[#B8D4E3] text-[#0A2F1F] shadow-[0_4px_16px_rgba(184,212,227,0.4)]'
                       : 'bg-[#F5F5F0]/10 text-[#F5F5F0]/70'
