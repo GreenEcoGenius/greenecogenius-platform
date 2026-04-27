@@ -78,3 +78,21 @@ button, a, [role="button"] { user-select: none; }
 .animate-fade-in {
   animation: fade-in 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Camera scanner: make webview transparent so camera preview shows behind */
+body.barcode-scanner-active {
+  background: transparent !important;
+  --background: transparent;
+}
+
+body.barcode-scanner-active * {
+  background: transparent !important;
+}
+
+body.barcode-scanner-active .barcode-scanner-overlay,
+body.barcode-scanner-active [class*="bg-black/"],
+body.barcode-scanner-active .border-\[\#B8D4E3\],
+body.barcode-scanner-active .text-white,
+body.barcode-scanner-active .text-\[\#B8D4E3\] {
+  background-color: var(--tw-bg-opacity-bg, initial) !important;
+}

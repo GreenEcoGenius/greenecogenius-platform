@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    '@capacitor-mlkit/barcode-scanning':
+      specifier: ^8.0.1
+      version: 8.0.1
     '@capacitor/device':
       specifier: ^7.0.5
       version: 7.0.5
@@ -378,6 +381,9 @@ importers:
 
   apps/mobile:
     dependencies:
+      '@capacitor-mlkit/barcode-scanning':
+        specifier: 'catalog:'
+        version: 8.0.1(@capacitor/core@7.6.2)
       '@capacitor/app':
         specifier: ^7.0.0
         version: 7.1.2(@capacitor/core@7.6.2)
@@ -1898,6 +1904,11 @@ packages:
 
   '@braintree/sanitize-url@6.0.4':
     resolution: {integrity: sha512-s3jaWicZd0pkP0jf5ysyHUI/RE7MHos6qlToFcGWXVp+ykHOy77OUMrfbgJ9it2C5bow7OIQwYYaHjk9XlBQ2A==}
+
+  '@capacitor-mlkit/barcode-scanning@8.0.1':
+    resolution: {integrity: sha512-94SyxzbcQ2HBd7yxS34dqc0PzwdOw8/98xBrjw1ioznE/Ksky/iwsip5Bm8P8Qg+dgnJYWz7NcIPjd+6bLjVoQ==}
+    peerDependencies:
+      '@capacitor/core': '>=8.0.0'
 
   '@capacitor/app@7.1.2':
     resolution: {integrity: sha512-d4I/oF/PRu4megL7/IGKYfe5j7yzSON1FRFgq6kH+m5kH6g7V+wyjHRLauCzGNjdRx4S+nWOumINds0qcRBtKg==}
@@ -9420,6 +9431,10 @@ snapshots:
       '@types/react': 19.2.14
 
   '@braintree/sanitize-url@6.0.4': {}
+
+  '@capacitor-mlkit/barcode-scanning@8.0.1(@capacitor/core@7.6.2)':
+    dependencies:
+      '@capacitor/core': 7.6.2
 
   '@capacitor/app@7.1.2(@capacitor/core@7.6.2)':
     dependencies:

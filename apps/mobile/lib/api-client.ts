@@ -1,6 +1,6 @@
 import { Capacitor } from '@capacitor/core';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://greenecogenius.tech';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://www.greenecogenius.tech';
 
 export function apiUrl(path: string): string {
   const isNative = typeof window !== 'undefined' && Capacitor.isNativePlatform();
