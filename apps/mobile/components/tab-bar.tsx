@@ -18,7 +18,7 @@ export function TabBar() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#F5F5F0]/10 bg-[#0A2F1F]/90 backdrop-blur-xl">
+    <nav className="z-50 border-t border-[#F5F5F0]/10 bg-[#0A2F1F]/90 backdrop-blur-xl">
       <div className="flex items-center justify-around pb-[env(safe-area-inset-bottom)] pt-2">
         {tabs.map(({ href, label, icon: Icon, prominent }) => {
           const active = pathname === href || pathname?.startsWith(`${href}/`);

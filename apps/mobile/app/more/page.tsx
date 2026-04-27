@@ -37,8 +37,8 @@ function MoreContent() {
       icon: ShieldCheck,
       label: t('traceability'),
       desc: t('traceabilityDesc'),
-      badge: t('badgeSoon'),
-      disabled: true,
+      badge: t('badgeNew'),
+      
     },
     {
       href: '/dashboard',
