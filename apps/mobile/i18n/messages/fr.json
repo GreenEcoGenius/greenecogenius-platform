@@ -22,11 +22,17 @@
     "save": "Enregistrer",
     "cancel": "Annuler",
     "delete": "Supprimer",
-    "confirm": "Confirmer"
+    "confirm": "Confirmer",
+    "retry": "Réessayer",
+    "send": "Envoyer",
+    "stop": "Arrêter",
+    "copy": "Copier",
+    "copied": "Copié"
   },
   "nav": {
     "home": "Accueil",
     "dashboard": "Dashboard",
+    "genius": "Genius",
     "teams": "Équipes",
     "settings": "Réglages"
   },
@@ -55,5 +61,31 @@
     "title": "Équipes",
     "subtitle": "Multi-tenant accounts",
     "empty": "Aucune équipe pour le moment. Créez votre première équipe pour collaborer."
+  },
+  "genius": {
+    "title": "Genius",
+    "subtitle": "Votre assistant ESG par IA",
+    "placeholder": "Posez une question à Genius…",
+    "intro": "Bonjour. Je suis Genius, votre assistant IA pour l'économie circulaire, l'ESG et la conformité CSRD.",
+    "introTip": "Posez-moi une question, je vous aiguille vers le bon sujet automatiquement.",
+    "suggestionsTitle": "Suggestions",
+    "suggestion1": "Comment réduire mon empreinte carbone ?",
+    "suggestion2": "Que dois-je inclure dans un rapport CSRD ?",
+    "suggestion3": "Comment lister une matière sur le Comptoir ?",
+    "suggestion4": "Quelles sont les normes RSE applicables ?",
+    "thinking": "Genius réfléchit…",
+    "errorGeneric": "Genius n'a pas pu répondre. Réessayez dans un instant.",
+    "errorAuth": "Session expirée. Reconnectez-vous.",
+    "errorOffline": "Pas de connexion Internet.",
+    "agentLabel": {
+      "comptoir": "Comptoir Circulaire",
+      "carbon": "Bilan Carbone",
+      "esg": "ESG / CSRD",
+      "traceability": "Traçabilité",
+      "rse": "Labels RSE",
+      "compliance": "Conformité"
+    },
+    "newChat": "Nouvelle conversation",
+    "clearConfirm": "Effacer la conversation actuelle ?"
   }
 }

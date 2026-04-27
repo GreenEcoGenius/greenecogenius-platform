@@ -22,11 +22,17 @@
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "retry": "Retry",
+    "send": "Send",
+    "stop": "Stop",
+    "copy": "Copy",
+    "copied": "Copied"
   },
   "nav": {
     "home": "Home",
     "dashboard": "Dashboard",
+    "genius": "Genius",
     "teams": "Teams",
     "settings": "Settings"
   },
@@ -55,5 +61,31 @@
     "title": "Teams",
     "subtitle": "Multi-tenant accounts",
     "empty": "No teams yet. Create your first team to collaborate."
+  },
+  "genius": {
+    "title": "Genius",
+    "subtitle": "Your AI assistant for ESG",
+    "placeholder": "Ask Genius a question…",
+    "intro": "Hi. I'm Genius, your AI assistant for circular economy, ESG and CSRD compliance.",
+    "introTip": "Ask me anything, I'll route you to the right specialist automatically.",
+    "suggestionsTitle": "Suggestions",
+    "suggestion1": "How can I reduce my carbon footprint?",
+    "suggestion2": "What should a CSRD report include?",
+    "suggestion3": "How do I list a material on the Comptoir?",
+    "suggestion4": "Which CSR standards apply to my company?",
+    "thinking": "Genius is thinking…",
+    "errorGeneric": "Genius couldn't reply. Please try again in a moment.",
+    "errorAuth": "Session expired. Please sign in again.",
+    "errorOffline": "No internet connection.",
+    "agentLabel": {
+      "comptoir": "Circular Marketplace",
+      "carbon": "Carbon Footprint",
+      "esg": "ESG / CSRD",
+      "traceability": "Traceability",
+      "rse": "CSR Labels",
+      "compliance": "Compliance"
+    },
+    "newChat": "New conversation",
+    "clearConfirm": "Clear current conversation?"
   }
 }
