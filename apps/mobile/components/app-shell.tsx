@@ -26,13 +26,13 @@ export function AppShell({
 
   return (
     <div className="flex min-h-screen flex-col bg-[#0A2F1F]">
-      <header className="sticky top-0 z-40 border-b border-[#F5F5F0]/10 bg-[#0A2F1F]/90 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-[#F5F5F0]/10 bg-[#0A2F1F]/90 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
         <div className="flex items-center justify-between gap-3 px-4 py-3">
-          <div className="flex flex-1 items-center gap-2">
+          <div className="flex flex-1 items-center gap-2 min-w-0">
             {showBack && (
               <button
                 onClick={() => router.back()}
-                className="-ml-2 flex h-9 w-9 items-center justify-center rounded-full text-[#F5F5F0] active:bg-[#F5F5F0]/10"
+                className="-ml-2 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[#F5F5F0] active:bg-[#F5F5F0]/10"
               >
                 <ChevronLeft className="h-6 w-6" />
               </button>

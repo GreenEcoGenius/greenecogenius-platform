@@ -34,9 +34,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-[#0A2F1F] text-[#F5F5F0] antialiased">
         <CapacitorInit />
         <LocaleProvider>
-          <div className="min-h-screen pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
-            {children}
-          </div>
+          {children}
           <Toaster theme="dark" position="top-center" richColors />
         </LocaleProvider>
       </body>
