@@ -2,17 +2,19 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Home, BarChart3, Users, Settings } from 'lucide-react';
-
-const tabs = [
-  { href: '/home', label: 'Accueil', icon: Home },
-  { href: '/dashboard', label: 'Dashboard', icon: BarChart3 },
-  { href: '/teams', label: 'Équipes', icon: Users },
-  { href: '/settings', label: 'Réglages', icon: Settings },
-];
 
 export function TabBar() {
   const pathname = usePathname();
+  const t = useTranslations('nav');
+
+  const tabs = [
+    { href: '/home', label: t('home'), icon: Home },
+    { href: '/dashboard', label: t('dashboard'), icon: BarChart3 },
+    { href: '/teams', label: t('teams'), icon: Users },
+    { href: '/settings', label: t('settings'), icon: Settings },
+  ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#F5F5F0]/10 bg-[#0A2F1F]/90 backdrop-blur-xl">

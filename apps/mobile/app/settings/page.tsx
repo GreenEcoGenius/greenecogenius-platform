@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { ChevronRight, User, Bell, Globe, Lock, LogOut, FileText, CircleHelp } from 'lucide-react';
 import { AuthGuard } from '~/components/auth-guard';
@@ -13,13 +14,13 @@ const localeLabels: Record<Locale, string> = { fr: 'Français', en: 'English' };
 
 function SettingsContent() {
   const router = useRouter();
+  const t = useTranslations('settings');
+  const tc = useTranslations('common');
   const [email, setEmail] = useState<string | null>(null);
   const [locale, setLocaleValue] = useState<Locale>('fr');
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setEmail(user?.email ?? null);
-    });
+    supabase.auth.getUser().then(({ data: { user } }) => setEmail(user?.email ?? null));
     detectInitialLocale().then(setLocaleValue);
   }, []);
 
@@ -39,69 +40,56 @@ function SettingsContent() {
 
   const sections: Array<{ title: string; items: Item[] }> = [
     {
-      title: 'Compte',
+      title: t('account'),
       items: [
-        { icon: User, label: 'Profil', value: email ?? '' },
-        { icon: Lock, label: 'Sécurité' },
-        { icon: Bell, label: 'Notifications' },
+        { icon: User, label: t('profile'), value: email ?? '' },
+        { icon: Lock, label: t('security') },
+        { icon: Bell, label: t('notifications') },
       ],
     },
     {
-      title: 'Préférences',
+      title: t('preferences'),
       items: [
-        { icon: Globe, label: 'Langue', value: localeLabels[locale], href: '/settings/language' },
+        { icon: Globe, label: t('language'), value: localeLabels[locale], href: '/settings/language' },
       ],
     },
     {
-      title: 'Support',
+      title: t('support'),
       items: [
-        { icon: FileText, label: 'Conditions générales' },
-        { icon: CircleHelp, label: 'Aide & contact' },
+        { icon: FileText, label: t('terms') },
+        { icon: CircleHelp, label: t('help') },
       ],
     },
     {
       title: '',
       items: [
-        { icon: LogOut, label: 'Déconnexion', onClick: handleSignOut, danger: true },
+        { icon: LogOut, label: tc('logout'), onClick: handleSignOut, danger: true },
       ],
     },
   ];
 
-  function renderRow(item: Item, j: number, total: number) {
+  function renderRow(item: Item, j: number) {
     const inner = (
       <>
         <item.icon className={`h-5 w-5 ${item.danger ? 'text-red-400' : 'text-[#F5F5F0]/70'}`} />
         <span className={`flex-1 text-sm ${item.danger ? 'text-red-400 font-medium' : 'text-[#F5F5F0]'}`}>
           {item.label}
         </span>
-        {item.value && (
-          <span className="truncate text-xs text-[#F5F5F0]/50">{item.value}</span>
-        )}
+        {item.value && <span className="truncate text-xs text-[#F5F5F0]/50">{item.value}</span>}
         {!item.danger && <ChevronRight className="h-4 w-4 text-[#F5F5F0]/30" />}
       </>
     );
-
     const className = `flex w-full items-center gap-3 px-4 py-3.5 text-left active:bg-[#F5F5F0]/5 ${
       j > 0 ? 'border-t border-[#F5F5F0]/10' : ''
     }`;
-
     if (item.href) {
-      return (
-        <Link key={item.label} href={item.href} className={className}>
-          {inner}
-        </Link>
-      );
+      return <Link key={item.label} href={item.href} className={className}>{inner}</Link>;
     }
-
-    return (
-      <button key={item.label} onClick={item.onClick} className={className}>
-        {inner}
-      </button>
-    );
+    return <button key={item.label} onClick={item.onClick} className={className}>{inner}</button>;
   }
 
   return (
-    <AppShell title="Réglages">
+    <AppShell title={t('title')}>
       <div className="space-y-6">
         {sections.map((section, i) => (
           <section key={i}>
@@ -111,13 +99,11 @@ function SettingsContent() {
               </h2>
             )}
             <div className="overflow-hidden rounded-2xl border border-[#F5F5F0]/10 bg-[#F5F5F0]/[0.03]">
-              {section.items.map((item, j) => renderRow(item, j, section.items.length))}
+              {section.items.map((item, j) => renderRow(item, j))}
             </div>
           </section>
         ))}
-        <p className="pt-2 text-center text-xs text-[#F5F5F0]/30">
-          GreenEcoGenius · v1.0.0
-        </p>
+        <p className="pt-2 text-center text-xs text-[#F5F5F0]/30">GreenEcoGenius · v1.0.0</p>
       </div>
     </AppShell>
   );

@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
 import { Toaster } from 'sonner';
 import { CapacitorInit } from '~/components/capacitor-init';
+import { LocaleProvider } from '~/components/locale-provider';
 import '~/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -25,23 +24,21 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const messages = await getMessages();
-
   return (
     <html lang="fr" className="dark">
       <body className="min-h-screen bg-[#0A2F1F] text-[#F5F5F0] antialiased">
         <CapacitorInit />
-        <NextIntlClientProvider messages={messages}>
+        <LocaleProvider>
           <div className="min-h-screen pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
             {children}
           </div>
           <Toaster theme="dark" position="top-center" richColors />
-        </NextIntlClientProvider>
+        </LocaleProvider>
       </body>
     </html>
   );
