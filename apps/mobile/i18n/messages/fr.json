@@ -35,7 +35,8 @@
     "genius": "Genius",
     "teams": "Équipes",
     "carbon": "Carbone",
-    "settings": "Réglages"
+    "settings": "Réglages",
+    "more": "Plus"
   },
   "home": {
     "greeting": "Bonjour",
@@ -119,5 +120,47 @@
     "esgFootnote": "Estimations basées sur les facteurs ADEME 2024. Calcul officiel disponible sur la version web.",
     "emptyEsg": "Aucun bilan ESG",
     "emptyEsgHint": "Renseignez vos données ESG sur la version web pour générer votre bilan annuel."
+  },
+  "more": {
+    "title": "Plus",
+    "subtitle": "Modules complémentaires",
+    "marketplace": "Comptoir Circulaire",
+    "marketplaceDesc": "Achetez et vendez des matières recyclées",
+    "traceability": "Traçabilité",
+    "traceabilityDesc": "Vérification blockchain de vos lots",
+    "dashboard": "Dashboard",
+    "dashboardDesc": "Vue d'ensemble de vos KPI",
+    "teams": "Équipes",
+    "teamsDesc": "Gérez vos comptes multi-tenants",
+    "badgeNew": "Nouveau",
+    "badgeSoon": "Bientôt"
+  },
+  "marketplace": {
+    "title": "Comptoir",
+    "subtitle": "Matières recyclées disponibles",
+    "detailTitle": "Détail",
+    "categoryAll": "Toutes",
+    "priceOnRequest": "Prix sur demande",
+    "badgeCollect": "Collecte",
+    "loading": "Chargement…",
+    "retry": "Réessayer",
+    "refresh": "Rafraîchir",
+    "back": "Retour",
+    "notFound": "Annonce introuvable",
+    "emptyAll": "Aucune annonce active",
+    "emptyCategory": "Aucune annonce dans cette catégorie",
+    "emptyHint": "Les annonces du Comptoir Circulaire apparaîtront ici.",
+    "listingsCount": "annonce(s)",
+    "price": "Prix",
+    "transport": "transport",
+    "quantity": "Quantité",
+    "location": "Localisation",
+    "listedOn": "Publiée le",
+    "type": "Type",
+    "typeSell": "Vente",
+    "typeCollect": "Collecte",
+    "description": "Description",
+    "materialDetails": "Détails matière",
+    "readOnlyFootnote": "Consultation uniquement. Pour acheter, utilisez la version web."
   }
 }

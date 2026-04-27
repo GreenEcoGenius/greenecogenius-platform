@@ -35,7 +35,8 @@
     "genius": "Genius",
     "teams": "Teams",
     "carbon": "Carbon",
-    "settings": "Settings"
+    "settings": "Settings",
+    "more": "More"
   },
   "home": {
     "greeting": "Hello",
@@ -119,5 +120,47 @@
     "esgFootnote": "Estimates based on ADEME 2024 factors. Official calculation available on the web app.",
     "emptyEsg": "No ESG report",
     "emptyEsgHint": "Enter your ESG data on the web app to generate your annual report."
+  },
+  "more": {
+    "title": "More",
+    "subtitle": "Additional modules",
+    "marketplace": "Marketplace",
+    "marketplaceDesc": "Buy and sell recycled materials",
+    "traceability": "Traceability",
+    "traceabilityDesc": "Blockchain verification of your lots",
+    "dashboard": "Dashboard",
+    "dashboardDesc": "Overview of your KPIs",
+    "teams": "Teams",
+    "teamsDesc": "Manage your multi-tenant accounts",
+    "badgeNew": "New",
+    "badgeSoon": "Soon"
+  },
+  "marketplace": {
+    "title": "Marketplace",
+    "subtitle": "Available recycled materials",
+    "detailTitle": "Details",
+    "categoryAll": "All",
+    "priceOnRequest": "Price on request",
+    "badgeCollect": "Collect",
+    "loading": "Loading…",
+    "retry": "Retry",
+    "refresh": "Refresh",
+    "back": "Back",
+    "notFound": "Listing not found",
+    "emptyAll": "No active listings",
+    "emptyCategory": "No listings in this category",
+    "emptyHint": "Marketplace listings will appear here.",
+    "listingsCount": "listing(s)",
+    "price": "Price",
+    "transport": "transport",
+    "quantity": "Quantity",
+    "location": "Location",
+    "listedOn": "Listed on",
+    "type": "Type",
+    "typeSell": "Sale",
+    "typeCollect": "Collect",
+    "description": "Description",
+    "materialDetails": "Material details",
+    "readOnlyFootnote": "Read-only view. To purchase, use the web app."
   }
 }
