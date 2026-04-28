@@ -24,7 +24,14 @@ export default function MorePage() {
 function MoreContent() {
   const t = useTranslations('more');
 
-  const items = [
+  const items: Array<{
+    href: string;
+    icon: typeof ShoppingBag;
+    label: string;
+    desc: string;
+    badge?: string;
+    disabled?: boolean;
+  }> = [
     {
       href: '/marketplace',
       icon: ShoppingBag,
@@ -38,7 +45,6 @@ function MoreContent() {
       label: t('traceability'),
       desc: t('traceabilityDesc'),
       badge: t('badgeNew'),
-      
     },
     {
       href: '/dashboard',

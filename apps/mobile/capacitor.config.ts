@@ -1,4 +1,5 @@
 import type { CapacitorConfig } from '@capacitor/cli';
+import { KeyboardResize, KeyboardStyle } from '@capacitor/keyboard';
 
 const config: CapacitorConfig = {
   appId: 'tech.greenecogenius.app',
@@ -24,8 +25,8 @@ const config: CapacitorConfig = {
       backgroundColor: '#0A2F1F',
     },
     Keyboard: {
-      resize: 'native',
-      style: 'DARK',
+      resize: KeyboardResize.Native,
+      style: KeyboardStyle.Dark,
     },
   },
 };
