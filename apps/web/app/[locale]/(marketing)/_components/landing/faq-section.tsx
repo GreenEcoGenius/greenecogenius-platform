@@ -14,7 +14,7 @@ export function FaqSection() {
   return (
     <section className="py-20 sm:py-28">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-metal-900 mb-3 text-center text-3xl font-bold sm:text-4xl">
+        <h2 className="gradient-text-verdure-leaf mb-3 text-center text-3xl font-bold sm:text-4xl">
           {t('landing.faqTitle')}
         </h2>
         <p className="text-metal-600 mx-auto mb-14 max-w-xl text-center text-lg">

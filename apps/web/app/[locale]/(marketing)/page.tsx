@@ -143,7 +143,7 @@ export default async function Home() {
               <p className="text-primary mb-4 text-sm font-semibold tracking-wider uppercase">
                 {t('featuresBadge')}
               </p>
-              <h2 className="text-metal-900 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              <h2 className="gradient-text-verdure-leaf text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
                 {t('featuresHeading')}
               </h2>
               <p className="text-metal-600 mt-4 text-lg">

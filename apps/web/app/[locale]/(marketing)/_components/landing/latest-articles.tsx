@@ -46,7 +46,7 @@ export async function LatestArticles() {
               <p className="text-primary mb-2 text-sm font-semibold tracking-wider uppercase">
                 Blog
               </p>
-              <h2 className="text-metal-900 text-3xl font-bold tracking-tight sm:text-4xl">
+              <h2 className="gradient-text-verdure-leaf text-3xl font-bold tracking-tight sm:text-4xl">
                 {t('blog')}
               </h2>
             </div>
