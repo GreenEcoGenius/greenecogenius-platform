@@ -9,7 +9,7 @@ import { getTranslations } from 'next-intl/server';
 import { AnimateOnScroll } from './_components/animate-on-scroll';
 import { ComparisonTable } from './_components/landing/comparison-table';
 import { FaqSection } from './_components/landing/faq-section';
-import { SourcesCarousel, TechCarousel } from './_components/landing/foundations-section';
+import { FrameworksCarousel, SourcesCarousel, TechCarousel } from './_components/landing/foundations-section';
 import { HowItWorks } from './_components/landing/how-it-works';
 import { ImpactSimulator } from './_components/landing/impact-simulator';
 import { LatestArticles } from './_components/landing/latest-articles';
@@ -129,11 +129,11 @@ export default async function Home() {
       {/* ───── CARROUSEL TECHNOLOGIES ───── */}
       <TechCarousel />
 
-      {/* ───── CARROUSEL SOURCES + RÉFÉRENTIELS ───── */}
-      <SourcesCarousel />
-
       {/* ───── SECTION 3 — URGENCE RÉGLEMENTAIRE ───── */}
       <RegulatoryTimeline />
+
+      {/* ───── CARROUSEL SOURCES OFFICIELLES ───── */}
+      <SourcesCarousel />
 
       {/* ───── SECTION 4 — 3 PILIERS ───── */}
       <section id="features" className="bg-metal-50 py-20 sm:py-32">
@@ -200,6 +200,9 @@ export default async function Home() {
       <Suspense fallback={<div className="py-28" />}>
         <ImpactSimulator />
       </Suspense>
+
+      {/* ───── CARROUSEL RÉFÉRENTIELS ───── */}
+      <FrameworksCarousel />
 
       {/* ───── SECTION 7.5 — COMPARATIF CONCURRENTIEL ───── */}
       <ComparisonTable />
