@@ -81,18 +81,39 @@ function LogoCard({
   );
 }
 
-function LogoGrid({
+function LogoMarquee({
   logos,
   logoClass,
+  speed = 40,
 }: {
   logos: LogoItem[];
   logoClass: string;
+  speed?: number;
 }) {
+  const loop = [...logos, ...logos];
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-      {logos.map((logo) => (
-        <LogoCard key={logo.name} logo={logo} logoClass={logoClass} />
-      ))}
+    <div
+      className="group relative overflow-hidden"
+      style={{
+        maskImage:
+          'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+        WebkitMaskImage:
+          'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+      }}
+    >
+      <div
+        className="flex w-max gap-4 [animation:marquee_var(--marquee-duration)_linear_infinite] group-hover:[animation-play-state:paused]"
+        style={{ ['--marquee-duration' as string]: `${speed}s` }}
+      >
+        {loop.map((logo, idx) => (
+          <div
+            key={`${logo.name}-${idx}`}
+            className="w-56 shrink-0 sm:w-64"
+          >
+            <LogoCard logo={logo} logoClass={logoClass} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -102,14 +123,14 @@ export function TechCarousel() {
 
   return (
     <section className="py-10 sm:py-14">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex items-center justify-center gap-2">
-          <Code2 className="h-5 w-5 text-[#00A86B]" strokeWidth={1.5} />
-          <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
-            {t('landing.foundationsTech')}
-          </p>
-        </div>
-        <LogoGrid logos={techLogos} logoClass="h-16 max-h-20" />
+      <div className="mb-8 flex items-center justify-center gap-2 px-4">
+        <Code2 className="h-5 w-5 text-[#00A86B]" strokeWidth={1.5} />
+        <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
+          {t('landing.foundationsTech')}
+        </p>
+      </div>
+      <div className="mx-auto max-w-7xl">
+        <LogoMarquee logos={techLogos} logoClass="h-16 max-h-20" speed={50} />
       </div>
     </section>
   );
@@ -120,14 +141,14 @@ export function SourcesCarousel() {
 
   return (
     <section className="py-10 sm:py-14">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex items-center justify-center gap-2">
-          <Database className="h-5 w-5 text-[#00A86B]" strokeWidth={1.5} />
-          <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
-            {t('landing.foundationsSources')}
-          </p>
-        </div>
-        <LogoGrid logos={sourceLogos} logoClass="h-14 max-h-18" />
+      <div className="mb-8 flex items-center justify-center gap-2 px-4">
+        <Database className="h-5 w-5 text-[#00A86B]" strokeWidth={1.5} />
+        <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
+          {t('landing.foundationsSources')}
+        </p>
+      </div>
+      <div className="mx-auto max-w-7xl">
+        <LogoMarquee logos={sourceLogos} logoClass="h-14 max-h-18" speed={35} />
       </div>
     </section>
   );
@@ -138,17 +159,17 @@ export function FrameworksCarousel() {
 
   return (
     <section className="py-10 sm:py-14">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-2 flex items-center justify-center gap-2">
-          <ShieldCheck className="h-5 w-5 text-verdure-600" strokeWidth={1.5} />
-          <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
-            {t('landing.foundationsFrameworks')}
-          </p>
-        </div>
-        <p className="text-metal-400 mb-6 text-center text-xs">
-          {t('landing.foundationsFrameworksSub')}
+      <div className="mb-2 flex items-center justify-center gap-2 px-4">
+        <ShieldCheck className="h-5 w-5 text-verdure-600" strokeWidth={1.5} />
+        <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
+          {t('landing.foundationsFrameworks')}
         </p>
-        <LogoGrid logos={frameworkLogos} logoClass="h-14 max-h-18" />
+      </div>
+      <p className="text-metal-400 mb-6 px-4 text-center text-xs">
+        {t('landing.foundationsFrameworksSub')}
+      </p>
+      <div className="mx-auto max-w-7xl">
+        <LogoMarquee logos={frameworkLogos} logoClass="h-14 max-h-18" speed={45} />
       </div>
     </section>
   );
