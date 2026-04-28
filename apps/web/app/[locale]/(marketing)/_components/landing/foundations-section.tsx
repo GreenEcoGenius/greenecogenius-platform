@@ -138,39 +138,32 @@ export function TechCarousel() {
 
 export function SourcesCarousel() {
   const t = useTranslations('marketing');
+  const combined = [...sourceLogos, ...frameworkLogos];
 
   return (
     <section className="py-10 sm:py-14">
-      <div className="mb-8 flex items-center justify-center gap-2 px-4">
-        <Database className="h-5 w-5 text-[#00A86B]" strokeWidth={1.5} />
-        <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
-          {t('landing.foundationsSources')}
-        </p>
-      </div>
-      <div className="mx-auto max-w-7xl">
-        <LogoMarquee logos={sourceLogos} logoClass="h-14 max-h-18" speed={35} />
-      </div>
-    </section>
-  );
-}
-
-export function FrameworksCarousel() {
-  const t = useTranslations('marketing');
-
-  return (
-    <section className="py-10 sm:py-14">
-      <div className="mb-2 flex items-center justify-center gap-2 px-4">
-        <ShieldCheck className="h-5 w-5 text-verdure-600" strokeWidth={1.5} />
-        <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
-          {t('landing.foundationsFrameworks')}
-        </p>
+      <div className="mb-2 flex items-center justify-center gap-4 px-4">
+        <div className="flex items-center gap-2">
+          <Database className="h-5 w-5 text-[#00A86B]" strokeWidth={1.5} />
+          <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
+            {t('landing.foundationsSources')}
+          </p>
+        </div>
+        <span className="text-metal-300">·</span>
+        <div className="flex items-center gap-2">
+          <ShieldCheck className="h-5 w-5 text-verdure-600" strokeWidth={1.5} />
+          <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
+            {t('landing.foundationsFrameworks')}
+          </p>
+        </div>
       </div>
       <p className="text-metal-400 mb-6 px-4 text-center text-xs">
         {t('landing.foundationsFrameworksSub')}
       </p>
       <div className="mx-auto max-w-7xl">
-        <LogoMarquee logos={frameworkLogos} logoClass="h-14 max-h-18" speed={45} />
+        <LogoMarquee logos={combined} logoClass="h-14 max-h-18" speed={55} />
       </div>
     </section>
   );
 }
+
