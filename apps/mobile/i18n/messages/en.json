@@ -27,7 +27,10 @@
     "send": "Send",
     "stop": "Stop",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied",
+    "offline": "You are offline. Some features are unavailable.",
+    "errorTitle": "Oops, something went wrong",
+    "errorDescription": "The app encountered an unexpected problem. Try again or restart the app."
   },
   "nav": {
     "home": "Home",

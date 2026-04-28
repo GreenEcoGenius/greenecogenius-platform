@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
   fetchCarbonRecords,
@@ -59,7 +59,7 @@ export function useCarbonRecords(): UseCarbonRecordsState {
     await load(true);
   }, [load]);
 
-  const stats = computeCarbonRecordsStats(records);
+  const stats = useMemo(() => computeCarbonRecordsStats(records), [records]);
 
   return { records, stats, loading, refreshing, error, refetch };
 }

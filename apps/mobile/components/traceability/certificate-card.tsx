@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import Link from 'next/link';
 import { ShieldCheck, Leaf, Package, Calendar } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -10,7 +11,7 @@ interface CertificateCardProps {
   cert: CertificateWithBlockchain;
 }
 
-export function CertificateCard({ cert }: CertificateCardProps) {
+export const CertificateCard = memo(function CertificateCard({ cert }: CertificateCardProps) {
   const t = useTranslations('traceability');
   const locale = useLocale();
 
@@ -84,4 +85,4 @@ export function CertificateCard({ cert }: CertificateCardProps) {
       </div>
     </Link>
   );
-}
+});

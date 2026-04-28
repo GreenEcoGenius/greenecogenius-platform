@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import Link from 'next/link';
 import { Leaf, Truck, ArrowRight } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
@@ -10,7 +11,7 @@ interface RecordCardProps {
   record: CarbonRecord;
 }
 
-export function RecordCard({ record }: RecordCardProps) {
+export const RecordCard = memo(function RecordCard({ record }: RecordCardProps) {
   const t = useTranslations('carbon');
   const locale = useLocale();
 
@@ -70,4 +71,4 @@ export function RecordCard({ record }: RecordCardProps) {
       </div>
     </Link>
   );
-}
+});

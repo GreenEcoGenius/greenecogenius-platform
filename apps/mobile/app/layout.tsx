@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Toaster } from 'sonner';
 import { CapacitorInit } from '~/components/capacitor-init';
 import { LocaleProvider } from '~/components/locale-provider';
+import { OfflineBanner } from '~/components/ui/offline-banner';
 import '~/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-[#0A2F1F] text-[#F5F5F0] antialiased">
         <CapacitorInit />
         <LocaleProvider>
+          <OfflineBanner />
           {children}
           <Toaster theme="dark" position="top-center" richColors />
         </LocaleProvider>

@@ -27,7 +27,10 @@
     "send": "Envoyer",
     "stop": "Arrêter",
     "copy": "Copier",
-    "copied": "Copié"
+    "copied": "Copié",
+    "offline": "Vous êtes hors-ligne. Certaines fonctionnalités sont indisponibles.",
+    "errorTitle": "Oups, une erreur est survenue",
+    "errorDescription": "L'application a rencontré un problème inattendu. Réessayez ou redémarrez l'application."
   },
   "nav": {
     "home": "Accueil",

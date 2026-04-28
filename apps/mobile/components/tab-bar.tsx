@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Home, LayoutGrid, Sparkles, Leaf, Settings } from 'lucide-react';
+import { useHaptics } from '~/hooks/use-haptics';
 
 export function TabBar() {
   const pathname = usePathname();
   const t = useTranslations('nav');
+  const { tapLight } = useHaptics();
 
   const tabs = [
     { href: '/home', label: t('home'), icon: Home },
@@ -26,6 +28,7 @@ export function TabBar() {
             <Link
               key={href}
               href={href}
+              onClick={() => void tapLight()}
               className={`flex flex-1 flex-col items-center gap-0.5 py-0.5 transition-colors ${
                 active ? 'text-[#F5F5F0]' : 'text-[#F5F5F0]/50'
               }`}
