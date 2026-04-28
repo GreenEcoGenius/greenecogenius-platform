@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 interface CsrdIndicator {
@@ -21,11 +20,8 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const adminClient = getSupabaseServerAdminClient();
-
-  // Fetch latest org_esg_data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: esgRows, error: esgError } = await (adminClient as any)
+  // Use standard client — RLS ensures user can only access their own data
+  const { data: esgRows, error: esgError } = await client
     .from('org_esg_data')
     .select('*')
     .eq('account_id', user.id)
@@ -39,9 +35,7 @@ export async function GET() {
     );
   }
 
-  // Fetch latest esg_reports
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: reports, error: reportError } = await (adminClient as any)
+  const { data: reports, error: reportError } = await client
     .from('esg_reports')
     .select('*')
     .eq('account_id', user.id)

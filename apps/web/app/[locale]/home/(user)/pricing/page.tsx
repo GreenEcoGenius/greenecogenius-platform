@@ -33,28 +33,24 @@ async function BlockchainDashboardPage() {
   const client = getSupabaseServerClient();
 
   // Fetch blockchain records count
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { count: blocksCount } = await (client as any)
+  const { count: blocksCount } = await client
     .from('blockchain_records')
     .select('*', { count: 'exact', head: true });
 
   // Fetch certificates count
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { count: certsCount } = await (client as any)
+  const { count: certsCount } = await client
     .from('traceability_certificates')
     .select('*', { count: 'exact', head: true });
 
   // Fetch recent blockchain records
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: recentBlocks } = await (client as any)
+  const { data: recentBlocks } = await client
     .from('blockchain_records')
     .select('id, block_number, record_hash, created_at, listing_id')
     .order('created_at', { ascending: false })
     .limit(10);
 
   // Fetch recent certificates
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: recentCerts } = await (client as any)
+  const { data: recentCerts } = await client
     .from('traceability_certificates')
     .select(
       'id, certificate_number, verification_hash, status, created_at, material_type, weight_kg, co2_avoided',

@@ -164,7 +164,6 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
                     {SUBCATEGORIES[category]!.map((key) => (
                       <SelectItem key={key} value={key}>
                         {t(
-                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           `subcategories.${key}` as any,
                         )}
                       </SelectItem>

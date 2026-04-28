@@ -36,8 +36,7 @@ async function ESGReportsPage() {
     return null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: reports } = await (client as any)
+  const { data: reports } = await client
     .from('esg_reports')
     .select('*')
     .eq('account_id', userId)

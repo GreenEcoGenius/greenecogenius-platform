@@ -21,7 +21,6 @@ import { ContractSignatureService } from '~/lib/signature/contract-signature-ser
 import { SendForSignatureButton } from './_components/send-for-signature-button';
 import { SignatureStatusRow } from './_components/signature-status-row';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const any_ = (v: unknown) => v as any;
 
 interface Params {

@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 // Average emissions per employee by sector (tonnes CO2e/year) — source ADEME/INSEE
@@ -33,13 +32,11 @@ export async function GET(request: NextRequest) {
   }
 
   const { searchParams } = new URL(request.url);
-  const year = parseInt(searchParams.get('year') ?? '2026', 10);
+  const yearParam = searchParams.get('year');
+  const year = yearParam && /^\d{4}$/.test(yearParam) ? parseInt(yearParam, 10) : 2026;
 
-  const adminClient = getSupabaseServerAdminClient();
-
-  // Fetch user's esg_reports for the year
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: reports, error: reportsError } = await (adminClient as any)
+  // Use standard client — RLS ensures user can only access their own data
+  const { data: reports, error: reportsError } = await client
     .from('esg_reports')
     .select('total_emissions')
     .eq('account_id', user.id)
@@ -52,9 +49,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Fetch user's org_esg_data to get industry_sector and nb_employees
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: orgData, error: orgError } = await (adminClient as any)
+  const { data: orgData, error: orgError } = await client
     .from('org_esg_data')
     .select('industry_sector, nb_employees')
     .eq('account_id', user.id)
@@ -84,8 +79,8 @@ export async function GET(request: NextRequest) {
   // Sum total emissions across reports for the year (in kg CO2e)
   const totalEmissionsKg =
     reports?.reduce(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (sum: number, r: any) => sum + (r.total_emissions ?? 0),
+      (sum: number, r: { total_emissions?: number }) =>
+        sum + (r.total_emissions ?? 0),
       0,
     ) ?? 0;
 

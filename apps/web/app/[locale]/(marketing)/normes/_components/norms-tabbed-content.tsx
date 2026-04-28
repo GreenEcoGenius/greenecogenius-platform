@@ -92,12 +92,12 @@ const TAB_DEFS: Array<{
 ];
 
 const PILLAR_HERO: Record<NormPillar, string> = {
-  circular_economy: '/images/normes/circular-recycling-process.png',
-  carbon: '/images/normes/carbon-dashboard-dark.png',
-  reporting: '/images/normes/reporting-co2-dashboard.png',
-  traceability: '/images/normes/traceability-blockchain-dark.png',
-  data: '/images/normes/saas-carbon-dashboard.png',
-  labels: '/images/normes/labels-csrd-mobile-v2.png',
+  circular_economy: '/images/normes/circular-recycling-process.webp',
+  carbon: '/images/normes/carbon-dashboard-dark.webp',
+  reporting: '/images/normes/reporting-co2-dashboard.webp',
+  traceability: '/images/normes/traceability-blockchain-dark.webp',
+  data: '/images/normes/saas-carbon-dashboard.webp',
+  labels: '/images/normes/labels-csrd-mobile-v2.webp',
 };
 
 // ── Animated norm card with PDF download ──

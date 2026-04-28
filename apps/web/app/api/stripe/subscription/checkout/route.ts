@@ -34,8 +34,7 @@ export async function POST(req: NextRequest) {
   const adminClient = getSupabaseServerAdminClient();
 
   // Check if already has active subscription
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: existingSub } = await (adminClient as any)
+  const { data: existingSub } = await adminClient
     .from('organization_subscriptions')
     .select('id, status')
     .eq('account_id', user.id)
@@ -50,8 +49,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Get plan
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: plan } = await (adminClient as any)
+  const { data: plan } = await adminClient
     .from('subscription_plans')
     .select('*')
     .eq('id', planId)

@@ -20,8 +20,7 @@ export async function GET(
   const adminClient = getSupabaseServerAdminClient();
 
   // Query blockchain_records by record_hash
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: blockchainRecord, error } = await (adminClient as any)
+  const { data: blockchainRecord, error } = await adminClient
     .from('blockchain_records')
     .select('*')
     .eq('record_hash', hash)
@@ -38,8 +37,8 @@ export async function GET(
   let carbonData = null;
 
   if (blockchainRecord.transaction_id) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: carbonRecord } = await (adminClient as any)
+    // 
+    const { data: carbonRecord } = await adminClient
       .from('carbon_records')
       .select('*')
       .eq('transaction_id', blockchainRecord.transaction_id)

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { createClient } from '@supabase/supabase-js';
+import { z } from 'zod';
 
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
@@ -10,8 +11,21 @@ import {
   loadGeniusContext,
 } from '~/lib/ai/genius-context';
 import { executeStream, routeRequest } from '~/lib/ai/orchestrator';
+import { AI_RATE_LIMIT, applyRateLimit } from '~/lib/server/rate-limit';
 
 export const dynamic = 'force-dynamic';
+
+const MobileChatSchema = z.object({
+  message: z.string().min(1).max(4000),
+  agentType: z.enum(['comptoir', 'carbon', 'esg', 'traceability', 'rse', 'compliance']).optional(),
+  locale: z.enum(['fr', 'en']).optional(),
+  context: z.object({
+    previousMessages: z.array(z.object({
+      role: z.enum(['user', 'assistant']),
+      content: z.string(),
+    })).optional(),
+  }).passthrough().optional(),
+});
 
 /**
  * Mobile-friendly AI chat endpoint.
@@ -20,9 +34,13 @@ export const dynamic = 'force-dynamic';
  * instead of relying on Supabase cookies (Capacitor WebView does not share
  * cookies with the host domain).
  *
- * CORS is enabled because the iOS app loads from capacitor://localhost.
+ * CORS is restricted to known mobile origins.
  */
 export async function POST(req: NextRequest) {
+  // Rate limiting — protect Anthropic credits
+  const limited = applyRateLimit(req, AI_RATE_LIMIT);
+  if (limited) return limited;
+
   if (!process.env.ANTHROPIC_API_KEY) {
     return jsonError('AI not configured', 503);
   }
@@ -59,35 +77,22 @@ export async function POST(req: NextRequest) {
 
   const user = userData.user;
 
-  // Parse body
-  let body: {
-    message?: string;
-    agentType?: string;
-    locale?: string;
-    context?: {
-      previousMessages?: Array<{
-        role: 'user' | 'assistant';
-        content: string;
-      }>;
-      [key: string]: unknown;
-    };
-  };
+  // Parse and validate body
+  let rawBody: unknown;
 
   try {
-    body = await req.json();
+    rawBody = await req.json();
   } catch {
     return jsonError('Invalid JSON body', 400);
   }
 
-  const { message, agentType, locale, context } = body;
+  const parsed = MobileChatSchema.safeParse(rawBody);
 
-  if (!message || typeof message !== 'string') {
-    return jsonError('Message is required', 400);
+  if (!parsed.success) {
+    return jsonError('Invalid request body', 400);
   }
 
-  if (message.length > 4000) {
-    return jsonError('Message too long (max 4000 chars)', 400);
-  }
+  const { message, agentType, locale, context } = parsed.data;
 
   try {
     const resolvedAgent: AgentType = agentType
@@ -96,6 +101,8 @@ export async function POST(req: NextRequest) {
 
     let userContextPrompt = '';
     try {
+      // Admin client is justified here: mobile auth uses bearer tokens,
+      // not cookie-based sessions, so RLS cannot apply.
       const adminClient = getSupabaseServerAdminClient();
       const geniusCtx = await loadGeniusContext(adminClient, user.id);
       userContextPrompt = formatContextForPrompt(geniusCtx, locale ?? 'fr');
@@ -115,24 +122,37 @@ export async function POST(req: NextRequest) {
         'Cache-Control': 'no-cache',
         'Transfer-Encoding': 'chunked',
         'X-Agent-Type': resolvedAgent,
-        ...corsHeaders(),
+        ...corsHeaders(req),
       },
     });
   } catch (error) {
     console.error('[Mobile Genius] Error:', error);
-    const msg =
-      error instanceof Error ? error.message : 'Internal server error';
-    return jsonError(msg, 500);
+
+    return jsonError('An unexpected error occurred', 500);
   }
 }
 
-export async function OPTIONS() {
-  return new Response(null, { status: 204, headers: corsHeaders() });
+export async function OPTIONS(req: NextRequest) {
+  return new Response(null, { status: 204, headers: corsHeaders(req) });
 }
 
-function corsHeaders() {
+/**
+ * CORS headers restricted to known mobile origins.
+ * Capacitor uses capacitor://localhost on iOS and http://localhost on Android.
+ */
+const ALLOWED_ORIGINS = new Set([
+  'capacitor://localhost',
+  'http://localhost',
+  'https://www.greenecogenius.tech',
+  'https://greenecogenius.tech',
+]);
+
+function corsHeaders(req?: NextRequest) {
+  const origin = req?.headers.get('origin') ?? '';
+  const allowedOrigin = ALLOWED_ORIGINS.has(origin) ? origin : '';
+
   return {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': allowedOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Max-Age': '86400',

@@ -45,8 +45,8 @@ export async function POST(req: NextRequest) {
       if (!transactionId) break; // Not a marketplace payment
 
       // Update transaction
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (adminClient as any)
+      // 
+      await adminClient
         .from('marketplace_transactions')
         .update({
           payment_status: 'succeeded',
@@ -60,8 +60,8 @@ export async function POST(req: NextRequest) {
         .eq('id', transactionId);
 
       // Get transaction details for wallet update
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: tx } = await (adminClient as any)
+      // 
+      const { data: tx } = await adminClient
         .from('marketplace_transactions')
         .select('seller_account_id, seller_amount, listing_id')
         .eq('id', transactionId)
@@ -69,23 +69,23 @@ export async function POST(req: NextRequest) {
 
       if (tx) {
         // Add to seller's pending balance
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { data: wallet } = await (adminClient as any)
+        // 
+        const { data: wallet } = await adminClient
           .from('wallet_balances')
           .select('id')
           .eq('account_id', tx.seller_account_id)
           .single();
 
         if (wallet) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          await (adminClient as any).rpc('increment_wallet_pending', {
+          // 
+          await adminClient.rpc('increment_wallet_pending', {
             p_account_id: tx.seller_account_id,
             p_amount: tx.seller_amount,
           });
         } else {
           // Create wallet with pending balance
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          await (adminClient as any).from('wallet_balances').insert({
+          // 
+          await adminClient.from('wallet_balances').insert({
             account_id: tx.seller_account_id,
             pending_balance: tx.seller_amount,
             currency: 'eur',
@@ -93,16 +93,16 @@ export async function POST(req: NextRequest) {
         }
 
         // Mark listing as sold
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (adminClient as any)
+        // 
+        await adminClient
           .from('listings')
           .update({ status: 'sold' })
           .eq('id', tx.listing_id);
       }
 
       // Log event
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (adminClient as any).from('transaction_events').insert({
+      // 
+      await adminClient.from('transaction_events').insert({
         transaction_id: transactionId,
         event_type: 'payment_succeeded',
         actor_role: 'platform',
@@ -122,8 +122,8 @@ export async function POST(req: NextRequest) {
 
       if (!transactionId) break;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (adminClient as any)
+      // 
+      await adminClient
         .from('marketplace_transactions')
         .update({
           payment_status: 'failed',
@@ -131,8 +131,8 @@ export async function POST(req: NextRequest) {
         })
         .eq('id', transactionId);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (adminClient as any).from('transaction_events').insert({
+      // 
+      await adminClient.from('transaction_events').insert({
         transaction_id: transactionId,
         event_type: 'payment_failed',
         actor_role: 'platform',
@@ -155,16 +155,16 @@ export async function POST(req: NextRequest) {
 
       if (!paymentIntentId) break;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: tx } = await (adminClient as any)
+      // 
+      const { data: tx } = await adminClient
         .from('marketplace_transactions')
         .select('id, seller_account_id, seller_amount')
         .eq('stripe_payment_intent_id', paymentIntentId)
         .single();
 
       if (tx) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (adminClient as any)
+        // 
+        await adminClient
           .from('marketplace_transactions')
           .update({
             payment_status: 'refunded',
@@ -172,8 +172,8 @@ export async function POST(req: NextRequest) {
           })
           .eq('id', tx.id);
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (adminClient as any).from('transaction_events').insert({
+        // 
+        await adminClient.from('transaction_events').insert({
           transaction_id: tx.id,
           event_type: 'refund_issued',
           actor_role: 'platform',
@@ -207,8 +207,8 @@ export async function POST(req: NextRequest) {
           : session.customer?.id;
 
       if (accountId && planId && subscriptionId) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (adminClient as any).from('organization_subscriptions').upsert(
+        // 
+        await adminClient.from('organization_subscriptions').upsert(
           {
             account_id: accountId,
             plan_id: planId,
@@ -223,7 +223,7 @@ export async function POST(req: NextRequest) {
     }
 
     case 'customer.subscription.updated': {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // 
       const subscription = event.data.object as any;
       const stripeSubId = subscription.id as string;
       const status = subscription.status as string;
@@ -252,8 +252,8 @@ export async function POST(req: NextRequest) {
         ).toISOString();
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (adminClient as any)
+      // 
+      await adminClient
         .from('organization_subscriptions')
         .update(updateData)
         .eq('stripe_subscription_id', stripeSubId);
@@ -262,11 +262,11 @@ export async function POST(req: NextRequest) {
     }
 
     case 'customer.subscription.deleted': {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // 
       const subscription = event.data.object as any;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (adminClient as any)
+      // 
+      await adminClient
         .from('organization_subscriptions')
         .update({
           status: 'cancelled',
@@ -278,15 +278,15 @@ export async function POST(req: NextRequest) {
     }
 
     case 'invoice.payment_succeeded': {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // 
       const invoice = event.data.object as any;
       const stripeSubId = invoice.subscription
         ? String(invoice.subscription)
         : null;
 
       if (stripeSubId) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (adminClient as any)
+        // 
+        await adminClient
           .from('organization_subscriptions')
           .update({ status: 'active' })
           .eq('stripe_subscription_id', stripeSubId);
@@ -295,15 +295,15 @@ export async function POST(req: NextRequest) {
     }
 
     case 'invoice.payment_failed': {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // 
       const invoice = event.data.object as any;
       const stripeSubId = invoice.subscription
         ? String(invoice.subscription)
         : null;
 
       if (stripeSubId) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (adminClient as any)
+        // 
+        await adminClient
           .from('organization_subscriptions')
           .update({ status: 'past_due' })
           .eq('stripe_subscription_id', stripeSubId);

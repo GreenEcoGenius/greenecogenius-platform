@@ -34,12 +34,10 @@ export default async function VerifyLandingPage({
   const adminClient = getSupabaseServerAdminClient();
 
   const [certificatesResult, carbonResult] = await Promise.all([
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (adminClient as any)
+    adminClient
       .from('traceability_certificates')
       .select('id', { count: 'exact', head: true }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (adminClient as any)
+    adminClient
       .from('carbon_records')
       .select('weight_tonnes, co2_avoided'),
   ]);

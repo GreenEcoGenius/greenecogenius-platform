@@ -152,7 +152,6 @@ async function ExternalActivitiesPage() {
                           )
                             ? t(
                                 // Narrowed by KNOWN_SUBCATEGORIES above.
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                 `subcategories.${r.subcategory}` as any,
                               )
                             : r.subcategory;

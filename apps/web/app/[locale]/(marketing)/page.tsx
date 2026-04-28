@@ -221,7 +221,7 @@ export default async function Home() {
       {/* ───── SECTION 11 — NEWSLETTER ───── */}
       <section className="relative overflow-hidden py-20 sm:py-28">
         <Image
-          src="/images/normes/circular-infinity-aerial.png"
+          src="/images/normes/circular-infinity-aerial.webp"
           alt=""
           fill
           className="object-cover"

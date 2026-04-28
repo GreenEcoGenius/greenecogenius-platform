@@ -37,8 +37,7 @@ async function UserHomePage() {
 
   const t = await getTranslations('marketplace');
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const c = client as any;
+  const c = client;
 
   const [
     { count: totalActive },

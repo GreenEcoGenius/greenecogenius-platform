@@ -1,10 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { z } from 'zod';
+
 export const dynamic = 'force-dynamic';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+
+const PostSchema = z.object({
+  reporting_year: z.number().int().min(2000).max(2100),
+  reporting_period: z.string().min(1).max(50),
+  natural_gas_kwh: z.number().min(0).optional(),
+  fuel_liters: z.number().min(0).optional(),
+  fuel_type: z.string().max(50).optional(),
+  other_kg_co2: z.number().min(0).optional(),
+  electricity_kwh: z.number().min(0).optional(),
+  electricity_source: z.string().max(50).optional(),
+  heating_kwh: z.number().min(0).optional(),
+  business_travel_km: z.number().min(0).optional(),
+  travel_mode: z.string().max(50).optional(),
+  commuting_employees: z.number().int().min(0).optional(),
+  commuting_avg_km: z.number().min(0).optional(),
+  purchased_goods_eur: z.number().min(0).optional(),
+  waste_tonnes: z.number().min(0).optional(),
+  nb_employees: z.number().int().min(0).optional(),
+  platform_co2_avoided: z.number().min(0).optional(),
+  platform_transactions_count: z.number().int().min(0).optional(),
+  platform_tonnes_recycled: z.number().min(0).optional(),
+});
 
 export async function GET(req: NextRequest) {
   const client = getSupabaseServerClient();
@@ -17,27 +40,17 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const year = searchParams.get('year');
 
-  if (!year) {
+  if (!year || !/^\d{4}$/.test(year)) {
     return NextResponse.json(
-      { error: 'Query parameter "year" is required' },
+      { error: 'Query parameter "year" is required and must be a 4-digit year' },
       { status: 400 },
     );
   }
 
   const reportingYear = parseInt(year, 10);
 
-  if (isNaN(reportingYear)) {
-    return NextResponse.json(
-      { error: 'Invalid year parameter' },
-      { status: 400 },
-    );
-  }
-
-  const adminClient = getSupabaseServerAdminClient();
-
-  // Fetch org_esg_data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data, error } = await (adminClient as any)
+  // Use standard client — RLS ensures user can only access their own data
+  const { data, error } = await client
     .from('org_esg_data')
     .select('*')
     .eq('account_id', user.id)
@@ -54,8 +67,7 @@ export async function GET(req: NextRequest) {
   const startDate = `${reportingYear}-01-01`;
   const endDate = `${reportingYear}-12-31`;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: records } = await (adminClient as any)
+  const { data: records } = await client
     .from('carbon_records')
     .select('co2_avoided_kg, transaction_type, tonnes_recycled')
     .eq('account_id', user.id)
@@ -91,63 +103,30 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  let body: Record<string, unknown>;
+  let rawBody: unknown;
 
   try {
-    body = await req.json();
+    rawBody = await req.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  if (!body.reporting_year || !body.reporting_period) {
+  const parsed = PostSchema.safeParse(rawBody);
+
+  if (!parsed.success) {
     return NextResponse.json(
-      { error: 'reporting_year and reporting_period are required' },
+      { error: 'Invalid request', details: parsed.error.flatten() },
       { status: 400 },
     );
   }
 
-  // Whitelist allowed fields for upsert
-  const allowedFields = [
-    'reporting_year',
-    'reporting_period',
-    // Scope 1 fields
-    'natural_gas_kwh',
-    'fuel_liters',
-    'fuel_type',
-    'other_kg_co2',
-    // Scope 2 fields
-    'electricity_kwh',
-    'electricity_source',
-    'heating_kwh',
-    // Scope 3 fields
-    'business_travel_km',
-    'travel_mode',
-    'commuting_employees',
-    'commuting_avg_km',
-    'purchased_goods_eur',
-    'waste_tonnes',
-    // General
-    'nb_employees',
-    // Platform auto-fill
-    'platform_co2_avoided',
-    'platform_transactions_count',
-    'platform_tonnes_recycled',
-  ];
-
-  const record: Record<string, unknown> = {
+  const record = {
     account_id: user.id,
+    ...parsed.data,
   };
 
-  for (const field of allowedFields) {
-    if (body[field] !== undefined) {
-      record[field] = body[field];
-    }
-  }
-
-  const adminClient = getSupabaseServerAdminClient();
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data, error } = await (adminClient as any)
+  // Use standard client — RLS ensures user can only write their own data
+  const { data, error } = await client
     .from('org_esg_data')
     .upsert(record, {
       onConflict: 'account_id,reporting_year,reporting_period',

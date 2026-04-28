@@ -19,8 +19,7 @@ export async function POST() {
   const adminClient = getSupabaseServerAdminClient();
 
   // Get the subscription to find the Stripe customer
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: sub } = await (adminClient as any)
+  const { data: sub } = await adminClient
     .from('organization_subscriptions')
     .select('stripe_customer_id')
     .eq('account_id', user.id)

@@ -1,13 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { z } from 'zod';
+
 export const dynamic = 'force-dynamic';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { execute } from '~/lib/ai/orchestrator';
+import { AI_RATE_LIMIT, applyRateLimit } from '~/lib/server/rate-limit';
+
+const RequestSchema = z.object({
+  title: z.string().min(1).max(500),
+  description: z.string().max(5000).optional(),
+});
 
 export async function POST(req: NextRequest) {
+  const limited = applyRateLimit(req, AI_RATE_LIMIT);
+  if (limited) return limited;
+
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json({ error: 'AI not configured' }, { status: 503 });
   }
@@ -21,11 +32,16 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { title, description }: { title: string; description: string } = body;
+    const parsed = RequestSchema.safeParse(body);
 
-    if (!title || typeof title !== 'string') {
-      return NextResponse.json({ error: 'title is required' }, { status: 400 });
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: 'Invalid request', details: parsed.error.flatten() },
+        { status: 400 },
+      );
     }
+
+    const { title, description } = parsed.data;
 
     const prompt = `Categorize the following material listing for the GreenEcoGenius circular economy marketplace.
 
@@ -43,12 +59,12 @@ Return ONLY the JSON object, no markdown fences or extra text.`;
 
     const response = await execute('comptoir', prompt);
 
-    let parsed;
+    let categorization;
 
     try {
-      parsed = JSON.parse(response.content);
+      categorization = JSON.parse(response.content);
     } catch {
-      parsed = {
+      categorization = {
         materialType: 'other',
         qualityGrade: 'C',
         fluxCategory: 'recycling',
@@ -58,7 +74,7 @@ Return ONLY the JSON object, no markdown fences or extra text.`;
     }
 
     return NextResponse.json({
-      ...parsed,
+      ...categorization,
       agent: response.agent,
       model: response.model,
       usage: response.usage,
@@ -66,9 +82,9 @@ Return ONLY the JSON object, no markdown fences or extra text.`;
   } catch (error) {
     console.error('[Comptoir Categorize] Error:', error);
 
-    const message =
-      error instanceof Error ? error.message : 'Internal server error';
-
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: 'An unexpected error occurred' },
+      { status: 500 },
+    );
   }
 }

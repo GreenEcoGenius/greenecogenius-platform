@@ -98,8 +98,7 @@ export async function POST(req: NextRequest) {
   const adminClient = getSupabaseServerAdminClient();
 
   // Look up the transaction via the envelope id (unique).
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: tx, error } = await (adminClient as any)
+  const { data: tx, error } = await adminClient
     .from('marketplace_transactions')
     .select('id, contract_status, seller_signed, buyer_signed')
     .eq('signature_envelope_id', envelopeId)
@@ -125,8 +124,8 @@ export async function POST(req: NextRequest) {
       }
       case 'declined':
       case 'voided': {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (adminClient as any)
+        // 
+        await adminClient
           .from('marketplace_transactions')
           .update({ contract_status: 'cancelled' })
           .eq('id', tx.id);
@@ -159,8 +158,8 @@ export async function POST(req: NextRequest) {
           } else if (patch.buyer_signed && !tx.seller_signed) {
             patch.contract_status = 'buyer_signed';
           }
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          await (adminClient as any)
+          // 
+          await adminClient
             .from('marketplace_transactions')
             .update(patch)
             .eq('id', tx.id);

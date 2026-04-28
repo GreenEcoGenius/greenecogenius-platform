@@ -3,13 +3,22 @@ import { cookies } from 'next/headers';
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 
+import { z } from 'zod';
+
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { generateESGReportPDF } from '~/lib/services/pdf/templates/esg-report-template';
+import { EXPORT_RATE_LIMIT, applyRateLimit } from '~/lib/server/rate-limit';
+
+const RequestSchema = z.object({
+  reporting_year: z.number().int().min(2000).max(2100),
+});
 
 export async function POST(req: NextRequest) {
+  const limited = applyRateLimit(req, EXPORT_RATE_LIMIT);
+  if (limited) return limited;
+
   const client = getSupabaseServerClient();
   const { data: user, error: authError } = await requireUser(client);
 
@@ -17,27 +26,27 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  let body: { reporting_year: number };
+  let rawBody: unknown;
 
   try {
-    body = await req.json();
+    rawBody = await req.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  if (!body.reporting_year) {
+  const parsed = RequestSchema.safeParse(rawBody);
+
+  if (!parsed.success) {
     return NextResponse.json(
-      { error: 'reporting_year is required' },
+      { error: 'Invalid request', details: parsed.error.flatten() },
       { status: 400 },
     );
   }
 
-  const adminClient = getSupabaseServerAdminClient();
-  const year = body.reporting_year;
+  const year = parsed.data.reporting_year;
 
-  // 1. Fetch org_esg_data for user + year
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: esgRows } = await (adminClient as any)
+  // Use standard client — RLS ensures user can only access their own data
+  const { data: esgRows } = await client
     .from('org_esg_data')
     .select('*')
     .eq('account_id', user.id)
@@ -45,9 +54,7 @@ export async function POST(req: NextRequest) {
 
   const esg = esgRows?.[0] ?? {};
 
-  // 2. Fetch the latest esg_reports entry (calculated totals)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: reportRows } = await (adminClient as any)
+  const { data: reportRows } = await client
     .from('esg_reports')
     .select('*')
     .eq('account_id', user.id)
@@ -57,12 +64,10 @@ export async function POST(req: NextRequest) {
 
   const report = reportRows?.[0];
 
-  // 3. Fetch carbon_records for the user (platform data)
   const startDate = `${year}-01-01`;
   const endDate = `${year}-12-31`;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: carbonRecords } = await (adminClient as any)
+  const { data: carbonRecords } = await client
     .from('carbon_records')
     .select('co2_avoided_kg, transaction_type, tonnes_recycled')
     .eq('account_id', user.id)
@@ -82,9 +87,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 4. Fetch account name
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: account } = await (adminClient as any)
+  const { data: account } = await client
     .from('accounts')
     .select('name')
     .eq('id', user.id)

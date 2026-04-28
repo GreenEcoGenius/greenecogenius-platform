@@ -32,8 +32,7 @@ export async function POST(req: NextRequest) {
   const adminClient = getSupabaseServerAdminClient();
 
   // Fetch transaction
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: tx } = await (adminClient as any)
+  const { data: tx } = await adminClient
     .from('marketplace_transactions')
     .select('*')
     .eq('id', transactionId)
@@ -63,8 +62,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Get seller's Stripe connected account
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: sellerConnect } = await (adminClient as any)
+  const { data: sellerConnect } = await adminClient
     .from('stripe_connected_accounts')
     .select('stripe_account_id')
     .eq('account_id', tx.seller_account_id)
@@ -95,8 +93,7 @@ export async function POST(req: NextRequest) {
   const now = new Date().toISOString();
 
   // Update transaction
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await (adminClient as any)
+  await adminClient
     .from('marketplace_transactions')
     .update({
       status: 'completed',
@@ -108,8 +105,7 @@ export async function POST(req: NextRequest) {
     .eq('id', transactionId);
 
   // Update wallet: move from pending to available
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: wallet } = await (adminClient as any)
+  const { data: wallet } = await adminClient
     .from('wallet_balances')
     .select(
       'pending_balance, available_balance, total_earned, total_commission_paid, total_transactions',
@@ -118,8 +114,8 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (wallet) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (adminClient as any)
+    // 
+    await adminClient
       .from('wallet_balances')
       .update({
         pending_balance: Math.max(0, wallet.pending_balance - tx.seller_amount),
@@ -133,8 +129,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Log events
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await (adminClient as any).from('transaction_events').insert([
+  await adminClient.from('transaction_events').insert([
     {
       transaction_id: transactionId,
       event_type: 'delivery_confirmed',
@@ -154,14 +149,12 @@ export async function POST(req: NextRequest) {
   ]);
 
   // Step A: Calculate carbon footprint for this transaction
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await (adminClient as any).rpc('calculate_transaction_carbon', {
+  await adminClient.rpc('calculate_transaction_carbon', {
     p_transaction_id: transactionId,
   });
 
   // Step B: Generate blockchain record for traceability (off-chain hash)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: hashResult } = await (adminClient as any).rpc(
+  const { data: hashResult } = await adminClient.rpc(
     'generate_blockchain_record',
     { p_transaction_id: transactionId },
   );
@@ -172,8 +165,8 @@ export async function POST(req: NextRequest) {
       const { registerLotOnChain } =
         await import('~/lib/blockchain/alchemy-service');
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: listing } = await (adminClient as any)
+      // 
+      const { data: listing } = await adminClient
         .from('marketplace_listings')
         .select(
           'material_type, weight_kg, co2_avoided, origin_location, destination_location',
@@ -193,8 +186,8 @@ export async function POST(req: NextRequest) {
       });
 
       // Update the blockchain_records entry with the polygon tx hash
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (adminClient as any)
+      // 
+      await adminClient
         .from('blockchain_records')
         .update({
           polygon_tx_hash: onChainResult.txHash,
@@ -210,23 +203,21 @@ export async function POST(req: NextRequest) {
   // Step C: Generate traceability certificate
   const certNumber = `GEG-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: carbonRecord } = await (adminClient as any)
+  const { data: carbonRecord } = await adminClient
     .from('carbon_records')
     .select('id')
     .eq('transaction_id', transactionId)
     .single();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: blockchainRecord } = await (adminClient as any)
+  const { data: blockchainRecord } = await adminClient
     .from('blockchain_records')
     .select('id, record_hash')
     .eq('transaction_id', transactionId)
     .single();
 
   if (carbonRecord && blockchainRecord) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (adminClient as any).from('traceability_certificates').insert({
+    // 
+    await adminClient.from('traceability_certificates').insert({
       certificate_number: certNumber,
       transaction_id: transactionId,
       carbon_record_id: carbonRecord.id,

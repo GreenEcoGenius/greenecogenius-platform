@@ -72,16 +72,14 @@ async function PersonalAccountBillingPage() {
   const t = await getTranslations('billing');
 
   // Fetch plans
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: plans } = await (adminClient as any)
+  const { data: plans } = await adminClient
     .from('subscription_plans')
     .select('*')
     .eq('is_active', true)
     .order('sort_order');
 
   // Fetch current subscription
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: currentSub } = await (adminClient as any)
+  const { data: currentSub } = await adminClient
     .from('organization_subscriptions')
     .select('*, subscription_plans(name, display_name)')
     .eq('account_id', user.id)

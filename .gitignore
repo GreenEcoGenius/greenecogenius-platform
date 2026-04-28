@@ -64,3 +64,4 @@ supabase/.temp/
 # iCloud sync duplicates
 apps/mobile/ios/App/App/config [0-9]*.xml
 
+.env

@@ -39,7 +39,7 @@ export default async function AboutPage() {
       {/* ───── HERO ───── */}
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <Image
-          src="/images/normes/reporting-esg-presentation.png"
+          src="/images/normes/reporting-esg-presentation.webp"
           alt=""
           fill
           className="object-cover"
@@ -110,7 +110,7 @@ export default async function AboutPage() {
             <AnimateOnScroll animation="fade-right">
               <div className="overflow-hidden rounded-xl shadow-sm">
                 <Image
-                  src="/images/hero-recycling-facility.png"
+                  src="/images/hero-recycling-facility.webp"
                   alt={t('altRecyclingFacility')}
                   width={1024}
                   height={585}
@@ -159,7 +159,7 @@ export default async function AboutPage() {
             >
               <div className="overflow-hidden rounded-xl shadow-sm">
                 <Image
-                  src="/images/greentech-energy.png"
+                  src="/images/greentech-energy.webp"
                   alt={t('altSortedMaterials')}
                   width={1024}
                   height={585}

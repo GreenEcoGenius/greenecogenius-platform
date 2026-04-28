@@ -25,24 +25,21 @@ async function WalletPage() {
   }
 
   // Fetch connected account status
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: connectedAccount } = await (client as any)
+  const { data: connectedAccount } = await client
     .from('stripe_connected_accounts')
     .select('*')
     .eq('account_id', userId)
     .single();
 
   // Fetch wallet balance
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: wallet } = await (client as any)
+  const { data: wallet } = await client
     .from('wallet_balances')
     .select('*')
     .eq('account_id', userId)
     .single();
 
   // Fetch recent transactions (as seller)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: sellerTransactions } = await (client as any)
+  const { data: sellerTransactions } = await client
     .from('marketplace_transactions')
     .select('*, listings(title)')
     .eq('seller_account_id', userId)
@@ -50,8 +47,7 @@ async function WalletPage() {
     .limit(20);
 
   // Fetch recent transactions (as buyer)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: buyerTransactions } = await (client as any)
+  const { data: buyerTransactions } = await client
     .from('marketplace_transactions')
     .select('*, listings(title)')
     .eq('buyer_account_id', userId)

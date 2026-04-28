@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { z } from 'zod';
+
 export const dynamic = 'force-dynamic';
 
 import { requireUser } from '@kit/supabase/require-user';
@@ -12,8 +14,25 @@ import {
   loadGeniusContext,
 } from '~/lib/ai/genius-context';
 import { executeStream, routeRequest } from '~/lib/ai/orchestrator';
+import { AI_RATE_LIMIT, applyRateLimit } from '~/lib/server/rate-limit';
+
+const ChatRequestSchema = z.object({
+  message: z.string().min(1).max(10_000),
+  agentType: z.enum(['comptoir', 'carbon', 'esg', 'traceability', 'rse', 'compliance']).optional(),
+  locale: z.enum(['fr', 'en']).optional(),
+  context: z.object({
+    previousMessages: z.array(z.object({
+      role: z.enum(['user', 'assistant']),
+      content: z.string(),
+    })).optional(),
+  }).passthrough().optional(),
+});
 
 export async function POST(req: NextRequest) {
+  // Rate limiting — protect Anthropic credits
+  const limited = applyRateLimit(req, AI_RATE_LIMIT);
+  if (limited) return limited;
+
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json({ error: 'AI not configured' }, { status: 503 });
   }
@@ -27,30 +46,16 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const {
-      message,
-      agentType,
-      locale,
-      context,
-    }: {
-      message: string;
-      agentType?: string;
-      locale?: string;
-      context?: {
-        previousMessages?: Array<{
-          role: 'user' | 'assistant';
-          content: string;
-        }>;
-        [key: string]: unknown;
-      };
-    } = body;
+    const parsed = ChatRequestSchema.safeParse(body);
 
-    if (!message || typeof message !== 'string') {
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'Message is required' },
+        { error: 'Invalid request', details: parsed.error.flatten() },
         { status: 400 },
       );
     }
+
+    const { message, agentType, locale, context } = parsed.data;
 
     const resolvedAgent: AgentType = agentType
       ? (agentType as AgentType)

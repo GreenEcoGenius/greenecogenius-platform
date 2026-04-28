@@ -14,14 +14,14 @@ export async function GET() {
   // Run all queries in parallel
   const [certificatesResult, carbonResult] = await Promise.all([
     // Total certificates count
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (adminClient as any)
+    // 
+    adminClient
       .from('traceability_certificates')
       .select('id', { count: 'exact', head: true }),
 
     // Carbon aggregates
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (adminClient as any)
+    // 
+    adminClient
       .from('carbon_records')
       .select('weight_tonnes, co2_avoided'),
   ]);
