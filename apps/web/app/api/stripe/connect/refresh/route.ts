@@ -18,8 +18,7 @@ export async function POST() {
 
   const adminClient = getSupabaseServerAdminClient();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: connected } = await (adminClient as any)
+  const { data: connected } = await adminClient
     .from('stripe_connected_accounts')
     .select('stripe_account_id')
     .eq('account_id', user.id)

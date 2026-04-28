@@ -13,8 +13,7 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data } = await (client as any)
+  const { data } = await client
     .from('commission_config')
     .select(
       'name, commission_type, flat_rate, tiers, valid_from, valid_until, is_active, description',

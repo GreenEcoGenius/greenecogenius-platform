@@ -35,8 +35,7 @@ async function CompliancePage() {
   if (!userId) return null;
 
   // Fetch real compliance data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: complianceRows } = await (client as any)
+  const { data: complianceRows } = await client
     .from('account_norm_compliance')
     .select('*')
     .eq('account_id', userId);

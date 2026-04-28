@@ -21,8 +21,7 @@ export async function POST(req: NextRequest) {
   // Check if already has a connected account
   const adminClient = getSupabaseServerAdminClient();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: existing } = await (adminClient as any)
+  const { data: existing } = await adminClient
     .from('stripe_connected_accounts')
     .select('stripe_account_id, onboarding_complete')
     .eq('account_id', accountId)
@@ -56,8 +55,8 @@ export async function POST(req: NextRequest) {
       stripeAccountId = account.id;
 
       // Save to database
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (adminClient as any).from('stripe_connected_accounts').insert({
+      // 
+      await adminClient.from('stripe_connected_accounts').insert({
         account_id: accountId,
         stripe_account_id: stripeAccountId,
         business_type: 'company',

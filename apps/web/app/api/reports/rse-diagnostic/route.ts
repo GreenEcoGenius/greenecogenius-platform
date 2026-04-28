@@ -72,8 +72,7 @@ export async function POST(req: NextRequest) {
 
   const adminClient = getSupabaseServerAdminClient();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: account } = await (adminClient as any)
+  const { data: account } = await adminClient
     .from('accounts')
     .select('name')
     .eq('id', user.id)

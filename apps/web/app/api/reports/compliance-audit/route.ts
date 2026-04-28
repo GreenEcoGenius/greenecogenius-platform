@@ -211,8 +211,7 @@ export async function POST() {
 
   const adminClient = getSupabaseServerAdminClient();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: account } = await (adminClient as any)
+  const { data: account } = await adminClient
     .from('accounts')
     .select('name')
     .eq('id', user.id)
@@ -225,8 +224,7 @@ export async function POST() {
   // Try to load real compliance data from database first
   let auditResult: AuditResult;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: realCompliance } = await (adminClient as any)
+  const { data: realCompliance } = await adminClient
     .from('account_norm_compliance')
     .select('norm_id, status')
     .eq('account_id', user.id);
@@ -362,8 +360,8 @@ export async function POST() {
 
   // Save audit record
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (adminClient as any).from('compliance_audits').insert({
+    // 
+    await adminClient.from('compliance_audits').insert({
       account_id: user.id,
       score: auditResult.score,
       norms_compliant: auditResult.normsCompliant,

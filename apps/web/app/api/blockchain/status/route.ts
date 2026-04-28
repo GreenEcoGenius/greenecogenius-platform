@@ -12,14 +12,12 @@ export async function GET() {
   const adminClient = getSupabaseServerAdminClient();
 
   // Count blockchain records
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { count: blocksCount } = await (adminClient as any)
+  const { count: blocksCount } = await adminClient
     .from('blockchain_records')
     .select('*', { count: 'exact', head: true });
 
   // Count certificates
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { count: certsCount } = await (adminClient as any)
+  const { count: certsCount } = await adminClient
     .from('traceability_certificates')
     .select('*', { count: 'exact', head: true });
 

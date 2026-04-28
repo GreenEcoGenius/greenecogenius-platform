@@ -44,8 +44,8 @@ export async function POST(req: NextRequest) {
     const payoutsEnabled = account.payouts_enabled ?? false;
     const onboardingComplete = chargesEnabled && payoutsEnabled;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (adminClient as any)
+    // 
+    await adminClient
       .from('stripe_connected_accounts')
       .update({
         charges_enabled: chargesEnabled,
@@ -57,16 +57,16 @@ export async function POST(req: NextRequest) {
 
     // Create wallet if onboarding just completed and doesn't exist yet
     if (onboardingComplete) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: connected } = await (adminClient as any)
+      // 
+      const { data: connected } = await adminClient
         .from('stripe_connected_accounts')
         .select('account_id')
         .eq('stripe_account_id', stripeAccountId)
         .single();
 
       if (connected) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (adminClient as any)
+        // 
+        await adminClient
           .from('wallet_balances')
           .upsert(
             { account_id: connected.account_id, currency: 'eur' },

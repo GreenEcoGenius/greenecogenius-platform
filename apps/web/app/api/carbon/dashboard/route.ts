@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 type Period = 'month' | 'quarter' | 'year' | 'all';
@@ -100,14 +98,14 @@ export async function GET(req: NextRequest) {
   const period = (req.nextUrl.searchParams.get('period') as Period) || 'all';
   const { current, previous, previousEnd } = getDateRange(period);
 
-  const adminClient = getSupabaseServerAdminClient();
+  // Use standard client — RLS ensures user can only access their own data
 
   // ---------------------------------------------------------------------------
   // Build all queries in parallel
   // ---------------------------------------------------------------------------
 
   // 1. Current-period carbon records
-  const currentRecordsQuery = (adminClient as any)
+  const currentRecordsQuery = client
     .from('carbon_records')
     .select('*')
     .eq('account_id', accountId)
@@ -118,9 +116,9 @@ export async function GET(req: NextRequest) {
   }
 
   // 2. Previous-period carbon records (for comparison)
-  let previousRecordsPromise: Promise<{ data: any[]; error: any }>;
+  let previousRecordsPromise: Promise<{ data: unknown[]; error: unknown }>;
   if (previous && previousEnd) {
-    previousRecordsPromise = (adminClient as any)
+    previousRecordsPromise = client
       .from('carbon_records')
       .select('co2_avoided, co2_net_benefit, weight_tonnes')
       .eq('account_id', accountId)
@@ -131,13 +129,13 @@ export async function GET(req: NextRequest) {
   }
 
   // 3. ALL records (needed for score calculation regardless of period filter)
-  const allRecordsQuery = (adminClient as any)
+  const allRecordsQuery = client
     .from('carbon_records')
     .select('created_at, material_category, weight_tonnes, co2_net_benefit')
     .eq('account_id', accountId);
 
   // 4. Recent transactions (limit 10) with listing title + blockchain hash
-  const recentTransactionsQuery = (adminClient as any)
+  const recentTransactionsQuery = client
     .from('carbon_records')
     .select(
       `
@@ -167,7 +165,7 @@ export async function GET(req: NextRequest) {
     .limit(10);
 
   // 5. Certificates (limit 6) with blockchain hash + carbon co2
-  const certificatesQuery = (adminClient as any)
+  const certificatesQuery = client
     .from('traceability_certificates')
     .select(
       `
@@ -189,7 +187,7 @@ export async function GET(req: NextRequest) {
     .limit(6);
 
   // 6. First record date (for seniority)
-  const firstRecordQuery = (adminClient as any)
+  const firstRecordQuery = client
     .from('carbon_records')
     .select('created_at')
     .eq('account_id', accountId)
@@ -223,9 +221,9 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const records: any[] = currentRecordsRes.data ?? [];
-  const prevRecords: any[] = previousRecordsRes.data ?? [];
-  const allRecords: any[] = allRecordsRes.data ?? [];
+  const records = (currentRecordsRes.data ?? []) as Record<string, unknown>[];
+  const prevRecords = (previousRecordsRes.data ?? []) as Record<string, unknown>[];
+  const allRecords = (allRecordsRes.data ?? []) as Record<string, unknown>[];
 
   // ---------------------------------------------------------------------------
   // HERO metrics
@@ -350,15 +348,15 @@ export async function GET(req: NextRequest) {
   // ---------------------------------------------------------------------------
 
   const totalTonnesAll = allRecords.reduce(
-    (sum: number, r: any) => sum + Number(r.weight_tonnes ?? 0),
+    (sum: number, r: Record<string, unknown>) => sum + Number((r.weight_tonnes as number) ?? 0),
     0,
   );
   const totalCo2NetAll = allRecords.reduce(
-    (sum: number, r: any) => sum + Number(r.co2_net_benefit ?? 0),
+    (sum: number, r: Record<string, unknown>) => sum + Number((r.co2_net_benefit as number) ?? 0),
     0,
   );
   const uniqueMaterials = new Set(
-    allRecords.map((r: any) => r.material_category),
+    allRecords.map((r: Record<string, unknown>) => r.material_category as string),
   ).size;
 
   // Active months in last 6 months
@@ -396,8 +394,8 @@ export async function GET(req: NextRequest) {
   // RECENT TRANSACTIONS
   // ---------------------------------------------------------------------------
 
-  const recentTransactions = (recentTxRes.data ?? []).map((r: any) => {
-    const tx = r.marketplace_transactions;
+  const recentTransactions = (recentTxRes.data ?? []).map((r: Record<string, unknown>) => {
+    const tx = r.marketplace_transactions as Record<string, unknown> | null;
     return {
       id: r.id,
       transaction_id: r.transaction_id,
@@ -421,7 +419,7 @@ export async function GET(req: NextRequest) {
   // CERTIFICATES
   // ---------------------------------------------------------------------------
 
-  const certificates = (certsRes.data ?? []).map((c: any) => ({
+  const certificates = (certsRes.data ?? []).map((c: Record<string, unknown>) => ({
     id: c.id,
     certificate_number: c.certificate_number,
     certificate_url: c.certificate_url,

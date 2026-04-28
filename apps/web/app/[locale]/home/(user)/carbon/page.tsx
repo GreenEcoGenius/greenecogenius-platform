@@ -70,24 +70,21 @@ async function CarbonPage() {
   }
 
   // Fetch carbon records
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: carbonRecords } = await (client as any)
+  const { data: carbonRecords } = await client
     .from('carbon_records')
     .select('*')
     .eq('account_id', userId)
     .order('created_at', { ascending: true });
 
   // Fetch traceability certificates
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: certificates } = await (client as any)
+  const { data: certificates } = await client
     .from('traceability_certificates')
     .select('*')
     .eq('account_id', userId)
     .order('issued_at', { ascending: false });
 
   // Fetch circularity score
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: scoreData } = await (client as any)
+  const { data: scoreData } = await client
     .from('circularity_scores')
     .select('*')
     .eq('account_id', userId)

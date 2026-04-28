@@ -33,8 +33,7 @@ export async function POST(req: NextRequest) {
   const adminClient = getSupabaseServerAdminClient();
 
   // Lot limit enforcement based on subscription plan
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: sub } = await (adminClient as any)
+  const { data: sub } = await adminClient
     .from('organization_subscriptions')
     .select('status, subscription_plans(name, max_traced_lots_per_month)')
     .eq('account_id', user.id)
@@ -48,8 +47,8 @@ export async function POST(req: NextRequest) {
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { count } = await (adminClient as any)
+    // 
+    const { count } = await adminClient
       .from('marketplace_transactions')
       .select('id', { count: 'exact', head: true })
       .eq('buyer_account_id', user.id)
@@ -87,8 +86,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Check seller has a connected Stripe account
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: sellerConnect } = await (adminClient as any)
+  const { data: sellerConnect } = await adminClient
     .from('stripe_connected_accounts')
     .select('stripe_account_id, onboarding_complete, charges_enabled')
     .eq('account_id', listing.account_id)
@@ -118,8 +116,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Calculate degressive commission via SQL function
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: commissionResult } = await (adminClient as any).rpc(
+  const { data: commissionResult } = await adminClient.rpc(
     'calculate_commission',
     { p_amount_cents: totalAmount },
   );
@@ -135,8 +132,7 @@ export async function POST(req: NextRequest) {
   const commissionConfigName = commission?.config_name ?? 'unknown';
 
   // Create the marketplace transaction record
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: transaction, error: txError } = await (adminClient as any)
+  const { data: transaction, error: txError } = await adminClient
     .from('marketplace_transactions')
     .insert({
       listing_id: listingId,
@@ -164,8 +160,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Log event
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await (adminClient as any).from('transaction_events').insert({
+  await adminClient.from('transaction_events').insert({
     transaction_id: transaction.id,
     event_type: 'payment_created',
     actor_account_id: user.id,
@@ -260,8 +255,8 @@ export async function POST(req: NextRequest) {
 
   // Store PaymentIntent ID
   if (session.payment_intent) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (adminClient as any)
+    // 
+    await adminClient
       .from('marketplace_transactions')
       .update({
         stripe_payment_intent_id:

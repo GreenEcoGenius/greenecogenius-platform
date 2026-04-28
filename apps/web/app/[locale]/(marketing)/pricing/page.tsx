@@ -16,15 +16,13 @@ export const generateMetadata = async () => {
 async function PricingPage() {
   const adminClient = getSupabaseServerAdminClient();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: plans } = await (adminClient as any)
+  const { data: plans } = await adminClient
     .from('subscription_plans')
     .select('*')
     .eq('is_active', true)
     .order('sort_order');
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: commissionConfigs } = await (adminClient as any)
+  const { data: commissionConfigs } = await adminClient
     .from('commission_config')
     .select('*')
     .order('is_active', { ascending: false });

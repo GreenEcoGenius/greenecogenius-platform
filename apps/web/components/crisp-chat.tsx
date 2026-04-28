@@ -2,13 +2,20 @@
 
 import { useEffect } from 'react';
 
+declare global {
+  interface Window {
+    $crisp?: unknown[];
+    CRISP_WEBSITE_ID?: string;
+  }
+}
+
 export function CrispChat() {
   useEffect(() => {
     const CRISP_WEBSITE_ID = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID;
     if (!CRISP_WEBSITE_ID) return;
 
-    (window as any).$crisp = [];
-    (window as any).CRISP_WEBSITE_ID = CRISP_WEBSITE_ID;
+    window.$crisp = [];
+    window.CRISP_WEBSITE_ID = CRISP_WEBSITE_ID;
 
     const script = document.createElement('script');
     script.src = 'https://client.crisp.chat/l.js';

@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 
@@ -17,16 +15,15 @@ export async function GET() {
   }
 
   const accountId = user.id;
-  const adminClient = getSupabaseServerAdminClient();
 
-  const { data: records } = await (adminClient as any)
+  // Use standard client — RLS ensures user can only access their own data
+  const { data: records } = await client
     .from('carbon_records')
     .select('*')
     .eq('account_id', accountId)
     .order('created_at', { ascending: false });
 
-  // Use real data only — no demo fallback
-  const allRecords: any[] = records ?? [];
+  const allRecords = (records ?? []) as Record<string, unknown>[];
 
   // CSV header
   const headers = [
@@ -41,9 +38,9 @@ export async function GET() {
     'Distance(km)',
   ];
 
-  const rows = allRecords.map((r: any) => {
+  const rows = allRecords.map((r) => {
     const date = r.created_at
-      ? new Date(r.created_at).toISOString().split('T')[0]
+      ? new Date(r.created_at as string).toISOString().split('T')[0]
       : '';
     return [
       date,

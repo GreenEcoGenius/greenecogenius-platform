@@ -32,8 +32,7 @@ export async function GET(req: NextRequest) {
   const adminClient = getSupabaseServerAdminClient();
 
   // Call the SQL function
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data, error } = await (adminClient as any).rpc(
+  const { data, error } = await adminClient.rpc(
     'calculate_commission',
     { p_amount_cents: amountCents },
   );
@@ -48,8 +47,7 @@ export async function GET(req: NextRequest) {
   const result = data[0];
 
   // Get promo end date if applicable
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: configData } = await (adminClient as any)
+  const { data: configData } = await adminClient
     .from('commission_config')
     .select('valid_until, commission_type')
     .eq('id', result.config_id)

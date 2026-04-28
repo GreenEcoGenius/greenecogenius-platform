@@ -25,8 +25,7 @@ export async function GET(
   const adminClient = getSupabaseServerAdminClient();
 
   // 1. Try to find by record_hash
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let { data: blockchainRecord } = await (adminClient as any)
+  let { data: blockchainRecord } = await adminClient
     .from('blockchain_records')
     .select('*')
     .eq('record_hash', hash.trim())
@@ -36,8 +35,8 @@ export async function GET(
 
   // 2. If not found, try traceability_certificates by certificate_number (case-insensitive)
   if (!blockchainRecord) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: cert } = await (adminClient as any)
+    // 
+    const { data: cert } = await adminClient
       .from('traceability_certificates')
       .select('*')
       .ilike('certificate_number', hash.trim())
@@ -48,8 +47,8 @@ export async function GET(
 
       // Find the blockchain record via transaction_id
       if (cert.transaction_id) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { data: br } = await (adminClient as any)
+        // 
+        const { data: br } = await adminClient
           .from('blockchain_records')
           .select('*')
           .eq('transaction_id', cert.transaction_id)
@@ -72,8 +71,8 @@ export async function GET(
 
   // Fetch certificate if not already loaded
   if (!certificate && transactionId) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: cert } = await (adminClient as any)
+    // 
+    const { data: cert } = await adminClient
       .from('traceability_certificates')
       .select('*')
       .eq('transaction_id', transactionId)
@@ -86,8 +85,8 @@ export async function GET(
   let carbonRecord = null;
 
   if (transactionId) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: cr } = await (adminClient as any)
+    // 
+    const { data: cr } = await adminClient
       .from('carbon_records')
       .select('*')
       .eq('transaction_id', transactionId)
@@ -101,8 +100,8 @@ export async function GET(
   let listing = null;
 
   if (transactionId) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: tx } = await (adminClient as any)
+    // 
+    const { data: tx } = await adminClient
       .from('marketplace_transactions')
       .select('*')
       .eq('id', transactionId)
@@ -111,8 +110,8 @@ export async function GET(
     transaction = tx;
 
     if (tx?.listing_id) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: l } = await (adminClient as any)
+      // 
+      const { data: l } = await adminClient
         .from('listings')
         .select('title')
         .eq('id', tx.listing_id)
@@ -179,7 +178,6 @@ export async function GET(
 }
 
 async function verifyChainIntegrity(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   adminClient: any,
   record: Record<string, unknown>,
 ): Promise<boolean> {

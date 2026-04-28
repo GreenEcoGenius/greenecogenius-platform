@@ -30,9 +30,8 @@ export async function POST(req: NextRequest) {
   const { transactionId } = parsed.data;
   const adminClient = getSupabaseServerAdminClient();
 
-  // Fetch transaction
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: tx } = await (adminClient as any)
+  // Fetch transaction (admin client needed: cross-account data)
+  const { data: tx } = await adminClient
     .from('marketplace_transactions')
     .select('*')
     .eq('id', transactionId)
@@ -46,8 +45,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Fetch listing details
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: listing } = await (adminClient as any)
+  const { data: listing } = await adminClient
     .from('marketplace_listings')
     .select('*')
     .eq('id', tx.listing_id)
@@ -80,15 +78,13 @@ export async function POST(req: NextRequest) {
     });
 
     // Update transaction with tx hash
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (adminClient as any)
+    await adminClient
       .from('marketplace_transactions')
       .update({ polygon_tx_hash: result.txHash })
       .eq('id', transactionId);
 
     // Log blockchain record
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (adminClient as any).from('blockchain_records').insert({
+    await adminClient.from('blockchain_records').insert({
       transaction_id: transactionId,
       listing_id: tx.listing_id,
       record_hash: result.dataHash,

@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { generateCarbonReportPDF } from '~/lib/services/pdf/templates/carbon-report-template';
@@ -18,15 +16,14 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const adminClient = getSupabaseServerAdminClient();
-
-  const { data: account } = await (adminClient as any)
+  // Use standard client — RLS ensures user can only access their own data
+  const { data: account } = await client
     .from('accounts')
     .select('name')
     .eq('id', user.id)
     .single();
 
-  const { data: records } = await (adminClient as any)
+  const { data: records } = await client
     .from('carbon_records')
     .select('material_category, weight_kg, co2_avoided, co2_transport, co2_net')
     .eq('account_id', user.id);
@@ -35,10 +32,10 @@ export async function GET() {
   const isFr = locale === 'fr';
   const companyName = account?.name ?? (isFr ? 'Mon entreprise' : 'My company');
 
-  const allRecords: any[] = records ?? [];
-  const co2Avoided = allRecords.reduce((s: number, r: any) => s + Number(r.co2_avoided ?? 0), 0);
-  const co2Transport = allRecords.reduce((s: number, r: any) => s + Number(r.co2_transport ?? 0), 0);
-  const totalWeightKg = allRecords.reduce((s: number, r: any) => s + Number(r.weight_kg ?? 0), 0);
+  const allRecords = (records ?? []) as Record<string, unknown>[];
+  const co2Avoided = allRecords.reduce((s: number, r) => s + Number((r.co2_avoided as number) ?? 0), 0);
+  const co2Transport = allRecords.reduce((s: number, r) => s + Number((r.co2_transport as number) ?? 0), 0);
+  const totalWeightKg = allRecords.reduce((s: number, r) => s + Number((r.weight_kg as number) ?? 0), 0);
 
   const generatedAt = new Date().toLocaleDateString(isFr ? 'fr-FR' : 'en-GB', {
     year: 'numeric',
@@ -56,7 +53,7 @@ export async function GET() {
       totalEmissions: 0,
       co2Avoided: co2Avoided / 1000,
       totalWeightTonnes: totalWeightKg / 1000,
-      records: allRecords.map((r: any) => ({
+      records: allRecords.map((r) => ({
         category: r.material_category ?? '',
         weight_kg: Number(r.weight_kg ?? 0),
         co2_avoided: Number(r.co2_avoided ?? 0),

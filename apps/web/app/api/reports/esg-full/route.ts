@@ -50,8 +50,7 @@ export async function POST(req: NextRequest) {
   const adminClient = getSupabaseServerAdminClient();
 
   // 1. Fetch org_esg_data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: esgRows } = await (adminClient as any)
+  const { data: esgRows } = await adminClient
     .from('org_esg_data')
     .select('*')
     .eq('account_id', user.id)
@@ -60,8 +59,7 @@ export async function POST(req: NextRequest) {
   const esg = esgRows?.[0] ?? {};
 
   // 2. Fetch latest esg_reports
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: reportRows } = await (adminClient as any)
+  const { data: reportRows } = await adminClient
     .from('esg_reports')
     .select('*')
     .eq('account_id', user.id)
@@ -75,8 +73,7 @@ export async function POST(req: NextRequest) {
   const startDate = `${year}-01-01`;
   const endDate = `${year}-12-31`;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: carbonRecords } = await (adminClient as any)
+  const { data: carbonRecords } = await adminClient
     .from('carbon_records')
     .select('co2_avoided_kg, transaction_type, tonnes_recycled, created_at')
     .eq('account_id', user.id)
@@ -96,8 +93,7 @@ export async function POST(req: NextRequest) {
   }
 
   // 4. Fetch account name
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: account } = await (adminClient as any)
+  const { data: account } = await adminClient
     .from('accounts')
     .select('name')
     .eq('id', user.id)

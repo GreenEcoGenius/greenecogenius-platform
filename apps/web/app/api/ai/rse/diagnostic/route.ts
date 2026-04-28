@@ -1,13 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { z } from 'zod';
+
 export const dynamic = 'force-dynamic';
 
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { execute } from '~/lib/ai/orchestrator';
+import { AI_RATE_LIMIT, applyRateLimit } from '~/lib/server/rate-limit';
+
+const RequestSchema = z.object({
+  orgData: z.record(z.unknown()).refine((v) => Object.keys(v).length > 0, {
+    message: 'orgData must be a non-empty object',
+  }),
+});
 
 export async function POST(req: NextRequest) {
+  const limited = applyRateLimit(req, AI_RATE_LIMIT);
+  if (limited) return limited;
+
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json({ error: 'AI not configured' }, { status: 503 });
   }
@@ -21,16 +33,17 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { orgData }: { orgData: object } = body;
+    const parsed = RequestSchema.safeParse(body);
 
-    if (!orgData || typeof orgData !== 'object') {
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'orgData is required and must be an object' },
+        { error: 'Invalid request', details: parsed.error.flatten() },
         { status: 400 },
       );
     }
 
-    const context = { orgData: orgData as Record<string, unknown> };
+    const { orgData } = parsed.data;
+    const context = { orgData };
 
     const prompt = `Perform a comprehensive RSE (Responsabilite Societale des Entreprises) diagnostic for this organisation. Based on the provided organisation data, evaluate:
 
@@ -54,9 +67,9 @@ Conclude with an overall RSE maturity assessment and a prioritised 12-month acti
   } catch (error) {
     console.error('[RSE Diagnostic] Error:', error);
 
-    const message =
-      error instanceof Error ? error.message : 'Internal server error';
-
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: 'An unexpected error occurred' },
+      { status: 500 },
+    );
   }
 }

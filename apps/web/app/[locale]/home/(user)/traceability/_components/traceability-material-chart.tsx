@@ -91,7 +91,6 @@ export function TraceabilityMaterialChart({
                 fontSize: '12px',
                 color: '#fff',
               }}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               formatter={(value: any) => {
                 return [`${value ?? 0}t`, ''];
               }}

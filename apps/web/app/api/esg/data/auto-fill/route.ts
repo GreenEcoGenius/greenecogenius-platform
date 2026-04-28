@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 export async function GET(req: NextRequest) {
@@ -17,29 +16,20 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const year = searchParams.get('year');
 
-  if (!year) {
+  if (!year || !/^\d{4}$/.test(year)) {
     return NextResponse.json(
-      { error: 'Query parameter "year" is required' },
+      { error: 'Query parameter "year" is required and must be a 4-digit year' },
       { status: 400 },
     );
   }
 
   const reportingYear = parseInt(year, 10);
 
-  if (isNaN(reportingYear)) {
-    return NextResponse.json(
-      { error: 'Invalid year parameter' },
-      { status: 400 },
-    );
-  }
-
-  const adminClient = getSupabaseServerAdminClient();
-
   const startDate = `${reportingYear}-01-01`;
   const endDate = `${reportingYear}-12-31`;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: records, error } = await (adminClient as any)
+  // Use standard client — RLS ensures user can only access their own data
+  const { data: records, error } = await client
     .from('carbon_records')
     .select('co2_avoided_kg, transaction_type, tonnes_recycled')
     .eq('account_id', user.id)

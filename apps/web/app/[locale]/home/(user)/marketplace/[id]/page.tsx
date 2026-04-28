@@ -48,8 +48,7 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
   }
 
   // Fetch listing image
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: images } = await (client as any)
+  const { data: images } = await client
     .from('listing_images')
     .select('storage_path')
     .eq('listing_id', id)

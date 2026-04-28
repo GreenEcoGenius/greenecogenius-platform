@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { z } from 'zod';
+
 export const dynamic = 'force-dynamic';
 
 import { requireUser } from '@kit/supabase/require-user';
-import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+
+import { EXPORT_RATE_LIMIT, applyRateLimit } from '~/lib/server/rate-limit';
+
+const RequestSchema = z.object({
+  reporting_year: z.number().int().min(2000).max(2100),
+});
 
 interface EsgData {
   natural_gas_kwh: number;
@@ -189,6 +196,9 @@ function generateRecommendations(
 }
 
 export async function POST(req: NextRequest) {
+  const limited = applyRateLimit(req, EXPORT_RATE_LIMIT);
+  if (limited) return limited;
+
   const client = getSupabaseServerClient();
   const { data: user, error: authError } = await requireUser(client);
 
@@ -196,30 +206,31 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  let body: { reporting_year: number };
+  let rawBody: unknown;
 
   try {
-    body = await req.json();
+    rawBody = await req.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  if (!body.reporting_year) {
+  const parsed = RequestSchema.safeParse(rawBody);
+
+  if (!parsed.success) {
     return NextResponse.json(
-      { error: 'reporting_year is required' },
+      { error: 'Invalid request', details: parsed.error.flatten() },
       { status: 400 },
     );
   }
 
-  const adminClient = getSupabaseServerAdminClient();
+  const { reporting_year } = parsed.data;
 
-  // Fetch org_esg_data for user + year
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: esgRows, error: esgError } = await (adminClient as any)
+  // Use standard client — RLS ensures user can only access their own data
+  const { data: esgRows, error: esgError } = await client
     .from('org_esg_data')
     .select('*')
     .eq('account_id', user.id)
-    .eq('reporting_year', body.reporting_year);
+    .eq('reporting_year', reporting_year);
 
   if (esgError) {
     return NextResponse.json(
@@ -241,8 +252,7 @@ export async function POST(req: NextRequest) {
   const esgRow = esgRows[0];
 
   // Fetch emission factors
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: factors } = await (adminClient as any)
+  const { data: factors } = await client
     .from('esg_emission_factors')
     .select('*');
 
@@ -287,7 +297,7 @@ export async function POST(req: NextRequest) {
 
   const reportData = {
     account_id: user.id,
-    report_year: body.reporting_year,
+    report_year: reporting_year,
     scope1_kg: emissions.scope1_kg,
     scope2_kg: emissions.scope2_kg,
     scope3_kg: emissions.scope3_kg,
@@ -300,8 +310,7 @@ export async function POST(req: NextRequest) {
     calculated_at: new Date().toISOString(),
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: report, error: reportError } = await (adminClient as any)
+  const { data: report, error: reportError } = await client
     .from('esg_reports')
     .upsert(reportData, {
       onConflict: 'account_id,report_year',

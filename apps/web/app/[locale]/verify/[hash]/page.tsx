@@ -42,8 +42,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
   const adminClient = getSupabaseServerAdminClient();
 
   // 1. Try to find by record_hash
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let { data: blockchainRecord } = await (adminClient as any)
+  let { data: blockchainRecord } = await adminClient
     .from('blockchain_records')
     .select('*')
     .eq('record_hash', hash.trim())
@@ -53,8 +52,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
 
   // 2. If not found, try traceability_certificates by certificate_number
   if (!blockchainRecord) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: cert } = await (adminClient as any)
+    const { data: cert } = await adminClient
       .from('traceability_certificates')
       .select('*')
       .ilike('certificate_number', hash.trim())
@@ -64,8 +62,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
       certificate = cert;
 
       if (cert.transaction_id) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { data: br } = await (adminClient as any)
+        const { data: br } = await adminClient
           .from('blockchain_records')
           .select('*')
           .eq('transaction_id', cert.transaction_id)
@@ -133,8 +130,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
 
   // Fetch certificate if not loaded
   if (!certificate && transactionId) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: cert } = await (adminClient as any)
+    const { data: cert } = await adminClient
       .from('traceability_certificates')
       .select('*')
       .eq('transaction_id', transactionId)
@@ -147,8 +143,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
   let carbonRecord: Record<string, unknown> | null = null;
 
   if (transactionId) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: cr } = await (adminClient as any)
+    const { data: cr } = await adminClient
       .from('carbon_records')
       .select('*')
       .eq('transaction_id', transactionId)
@@ -162,8 +157,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
   let listing: Record<string, unknown> | null = null;
 
   if (transactionId) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: tx } = await (adminClient as any)
+    const { data: tx } = await adminClient
       .from('marketplace_transactions')
       .select('*')
       .eq('id', transactionId)
@@ -172,8 +166,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
     transaction = tx;
 
     if (tx?.listing_id) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: l } = await (adminClient as any)
+      const { data: l } = await adminClient
         .from('listings')
         .select('title')
         .eq('id', tx.listing_id)
@@ -188,8 +181,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
   let chainIntegrity = true;
 
   if (blockNumber > 1 && blockchainRecord.previous_hash !== 'GENESIS') {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: prevBlock } = await (adminClient as any)
+    const { data: prevBlock } = await adminClient
       .from('blockchain_records')
       .select('record_hash')
       .eq('block_number', blockNumber - 1)

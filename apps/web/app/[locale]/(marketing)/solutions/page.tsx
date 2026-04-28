@@ -39,7 +39,7 @@ export default async function SolutionsPage() {
         t('solMarketplaceF2'),
         t('solMarketplaceF3'),
       ],
-      image: '/images/normes/circular-zero-waste.png',
+      image: '/images/normes/circular-zero-waste.webp',
       href: '/auth/sign-up',
     },
     {
@@ -50,7 +50,7 @@ export default async function SolutionsPage() {
       badgeClass: 'bg-circuit-ice text-circuit-blue',
       description: t('solTraceDesc'),
       features: [t('solTraceF1'), t('solTraceF2'), t('solTraceF3')],
-      image: '/images/normes/traceability-blockchain-chain.png',
+      image: '/images/normes/traceability-blockchain-chain.webp',
       href: '/auth/sign-up',
     },
     {
@@ -61,7 +61,7 @@ export default async function SolutionsPage() {
       badgeClass: 'bg-tech-mint text-tech-emerald',
       description: t('solCarbonDesc'),
       features: [t('solCarbonF1'), t('solCarbonF2'), t('solCarbonF3')],
-      image: '/images/normes/carbon-counter-1000t.png',
+      image: '/images/normes/carbon-counter-1000t.webp',
       href: '/auth/sign-up',
     },
     {
@@ -72,7 +72,7 @@ export default async function SolutionsPage() {
       badgeClass: 'bg-badge-purple-bg text-badge-purple-text',
       description: t('solEsgDesc'),
       features: [t('solEsgF1'), t('solEsgF2'), t('solEsgF3')],
-      image: '/images/normes/reporting-esg-meeting.png',
+      image: '/images/normes/reporting-esg-meeting.webp',
       href: '/auth/sign-up',
     },
     {
@@ -87,7 +87,7 @@ export default async function SolutionsPage() {
         t('solComplianceF2'),
         t('solComplianceF3'),
       ],
-      image: '/images/normes/labels-globe-recycle.png',
+      image: '/images/normes/labels-globe-recycle.webp',
       href: '/auth/sign-up',
     },
     {
