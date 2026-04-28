@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import Link from 'next/link';
 import { MapPin, Package, Truck } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -11,7 +12,7 @@ interface ListingCardProps {
   listing: ListingWithCategory;
 }
 
-export function ListingCard({ listing }: ListingCardProps) {
+export const ListingCard = memo(function ListingCard({ listing }: ListingCardProps) {
   const t = useTranslations('marketplace');
   const locale = useLocale();
 
@@ -93,4 +94,4 @@ export function ListingCard({ listing }: ListingCardProps) {
       </div>
     </Link>
   );
-}
+});

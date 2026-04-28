@@ -2,42 +2,29 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { supabase } from '~/lib/supabase-client';
+import { useAuth } from '~/hooks/use-auth';
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
+  const { isAuthenticated, loading } = useAuth();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    let mounted = true;
+    if (loading) return;
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!mounted) return;
-      const isAuthRoute = pathname?.startsWith('/auth');
-      if (!session && !isAuthRoute) {
-        router.replace('/auth/sign-in');
-      } else if (session && isAuthRoute) {
-        router.replace('/home');
-      } else {
-        setReady(true);
-      }
-    });
+    const isAuthRoute = pathname?.startsWith('/auth');
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!mounted) return;
-      const isAuthRoute = pathname?.startsWith('/auth');
-      if (!session && !isAuthRoute) router.replace('/auth/sign-in');
-      if (session && isAuthRoute) router.replace('/home');
-    });
+    if (!isAuthenticated && !isAuthRoute) {
+      router.replace('/auth/sign-in');
+    } else if (isAuthenticated && isAuthRoute) {
+      router.replace('/home');
+    } else {
+      setReady(true);
+    }
+  }, [loading, isAuthenticated, pathname, router]);
 
-    return () => {
-      mounted = false;
-      sub.subscription.unsubscribe();
-    };
-  }, [pathname, router]);
-
-  if (!ready) {
+  if (loading || !ready) {
     return (
       <div className="flex h-screen items-center justify-center bg-[#0A2F1F]">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#F5F5F0] border-t-transparent" />

@@ -32,8 +32,8 @@ const config: NextConfig = {
           ],
         },
       }),
-  typescript: { ignoreBuildErrors: true },
-  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: false },
+  eslint: { ignoreDuringBuilds: false },
 };
 
 export default withNextIntl(config);

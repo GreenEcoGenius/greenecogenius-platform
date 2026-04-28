@@ -7,6 +7,7 @@ import { ShieldCheck, ScanLine, RotateCw } from 'lucide-react';
 import { AppShell } from '~/components/app-shell';
 import { AuthGuard } from '~/components/auth-guard';
 import { CertificateCard } from '~/components/traceability/certificate-card';
+import { CertificateCardSkeleton } from '~/components/ui/skeleton';
 import { useTraceability } from '~/hooks/use-traceability';
 
 export default function TraceabilityPage() {
@@ -57,9 +58,10 @@ function TraceabilityContent() {
 
       {/* States */}
       {loading && certificates.length === 0 ? (
-        <div className="flex flex-col items-center gap-2 py-8">
-          <RotateCw className="h-5 w-5 animate-spin text-[#F5F5F0]/40" />
-          <p className="text-xs text-[#F5F5F0]/50">{t('loading')}</p>
+        <div className="space-y-3 py-2">
+          <CertificateCardSkeleton />
+          <CertificateCardSkeleton />
+          <CertificateCardSkeleton />
         </div>
       ) : error ? (
         <div className="flex flex-col items-center gap-3 py-8">

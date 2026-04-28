@@ -4,7 +4,25 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { toast } from 'sonner';
+import { Capacitor } from '@capacitor/core';
 import { supabase } from '~/lib/supabase-client';
+
+/**
+ * Build the redirect URL for email confirmation.
+ * On native iOS, use the Universal Link so the OS opens the app directly.
+ * On web, fall back to the standard web callback.
+ */
+function getEmailRedirectUrl(): string {
+  const webCallback = `${process.env.NEXT_PUBLIC_API_URL}/auth/callback`;
+  if (
+    typeof window !== 'undefined' &&
+    Capacitor.isNativePlatform()
+  ) {
+    // Universal Link registered in apple-app-site-association
+    return `${process.env.NEXT_PUBLIC_API_URL}/auth/callback?redirect_to=tech.greenecogenius.app://auth/callback`;
+  }
+  return webCallback;
+}
 
 export default function SignUpPage() {
   const t = useTranslations('auth');
@@ -17,11 +35,15 @@ export default function SignUpPage() {
     e.preventDefault();
     setLoading(true);
     const { error } = await supabase.auth.signUp({
-      email, password,
-      options: { emailRedirectTo: `${process.env.NEXT_PUBLIC_API_URL}/auth/callback` },
+      email,
+      password,
+      options: { emailRedirectTo: getEmailRedirectUrl() },
     });
     setLoading(false);
-    if (error) { toast.error(error.message); return; }
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     setSent(true);
     toast.success(t('emailSent'));
   }

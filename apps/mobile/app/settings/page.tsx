@@ -3,11 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import { ChevronRight, User, Bell, Globe, Lock, LogOut, FileText, CircleHelp } from 'lucide-react';
 import { AuthGuard } from '~/components/auth-guard';
 import { AppShell } from '~/components/app-shell';
-import { supabase } from '~/lib/supabase-client';
+import { useAuth } from '~/hooks/use-auth';
 import { detectInitialLocale, type Locale } from '~/lib/locale';
 
 const localeLabels: Record<Locale, string> = { fr: 'Français', en: 'English' };
@@ -16,18 +15,19 @@ function SettingsContent() {
   const router = useRouter();
   const t = useTranslations('settings');
   const tc = useTranslations('common');
-  const [email, setEmail] = useState<string | null>(null);
+  const { user, signOut } = useAuth();
   const [locale, setLocaleValue] = useState<Locale>('fr');
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setEmail(user?.email ?? null));
     detectInitialLocale().then(setLocaleValue);
   }, []);
 
   async function handleSignOut() {
-    await supabase.auth.signOut();
+    await signOut();
     router.replace('/auth/sign-in');
   }
+
+  const email = user?.email ?? null;
 
   type Item = {
     icon: typeof User;

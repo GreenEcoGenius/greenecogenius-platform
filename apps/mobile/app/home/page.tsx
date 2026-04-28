@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Leaf, TrendingUp, Recycle, Award, Activity, AlertCircle } from 'lucide-react';
+import { Leaf, TrendingUp, Recycle, Activity, AlertCircle } from 'lucide-react';
 import { AuthGuard } from '~/components/auth-guard';
 import { AppShell } from '~/components/app-shell';
-import { supabase } from '~/lib/supabase-client';
+import { useAuth } from '~/hooks/use-auth';
 import { useDashboardKpis } from '~/hooks/use-dashboard-kpis';
 import { formatCO2, formatTonnes, formatNumber, formatRelativeDate } from '~/lib/format';
 
@@ -42,12 +41,8 @@ function StatCard({
 
 function HomeContent() {
   const t = useTranslations('home');
-  const [user, setUser] = useState<{ email?: string } | null>(null);
+  const { user } = useAuth();
   const { data, loading, error } = useDashboardKpis();
-
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
-  }, []);
 
   const k = data?.kpis;
   const records = data?.recentRecords ?? [];

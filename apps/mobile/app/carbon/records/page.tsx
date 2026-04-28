@@ -5,6 +5,7 @@ import { Leaf, RotateCw } from 'lucide-react';
 
 import { RecordCard } from '~/components/carbon/record-card';
 import { StatsHeader } from '~/components/carbon/stats-header';
+import { ListRowSkeleton, StatCardSkeleton } from '~/components/ui/skeleton';
 import { useCarbonRecords } from '~/hooks/use-carbon-records';
 
 export default function CarbonRecordsPage() {
@@ -14,9 +15,17 @@ export default function CarbonRecordsPage() {
 
   if (loading && records.length === 0) {
     return (
-      <div className="flex flex-col items-center gap-2 py-12">
-        <RotateCw className="h-5 w-5 animate-spin text-[#F5F5F0]/40" />
-        <p className="text-xs text-[#F5F5F0]/50">{t('loading')}</p>
+      <div className="space-y-6 py-2">
+        <div className="grid grid-cols-2 gap-3">
+          <StatCardSkeleton />
+          <StatCardSkeleton />
+        </div>
+        <div className="space-y-2">
+          <ListRowSkeleton />
+          <ListRowSkeleton />
+          <ListRowSkeleton />
+          <ListRowSkeleton />
+        </div>
       </div>
     );
   }
