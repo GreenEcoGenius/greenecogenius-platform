@@ -1,3 +1,4 @@
+import type { Viewport } from 'next';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 
@@ -19,6 +20,20 @@ import { getRootTheme } from '~/lib/root-theme';
 export const generateMetadata = () => {
   return generateRootMetadata();
 };
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  interactiveWidget: 'resizes-content',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  interactiveWidget: 'resizes-content',
+};
+
 
 interface LocaleLayoutProps {
   children: React.ReactNode;
