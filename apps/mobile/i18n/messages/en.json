@@ -411,7 +411,14 @@
     "geniusLabel": "Genius AI",
     "geniusDescFull": "Multi-agent intelligent assistant",
     "dashboardLabel": "Dashboard",
-    "dashboardDescFull": "Overview of your data"
+    "dashboardDescFull": "Overview of your data",
+    "complianceTitle": "CSR & Compliance",
+    "rseLabel": "CSR & Labels",
+    "rseDescFull": "CSR diagnostic and label eligibility",
+    "complianceLabel": "Compliance",
+    "complianceDescFull": "42 standards, pre-audit and regulatory watch",
+    "extraDataLabel": "Supplementary data",
+    "extraDataDescFull": "Governance, social, environment, procurement"
   },
   "marketplace": {
     "title": "Marketplace",
@@ -571,5 +578,48 @@
     "contractSent": "Sent",
     "contractPending": "Pending",
     "signContract": "Sign contract"
+  },
+  "rse": {
+    "title": "CSR & Labels",
+    "subtitle": "Diagnostic and eligibility",
+    "scoreTitle": "CSR Score",
+    "scoreDesc": "Multi-pillar assessment",
+    "labelsTitle": "Label eligibility",
+    "labelsDesc": "B Corp, Lucie, GreenTech...",
+    "actionPlanTitle": "Action plan",
+    "actionPlanDesc": "Personalized recommendations",
+    "ecosystemTitle": "Ecosystem",
+    "ecosystemDesc": "CSR partner connections",
+    "eligibilityTitle": "Label eligibility",
+    "accessible": "accessible",
+    "diagnosticCta": "Start CSR diagnostic",
+    "diagnosticCtaDesc": "Get your personalized score and a detailed action plan."
+  },
+  "compliance": {
+    "title": "Compliance",
+    "subtitle": "42 standards · 6 pillars",
+    "globalScore": "Compliance score",
+    "partial": "partial",
+    "alerts": "alerts",
+    "pillarsTitle": "6 compliance pillars",
+    "norms": "standards",
+    "regulatoryWatch": "Regulatory watch"
+  },
+  "extraData": {
+    "title": "Supplementary data",
+    "subtitle": "Enrich your score",
+    "governance": "Governance",
+    "social": "Social & HR",
+    "environment": "Environment",
+    "procurement": "Procurement",
+    "community": "Community",
+    "emptyCategory": "No data in this category",
+    "addActivity": "Add data",
+    "formTitlePlaceholder": "Title (e.g. Code of conduct 2026)",
+    "formDescPlaceholder": "Description...",
+    "formValuePlaceholder": "Value",
+    "formUnitPlaceholder": "Unit",
+    "cancel": "Cancel",
+    "save": "Add"
   }
 }

@@ -40,10 +40,10 @@ async function CompliancePage() {
     .select('*')
     .eq('account_id', userId);
 
-  // Norms under the "data" pillar (RGPD, ISO 27001, SOC 2, NIS2, Label NR)
-  // concern the platform itself, not the client's ecological compliance.
-  // They are hidden from the client dashboard — 37 norms instead of 42.
-  const CLIENT_NORMS = NORMS_DATABASE.filter((n) => n.pillar !== 'data');
+  // All 42 norms across 6 pillars are now shown to clients,
+  // including the "Données & SaaS" pillar (RGPD, ISO 27001, SOC 2, NIS2, AI Act).
+  // This aligns the dashboard with the 42-norm marketing promise.
+  const CLIENT_NORMS = NORMS_DATABASE;
   const clientNormIds = new Set(CLIENT_NORMS.map((n) => n.id));
 
   const allRows = (complianceRows ?? []) as Array<{
@@ -77,7 +77,7 @@ async function CompliancePage() {
               <p className="text-[#7DC4A0] mx-auto mt-3 max-w-md text-sm leading-relaxed">
                 <Trans
                   i18nKey="compliance:emptyDesc"
-                  defaults="Publiez une annonce ou réalisez une transaction sur Le Comptoir Circulaire. La plateforme évaluera automatiquement votre conformité aux 37 normes environnementales et RSE."
+                  defaults="Publiez une annonce ou réalisez une transaction sur Le Comptoir Circulaire. La plateforme évaluera automatiquement votre conformité aux 42 normes environnementales et RSE."
                 />
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -110,9 +110,9 @@ async function CompliancePage() {
     );
   }
 
-  // Aggregate stats (score is computed over the full client catalog of 37
+  // Aggregate stats (score is computed over the full client catalog of 42
   // norms, not only the rows present in the compliance table, so an empty
-  // account correctly reports 0/37 = 0%).
+  // account correctly reports 0/42 = 0%).
   const totalClientNorms = CLIENT_NORMS.length;
   const compliantCount = rows.filter((r) => r.status === 'compliant').length;
   const nonCompliantCount = rows.filter(
@@ -123,7 +123,7 @@ async function CompliancePage() {
     : 0;
   const alertCount = nonCompliantCount;
 
-  // Build pillar aggregation from real data (excluding the "data" pillar)
+  // Build pillar aggregation from real data (all 6 pillars)
   const pillarMap = new Map<
     string,
     { compliant: number; total: number; norms: string[] }
@@ -148,6 +148,7 @@ async function CompliancePage() {
     reporting: { name: t('pillarReportingEsg'), icon: 'reporting' },
     traceability: { name: t('pillarTraceabilityName'), icon: 'traceability' },
     labels: { name: t('pillarLabelsName'), icon: 'labels' },
+    data: { name: t('pillarDataSaas'), icon: 'data' },
   };
 
   const pillars = Array.from(pillarMap.entries()).map(([key, val]) => ({

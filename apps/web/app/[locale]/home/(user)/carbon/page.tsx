@@ -26,6 +26,8 @@ import { CarbonAvoidedChart } from './_components/carbon-avoided-chart';
 import { CarbonByMaterialChart } from './_components/carbon-by-material-chart';
 import { CarbonEquivalences } from './_components/carbon-equivalences';
 import { CarbonExportButton } from './_components/carbon-export-button';
+import { CarbonReductionPlan } from './_components/carbon-reduction-plan';
+import { SbtiTrajectory } from './_components/sbti-trajectory';
 import { CarbonHeroMetrics } from './_components/carbon-hero-metrics';
 import { CarbonScoreCard } from './_components/carbon-score-card';
 import { CarbonTransactionsTable } from './_components/carbon-transactions-table';
@@ -216,7 +218,7 @@ async function CarbonPage() {
     <PageBody>
       <SectionHeader titleKey="carbonTitle" descKey="carbonDesc" />
 
-      <div className="mb-6 flex flex-wrap gap-3">
+      <div className="mb-6 flex flex-wrap items-center gap-3">
         <Button
           variant="default"
           size="sm"
@@ -227,6 +229,7 @@ async function CarbonPage() {
           <Trans i18nKey="carbon:startAssessment" />
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
+        <CarbonExportButton />
       </div>
 
       <div className="space-y-8">
@@ -440,6 +443,12 @@ async function CarbonPage() {
 
         {/* Section 6 - Certificates */}
         <CertificatesList certificates={certs} />
+
+        {/* Section 7 - Carbon Reduction Plan (Genius AI) */}
+        <CarbonReductionPlan />
+
+        {/* Section 8 - SBTi / Net Zero Trajectory */}
+        <SbtiTrajectory />
 
         <SectionFooterImage
           src="https://fnlenvefzwlncgorsmib.supabase.co/storage/v1/object/public/account_image/generation-5078cbe2-55c7-4019-bf5f-d42644debf1b.png"

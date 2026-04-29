@@ -30,7 +30,7 @@
   "featCo2Auto": "Automatic CO₂ avoided calculation per transaction",
   "feat50Lots": "Up to 50 blockchain-traced lots / month",
   "featCertificates": "Traceability certificates (PDF with QR code)",
-  "featRseBasic": "Basic CSR diagnostic (5-pillar score)",
+  "featRseBasic": "Basic CSR diagnostic (6-pillar score)",
   "featCompliance42": "Automatic compliance evaluation (42 standards)",
   "featGenius10": "Genius AI assistant (10 messages/day)",
   "featEmailSupport": "Email support",

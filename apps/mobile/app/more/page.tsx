@@ -1,5 +1,4 @@
 'use client';
-
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import {
@@ -13,6 +12,9 @@ import {
   Leaf,
   ChevronRight,
   TrendingUp,
+  Award,
+  Shield,
+  Database,
 } from 'lucide-react';
 import { AuthGuard } from '~/components/auth-guard';
 import { AppShell } from '~/components/app-shell';
@@ -72,6 +74,32 @@ function MoreContent() {
           descKey: 'reportsDescFull',
           href: '/carbon/records',
           color: '#F5F5F0',
+        },
+      ],
+    },
+    {
+      titleKey: 'complianceTitle',
+      items: [
+        {
+          icon: Award,
+          labelKey: 'rseLabel',
+          descKey: 'rseDescFull',
+          href: '/rse',
+          color: '#F59E0B',
+        },
+        {
+          icon: Shield,
+          labelKey: 'complianceLabel',
+          descKey: 'complianceDescFull',
+          href: '/compliance',
+          color: '#6EE7B7',
+        },
+        {
+          icon: Database,
+          labelKey: 'extraDataLabel',
+          descKey: 'extraDataDescFull',
+          href: '/extra-data',
+          color: '#A78BFA',
         },
       ],
     },
@@ -137,7 +165,10 @@ function MoreContent() {
                     className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
                     style={{ backgroundColor: `${item.color}12` }}
                   >
-                    <item.icon className="h-4 w-4" style={{ color: item.color }} />
+                    <item.icon
+                      className="h-4 w-4"
+                      style={{ color: item.color }}
+                    />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
@@ -150,7 +181,9 @@ function MoreContent() {
                         </span>
                       )}
                     </div>
-                    <p className="text-[11px] text-[#F5F5F0]/35">{t(item.descKey)}</p>
+                    <p className="text-[11px] text-[#F5F5F0]/35">
+                      {t(item.descKey)}
+                    </p>
                   </div>
                   <ChevronRight className="h-4 w-4 shrink-0 text-[#F5F5F0]/15" />
                 </Link>

@@ -411,7 +411,14 @@
     "geniusLabel": "Genius IA",
     "geniusDescFull": "Assistant intelligent multi-agents",
     "dashboardLabel": "Dashboard",
-    "dashboardDescFull": "Vue d'ensemble de vos données"
+    "dashboardDescFull": "Vue d'ensemble de vos données",
+    "complianceTitle": "RSE & Conformité",
+    "rseLabel": "RSE & Labels",
+    "rseDescFull": "Diagnostic RSE et éligibilité labels",
+    "complianceLabel": "Conformité",
+    "complianceDescFull": "42 normes, pré-audit et veille réglementaire",
+    "extraDataLabel": "Données complémentaires",
+    "extraDataDescFull": "Gouvernance, social, environnement, achats"
   },
   "marketplace": {
     "title": "Comptoir",
@@ -571,5 +578,48 @@
     "contractSent": "Envoyé",
     "contractPending": "En attente",
     "signContract": "Signer le contrat"
+  },
+  "rse": {
+    "title": "RSE & Labels",
+    "subtitle": "Diagnostic et éligibilité",
+    "scoreTitle": "Score RSE",
+    "scoreDesc": "Évaluation multi-piliers",
+    "labelsTitle": "Éligibilité labels",
+    "labelsDesc": "B Corp, Lucie, GreenTech...",
+    "actionPlanTitle": "Plan d'action",
+    "actionPlanDesc": "Recommandations personnalisées",
+    "ecosystemTitle": "Écosystème",
+    "ecosystemDesc": "Connexion partenaires RSE",
+    "eligibilityTitle": "Éligibilité labels",
+    "accessible": "accessibles",
+    "diagnosticCta": "Lancer le diagnostic RSE",
+    "diagnosticCtaDesc": "Obtenez votre score personnalisé et un plan d'action détaillé."
+  },
+  "compliance": {
+    "title": "Conformité",
+    "subtitle": "42 normes · 6 piliers",
+    "globalScore": "Score de conformité",
+    "partial": "partiels",
+    "alerts": "alertes",
+    "pillarsTitle": "6 piliers de conformité",
+    "norms": "normes",
+    "regulatoryWatch": "Veille réglementaire"
+  },
+  "extraData": {
+    "title": "Données complémentaires",
+    "subtitle": "Enrichissez votre score",
+    "governance": "Gouvernance",
+    "social": "Social & RH",
+    "environment": "Environnement",
+    "procurement": "Achats",
+    "community": "Communauté",
+    "emptyCategory": "Aucune donnée dans cette catégorie",
+    "addActivity": "Ajouter une donnée",
+    "formTitlePlaceholder": "Titre (ex: Code de conduite 2026)",
+    "formDescPlaceholder": "Description...",
+    "formValuePlaceholder": "Valeur",
+    "formUnitPlaceholder": "Unité",
+    "cancel": "Annuler",
+    "save": "Ajouter"
   }
 }
