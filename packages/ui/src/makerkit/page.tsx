@@ -32,7 +32,7 @@ function PageWithSidebar(props: PageProps) {
 
   return (
     <div
-      className={cn('flex min-w-0 flex-1 lg:h-full lg:overflow-hidden', props.className)}
+      className={cn('flex min-w-0 flex-1 overflow-x-hidden lg:h-full lg:overflow-hidden', props.className)}
     >
       {Navigation}
 

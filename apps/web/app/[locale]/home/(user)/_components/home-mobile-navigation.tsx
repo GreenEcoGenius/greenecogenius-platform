@@ -52,7 +52,7 @@ export function HomeMobileNavigation(props: { workspace: UserWorkspace }) {
         <Menu className={'h-8 w-8'} />
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent sideOffset={10} className={'w-screen rounded-none'}>
+      <DropdownMenuContent sideOffset={10} className={'w-[calc(100vw-16px)] max-w-[100vw] rounded-none'}>
         <If condition={featuresFlagConfig.enableTeamAccounts}>
           <DropdownMenuGroup>
             <DropdownMenuLabel>

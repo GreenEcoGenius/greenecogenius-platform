@@ -54,7 +54,7 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
           <SidebarChatBridge />
           <AppHeader />
 
-          <div className="min-w-0 flex-1 lg:flex lg:h-dvh lg:flex-col">
+          <div className="min-w-0 flex-1 overflow-x-hidden lg:flex lg:h-dvh lg:flex-col">
             <div className="min-h-0 flex-1 lg:flex lg:overflow-hidden">
               <Page
                 style={'sidebar'}
@@ -88,7 +88,7 @@ async function HeaderLayout({ children }: React.PropsWithChildren) {
       <ChatProvider>
         <AppHeader />
 
-        <div className="flex min-w-0 flex-1">
+        <div className="flex min-w-0 flex-1 overflow-x-hidden">
           <Page
             style={'header'}
             contentContainerClassName="flex flex-1 flex-col space-y-4 pt-20 md:pt-32"

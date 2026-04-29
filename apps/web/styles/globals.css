@@ -89,3 +89,17 @@
   --indicator-error: #e24b4a;
   --indicator-info: #3B82F6;
 }
+
+/* Prevent horizontal scroll on mobile */
+@media (max-width: 767px) {
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+  }
+  /* Prevent any child from exceeding viewport */
+  #__next, main, [data-scroll-root] {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+}

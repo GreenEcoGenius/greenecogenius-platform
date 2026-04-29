@@ -214,61 +214,48 @@ export function AIChatPanel() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
-  // Lock body scroll when chat is open on mobile + handle iOS keyboard
+  // Lock body scroll when chat is open on mobile
   const mobileContainerRef = useRef<HTMLDivElement>(null);
+  const scrollYRef = useRef(0);
+
   useEffect(() => {
     if (!chatOpen) return;
 
-    // Lock body scroll on mobile
-    const originalOverflow = document.body.style.overflow;
-    const originalPosition = document.body.style.position;
-    const originalTop = document.body.style.top;
-    const originalWidth = document.body.style.width;
-    const scrollY = window.scrollY;
-
-    // Only lock on mobile (< 768px)
     const isMobile = window.innerWidth < 768;
-    if (isMobile) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-    }
+    if (!isMobile) return;
 
-    // Handle iOS visual viewport resize (keyboard open/close)
-    const vv = window.visualViewport;
-    const container = mobileContainerRef.current;
+    // Save scroll position and lock body
+    scrollYRef.current = window.scrollY;
+    const html = document.documentElement;
+    const body = document.body;
 
-    function handleViewportResize() {
-      if (!vv || !container || !isMobile) return;
-      // Set the container height to the visual viewport height
-      // This accounts for the keyboard taking space
-      const height = vv.height;
-      container.style.height = `${height}px`;
-      container.style.maxHeight = `${height}px`;
-      // Also offset for any viewport offset (iOS address bar)
-      container.style.top = `${vv.offsetTop}px`;
-    }
+    // Use touch-action + overflow to prevent background scroll
+    // without position:fixed (which causes iOS layout jumps)
+    html.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+    body.style.touchAction = 'none';
+    // Prevent iOS bounce/overscroll on body
+    body.style.overscrollBehavior = 'none';
+    html.style.overscrollBehavior = 'none';
 
-    if (vv && isMobile) {
-      vv.addEventListener('resize', handleViewportResize);
-      vv.addEventListener('scroll', handleViewportResize);
-      // Initial call
-      handleViewportResize();
+    // Prevent touchmove on body (blocks background scroll)
+    function preventBodyScroll(e: TouchEvent) {
+      // Allow scroll inside the chat messages container
+      const target = e.target as HTMLElement;
+      if (target.closest('[data-chat-messages]')) return;
+      e.preventDefault();
     }
+    document.addEventListener('touchmove', preventBodyScroll, { passive: false });
 
     return () => {
-      if (isMobile) {
-        document.body.style.overflow = originalOverflow;
-        document.body.style.position = originalPosition;
-        document.body.style.top = originalTop;
-        document.body.style.width = originalWidth;
-        window.scrollTo(0, scrollY);
-      }
-      if (vv && isMobile) {
-        vv.removeEventListener('resize', handleViewportResize);
-        vv.removeEventListener('scroll', handleViewportResize);
-      }
+      html.style.overflow = '';
+      body.style.overflow = '';
+      body.style.touchAction = '';
+      body.style.overscrollBehavior = '';
+      html.style.overscrollBehavior = '';
+      document.removeEventListener('touchmove', preventBodyScroll);
+      // Restore scroll position
+      window.scrollTo(0, scrollYRef.current);
     };
   }, [chatOpen]);
 
@@ -414,8 +401,14 @@ export function AIChatPanel() {
       {/* Mobile: full-screen overlay */}
       <div
         ref={mobileContainerRef}
-        className="fixed inset-x-0 top-0 z-[60] flex flex-col bg-[#0D3A26] md:hidden"
-        style={{ height: '100dvh', maxHeight: '100dvh', overscrollBehavior: 'contain' }}
+        className="fixed inset-0 z-[60] flex flex-col bg-[#0D3A26] md:hidden"
+        style={{
+          height: '100dvh',
+          maxHeight: '-webkit-fill-available',
+          overscrollBehavior: 'none',
+          touchAction: 'none',
+          WebkitOverflowScrolling: 'auto',
+        }}
         role="dialog"
         aria-modal="true"
       >
@@ -462,7 +455,15 @@ export function AIChatPanel() {
         </div>
 
         {/* Mobile messages */}
-        <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-4" style={{ overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
+        <div
+          data-chat-messages
+          className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-4"
+          style={{
+            overscrollBehavior: 'contain',
+            WebkitOverflowScrolling: 'touch',
+            touchAction: 'pan-y',
+          }}
+        >
           {!hasMessages && !loading ? (
             <div className="flex flex-1 flex-col">
               <div className="mb-4 flex gap-2">
@@ -552,7 +553,7 @@ export function AIChatPanel() {
         />
 
         {/* Mobile input */}
-        <div className="shrink-0 border-[#1A5C3E] border-t p-3 pb-[env(safe-area-inset-bottom,12px)]">
+        <div className="shrink-0 border-[#1A5C3E] border-t p-3 pb-[env(safe-area-inset-bottom,12px)]" style={{ touchAction: 'manipulation' }}>
           <div className="border-metal-silver bg-[#0D3A26] flex items-end gap-2 rounded-xl border px-3 py-2">
             <button
               type="button"

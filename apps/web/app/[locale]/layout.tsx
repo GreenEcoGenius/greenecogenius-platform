@@ -49,7 +49,7 @@ export default async function LocaleLayout({
         <PublicEnvScript nonce={nonce} />
       </head>
 
-      <body>
+      <body className="overflow-x-hidden max-w-[100vw]">
         <RootProviders
           theme={theme}
           locale={locale}
@@ -73,7 +73,7 @@ function getRootClassName(theme: string) {
   const fontsClassName = getFontsClassName(theme);
 
   return cn(
-    'bg-background min-h-screen antialiased md:overscroll-y-none',
+    'bg-background min-h-screen antialiased overflow-x-hidden md:overscroll-y-none',
     fontsClassName,
   );
 }

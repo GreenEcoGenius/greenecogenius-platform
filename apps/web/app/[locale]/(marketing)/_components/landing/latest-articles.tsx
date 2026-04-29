@@ -70,7 +70,7 @@ export async function LatestArticles() {
         </div>
 
         {/* Mobile: horizontal scroll carousel */}
-        <div className="mt-10 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:hidden">
+        <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden px-4 pb-4 md:hidden">
           {posts.map((post) => (
             <div
               key={post.slug}
