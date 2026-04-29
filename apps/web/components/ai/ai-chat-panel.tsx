@@ -214,6 +214,64 @@ export function AIChatPanel() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
+  // Lock body scroll when chat is open on mobile + handle iOS keyboard
+  const mobileContainerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!chatOpen) return;
+
+    // Lock body scroll on mobile
+    const originalOverflow = document.body.style.overflow;
+    const originalPosition = document.body.style.position;
+    const originalTop = document.body.style.top;
+    const originalWidth = document.body.style.width;
+    const scrollY = window.scrollY;
+
+    // Only lock on mobile (< 768px)
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+    }
+
+    // Handle iOS visual viewport resize (keyboard open/close)
+    const vv = window.visualViewport;
+    const container = mobileContainerRef.current;
+
+    function handleViewportResize() {
+      if (!vv || !container || !isMobile) return;
+      // Set the container height to the visual viewport height
+      // This accounts for the keyboard taking space
+      const height = vv.height;
+      container.style.height = `${height}px`;
+      container.style.maxHeight = `${height}px`;
+      // Also offset for any viewport offset (iOS address bar)
+      container.style.top = `${vv.offsetTop}px`;
+    }
+
+    if (vv && isMobile) {
+      vv.addEventListener('resize', handleViewportResize);
+      vv.addEventListener('scroll', handleViewportResize);
+      // Initial call
+      handleViewportResize();
+    }
+
+    return () => {
+      if (isMobile) {
+        document.body.style.overflow = originalOverflow;
+        document.body.style.position = originalPosition;
+        document.body.style.top = originalTop;
+        document.body.style.width = originalWidth;
+        window.scrollTo(0, scrollY);
+      }
+      if (vv && isMobile) {
+        vv.removeEventListener('resize', handleViewportResize);
+        vv.removeEventListener('scroll', handleViewportResize);
+      }
+    };
+  }, [chatOpen]);
+
   // Focus input when opened + auto-send pending prompt
   useEffect(() => {
     if (chatOpen) {
@@ -355,12 +413,14 @@ export function AIChatPanel() {
     <>
       {/* Mobile: full-screen overlay */}
       <div
-        className="fixed inset-0 z-[60] flex flex-col bg-[#0D3A26] md:hidden"
+        ref={mobileContainerRef}
+        className="fixed inset-x-0 top-0 z-[60] flex flex-col bg-[#0D3A26] md:hidden"
+        style={{ height: '100dvh', maxHeight: '100dvh', overscrollBehavior: 'contain' }}
         role="dialog"
         aria-modal="true"
       >
         {/* Mobile header */}
-        <div className="border-[#1A5C3E] flex items-center justify-between border-b px-4 py-3">
+        <div className="border-[#1A5C3E] flex shrink-0 items-center justify-between border-b px-4 py-3">
           <div className="flex items-center gap-2">
             <span className="bg-[#1A5C3E] rounded-lg p-1.5">
               <Sparkles className="text-primary h-3.5 w-3.5" />
@@ -402,7 +462,7 @@ export function AIChatPanel() {
         </div>
 
         {/* Mobile messages */}
-        <div className="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
+        <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-4" style={{ overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
           {!hasMessages && !loading ? (
             <div className="flex flex-1 flex-col">
               <div className="mb-4 flex gap-2">
@@ -472,11 +532,11 @@ export function AIChatPanel() {
         </div>
 
         {/* Mobile disclaimer */}
-        <div className="text-[#7DC4A0] px-4 text-center text-[10px]">
+        <div className="shrink-0 text-[#7DC4A0] px-4 text-center text-[10px]">
           {t('ai.disclaimer')}
         </div>
 
-        {/* Mobile hidden file input */}
+        {/* Mobile hidden file input - shrink-0 */}
         <input
           ref={fileInputRef}
           type="file"
@@ -492,7 +552,7 @@ export function AIChatPanel() {
         />
 
         {/* Mobile input */}
-        <div className="border-[#1A5C3E] border-t p-3 pb-[env(safe-area-inset-bottom,12px)]">
+        <div className="shrink-0 border-[#1A5C3E] border-t p-3 pb-[env(safe-area-inset-bottom,12px)]">
           <div className="border-metal-silver bg-[#0D3A26] flex items-end gap-2 rounded-xl border px-3 py-2">
             <button
               type="button"
@@ -508,12 +568,18 @@ export function AIChatPanel() {
                 setInput(e.target.value);
                 const el = e.target;
                 el.style.height = 'auto';
-                el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+                el.style.height = Math.min(el.scrollHeight, 80) + 'px';
+              }}
+              onFocus={() => {
+                // On iOS, wait for keyboard to appear then scroll messages to bottom
+                setTimeout(() => {
+                  messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+                }, 400);
               }}
               onKeyDown={handleKeyDown}
               placeholder={t('ai.askQuestion')}
               rows={1}
-              className="text-[#F5F5F0] placeholder:text-[#7DC4A0] max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-[14px] leading-relaxed outline-none"
+              className="text-[#F5F5F0] placeholder:text-[#7DC4A0] max-h-[80px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-[14px] leading-relaxed outline-none"
               disabled={loading}
             />
             <button
