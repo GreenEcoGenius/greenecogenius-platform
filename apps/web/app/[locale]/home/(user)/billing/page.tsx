@@ -99,7 +99,7 @@ async function PersonalAccountBillingPage() {
     <PageBody>
       {/* Current subscription banner */}
       {currentSub && (
-        <Card className="mb-6 border-verdure-200 bg-verdure-50 dark:border-verdure-900 dark:bg-verdure-950">
+        <Card className="mb-6 border-[#1A5C3E] bg-[#1A5C3E] dark:border-verdure-900 dark:bg-verdure-950">
           <CardContent className="flex items-center justify-between py-4">
             <div className="flex items-center gap-3">
               <BadgeCheck className="h-6 w-6 text-verdure-600" />
@@ -107,7 +107,7 @@ async function PersonalAccountBillingPage() {
                 <p className="font-semibold">
                   Plan {currentSub.subscription_plans?.display_name}
                 </p>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-[#B8D4E3] text-sm">
                   {currentSub.status === 'trialing'
                     ? t('trialInProgress')
                     : t('subscriptionActive')}
@@ -141,7 +141,7 @@ async function PersonalAccountBillingPage() {
               <span className="text-3xl font-bold">
                 {essentiel ? formatPrice(essentiel.monthly_price) : '149'}€
               </span>
-              <span className="text-muted-foreground">{t('perMonthSuffix')}</span>
+              <span className="text-[#B8D4E3]">{t('perMonthSuffix')}</span>
             </div>
           </CardHeader>
           <CardContent className="flex flex-1 flex-col">
@@ -191,11 +191,11 @@ async function PersonalAccountBillingPage() {
               <span className="text-3xl font-bold">
                 {avance ? formatPrice(avance.monthly_price) : '449'}€
               </span>
-              <span className="text-muted-foreground">{t('perMonthSuffix')}</span>
+              <span className="text-[#B8D4E3]">{t('perMonthSuffix')}</span>
             </div>
           </CardHeader>
           <CardContent className="flex flex-1 flex-col">
-            <p className="text-muted-foreground mb-3 text-xs italic">
+            <p className="text-[#B8D4E3] mb-3 text-xs italic">
               <Trans i18nKey="pricingPage.everythingEssentiel" />
             </p>
             <ul className="flex-1 space-y-2">
@@ -232,7 +232,7 @@ async function PersonalAccountBillingPage() {
             </div>
           </CardHeader>
           <CardContent className="flex flex-1 flex-col">
-            <p className="text-muted-foreground mb-3 text-xs italic">
+            <p className="text-[#B8D4E3] mb-3 text-xs italic">
               <Trans i18nKey="pricingPage.everythingAvance" />
             </p>
             <ul className="flex-1 space-y-2">
@@ -267,11 +267,11 @@ async function PersonalAccountBillingPage() {
       )}
 
       {/* Bottom section — included with marketplace */}
-      <div className="mt-10 rounded-xl border border-verdure-200 bg-verdure-50/50 p-6 dark:border-verdure-900 dark:bg-verdure-950/30">
+      <div className="mt-10 rounded-xl border border-[#1A5C3E] bg-[#1A5C3E]/50 p-6 dark:border-verdure-900 dark:bg-verdure-950/30">
         <h3 className="mb-3 text-center text-lg font-semibold">
           {t('includedEachTransactionTitle')}
         </h3>
-        <p className="text-muted-foreground mb-4 text-center text-sm">
+        <p className="text-[#B8D4E3] mb-4 text-center text-sm">
           {t('includedEachTransactionDesc')}
         </p>
         <div className="flex flex-wrap justify-center gap-3">
@@ -325,7 +325,7 @@ async function PersonalAccountBillingPage() {
           ].map((tag) => (
             <span
               key={tag.label}
-              className="inline-flex items-center gap-1.5 rounded-full border border-verdure-200 bg-card px-3 py-1.5 text-sm dark:border-verdure-800 dark:bg-verdure-950"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#1A5C3E] bg-[#0D3A26] px-3 py-1.5 text-sm dark:border-verdure-800 dark:bg-verdure-950"
             >
               {tag.icon} {tag.label}
             </span>
@@ -339,19 +339,19 @@ async function PersonalAccountBillingPage() {
         <div className="space-y-3">
           <div className="rounded-lg border p-4">
             <p className="font-medium">{t('faqIncludedQ')}</p>
-            <p className="text-muted-foreground mt-1 text-sm">
+            <p className="text-[#B8D4E3] mt-1 text-sm">
               {t('faqIncludedA')}
             </p>
           </div>
           <div className="rounded-lg border p-4">
             <p className="font-medium">{t('faqTrialQ')}</p>
-            <p className="text-muted-foreground mt-1 text-sm">
+            <p className="text-[#B8D4E3] mt-1 text-sm">
               {t('faqTrialA')}
             </p>
           </div>
           <div className="rounded-lg border p-4">
             <p className="font-medium">{t('faqChangePlanQ')}</p>
-            <p className="text-muted-foreground mt-1 text-sm">
+            <p className="text-[#B8D4E3] mt-1 text-sm">
               {t('faqChangePlanA')}
             </p>
           </div>

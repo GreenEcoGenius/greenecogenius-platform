@@ -152,7 +152,7 @@ export function CertificateIssuer({
                 {cert.txHash && (
                   <div className="mt-1 flex items-center gap-1">
                     <Shield className="h-3 w-3 text-[#E6F7EF]0" />
-                    <span className="text-muted-foreground text-[10px]">
+                    <span className="text-[#B8D4E3] text-[10px]">
                       Blockchain: {cert.txHash.slice(0, 10)}...
                     </span>
                   </div>
@@ -210,7 +210,7 @@ export function CertificateIssuer({
   // Selection state
   return (
     <div className="space-y-4">
-      <p className="text-muted-foreground text-sm">
+      <p className="text-[#B8D4E3] text-sm">
         Selectionnez les lots pour lesquels vous souhaitez emettre un certificat
         de tracabilite.
       </p>
@@ -222,7 +222,7 @@ export function CertificateIssuer({
             onCheckedChange={toggleAll}
             data-test="certificate-select-all"
           />
-          <span className="text-muted-foreground text-xs font-medium">
+          <span className="text-[#B8D4E3] text-xs font-medium">
             Tout selectionner ({selected.size}/{eligibleLots.length})
           </span>
         </div>
@@ -242,7 +242,7 @@ export function CertificateIssuer({
                 <span className="font-mono text-sm font-medium">
                   {lot.lotId}
                 </span>
-                <span className="text-muted-foreground ml-2 text-xs capitalize">
+                <span className="text-[#B8D4E3] ml-2 text-xs capitalize">
                   {lot.material}
                 </span>
               </div>

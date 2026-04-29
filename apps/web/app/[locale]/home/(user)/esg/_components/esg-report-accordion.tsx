@@ -93,13 +93,13 @@ export function ESGReportAccordion({
                 <button
                   type="button"
                   onClick={() => setExpandedId(isExpanded ? null : section.id)}
-                  className="flex w-full items-center justify-between p-4 text-left transition-colors hover:bg-[#E8F5EE] dark:hover:bg-gray-900/50"
+                  className="flex w-full items-center justify-between p-4 text-left transition-colors hover:bg-[#12472F] dark:hover:bg-gray-900/50"
                 >
                   <div className="flex items-center gap-3">
                     {getStatusIcon(section.status, section.completionPct)}
                     <span className="text-sm font-medium">
                       {section.esrsCode && (
-                        <span className="text-muted-foreground mr-1.5 font-normal">
+                        <span className="text-[#B8D4E3] mr-1.5 font-normal">
                           {section.esrsCode}
                         </span>
                       )}
@@ -139,19 +139,19 @@ export function ESGReportAccordion({
                       {section.completionPct}%
                     </span>
                     {isExpanded ? (
-                      <ChevronDown className="text-muted-foreground h-4 w-4" />
+                      <ChevronDown className="text-[#B8D4E3] h-4 w-4" />
                     ) : (
-                      <ChevronRight className="text-muted-foreground h-4 w-4" />
+                      <ChevronRight className="text-[#B8D4E3] h-4 w-4" />
                     )}
                   </div>
                 </button>
 
                 {/* Expanded content */}
                 {isExpanded && (
-                  <div className="border-t bg-[#E8F5EE]/50 px-4 py-3 dark:bg-gray-900/20">
+                  <div className="border-t bg-[#12472F]/50 px-4 py-3 dark:bg-gray-900/20">
                     {/* Description */}
                     {section.description && (
-                      <p className="text-muted-foreground mb-3 text-xs italic">
+                      <p className="text-[#B8D4E3] mb-3 text-xs italic">
                         {section.description}
                       </p>
                     )}
@@ -172,14 +172,14 @@ export function ESGReportAccordion({
                               )}
                               <span
                                 className={
-                                  field.complete ? '' : 'text-muted-foreground'
+                                  field.complete ? '' : 'text-[#B8D4E3]'
                                 }
                               >
                                 {field.label}
                               </span>
                             </div>
                             <div className="flex items-center gap-2">
-                              <span className="text-muted-foreground text-xs">
+                              <span className="text-[#B8D4E3] text-xs">
                                 {field.value}
                               </span>
                               {field.sourceLink ? (
@@ -211,7 +211,7 @@ export function ESGReportAccordion({
 
                     {/* Blockchain hash */}
                     {section.blockchainHash && (
-                      <p className="text-muted-foreground mb-2 font-mono text-[10px]">
+                      <p className="text-[#B8D4E3] mb-2 font-mono text-[10px]">
                         Hash blockchain : {section.blockchainHash}
                       </p>
                     )}
@@ -220,7 +220,7 @@ export function ESGReportAccordion({
                     <div className="bg-muted h-1.5 w-full max-w-md overflow-hidden rounded-full">
                       <div
                         className={`h-full rounded-full transition-all duration-500 ${
-                          isComplete ? 'bg-[#E6F7EF]0' : 'bg-[#E6F7EF]0'
+                          isComplete ? 'bg-[#1A5C3E]0' : 'bg-[#1A5C3E]0'
                         }`}
                         style={{ width: `${section.completionPct}%` }}
                       />

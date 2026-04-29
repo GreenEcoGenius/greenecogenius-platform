@@ -31,14 +31,14 @@ const SECTION_COLORS: Record<string, string> = {
   marketplace:
     'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   inventaire:
-    'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
+    'bg-blue-100 text-blue-400 dark:bg-blue-900/40 dark:text-blue-300',
   transport: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   suivi: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   certification:
     'bg-verdure-100 text-verdure-700 dark:bg-verdure-900/40 dark:text-verdure-300',
   blockchain:
     'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
-  dashboard: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
+  dashboard: 'bg-gray-100 text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0]',
 };
 
 function formatTimeAgo(isoDate: string): string {
@@ -81,10 +81,10 @@ export function TraceabilityActivityFeed({
             <div className="relative mt-0.5 flex-shrink-0">
               <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-full">
                 {ACTIVITY_ICONS[activity.type] ?? (
-                  <Package className="h-4 w-4 text-gray-500" />
+                  <Package className="h-4 w-4 text-[#7DC4A0]" />
                 )}
               </div>
-              <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#E6F7EF]0 dark:border-gray-900" />
+              <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#1A5C3E]0 dark:border-gray-900" />
             </div>
 
             {/* Content */}
@@ -106,7 +106,7 @@ export function TraceabilityActivityFeed({
             </div>
 
             {/* Timestamp */}
-            <span className="text-muted-foreground flex-shrink-0 text-xs">
+            <span className="text-[#B8D4E3] flex-shrink-0 text-xs">
               {formatTimeAgo(activity.timestamp)}
             </span>
           </div>

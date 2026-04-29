@@ -41,7 +41,7 @@ export function CertificatesList({ certificates }: CertificatesListProps) {
         <h3 className="mb-4 text-lg font-semibold">
           <Trans i18nKey="carbon:certificates" />
         </h3>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-[#B8D4E3] text-sm">
           <Trans i18nKey="carbon:noCertificates" />
         </p>
       </div>
@@ -100,7 +100,7 @@ export function CertificatesList({ certificates }: CertificatesListProps) {
                   kg
                 </TableCell>
                 <TableCell>
-                  <code className="text-muted-foreground text-xs">
+                  <code className="text-[#B8D4E3] text-xs">
                     {truncateHash(cert.blockchain_hash)}
                   </code>
                 </TableCell>

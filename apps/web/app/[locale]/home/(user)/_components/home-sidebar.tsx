@@ -26,7 +26,7 @@ export function HomeSidebar(props: HomeSidebarProps) {
 
       <SidebarFooter className="p-3">
         <div className="flex justify-end">
-          <SidebarTrigger className="text-metal-steel hover:text-metal-700 h-8 w-8 cursor-pointer" />
+          <SidebarTrigger className="text-[#7DC4A0] hover:text-[#E0E7E3] h-8 w-8 cursor-pointer" />
         </div>
       </SidebarFooter>
     </Sidebar>

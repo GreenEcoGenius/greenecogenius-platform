@@ -27,11 +27,11 @@ export function UpgradePrompt({ feature, requiredPlan }: UpgradePromptProps) {
     <Card className="border-dashed">
       <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
         <div className="bg-muted rounded-full p-4">
-          <Lock className="text-muted-foreground h-8 w-8" />
+          <Lock className="text-[#B8D4E3] h-8 w-8" />
         </div>
         <div>
           <h3 className="text-lg font-semibold">{feature}</h3>
-          <p className="text-muted-foreground mt-1 text-sm">
+          <p className="text-[#B8D4E3] mt-1 text-sm">
             <Trans i18nKey="wallet.upgradeRequired" />
           </p>
         </div>

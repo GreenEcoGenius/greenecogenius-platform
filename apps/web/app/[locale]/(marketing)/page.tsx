@@ -136,7 +136,7 @@ export default async function Home() {
       <SourcesCarousel />
 
       {/* ───── SECTION 4 — 3 PILIERS ───── */}
-      <section id="features" className="bg-metal-50 py-20 sm:py-32">
+      <section id="features" className="bg-[#0D3A26] py-20 sm:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
             <div className="mx-auto max-w-2xl text-center">
@@ -146,7 +146,7 @@ export default async function Home() {
               <h2 className="gradient-text-verdure-leaf text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
                 {t('featuresHeading')}
               </h2>
-              <p className="text-metal-600 mt-4 text-lg">
+              <p className="text-[#B8D4E3] mt-4 text-lg">
                 {t('featuresSubheading')}
               </p>
             </div>
@@ -232,7 +232,7 @@ export default async function Home() {
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               {t('landing.newsletterTitle')}
             </h2>
-            <p className="text-metal-silver mt-4 text-lg">
+            <p className="text-[#B8D4E3] mt-4 text-lg">
               {t('landing.newsletterSub')}
             </p>
           </AnimateOnScroll>
@@ -241,7 +241,7 @@ export default async function Home() {
             <div className="mt-10 flex justify-center">
               <NewsletterForm />
             </div>
-            <p className="text-metal-steel mt-4 text-xs">
+            <p className="text-[#7DC4A0] mt-4 text-xs">
               {t('newsletterDisclaimer')}
             </p>
           </AnimateOnScroll>
@@ -271,7 +271,7 @@ function PillarCard({
   stat: string;
 }) {
   return (
-    <div className="group border-metal-silver/50 hover:border-circuit-turquoise hover:shadow-circuit-ice/30 h-full overflow-hidden rounded-2xl border bg-card transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
+    <div className="group border-metal-silver/50 hover:border-circuit-turquoise hover:shadow-circuit-ice/30 h-full overflow-hidden rounded-2xl border bg-[#0D3A26] transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={image}
@@ -291,11 +291,11 @@ function PillarCard({
             {badge}
           </span>
         </div>
-        <h3 className="text-metal-900 text-lg font-semibold">{title}</h3>
-        <p className="text-metal-600 mt-2 text-sm leading-relaxed">
+        <h3 className="text-[#F5F5F0] text-lg font-semibold">{title}</h3>
+        <p className="text-[#B8D4E3] mt-2 text-sm leading-relaxed">
           {description}
         </p>
-        <p className="text-metal-500 mt-2 text-xs italic">{extra}</p>
+        <p className="text-[#7DC4A0] mt-2 text-xs italic">{extra}</p>
         <p className="text-primary mt-3 text-xs font-semibold">{stat}</p>
       </div>
     </div>

@@ -15,11 +15,11 @@ const IMPACT_STYLES: Record<
   { className: string; i18nKey: string }
 > = {
   low: {
-    className: 'bg-gray-100 text-gray-700',
+    className: 'bg-gray-100 text-[#B8D4E3]',
     i18nKey: 'compliance:impactLow',
   },
   medium: {
-    className: 'bg-blue-100 text-blue-700',
+    className: 'bg-blue-100 text-blue-400',
     i18nKey: 'compliance:impactMedium',
   },
   high: {
@@ -78,11 +78,11 @@ export function RegulatoryWatch() {
             return (
               <div
                 key={norm.id}
-                className="flex gap-4 rounded-lg border p-4 transition-colors hover:bg-[#E8F5EE]"
+                className="flex gap-4 rounded-lg border p-4 transition-colors hover:bg-[#12472F]"
               >
                 <div className="flex shrink-0 flex-col items-center">
-                  <Calendar className="text-muted-foreground mb-1 h-4 w-4" />
-                  <span className="text-muted-foreground text-xs font-medium">
+                  <Calendar className="text-[#B8D4E3] mb-1 h-4 w-4" />
+                  <span className="text-[#B8D4E3] text-xs font-medium">
                     {norm.year}
                   </span>
                 </div>
@@ -93,7 +93,7 @@ export function RegulatoryWatch() {
                       <Trans i18nKey={impactStyle.i18nKey} />
                     </Badge>
                   </div>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-[#B8D4E3] text-sm">
                     {norm.description}
                   </p>
                 </div>

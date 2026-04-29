@@ -19,7 +19,7 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
       <CardHeader className="p-4">
         <CardTitle className="text-lg font-medium">{label}</CardTitle>
 
-        <CardDescription className="text-muted-foreground max-w-xs text-sm font-normal">
+        <CardDescription className="text-[#B8D4E3] max-w-xs text-sm font-normal">
           {description}
         </CardDescription>
       </CardHeader>

@@ -66,11 +66,11 @@ function ScaleQuestion({
   const [showHelp, setShowHelp] = useState(false);
 
   return (
-    <div className="rounded-xl border border-[#D5E8DD] bg-card p-4">
+    <div className="rounded-xl border border-[#1A5C3E] bg-[#0D3A26] p-4">
       <div className="mb-3 flex items-start justify-between gap-2">
-        <p className="text-sm font-medium text-gray-900">{getLabel(question, locale)}</p>
+        <p className="text-sm font-medium text-[#F5F5F0]">{getLabel(question, locale)}</p>
         {question.auto_from && (
-          <Badge variant="outline" className="shrink-0 border-[#8FDAB5] bg-[#E6F7EF] text-[10px] text-[#008F5A]">
+          <Badge variant="outline" className="shrink-0 border-[#8FDAB5] bg-[#1A5C3E] text-[10px] text-[#008F5A]">
             Auto
           </Badge>
         )}
@@ -79,14 +79,14 @@ function ScaleQuestion({
       <button
         type="button"
         onClick={() => setShowHelp(!showHelp)}
-        className="mb-3 flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600"
+        className="mb-3 flex items-center gap-1 text-xs text-[#7DC4A0] hover:text-[#B8D4E3]"
       >
         {showHelp ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
         {getHelp(question, locale)}
       </button>
 
       {showHelp && (
-        <p className="mb-3 rounded-lg bg-[#E8F5EE] p-2 text-xs text-gray-500">
+        <p className="mb-3 rounded-lg bg-[#12472F] p-2 text-xs text-[#7DC4A0]">
           {getHelp(question, locale)}
         </p>
       )}
@@ -98,8 +98,8 @@ function ScaleQuestion({
               key={opt.value}
               className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 text-sm transition-colors ${
                 value === opt.value
-                  ? 'border-[#8FDAB5] bg-[#E6F7EF] text-[#008F5A]'
-                  : 'border-[#D5E8DD] hover:border-[#C5DDD0] hover:bg-[#E8F5EE]'
+                  ? 'border-[#8FDAB5] bg-[#1A5C3E] text-[#008F5A]'
+                  : 'border-[#1A5C3E] hover:border-[#1A5C3E] hover:bg-[#12472F]'
               }`}
             >
               <input
@@ -111,7 +111,7 @@ function ScaleQuestion({
                 className="accent-[#00A86B]"
               />
               <span className="flex-1">{locale === 'fr' ? opt.label_fr : opt.label_en}</span>
-              <span className="text-xs text-gray-400">{opt.value}/{question.max_score}</span>
+              <span className="text-xs text-[#7DC4A0]">{opt.value}/{question.max_score}</span>
             </label>
           ))}
         </div>
@@ -127,8 +127,8 @@ function ScaleQuestion({
               key={opt.val}
               className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border p-3 text-sm font-medium transition-colors ${
                 value === opt.val
-                  ? 'border-[#8FDAB5] bg-[#E6F7EF] text-[#008F5A]'
-                  : 'border-[#D5E8DD] hover:border-[#C5DDD0] hover:bg-[#E8F5EE]'
+                  ? 'border-[#8FDAB5] bg-[#1A5C3E] text-[#008F5A]'
+                  : 'border-[#1A5C3E] hover:border-[#1A5C3E] hover:bg-[#12472F]'
               }`}
             >
               <input
@@ -148,7 +148,7 @@ function ScaleQuestion({
       {question.type === 'text' && (
         <input
           type="text"
-          className="w-full rounded-lg border border-[#C5DDD0] px-3 py-2 text-sm outline-none focus:border-[#8FDAB5] focus:ring-1 focus:ring-[#8FDAB5]"
+          className="w-full rounded-lg border border-[#1A5C3E] px-3 py-2 text-sm outline-none focus:border-[#8FDAB5] focus:ring-1 focus:ring-[#8FDAB5]"
           placeholder={locale === 'fr' ? 'Votre reponse...' : 'Your answer...'}
           onChange={(e) => onChange(Number(e.target.value) || 0)}
         />
@@ -157,7 +157,7 @@ function ScaleQuestion({
       {question.labels_impacted.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-1">
           {question.labels_impacted.map((l) => (
-            <span key={l} className="rounded bg-[#E8F5EE] px-1.5 py-0.5 text-[10px] text-gray-400">
+            <span key={l} className="rounded bg-[#12472F] px-1.5 py-0.5 text-[10px] text-[#7DC4A0]">
               {l.replace(/_/g, ' ')}
             </span>
           ))}
@@ -257,7 +257,7 @@ export function DiagnosticWizard() {
   return (
     <div className="space-y-6">
       {/* ISO 26000 banner */}
-      <p className="text-center text-xs text-gray-400">
+      <p className="text-center text-xs text-[#7DC4A0]">
         {locale === 'fr'
           ? 'Diagnostic structure selon le cadre ISO 26000 — la norme internationale de responsabilite societale'
           : 'Diagnostic structured according to the ISO 26000 framework — the international standard for social responsibility'}
@@ -269,13 +269,13 @@ export function DiagnosticWizard() {
           <span className="font-medium">
             {t('step')} {step + 1} {t('of')} {totalSteps}
           </span>
-          <span className="text-gray-500">
+          <span className="text-[#7DC4A0]">
             {answeredCount}/{TOTAL_QUESTIONS} {locale === 'fr' ? 'reponses' : 'answers'}
           </span>
         </div>
         <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
           <div
-            className="h-full rounded-full bg-[#E6F7EF]0 transition-all duration-300"
+            className="h-full rounded-full bg-[#1A5C3E]0 transition-all duration-300"
             style={{ width: `${((step + 1) / totalSteps) * 100}%` }}
           />
         </div>
@@ -284,7 +284,7 @@ export function DiagnosticWizard() {
       {/* Overview step */}
       {isOverview && (
         <div className="space-y-4">
-          <div className="flex items-center gap-2 text-gray-500">
+          <div className="flex items-center gap-2 text-[#7DC4A0]">
             <Clock className="h-4 w-4" />
             <span className="text-sm">~15 {locale === 'fr' ? 'minutes' : 'minutes'}</span>
           </div>
@@ -301,11 +301,11 @@ export function DiagnosticWizard() {
                       <Icon className="h-5 w-5 text-[#00A86B]" strokeWidth={1.5} />
                       <h3 className="text-sm font-semibold">{getPillarName(pillar, locale)}</h3>
                     </div>
-                    <p className="mb-2 text-xs text-gray-500">{getPillarDesc(pillar, locale)}</p>
-                    <div className="flex items-center gap-2 text-xs text-gray-400">
+                    <p className="mb-2 text-xs text-[#7DC4A0]">{getPillarDesc(pillar, locale)}</p>
+                    <div className="flex items-center gap-2 text-xs text-[#7DC4A0]">
                       <span>{scoredQ.length} questions</span>
                       {autoQ.length > 0 && (
-                        <Badge variant="outline" className="border-[#8FDAB5] bg-[#E6F7EF] text-[10px] text-[#008F5A]">
+                        <Badge variant="outline" className="border-[#8FDAB5] bg-[#1A5C3E] text-[10px] text-[#008F5A]">
                           {autoQ.length} auto
                         </Badge>
                       )}
@@ -328,8 +328,8 @@ export function DiagnosticWizard() {
               return <Icon className="h-6 w-6 text-[#00A86B]" strokeWidth={1.5} />;
             })()}
             <div>
-              <h2 className="text-lg font-bold text-gray-900">{getPillarName(currentPillar, locale)}</h2>
-              <p className="text-sm text-gray-500">{getPillarDesc(currentPillar, locale)}</p>
+              <h2 className="text-lg font-bold text-[#F5F5F0]">{getPillarName(currentPillar, locale)}</h2>
+              <p className="text-sm text-[#7DC4A0]">{getPillarDesc(currentPillar, locale)}</p>
             </div>
           </div>
 
@@ -354,8 +354,8 @@ export function DiagnosticWizard() {
           <Card>
             <CardContent className="flex flex-col items-center gap-3 py-8">
               <div className="text-6xl font-bold text-[#00A86B]">{result.globalScore}</div>
-              <p className="text-sm text-gray-500">/ 100</p>
-              <Badge className="bg-[#E6F7EF]0 text-white">
+              <p className="text-sm text-[#7DC4A0]">/ 100</p>
+              <Badge className="bg-[#1A5C3E]0 text-white">
                 {t('level')} : {t(result.levelKey)}
               </Badge>
             </CardContent>
@@ -380,11 +380,11 @@ export function DiagnosticWizard() {
                 <div key={p.pillar_id}>
                   <div className="mb-1 flex items-center justify-between text-sm">
                     <span className="font-medium">{locale === 'fr' ? p.name_fr : p.name_en}</span>
-                    <span className="text-gray-500">{p.percentage}%</span>
+                    <span className="text-[#7DC4A0]">{p.percentage}%</span>
                   </div>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
                     <div
-                      className="h-full rounded-full bg-[#E6F7EF]0 transition-all"
+                      className="h-full rounded-full bg-[#1A5C3E]0 transition-all"
                       style={{ width: `${p.percentage}%` }}
                     />
                   </div>
@@ -402,22 +402,22 @@ export function DiagnosticWizard() {
                 </h3>
                 <div className="space-y-2">
                   {result.actionPlan.slice(0, 5).map((a) => (
-                    <div key={a.question_id} className="flex items-start gap-3 rounded-lg border border-[#D5E8DD] p-3">
+                    <div key={a.question_id} className="flex items-start gap-3 rounded-lg border border-[#1A5C3E] p-3">
                       <Badge
                         variant="outline"
                         className={`shrink-0 text-[10px] ${
                           a.priority === 'high'
-                            ? 'border-red-200 bg-red-50 text-red-700'
+                            ? 'border-red-200 bg-red-900/30 text-red-400'
                             : a.priority === 'medium'
-                              ? 'border-amber-200 bg-amber-50 text-amber-700'
-                              : 'border-[#C5DDD0] text-gray-500'
+                              ? 'border-amber-200 bg-amber-900/30 text-amber-400'
+                              : 'border-[#1A5C3E] text-[#7DC4A0]'
                         }`}
                       >
                         {a.priority === 'high' ? (locale === 'fr' ? 'Haute' : 'High') : a.priority === 'medium' ? (locale === 'fr' ? 'Moyenne' : 'Medium') : (locale === 'fr' ? 'Basse' : 'Low')}
                       </Badge>
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs text-gray-700">{locale === 'fr' ? a.question_fr : a.question_en}</p>
-                        <p className="mt-0.5 text-[10px] text-gray-400">
+                        <p className="text-xs text-[#B8D4E3]">{locale === 'fr' ? a.question_fr : a.question_en}</p>
+                        <p className="mt-0.5 text-[10px] text-[#7DC4A0]">
                           {a.current_level}/{a.target_level} — {a.labels.join(', ')}
                         </p>
                       </div>
@@ -460,7 +460,7 @@ export function DiagnosticWizard() {
               {locale === 'fr' ? 'Demander conseil a Genius' : 'Ask Genius for advice'}
             </Button>
           </div>
-          <p className="text-center text-[11px] text-gray-400">
+          <p className="text-center text-[11px] text-[#7DC4A0]">
             {locale === 'fr'
               ? 'Accompagnement personnalise propulse par Genius, notre IA Anthropic.'
               : 'Personalized guidance powered by Genius, our Anthropic AI.'}

@@ -11,15 +11,15 @@ import { Card, CardContent } from '@kit/ui/card';
 import type { DemoData } from '~/lib/demo/demo-data';
 
 function getBarColor(pct: number): string {
-  if (pct >= 80) return 'bg-[#E6F7EF]0';
-  if (pct >= 50) return 'bg-[#E6F7EF]0';
+  if (pct >= 80) return 'bg-[#1A5C3E]0';
+  if (pct >= 50) return 'bg-[#1A5C3E]0';
   return 'bg-slate-400';
 }
 
 function getTextColor(pct: number): string {
   if (pct >= 80) return 'text-[#00A86B]';
   if (pct >= 50) return 'text-[#00A86B]';
-  return 'text-slate-500';
+  return 'text-[#7DC4A0]';
 }
 
 export function CsrdComplianceChart({
@@ -47,7 +47,7 @@ export function CsrdComplianceChart({
     <Card>
       <CardContent className="p-5">
         <h3 className="text-sm font-semibold">{t('csrdTitle')}</h3>
-        <p className="text-muted-foreground mb-4 text-xs">
+        <p className="text-[#B8D4E3] mb-4 text-xs">
           {t('csrdEsrsStandards')}
         </p>
 
@@ -59,15 +59,15 @@ export function CsrdComplianceChart({
             return (
               <div key={ind.code}>
                 {showCategory && (
-                  <p className="text-muted-foreground mt-3 mb-1 text-[10px] font-semibold tracking-wider uppercase first:mt-0">
+                  <p className="text-[#B8D4E3] mt-3 mb-1 text-[10px] font-semibold tracking-wider uppercase first:mt-0">
                     {getCategoryLabel(ind.category)}
                   </p>
                 )}
                 <Link
                   href={`/home/esg/csrd`}
-                  className="group flex items-center gap-2 rounded-md px-1 py-1 transition-colors hover:bg-[#E8F5EE] dark:hover:bg-gray-900/50"
+                  className="group flex items-center gap-2 rounded-md px-1 py-1 transition-colors hover:bg-[#12472F] dark:hover:bg-gray-900/50"
                 >
-                  <span className="w-8 text-xs font-semibold text-gray-500">
+                  <span className="w-8 text-xs font-semibold text-[#7DC4A0]">
                     {ind.code}
                   </span>
                   <div className="flex-1">

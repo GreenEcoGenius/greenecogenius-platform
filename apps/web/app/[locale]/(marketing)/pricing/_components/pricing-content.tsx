@@ -137,10 +137,10 @@ export function PricingContent({
     <div className="flex flex-col">
       {/* HERO */}
       <section className="container mx-auto px-4 py-12 text-center lg:py-20">
-        <h1 className="font-heading text-metal-900 mx-auto max-w-3xl text-4xl font-bold tracking-tight lg:text-5xl">
+        <h1 className="font-heading text-[#F5F5F0] mx-auto max-w-3xl text-4xl font-bold tracking-tight lg:text-5xl">
           <Trans i18nKey="pricingPage.heroTitle" />
         </h1>
-        <p className="text-metal-600 mx-auto mt-4 max-w-2xl text-lg">
+        <p className="text-[#B8D4E3] mx-auto mt-4 max-w-2xl text-lg">
           <Trans i18nKey="pricingPage.heroSubtitle" />
         </p>
         <p className="text-primary mt-3 text-sm">
@@ -150,7 +150,7 @@ export function PricingContent({
         {/* TOGGLE */}
         <div className="mt-8 flex items-center justify-center gap-3">
           <span
-            className={`text-sm font-medium ${!annual ? 'text-metal-900' : 'text-metal-500'}`}
+            className={`text-sm font-medium ${!annual ? 'text-[#F5F5F0]' : 'text-[#7DC4A0]'}`}
           >
             <Trans i18nKey="pricingPage.monthly" />
           </span>
@@ -162,11 +162,11 @@ export function PricingContent({
             className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${annual ? 'bg-primary' : 'bg-metal-frost'}`}
           >
             <span
-              className={`inline-block h-5 w-5 rounded-full bg-card shadow-sm transition-transform ${annual ? 'translate-x-6' : 'translate-x-1'}`}
+              className={`inline-block h-5 w-5 rounded-full bg-[#0D3A26] shadow-lg shadow-black/20 transition-transform ${annual ? 'translate-x-6' : 'translate-x-1'}`}
             />
           </button>
           <span
-            className={`text-sm font-medium ${annual ? 'text-metal-900' : 'text-metal-500'}`}
+            className={`text-sm font-medium ${annual ? 'text-[#F5F5F0]' : 'text-[#7DC4A0]'}`}
           >
             <Trans i18nKey="pricingPage.annual" />
           </span>
@@ -182,9 +182,9 @@ export function PricingContent({
       </section>
 
       {/* INCLUDED BANNER */}
-      <section className="border-metal-chrome bg-circuit-ice/20 border-y py-8">
+      <section className="border-[#1A5C3E] bg-circuit-ice/20 border-y py-8">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-metal-900 mb-4 text-lg font-semibold">
+          <h2 className="text-[#F5F5F0] mb-4 text-lg font-semibold">
             <Trans i18nKey="pricingPage.includedTitle" />
           </h2>
           <div className="flex flex-wrap justify-center gap-3">
@@ -209,7 +209,7 @@ export function PricingContent({
             ].map((tag, i) => (
               <span
                 key={i}
-                className="border-circuit-turquoise/30 text-circuit-blue inline-flex items-center gap-1.5 rounded-full border bg-card px-3 py-1.5 text-sm"
+                className="border-circuit-turquoise/30 text-circuit-blue inline-flex items-center gap-1.5 rounded-full border bg-[#0D3A26] px-3 py-1.5 text-sm"
               >
                 {tag.icon}
                 <Trans i18nKey={tag.key} />
@@ -229,11 +229,11 @@ export function PricingContent({
                 <Zap className="text-primary h-5 w-5" />
                 <CardTitle>{essentiel?.display_name ?? 'Essentiel'}</CardTitle>
               </div>
-              <p className="text-metal-600 text-sm">
+              <p className="text-[#B8D4E3] text-sm">
                 <Trans i18nKey="pricingPage.essentielTarget" />
               </p>
               <div className="mt-4">
-                <span className="text-metal-900 text-4xl font-bold">
+                <span className="text-[#F5F5F0] text-4xl font-bold">
                   {essentiel
                     ? formatPrice(
                         annual
@@ -243,9 +243,9 @@ export function PricingContent({
                     : '149'}
                   €
                 </span>
-                <span className="text-metal-500">/mois</span>
+                <span className="text-[#7DC4A0]">/mois</span>
                 {annual && essentiel?.annual_price && (
-                  <p className="text-metal-500 mt-1 text-sm">
+                  <p className="text-[#7DC4A0] mt-1 text-sm">
                     {formatPrice(essentiel.annual_price)}€/an
                   </p>
                 )}
@@ -256,7 +256,7 @@ export function PricingContent({
                 {essentielFeatures.map((feat) => (
                   <li key={feat} className="flex items-start gap-2">
                     <Check className="text-tech-neon mt-0.5 h-4 w-4 shrink-0" />
-                    <span className="text-metal-700 text-sm">
+                    <span className="text-[#E0E7E3] text-sm">
                       <Trans i18nKey={feat} />
                     </span>
                   </li>
@@ -264,7 +264,7 @@ export function PricingContent({
               </ul>
               <Button
                 variant="outline"
-                className="border-metal-silver text-metal-700 hover:bg-metal-chrome mt-6 w-full rounded-xl"
+                className="border-metal-silver text-[#E0E7E3] hover:bg-metal-chrome mt-6 w-full rounded-xl"
                 render={
                   <Link href="/home/billing">
                     <Trans i18nKey="pricingPage.startTrial" />
@@ -281,16 +281,16 @@ export function PricingContent({
               <div className="mb-2 flex items-center justify-center gap-2">
                 <BarChart3 className="text-primary h-5 w-5" />
                 <CardTitle>{avance?.display_name ?? 'Avance'}</CardTitle>
-                <Badge className="bg-leaf-500 text-leaf-900 font-semibold">
+                <Badge className="bg-[#1A5C3E]0 text-leaf-900 font-semibold">
                   <Sparkles className="mr-1 h-3 w-3" />
                   <Trans i18nKey="pricingPage.popular" />
                 </Badge>
               </div>
-              <p className="text-metal-600 text-sm">
+              <p className="text-[#B8D4E3] text-sm">
                 <Trans i18nKey="pricingPage.avanceTarget" />
               </p>
               <div className="mt-4">
-                <span className="text-metal-900 text-4xl font-bold">
+                <span className="text-[#F5F5F0] text-4xl font-bold">
                   {avance
                     ? formatPrice(
                         annual
@@ -300,23 +300,23 @@ export function PricingContent({
                     : '449'}
                   €
                 </span>
-                <span className="text-metal-500">/mois</span>
+                <span className="text-[#7DC4A0]">/mois</span>
                 {annual && avance?.annual_price && (
-                  <p className="text-metal-500 mt-1 text-sm">
+                  <p className="text-[#7DC4A0] mt-1 text-sm">
                     {formatPrice(avance.annual_price)}€/an
                   </p>
                 )}
               </div>
             </CardHeader>
             <CardContent className="flex flex-1 flex-col">
-              <p className="text-metal-500 mb-3 text-xs italic">
+              <p className="text-[#7DC4A0] mb-3 text-xs italic">
                 <Trans i18nKey="pricingPage.everythingEssentiel" />
               </p>
               <ul className="flex-1 space-y-3">
                 {avanceFeatures.map((feat) => (
                   <li key={feat} className="flex items-start gap-2">
                     <Check className="text-tech-neon mt-0.5 h-4 w-4 shrink-0" />
-                    <span className="text-metal-700 text-sm">
+                    <span className="text-[#E0E7E3] text-sm">
                       <Trans i18nKey={feat} />
                     </span>
                   </li>
@@ -335,27 +335,27 @@ export function PricingContent({
           <Card className="border-metal-silver bg-metal-frost flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
             <CardHeader className="text-center">
               <div className="mb-2 flex items-center justify-center gap-2">
-                <Building2 className="text-metal-700 h-5 w-5" />
+                <Building2 className="text-[#E0E7E3] h-5 w-5" />
                 <CardTitle>Enterprise</CardTitle>
               </div>
-              <p className="text-metal-600 text-sm">
+              <p className="text-[#B8D4E3] text-sm">
                 <Trans i18nKey="pricingPage.enterpriseTarget" />
               </p>
               <div className="mt-4">
-                <span className="text-metal-900 text-3xl font-bold">
+                <span className="text-[#F5F5F0] text-3xl font-bold">
                   <Trans i18nKey="pricingPage.onQuote" />
                 </span>
               </div>
             </CardHeader>
             <CardContent className="flex flex-1 flex-col">
-              <p className="text-metal-500 mb-3 text-xs italic">
+              <p className="text-[#7DC4A0] mb-3 text-xs italic">
                 <Trans i18nKey="pricingPage.everythingAvance" />
               </p>
               <ul className="flex-1 space-y-3">
                 {enterpriseFeatures.map((feat) => (
                   <li key={feat} className="flex items-start gap-2">
                     <Check className="text-tech-neon mt-0.5 h-4 w-4 shrink-0" />
-                    <span className="text-metal-700 text-sm">
+                    <span className="text-[#E0E7E3] text-sm">
                       <Trans i18nKey={feat} />
                     </span>
                   </li>
@@ -363,7 +363,7 @@ export function PricingContent({
               </ul>
               <Button
                 variant="secondary"
-                className="border-metal-silver bg-metal-frost text-metal-700 hover:bg-metal-chrome mt-6 w-full rounded-xl border"
+                className="border-metal-silver bg-metal-frost text-[#E0E7E3] hover:bg-metal-chrome mt-6 w-full rounded-xl border"
                 render={
                   <Link href="/contact?subject=Demande+Plan+Enterprise">
                     <Users className="mr-2 h-4 w-4" />
@@ -372,7 +372,7 @@ export function PricingContent({
                 }
                 nativeButton={false}
               />
-              <p className="mt-2 text-center text-xs text-gray-400">
+              <p className="mt-2 text-center text-xs text-[#7DC4A0]">
                 <Trans i18nKey="pricingPage.responseTime" />
               </p>
             </CardContent>
@@ -382,11 +382,11 @@ export function PricingContent({
 
       {/* ACCOMPAGNEMENT SUR MESURE */}
       <section className="container mx-auto px-4 pt-0 pb-16">
-        <div className="mx-auto max-w-3xl rounded-xl border border-[#8FDAB5] bg-[#E6F7EF] px-6 py-10 text-center">
-          <h2 className="text-metal-900 text-xl font-semibold">
+        <div className="mx-auto max-w-3xl rounded-xl border border-[#8FDAB5] bg-[#1A5C3E] px-6 py-10 text-center">
+          <h2 className="text-[#F5F5F0] text-xl font-semibold">
             <Trans i18nKey="pricingPage.customSupportTitle" />
           </h2>
-          <p className="text-metal-600 mx-auto mt-2 max-w-lg text-sm">
+          <p className="text-[#B8D4E3] mx-auto mt-2 max-w-lg text-sm">
             <Trans i18nKey="pricingPage.customSupportSubtitle" />
           </p>
           <Button
@@ -405,10 +405,10 @@ export function PricingContent({
       {/* COMMISSION MARKETPLACE */}
       <section className="bg-metal-frost py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-metal-900 mb-2 text-center text-2xl font-bold">
+          <h2 className="text-[#F5F5F0] mb-2 text-center text-2xl font-bold">
             <Trans i18nKey="pricingPage.commissionTitle" />
           </h2>
-          <p className="text-metal-600 mb-8 text-center">
+          <p className="text-[#B8D4E3] mb-8 text-center">
             <Trans i18nKey="pricingPage.commissionSubtitle" />
           </p>
 
@@ -438,7 +438,7 @@ export function PricingContent({
                   <p className="text-circuit-cyan text-3xl font-bold">
                     {tier.rate}
                   </p>
-                  <p className="text-metal-500 mt-1 text-sm">
+                  <p className="text-[#7DC4A0] mt-1 text-sm">
                     <Trans i18nKey={tier.range} />
                   </p>
                 </CardContent>
@@ -458,9 +458,9 @@ export function PricingContent({
       </section>
 
       {/* FAQ */}
-      <section className="bg-metal-50 py-16">
+      <section className="bg-[#0D3A26] py-16">
         <div className="container mx-auto max-w-3xl px-4">
-          <h2 className="text-metal-900 mb-8 text-center text-2xl font-bold">
+          <h2 className="text-[#F5F5F0] mb-8 text-center text-2xl font-bold">
             <Trans i18nKey="pricingPage.faqTitle" />
           </h2>
 
@@ -468,13 +468,13 @@ export function PricingContent({
             {faqKeys.map((key, i) => (
               <div
                 key={i}
-                className="border-metal-chrome rounded-xl border bg-card"
+                className="border-[#1A5C3E] rounded-xl border bg-[#0D3A26]"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="flex w-full items-center justify-between p-4 text-left"
                 >
-                  <span className="text-metal-900 pr-4 font-medium">
+                  <span className="text-[#F5F5F0] pr-4 font-medium">
                     <Trans i18nKey={`${key}Q`} />
                   </span>
                   <ChevronDown
@@ -482,7 +482,7 @@ export function PricingContent({
                   />
                 </button>
                 {openFaq === i && (
-                  <div className="border-metal-chrome text-metal-600 border-t px-4 pt-3 pb-4 text-sm">
+                  <div className="border-[#1A5C3E] text-[#B8D4E3] border-t px-4 pt-3 pb-4 text-sm">
                     <Trans i18nKey={`${key}A`} />
                   </div>
                 )}
@@ -504,7 +504,7 @@ export function PricingContent({
           <h2 className="text-3xl font-bold text-white">
             <Trans i18nKey="pricingPage.ctaTitle" />
           </h2>
-          <p className="text-metal-silver mx-auto mt-4 max-w-xl">
+          <p className="text-[#B8D4E3] mx-auto mt-4 max-w-xl">
             <Trans i18nKey="pricingPage.ctaSubtitle" />
           </p>
           <Button
@@ -518,7 +518,7 @@ export function PricingContent({
             }
             nativeButton={false}
           />
-          <div className="text-metal-steel mt-6 flex items-center justify-center gap-6 text-sm">
+          <div className="text-[#7DC4A0] mt-6 flex items-center justify-center gap-6 text-sm">
             <span className="flex items-center gap-1">
               <Mail className="h-4 w-4" />
               contact@greenecogenius.tech
@@ -606,20 +606,20 @@ const COMING_SOON: ComingSoonFeature[] = [
 
 function ComingSoonSection() {
   return (
-    <section className="bg-[#E8F5EE] py-20">
+    <section className="bg-[#12472F] py-20">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="mb-12 text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-sm font-medium text-amber-700">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-900/30 px-3 py-1 text-sm font-medium text-amber-400">
             <Rocket className="h-4 w-4" strokeWidth={1.5} />
             Roadmap 2026 — 2027
           </div>
-          <h2 className="text-metal-900 text-3xl font-bold">
+          <h2 className="text-[#F5F5F0] text-3xl font-bold">
             <Trans
               i18nKey="pricingPage.comingSoonTitle"
               defaults="Prochainement sur la plateforme"
             />
           </h2>
-          <p className="text-metal-500 mx-auto mt-3 max-w-2xl text-lg">
+          <p className="text-[#7DC4A0] mx-auto mt-3 max-w-2xl text-lg">
             <Trans
               i18nKey="pricingPage.comingSoonSubtitle"
               defaults="Nous construisons en continu. Voici les fonctionnalites en cours de developpement."
@@ -633,10 +633,10 @@ function ComingSoonSection() {
             return (
               <div
                 key={feature.titleEn}
-                className="rounded-xl border border-[#C5DDD0] bg-card p-6 transition-colors hover:border-[#8FDAB5]"
+                className="rounded-xl border border-[#1A5C3E] bg-[#0D3A26] p-6 transition-colors hover:border-[#8FDAB5]"
               >
                 <div className="mb-3 flex items-start justify-between">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E6F7EF]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#1A5C3E]">
                     <Icon
                       className="h-5 w-5 text-[#00A86B]"
                       strokeWidth={1.5}
@@ -645,27 +645,27 @@ function ComingSoonSection() {
                   <span
                     className={`rounded-full border px-2 py-1 text-xs font-medium ${
                       feature.timeline.startsWith('Q')
-                        ? 'border-amber-200 bg-amber-50 text-amber-700'
-                        : 'border-[#C5DDD0] bg-[#E8F5EE] text-gray-600'
+                        ? 'border-amber-200 bg-amber-900/30 text-amber-400'
+                        : 'border-[#1A5C3E] bg-[#12472F] text-[#B8D4E3]'
                     }`}
                   >
                     {feature.timeline}
                   </span>
                 </div>
-                <h3 className="text-metal-900 mb-2 font-semibold">
+                <h3 className="text-[#F5F5F0] mb-2 font-semibold">
                   <Trans
                     i18nKey={`pricingPage.cs_${feature.titleEn.replace(/[^a-zA-Z]/g, '_').toLowerCase()}`}
                     defaults={feature.titleFr}
                   />
                 </h3>
-                <p className="text-metal-500 text-sm">{feature.descFr}</p>
+                <p className="text-[#7DC4A0] text-sm">{feature.descFr}</p>
               </div>
             );
           })}
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-metal-400 text-sm">
+          <p className="text-[#5A9E7D] text-sm">
             <Trans
               i18nKey="pricingPage.comingSoonInterested"
               defaults="Une fonctionnalite vous interesse particulierement ?"

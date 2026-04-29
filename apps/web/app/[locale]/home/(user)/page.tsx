@@ -187,7 +187,7 @@ async function UserHomePage() {
                     description={t('dashboard.completeScope3Desc')}
                     href="/home/esg/wizard?step=3"
                     badge={t('dashboard.highImpact')}
-                    badgeColor="bg-metal-frost text-metal-700"
+                    badgeColor="bg-metal-frost text-[#E0E7E3]"
                   />
                   <ActionCard
                     icon={<Recycle className="text-primary h-5 w-5" />}
@@ -224,15 +224,15 @@ async function UserHomePage() {
               <CardContent className="p-6">
                 <div className="mb-4 flex items-center justify-between">
                   <h2 className="text-base font-semibold">
-                    <Bell className="text-metal-steel mr-2 inline h-4 w-4" />
+                    <Bell className="text-[#7DC4A0] mr-2 inline h-4 w-4" />
                     {t('dashboard.recentActivity')}
                   </h2>
                 </div>
 
-                <div className="text-metal-500 flex flex-col items-center py-8 text-center text-sm">
-                  <Bell className="text-metal-300 mb-3 h-8 w-8" />
+                <div className="text-[#7DC4A0] flex flex-col items-center py-8 text-center text-sm">
+                  <Bell className="text-[#4A8A6D] mb-3 h-8 w-8" />
                   <p>{t('dashboard.noActivityYet')}</p>
-                  <p className="text-metal-400 mt-1 text-xs">
+                  <p className="text-[#5A9E7D] mt-1 text-xs">
                     {t('dashboard.noActivityDesc')}
                   </p>
                 </div>
@@ -258,7 +258,7 @@ async function UserHomePage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-metal-chrome text-metal-700 border-b text-left text-xs font-semibold tracking-wider uppercase">
+                    <tr className="border-[#1A5C3E] text-[#E0E7E3] border-b text-left text-xs font-semibold tracking-wider uppercase">
                       <th className="pb-3">{t('materialLabel')}</th>
                       <th className="pb-3">{t('typeLabel')}</th>
                       <th className="pb-3">{t('quantityLabel')}</th>
@@ -274,13 +274,13 @@ async function UserHomePage() {
                       return (
                         <tr
                           key={listing.id as string}
-                          className="hover:bg-metal-50"
+                          className="hover:bg-[#0D3A26]"
                         >
                           <td className="py-3">
                             <p className="font-medium">
                               {listing.title as string}
                             </p>
-                            <p className="text-metal-500 text-xs">
+                            <p className="text-[#7DC4A0] text-xs">
                               {cat?.name_fr ?? cat?.name}
                             </p>
                           </td>
@@ -352,7 +352,7 @@ function ActionCard({
   return (
     <Link
       href={href}
-      className="group border-metal-chrome flex gap-3 rounded-xl border p-4 transition-all duration-200 hover:shadow-sm"
+      className="group border-[#1A5C3E] flex gap-3 rounded-xl border p-4 transition-all duration-200 hover:shadow-lg shadow-black/20"
     >
       <div className="mt-0.5 shrink-0">{icon}</div>
       <div className="min-w-0 flex-1">
@@ -364,9 +364,9 @@ function ActionCard({
             {badge}
           </span>
         </div>
-        <p className="text-metal-500 mt-0.5 text-xs">{description}</p>
+        <p className="text-[#7DC4A0] mt-0.5 text-xs">{description}</p>
       </div>
-      <ArrowRight className="text-metal-steel h-4 w-4 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
+      <ArrowRight className="text-[#7DC4A0] h-4 w-4 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
     </Link>
   );
 }
@@ -390,9 +390,9 @@ function TypeBadge({ type, label }: { type: string; label: string }) {
 function StatusBadge({ status, label }: { status: string; label: string }) {
   const styles: Record<string, string> = {
     active: 'bg-tech-mint text-tech-emerald',
-    draft: 'bg-metal-frost text-metal-steel',
+    draft: 'bg-metal-frost text-[#7DC4A0]',
     sold: 'bg-circuit-ice text-circuit-blue',
-    expired: 'bg-metal-frost text-metal-steel',
+    expired: 'bg-metal-frost text-[#7DC4A0]',
   };
 
   return (

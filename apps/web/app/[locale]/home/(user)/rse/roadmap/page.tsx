@@ -19,16 +19,16 @@ async function RoadmapPage() {
       <div className="space-y-6">
         <Card>
           <CardContent className="flex flex-col items-center px-6 py-16 text-center">
-            <div className="bg-primary-light mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
+            <div className="bg-[#1A5C3E] mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
               <Map className="text-primary h-8 w-8" />
             </div>
-            <h2 className="text-metal-900 text-2xl font-bold">
+            <h2 className="text-[#F5F5F0] text-2xl font-bold">
               <Trans
                 i18nKey="rse:roadmapTitle"
                 defaults="Feuille de route RSE"
               />
             </h2>
-            <p className="text-metal-500 mx-auto mt-3 max-w-md text-sm leading-relaxed">
+            <p className="text-[#7DC4A0] mx-auto mt-3 max-w-md text-sm leading-relaxed">
               <Trans
                 i18nKey="rse:roadmapEmptyDesc"
                 defaults="Lancez votre premier diagnostic RSE pour générer une feuille de route personnalisée avec des actions prioritaires, un calendrier et un score projeté."

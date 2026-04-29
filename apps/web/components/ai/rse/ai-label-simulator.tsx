@@ -39,8 +39,8 @@ const labelCards: LabelCard[] = [
     id: 'bcorp',
     name: 'B Corp',
     icon: Award,
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-50 dark:bg-blue-950/30',
+    color: 'text-blue-400',
+    bgColor: 'bg-blue-900/30 dark:bg-blue-950/30',
     score: 72,
     threshold: 80,
     status: 'Ecart a combler: 8 points',
@@ -54,7 +54,7 @@ const labelCards: LabelCard[] = [
     name: 'GreenTech Innovation',
     icon: Leaf,
     color: 'text-verdure-600',
-    bgColor: 'bg-verdure-50 dark:bg-verdure-950/30',
+    bgColor: 'bg-[#1A5C3E] dark:bg-verdure-950/30',
     status: 'Eligible',
     detail:
       "Criteres d'innovation verte satisfaits. Impact environnemental positif mesurable detecte.",
@@ -65,8 +65,8 @@ const labelCards: LabelCard[] = [
     id: 'labelnr',
     name: 'Label NR (INR)',
     icon: Monitor,
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-50 dark:bg-purple-950/30',
+    color: 'text-purple-400',
+    bgColor: 'bg-purple-900/30 dark:bg-purple-950/30',
     status: 'Niveau NR1 atteignable',
     detail:
       "Numerique responsable: niveau NR1 accessible. Progression vers NR2 necessiterait des actions sur l'accessibilite et l'ecoconception.",
@@ -102,7 +102,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   variant="outline"
                   className={
                     label.score >= label.threshold
-                      ? 'border-verdure-200 text-verdure-700 dark:border-verdure-800 dark:text-verdure-400'
+                      ? 'border-[#1A5C3E] text-verdure-700 dark:border-verdure-800 dark:text-verdure-400'
                       : 'border-[#8FDAB5] text-[#00A86B] dark:border-[#008F5A] dark:text-[#00A86B]'
                   }
                 >
@@ -111,14 +111,14 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
               )}
             </div>
 
-            <p className="text-muted-foreground mt-1 text-xs">{label.detail}</p>
+            <p className="text-[#B8D4E3] mt-1 text-xs">{label.detail}</p>
 
             {/* Score bar for B Corp */}
             {label.score !== undefined && label.threshold !== undefined && (
               <div className="mt-2">
                 <div className="relative h-2 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
                   <div
-                    className="h-full rounded-full bg-blue-500 transition-all duration-500"
+                    className="h-full rounded-full bg-blue-900/300 transition-all duration-500"
                     style={{
                       width: `${(label.score / (label.threshold * 2.5)) * 100}%`,
                     }}
@@ -132,7 +132,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
                   />
                 </div>
                 <div className="mt-1 flex justify-between text-[10px]">
-                  <span className="text-muted-foreground">
+                  <span className="text-[#B8D4E3]">
                     Score: {label.score}
                   </span>
                   <span className="text-[#008F5A]">
@@ -170,7 +170,7 @@ function LabelSimulatorCard({ label }: { label: LabelCard }) {
             )}
 
             {expanded && error && (
-              <div className="mt-3 rounded-md border border-[#8FDAB5] bg-[#E6F7EF] p-3 dark:border-[#008F5A] dark:bg-[#004428]/20">
+              <div className="mt-3 rounded-md border border-[#8FDAB5] bg-[#1A5C3E] p-3 dark:border-[#008F5A] dark:bg-[#004428]/20">
                 <p className="text-xs text-[#008F5A]">{error}</p>
                 <Button
                   variant="ghost"
@@ -236,7 +236,7 @@ export function AILabelSimulator({ className }: { className?: string }) {
             </CardTitle>
             <AIPoweredBadge methodology="Multi-referentiel" />
           </div>
-          <p className="text-muted-foreground text-xs">
+          <p className="text-[#B8D4E3] text-xs">
             Estimez votre eligibilite aux principaux labels RSE et obtenez des
             recommandations personnalisees.
           </p>

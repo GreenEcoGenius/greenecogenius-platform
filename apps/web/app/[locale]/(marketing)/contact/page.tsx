@@ -34,17 +34,17 @@ async function ContactPage({
         >
           <div
             className={
-              'border-metal-chrome flex w-full max-w-lg flex-col space-y-4 rounded-xl border bg-card p-8'
+              'border-[#1A5C3E] flex w-full max-w-lg flex-col space-y-4 rounded-xl border bg-[#0D3A26] p-8'
             }
           >
             <div>
               <Heading level={3}>
-                <span className="text-metal-900">
+                <span className="text-[#F5F5F0]">
                   <Trans i18nKey={'marketing.contactHeading'} />
                 </span>
               </Heading>
 
-              <p className={'text-metal-600'}>
+              <p className={'text-[#B8D4E3]'}>
                 <Trans i18nKey={'marketing.contactSubheading'} />
               </p>
             </div>

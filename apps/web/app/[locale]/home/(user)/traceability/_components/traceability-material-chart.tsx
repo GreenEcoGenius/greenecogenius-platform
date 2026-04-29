@@ -101,7 +101,7 @@ export function TraceabilityMaterialChart({
               verticalAlign="bottom"
               wrapperStyle={{ fontSize: '11px', paddingTop: '12px' }}
               formatter={(value: string) => (
-                <span className="text-muted-foreground">{value}</span>
+                <span className="text-[#B8D4E3]">{value}</span>
               )}
             />
           </PieChart>

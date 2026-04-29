@@ -15,14 +15,14 @@ const badgeVariants = cva(
         destructive:
           'bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20',
         outline:
-          'border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground',
+          'border-border text-[#F5F5F0] [a]:hover:bg-muted [a]:hover:text-[#B8D4E3]',
         ghost:
-          'hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50',
+          'hover:bg-muted hover:text-[#B8D4E3] dark:hover:bg-muted/50',
         link: 'text-primary underline-offset-4 hover:underline',
         success:
           'bg-brand-accent-light text-brand-accent-600 dark:bg-brand-accent/20 [&>svg]:text-brand-accent-600',
         warning:
-          'bg-amber-50 text-amber-600 border-amber-200 dark:bg-amber-950 dark:text-amber-400 [&>svg]:text-amber-600',
+          'bg-amber-900/30 text-amber-400 border-amber-200 dark:bg-amber-950 dark:text-amber-400 [&>svg]:text-amber-400',
       },
     },
     defaultVariants: {

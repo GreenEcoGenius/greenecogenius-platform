@@ -50,7 +50,7 @@ function KpiCard({
         <div className="mb-3 flex items-start justify-between">
           <div className="flex items-center gap-2">
             {icon}
-            <span className="text-muted-foreground text-sm font-medium">
+            <span className="text-[#B8D4E3] text-sm font-medium">
               {label}
             </span>
           </div>
@@ -60,12 +60,12 @@ function KpiCard({
         <div className="mb-1 text-3xl font-bold tracking-tight">{value}</div>
 
         <div className="mb-3 flex items-center gap-2">
-          <span className="text-muted-foreground text-xs">{subtitle}</span>
+          <span className="text-[#B8D4E3] text-xs">{subtitle}</span>
           <span
             className={`inline-flex items-center gap-0.5 text-xs font-semibold ${
               isPositive
                 ? 'text-[#00A86B] dark:text-[#00A86B]'
-                : 'text-slate-600 dark:text-slate-400'
+                : 'text-[#B8D4E3] dark:text-slate-400'
             }`}
           >
             {isPositive ? (
@@ -75,7 +75,7 @@ function KpiCard({
             )}
             {isPositive ? '+' : ''}
             {trend}%{' '}
-            <span className="text-muted-foreground font-normal">
+            <span className="text-[#B8D4E3] font-normal">
               {trendLabel}
             </span>
           </span>
@@ -84,7 +84,7 @@ function KpiCard({
         {linkHref && linkLabel && (
           <Link
             href={linkHref}
-            className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-xs transition-colors"
+            className="text-[#B8D4E3] hover:text-[#F5F5F0] inline-flex items-center gap-1 text-xs transition-colors"
           >
             {linkLabel}
             <ArrowUpRight className="h-3 w-3" />
@@ -135,7 +135,7 @@ export function TraceabilityKpiCards({
         }
         trend={lotsTrend}
         trendLabel={<Trans i18nKey="blockchain:vsLastMonth" />}
-        accentColor="bg-[#E6F7EF]0"
+        accentColor="bg-[#1A5C3E]0"
       />
 
       <KpiCard
@@ -151,11 +151,11 @@ export function TraceabilityKpiCards({
         trendLabel={<Trans i18nKey="blockchain:vsLastMonth" />}
         linkHref="/home/carbon"
         linkLabel={<Trans i18nKey="blockchain:co2AvoidedCard" />}
-        accentColor="bg-verdure-500"
+        accentColor="bg-[#1A5C3E]0"
       />
 
       <KpiCard
-        icon={<Recycle className="h-5 w-5 text-blue-600 dark:text-blue-400" />}
+        icon={<Recycle className="h-5 w-5 text-blue-400 dark:text-blue-400" />}
         value={`${totalTonnes.toLocaleString('fr-FR')}t`}
         label={<Trans i18nKey="blockchain:tonnesRecycled" />}
         subtitle={
@@ -167,7 +167,7 @@ export function TraceabilityKpiCards({
         trendLabel={<Trans i18nKey="blockchain:vsLastMonth" />}
         linkHref="/home/marketplace"
         linkLabel={<Trans i18nKey="blockchain:tonnesRecycled" />}
-        accentColor="bg-blue-500"
+        accentColor="bg-blue-900/300"
       />
 
       <KpiCard
@@ -184,12 +184,12 @@ export function TraceabilityKpiCards({
         badge={
           <Badge
             variant="outline"
-            className="border-[#8FDAB5] bg-[#E6F7EF] text-[#008F5A] dark:border-[#008F5A] dark:bg-[#004428]/40 dark:text-[#00A86B]"
+            className="border-[#8FDAB5] bg-[#1A5C3E] text-[#008F5A] dark:border-[#008F5A] dark:bg-[#004428]/40 dark:text-[#00A86B]"
           >
             <Trans i18nKey="blockchain:onChain" />
           </Badge>
         }
-        accentColor="bg-[#E6F7EF]0"
+        accentColor="bg-[#1A5C3E]0"
       />
     </div>
   );

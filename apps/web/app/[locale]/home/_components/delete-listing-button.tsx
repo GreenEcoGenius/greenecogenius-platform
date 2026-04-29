@@ -47,7 +47,7 @@ export function DeleteListingButton({ listingId }: { listingId: string }) {
   return (
     <>
       <button
-        className="text-muted-foreground hover:text-destructive rounded p-1 transition-colors"
+        className="text-[#B8D4E3] hover:text-destructive rounded p-1 transition-colors"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();

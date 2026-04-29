@@ -52,10 +52,10 @@ export function ExplorerContent({
       {/* Category cards */}
       <section className="pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-metal-900 mb-2 text-2xl font-bold">
+          <h2 className="text-[#F5F5F0] mb-2 text-2xl font-bold">
             {t('explorer.categoriesTitle')}
           </h2>
-          <p className="text-metal-500 mb-10 text-sm">
+          <p className="text-[#7DC4A0] mb-10 text-sm">
             {t('explorer.categoriesSub')}
           </p>
 
@@ -72,12 +72,12 @@ export function ExplorerContent({
       </section>
 
       {/* Map */}
-      <section className="bg-metal-50 py-16 sm:py-24">
+      <section className="bg-[#0D3A26] py-16 sm:py-24">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-metal-900 mb-2 text-center text-2xl font-bold">
+          <h2 className="text-[#F5F5F0] mb-2 text-center text-2xl font-bold">
             {t(`explorer.${zone}MapTitle`)}
           </h2>
-          <p className="text-metal-500 mb-10 text-center text-sm">
+          <p className="text-[#7DC4A0] mb-10 text-center text-sm">
             {t(`explorer.${zone}MapSubtitle`)}
           </p>
 

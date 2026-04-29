@@ -69,7 +69,7 @@ const Dropzone = ({
       <div
         {...getRootProps({
           className: cn(
-            'bg-card text-foreground rounded-lg border p-6 text-center transition-colors duration-300',
+            'bg-[#0D3A26] text-[#F5F5F0] rounded-lg border p-6 text-center transition-colors duration-300',
             className,
             isSuccess ? 'border-solid' : 'border-dashed',
             isActive && 'border-primary',
@@ -174,7 +174,7 @@ const DropzoneContent = ({ className }: { className?: string }) => {
                     .join(', ')}
                 </p>
               ) : loading && !isSuccessfullyUploaded ? (
-                <p className="text-muted-foreground text-xs">
+                <p className="text-[#B8D4E3] text-xs">
                   <Trans i18nKey="common.dropzone.uploading" />
                 </p>
               ) : fileError ? (
@@ -189,7 +189,7 @@ const DropzoneContent = ({ className }: { className?: string }) => {
                   <Trans i18nKey="common.dropzone.success" />
                 </p>
               ) : (
-                <p className="text-muted-foreground text-xs">
+                <p className="text-[#B8D4E3] text-xs">
                   {formatBytes(file.size, 2)}
                 </p>
               )}
@@ -199,7 +199,7 @@ const DropzoneContent = ({ className }: { className?: string }) => {
               <Button
                 size="icon"
                 variant="link"
-                className="text-muted-foreground hover:text-foreground shrink-0 justify-self-end"
+                className="text-[#B8D4E3] hover:text-[#F5F5F0] shrink-0 justify-self-end"
                 onClick={() => handleRemoveFile(file.name)}
               >
                 <X />
@@ -256,7 +256,7 @@ const DropzoneEmptyState = ({ className }: { className?: string }) => {
 
   return (
     <div className={cn('flex flex-col items-center gap-y-2', className)}>
-      <Upload size={20} className="text-muted-foreground" />
+      <Upload size={20} className="text-[#B8D4E3]" />
 
       <p className="text-sm">
         <Trans
@@ -266,11 +266,11 @@ const DropzoneEmptyState = ({ className }: { className?: string }) => {
       </p>
 
       <div className="flex flex-col items-center gap-y-1">
-        <p className="text-muted-foreground text-xs">
+        <p className="text-[#B8D4E3] text-xs">
           <Trans i18nKey="common.dropzone.dragAndDrop" />{' '}
           <a
             onClick={() => inputRef.current?.click()}
-            className="hover:text-foreground cursor-pointer underline transition"
+            className="hover:text-[#F5F5F0] cursor-pointer underline transition"
           >
             <Trans
               i18nKey="common.dropzone.select"
@@ -281,7 +281,7 @@ const DropzoneEmptyState = ({ className }: { className?: string }) => {
         </p>
 
         {maxFileSize !== Number.POSITIVE_INFINITY && (
-          <p className="text-muted-foreground text-xs">
+          <p className="text-[#B8D4E3] text-xs">
             <Trans
               i18nKey="common.dropzone.maxFileSize"
               values={{ size: formatBytes(maxFileSize, 2) }}

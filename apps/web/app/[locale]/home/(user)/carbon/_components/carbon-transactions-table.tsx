@@ -43,7 +43,7 @@ export function CarbonTransactionsTable({
       </h3>
       <div className="overflow-x-auto rounded-lg border">
         <table className="w-full text-left text-sm">
-          <thead className="border-b bg-[#E8F5EE] dark:bg-gray-800/50">
+          <thead className="border-b bg-[#12472F] dark:bg-gray-800/50">
             <tr>
               <th className="px-4 py-3 font-medium">
                 <Trans i18nKey="carbon:txDate" />
@@ -75,9 +75,9 @@ export function CarbonTransactionsTable({
             {transactions.map((tx, idx) => (
               <tr
                 key={`${tx.created_at}-${idx}`}
-                className="hover:bg-[#E8F5EE] dark:hover:bg-gray-800/30"
+                className="hover:bg-[#12472F] dark:hover:bg-gray-800/30"
               >
-                <td className="px-4 py-3 whitespace-nowrap text-gray-600 dark:text-gray-400">
+                <td className="px-4 py-3 whitespace-nowrap text-[#B8D4E3] dark:text-[#7DC4A0]">
                   {new Date(tx.created_at).toLocaleDateString('fr-FR')}
                 </td>
                 <td className="max-w-[200px] truncate px-4 py-3 font-medium">
@@ -108,7 +108,7 @@ export function CarbonTransactionsTable({
                       <code>{truncateHash(tx.blockchain_hash)}</code>
                     </Link>
                   ) : (
-                    <span className="text-muted-foreground text-xs">—</span>
+                    <span className="text-[#B8D4E3] text-xs">—</span>
                   )}
                 </td>
               </tr>

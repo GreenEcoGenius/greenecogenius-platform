@@ -18,9 +18,9 @@
 .gradient-text-verdure-leaf {
   background: linear-gradient(
     90deg,
-    var(--color-verdure-500),
-    var(--color-leaf-500),
-    var(--color-verdure-500)
+    #34D399,
+    #A3E635,
+    #34D399
   );
   background-size: 200% 200%;
   -webkit-background-clip: text;

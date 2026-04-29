@@ -46,7 +46,7 @@ export function ChangelogEntry({
 
             <If condition={description}>
               {(desc) => (
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <p className="text-[#B8D4E3] text-sm leading-relaxed">
                   {desc}
                 </p>
               )}

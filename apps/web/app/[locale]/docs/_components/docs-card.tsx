@@ -20,7 +20,7 @@ export function DocsCard({
         </h3>
 
         {subtitle && (
-          <div className="text-muted-foreground text-sm">
+          <div className="text-[#B8D4E3] text-sm">
             <p dangerouslySetInnerHTML={{ __html: subtitle }}></p>
           </div>
         )}

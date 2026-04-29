@@ -58,7 +58,7 @@ async function SidebarLayout({ children }: React.PropsWithChildren) {
             <div className="min-h-0 flex-1 lg:flex lg:overflow-hidden">
               <Page
                 style={'sidebar'}
-                contentContainerClassName="mx-auto flex w-full min-w-0 flex-1 flex-col bg-card pt-20 md:pt-24 lg:overflow-y-auto lg:bg-inherit"
+                contentContainerClassName="mx-auto flex w-full min-w-0 flex-1 flex-col bg-[#0D3A26] pt-20 md:pt-24 lg:overflow-y-auto lg:bg-inherit"
               >
                 <PageNavigation>
                   <HomeSidebar workspace={workspace} />

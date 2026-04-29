@@ -42,7 +42,7 @@ export const EcosystemShowcase: React.FC<EcosystemShowcaseProps> =
           </h2>
 
           {description && (
-            <p className="text-muted-foreground mt-2 text-base lg:text-lg">
+            <p className="text-[#B8D4E3] mt-2 text-base lg:text-lg">
               {description}
             </p>
           )}

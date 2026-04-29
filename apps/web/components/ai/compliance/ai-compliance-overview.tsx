@@ -85,7 +85,7 @@ function StatusBadge({ regulation }: { regulation: Regulation }) {
           <CheckCircle2 className="h-3.5 w-3.5" />
           Conforme
           {regulation.method && (
-            <span className="text-muted-foreground ml-0.5">
+            <span className="text-[#B8D4E3] ml-0.5">
               ({regulation.method})
             </span>
           )}
@@ -151,7 +151,7 @@ export function AIComplianceOverview({ className }: { className?: string }) {
         {/* Regulatory watch */}
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <Gavel className="text-muted-foreground h-4 w-4" />
+            <Gavel className="text-[#B8D4E3] h-4 w-4" />
             <p className="text-sm font-medium">Veille r\u00e9glementaire</p>
           </div>
 
@@ -160,7 +160,7 @@ export function AIComplianceOverview({ className }: { className?: string }) {
               <div className="flex items-start justify-between gap-2">
                 <div className="space-y-1">
                   <p className="text-sm font-medium">{change.title}</p>
-                  <p className="text-muted-foreground text-xs leading-relaxed">
+                  <p className="text-[#B8D4E3] text-xs leading-relaxed">
                     {change.description}
                   </p>
                 </div>
@@ -179,7 +179,7 @@ export function AIComplianceOverview({ className }: { className?: string }) {
         {/* Audit button */}
         {auditStarted && aiLoading ? (
           <div className="space-y-2">
-            <p className="text-muted-foreground text-xs">
+            <p className="text-[#B8D4E3] text-xs">
               Pr\u00e9-audit en cours...
             </p>
             <AILoadingState lines={3} />
@@ -199,7 +199,7 @@ export function AIComplianceOverview({ className }: { className?: string }) {
         )}
 
         {/* Blockchain link */}
-        <div className="text-muted-foreground flex items-center justify-center gap-1.5 text-xs">
+        <div className="text-[#B8D4E3] flex items-center justify-center gap-1.5 text-xs">
           <Link2 className="h-3 w-3" />
           Preuves de conformit\u00e9 ancr\u00e9es sur blockchain
         </div>

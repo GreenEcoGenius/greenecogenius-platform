@@ -66,7 +66,7 @@ export function SubscribeClientButton({
         <Trans i18nKey="pricingPage.startTrial" />
       </Button>
       {error && (
-        <p className="mt-2 text-center text-sm text-slate-500">{error}</p>
+        <p className="mt-2 text-center text-sm text-[#7DC4A0]">{error}</p>
       )}
     </div>
   );

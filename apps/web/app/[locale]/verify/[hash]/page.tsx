@@ -84,16 +84,16 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
 
           <h1 className="text-2xl font-bold">Hash non trouvé</h1>
 
-          <p className="text-muted-foreground">
+          <p className="text-[#B8D4E3]">
             Le hash ou numéro de certificat ne correspond à aucun
             enregistrement.
           </p>
 
-          <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-left text-sm dark:border-red-900 dark:bg-red-950/50">
+          <div className="rounded-lg border border-red-200 bg-red-900/30 p-4 text-left text-sm dark:border-red-900 dark:bg-red-950/50">
             <p className="font-medium text-red-800 dark:text-red-300">
               Vérifiez que vous avez copié le hash complet sans espaces.
             </p>
-            <code className="mt-2 block text-xs break-all text-red-600 dark:text-red-400">
+            <code className="mt-2 block text-xs break-all text-red-400 dark:text-red-400">
               {hash}
             </code>
           </div>
@@ -110,7 +110,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
             />
           </div>
 
-          <p className="text-muted-foreground text-sm">
+          <p className="text-[#B8D4E3] text-sm">
             Si vous pensez qu&apos;il s&apos;agit d&apos;une erreur,
             contactez-nous :{' '}
             <a
@@ -258,7 +258,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
             VÉRIFIÉ — Certificat Authentique
           </h1>
 
-          <p className="text-muted-foreground max-w-md text-sm">
+          <p className="text-[#B8D4E3] max-w-md text-sm">
             Ce certificat est enregistré dans la blockchain GreenEcoGenius et
             ses données sont intègres.
           </p>
@@ -290,7 +290,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="col-span-full">
-                <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+                <p className="text-[#B8D4E3] text-xs font-medium tracking-wide uppercase">
                   Hash SHA-256
                 </p>
                 <div className="mt-1 flex items-center gap-2">
@@ -331,7 +331,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
               />
 
               <div>
-                <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+                <p className="text-[#B8D4E3] text-xs font-medium tracking-wide uppercase">
                   Intégrité
                 </p>
                 <div className="mt-1">
@@ -341,7 +341,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                       Vérifiée
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-red-600 dark:text-red-400">
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-red-400 dark:text-red-400">
                       <ShieldAlert className="h-4 w-4" />
                       Non vérifiée
                     </span>
@@ -397,7 +397,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
 
         {/* Section 4 - Carbon Impact */}
         {co2Avoided > 0 && (
-          <Card className="border-verdure-200 bg-verdure-50 dark:border-verdure-900 dark:bg-verdure-950">
+          <Card className="border-[#1A5C3E] bg-[#1A5C3E] dark:border-verdure-900 dark:bg-verdure-950">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-verdure-800 dark:text-verdure-200">
                 <Leaf className="h-5 w-5" />
@@ -414,7 +414,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                 <CarbonStat
                   value={formatKg(co2Transport)}
                   label="CO₂ transport"
-                  color="text-orange-600 dark:text-orange-400"
+                  color="text-orange-400 dark:text-orange-400"
                 />
                 <CarbonStat
                   value={formatKg(co2Net)}
@@ -423,12 +423,12 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4 border-t border-verdure-200 pt-4 dark:border-verdure-800">
+              <div className="grid grid-cols-2 gap-4 border-t border-[#1A5C3E] pt-4 dark:border-verdure-800">
                 <div className="text-center">
                   <p className="text-2xl font-bold text-verdure-700 dark:text-verdure-300">
                     {treesEquiv.toLocaleString('fr-FR')}
                   </p>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-[#B8D4E3] text-sm">
                     arbres / an équivalent
                   </p>
                 </div>
@@ -436,7 +436,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                   <p className="text-2xl font-bold text-verdure-700 dark:text-verdure-300">
                     {carKmEquiv.toLocaleString('fr-FR')}
                   </p>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-[#B8D4E3] text-sm">
                     km en voiture évités
                   </p>
                 </div>
@@ -477,7 +477,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                       }`}
                     >
                       {index === timeline.length - 1 && (
-                        <div className="h-1.5 w-1.5 rounded-full bg-card" />
+                        <div className="h-1.5 w-1.5 rounded-full bg-[#0D3A26]" />
                       )}
                     </div>
 
@@ -488,7 +488,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                           {getEventLabel(event.event)}
                         </p>
                       </div>
-                      <div className="text-muted-foreground mt-0.5 flex items-center gap-2 text-xs">
+                      <div className="text-[#B8D4E3] mt-0.5 flex items-center gap-2 text-xs">
                         {event.date && (
                           <span>
                             {new Date(event.date).toLocaleDateString('fr-FR', {
@@ -560,7 +560,7 @@ function VerifyLayout({
         </div>
       </header>
       <main className="flex-1 px-4">{children}</main>
-      <footer className="text-muted-foreground border-t px-4 py-6 text-center text-xs">
+      <footer className="text-[#B8D4E3] border-t px-4 py-6 text-center text-xs">
         <p>
           GreenEcoGenius OÜ (Estonia) · GreenEcoGenius, Inc. (Delaware, USA)
         </p>
@@ -585,7 +585,7 @@ function InfoField({
 }) {
   return (
     <div className={className}>
-      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+      <p className="text-[#B8D4E3] text-xs font-medium tracking-wide uppercase">
         {label}
       </p>
       <p
@@ -609,7 +609,7 @@ function CarbonStat({
   return (
     <div className="text-center">
       <p className={`text-2xl font-bold ${color}`}>{value}</p>
-      <p className="text-muted-foreground text-sm">{label}</p>
+      <p className="text-[#B8D4E3] text-sm">{label}</p>
     </div>
   );
 }
@@ -648,7 +648,7 @@ function CopyButtonClient({
       <button
         data-test="copy-button"
         data-copy-text={text}
-        className="text-muted-foreground hover:text-foreground rounded p-1 transition-colors"
+        className="text-[#B8D4E3] hover:text-[#F5F5F0] rounded p-1 transition-colors"
         title={label}
         type="button"
       >
@@ -671,7 +671,7 @@ function CopyButtonClient({
 }
 
 function TimelineIcon({ event }: { event: string }) {
-  const className = 'h-4 w-4 text-muted-foreground';
+  const className = 'h-4 w-4 text-[#B8D4E3]';
 
   switch (event) {
     case 'listing_created':

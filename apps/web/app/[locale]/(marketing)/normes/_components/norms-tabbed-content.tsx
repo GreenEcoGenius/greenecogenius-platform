@@ -134,7 +134,7 @@ function NormCard({
     <div
       ref={ref}
       className={cn(
-        'group border-metal-silver rounded-xl border bg-card p-5 transition-all duration-700',
+        'group border-metal-silver rounded-xl border bg-[#0D3A26] p-5 transition-all duration-700',
         visible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0',
         'hover:-translate-y-1 hover:shadow-lg',
       )}
@@ -145,7 +145,7 @@ function NormCard({
           <p className="text-primary text-xs font-bold tracking-wider uppercase">
             {norm.reference}
           </p>
-          <h4 className="text-metal-900 mt-1 text-sm leading-snug font-semibold">
+          <h4 className="text-[#F5F5F0] mt-1 text-sm leading-snug font-semibold">
             {norm.title}
           </h4>
         </div>
@@ -156,15 +156,15 @@ function NormCard({
         </Badge>
       </div>
 
-      <p className="text-metal-600 mt-3 line-clamp-3 text-xs leading-relaxed">
+      <p className="text-[#B8D4E3] mt-3 line-clamp-3 text-xs leading-relaxed">
         {norm.description}
       </p>
 
       <div className="mt-4 flex flex-wrap items-center gap-2 text-[10px]">
-        <span className="bg-metal-frost text-metal-600 rounded-full px-2 py-0.5 font-medium">
+        <span className="bg-metal-frost text-[#B8D4E3] rounded-full px-2 py-0.5 font-medium">
           {norm.typeLabel}
         </span>
-        <span className="text-metal-500">{norm.statusLabel}</span>
+        <span className="text-[#7DC4A0]">{norm.statusLabel}</span>
         {norm.blockchainVerified && (
           <span className="border-circuit-cyan/30 bg-circuit-cyan/10 text-circuit-cyan rounded-full border px-2 py-0.5 font-medium">
             On-chain
@@ -172,7 +172,7 @@ function NormCard({
         )}
       </div>
 
-      <div className="border-metal-chrome mt-3 flex items-end justify-between border-t pt-3">
+      <div className="border-[#1A5C3E] mt-3 flex items-end justify-between border-t pt-3">
         <p className="text-primary text-[11px] leading-relaxed">
           {norm.gegApplication}
         </p>
@@ -184,7 +184,7 @@ function NormCard({
               '_blank',
             )
           }
-          className="text-metal-steel hover:bg-metal-frost hover:text-primary ml-2 shrink-0 rounded-xl p-1.5 transition-colors"
+          className="text-[#7DC4A0] hover:bg-metal-frost hover:text-primary ml-2 shrink-0 rounded-xl p-1.5 transition-colors"
           title="Telecharger le PDF"
         >
           <Download className="h-4 w-4" strokeWidth={1.5} />
@@ -223,7 +223,7 @@ function PillarContent({
           <h2 className="mt-2 text-3xl font-bold text-white sm:text-4xl">
             {info.label}
           </h2>
-          <p className="text-metal-silver mt-2 max-w-xl text-sm">
+          <p className="text-[#B8D4E3] mt-2 max-w-xl text-sm">
             {info.description}
           </p>
         </div>
@@ -297,7 +297,7 @@ export function NormsTabbedContent() {
     <>
       <div
         ref={tabBarRef}
-        className="border-metal-chrome sticky top-[64px] z-30 border-b bg-white/95 backdrop-blur-sm"
+        className="border-[#1A5C3E] sticky top-[64px] z-30 border-b bg-white/95 backdrop-blur-sm"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="scrollbar-none -mb-px flex gap-0 overflow-x-auto">
@@ -310,7 +310,7 @@ export function NormsTabbedContent() {
                   'flex shrink-0 items-center gap-1.5 border-b-2 px-4 py-3 text-sm font-medium transition-colors',
                   activeTab === tab.id
                     ? 'border-primary text-primary'
-                    : 'text-metal-500 hover:border-metal-300 hover:text-metal-700 border-transparent',
+                    : 'text-[#7DC4A0] hover:border-[#1A5C3E] hover:text-[#E0E7E3] border-transparent',
                 )}
               >
                 {tab.label}
@@ -318,7 +318,7 @@ export function NormsTabbedContent() {
                   <span
                     className={cn(
                       'text-[11px]',
-                      activeTab === tab.id ? 'text-primary' : 'text-metal-400',
+                      activeTab === tab.id ? 'text-primary' : 'text-[#5A9E7D]',
                     )}
                   >
                     ({tab.count})

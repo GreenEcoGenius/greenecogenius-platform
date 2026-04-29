@@ -29,7 +29,7 @@ export function ProfileActions({
           <div>
             <div className="mb-3 flex items-center gap-2">
               {theme === 'dark' ? (
-                <Moon className="h-4 w-4 text-slate-500" strokeWidth={1.5} />
+                <Moon className="h-4 w-4 text-[#7DC4A0]" strokeWidth={1.5} />
               ) : (
                 <Sun className="h-4 w-4 text-[#E6F7EF]0" strokeWidth={1.5} />
               )}
@@ -42,7 +42,7 @@ export function ProfileActions({
                 className={`rounded-lg border-2 px-3 py-2.5 text-xs font-medium transition-all ${
                   theme === 'light'
                     ? 'border-primary bg-primary/5 text-primary'
-                    : 'bg-muted text-muted-foreground border-transparent hover:border-gray-300'
+                    : 'bg-muted text-[#B8D4E3] border-transparent hover:border-gray-300'
                 }`}
               >
                 {t('themeLight')}
@@ -53,7 +53,7 @@ export function ProfileActions({
                 className={`rounded-lg border-2 px-3 py-2.5 text-xs font-medium transition-all ${
                   theme === 'dark'
                     ? 'border-primary bg-primary/5 text-primary'
-                    : 'bg-muted text-muted-foreground border-transparent hover:border-gray-300'
+                    : 'bg-muted text-[#B8D4E3] border-transparent hover:border-gray-300'
                 }`}
               >
                 {t('themeDark')}
@@ -64,7 +64,7 @@ export function ProfileActions({
                 className={`rounded-lg border-2 px-3 py-2.5 text-xs font-medium transition-all ${
                   theme === 'system'
                     ? 'border-primary bg-primary/5 text-primary'
-                    : 'bg-muted text-muted-foreground border-transparent hover:border-gray-300'
+                    : 'bg-muted text-[#B8D4E3] border-transparent hover:border-gray-300'
                 }`}
               >
                 {t('themeAuto')}

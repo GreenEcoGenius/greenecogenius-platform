@@ -32,7 +32,7 @@ export function AIChainAnalysis({ lotId, lotData }: AIChainAnalysisProps) {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Link2 className="h-5 w-5 text-blue-600" />
+            <Link2 className="h-5 w-5 text-blue-400" />
             Analyse de chaine
           </CardTitle>
           <AIPoweredBadge methodology="Tracabilite" />
@@ -42,14 +42,14 @@ export function AIChainAnalysis({ lotId, lotData }: AIChainAnalysisProps) {
       <CardContent>
         {!hasAnalyzed && (
           <div className="flex flex-col items-center gap-3 py-6 text-center">
-            <div className="rounded-full bg-blue-50 p-3 dark:bg-blue-950/30">
+            <div className="rounded-full bg-blue-900/30 p-3 dark:bg-blue-950/30">
               <Search className="h-6 w-6 text-blue-500" />
             </div>
             <div>
               <p className="text-sm font-medium">
                 Analyse complete du lot {lotId}
               </p>
-              <p className="text-muted-foreground mt-1 text-xs">
+              <p className="text-[#B8D4E3] mt-1 text-xs">
                 L&apos;IA analysera l&apos;ensemble de la chaine de tracabilite,
                 les documents et la conformite.
               </p>
@@ -67,7 +67,7 @@ export function AIChainAnalysis({ lotId, lotData }: AIChainAnalysisProps) {
 
         {loading && (
           <div className="py-4">
-            <p className="mb-3 text-center text-sm text-blue-600">
+            <p className="mb-3 text-center text-sm text-blue-400">
               Analyse en cours pour {lotId}...
             </p>
             <AILoadingState lines={5} />
@@ -75,7 +75,7 @@ export function AIChainAnalysis({ lotId, lotData }: AIChainAnalysisProps) {
         )}
 
         {error && (
-          <div className="rounded-md border border-[#8FDAB5] bg-[#E6F7EF] p-4 dark:border-[#008F5A] dark:bg-[#004428]/20">
+          <div className="rounded-md border border-[#8FDAB5] bg-[#1A5C3E] p-4 dark:border-[#008F5A] dark:bg-[#004428]/20">
             <p className="text-sm text-[#008F5A]">{error}</p>
             <Button
               variant="outline"
@@ -93,13 +93,13 @@ export function AIChainAnalysis({ lotId, lotData }: AIChainAnalysisProps) {
 
         {response && !loading && (
           <div className="space-y-3">
-            <div className="rounded-md border bg-blue-50/50 p-4 dark:bg-blue-950/10">
+            <div className="rounded-md border bg-blue-900/30/50 p-4 dark:bg-blue-950/10">
               <p className="text-sm leading-relaxed whitespace-pre-wrap">
                 {response.content}
               </p>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-muted-foreground text-[10px]">
+              <span className="text-[#B8D4E3] text-[10px]">
                 Genere par IA -- les resultats peuvent contenir des
                 inexactitudes
               </span>

@@ -21,19 +21,19 @@ async function PrivacyPolicyPage() {
       />
 
       <div className="container mx-auto max-w-3xl px-4 py-12 sm:py-16">
-        <p className="text-muted-foreground mb-12 text-sm">
+        <p className="text-[#B8D4E3] mb-12 text-sm">
           Dernière mise à jour : 29 mars 2026
         </p>
 
         <Section title="1. Responsables du traitement">
           <p>
-            <strong className="text-foreground">
+            <strong className="text-[#F5F5F0]">
               Pour les utilisateurs situés dans {"l'UE/EEE"} :
             </strong>
           </p>
           <p>
             Responsable du traitement :{' '}
-            <strong className="text-foreground">GreenEcoGenius OÜ</strong>
+            <strong className="text-[#F5F5F0]">GreenEcoGenius OÜ</strong>
             <br />
             Adresse : Tornimäe tn 5, 10145 Tallinn, Estonie
             <br />
@@ -50,13 +50,13 @@ async function PrivacyPolicyPage() {
             Base légale : RGPD (UE) 2016/679
           </p>
           <p>
-            <strong className="text-foreground">
+            <strong className="text-[#F5F5F0]">
               Pour les utilisateurs situés aux États-Unis :
             </strong>
           </p>
           <p>
             Responsable du traitement :{' '}
-            <strong className="text-foreground">GreenEcoGenius, Inc.</strong>
+            <strong className="text-[#F5F5F0]">GreenEcoGenius, Inc.</strong>
             <br />
             Adresse : 131 Continental Dr, Suite 305, Newark, DE 19713, USA
             <br />
@@ -269,7 +269,7 @@ async function PrivacyPolicyPage() {
             applicables.
           </p>
           <p>
-            <strong className="text-foreground">
+            <strong className="text-[#F5F5F0]">
               Sous-traitants techniques :
             </strong>
           </p>
@@ -300,7 +300,7 @@ function Section({
   return (
     <section className="border-border/50 mb-10 border-b pb-10 last:mb-0 last:border-b-0 last:pb-0">
       <h2 className="mb-4 text-lg font-semibold tracking-tight">{title}</h2>
-      <div className="text-muted-foreground space-y-3 text-[15px] leading-relaxed">
+      <div className="text-[#B8D4E3] space-y-3 text-[15px] leading-relaxed">
         {children}
       </div>
     </section>
@@ -309,7 +309,7 @@ function Section({
 
 function DataTable({ rows }: { rows: [string, string][] }) {
   return (
-    <div className="bg-card mt-3 overflow-hidden rounded-lg border">
+    <div className="bg-[#0D3A26] mt-3 overflow-hidden rounded-lg border">
       <table className="w-full text-sm">
         <tbody>
           {rows.map(([label, value], i) => (
@@ -317,10 +317,10 @@ function DataTable({ rows }: { rows: [string, string][] }) {
               key={label}
               className={i > 0 ? 'border-border/50 border-t' : ''}
             >
-              <td className="text-foreground w-1/3 px-4 py-3 align-top font-medium whitespace-nowrap">
+              <td className="text-[#F5F5F0] w-1/3 px-4 py-3 align-top font-medium whitespace-nowrap">
                 {label}
               </td>
-              <td className="text-muted-foreground px-4 py-3">{value}</td>
+              <td className="text-[#B8D4E3] px-4 py-3">{value}</td>
             </tr>
           ))}
         </tbody>

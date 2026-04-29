@@ -85,7 +85,7 @@ export function ListingImage({
     }
 
     return (
-      <div className="bg-cloud-100 flex aspect-square h-20 w-20 shrink-0 flex-col items-center justify-center rounded-lg sm:h-24 sm:w-24">
+      <div className="bg-[#0D3A26] flex aspect-square h-20 w-20 shrink-0 flex-col items-center justify-center rounded-lg sm:h-24 sm:w-24">
         <span className="text-verdure-500">
           {getCategoryIcon(categorySlug, 'thumbnail')}
         </span>
@@ -108,11 +108,11 @@ export function ListingImage({
 
   return (
     <div className="bg-muted mb-6 flex aspect-video w-full flex-col items-center justify-center gap-3 rounded-xl">
-      <span className="text-muted-foreground/50">
+      <span className="text-[#B8D4E3]/50">
         {getCategoryIcon(categorySlug, 'hero')}
       </span>
       {categoryName && (
-        <span className="text-muted-foreground text-sm">{categoryName}</span>
+        <span className="text-[#B8D4E3] text-sm">{categoryName}</span>
       )}
     </div>
   );

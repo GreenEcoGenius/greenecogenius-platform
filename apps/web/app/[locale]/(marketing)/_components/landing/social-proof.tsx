@@ -72,7 +72,7 @@ export function SocialProof({ className }: { className?: string }) {
     <section className={cn('py-16 sm:py-20', className)}>
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll animation="fade-up">
-          <p className="text-metal-500 mb-10 text-center text-sm font-medium tracking-wider uppercase">
+          <p className="text-[#7DC4A0] mb-10 text-center text-sm font-medium tracking-wider uppercase">
             {t('landing.socialTitle')}
           </p>
         </AnimateOnScroll>
@@ -93,7 +93,7 @@ export function SocialProof({ className }: { className?: string }) {
           </div>
         </div>
 
-        <p className="text-metal-400 mt-8 text-center text-xs">
+        <p className="text-[#5A9E7D] mt-8 text-center text-xs">
           {t('landing.socialDisclaimer')}
         </p>
       </div>

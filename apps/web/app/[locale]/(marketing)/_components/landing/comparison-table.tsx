@@ -30,7 +30,7 @@ type CellValue = 'yes' | 'no' | 'partial' | 'na' | 'price';
 function CellIcon({ value, col }: { value: CellValue; col: string }) {
   if (value === 'price') {
     return (
-      <span className={`text-xs font-semibold ${col === 'geg' ? 'text-[#008F5A]' : 'text-metal-600'}`}>
+      <span className={`text-xs font-semibold ${col === 'geg' ? 'text-[#008F5A]' : 'text-[#B8D4E3]'}`}>
         {PRICES[col]}
       </span>
     );
@@ -47,27 +47,27 @@ function CellIcon({ value, col }: { value: CellValue; col: string }) {
   if (value === 'partial') {
     return (
       <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-100">
-        <Minus className="h-4 w-4 text-amber-600" strokeWidth={2.5} />
+        <Minus className="h-4 w-4 text-amber-400" strokeWidth={2.5} />
       </span>
     );
   }
 
   if (value === 'no') {
     return (
-      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-red-50">
+      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-red-900/30">
         <X className="h-4 w-4 text-red-400" strokeWidth={2.5} />
       </span>
     );
   }
 
-  return <span className="text-metal-300">&mdash;</span>;
+  return <span className="text-[#4A8A6D]">&mdash;</span>;
 }
 
 function LegendDot({ type, label }: { type: 'yes' | 'partial' | 'no'; label: string }) {
   const styles = {
     yes: 'bg-[#8FDAB5] text-[#00A86B]',
-    partial: 'bg-amber-100 text-amber-600',
-    no: 'bg-red-50 text-red-400',
+    partial: 'bg-amber-100 text-amber-400',
+    no: 'bg-red-900/30 text-red-400',
   };
   const icons = {
     yes: <Check className="h-3 w-3" strokeWidth={2.5} />,
@@ -102,16 +102,16 @@ export function ComparisonTable() {
         <h2 className="gradient-text-verdure-leaf mb-3 text-center text-3xl font-bold sm:text-4xl">
           {t('landing.compTitle')}
         </h2>
-        <p className="text-metal-600 mx-auto mb-14 max-w-2xl text-center text-lg">
+        <p className="text-[#B8D4E3] mx-auto mb-14 max-w-2xl text-center text-lg">
           {t('landing.compSub')}
         </p>
 
         {/* Desktop table */}
-        <div className="hidden overflow-hidden rounded-2xl border bg-card shadow-sm md:block">
+        <div className="hidden overflow-hidden rounded-2xl border bg-[#0D3A26] shadow-lg shadow-black/20 md:block">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b bg-[#E8F5EE]">
-                <th className="px-5 py-4 text-left text-xs font-semibold tracking-wider text-gray-500 uppercase">
+              <tr className="border-b bg-[#12472F]">
+                <th className="px-5 py-4 text-left text-xs font-semibold tracking-wider text-[#7DC4A0] uppercase">
                   {t('landing.compFeature')}
                 </th>
                 {columns.map((col) => (
@@ -119,8 +119,8 @@ export function ComparisonTable() {
                     key={col}
                     className={`px-4 py-4 text-center text-xs font-semibold tracking-wider uppercase ${
                       col === 'geg'
-                        ? 'bg-[#E6F7EF] text-[#008F5A]'
-                        : 'text-gray-500'
+                        ? 'bg-[#1A5C3E] text-[#008F5A]'
+                        : 'text-[#7DC4A0]'
                     }`}
                   >
                     {col === 'geg' && (
@@ -138,15 +138,15 @@ export function ComparisonTable() {
               {FEATURES.map((row) => (
                 <tr
                   key={row.key}
-                  className="transition-colors hover:bg-[#E8F5EE]/50"
+                  className="transition-colors hover:bg-[#12472F]/50"
                 >
-                  <td className="text-metal-800 px-5 py-3.5 text-sm font-medium">
+                  <td className="text-[#F5F5F0] px-5 py-3.5 text-sm font-medium">
                     {t(`landing.comp_${row.key}`)}
                   </td>
                   {columns.map((col) => (
                     <td
                       key={col}
-                      className={`px-4 py-3.5 text-center ${col === 'geg' ? 'bg-[#E6F7EF]/50' : ''}`}
+                      className={`px-4 py-3.5 text-center ${col === 'geg' ? 'bg-[#1A5C3E]/50' : ''}`}
                     >
                       <CellIcon value={row[col]} col={col} />
                     </td>
@@ -160,14 +160,14 @@ export function ComparisonTable() {
         {/* Mobile cards */}
         <div className="space-y-3 md:hidden">
           {FEATURES.map((row) => (
-            <div key={row.key} className="rounded-xl border bg-card p-4">
-              <p className="text-metal-900 mb-3 text-sm font-semibold">
+            <div key={row.key} className="rounded-xl border bg-[#0D3A26] p-4">
+              <p className="text-[#F5F5F0] mb-3 text-sm font-semibold">
                 {t(`landing.comp_${row.key}`)}
               </p>
               <div className="grid grid-cols-4 gap-2 text-center">
                 {columns.map((col) => (
                   <div key={col}>
-                    <p className={`mb-1 text-[10px] font-medium ${col === 'geg' ? 'text-[#008F5A]' : 'text-metal-400'}`}>
+                    <p className={`mb-1 text-[10px] font-medium ${col === 'geg' ? 'text-[#008F5A]' : 'text-[#5A9E7D]'}`}>
                       {col === 'geg'
                         ? 'GEG'
                         : col === 'internal'
@@ -183,24 +183,24 @@ export function ComparisonTable() {
         </div>
 
         {/* Legend */}
-        <div className="text-metal-500 mt-6 flex flex-wrap items-center justify-center gap-5 text-xs">
+        <div className="text-[#7DC4A0] mt-6 flex flex-wrap items-center justify-center gap-5 text-xs">
           <LegendDot type="yes" label={t('landing.compLegendYes')} />
           <LegendDot type="partial" label={t('landing.compLegendPartial')} />
           <LegendDot type="no" label={t('landing.compLegendNo')} />
         </div>
 
         {/* Differentiator callout */}
-        <div className="mt-8 rounded-xl border-l-4 border-l-[#008F5A] bg-[#E6F7EF] p-6">
+        <div className="mt-8 rounded-xl border-l-4 border-l-[#008F5A] bg-[#1A5C3E] p-6">
           <div className="flex items-start gap-3">
             <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-[#008F5A]" />
-            <p className="text-metal-800 text-sm leading-relaxed">
+            <p className="text-[#F5F5F0] text-sm leading-relaxed">
               {t('landing.compCallout')}
             </p>
           </div>
         </div>
 
         {/* Price disclaimer */}
-        <p className="text-metal-400 mt-3 text-center text-[10px]">
+        <p className="text-[#5A9E7D] mt-3 text-center text-[10px]">
           {t('landing.compPriceDisclaimer')}
         </p>
 

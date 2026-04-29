@@ -28,7 +28,7 @@ const STATUS_CONFIG: Record<
     variant: 'default',
     i18nKey: 'rse:eligible',
     className:
-      'bg-verdure-100 text-verdure-800 dark:bg-verdure-900/40 dark:text-verdure-300 border-verdure-200',
+      'bg-verdure-100 text-verdure-800 dark:bg-verdure-900/40 dark:text-verdure-300 border-[#1A5C3E]',
   },
   in_progress: {
     variant: 'secondary',
@@ -40,7 +40,7 @@ const STATUS_CONFIG: Record<
     variant: 'outline',
     i18nKey: 'rse:notStarted',
     className:
-      'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 border-[#C5DDD0]',
+      'bg-gray-100 text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0] border-[#1A5C3E]',
   },
 };
 
@@ -72,7 +72,7 @@ export function LabelEligibilityCards({ labels }: LabelEligibilityCardsProps) {
                 >
                   {label.score}
                 </span>
-                <span className="text-muted-foreground text-sm">
+                <span className="text-[#B8D4E3] text-sm">
                   <Trans i18nKey="rse:threshold" /> {label.threshold}
                 </span>
               </div>
@@ -87,7 +87,7 @@ export function LabelEligibilityCards({ labels }: LabelEligibilityCardsProps) {
                 />
               </div>
               {!isEligible && (
-                <p className="text-muted-foreground text-xs">
+                <p className="text-[#B8D4E3] text-xs">
                   {label.threshold - label.score} <Trans i18nKey="rse:points" />{' '}
                   <Trans i18nKey="rse:actionsRemaining" />
                 </p>

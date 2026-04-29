@@ -32,8 +32,8 @@ export function ZoneSelector({
             onClick={() => onChange(id)}
             className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
               isActive
-                ? 'bg-[#00A86B] text-white shadow-md'
-                : 'border border-gray-300 bg-card text-gray-600 hover:border-gray-400 hover:bg-[#E8F5EE]'
+                ? 'bg-[#00A86B] text-white shadow-xl shadow-black/25'
+                : 'border border-gray-300 bg-[#0D3A26] text-[#B8D4E3] hover:border-gray-400 hover:bg-[#12472F]'
             }`}
           >
             <Icon className="h-4 w-4" />

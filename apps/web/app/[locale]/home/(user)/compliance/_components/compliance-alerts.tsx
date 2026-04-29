@@ -20,7 +20,7 @@ export function ComplianceAlerts({ alerts }: { alerts: AlertItem[] }) {
     <Card>
       <CardContent className="p-6">
         <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
-          <ShieldAlert className="h-5 w-5 text-slate-500" />
+          <ShieldAlert className="h-5 w-5 text-[#7DC4A0]" />
           <Trans i18nKey="compliance:alertsTitle" defaults="Alertes actives" />
           <Badge variant="destructive" className="ml-1">
             {alerts.length}
@@ -33,15 +33,15 @@ export function ComplianceAlerts({ alerts }: { alerts: AlertItem[] }) {
               key={alert.id}
               className={`rounded-lg border-l-4 p-4 ${
                 alert.urgency === 'urgent'
-                  ? 'border-l-slate-500 bg-[#E8F5EE]'
-                  : 'border-l-[#E6F7EF]0 bg-[#E6F7EF]'
+                  ? 'border-l-slate-500 bg-[#12472F]'
+                  : 'border-l-[#E6F7EF]0 bg-[#1A5C3E]'
               }`}
             >
               <div className="flex items-start gap-3">
                 <AlertTriangle
                   className={`mt-0.5 h-4 w-4 shrink-0 ${
                     alert.urgency === 'urgent'
-                      ? 'text-slate-600'
+                      ? 'text-[#B8D4E3]'
                       : 'text-[#00A86B]'
                   }`}
                 />
@@ -66,7 +66,7 @@ export function ComplianceAlerts({ alerts }: { alerts: AlertItem[] }) {
                       />
                     </Badge>
                   </div>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-[#B8D4E3] text-sm">
                     {alert.description}
                   </p>
                 </div>

@@ -83,7 +83,7 @@ export function ListingCard({
   return (
     <Link
       href={detailHref}
-      className="group bg-card border-border/40 relative flex gap-4 rounded-lg border p-5 transition-shadow hover:shadow-md"
+      className="group bg-[#0D3A26] border-border/40 relative flex gap-4 rounded-lg border p-5 transition-shadow hover:shadow-xl shadow-black/25"
     >
       <ListingImage
         imageUrl={imageUrl ?? null}
@@ -101,7 +101,7 @@ export function ListingCard({
           </Badge>
 
           <div className="flex items-center gap-1">
-            <span className="text-muted-foreground text-xs">
+            <span className="text-[#B8D4E3] text-xs">
               {listing.created_at
                 ? new Date(listing.created_at).toLocaleDateString('fr-FR')
                 : ''}
@@ -115,26 +115,26 @@ export function ListingCard({
         </h3>
 
         {listing.description && (
-          <p className="text-muted-foreground mt-1 line-clamp-2 text-xs">
+          <p className="text-[#B8D4E3] mt-1 line-clamp-2 text-xs">
             {listing.description}
           </p>
         )}
 
         <div className="mt-4 flex flex-wrap gap-3 text-xs">
           {listing.material_categories && (
-            <span className="text-muted-foreground flex items-center gap-1">
+            <span className="text-[#B8D4E3] flex items-center gap-1">
               <Tag className="h-3 w-3" />
               {listing.material_categories.name_fr}
             </span>
           )}
 
-          <span className="text-muted-foreground flex items-center gap-1">
+          <span className="text-[#B8D4E3] flex items-center gap-1">
             <Package className="h-3 w-3" />
             {listing.quantity} {listing.unit}
           </span>
 
           {listing.location_city && (
-            <span className="text-muted-foreground flex items-center gap-1">
+            <span className="text-[#B8D4E3] flex items-center gap-1">
               <MapPin className="h-3 w-3" />
               {listing.location_city}
             </span>
@@ -147,7 +147,7 @@ export function ListingCard({
               {listing.price_per_unit} {listing.currency}/{listing.unit}
             </div>
             {totalPrice !== null && (
-              <div className="text-muted-foreground text-xs">
+              <div className="text-[#B8D4E3] text-xs">
                 <Trans i18nKey="marketplace.totalLabel" />
                 {' : '}
                 {totalPrice.toLocaleString('fr-FR', {

@@ -32,7 +32,7 @@ export default async function SolutionsPage() {
       icon: <Recycle className="h-7 w-7" strokeWidth={1.5} />,
       title: t('solMarketplaceTitle'),
       subtitle: t('solMarketplaceSub'),
-      badgeClass: 'bg-primary-light text-primary-500',
+      badgeClass: 'bg-[#1A5C3E] text-primary-500',
       description: t('solMarketplaceDesc'),
       features: [
         t('solMarketplaceF1'),
@@ -106,17 +106,17 @@ export default async function SolutionsPage() {
 
   return (
     <div>
-      <section className="bg-metal-50 relative overflow-hidden py-20 sm:py-28">
+      <section className="bg-[#0D3A26] relative overflow-hidden py-20 sm:py-28">
         <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <div className="bg-primary-light text-primary mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold">
+            <div className="bg-[#1A5C3E] text-primary mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold">
               <Sparkles className="h-4 w-4" />
               {t('solBadge')}
             </div>
-            <h1 className="text-metal-900 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-[#F5F5F0] text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
               {t('solTitle')}
             </h1>
-            <p className="text-metal-600 mx-auto mt-4 max-w-2xl text-lg">
+            <p className="text-[#B8D4E3] mx-auto mt-4 max-w-2xl text-lg">
               {t('solDesc')}
             </p>
           </AnimateOnScroll>
@@ -129,7 +129,7 @@ export default async function SolutionsPage() {
         return (
           <section
             key={solution.id}
-            className={`py-16 sm:py-24 ${index % 2 === 1 ? 'bg-metal-50' : ''}`}
+            className={`py-16 sm:py-24 ${index % 2 === 1 ? 'bg-[#0D3A26]' : ''}`}
           >
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
               <div
@@ -138,7 +138,7 @@ export default async function SolutionsPage() {
                 <AnimateOnScroll
                   animation={isEven ? 'fade-right' : 'fade-left'}
                 >
-                  <div className="relative overflow-hidden rounded-xl shadow-sm lg:[direction:ltr]">
+                  <div className="relative overflow-hidden rounded-xl shadow-lg shadow-black/20 lg:[direction:ltr]">
                     <Image
                       src={solution.image}
                       alt={solution.title}
@@ -156,7 +156,7 @@ export default async function SolutionsPage() {
                     delay={100}
                   >
                     <div className="text-primary mb-4 inline-flex items-center gap-3">
-                      <div className="bg-primary-light rounded-xl p-3">
+                      <div className="bg-[#1A5C3E] rounded-xl p-3">
                         {solution.icon}
                       </div>
                       <div>
@@ -165,7 +165,7 @@ export default async function SolutionsPage() {
                         >
                           {solution.subtitle}
                         </p>
-                        <h2 className="text-metal-900 text-2xl font-bold sm:text-3xl">
+                        <h2 className="text-[#F5F5F0] text-2xl font-bold sm:text-3xl">
                           {solution.title}
                         </h2>
                       </div>
@@ -176,7 +176,7 @@ export default async function SolutionsPage() {
                     animation={isEven ? 'fade-left' : 'fade-right'}
                     delay={200}
                   >
-                    <p className="text-metal-600 text-base leading-relaxed">
+                    <p className="text-[#B8D4E3] text-base leading-relaxed">
                       {solution.description}
                     </p>
                   </AnimateOnScroll>
@@ -194,7 +194,7 @@ export default async function SolutionsPage() {
                           <div className="bg-tech-mint mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full">
                             <div className="bg-tech-neon h-1.5 w-1.5 rounded-full" />
                           </div>
-                          <span className="text-metal-700">{feature}</span>
+                          <span className="text-[#E0E7E3]">{feature}</span>
                         </li>
                       ))}
                     </ul>

@@ -50,36 +50,36 @@ const contractStatusConfig: Record<
   { color: string; icon: React.ReactNode; labelKey: string }
 > = {
   not_sent: {
-    color: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
+    color: 'bg-gray-100 text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0]',
     icon: <Clock className="h-3 w-3" />,
     labelKey: 'wallet.contractPending',
   },
   sent: {
-    color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+    color: 'bg-blue-100 text-blue-400 dark:bg-blue-900/30 dark:text-blue-400',
     icon: <Send className="h-3 w-3" />,
     labelKey: 'wallet.contractSent',
   },
   seller_signed: {
     color:
-      'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+      'bg-amber-100 text-amber-400 dark:bg-amber-900/30 dark:text-amber-400',
     icon: <FileSignature className="h-3 w-3" />,
     labelKey: 'wallet.contractPartial',
   },
   buyer_signed: {
     color:
-      'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+      'bg-amber-100 text-amber-400 dark:bg-amber-900/30 dark:text-amber-400',
     icon: <FileSignature className="h-3 w-3" />,
     labelKey: 'wallet.contractPartial',
   },
   fully_signed: {
     color:
-      'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
+      'bg-emerald-100 text-emerald-400 dark:bg-emerald-900/30 dark:text-emerald-400',
     icon: <CheckCircle className="h-3 w-3" />,
     labelKey: 'wallet.contractSigned',
   },
   blockchain_certified: {
     color:
-      'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
+      'bg-purple-100 text-purple-400 dark:bg-purple-900/30 dark:text-purple-400',
     icon: <ShieldCheck className="h-3 w-3" />,
     labelKey: 'wallet.contractCertified',
   },
@@ -101,18 +101,18 @@ export function DocuSignContracts({ transactions }: DocuSignContractsProps) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <FileSignature className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+          <FileSignature className="h-5 w-5 text-blue-400 dark:text-blue-400" />
           <Trans i18nKey="wallet.contractsTitle" />
         </CardTitle>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-[#B8D4E3] text-sm">
           <Trans i18nKey="wallet.contractsDesc" />
         </p>
       </CardHeader>
       <CardContent>
         {contractTransactions.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-10">
-            <FileSignature className="text-muted-foreground/30 mb-3 h-10 w-10" />
-            <p className="text-muted-foreground text-sm">
+            <FileSignature className="text-[#B8D4E3]/30 mb-3 h-10 w-10" />
+            <p className="text-[#B8D4E3] text-sm">
               <Trans i18nKey="wallet.noContracts" />
             </p>
           </div>
@@ -143,8 +143,8 @@ export function DocuSignContracts({ transactions }: DocuSignContractsProps) {
                       <FileSignature
                         className={`h-5 w-5 ${
                           isSigned
-                            ? 'text-emerald-600 dark:text-emerald-400'
-                            : 'text-blue-600 dark:text-blue-400'
+                            ? 'text-emerald-400 dark:text-emerald-400'
+                            : 'text-blue-400 dark:text-blue-400'
                         }`}
                       />
                     </div>
@@ -152,7 +152,7 @@ export function DocuSignContracts({ transactions }: DocuSignContractsProps) {
                       <p className="text-sm font-medium">
                         {tx.listings?.title ?? 'Transaction'}
                       </p>
-                      <p className="text-muted-foreground text-xs">
+                      <p className="text-[#B8D4E3] text-xs">
                         {formatDate(tx.created_at)} · {formatCents(tx.total_amount)}
                       </p>
                     </div>
@@ -166,7 +166,7 @@ export function DocuSignContracts({ transactions }: DocuSignContractsProps) {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="gap-1.5 text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                        className="gap-1.5 text-blue-400 hover:text-blue-400 dark:text-blue-400"
                         onClick={() =>
                           window.open(
                             `/home/transactions/${tx.id}`,
@@ -198,14 +198,14 @@ export function DocuSignContracts({ transactions }: DocuSignContractsProps) {
         )}
 
         {/* DocuSign info banner */}
-        <div className="mt-4 rounded-xl border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-950/30">
+        <div className="mt-4 rounded-xl border border-blue-200 bg-blue-900/30 p-4 dark:border-blue-800 dark:bg-blue-950/30">
           <div className="flex items-start gap-3">
-            <ShieldCheck className="mt-0.5 h-5 w-5 text-blue-600 dark:text-blue-400" />
+            <ShieldCheck className="mt-0.5 h-5 w-5 text-blue-400 dark:text-blue-400" />
             <div>
               <p className="text-sm font-medium text-blue-900 dark:text-blue-200">
                 <Trans i18nKey="wallet.docusignInfoTitle" />
               </p>
-              <p className="mt-1 text-xs text-blue-700 dark:text-blue-300">
+              <p className="mt-1 text-xs text-blue-400 dark:text-blue-300">
                 <Trans i18nKey="wallet.docusignInfoDesc" />
               </p>
             </div>

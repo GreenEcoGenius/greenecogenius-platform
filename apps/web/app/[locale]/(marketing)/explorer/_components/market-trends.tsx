@@ -16,7 +16,7 @@ export function MarketTrends({ stats }: { stats: NationalStat[] }) {
     <section>
       <div className="mb-6 flex items-center gap-2">
         <TrendingUp className="text-primary h-5 w-5" />
-        <h2 className="text-metal-900 text-xl font-bold">
+        <h2 className="text-[#F5F5F0] text-xl font-bold">
           {t('explorer.trendsTitle')}
         </h2>
       </div>
@@ -29,16 +29,16 @@ export function MarketTrends({ stats }: { stats: NationalStat[] }) {
           return (
             <div
               key={stat.category}
-              className="border-metal-chrome flex items-start gap-3 rounded-xl border bg-card p-4"
+              className="border-[#1A5C3E] flex items-start gap-3 rounded-xl border bg-[#0D3A26] p-4"
             >
-              <span className="text-metal-400 text-sm font-bold">
+              <span className="text-[#5A9E7D] text-sm font-bold">
                 {i + 1}.
               </span>
               <div>
-                <p className="text-metal-900 text-sm font-semibold">
+                <p className="text-[#F5F5F0] text-sm font-semibold">
                   {materialName}
                 </p>
-                <p className="text-metal-500 flex items-center gap-1 text-xs">
+                <p className="text-[#7DC4A0] flex items-center gap-1 text-xs">
                   {formatVolume(stat.annual_volume_tonnes)}
                   {t('explorer.perYear')}
                   {stat.recycling_rate > 0 && (
@@ -54,7 +54,7 @@ export function MarketTrends({ stats }: { stats: NationalStat[] }) {
         })}
       </div>
 
-      <p className="text-metal-400 mt-4 text-xs">
+      <p className="text-[#5A9E7D] mt-4 text-xs">
         {t('explorer.trendsDisclaimer')}
       </p>
     </section>

@@ -31,17 +31,17 @@ const STATUS_CONFIG: Record<
   },
   partial: {
     icon: Clock,
-    className: 'bg-amber-100 text-amber-700',
+    className: 'bg-amber-100 text-amber-400',
     i18nKey: 'compliance:statusPartial',
   },
   non_compliant: {
     icon: XCircle,
-    className: 'bg-red-100 text-red-700',
+    className: 'bg-red-100 text-red-400',
     i18nKey: 'compliance:statusNonCompliant',
   },
   not_evaluated: {
     icon: MinusCircle,
-    className: 'bg-gray-100 text-gray-500',
+    className: 'bg-gray-100 text-[#7DC4A0]',
     i18nKey: 'compliance:statusNotEvaluated',
   },
 };
@@ -127,7 +127,7 @@ export function NormStatusTable({ norms }: { norms: NormRow[] }) {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b text-xs font-medium text-gray-500 uppercase">
+              <tr className="border-b text-xs font-medium text-[#7DC4A0] uppercase">
                 <th className="px-3 py-2">{t('columnNorm')}</th>
                 <th className="px-3 py-2">{t('columnPillar')}</th>
                 <th className="px-3 py-2">{t('columnStatus')}</th>
@@ -143,9 +143,9 @@ export function NormStatusTable({ norms }: { norms: NormRow[] }) {
                   METHOD_LABELS[norm.autoVerified] ?? METHOD_LABELS.pending!;
 
                 return (
-                  <tr key={norm.name} className="hover:bg-[#E8F5EE]/50">
+                  <tr key={norm.name} className="hover:bg-[#12472F]/50">
                     <td className="px-3 py-3 font-medium">{norm.name}</td>
-                    <td className="text-muted-foreground px-3 py-3 text-xs">
+                    <td className="text-[#B8D4E3] px-3 py-3 text-xs">
                       {PILLAR_NAMES[norm.pillar] ?? norm.pillar}
                     </td>
                     <td className="px-3 py-3">
@@ -178,7 +178,7 @@ export function NormStatusTable({ norms }: { norms: NormRow[] }) {
           </table>
         </div>
 
-        <p className="text-muted-foreground mt-4 text-xs">
+        <p className="text-[#B8D4E3] mt-4 text-xs">
           {autoVerifiedCount}/{norms.length}{' '}
           <Trans
             i18nKey="compliance:autoVerifiedCount"

@@ -315,7 +315,7 @@ export function AIAssistant() {
 
       {/* ─── Chat panel ─── */}
       {open && (
-        <div className="border-metal-chrome shadow-metal-900/12 fixed right-6 bottom-6 z-50 flex w-[400px] flex-col overflow-hidden rounded-2xl border bg-card shadow-2xl">
+        <div className="border-[#1A5C3E] shadow-metal-900/12 fixed right-6 bottom-6 z-50 flex w-[400px] flex-col overflow-hidden rounded-2xl border bg-[#0D3A26] shadow-2xl">
           {/* Header */}
           <div className="from-primary to-primary-hover flex items-center justify-between bg-gradient-to-r px-5 py-4">
             <div>
@@ -355,7 +355,7 @@ export function AIAssistant() {
               /* Welcome screen */
               <div className="flex flex-1 flex-col">
                 {/* Welcome message */}
-                <div className="bg-metal-50 text-metal-700 mb-4 rounded-xl rounded-bl-sm px-4 py-3 text-sm leading-relaxed">
+                <div className="bg-[#0D3A26] text-[#E0E7E3] mb-4 rounded-xl rounded-bl-sm px-4 py-3 text-sm leading-relaxed">
                   {section.welcome}
                 </div>
 
@@ -366,7 +366,7 @@ export function AIAssistant() {
                       key={suggestion}
                       type="button"
                       onClick={() => handleSend(suggestion)}
-                      className="border-metal-chrome text-metal-700 hover:border-primary/30 hover:bg-primary-light/50 hover:text-primary flex items-center gap-2.5 rounded-xl border px-4 py-3 text-left text-[13px] transition-all duration-150"
+                      className="border-[#1A5C3E] text-[#E0E7E3] hover:border-primary/30 hover:bg-[#1A5C3E]/50 hover:text-primary flex items-center gap-2.5 rounded-xl border px-4 py-3 text-left text-[13px] transition-all duration-150"
                     >
                       <span className="text-primary">&#8599;</span>
                       {suggestion}
@@ -387,10 +387,10 @@ export function AIAssistant() {
                       </div>
                     ) : (
                       <div className="flex gap-2">
-                        <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                        <div className="bg-[#1A5C3E] flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
                           <Sparkles className="text-primary h-3 w-3" />
                         </div>
-                        <div className="bg-metal-50 text-metal-800 max-w-[85%] rounded-xl rounded-tl-sm px-4 py-2.5 text-sm leading-relaxed">
+                        <div className="bg-[#0D3A26] text-[#F5F5F0] max-w-[85%] rounded-xl rounded-tl-sm px-4 py-2.5 text-sm leading-relaxed">
                           {msg.streaming ? (
                             <StreamingMessage content={msg.content} />
                           ) : (
@@ -406,10 +406,10 @@ export function AIAssistant() {
 
                 {loading && (
                   <div className="flex gap-2">
-                    <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                    <div className="bg-[#1A5C3E] flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
                       <Sparkles className="text-primary h-3 w-3" />
                     </div>
-                    <div className="bg-metal-50 rounded-xl rounded-tl-sm px-4 py-3">
+                    <div className="bg-[#0D3A26] rounded-xl rounded-tl-sm px-4 py-3">
                       <AILoadingState lines={1} />
                     </div>
                   </div>
@@ -421,13 +421,13 @@ export function AIAssistant() {
           </div>
 
           {/* Disclaimer */}
-          <div className="text-metal-steel px-4 text-center text-[10px]">
+          <div className="text-[#7DC4A0] px-4 text-center text-[10px]">
             {t('ai.disclaimer')}
           </div>
 
           {/* Input */}
-          <div className="border-metal-chrome border-t p-3">
-            <div className="border-metal-silver bg-metal-50 flex items-end gap-2 rounded-xl border px-3 py-2">
+          <div className="border-[#1A5C3E] border-t p-3">
+            <div className="border-metal-silver bg-[#0D3A26] flex items-end gap-2 rounded-xl border px-3 py-2">
               <textarea
                 ref={inputRef}
                 value={input}
@@ -440,7 +440,7 @@ export function AIAssistant() {
                 onKeyDown={handleKeyDown}
                 placeholder={t('ai.askQuestion')}
                 rows={1}
-                className="text-metal-900 placeholder:text-metal-steel max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-sm leading-relaxed outline-none"
+                className="text-[#F5F5F0] placeholder:text-[#7DC4A0] max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-sm leading-relaxed outline-none"
                 disabled={loading}
               />
               <button

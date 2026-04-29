@@ -5,37 +5,37 @@ const SOURCE_CONFIG: Record<
   'ADEME/SINOE': {
     label: 'ADEME/SINOE',
     url: 'https://www.sinoe.org/',
-    className: 'bg-blue-50 text-blue-700 border-blue-200',
+    className: 'bg-blue-900/30 text-blue-400 border-blue-200',
   },
   'ADEME 2024': {
     label: 'ADEME',
     url: 'https://www.ademe.fr/',
-    className: 'bg-blue-50 text-blue-700 border-blue-200',
+    className: 'bg-blue-900/30 text-blue-400 border-blue-200',
   },
   ADEME: {
     label: 'ADEME',
     url: 'https://www.ademe.fr/',
-    className: 'bg-blue-50 text-blue-700 border-blue-200',
+    className: 'bg-blue-900/30 text-blue-400 border-blue-200',
   },
   Federec: {
     label: 'FEDEREC',
     url: 'https://federec.com/',
-    className: 'bg-verdure-50 text-verdure-700 border-verdure-200',
+    className: 'bg-[#1A5C3E] text-verdure-700 border-[#1A5C3E]',
   },
   'Federec 2024': {
     label: 'FEDEREC',
     url: 'https://federec.com/',
-    className: 'bg-verdure-50 text-verdure-700 border-verdure-200',
+    className: 'bg-[#1A5C3E] text-verdure-700 border-[#1A5C3E]',
   },
   Eurostat: {
     label: 'Eurostat',
     url: 'https://ec.europa.eu/eurostat',
-    className: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+    className: 'bg-indigo-900/30 text-indigo-400 border-indigo-200',
   },
   EPA: {
     label: 'US EPA',
     url: 'https://www.epa.gov/facts-and-figures-about-materials-waste-and-recycling',
-    className: 'bg-red-50 text-red-700 border-red-200',
+    className: 'bg-red-900/30 text-red-400 border-red-200',
   },
 };
 
@@ -43,7 +43,7 @@ export function SourceBadge({ source }: { source: string }) {
   const config = SOURCE_CONFIG[source] ?? {
     label: source,
     url: '#',
-    className: 'bg-[#E8F5EE] text-gray-600 border-[#C5DDD0]',
+    className: 'bg-[#12472F] text-[#B8D4E3] border-[#1A5C3E]',
   };
 
   return (

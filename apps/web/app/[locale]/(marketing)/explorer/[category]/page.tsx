@@ -100,7 +100,7 @@ export default async function CategoryDetailPage({ params }: PageProps) {
   return (
     <div>
       {/* Header */}
-      <section className="bg-metal-50 py-16 sm:py-20">
+      <section className="bg-[#0D3A26] py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <Link
             href="/explorer"
@@ -117,13 +117,13 @@ export default async function CategoryDetailPage({ params }: PageProps) {
               <Icon className="h-7 w-7" />
             </div>
             <div>
-              <h1 className="text-metal-900 text-3xl font-bold sm:text-4xl">
+              <h1 className="text-[#F5F5F0] text-3xl font-bold sm:text-4xl">
                 {t.raw(`explorer.materialNames.${categoryName}`) ?? categoryName}{' '}
-                <span className="text-metal-400 text-lg font-normal">
+                <span className="text-[#5A9E7D] text-lg font-normal">
                   {t('explorer.inFrance')}
                 </span>
               </h1>
-              <p className="text-metal-500 mt-1 text-sm">
+              <p className="text-[#7DC4A0] mt-1 text-sm">
                 {formatVolume(stat.annual_volume_tonnes)}
                 {t('explorer.perYear')} · {stat.data_source} {stat.year}
               </p>
@@ -142,10 +142,10 @@ export default async function CategoryDetailPage({ params }: PageProps) {
       </section>
 
       {/* Region table */}
-      <section className="bg-metal-50 py-16">
+      <section className="bg-[#0D3A26] py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <h2 className="text-metal-900 mb-6 text-xl font-bold">
+            <h2 className="text-[#F5F5F0] mb-6 text-xl font-bold">
               {t('explorer.regionBreakdown')}
             </h2>
             <RegionTable stats={regionStats} />
@@ -172,14 +172,14 @@ export default async function CategoryDetailPage({ params }: PageProps) {
       </section>
 
       {/* Norms + Sources */}
-      <section className="border-metal-chrome border-t py-8">
+      <section className="border-[#1A5C3E] border-t py-8">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center gap-3">
-            <BookOpen className="text-metal-400 h-4 w-4" />
-            <span className="text-metal-500 text-xs">
+            <BookOpen className="text-[#5A9E7D] h-4 w-4" />
+            <span className="text-[#7DC4A0] text-xs">
               {t('explorer.normsApplicable')}: {t('explorer.normsListFrance')}
             </span>
-            <span className="text-metal-300">|</span>
+            <span className="text-[#4A8A6D]">|</span>
             <DataSourceBadge />
           </div>
         </div>

@@ -68,10 +68,10 @@ async function RSEPage() {
         {/* CTA */}
         <Card>
           <CardContent className="flex flex-col items-center px-6 py-12 text-center">
-            <div className="bg-primary-light mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
+            <div className="bg-[#1A5C3E] mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
               <Award className="text-primary h-8 w-8" />
             </div>
-            <p className="text-metal-500 mx-auto max-w-md text-sm leading-relaxed">
+            <p className="text-[#7DC4A0] mx-auto max-w-md text-sm leading-relaxed">
               <Trans
                 i18nKey="rse:emptyDesc"
                 defaults="Evaluez votre maturite RSE et votre eligibilite aux labels environnementaux. Lancez votre premier diagnostic pour obtenir un score personnalise et un plan d'action."
@@ -107,10 +107,10 @@ async function RSEPage() {
             <Card key={f.title}>
               <CardContent className="p-5">
                 {f.icon}
-                <h3 className="text-metal-900 mt-2 text-sm font-semibold">
+                <h3 className="text-[#F5F5F0] mt-2 text-sm font-semibold">
                   {f.title}
                 </h3>
-                <p className="text-metal-500 mt-1 text-xs">{f.desc}</p>
+                <p className="text-[#7DC4A0] mt-1 text-xs">{f.desc}</p>
               </CardContent>
             </Card>
           ))}

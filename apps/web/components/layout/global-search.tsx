@@ -161,24 +161,24 @@ export function GlobalSearch() {
 
       {/* Modal */}
       <div
-        className="border-metal-chrome relative w-full max-w-lg overflow-hidden rounded-2xl border bg-card shadow-2xl"
+        className="border-[#1A5C3E] relative w-full max-w-lg overflow-hidden rounded-2xl border bg-[#0D3A26] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search input */}
-        <div className="border-metal-chrome flex items-center gap-3 border-b px-4 py-3">
-          <Search className="text-metal-steel h-5 w-5 shrink-0" />
+        <div className="border-[#1A5C3E] flex items-center gap-3 border-b px-4 py-3">
+          <Search className="text-[#7DC4A0] h-5 w-5 shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t('search.modalPlaceholder')}
-            className="text-metal-900 placeholder:text-metal-steel flex-1 border-none bg-transparent text-sm outline-none"
+            className="text-[#F5F5F0] placeholder:text-[#7DC4A0] flex-1 border-none bg-transparent text-sm outline-none"
           />
           <button
             type="button"
             onClick={() => setOpen(false)}
-            className="text-metal-steel hover:text-metal-700 shrink-0 transition-colors"
+            className="text-[#7DC4A0] hover:text-[#E0E7E3] shrink-0 transition-colors"
           >
             <X className="h-4 w-4" />
           </button>
@@ -187,13 +187,13 @@ export function GlobalSearch() {
         {/* Results */}
         <div className="max-h-[50vh] overflow-y-auto p-2">
           {filtered.length === 0 ? (
-            <p className="text-metal-500 py-8 text-center text-sm">
+            <p className="text-[#7DC4A0] py-8 text-center text-sm">
               {t('search.noResults', { query })}
             </p>
           ) : (
             filtered.map((group) => (
               <div key={group.category} className="mb-2">
-                <p className="text-metal-500 px-3 py-1.5 text-[11px] font-semibold tracking-wider uppercase">
+                <p className="text-[#7DC4A0] px-3 py-1.5 text-[11px] font-semibold tracking-wider uppercase">
                   {group.category}
                 </p>
                 {group.items.map((item) => (
@@ -201,9 +201,9 @@ export function GlobalSearch() {
                     key={item.href}
                     type="button"
                     onClick={() => navigate(item.href)}
-                    className="text-metal-700 hover:bg-metal-frost hover:text-metal-900 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors"
+                    className="text-[#E0E7E3] hover:bg-metal-frost hover:text-[#F5F5F0] flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors"
                   >
-                    <span className="text-metal-500">{item.icon}</span>
+                    <span className="text-[#7DC4A0]">{item.icon}</span>
                     {item.label}
                   </button>
                 ))}
@@ -213,10 +213,10 @@ export function GlobalSearch() {
         </div>
 
         {/* Footer hint */}
-        <div className="border-metal-chrome text-metal-steel flex items-center justify-between border-t px-4 py-2 text-[11px]">
+        <div className="border-[#1A5C3E] text-[#7DC4A0] flex items-center justify-between border-t px-4 py-2 text-[11px]">
           <span>{t('search.navigateWithArrows')}</span>
           <span>
-            <kbd className="border-metal-chrome bg-metal-50 rounded border px-1 py-0.5">
+            <kbd className="border-[#1A5C3E] bg-[#0D3A26] rounded border px-1 py-0.5">
               Esc
             </kbd>{' '}
             {t('search.pressEscToClose')}

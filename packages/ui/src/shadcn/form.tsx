@@ -132,7 +132,7 @@ const FormDescription: React.FC<React.ComponentPropsWithRef<'p'>> = ({
   return (
     <p
       id={formDescriptionId}
-      className={cn('text-muted-foreground text-[0.8rem]', className)}
+      className={cn('text-[#B8D4E3] text-[0.8rem]', className)}
       {...props}
     />
   );

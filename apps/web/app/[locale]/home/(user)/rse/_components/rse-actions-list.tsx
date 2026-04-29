@@ -27,7 +27,7 @@ const PRIORITY_CONFIG: Record<
 > = {
   urgent: {
     className:
-      'bg-slate-100 text-slate-800 dark:bg-slate-800/40 dark:text-slate-300 border-[#C5DDD0]',
+      'bg-slate-100 text-[#F5F5F0] dark:bg-slate-800/40 dark:text-slate-300 border-[#1A5C3E]',
     i18nKey: 'rse:urgent',
     icon: <Zap className="h-3 w-3" />,
   },
@@ -72,7 +72,7 @@ export function RSEActionsList({ actions }: RSEActionsListProps) {
             return (
               <div
                 key={idx}
-                className="flex flex-col gap-3 rounded-lg border p-4 transition-colors hover:bg-[#E8F5EE] sm:flex-row sm:items-center sm:justify-between dark:hover:bg-gray-900/50"
+                className="flex flex-col gap-3 rounded-lg border p-4 transition-colors hover:bg-[#12472F] sm:flex-row sm:items-center sm:justify-between dark:hover:bg-gray-900/50"
               >
                 <div className="flex-1 space-y-2">
                   <div className="flex flex-wrap items-center gap-2">
@@ -89,12 +89,12 @@ export function RSEActionsList({ actions }: RSEActionsListProps) {
                       className="inline-block h-2 w-2 rounded-full"
                       style={{ backgroundColor: pillarColor }}
                     />
-                    <span className="text-muted-foreground text-xs">
+                    <span className="text-[#B8D4E3] text-xs">
                       <Trans i18nKey={`rse:${action.pillar}`} />
                     </span>
                   </div>
                   <p className="text-sm font-medium">{action.title}</p>
-                  <div className="text-muted-foreground flex flex-wrap gap-3 text-xs">
+                  <div className="text-[#B8D4E3] flex flex-wrap gap-3 text-xs">
                     <span>
                       <Trans i18nKey="rse:impact" /> +{action.impact}{' '}
                       <Trans i18nKey="rse:points" />

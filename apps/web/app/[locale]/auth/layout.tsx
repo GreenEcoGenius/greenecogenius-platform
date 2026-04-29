@@ -6,8 +6,8 @@ function AuthLayout({ children }: React.PropsWithChildren) {
   return (
     <AuthLayoutShell
       Logo={AppLogo}
-      className="bg-cloud-50"
-      contentClassName="border-cloud-200"
+      className="bg-[#0A2F1F]"
+      contentClassName="border-[#1A5C3E]"
     >
       {children}
     </AuthLayoutShell>

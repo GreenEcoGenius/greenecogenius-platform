@@ -17,17 +17,17 @@ const URGENCY_STYLES = {
   past: {
     bg: 'bg-gray-100',
     border: 'border-gray-300',
-    text: 'text-gray-600',
+    text: 'text-[#B8D4E3]',
     icon: CheckCircle,
   },
   urgent: {
-    bg: 'bg-amber-50',
+    bg: 'bg-amber-900/30',
     border: 'border-amber-300',
-    text: 'text-amber-700',
+    text: 'text-amber-400',
     icon: AlertTriangle,
   },
   future: {
-    bg: 'bg-[#E6F7EF]',
+    bg: 'bg-[#1A5C3E]',
     border: 'border-[#8FDAB5]',
     text: 'text-[#008F5A]',
     icon: Clock,
@@ -43,7 +43,7 @@ export function RegulatoryTimeline() {
         <h2 className="gradient-text-verdure-leaf mb-3 text-center text-3xl font-bold sm:text-4xl">
           {t('landing.timelineTitle')}
         </h2>
-        <p className="text-metal-600 mx-auto mb-14 max-w-2xl text-center text-lg">
+        <p className="text-[#B8D4E3] mx-auto mb-14 max-w-2xl text-center text-lg">
           {t('landing.timelineSub')}
         </p>
 
@@ -68,7 +68,7 @@ export function RegulatoryTimeline() {
                     </span>
                   )}
                 </div>
-                <p className="text-metal-800 text-sm font-medium">
+                <p className="text-[#F5F5F0] text-sm font-medium">
                   {t(`landing.${m.key}`)}
                 </p>
               </div>
@@ -97,7 +97,7 @@ export function RegulatoryTimeline() {
                     </span>
                   )}
                 </div>
-                <p className="text-metal-800 text-sm">
+                <p className="text-[#F5F5F0] text-sm">
                   {t(`landing.${m.key}`)}
                 </p>
               </div>

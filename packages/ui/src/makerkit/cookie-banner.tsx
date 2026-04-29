@@ -41,7 +41,7 @@ export function CookieBanner() {
         <div className="flex-1">
           <h3
             id="cookie-banner-title"
-            className="text-foreground text-base font-semibold"
+            className="text-[#F5F5F0] text-base font-semibold"
           >
             <Trans
               i18nKey={'common.cookieBanner.title'}
@@ -50,7 +50,7 @@ export function CookieBanner() {
           </h3>
           <p
             id="cookie-banner-description"
-            className="text-muted-foreground mt-1 text-sm leading-relaxed"
+            className="text-[#B8D4E3] mt-1 text-sm leading-relaxed"
           >
             <Trans
               i18nKey={'common.cookieBanner.description'}

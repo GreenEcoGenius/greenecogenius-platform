@@ -17,7 +17,7 @@ function StatusBadge({ status }: { status: 'draft' | 'finalized' }) {
     return (
       <Badge
         variant="outline"
-        className="border-[#8FDAB5] bg-[#E6F7EF] text-[10px] text-[#008F5A] dark:border-[#008F5A] dark:bg-[#004428]/30 dark:text-[#8FDAB5]"
+        className="border-[#8FDAB5] bg-[#1A5C3E] text-[10px] text-[#008F5A] dark:border-[#008F5A] dark:bg-[#004428]/30 dark:text-[#8FDAB5]"
       >
         {t('reportStatusFinalized')}
       </Badge>
@@ -26,7 +26,7 @@ function StatusBadge({ status }: { status: 'draft' | 'finalized' }) {
   return (
     <Badge
       variant="outline"
-      className="border-[#8FDAB5] bg-[#E6F7EF] text-[10px] text-[#00A86B] dark:border-[#008F5A] dark:bg-[#00A86B]/30 dark:text-[#8FDAB5]"
+      className="border-[#8FDAB5] bg-[#1A5C3E] text-[10px] text-[#00A86B] dark:border-[#008F5A] dark:bg-[#00A86B]/30 dark:text-[#8FDAB5]"
     >
       {t('reportStatusDraft')}
     </Badge>
@@ -45,7 +45,7 @@ export function ReportHistoryTable({
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-sm font-semibold">{t('reportsGenerated')}</h3>
-            <p className="text-muted-foreground text-xs">
+            <p className="text-[#B8D4E3] text-xs">
               {t('reportsGeneratedDesc')}
             </p>
           </div>
@@ -65,7 +65,7 @@ export function ReportHistoryTable({
 
         <div className="mt-4 space-y-2">
           {reports.length === 0 && (
-            <p className="text-muted-foreground py-4 text-center text-sm">
+            <p className="text-[#B8D4E3] py-4 text-center text-sm">
               {t('noReportGenerated')}
             </p>
           )}
@@ -75,13 +75,13 @@ export function ReportHistoryTable({
               className="flex items-center justify-between rounded-lg border px-3 py-2.5"
             >
               <div className="flex items-center gap-3">
-                <FileText className="text-muted-foreground h-4 w-4" />
+                <FileText className="text-[#B8D4E3] h-4 w-4" />
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium">{report.period}</span>
                     <StatusBadge status={report.status} />
                   </div>
-                  <p className="text-muted-foreground text-[11px]">
+                  <p className="text-[#B8D4E3] text-[11px]">
                     {report.format} — {report.totalEmissionsT} t CO2e —{' '}
                     {report.blockchainProofs} {t('reportProofs')}
                   </p>

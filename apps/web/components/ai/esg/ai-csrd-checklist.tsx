@@ -150,8 +150,8 @@ function percentColor(percent: number): string {
 }
 
 function barColor(percent: number): string {
-  if (percent >= 80) return 'bg-[#E6F7EF]0';
-  if (percent >= 50) return 'bg-[#E6F7EF]0';
+  if (percent >= 80) return 'bg-[#1A5C3E]0';
+  if (percent >= 50) return 'bg-[#1A5C3E]0';
   return 'bg-[#008F5A]';
 }
 
@@ -198,7 +198,7 @@ export function AICSRDChecklist({ className }: { className?: string }) {
         {loading ? (
           <AILoadingState lines={6} />
         ) : error ? (
-          <div className="text-muted-foreground py-4 text-center text-sm">
+          <div className="text-[#B8D4E3] py-4 text-center text-sm">
             Impossible d&apos;\u00e9valuer la conformit\u00e9 CSRD. Veuillez
             r\u00e9essayer.
           </div>
@@ -260,7 +260,7 @@ export function AICSRDChecklist({ className }: { className?: string }) {
                               <span
                                 className={
                                   item.status === 'missing'
-                                    ? 'text-muted-foreground'
+                                    ? 'text-[#B8D4E3]'
                                     : ''
                                 }
                               >

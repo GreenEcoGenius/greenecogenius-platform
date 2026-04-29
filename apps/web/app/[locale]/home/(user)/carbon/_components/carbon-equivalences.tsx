@@ -55,7 +55,7 @@ export function CarbonEquivalences({ co2Avoided }: CarbonEquivalencesProps) {
                   ? eq.value.toLocaleString('fr-FR')
                   : eq.value}
               </div>
-              <p className="text-muted-foreground text-center text-xs leading-tight">
+              <p className="text-[#B8D4E3] text-center text-xs leading-tight">
                 <Trans i18nKey={eq.labelKey} />
               </p>
             </CardContent>

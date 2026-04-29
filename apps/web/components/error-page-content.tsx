@@ -54,7 +54,7 @@ export function ErrorPageContent({
 
         <p
           className={
-            'text-muted-foreground mt-3 max-w-sm text-sm leading-relaxed'
+            'text-[#B8D4E3] mt-3 max-w-sm text-sm leading-relaxed'
           }
         >
           <Trans i18nKey={subtitle} />

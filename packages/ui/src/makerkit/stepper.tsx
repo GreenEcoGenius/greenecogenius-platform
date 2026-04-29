@@ -119,7 +119,7 @@ function getClassNameBuilder() {
       {
         variant: 'default',
         selected: false,
-        className: 'text-muted-foreground',
+        className: 'text-[#B8D4E3]',
       },
       {
         variant: 'default',
@@ -152,7 +152,7 @@ function getClassNameBuilder() {
       {
         variant: 'numbers',
         selected: false,
-        className: 'text-muted-foreground',
+        className: 'text-[#B8D4E3]',
       },
       {
         variant: 'dots',
@@ -195,7 +195,7 @@ function StepDivider({
   complete: boolean;
 }>) {
   const spanClassName = cn('min-w-max text-sm font-medium', {
-    ['text-muted-foreground hidden sm:flex']: !selected,
+    ['text-[#B8D4E3] hidden sm:flex']: !selected,
     ['text-secondary-foreground']: selected || complete,
     ['font-medium']: selected,
   });

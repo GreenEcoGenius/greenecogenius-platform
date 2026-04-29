@@ -27,7 +27,7 @@ const cards = [
     titleKey: 'wallet.availableBalance',
     descKey: 'wallet.availableDesc',
     icon: Euro,
-    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    iconColor: 'text-emerald-400 dark:text-emerald-400',
     iconBg: 'bg-emerald-100 dark:bg-emerald-900/20',
     getValue: (w: any) => w?.availableBalance ?? 0,
   },
@@ -36,7 +36,7 @@ const cards = [
     titleKey: 'wallet.pendingBalance',
     descKey: 'wallet.pendingDesc',
     icon: Clock,
-    iconColor: 'text-amber-600 dark:text-amber-400',
+    iconColor: 'text-amber-400 dark:text-amber-400',
     iconBg: 'bg-amber-100 dark:bg-amber-900/20',
     getValue: (w: any) => w?.pendingBalance ?? 0,
   },
@@ -45,7 +45,7 @@ const cards = [
     titleKey: 'wallet.totalEarned',
     descKey: 'wallet.totalEarnedDesc',
     icon: TrendingUp,
-    iconColor: 'text-blue-600 dark:text-blue-400',
+    iconColor: 'text-blue-400 dark:text-blue-400',
     iconBg: 'bg-blue-100 dark:bg-blue-900/20',
     getValue: (w: any) => w?.totalEarned ?? 0,
   },
@@ -54,7 +54,7 @@ const cards = [
     titleKey: 'wallet.fees',
     descKey: 'wallet.feesDesc',
     icon: ArrowDownToLine,
-    iconColor: 'text-purple-600 dark:text-purple-400',
+    iconColor: 'text-purple-400 dark:text-purple-400',
     iconBg: 'bg-purple-100 dark:bg-purple-900/20',
     getValue: (w: any) => w?.totalFeesPaid ?? 0,
   },
@@ -77,7 +77,7 @@ export function WalletOverview({ wallet }: WalletOverviewProps) {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{formatCents(card.getValue(wallet))}</div>
-              <p className="text-muted-foreground text-xs mt-1">
+              <p className="text-[#B8D4E3] text-xs mt-1">
                 <Trans i18nKey={card.descKey} />
               </p>
             </CardContent>

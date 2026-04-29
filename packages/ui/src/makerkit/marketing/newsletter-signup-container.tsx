@@ -52,7 +52,7 @@ export function NewsletterSignupContainer({
     >
       <div className="text-center">
         <Heading level={4}>{heading}</Heading>
-        <p className="text-muted-foreground">{description}</p>
+        <p className="text-[#B8D4E3]">{description}</p>
       </div>
 
       {status === 'idle' && <NewsletterSignup onSignup={handleSubmit} />}

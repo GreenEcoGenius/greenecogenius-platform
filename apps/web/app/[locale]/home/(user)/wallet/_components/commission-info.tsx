@@ -60,7 +60,7 @@ export function CommissionInfo() {
       <CardContent>
         {isPromo ? (
           <div className="space-y-3">
-            <div className="flex items-start gap-2 rounded-lg bg-verdure-50 p-3 dark:bg-verdure-950">
+            <div className="flex items-start gap-2 rounded-lg bg-[#1A5C3E] p-3 dark:bg-verdure-950">
               <Info className="mt-0.5 h-4 w-4 text-verdure-600" />
               <div>
                 <p className="text-sm font-medium text-verdure-800 dark:text-verdure-200">
@@ -70,7 +70,7 @@ export function CommissionInfo() {
                   {(Number(activeConfig.flat_rate) * 100).toFixed(0)}%{' '}
                   <Trans i18nKey="wallet.promoFlat" />
                 </p>
-                <p className="text-muted-foreground mt-1 text-xs">
+                <p className="text-[#B8D4E3] mt-1 text-xs">
                   <Trans i18nKey="wallet.promoUntil" />{' '}
                   {new Date(activeConfig.valid_until!).toLocaleDateString(
                     'fr-FR',
@@ -82,7 +82,7 @@ export function CommissionInfo() {
           </div>
         ) : activeConfig.commission_type === 'degressive' ? (
           <div className="space-y-3">
-            <p className="text-muted-foreground text-sm">
+            <p className="text-[#B8D4E3] text-sm">
               <Trans i18nKey="wallet.degressiveDesc" />
             </p>
             <div className="overflow-hidden rounded-lg border">

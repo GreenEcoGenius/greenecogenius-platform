@@ -197,7 +197,7 @@ export function WorkspaceDropdown({
                 {displayName}
               </span>
 
-              <span className="text-muted-foreground max-w-max truncate text-xs">
+              <span className="text-[#B8D4E3] max-w-max truncate text-xs">
                 {userEmail}
               </span>
             </div>

@@ -28,13 +28,13 @@ export async function PricingPreview() {
   const t = await getTranslations('marketing');
 
   return (
-    <section className="bg-metal-50 py-20 sm:py-28">
+    <section className="bg-[#0D3A26] py-20 sm:py-28">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll animation="fade-up">
           <h2 className="gradient-text-verdure-leaf mb-3 text-center text-3xl font-bold sm:text-4xl">
             {t('landing.pricingTitle')}
           </h2>
-          <p className="text-metal-600 mx-auto mb-14 max-w-xl text-center text-lg">
+          <p className="text-[#B8D4E3] mx-auto mb-14 max-w-xl text-center text-lg">
             {t('landing.pricingSub')}
           </p>
         </AnimateOnScroll>
@@ -43,10 +43,10 @@ export async function PricingPreview() {
           {PLANS.map((plan, i) => (
             <AnimateOnScroll key={i} animation="fade-up" delay={i * 100}>
               <div
-                className={`relative rounded-2xl border bg-card p-6 shadow-sm ${
+                className={`relative rounded-2xl border bg-[#0D3A26] p-6 shadow-lg shadow-black/20 ${
                   plan.popular
                     ? 'border-primary ring-primary/20 ring-2'
-                    : 'border-[#C5DDD0]'
+                    : 'border-[#1A5C3E]'
                 }`}
               >
                 {plan.popular && (
@@ -54,24 +54,24 @@ export async function PricingPreview() {
                     {t('landing.popular')}
                   </span>
                 )}
-                <h3 className="text-metal-900 text-lg font-bold">
+                <h3 className="text-[#F5F5F0] text-lg font-bold">
                   {t(plan.nameKey)}
                 </h3>
                 <div className="my-4">
                   {plan.price ? (
-                    <p className="text-metal-900 text-3xl font-bold">
+                    <p className="text-[#F5F5F0] text-3xl font-bold">
                       {plan.price}€
-                      <span className="text-metal-500 text-sm font-normal">
+                      <span className="text-[#7DC4A0] text-sm font-normal">
                         /mois
                       </span>
                     </p>
                   ) : (
-                    <p className="text-metal-900 text-2xl font-bold">
+                    <p className="text-[#F5F5F0] text-2xl font-bold">
                       {t('landing.onQuote')}
                     </p>
                   )}
                 </div>
-                <p className="text-metal-600 text-sm">{t(plan.positionKey)}</p>
+                <p className="text-[#B8D4E3] text-sm">{t(plan.positionKey)}</p>
               </div>
             </AnimateOnScroll>
           ))}
@@ -85,7 +85,7 @@ export async function PricingPreview() {
             {t('landing.pricingCta')}
             <ArrowRight className="h-4 w-4" />
           </Link>
-          <p className="text-metal-400 mt-2 text-xs">
+          <p className="text-[#5A9E7D] mt-2 text-xs">
             {t('landing.pricingTrial')}
           </p>
         </div>

@@ -70,8 +70,8 @@ async function MyListingsPage() {
         </div>
       ) : (
         <div className="mt-12 flex flex-col items-center gap-4 text-center">
-          <Search className="text-muted-foreground h-12 w-12" />
-          <p className="text-muted-foreground">
+          <Search className="text-[#B8D4E3] h-12 w-12" />
+          <p className="text-[#B8D4E3]">
             <Trans i18nKey="marketplace.noOwnListings" />
           </p>
           <Button

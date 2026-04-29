@@ -49,26 +49,26 @@ export function AIDiagnostic() {
         nameKey: 'domainGovernance',
         score: 72,
         icon: Building2,
-        color: 'bg-blue-500',
+        color: 'bg-blue-900/300',
       },
       {
         nameKey: 'domainEnvironment',
         score: 85,
         icon: Leaf,
-        color: 'bg-verdure-500',
+        color: 'bg-[#1A5C3E]0',
       },
       { nameKey: 'domainSocial', score: 68, icon: Heart, color: 'bg-pink-500' },
       {
         nameKey: 'domainEthics',
         score: 76,
         icon: Scale,
-        color: 'bg-purple-500',
+        color: 'bg-purple-900/300',
       },
       {
         nameKey: 'domainStakeholders',
         score: 61,
         icon: Users,
-        color: 'bg-[#E6F7EF]0',
+        color: 'bg-[#1A5C3E]0',
       },
     ],
     [],
@@ -146,12 +146,12 @@ export function AIDiagnostic() {
       <CardContent>
         {!hasDiagnosed && !loading && (
           <div className="flex flex-col items-center gap-3 py-8 text-center">
-            <div className="rounded-full bg-[#E6F7EF] p-4 dark:bg-[#004428]/30">
+            <div className="rounded-full bg-[#1A5C3E] p-4 dark:bg-[#004428]/30">
               <Shield className="h-8 w-8 text-[#E6F7EF]0" />
             </div>
             <div>
               <p className="text-sm font-medium">{t('aiDiagnosticFeature')}</p>
-              <p className="text-muted-foreground mt-1 text-xs">
+              <p className="text-[#B8D4E3] mt-1 text-xs">
                 {t('aiDiagnosticDesc')}
               </p>
             </div>
@@ -175,7 +175,7 @@ export function AIDiagnostic() {
         )}
 
         {error && (
-          <div className="rounded-md border border-[#8FDAB5] bg-[#E6F7EF] p-4 dark:border-[#008F5A] dark:bg-[#004428]/20">
+          <div className="rounded-md border border-[#8FDAB5] bg-[#1A5C3E] p-4 dark:border-[#008F5A] dark:bg-[#004428]/20">
             <p className="text-sm text-[#008F5A]">{error}</p>
             <Button
               variant="outline"
@@ -204,7 +204,7 @@ export function AIDiagnostic() {
                   <div key={domain.nameKey} className="space-y-1">
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
-                        <Icon className="h-4 w-4 text-gray-500" />
+                        <Icon className="h-4 w-4 text-[#7DC4A0]" />
                         <span>{t(domain.nameKey)}</span>
                       </div>
                       <span className="font-semibold">{domain.score}%</span>
@@ -222,7 +222,7 @@ export function AIDiagnostic() {
 
             {/* AI response */}
             {response && (
-              <div className="rounded-md border bg-[#E6F7EF]/50 p-4 dark:bg-[#004428]/10">
+              <div className="rounded-md border bg-[#1A5C3E]/50 p-4 dark:bg-[#004428]/10">
                 <p className="text-sm leading-relaxed whitespace-pre-wrap">
                   {response.content}
                 </p>
@@ -277,7 +277,7 @@ export function AIDiagnostic() {
                         <span className="text-sm font-medium">
                           {t(label.nameKey)}
                         </span>
-                        <p className="text-muted-foreground text-xs">
+                        <p className="text-[#B8D4E3] text-xs">
                           {t(label.detailKey)}
                         </p>
                       </div>
@@ -292,7 +292,7 @@ export function AIDiagnostic() {
 
             {/* Disclaimer + reset */}
             <div className="flex items-center justify-between border-t pt-3">
-              <span className="text-muted-foreground text-[10px]">
+              <span className="text-[#B8D4E3] text-[10px]">
                 {t('aiDisclaimer')}
               </span>
               <Button

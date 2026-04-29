@@ -364,7 +364,7 @@ export function CreateListingForm({
           ) : (
             <span />
           )}
-          <span className="text-muted-foreground text-xs">
+          <span className="text-[#B8D4E3] text-xs">
             {descriptionText.length}/30 min
           </span>
         </div>
@@ -572,7 +572,7 @@ export function CreateListingForm({
         ) : (
           <div className="rounded-lg border border-dashed border-gray-300 p-5">
             <div className="flex flex-col items-center gap-3">
-              <ImagePlus className="text-muted-foreground h-8 w-8" />
+              <ImagePlus className="text-[#B8D4E3] h-8 w-8" />
 
               {/* Upload button */}
               <div className="flex items-center gap-3">
@@ -587,7 +587,7 @@ export function CreateListingForm({
                 </Button>
 
                 {/* Flux AI generation button */}
-                <span className="text-muted-foreground text-xs">
+                <span className="text-[#B8D4E3] text-xs">
                   <Trans i18nKey="marketplace.or" />
                 </span>
                 <Button
@@ -612,11 +612,11 @@ export function CreateListingForm({
                 </Button>
               </div>
 
-              <p className="text-muted-foreground text-center text-xs">
+              <p className="text-[#B8D4E3] text-center text-xs">
                 <Trans i18nKey="marketplace.photoHint" />
               </p>
 
-              <p className="text-center text-[11px] text-gray-400">
+              <p className="text-center text-[11px] text-[#7DC4A0]">
                 <Trans i18nKey="marketplace.flux.attribution" />
               </p>
 

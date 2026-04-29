@@ -241,10 +241,10 @@ export function EuropeMap({ countryStats }: { countryStats: CountryStat[] }) {
 
         {hoveredInfo && (
           <div
-            className="pointer-events-none absolute z-10 -translate-x-1/2 rounded-lg border border-[#C5DDD0] bg-card px-3.5 py-2 whitespace-nowrap shadow-lg"
+            className="pointer-events-none absolute z-10 -translate-x-1/2 rounded-lg border border-[#1A5C3E] bg-[#0D3A26] px-3.5 py-2 whitespace-nowrap shadow-lg"
             style={{ left: tooltipPos.x, top: tooltipPos.y }}
           >
-            <p className="text-metal-900 text-[13px] font-semibold">
+            <p className="text-[#F5F5F0] text-[13px] font-semibold">
               {locale === 'fr' ? hoveredInfo.nameFR : hoveredInfo.nameEN}
             </p>
             <p className="text-primary text-xs font-medium">
@@ -258,7 +258,7 @@ export function EuropeMap({ countryStats }: { countryStats: CountryStat[] }) {
 
       {/* Legend */}
       <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs">
-        <span className="text-metal-500">{t('explorer.volumeLabel')} :</span>
+        <span className="text-[#7DC4A0]">{t('explorer.volumeLabel')} :</span>
         {[
           { color: '#A7F3D0', label: '< 5 Mt' },
           { color: '#6EE7B7', label: '' },
@@ -272,10 +272,10 @@ export function EuropeMap({ countryStats }: { countryStats: CountryStat[] }) {
               className="h-3 w-3 rounded-full"
               style={{ backgroundColor: item.color }}
             />
-            {item.label && <span className="text-metal-400">{item.label}</span>}
+            {item.label && <span className="text-[#5A9E7D]">{item.label}</span>}
           </div>
         ))}
-        <span className="text-metal-400 ml-3 flex items-center gap-1">
+        <span className="text-[#5A9E7D] ml-3 flex items-center gap-1">
           <div className="h-3 w-3 rounded-full bg-[#E2E8F0]" />
           {t('explorer.outsideEU')}
         </span>

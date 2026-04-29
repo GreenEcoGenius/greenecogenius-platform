@@ -35,7 +35,7 @@ function NavLink({ entry, direction }: NavLinkProps) {
         !isPrevious && 'text-right md:items-end',
       )}
     >
-      <div className="text-muted-foreground flex items-center gap-2 text-xs">
+      <div className="text-[#B8D4E3] flex items-center gap-2 text-xs">
         {isPrevious && <Icon className="h-3 w-3" />}
 
         <span className="font-medium tracking-wider uppercase">
@@ -49,7 +49,7 @@ function NavLink({ entry, direction }: NavLinkProps) {
           {entry.title}
         </h3>
 
-        <div className="text-muted-foreground text-xs">
+        <div className="text-[#B8D4E3] text-xs">
           <DateFormatter dateString={entry.publishedAt} />
         </div>
       </div>

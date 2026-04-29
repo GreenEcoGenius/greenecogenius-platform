@@ -334,7 +334,7 @@ function CustomersTable() {
           <TableRow key={customer.name}>
             <TableCell className={'flex flex-col'}>
               <span>{customer.name}</span>
-              <span className={'text-muted-foreground text-sm'}>
+              <span className={'text-[#B8D4E3] text-sm'}>
                 {customer.email}
               </span>
             </TableCell>
@@ -620,7 +620,7 @@ export function VisitorsChart() {
             <div className="flex items-center gap-2 leading-none font-medium">
               {t('dashboardTrendUp')} <TrendingUp className="h-4 w-4" />
             </div>
-            <div className="text-muted-foreground flex items-center gap-2 leading-none">
+            <div className="text-[#B8D4E3] flex items-center gap-2 leading-none">
               {t('dashboardPeriod')}
             </div>
           </div>
@@ -773,7 +773,7 @@ export function PageViewsChart() {
                 className="data-[active=true]:bg-muted/50 relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
                 onClick={() => setActiveChart(chart)}
               >
-                <span className="text-muted-foreground text-xs">
+                <span className="text-[#B8D4E3] text-xs">
                   {chartConfig[chart].label}
                 </span>
                 <span className="text-lg leading-none font-bold sm:text-3xl">

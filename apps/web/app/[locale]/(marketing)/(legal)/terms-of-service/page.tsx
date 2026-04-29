@@ -21,13 +21,13 @@ async function TermsOfServicePage() {
       />
 
       <div className="container mx-auto max-w-3xl px-4 py-12 sm:py-16">
-        <p className="text-muted-foreground mb-12 text-sm">
+        <p className="text-[#B8D4E3] mb-12 text-sm">
           Dernière mise à jour : 29 mars 2026
         </p>
 
         <Section title="1. Informations légales">
           <p>La plateforme GreenEcoGenius est éditée conjointement par :</p>
-          <h4 className="text-foreground mt-4 mb-2 text-sm font-semibold">
+          <h4 className="text-[#F5F5F0] mt-4 mb-2 text-sm font-semibold">
             EUROPE
           </h4>
           <InfoGrid
@@ -48,7 +48,7 @@ async function TermsOfServicePage() {
               ['Email', 'contact@greenecogenius.tech'],
             ]}
           />
-          <h4 className="text-foreground mt-4 mb-2 text-sm font-semibold">
+          <h4 className="text-[#F5F5F0] mt-4 mb-2 text-sm font-semibold">
             ÉTATS-UNIS
           </h4>
           <InfoGrid
@@ -211,7 +211,7 @@ function Section({
   return (
     <section className="border-border/50 mb-10 border-b pb-10 last:mb-0 last:border-b-0 last:pb-0">
       <h2 className="mb-4 text-lg font-semibold tracking-tight">{title}</h2>
-      <div className="text-muted-foreground space-y-3 text-[15px] leading-relaxed">
+      <div className="text-[#B8D4E3] space-y-3 text-[15px] leading-relaxed">
         {children}
       </div>
     </section>
@@ -220,14 +220,14 @@ function Section({
 
 function InfoGrid({ items }: { items: [string, string][] }) {
   return (
-    <div className="bg-card mt-4 rounded-lg border p-5">
+    <div className="bg-[#0D3A26] mt-4 rounded-lg border p-5">
       <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {items.map(([label, value]) => (
           <div key={label}>
-            <dt className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+            <dt className="text-[#B8D4E3] text-xs font-medium tracking-wider uppercase">
               {label}
             </dt>
-            <dd className="text-foreground mt-1 text-sm">{value}</dd>
+            <dd className="text-[#F5F5F0] mt-1 text-sm">{value}</dd>
           </div>
         ))}
       </dl>

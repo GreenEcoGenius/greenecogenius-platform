@@ -50,9 +50,9 @@ async function ESGReportsPage() {
         <Card>
           <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
             <div className="bg-muted rounded-full p-4">
-              <FileText className="text-muted-foreground h-8 w-8" />
+              <FileText className="text-[#B8D4E3] h-8 w-8" />
             </div>
-            <p className="text-muted-foreground max-w-md text-sm">
+            <p className="text-[#B8D4E3] max-w-md text-sm">
               <Trans i18nKey="esg:noReports" />
             </p>
             <Button
@@ -81,7 +81,7 @@ function ReportCard({ report }: { report: ESGReport }) {
     <Card>
       <CardContent className="flex items-center justify-between p-6">
         <div className="flex items-center gap-4">
-          <div className="rounded-xl bg-[#E6F7EF] p-3 dark:bg-[#004428]/30">
+          <div className="rounded-xl bg-[#1A5C3E] p-3 dark:bg-[#004428]/30">
             <FileText className="h-6 w-6 text-[#00A86B]" />
           </div>
           <div>
@@ -91,7 +91,7 @@ function ReportCard({ report }: { report: ESGReport }) {
               </span>
               <Badge variant={'outline'}>{report.report_type}</Badge>
             </div>
-            <div className="text-muted-foreground mt-1 text-sm">
+            <div className="text-[#B8D4E3] mt-1 text-sm">
               <Trans i18nKey="esg:reportEmissions" />:{' '}
               {report.total_emissions?.toFixed(0) ?? '—'} kg CO2e
             </div>

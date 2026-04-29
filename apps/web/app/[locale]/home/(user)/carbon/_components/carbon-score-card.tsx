@@ -31,7 +31,7 @@ const LEVEL_CONFIG: Record<
   argent: {
     icon: <Award className="h-4 w-4" strokeWidth={1.5} />,
     i18nKey: 'carbon:scoreArgent',
-    color: 'text-slate-500',
+    color: 'text-[#7DC4A0]',
   },
   or: {
     icon: <Trophy className="h-4 w-4" strokeWidth={1.5} />,
@@ -72,7 +72,7 @@ function ScoreBreakdownRow({
 }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className="text-muted-foreground text-sm">
+      <span className="text-[#B8D4E3] text-sm">
         <Trans i18nKey={labelKey} />
       </span>
       <div className="flex items-center gap-2">
@@ -164,7 +164,7 @@ export function CarbonScoreCard({ score }: CarbonScoreCardProps) {
             </div>
             {nextLevel && (
               <div className="w-full max-w-[160px]">
-                <div className="mb-1 flex justify-between text-xs text-gray-500">
+                <div className="mb-1 flex justify-between text-xs text-[#7DC4A0]">
                   <span>{score.total}</span>
                   <span>{nextLevel.threshold}</span>
                 </div>

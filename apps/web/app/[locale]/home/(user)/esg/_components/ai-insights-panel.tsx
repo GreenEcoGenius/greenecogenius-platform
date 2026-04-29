@@ -37,7 +37,7 @@ export function AiInsightsPanel({
     <Card>
       <CardContent className="p-5">
         <h3 className="text-sm font-semibold">Insights IA</h3>
-        <p className="text-muted-foreground mb-4 text-xs">
+        <p className="text-[#B8D4E3] mb-4 text-xs">
           Recommandations du reporting
         </p>
 
@@ -47,7 +47,7 @@ export function AiInsightsPanel({
               <div className="mt-0.5 shrink-0">{getIcon(insight.type)}</div>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium">{insight.title}</p>
-                <p className="text-muted-foreground mt-0.5 text-xs">
+                <p className="text-[#B8D4E3] mt-0.5 text-xs">
                   {insight.description}
                 </p>
                 {insight.actionLabel && insight.actionHref && (

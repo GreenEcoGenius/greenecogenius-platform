@@ -17,7 +17,7 @@ export const CardButton: React.FC<
     props: {
       ...props,
       className: cn(
-        'group hover:bg-secondary/20 active:bg-secondary/50 dark:shadow-primary/20 relative flex h-36 flex-col rounded-xl border border-gray-100 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:shadow-lg',
+        'group hover:bg-secondary/20 active:bg-secondary/50 dark:shadow-primary/20 relative flex h-36 flex-col rounded-xl border border-gray-100 shadow-lg shadow-black/20 transition-all duration-200 hover:shadow-xl shadow-black/25 hover:-translate-y-0.5 active:shadow-lg',
         className,
       ),
       children,
@@ -38,7 +38,7 @@ export const CardButtonTitle: React.FC<
       ...props,
       className: cn(
         className,
-        'text-muted-foreground group-hover:text-secondary-foreground text-left align-super text-sm font-medium transition-colors',
+        'text-[#B8D4E3] group-hover:text-secondary-foreground text-left align-super text-sm font-medium transition-colors',
       ),
       children,
     },
@@ -64,7 +64,7 @@ export const CardButtonHeader: React.FC<
 
       <ChevronRight
         className={cn(
-          'text-muted-foreground group-hover:text-secondary-foreground absolute top-4 right-2 h-4 transition-colors',
+          'text-[#B8D4E3] group-hover:text-secondary-foreground absolute top-4 right-2 h-4 transition-colors',
           {
             hidden: !displayArrow,
           },

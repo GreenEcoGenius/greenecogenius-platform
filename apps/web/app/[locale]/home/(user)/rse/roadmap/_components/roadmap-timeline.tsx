@@ -41,12 +41,12 @@ const PILLAR_COLORS: Record<string, string> = {
   environment:
     'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#004428] dark:text-[#8FDAB5]',
   social: 'bg-verdure-100 text-verdure-800 dark:bg-verdure-900 dark:text-verdure-300',
-  ethics: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
-  stakeholders: 'bg-[#E6F7EF] text-[#00A86B] dark:bg-[#00A86B] dark:text-[#8FDAB5]',
+  ethics: 'bg-slate-100 text-[#F5F5F0] dark:bg-slate-800 dark:text-slate-300',
+  stakeholders: 'bg-[#1A5C3E] text-[#00A86B] dark:bg-[#00A86B] dark:text-[#8FDAB5]',
 };
 
 const PRIORITY_STYLES: Record<ActionPriority, string> = {
-  urgent: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
+  urgent: 'bg-slate-100 text-[#F5F5F0] dark:bg-slate-800 dark:text-slate-300',
   important: 'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#00A86B] dark:text-[#8FDAB5]',
   quick_win: 'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#00A86B] dark:text-[#8FDAB5]',
 };
@@ -102,7 +102,7 @@ export function RoadmapTimeline({
               {quarterActions.map((action) => (
                 <Card
                   key={action.id}
-                  className="transition-shadow hover:shadow-md"
+                  className="transition-shadow hover:shadow-xl shadow-black/25"
                 >
                   <CardContent className="py-4">
                     <div className="flex items-start gap-3">
@@ -119,7 +119,7 @@ export function RoadmapTimeline({
                       <div className="min-w-0 flex-1 space-y-2">
                         <div className="flex flex-wrap items-center gap-2">
                           <span
-                            className={`text-sm font-medium ${action.status === 'done' ? 'text-muted-foreground line-through' : ''}`}
+                            className={`text-sm font-medium ${action.status === 'done' ? 'text-[#B8D4E3] line-through' : ''}`}
                           >
                             {action.title}
                           </span>
@@ -150,7 +150,7 @@ export function RoadmapTimeline({
                           ))}
                         </div>
 
-                        <div className="text-muted-foreground flex items-center gap-4 text-xs">
+                        <div className="text-[#B8D4E3] flex items-center gap-4 text-xs">
                           <span>
                             <Trans i18nKey="rse:impact" />: +{action.impact}{' '}
                             <Trans i18nKey="rse:points" />

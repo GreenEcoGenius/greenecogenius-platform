@@ -80,7 +80,7 @@ async function BlockchainDashboardPage() {
     <PageBody>
       <div className="mx-auto max-w-6xl space-y-8">
         {/* Subtitle */}
-        <p className="text-muted-foreground text-center text-lg">
+        <p className="text-[#B8D4E3] text-center text-lg">
           <Trans i18nKey="blockchain:subtitle" />
         </p>
 
@@ -91,12 +91,12 @@ async function BlockchainDashboardPage() {
               <CardTitle className="text-sm font-medium">
                 <Trans i18nKey="blockchain:totalBlocks" />
               </CardTitle>
-              <Hash className="text-muted-foreground h-4 w-4" />
+              <Hash className="text-[#B8D4E3] h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{blocksCount ?? 0}</div>
               {onChainStats && (
-                <p className="text-muted-foreground text-xs">
+                <p className="text-[#B8D4E3] text-xs">
                   {onChainStats.totalLots} on-chain
                 </p>
               )}
@@ -108,12 +108,12 @@ async function BlockchainDashboardPage() {
               <CardTitle className="text-sm font-medium">
                 <Trans i18nKey="blockchain:totalCertificates" />
               </CardTitle>
-              <ScrollText className="text-muted-foreground h-4 w-4" />
+              <ScrollText className="text-[#B8D4E3] h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{certsCount ?? 0}</div>
               {onChainStats && (
-                <p className="text-muted-foreground text-xs">
+                <p className="text-[#B8D4E3] text-xs">
                   {onChainStats.totalCertificates} on-chain
                 </p>
               )}
@@ -125,7 +125,7 @@ async function BlockchainDashboardPage() {
               <CardTitle className="text-sm font-medium">
                 <Trans i18nKey="blockchain:chainStatus" />
               </CardTitle>
-              <Shield className="text-muted-foreground h-4 w-4" />
+              <Shield className="text-[#B8D4E3] h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-2">
@@ -138,15 +138,15 @@ async function BlockchainDashboardPage() {
                   </>
                 ) : (
                   <>
-                    <XCircle className="text-muted-foreground h-5 w-5" />
-                    <span className="text-muted-foreground text-sm">
+                    <XCircle className="text-[#B8D4E3] h-5 w-5" />
+                    <span className="text-[#B8D4E3] text-sm">
                       <Trans i18nKey="blockchain:polygonNotConfigured" />
                     </span>
                   </>
                 )}
               </div>
               {polygonConfigured && onChainStats && (
-                <p className="text-muted-foreground mt-1 text-xs">
+                <p className="text-[#B8D4E3] mt-1 text-xs">
                   <Trans i18nKey="blockchain:networkLabel" />:{' '}
                   {onChainStats.network}
                 </p>
@@ -158,7 +158,7 @@ async function BlockchainDashboardPage() {
         {/* Polygon info banner */}
         {!polygonConfigured && (
           <div className="bg-muted rounded-lg border p-4 text-center">
-            <p className="text-muted-foreground text-sm">
+            <p className="text-[#B8D4E3] text-sm">
               <Trans i18nKey="blockchain:offChainNote" />
             </p>
           </div>
@@ -219,7 +219,7 @@ async function BlockchainDashboardPage() {
                                 {block.block_number}
                               </Badge>
                             )}
-                            <span className="text-muted-foreground text-xs">
+                            <span className="text-[#B8D4E3] text-xs">
                               {new Date(block.created_at).toLocaleDateString()}
                             </span>
                           </div>
@@ -232,7 +232,7 @@ async function BlockchainDashboardPage() {
                   )}
                 </div>
               ) : (
-                <p className="text-muted-foreground text-sm">
+                <p className="text-[#B8D4E3] text-sm">
                   <Trans i18nKey="blockchain:noRecords" />
                 </p>
               )}
@@ -279,7 +279,7 @@ async function BlockchainDashboardPage() {
                               {cert.status}
                             </Badge>
                           </div>
-                          <div className="text-muted-foreground mt-1 flex gap-3 text-xs">
+                          <div className="text-[#B8D4E3] mt-1 flex gap-3 text-xs">
                             {cert.material_type && (
                               <span>{cert.material_type}</span>
                             )}
@@ -299,7 +299,7 @@ async function BlockchainDashboardPage() {
                   )}
                 </div>
               ) : (
-                <p className="text-muted-foreground text-sm">
+                <p className="text-[#B8D4E3] text-sm">
                   <Trans i18nKey="blockchain:noRecords" />
                 </p>
               )}

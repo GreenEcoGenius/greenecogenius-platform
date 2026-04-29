@@ -11,8 +11,8 @@ import type { MockLot } from '~/lib/mock/traceability-mock-data';
 const CONTRACT_ADDRESS = '0x9EB83c7Acd57E228Cc3f9316eC4f27ce1fE94cF6';
 
 const STATUS_BADGE_STYLES: Record<string, string> = {
-  created: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-  qualified: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
+  created: 'bg-gray-100 text-[#B8D4E3] dark:bg-gray-800 dark:text-gray-300',
+  qualified: 'bg-blue-100 text-blue-400 dark:bg-blue-900/40 dark:text-blue-300',
   listed: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   sold: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   in_transit:
@@ -37,7 +37,7 @@ const SOURCE_BADGE_STYLES: Record<string, string> = {
   marketplace:
     'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   collecte: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
-  import: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
+  import: 'bg-gray-100 text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0]',
 };
 
 const SOURCE_I18N: Record<string, string> = {
@@ -100,7 +100,7 @@ export function TraceabilityTable({ lots }: TraceabilityTableProps) {
       <CardContent className="overflow-x-auto p-0">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="text-muted-foreground border-b text-xs font-medium">
+            <tr className="text-[#B8D4E3] border-b text-xs font-medium">
               <th className="px-4 py-3">
                 <Trans i18nKey="blockchain:lotId" />
               </th>
@@ -182,18 +182,18 @@ export function TraceabilityTable({ lots }: TraceabilityTableProps) {
                       href={`https://polygonscan.com/tx/${lot.blockchainTxHash}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 font-mono text-[10px] text-blue-600 hover:underline dark:text-blue-400"
+                      className="inline-flex items-center gap-1 font-mono text-[10px] text-blue-400 hover:underline dark:text-blue-400"
                     >
                       {truncateHash(lot.blockchainTxHash)}
                       <ExternalLink className="h-3 w-3" />
                     </a>
                   ) : (
-                    <span className="text-muted-foreground text-xs">
+                    <span className="text-[#B8D4E3] text-xs">
                       {truncateHash(lot.dataHash)}
                     </span>
                   )}
                 </td>
-                <td className="text-muted-foreground px-4 py-3 text-xs">
+                <td className="text-[#B8D4E3] px-4 py-3 text-xs">
                   {formatDate(lot.createdAt)}
                 </td>
               </tr>

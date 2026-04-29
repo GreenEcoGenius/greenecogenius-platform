@@ -113,7 +113,7 @@ async function MarketplacePage() {
                   imageUrl={firstImage}
                   imageCount={images.length}
                 />
-                <div className="bg-card -mt-1 flex items-center gap-1.5 rounded-b-lg border border-t-0 px-5 py-2 text-xs text-[#2e8b6e]">
+                <div className="bg-[#0D3A26] -mt-1 flex items-center gap-1.5 rounded-b-lg border border-t-0 px-5 py-2 text-xs text-[#2e8b6e]">
                   <Leaf className="h-3 w-3" />
                   {t('co2AvoidedEstimated')}{' '}
                   {(((listing.quantity ?? 0) * 0.8) / 1000).toFixed(1)}t
@@ -124,8 +124,8 @@ async function MarketplacePage() {
         </div>
       ) : (
         <div className="mt-12 flex flex-col items-center gap-4 text-center">
-          <Search className="text-muted-foreground h-12 w-12" />
-          <p className="text-muted-foreground">
+          <Search className="text-[#B8D4E3] h-12 w-12" />
+          <p className="text-[#B8D4E3]">
             <Trans i18nKey="marketplace.noListings" />
           </p>
           <Button
@@ -159,10 +159,10 @@ function MarketKpiCard({
   label: string;
 }) {
   return (
-    <div className="bg-card rounded-xl border p-5">
+    <div className="bg-[#0D3A26] rounded-xl border p-5">
       <div className="mb-2 flex items-center gap-2">
         {icon}
-        <span className="text-muted-foreground text-xs font-medium">
+        <span className="text-[#B8D4E3] text-xs font-medium">
           {label}
         </span>
       </div>

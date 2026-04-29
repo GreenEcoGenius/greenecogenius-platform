@@ -125,20 +125,20 @@ async function ExternalActivitiesPage() {
             return (
               <TabsContent key={c.id} value={c.id} className="mt-6">
                 <div className="grid gap-6 lg:grid-cols-2">
-                  <div className="rounded-xl border bg-card p-6">
+                  <div className="rounded-xl border bg-[#0D3A26] p-6">
                     <h3 className="mb-1 text-lg font-semibold">
                       {t('addData', { category: label })}
                     </h3>
-                    <p className="mb-4 text-sm text-gray-500">{description}</p>
+                    <p className="mb-4 text-sm text-[#7DC4A0]">{description}</p>
                     <ExternalActivityForm category={c.id} />
                   </div>
 
-                  <div className="rounded-xl border bg-card p-6">
+                  <div className="rounded-xl border bg-[#0D3A26] p-6">
                     <h3 className="mb-4 text-lg font-semibold">
                       {t('savedData')} ({rows.length})
                     </h3>
                     {rows.length === 0 ? (
-                      <div className="flex flex-col items-center gap-2 py-8 text-center text-sm text-gray-400">
+                      <div className="flex flex-col items-center gap-2 py-8 text-center text-sm text-[#7DC4A0]">
                         <FileText className="h-8 w-8" strokeWidth={1.5} />
                         {t('noDataYet')}
                       </div>
@@ -161,20 +161,20 @@ async function ExternalActivitiesPage() {
                           return (
                             <li
                               key={r.id}
-                              className="flex items-start justify-between gap-3 rounded-lg border border-[#D5E8DD] bg-[#E8F5EE] p-3"
+                              className="flex items-start justify-between gap-3 rounded-lg border border-[#1A5C3E] bg-[#12472F] p-3"
                             >
                               <div className="min-w-0">
-                                <p className="truncate text-sm font-medium text-gray-900">
+                                <p className="truncate text-sm font-medium text-[#F5F5F0]">
                                   {r.title}
                                 </p>
-                                <p className="text-xs text-gray-500">
+                                <p className="text-xs text-[#7DC4A0]">
                                   {subcategoryLabel}
                                   {r.quantitative_value !== null
                                     ? ` — ${r.quantitative_value}${r.quantitative_unit ? ` ${r.quantitative_unit}` : ''}`
                                     : ''}
                                 </p>
                                 {r.description ? (
-                                  <p className="mt-1 line-clamp-2 text-xs text-gray-600">
+                                  <p className="mt-1 line-clamp-2 text-xs text-[#B8D4E3]">
                                     {r.description}
                                   </p>
                                 ) : null}
@@ -195,7 +195,7 @@ async function ExternalActivitiesPage() {
                                   </a>
                                 ) : null}
                                 {r.verified && !docHref ? (
-                                  <span className="mt-1 inline-block rounded-full bg-[#E6F7EF] px-2 py-0.5 text-[10px] font-medium text-[#008F5A]">
+                                  <span className="mt-1 inline-block rounded-full bg-[#1A5C3E] px-2 py-0.5 text-[10px] font-medium text-[#008F5A]">
                                     {t('list.proofProvided')}
                                   </span>
                                 ) : null}

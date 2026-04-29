@@ -98,7 +98,7 @@ export default async function RegionDetailPage({ params }: PageProps) {
   return (
     <div>
       {/* Header */}
-      <section className="bg-metal-50 py-16 sm:py-20">
+      <section className="bg-[#0D3A26] py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <Link
             href="/explorer"
@@ -109,14 +109,14 @@ export default async function RegionDetailPage({ params }: PageProps) {
           </Link>
 
           <div className="flex items-center gap-4">
-            <div className="bg-primary-light text-primary flex h-14 w-14 items-center justify-center rounded-2xl">
+            <div className="bg-[#1A5C3E] text-primary flex h-14 w-14 items-center justify-center rounded-2xl">
               <MapPin className="h-7 w-7" />
             </div>
             <div>
-              <h1 className="text-metal-900 text-3xl font-bold sm:text-4xl">
+              <h1 className="text-[#F5F5F0] text-3xl font-bold sm:text-4xl">
                 {regionName}
               </h1>
-              <p className="text-metal-500 mt-1 text-sm">
+              <p className="text-[#7DC4A0] mt-1 text-sm">
                 {formatVolume(totalVolume)}{t('explorer.perYear')} · {stats.length}{' '}
                 {t('explorer.categoriesAvailable')}
               </p>
@@ -129,10 +129,10 @@ export default async function RegionDetailPage({ params }: PageProps) {
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <h2 className="text-metal-900 mb-2 text-xl font-bold">
+            <h2 className="text-[#F5F5F0] mb-2 text-xl font-bold">
               {t('explorer.materialsAvailable')}
             </h2>
-            <p className="text-metal-500 mb-8 text-sm">
+            <p className="text-[#7DC4A0] mb-8 text-sm">
               {t('explorer.regionCategoriesSub')}
             </p>
           </AnimateOnScroll>
@@ -171,7 +171,7 @@ export default async function RegionDetailPage({ params }: PageProps) {
       </section>
 
       {/* Footer */}
-      <section className="border-metal-chrome border-t py-8">
+      <section className="border-[#1A5C3E] border-t py-8">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <DataSourceBadge />
         </div>

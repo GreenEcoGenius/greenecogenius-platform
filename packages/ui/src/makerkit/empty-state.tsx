@@ -10,7 +10,7 @@ const EmptyStateHeading: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
   ...props
 }) => (
   <h3
-    className={cn('text-lg font-semibold text-gray-600 tracking-tight', className)}
+    className={cn('text-lg font-semibold text-[#B8D4E3] tracking-tight', className)}
     {...props}
   />
 );
@@ -20,7 +20,7 @@ const EmptyStateText: React.FC<React.HTMLAttributes<HTMLParagraphElement>> = ({
   className,
   ...props
 }) => (
-  <p className={cn('text-gray-400 text-sm max-w-sm', className)} {...props} />
+  <p className={cn('text-[#7DC4A0] text-sm max-w-sm', className)} {...props} />
 );
 EmptyStateText.displayName = 'EmptyStateText';
 

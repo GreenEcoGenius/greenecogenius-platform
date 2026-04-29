@@ -167,7 +167,7 @@ export function HeroVisual() {
                     />
                   </div>
                   <span
-                    className="text-[10px] font-semibold tracking-wide whitespace-nowrap drop-shadow-md sm:text-xs"
+                    className="text-[10px] font-semibold tracking-wide whitespace-nowrap drop-shadow-xl shadow-black/25 sm:text-xs"
                     style={{ color: node.color }}
                   >
                     {node.label}

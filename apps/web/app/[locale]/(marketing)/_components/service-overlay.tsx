@@ -29,7 +29,7 @@ export const SERVICES: ServiceData[] = [
     heroImage: '/images/normes/circular-zero-waste.webp',
     ctaLabelKey: 'serviceRecyclerCta',
     ctaHref: '/auth/sign-up',
-    badgeColor: 'bg-primary-light text-primary-500',
+    badgeColor: 'bg-[#1A5C3E] text-primary-500',
   },
   {
     id: 'tracer',
@@ -84,7 +84,7 @@ export const SERVICES: ServiceData[] = [
     heroImage: '/images/normes/labels-globe-recycle.webp',
     ctaLabelKey: 'serviceConnecterCta',
     ctaHref: '/auth/sign-up',
-    badgeColor: 'bg-red-50 text-red-600',
+    badgeColor: 'bg-red-900/30 text-red-400',
   },
 ];
 
@@ -142,10 +142,10 @@ export function ServiceOverlay({
           className="border-metal-silver hover:bg-metal-chrome absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full border bg-white/80 backdrop-blur transition-colors"
           aria-label="Close"
         >
-          <X className="text-metal-600 h-4 w-4" />
+          <X className="text-[#B8D4E3] h-4 w-4" />
         </button>
 
-        <div className="mb-16 max-h-[80svh] overflow-y-auto rounded-t-2xl bg-card shadow-2xl sm:mb-0 sm:max-h-[90svh] sm:rounded-2xl">
+        <div className="mb-16 max-h-[80svh] overflow-y-auto rounded-t-2xl bg-[#0D3A26] shadow-2xl sm:mb-0 sm:max-h-[90svh] sm:rounded-2xl">
           <div className="relative h-[160px] overflow-hidden sm:h-[240px]">
             <img
               src={service.heroImage}
@@ -168,7 +168,7 @@ export function ServiceOverlay({
             </div>
 
             <h2
-              className="text-metal-900 mt-3 text-2xl font-semibold transition-all duration-500"
+              className="text-[#F5F5F0] mt-3 text-2xl font-semibold transition-all duration-500"
               style={{
                 opacity: show ? 1 : 0,
                 transform: show ? 'translateY(0)' : 'translateY(16px)',
@@ -179,7 +179,7 @@ export function ServiceOverlay({
             </h2>
 
             <p
-              className="text-metal-600 mt-3 text-base leading-relaxed transition-all duration-500"
+              className="text-[#B8D4E3] mt-3 text-base leading-relaxed transition-all duration-500"
               style={{
                 opacity: show ? 1 : 0,
                 transform: show ? 'translateY(0)' : 'translateY(16px)',

@@ -41,14 +41,14 @@ export function NoSubscriptionPreview() {
                 <CheckCircle2 className="h-4 w-4 text-[#E6F7EF]0" />
                 72% complete
               </span>
-              <span className="text-muted-foreground">
+              <span className="text-[#B8D4E3]">
                 42 champs auto-remplis
               </span>
             </div>
             <div className="mt-3 max-w-lg">
               <div className="bg-muted h-2 overflow-hidden rounded-full">
                 <div
-                  className="h-full rounded-full bg-[#E6F7EF]0"
+                  className="h-full rounded-full bg-[#1A5C3E]0"
                   style={{ width: '72%' }}
                 />
               </div>
@@ -62,7 +62,7 @@ export function NoSubscriptionPreview() {
             <h3 className="mb-4 text-lg font-semibold">
               <Trans i18nKey="esg:reportContent" />
             </h3>
-            <p className="text-muted-foreground mb-6 text-sm">
+            <p className="text-[#B8D4E3] mb-6 text-sm">
               <Trans i18nKey="esg:noSubscriptionDesc" />
             </p>
 
@@ -110,7 +110,7 @@ export function NoSubscriptionPreview() {
         <Card className="border-dashed">
           <CardContent className="flex flex-col items-center gap-6 py-12 text-center">
             <div className="bg-muted rounded-full p-4">
-              <BarChart3 className="text-muted-foreground h-10 w-10" />
+              <BarChart3 className="text-[#B8D4E3] h-10 w-10" />
             </div>
             <div>
               <h3 className="text-xl font-semibold">
@@ -118,19 +118,19 @@ export function NoSubscriptionPreview() {
               </h3>
             </div>
             <div className="flex flex-wrap justify-center gap-3">
-              <div className="flex items-center gap-2 rounded-full bg-[#E6F7EF] px-4 py-2 text-sm text-[#008F5A] dark:bg-[#004428]/30 dark:text-[#8FDAB5]">
+              <div className="flex items-center gap-2 rounded-full bg-[#1A5C3E] px-4 py-2 text-sm text-[#008F5A] dark:bg-[#004428]/30 dark:text-[#8FDAB5]">
                 <ClipboardList className="h-4 w-4" />
                 Scope 1/2/3
               </div>
-              <div className="flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm text-blue-700 dark:bg-blue-950/30 dark:text-blue-300">
+              <div className="flex items-center gap-2 rounded-full bg-blue-900/30 px-4 py-2 text-sm text-blue-400 dark:bg-blue-950/30 dark:text-blue-300">
                 <FileText className="h-4 w-4" />
                 CSRD / GRI
               </div>
-              <div className="flex items-center gap-2 rounded-full bg-[#E6F7EF] px-4 py-2 text-sm text-[#00A86B] dark:bg-[#00A86B]/30 dark:text-[#8FDAB5]">
+              <div className="flex items-center gap-2 rounded-full bg-[#1A5C3E] px-4 py-2 text-sm text-[#00A86B] dark:bg-[#00A86B]/30 dark:text-[#8FDAB5]">
                 <Lightbulb className="h-4 w-4" />
                 IA Recommendations
               </div>
-              <div className="flex items-center gap-2 rounded-full bg-[#E6F7EF] px-4 py-2 text-sm text-[#00A86B] dark:bg-[#00A86B]/30 dark:text-[#8FDAB5]">
+              <div className="flex items-center gap-2 rounded-full bg-[#1A5C3E] px-4 py-2 text-sm text-[#00A86B] dark:bg-[#00A86B]/30 dark:text-[#8FDAB5]">
                 <Shield className="h-4 w-4" />
                 Blockchain
               </div>

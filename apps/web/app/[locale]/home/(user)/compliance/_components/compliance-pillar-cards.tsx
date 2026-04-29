@@ -35,21 +35,21 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 function getScoreColor(pct: number) {
   if (pct >= 80) return 'text-[#00A86B] dark:text-[#00A86B]';
   if (pct >= 60) return 'text-[#00A86B] dark:text-[#00A86B]';
-  return 'text-slate-600 dark:text-slate-400';
+  return 'text-[#B8D4E3] dark:text-slate-400';
 }
 
 function getBarColor(pct: number) {
-  if (pct >= 80) return 'bg-[#E6F7EF]0';
-  if (pct >= 60) return 'bg-[#E6F7EF]0';
-  return 'bg-[#E8F5EE]0';
+  if (pct >= 80) return 'bg-[#1A5C3E]0';
+  if (pct >= 60) return 'bg-[#1A5C3E]0';
+  return 'bg-[#12472F]0';
 }
 
 function getBgColor(pct: number) {
   if (pct >= 80)
-    return 'bg-[#E6F7EF] dark:bg-[#004428]/30 text-[#00A86B] dark:text-[#00A86B]';
+    return 'bg-[#1A5C3E] dark:bg-[#004428]/30 text-[#00A86B] dark:text-[#00A86B]';
   if (pct >= 60)
-    return 'bg-[#E6F7EF] dark:bg-[#00A86B]/30 text-[#00A86B] dark:text-[#00A86B]';
-  return 'bg-[#E8F5EE] dark:bg-slate-950/30 text-slate-600 dark:text-slate-400';
+    return 'bg-[#1A5C3E] dark:bg-[#00A86B]/30 text-[#00A86B] dark:text-[#00A86B]';
+  return 'bg-[#12472F] dark:bg-slate-950/30 text-[#B8D4E3] dark:text-slate-400';
 }
 
 export function CompliancePillarCards({ pillars }: CompliancePillarCardsProps) {
@@ -58,7 +58,7 @@ export function CompliancePillarCards({ pillars }: CompliancePillarCardsProps) {
       {pillars.map((pillar) => {
         const pct = Math.round((pillar.compliant / pillar.total) * 100);
         return (
-          <Card key={pillar.icon} className="transition-shadow hover:shadow-md">
+          <Card key={pillar.icon} className="transition-shadow hover:shadow-xl shadow-black/25">
             <CardContent className="p-5">
               <div className="mb-3 flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -67,7 +67,7 @@ export function CompliancePillarCards({ pillars }: CompliancePillarCardsProps) {
                   </div>
                   <div>
                     <h4 className="text-sm font-semibold">{pillar.name}</h4>
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-[#B8D4E3] text-xs">
                       {pillar.compliant}/{pillar.total} normes
                     </p>
                   </div>
@@ -90,13 +90,13 @@ export function CompliancePillarCards({ pillars }: CompliancePillarCardsProps) {
                 {pillar.norms.slice(0, 4).map((norm) => (
                   <span
                     key={norm}
-                    className="text-muted-foreground rounded bg-gray-100 px-1.5 py-0.5 text-[10px] dark:bg-gray-800"
+                    className="text-[#B8D4E3] rounded bg-gray-100 px-1.5 py-0.5 text-[10px] dark:bg-gray-800"
                   >
                     {norm}
                   </span>
                 ))}
                 {pillar.norms.length > 4 && (
-                  <span className="text-muted-foreground rounded bg-gray-100 px-1.5 py-0.5 text-[10px] dark:bg-gray-800">
+                  <span className="text-[#B8D4E3] rounded bg-gray-100 px-1.5 py-0.5 text-[10px] dark:bg-gray-800">
                     +{pillar.norms.length - 4}
                   </span>
                 )}

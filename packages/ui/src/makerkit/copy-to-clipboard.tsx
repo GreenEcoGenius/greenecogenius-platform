@@ -65,7 +65,7 @@ export function CopyToClipboard({
     >
       {children}
 
-      <span className="text-muted-foreground transition-opacity">
+      <span className="text-[#B8D4E3] transition-opacity">
         {copied ? (
           <Check className="h-3.5 w-3.5 text-[#40916C]" />
         ) : (

@@ -298,7 +298,7 @@ export function ExternalActivityForm({ category }: ExternalActivityFormProps) {
           name="document_url"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-xs text-gray-500">
+              <FormLabel className="text-xs text-[#7DC4A0]">
                 {t('form.externalUrlLabel')}
               </FormLabel>
               <FormControl>

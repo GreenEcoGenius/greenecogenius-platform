@@ -31,7 +31,7 @@ async function SignUpPage() {
           <Trans i18nKey={'auth.signUpHeading'} />
         </Heading>
 
-        <p className={'text-metal-600 text-sm'}>
+        <p className={'text-[#B8D4E3] text-sm'}>
           <Trans i18nKey={'auth.signUpSubheading'} />
         </p>
       </div>

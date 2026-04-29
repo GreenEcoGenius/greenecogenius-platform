@@ -90,7 +90,7 @@ export function StripeConnectSetup({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-[#B8D4E3] mb-4">
             <Trans i18nKey="wallet.stripeSetupDesc" />
           </p>
           <Button onClick={startOnboarding} disabled={loading}>
@@ -109,15 +109,15 @@ export function StripeConnectSetup({
   // Onboarding incomplete
   if (!connectedAccount.onboardingComplete) {
     return (
-      <Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/30">
+      <Card className="border-amber-200 bg-amber-900/30 dark:border-amber-800 dark:bg-amber-950/30">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <ShieldAlert className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+            <ShieldAlert className="h-5 w-5 text-amber-400 dark:text-amber-400" />
             <Trans i18nKey="wallet.onboardingPending" />
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-[#B8D4E3] mb-4">
             <Trans i18nKey="wallet.onboardingPendingDesc" />
           </p>
           <Button onClick={refreshOnboarding} disabled={loading}>
@@ -131,7 +131,7 @@ export function StripeConnectSetup({
 
   // Fully set up
   return (
-    <Card className="border-verdure-200 bg-verdure-50 dark:border-verdure-900 dark:bg-verdure-950">
+    <Card className="border-[#1A5C3E] bg-[#1A5C3E] dark:border-verdure-900 dark:bg-verdure-950">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BadgeCheck className="h-5 w-5 text-verdure-600" />
@@ -139,7 +139,7 @@ export function StripeConnectSetup({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-muted-foreground mb-4">
+        <p className="text-[#B8D4E3] mb-4">
           <Trans i18nKey="wallet.accountVerifiedDesc" />
         </p>
         <Button variant="outline" onClick={openDashboard} disabled={loading}>

@@ -121,7 +121,7 @@ export function AIReductionPlan({ className }: { className?: string }) {
         {loading ? (
           <AILoadingState lines={5} />
         ) : error ? (
-          <div className="text-muted-foreground py-4 text-center text-sm">
+          <div className="text-[#B8D4E3] py-4 text-center text-sm">
             Impossible de g\u00e9n\u00e9rer le plan de r\u00e9duction. Veuillez
             r\u00e9essayer.
           </div>
@@ -146,7 +146,7 @@ export function AIReductionPlan({ className }: { className?: string }) {
                       {/* Impact bar */}
                       <div className="space-y-1">
                         <div className="flex justify-between text-xs">
-                          <span className="text-muted-foreground">
+                          <span className="text-[#B8D4E3]">
                             Impact potentiel
                           </span>
                           <span className="font-medium text-[#00A86B]">
@@ -155,7 +155,7 @@ export function AIReductionPlan({ className }: { className?: string }) {
                         </div>
                         <div className="bg-muted h-2 overflow-hidden rounded-full">
                           <div
-                            className="h-full rounded-full bg-[#E6F7EF]0 transition-all"
+                            className="h-full rounded-full bg-[#1A5C3E]0 transition-all"
                             style={{ width: `${action.impactPercent}%` }}
                           />
                         </div>
@@ -163,13 +163,13 @@ export function AIReductionPlan({ className }: { className?: string }) {
 
                       <div className="flex items-center justify-between text-xs">
                         <div className="flex gap-4">
-                          <span className="text-muted-foreground">
+                          <span className="text-[#B8D4E3]">
                             \u00c9conomie:{' '}
                             <span className="font-medium text-[#00A86B]">
                               {action.co2Savings}
                             </span>
                           </span>
-                          <span className="text-muted-foreground">
+                          <span className="text-[#B8D4E3]">
                             Co\u00fbt estim\u00e9:{' '}
                             <span className="font-medium">
                               {action.estimatedCost}

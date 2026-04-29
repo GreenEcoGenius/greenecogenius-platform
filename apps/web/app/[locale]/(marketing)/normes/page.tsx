@@ -31,16 +31,16 @@ export default async function NormesPage() {
 
   return (
     <>
-      <section className="bg-metal-50 relative overflow-hidden py-20 sm:py-28">
+      <section className="bg-[#0D3A26] relative overflow-hidden py-20 sm:py-28">
         <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <h1 className="text-metal-900 text-4xl font-bold tracking-tight sm:text-5xl">
+            <h1 className="text-[#F5F5F0] text-4xl font-bold tracking-tight sm:text-5xl">
               {t('normesTitle')}
             </h1>
-            <p className="text-metal-600 mx-auto mt-4 max-w-2xl text-lg">
+            <p className="text-[#B8D4E3] mx-auto mt-4 max-w-2xl text-lg">
               {t('normesDesc')}
             </p>
-            <p className="text-metal-500 mx-auto mt-3 max-w-3xl text-sm">
+            <p className="text-[#7DC4A0] mx-auto mt-3 max-w-3xl text-sm">
               {t('normesSubDesc')}
             </p>
           </AnimateOnScroll>
@@ -52,7 +52,7 @@ export default async function NormesPage() {
                   <div className="text-primary text-3xl font-bold">
                     <AnimatedCounter target={item.target} />
                   </div>
-                  <p className="text-metal-500 mt-1 text-xs">{item.label}</p>
+                  <p className="text-[#7DC4A0] mt-1 text-xs">{item.label}</p>
                 </div>
               ))}
             </div>

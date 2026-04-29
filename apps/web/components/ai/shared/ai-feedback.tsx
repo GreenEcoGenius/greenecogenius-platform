@@ -20,7 +20,7 @@ export function AIFeedback({
 
   return (
     <div className="flex items-center gap-1">
-      <span className="text-muted-foreground mr-1 text-xs">
+      <span className="text-[#B8D4E3] mr-1 text-xs">
         Cette r\u00e9ponse est utile ?
       </span>
 

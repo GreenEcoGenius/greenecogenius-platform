@@ -16,10 +16,10 @@ export async function PublicCTA() {
   return (
     <section className="bg-primary/5 rounded-3xl p-8 sm:p-12">
       <div className="mx-auto max-w-3xl text-center">
-        <h2 className="text-metal-900 text-2xl font-bold sm:text-3xl">
+        <h2 className="text-[#F5F5F0] text-2xl font-bold sm:text-3xl">
           {t('explorer.ctaHeading')}
         </h2>
-        <p className="text-metal-600 mt-3 text-base">
+        <p className="text-[#B8D4E3] mt-3 text-base">
           {t('explorer.ctaSubheading')}
         </p>
 
@@ -27,7 +27,7 @@ export async function PublicCTA() {
           {features.map((f) => (
             <li key={f.text} className="flex items-start gap-2 text-sm">
               <f.icon className="text-primary mt-0.5 h-4 w-4 shrink-0" />
-              <span className="text-metal-700">{f.text}</span>
+              <span className="text-[#E0E7E3]">{f.text}</span>
             </li>
           ))}
         </ul>
@@ -57,11 +57,11 @@ export async function DualCTA() {
 
   return (
     <div className="grid gap-6 sm:grid-cols-2">
-      <div className="border-primary/20 rounded-2xl border bg-card p-6">
-        <h3 className="text-metal-900 text-lg font-semibold">
+      <div className="border-primary/20 rounded-2xl border bg-[#0D3A26] p-6">
+        <h3 className="text-[#F5F5F0] text-lg font-semibold">
           {t('explorer.ctaBuyerTitle')}
         </h3>
-        <p className="text-metal-600 mt-2 text-sm">
+        <p className="text-[#B8D4E3] mt-2 text-sm">
           {t('explorer.ctaBuyerDesc')}
         </p>
         <Link
@@ -72,11 +72,11 @@ export async function DualCTA() {
           <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
-      <div className="border-metal-silver/50 rounded-2xl border bg-card p-6">
-        <h3 className="text-metal-900 text-lg font-semibold">
+      <div className="border-metal-silver/50 rounded-2xl border bg-[#0D3A26] p-6">
+        <h3 className="text-[#F5F5F0] text-lg font-semibold">
           {t('explorer.ctaSellerTitle')}
         </h3>
-        <p className="text-metal-600 mt-2 text-sm">
+        <p className="text-[#B8D4E3] mt-2 text-sm">
           {t('explorer.ctaSellerDesc')}
         </p>
         <Link

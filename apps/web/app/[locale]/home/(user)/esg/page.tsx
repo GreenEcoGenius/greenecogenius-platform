@@ -59,13 +59,13 @@ async function ESGPage() {
       <div className="space-y-6">
         <Card>
           <CardContent className="flex flex-col items-center px-6 py-16 text-center">
-            <div className="bg-primary-light mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
+            <div className="bg-[#1A5C3E] mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
               <BarChart3 className="text-primary h-8 w-8" />
             </div>
-            <h2 className="text-metal-900 text-2xl font-bold">
+            <h2 className="text-[#F5F5F0] text-2xl font-bold">
               <Trans i18nKey="esg:emptyTitle" defaults="Reporting ESG" />
             </h2>
-            <p className="text-metal-500 mx-auto mt-3 max-w-md text-sm leading-relaxed">
+            <p className="text-[#7DC4A0] mx-auto mt-3 max-w-md text-sm leading-relaxed">
               <Trans
                 i18nKey="esg:emptyDesc"
                 defaults="Générez votre rapport ESG conforme CSRD, GHG Protocol et GRI. Commencez par remplir vos données ou laissez la plateforme auto-remplir depuis vos transactions."
@@ -107,10 +107,10 @@ async function ESGPage() {
             <Card key={f.title}>
               <CardContent className="p-5">
                 <span className="text-2xl">{f.icon}</span>
-                <h3 className="text-metal-900 mt-2 text-sm font-semibold">
+                <h3 className="text-[#F5F5F0] mt-2 text-sm font-semibold">
                   {f.title}
                 </h3>
-                <p className="text-metal-500 mt-1 text-xs">{f.desc}</p>
+                <p className="text-[#7DC4A0] mt-1 text-xs">{f.desc}</p>
               </CardContent>
             </Card>
           ))}

@@ -304,7 +304,7 @@ export function ESGFormWizard({
                     ? 'bg-primary/10 text-primary font-semibold'
                     : isDone
                       ? 'text-[#00A86B]'
-                      : 'text-muted-foreground'
+                      : 'text-[#B8D4E3]'
                 }`}
               >
                 <Icon className="h-5 w-5" />
@@ -315,7 +315,7 @@ export function ESGFormWizard({
               {i < STEPS.length - 1 && (
                 <div
                   className={`mx-1 h-0.5 w-4 flex-shrink-0 rounded ${
-                    isDone ? 'bg-[#E6F7EF]0' : 'bg-muted'
+                    isDone ? 'bg-[#1A5C3E]0' : 'bg-muted'
                   }`}
                 />
               )}
@@ -326,7 +326,7 @@ export function ESGFormWizard({
 
       {/* Auto-save indicator */}
       <div className="flex justify-end">
-        <span className="text-muted-foreground text-xs">
+        <span className="text-[#B8D4E3] text-xs">
           {saveStatus === 'saving' && <Trans i18nKey="esg:saving" />}
           {saveStatus === 'saved' && (
             <span className="text-[#00A86B]">
@@ -428,7 +428,7 @@ function FormGroup({
       </label>
       {children}
       {helpText && (
-        <p className="text-muted-foreground text-xs">
+        <p className="text-[#B8D4E3] text-xs">
           <Trans i18nKey={helpText} />
         </p>
       )}
@@ -454,7 +454,7 @@ function NumberInput({
       onChange={(e) => onChange(Number(e.target.value) || 0)}
       min={min}
       step={step}
-      className="border-input bg-background focus:ring-ring w-full rounded-md border px-3 py-2 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none"
+      className="border-input bg-background focus:ring-ring w-full rounded-md border px-3 py-2 text-sm shadow-lg shadow-black/20 transition-colors focus:ring-2 focus:outline-none"
     />
   );
 }
@@ -472,7 +472,7 @@ function SelectInput({
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="border-input bg-background focus:ring-ring w-full rounded-md border px-3 py-2 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none"
+      className="border-input bg-background focus:ring-ring w-full rounded-md border px-3 py-2 text-sm shadow-lg shadow-black/20 transition-colors focus:ring-2 focus:outline-none"
     >
       {options.map((opt) => (
         <option key={opt.value} value={opt.value}>
@@ -485,7 +485,7 @@ function SelectInput({
 
 function CO2Estimate({ value }: { value: number }) {
   return (
-    <div className="mt-4 flex items-center gap-2 rounded-lg border border-dashed border-[#8FDAB5] bg-[#E6F7EF] p-3 dark:border-[#008F5A] dark:bg-[#004428]/30">
+    <div className="mt-4 flex items-center gap-2 rounded-lg border border-dashed border-[#8FDAB5] bg-[#1A5C3E] p-3 dark:border-[#008F5A] dark:bg-[#004428]/30">
       <Leaf className="h-4 w-4 text-[#00A86B]" />
       <span className="text-sm font-medium text-[#008F5A] dark:text-[#8FDAB5]">
         <Trans i18nKey="esg:estimated" />: {value.toFixed(1)} kg CO2e
@@ -535,7 +535,7 @@ function StepCompanyInfo({
         <h3 className="text-lg font-semibold">
           <Trans i18nKey="esg:companyInfoLabel" />
         </h3>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-[#B8D4E3] text-sm">
           <Trans i18nKey="esg:companyInfoDesc" />
         </p>
       </div>
@@ -547,7 +547,7 @@ function StepCompanyInfo({
             onChange={(e) =>
               updateField('reporting_year', Number(e.target.value))
             }
-            className="border-input bg-background focus:ring-ring w-full rounded-md border px-3 py-2 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none"
+            className="border-input bg-background focus:ring-ring w-full rounded-md border px-3 py-2 text-sm shadow-lg shadow-black/20 transition-colors focus:ring-2 focus:outline-none"
           >
             {years.map((y) => (
               <option key={y} value={y}>
@@ -617,7 +617,7 @@ function StepScope1({
         <h3 className="text-lg font-semibold">
           <Trans i18nKey="esg:scope1Label" />
         </h3>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-[#B8D4E3] text-sm">
           <Trans i18nKey="esg:scope1Desc" />
         </p>
       </div>
@@ -683,7 +683,7 @@ function StepScope2({
         <h3 className="text-lg font-semibold">
           <Trans i18nKey="esg:scope2Label" />
         </h3>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-[#B8D4E3] text-sm">
           <Trans i18nKey="esg:scope2Desc" />
         </p>
       </div>
@@ -741,7 +741,7 @@ function StepScope3({
           <h3 className="text-lg font-semibold">
             <Trans i18nKey="esg:scope3Label" />
           </h3>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-[#B8D4E3] text-sm">
             <Trans i18nKey="esg:scope3Desc" />
           </p>
         </div>
@@ -766,7 +766,7 @@ function StepScope3({
         <h3 className="text-lg font-semibold">
           <Trans i18nKey="esg:scope3Label" />
         </h3>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-[#B8D4E3] text-sm">
           <Trans i18nKey="esg:scope3Desc" />
         </p>
       </div>
@@ -818,7 +818,7 @@ function StepScope3({
       </div>
 
       {/* Platform data (read-only) */}
-      <div className="rounded-lg border border-[#8FDAB5] bg-[#E6F7EF] p-4 dark:border-[#008F5A] dark:bg-[#004428]/30">
+      <div className="rounded-lg border border-[#8FDAB5] bg-[#1A5C3E] p-4 dark:border-[#008F5A] dark:bg-[#004428]/30">
         <div className="mb-3 flex items-center gap-2">
           <Factory className="h-5 w-5 text-[#00A86B]" />
           <h4 className="font-semibold text-[#008F5A] dark:text-[#8FDAB5]">
@@ -834,7 +834,7 @@ function StepScope3({
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="text-sm">
-            <span className="text-muted-foreground">
+            <span className="text-[#B8D4E3]">
               <Trans i18nKey="esg:platformTonnes" />
             </span>
             <p className="text-lg font-semibold text-[#008F5A] dark:text-[#8FDAB5]">
@@ -842,7 +842,7 @@ function StepScope3({
             </p>
           </div>
           <div className="text-sm">
-            <span className="text-muted-foreground">
+            <span className="text-[#B8D4E3]">
               <Trans i18nKey="esg:platformCO2" />
             </span>
             <p className="text-lg font-semibold text-[#008F5A] dark:text-[#8FDAB5]">
@@ -850,7 +850,7 @@ function StepScope3({
             </p>
           </div>
           <div className="text-sm">
-            <span className="text-muted-foreground">
+            <span className="text-[#B8D4E3]">
               <Trans i18nKey="esg:platformTx" />
             </span>
             <p className="text-lg font-semibold text-[#008F5A] dark:text-[#8FDAB5]">
@@ -892,7 +892,7 @@ function StepSummary({
         <h3 className="text-lg font-semibold">
           <Trans i18nKey="esg:summaryTitle" />
         </h3>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-[#B8D4E3] text-sm">
           <Trans i18nKey="esg:summaryDesc" />
         </p>
       </div>
@@ -903,21 +903,21 @@ function StepSummary({
           label="Scope 1"
           value={scope1}
           max={maxScope}
-          color="bg-[#E6F7EF]0"
+          color="bg-[#1A5C3E]0"
           textColor="text-[#00A86B]"
         />
         <ScopeSummaryBar
           label="Scope 2"
           value={scope2}
           max={maxScope}
-          color="bg-blue-500"
-          textColor="text-blue-600"
+          color="bg-blue-900/300"
+          textColor="text-blue-400"
         />
         <ScopeSummaryBar
           label="Scope 3"
           value={scope3}
           max={maxScope}
-          color="bg-[#E6F7EF]0"
+          color="bg-[#1A5C3E]0"
           textColor="text-[#00A86B]"
         />
       </div>
@@ -926,7 +926,7 @@ function StepSummary({
       <div className="rounded-lg border p-4">
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">
+            <span className="text-[#B8D4E3]">
               <Trans i18nKey="esg:scopeTotal" />
             </span>
             <span className="font-bold">{total.toFixed(1)} kg CO2e</span>
@@ -945,14 +945,14 @@ function StepSummary({
             </span>
             <span className="font-bold">{net.toFixed(1)} kg CO2e</span>
           </div>
-          <div className="text-muted-foreground text-right text-xs">
+          <div className="text-[#B8D4E3] text-right text-xs">
             ({(net / 1000).toFixed(2)} t CO2e)
           </div>
         </div>
       </div>
 
       {/* CTA */}
-      <div className="text-muted-foreground text-center text-sm">
+      <div className="text-[#B8D4E3] text-center text-sm">
         <Trans i18nKey="esg:estimated" />
       </div>
     </div>

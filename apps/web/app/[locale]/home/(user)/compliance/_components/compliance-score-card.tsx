@@ -27,7 +27,7 @@ export function ComplianceScoreCard({
       ? 'text-[#00A86B]'
       : score >= 60
         ? 'text-[#00A86B]'
-        : 'text-slate-600';
+        : 'text-[#B8D4E3]';
 
   const ringColor =
     score >= 80
@@ -53,7 +53,7 @@ export function ComplianceScoreCard({
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="8"
-                className="text-gray-100 dark:text-gray-800"
+                className="text-gray-100 dark:text-[#F5F5F0]"
               />
               <circle
                 cx="60"
@@ -82,14 +82,14 @@ export function ComplianceScoreCard({
                 <Trans i18nKey="compliance:scoreTitle" />
               </h3>
               {lastUpdate && (
-                <p className="text-muted-foreground text-sm">
+                <p className="text-[#B8D4E3] text-sm">
                   <Trans i18nKey="compliance:lastUpdate" /> : {lastUpdate}
                 </p>
               )}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-3 rounded-lg bg-[#E6F7EF] p-3 dark:bg-[#004428]/30">
+              <div className="flex items-center gap-3 rounded-lg bg-[#1A5C3E] p-3 dark:bg-[#004428]/30">
                 <CheckCircle2 className="h-5 w-5 text-[#00A86B]" />
                 <div>
                   <p className="text-lg font-bold text-[#008F5A] dark:text-[#00A86B]">
@@ -101,13 +101,13 @@ export function ComplianceScoreCard({
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 rounded-lg bg-[#E8F5EE] p-3 dark:bg-slate-950/30">
-                <AlertTriangle className="h-5 w-5 text-slate-600" />
+              <div className="flex items-center gap-3 rounded-lg bg-[#12472F] p-3 dark:bg-slate-950/30">
+                <AlertTriangle className="h-5 w-5 text-[#B8D4E3]" />
                 <div>
-                  <p className="text-lg font-bold text-slate-700 dark:text-slate-400">
+                  <p className="text-lg font-bold text-[#B8D4E3] dark:text-slate-400">
                     {alerts}
                   </p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">
+                  <p className="text-xs text-[#B8D4E3] dark:text-slate-400">
                     <Trans i18nKey="compliance:activeAlerts" />
                   </p>
                 </div>
@@ -116,7 +116,7 @@ export function ComplianceScoreCard({
 
             <div className="flex gap-2">
               <PreAuditButton />
-              <button className="text-muted-foreground rounded-md border px-4 py-2 text-sm font-medium hover:bg-[#E8F5EE] dark:hover:bg-gray-900">
+              <button className="text-[#B8D4E3] rounded-md border px-4 py-2 text-sm font-medium hover:bg-[#12472F] dark:hover:bg-gray-900">
                 <Trans i18nKey="compliance:exportReport" />
               </button>
             </div>

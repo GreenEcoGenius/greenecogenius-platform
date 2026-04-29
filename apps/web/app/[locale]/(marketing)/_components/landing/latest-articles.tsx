@@ -38,7 +38,7 @@ export async function LatestArticles() {
   }
 
   return (
-    <section className="bg-metal-50 py-20 sm:py-28">
+    <section className="bg-[#0D3A26] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll animation="fade-up">
           <div className="flex items-end justify-between">
@@ -107,7 +107,7 @@ function ArticleCard({ post }: { post: { slug: string; title: string; descriptio
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[#C5DDD0] bg-card transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[#1A5C3E] bg-[#0D3A26] transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
     >
       {post.image && (
         <div className="relative aspect-[16/9] overflow-hidden">
@@ -120,12 +120,12 @@ function ArticleCard({ post }: { post: { slug: string; title: string; descriptio
         </div>
       )}
       <div className="flex flex-1 flex-col p-6">
-        <time className="text-metal-500 text-xs font-medium">{formatted}</time>
-        <h3 className="text-metal-900 mt-2 text-lg font-semibold leading-snug group-hover:underline">
+        <time className="text-[#7DC4A0] text-xs font-medium">{formatted}</time>
+        <h3 className="text-[#F5F5F0] mt-2 text-lg font-semibold leading-snug group-hover:underline">
           {post.title}
         </h3>
         {post.description && (
-          <p className="text-metal-600 mt-2 line-clamp-3 text-sm leading-relaxed">
+          <p className="text-[#B8D4E3] mt-2 line-clamp-3 text-sm leading-relaxed">
             {post.description}
           </p>
         )}

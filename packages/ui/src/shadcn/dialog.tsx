@@ -135,7 +135,7 @@ function DialogDescription({
     <DialogPrimitive.Description
       data-slot="dialog-description"
       className={cn(
-        'text-muted-foreground *:[a]:hover:text-foreground text-sm *:[a]:underline *:[a]:underline-offset-3',
+        'text-[#B8D4E3] *:[a]:hover:text-[#F5F5F0] text-sm *:[a]:underline *:[a]:underline-offset-3',
         className,
       )}
       {...props}

@@ -119,8 +119,8 @@ export function MaterialsMap({
             height="44"
             className="pointer-events-none"
           >
-            <div className="rounded-lg bg-card px-3 py-2 text-center shadow-lg">
-              <p className="text-metal-900 text-xs font-semibold">
+            <div className="rounded-lg bg-[#0D3A26] px-3 py-2 text-center shadow-lg">
+              <p className="text-[#F5F5F0] text-xs font-semibold">
                 {t.raw(`explorer.regionNames.${tooltip.name}`) as string}
               </p>
               <p className="text-primary text-xs font-bold">
@@ -132,14 +132,14 @@ export function MaterialsMap({
       </svg>
 
       <div className="mt-4 flex items-center justify-center gap-2 text-xs">
-        <span className="text-metal-500">{t('explorer.volumeLabel')} :</span>
+        <span className="text-[#7DC4A0]">{t('explorer.volumeLabel')} :</span>
         {VOLUME_COLORS.map((step, i) => (
           <div key={i} className="flex items-center gap-1">
             <div
               className="h-3 w-3 rounded-sm"
               style={{ backgroundColor: step.fill }}
             />
-            <span className="text-metal-400">
+            <span className="text-[#5A9E7D]">
               {i === 0
                 ? '< 1 Mt'
                 : i === VOLUME_COLORS.length - 1

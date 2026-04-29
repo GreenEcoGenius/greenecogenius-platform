@@ -19,7 +19,7 @@ export function ChangelogHeader({ entry }: { entry: Cms.ContentItem }) {
         <div className="mx-auto flex max-w-3xl items-center justify-between">
           <Link
             href="/changelog"
-            className="text-muted-foreground hover:text-primary flex items-center gap-1.5 text-sm font-medium transition-colors"
+            className="text-[#B8D4E3] hover:text-primary flex items-center gap-1.5 text-sm font-medium transition-colors"
           >
             <ChevronLeft className="h-4 w-4" />
             <Trans i18nKey="marketing.changelog" />
@@ -30,7 +30,7 @@ export function ChangelogHeader({ entry }: { entry: Cms.ContentItem }) {
       <div className={cn('border-border/50 border-b py-8')}>
         <div className="mx-auto flex max-w-3xl flex-col gap-y-2.5">
           <div>
-            <span className="text-muted-foreground text-xs">
+            <span className="text-[#B8D4E3] text-xs">
               <DateFormatter dateString={publishedAt} />
             </span>
           </div>
@@ -41,7 +41,7 @@ export function ChangelogHeader({ entry }: { entry: Cms.ContentItem }) {
 
           {description && (
             <h2
-              className="text-muted-foreground text-base"
+              className="text-[#B8D4E3] text-base"
               dangerouslySetInnerHTML={{ __html: description }}
             />
           )}

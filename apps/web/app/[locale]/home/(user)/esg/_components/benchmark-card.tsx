@@ -107,14 +107,14 @@ export function BenchmarkCard() {
               <span className="font-medium">
                 <Trans i18nKey="esg:benchmarkYourCompany" />
               </span>
-              <span className="text-muted-foreground">
+              <span className="text-[#B8D4E3]">
                 {data.company.emissions_per_employee.toFixed(1)}{' '}
                 <Trans i18nKey="esg:benchmarkPerEmployee" />
               </span>
             </div>
             <div className="bg-muted h-3 overflow-hidden rounded-full">
               <div
-                className="h-full rounded-full bg-[#E6F7EF]0 transition-all duration-700"
+                className="h-full rounded-full bg-[#1A5C3E]0 transition-all duration-700"
                 style={{ width: `${companyPct}%` }}
               />
             </div>
@@ -126,7 +126,7 @@ export function BenchmarkCard() {
               <span className="font-medium">
                 <Trans i18nKey="esg:benchmarkSectorAvg" />
               </span>
-              <span className="text-muted-foreground">
+              <span className="text-[#B8D4E3]">
                 {data.sector_average.toFixed(1)}{' '}
                 <Trans i18nKey="esg:benchmarkPerEmployee" />
               </span>
@@ -142,11 +142,11 @@ export function BenchmarkCard() {
           {/* Comparison text */}
           <div className="border-t pt-3 text-center">
             <span
-              className={`text-lg font-bold ${isBelow ? 'text-[#00A86B]' : 'text-slate-600'}`}
+              className={`text-lg font-bold ${isBelow ? 'text-[#00A86B]' : 'text-[#B8D4E3]'}`}
             >
               {Math.abs(data.comparison_pct)}%
             </span>{' '}
-            <span className="text-muted-foreground text-sm">
+            <span className="text-[#B8D4E3] text-sm">
               {isBelow ? (
                 <Trans i18nKey="esg:benchmarkBelowAvg" />
               ) : (

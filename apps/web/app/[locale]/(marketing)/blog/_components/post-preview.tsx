@@ -44,7 +44,7 @@ export function PostPreview({
       <div className={'flex flex-col space-y-2'}>
         <div className={'flex flex-col space-y-2'}>
           <div className="flex flex-row items-center gap-x-3 text-xs">
-            <div className="text-muted-foreground">
+            <div className="text-[#B8D4E3]">
               <DateFormatter dateString={publishedAt} />
             </div>
           </div>
@@ -55,7 +55,7 @@ export function PostPreview({
         </div>
 
         <p
-          className="text-muted-foreground mb-4 text-sm leading-relaxed"
+          className="text-[#B8D4E3] mb-4 text-sm leading-relaxed"
           dangerouslySetInnerHTML={{ __html: trimText(description ?? '', 200) }}
         />
       </div>

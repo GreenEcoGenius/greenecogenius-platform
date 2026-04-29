@@ -56,7 +56,7 @@ const mockAlerts: Alert[] = [
 const alertConfig = {
   error: {
     border: 'border-l-4 border-l-[#008F5A]',
-    bg: 'bg-[#E6F7EF]/80 dark:bg-[#004428]/20',
+    bg: 'bg-[#1A5C3E]/80 dark:bg-[#004428]/20',
     icon: XCircle,
     iconColor: 'text-[#008F5A] dark:text-[#00A86B]',
     badgeVariant: 'outline' as const,
@@ -64,7 +64,7 @@ const alertConfig = {
   },
   warning: {
     border: 'border-l-4 border-l-[#E6F7EF]0',
-    bg: 'bg-[#E6F7EF] dark:bg-[#00A86B]/20',
+    bg: 'bg-[#1A5C3E] dark:bg-[#00A86B]/20',
     icon: AlertTriangle,
     iconColor: 'text-[#00A86B] dark:text-[#00A86B]',
     badgeVariant: 'outline' as const,
@@ -72,7 +72,7 @@ const alertConfig = {
   },
   info: {
     border: 'border-l-4 border-l-green-500',
-    bg: 'bg-verdure-50 dark:bg-verdure-950/20',
+    bg: 'bg-[#1A5C3E] dark:bg-verdure-950/20',
     icon: CheckCircle,
     iconColor: 'text-verdure-500',
     badgeVariant: 'outline' as const,
@@ -146,7 +146,7 @@ export function AITraceabilityAlerts({ className }: { className?: string }) {
                       {config.label}
                     </Badge>
                     {alert.lotId && (
-                      <span className="text-muted-foreground font-mono text-xs">
+                      <span className="text-[#B8D4E3] font-mono text-xs">
                         {alert.lotId}
                       </span>
                     )}
@@ -176,7 +176,7 @@ export function AITraceabilityAlerts({ className }: { className?: string }) {
                   onClick={() =>
                     setDismissed((prev) => new Set([...prev, index]))
                   }
-                  className="text-muted-foreground hover:text-foreground shrink-0"
+                  className="text-[#B8D4E3] hover:text-[#F5F5F0] shrink-0"
                   aria-label="Masquer cette alerte"
                 >
                   <X className="h-4 w-4" />

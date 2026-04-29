@@ -79,7 +79,7 @@ export function AIListingAssistant({
     : null;
 
   return (
-    <Card className="border-verdure-200 bg-verdure-50/50 dark:border-verdure-900 dark:bg-verdure-950/20">
+    <Card className="border-[#1A5C3E] bg-[#1A5C3E]/50 dark:border-verdure-900 dark:bg-verdure-950/20">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm font-medium">
@@ -97,7 +97,7 @@ export function AIListingAssistant({
             <div className="flex items-start gap-2">
               <Recycle className="mt-0.5 h-4 w-4 shrink-0 text-verdure-600" />
               <div>
-                <p className="text-muted-foreground text-xs">
+                <p className="text-[#B8D4E3] text-xs">
                   Cat\u00e9gorie de flux
                 </p>
                 <p className="text-sm font-medium">
@@ -109,7 +109,7 @@ export function AIListingAssistant({
             <div className="flex items-start gap-2">
               <Scale className="mt-0.5 h-4 w-4 shrink-0 text-verdure-600" />
               <div>
-                <p className="text-muted-foreground text-xs">
+                <p className="text-[#B8D4E3] text-xs">
                   Code d\u00e9chet
                 </p>
                 <p className="text-sm font-medium">
@@ -121,7 +121,7 @@ export function AIListingAssistant({
             <div className="flex items-start gap-2">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-verdure-600" />
               <div>
-                <p className="text-muted-foreground text-xs">
+                <p className="text-[#B8D4E3] text-xs">
                   Norme applicable
                 </p>
                 <p className="text-sm font-medium">{classification.norm}</p>
@@ -131,7 +131,7 @@ export function AIListingAssistant({
             <div className="flex items-start gap-2">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-verdure-600" />
               <div>
-                <p className="text-muted-foreground text-xs">
+                <p className="text-[#B8D4E3] text-xs">
                   Certification sugg\u00e9r\u00e9e
                 </p>
                 <p className="text-sm font-medium">
@@ -143,7 +143,7 @@ export function AIListingAssistant({
             <div className="flex items-start gap-2">
               <Leaf className="mt-0.5 h-4 w-4 shrink-0 text-verdure-600" />
               <div>
-                <p className="text-muted-foreground text-xs">
+                <p className="text-[#B8D4E3] text-xs">
                   CO2 \u00e9vit\u00e9 estim\u00e9
                 </p>
                 <p className="text-sm font-medium text-verdure-700 dark:text-verdure-400">
@@ -155,7 +155,7 @@ export function AIListingAssistant({
             <div className="flex items-start gap-2">
               <Scale className="mt-0.5 h-4 w-4 shrink-0 text-verdure-600" />
               <div>
-                <p className="text-muted-foreground text-xs">
+                <p className="text-[#B8D4E3] text-xs">
                   Fourchette de prix
                 </p>
                 <p className="text-sm font-medium">

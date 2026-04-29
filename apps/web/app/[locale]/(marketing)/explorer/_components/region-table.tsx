@@ -19,10 +19,10 @@ export async function RegionTable({ stats }: { stats: RegionStat[] }) {
   );
 
   return (
-    <div className="overflow-x-auto rounded-xl border bg-card">
+    <div className="overflow-x-auto rounded-xl border bg-[#0D3A26]">
       <table className="w-full text-left text-sm">
         <thead>
-          <tr className="bg-metal-50 text-metal-500 border-b text-xs font-medium tracking-wider uppercase">
+          <tr className="bg-[#0D3A26] text-[#7DC4A0] border-b text-xs font-medium tracking-wider uppercase">
             <th className="px-4 py-3">{t('explorer.tableRegion')}</th>
             <th className="px-4 py-3 text-right">
               {t('explorer.tableVolume')}
@@ -42,7 +42,7 @@ export async function RegionTable({ stats }: { stats: RegionStat[] }) {
           {sorted.map((s) => (
             <tr
               key={s.region}
-              className="hover:bg-metal-50/50 transition-colors"
+              className="hover:bg-[#0D3A26]/50 transition-colors"
             >
               <td className="px-4 py-3 font-medium">
                 <Link
@@ -52,13 +52,13 @@ export async function RegionTable({ stats }: { stats: RegionStat[] }) {
                   {s.region}
                 </Link>
               </td>
-              <td className="text-metal-900 px-4 py-3 text-right font-semibold">
+              <td className="text-[#F5F5F0] px-4 py-3 text-right font-semibold">
                 {formatVolume(s.annual_volume_tonnes)}
               </td>
-              <td className="text-metal-600 hidden px-4 py-3 text-right sm:table-cell">
+              <td className="text-[#B8D4E3] hidden px-4 py-3 text-right sm:table-cell">
                 {formatRate(s.recycling_rate)}
               </td>
-              <td className="text-metal-600 hidden px-4 py-3 text-right md:table-cell">
+              <td className="text-[#B8D4E3] hidden px-4 py-3 text-right md:table-cell">
                 {formatPrice(s.avg_price_per_tonne)}
               </td>
               <td className="px-4 py-3 text-right">

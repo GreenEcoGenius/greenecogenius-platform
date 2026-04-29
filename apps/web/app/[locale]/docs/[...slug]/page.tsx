@@ -56,7 +56,7 @@ async function DocumentationPage({ params }: DocumentationPageProps) {
             <section className={'mt-4 flex flex-col gap-y-1 pb-4'}>
               <h1
                 className={
-                  'text-foreground text-3xl font-semibold tracking-tighter'
+                  'text-[#F5F5F0] text-3xl font-semibold tracking-tighter'
                 }
               >
                 {page.title}

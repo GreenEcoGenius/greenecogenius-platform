@@ -63,39 +63,39 @@ function contractStatusBadge(status: string | null) {
   const map: Record<string, { label: string; className: string }> = {
     not_started: {
       label: 'Contrat non genere',
-      className: 'bg-gray-100 text-gray-700 border-[#C5DDD0]',
+      className: 'bg-gray-100 text-[#B8D4E3] border-[#1A5C3E]',
     },
     contract_generated: {
       label: 'Contrat genere',
-      className: 'bg-blue-50 text-blue-700 border-blue-200',
+      className: 'bg-blue-900/30 text-blue-400 border-blue-200',
     },
     pending_signatures: {
       label: 'En attente de signature',
-      className: 'bg-amber-50 text-amber-700 border-amber-200',
+      className: 'bg-amber-900/30 text-amber-400 border-amber-200',
     },
     seller_signed: {
       label: 'Vendeur a signe',
-      className: 'bg-amber-50 text-amber-700 border-amber-200',
+      className: 'bg-amber-900/30 text-amber-400 border-amber-200',
     },
     buyer_signed: {
       label: 'Acheteur a signe',
-      className: 'bg-amber-50 text-amber-700 border-amber-200',
+      className: 'bg-amber-900/30 text-amber-400 border-amber-200',
     },
     fully_signed: {
       label: 'Signe par les deux parties',
-      className: 'bg-[#E6F7EF] text-[#008F5A] border-[#8FDAB5]',
+      className: 'bg-[#1A5C3E] text-[#008F5A] border-[#8FDAB5]',
     },
     blockchain_certified: {
       label: 'Certifie blockchain',
-      className: 'bg-[#E6F7EF] text-[#008F5A] border-[#8FDAB5]',
+      className: 'bg-[#1A5C3E] text-[#008F5A] border-[#8FDAB5]',
     },
     cancelled: {
       label: 'Annule',
-      className: 'bg-red-50 text-red-700 border-red-200',
+      className: 'bg-red-900/30 text-red-400 border-red-200',
     },
     expired: {
       label: 'Expire',
-      className: 'bg-red-50 text-red-700 border-red-200',
+      className: 'bg-red-900/30 text-red-400 border-red-200',
     },
   };
   const entry = map[status ?? 'not_started'] ?? map.not_started!;
@@ -201,30 +201,30 @@ async function TransactionDetailPage({ params }: Params) {
                     className="h-5 w-5 text-[#00A86B]"
                     strokeWidth={1.5}
                   />
-                  <h2 className="text-lg font-semibold text-gray-900">
+                  <h2 className="text-lg font-semibold text-[#F5F5F0]">
                     Contrat de vente
                   </h2>
                 </div>
                 {contractStatusBadge(tx.contract_status)}
               </div>
 
-              <div className="mb-5 grid gap-2 text-sm text-gray-600">
+              <div className="mb-5 grid gap-2 text-sm text-[#B8D4E3]">
                 <div className="flex justify-between">
                   <span>Reference</span>
-                  <span className="font-medium text-gray-900">
+                  <span className="font-medium text-[#F5F5F0]">
                     {tx.contract_id ?? '—'}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Statut de paiement</span>
-                  <span className="font-medium capitalize text-gray-900">
+                  <span className="font-medium capitalize text-[#F5F5F0]">
                     {tx.status.replace(/_/g, ' ')}
                   </span>
                 </div>
                 {tx.contract_expires_at ? (
                   <div className="flex justify-between">
                     <span>Expire le</span>
-                    <span className="font-medium text-gray-900">
+                    <span className="font-medium text-[#F5F5F0]">
                       {new Date(tx.contract_expires_at).toLocaleDateString(
                         'fr-FR',
                       )}
@@ -249,7 +249,7 @@ async function TransactionDetailPage({ params }: Params) {
                   />
                 </div>
               ) : (
-                <p className="mb-5 rounded-lg bg-[#E8F5EE] p-3 text-sm text-gray-500">
+                <p className="mb-5 rounded-lg bg-[#12472F] p-3 text-sm text-[#7DC4A0]">
                   Aucun contrat n&apos;a encore ete genere. Une fois le
                   paiement confirme, vous pouvez generer le contrat et
                   l&apos;envoyer aux deux parties pour signature electronique
@@ -262,7 +262,7 @@ async function TransactionDetailPage({ params }: Params) {
               ) : null}
 
               {tx.contract_status === 'blockchain_certified' ? (
-                <div className="flex items-center gap-2 rounded-lg border border-[#8FDAB5] bg-[#E6F7EF] p-3 text-sm text-[#008F5A]">
+                <div className="flex items-center gap-2 rounded-lg border border-[#8FDAB5] bg-[#1A5C3E] p-3 text-sm text-[#008F5A]">
                   <ShieldCheck className="h-4 w-4" strokeWidth={1.5} />
                   <span>
                     Transaction signee et certifiee sur Polygon. Le hash du
@@ -270,7 +270,7 @@ async function TransactionDetailPage({ params }: Params) {
                   </span>
                 </div>
               ) : tx.contract_status === 'fully_signed' ? (
-                <div className="flex items-center gap-2 rounded-lg border border-[#8FDAB5] bg-[#E6F7EF] p-3 text-sm text-[#008F5A]">
+                <div className="flex items-center gap-2 rounded-lg border border-[#8FDAB5] bg-[#1A5C3E] p-3 text-sm text-[#008F5A]">
                   <CheckCircle2 className="h-4 w-4" strokeWidth={1.5} />
                   <span>
                     Contrat signe par les deux parties. Ancrage blockchain en

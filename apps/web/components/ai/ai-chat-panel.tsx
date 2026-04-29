@@ -355,19 +355,19 @@ export function AIChatPanel() {
     <>
       {/* Mobile: full-screen overlay */}
       <div
-        className="fixed inset-0 z-[60] flex flex-col bg-card md:hidden"
+        className="fixed inset-0 z-[60] flex flex-col bg-[#0D3A26] md:hidden"
         role="dialog"
         aria-modal="true"
       >
         {/* Mobile header */}
-        <div className="border-metal-chrome flex items-center justify-between border-b px-4 py-3">
+        <div className="border-[#1A5C3E] flex items-center justify-between border-b px-4 py-3">
           <div className="flex items-center gap-2">
-            <span className="bg-primary-light rounded-lg p-1.5">
+            <span className="bg-[#1A5C3E] rounded-lg p-1.5">
               <Sparkles className="text-primary h-3.5 w-3.5" />
             </span>
             <div>
-              <p className="text-metal-900 text-sm font-semibold">Genius</p>
-              <div className="text-metal-500 flex items-center gap-1 text-[11px]">
+              <p className="text-[#F5F5F0] text-sm font-semibold">Genius</p>
+              <div className="text-[#7DC4A0] flex items-center gap-1 text-[11px]">
                 {section.icon}
                 {section.name}
               </div>
@@ -377,7 +377,7 @@ export function AIChatPanel() {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+              className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
               title={t('ai.importDocument')}
             >
               <Paperclip className="h-4 w-4" />
@@ -385,7 +385,7 @@ export function AIChatPanel() {
             <button
               type="button"
               onClick={() => setMessages([])}
-              className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+              className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
               title={t('ai.newConversation')}
             >
               <PenLine className="h-4 w-4" />
@@ -393,7 +393,7 @@ export function AIChatPanel() {
             <button
               type="button"
               onClick={closeChat}
-              className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+              className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
               title={t('ai.close')}
             >
               <X className="h-5 w-5" />
@@ -406,10 +406,10 @@ export function AIChatPanel() {
           {!hasMessages && !loading ? (
             <div className="flex flex-1 flex-col">
               <div className="mb-4 flex gap-2">
-                <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                <div className="bg-[#1A5C3E] flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
                   <Sparkles className="text-primary h-3 w-3" />
                 </div>
-                <div className="bg-metal-50 text-metal-700 rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] leading-relaxed">
+                <div className="bg-[#0D3A26] text-[#E0E7E3] rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] leading-relaxed">
                   {section.welcome}
                 </div>
               </div>
@@ -419,7 +419,7 @@ export function AIChatPanel() {
                     key={suggestion}
                     type="button"
                     onClick={() => handleSend(suggestion)}
-                    className="border-metal-chrome text-metal-600 hover:border-primary/30 hover:bg-primary-light/50 hover:text-primary flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left text-[13px] transition-all duration-150"
+                    className="border-[#1A5C3E] text-[#B8D4E3] hover:border-primary/30 hover:bg-[#1A5C3E]/50 hover:text-primary flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left text-[13px] transition-all duration-150"
                   >
                     <span className="text-primary">&#8599;</span>
                     {suggestion}
@@ -439,14 +439,14 @@ export function AIChatPanel() {
                     </div>
                   ) : (
                     <div className="flex gap-2">
-                      <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                      <div className="bg-[#1A5C3E] flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
                         <Sparkles className="text-primary h-3 w-3" />
                       </div>
-                      <div className="bg-metal-50 text-metal-800 max-w-[85%] rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] leading-relaxed">
+                      <div className="bg-[#0D3A26] text-[#F5F5F0] max-w-[85%] rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] leading-relaxed">
                         <div className="whitespace-pre-wrap">
                           {msg.content}
                           {msg.streaming && msg.content && (
-                            <span className="bg-[#E6F7EF]0 ml-0.5 inline-block h-3.5 w-0.5 animate-pulse" />
+                            <span className="bg-[#1A5C3E]0 ml-0.5 inline-block h-3.5 w-0.5 animate-pulse" />
                           )}
                         </div>
                       </div>
@@ -457,10 +457,10 @@ export function AIChatPanel() {
 
               {loading && !messages.some((m) => m.streaming && m.content) && (
                 <div className="flex gap-2">
-                  <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                  <div className="bg-[#1A5C3E] flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
                     <Sparkles className="text-primary h-3 w-3" />
                   </div>
-                  <div className="bg-metal-50 text-metal-500 rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px]">
+                  <div className="bg-[#0D3A26] text-[#7DC4A0] rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px]">
                     {locale === 'fr' ? 'Genius reflechit...' : 'Genius is thinking...'}
                   </div>
                 </div>
@@ -472,7 +472,7 @@ export function AIChatPanel() {
         </div>
 
         {/* Mobile disclaimer */}
-        <div className="text-metal-steel px-4 text-center text-[10px]">
+        <div className="text-[#7DC4A0] px-4 text-center text-[10px]">
           {t('ai.disclaimer')}
         </div>
 
@@ -492,12 +492,12 @@ export function AIChatPanel() {
         />
 
         {/* Mobile input */}
-        <div className="border-metal-chrome border-t p-3 pb-[env(safe-area-inset-bottom,12px)]">
-          <div className="border-metal-silver bg-metal-50 flex items-end gap-2 rounded-xl border px-3 py-2">
+        <div className="border-[#1A5C3E] border-t p-3 pb-[env(safe-area-inset-bottom,12px)]">
+          <div className="border-metal-silver bg-[#0D3A26] flex items-end gap-2 rounded-xl border px-3 py-2">
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="text-metal-steel hover:text-metal-600 flex h-8 w-8 shrink-0 items-center justify-center transition-colors"
+              className="text-[#7DC4A0] hover:text-[#B8D4E3] flex h-8 w-8 shrink-0 items-center justify-center transition-colors"
               title={t('ai.attachFile')}
             >
               <Paperclip className="h-4 w-4" />
@@ -513,7 +513,7 @@ export function AIChatPanel() {
               onKeyDown={handleKeyDown}
               placeholder={t('ai.askQuestion')}
               rows={1}
-              className="text-metal-900 placeholder:text-metal-steel max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-[14px] leading-relaxed outline-none"
+              className="text-[#F5F5F0] placeholder:text-[#7DC4A0] max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-[14px] leading-relaxed outline-none"
               disabled={loading}
             />
             <button
@@ -529,16 +529,16 @@ export function AIChatPanel() {
       </div>
 
       {/* Desktop: sidebar panel */}
-      <div className="border-metal-chrome hidden h-full w-[380px] shrink-0 flex-col border-l bg-card pt-20 md:flex md:pt-24">
+      <div className="border-[#1A5C3E] hidden h-full w-[380px] shrink-0 flex-col border-l bg-[#0D3A26] pt-20 md:flex md:pt-24">
       {/* Header */}
-      <div className="border-metal-chrome flex items-center justify-between border-b px-4 py-3">
+      <div className="border-[#1A5C3E] flex items-center justify-between border-b px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="bg-primary-light rounded-lg p-1.5">
+          <span className="bg-[#1A5C3E] rounded-lg p-1.5">
             <Sparkles className="text-primary h-3.5 w-3.5" />
           </span>
           <div>
-            <p className="text-metal-900 text-sm font-semibold">Genius</p>
-            <div className="text-metal-500 flex items-center gap-1 text-[11px]">
+            <p className="text-[#F5F5F0] text-sm font-semibold">Genius</p>
+            <div className="text-[#7DC4A0] flex items-center gap-1 text-[11px]">
               {section.icon}
               {section.name}
             </div>
@@ -548,7 +548,7 @@ export function AIChatPanel() {
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
+            className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
             title={t('ai.importDocument')}
           >
             <Paperclip className="h-3.5 w-3.5" />
@@ -556,7 +556,7 @@ export function AIChatPanel() {
           <button
             type="button"
             onClick={() => setMessages([])}
-            className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
+            className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
             title={t('ai.newConversation')}
           >
             <PenLine className="h-3.5 w-3.5" />
@@ -564,7 +564,7 @@ export function AIChatPanel() {
           <button
             type="button"
             onClick={closeChat}
-            className="text-metal-500 hover:bg-metal-frost hover:text-metal-700 flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
+            className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
             title={t('ai.close')}
           >
             <X className="h-4 w-4" />
@@ -578,10 +578,10 @@ export function AIChatPanel() {
           <div className="flex flex-1 flex-col">
             {/* Welcome */}
             <div className="mb-4 flex gap-2">
-              <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+              <div className="bg-[#1A5C3E] flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
                 <Sparkles className="text-primary h-3 w-3" />
               </div>
-              <div className="bg-metal-50 text-metal-700 rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] leading-relaxed">
+              <div className="bg-[#0D3A26] text-[#E0E7E3] rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] leading-relaxed">
                 {section.welcome}
               </div>
             </div>
@@ -593,7 +593,7 @@ export function AIChatPanel() {
                   key={suggestion}
                   type="button"
                   onClick={() => handleSend(suggestion)}
-                  className="border-metal-chrome text-metal-600 hover:border-primary/30 hover:bg-primary-light/50 hover:text-primary flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left text-[12px] transition-all duration-150"
+                  className="border-[#1A5C3E] text-[#B8D4E3] hover:border-primary/30 hover:bg-[#1A5C3E]/50 hover:text-primary flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left text-[12px] transition-all duration-150"
                 >
                   <span className="text-primary">&#8599;</span>
                   {suggestion}
@@ -613,14 +613,14 @@ export function AIChatPanel() {
                   </div>
                 ) : (
                   <div className="flex gap-2">
-                    <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                    <div className="bg-[#1A5C3E] flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
                       <Sparkles className="text-primary h-3 w-3" />
                     </div>
-                    <div className="bg-metal-50 text-metal-800 max-w-[85%] rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] leading-relaxed">
+                    <div className="bg-[#0D3A26] text-[#F5F5F0] max-w-[85%] rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] leading-relaxed">
                       <div className="whitespace-pre-wrap">
                         {msg.content}
                         {msg.streaming && msg.content && (
-                          <span className="bg-[#E6F7EF]0 ml-0.5 inline-block h-3.5 w-0.5 animate-pulse" />
+                          <span className="bg-[#1A5C3E]0 ml-0.5 inline-block h-3.5 w-0.5 animate-pulse" />
                         )}
                       </div>
                     </div>
@@ -631,10 +631,10 @@ export function AIChatPanel() {
 
             {loading && !messages.some((m) => m.streaming && m.content) && (
               <div className="flex gap-2">
-                <div className="bg-primary-light flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+                <div className="bg-[#1A5C3E] flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
                   <Sparkles className="text-primary h-3 w-3" />
                 </div>
-                <div className="bg-metal-50 text-metal-500 rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px]">
+                <div className="bg-[#0D3A26] text-[#7DC4A0] rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px]">
                   {locale === 'fr' ? 'Genius reflechit...' : 'Genius is thinking...'}
                 </div>
               </div>
@@ -646,7 +646,7 @@ export function AIChatPanel() {
       </div>
 
       {/* Disclaimer */}
-      <div className="text-metal-steel px-4 text-center text-[10px]">
+      <div className="text-[#7DC4A0] px-4 text-center text-[10px]">
         {t('ai.disclaimer')}
       </div>
 
@@ -666,12 +666,12 @@ export function AIChatPanel() {
       />
 
       {/* Input */}
-      <div className="border-metal-chrome border-t p-3">
-        <div className="border-metal-silver bg-metal-50 flex items-end gap-2 rounded-xl border px-3 py-2">
+      <div className="border-[#1A5C3E] border-t p-3">
+        <div className="border-metal-silver bg-[#0D3A26] flex items-end gap-2 rounded-xl border px-3 py-2">
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="text-metal-steel hover:text-metal-600 flex h-8 w-8 shrink-0 items-center justify-center transition-colors"
+            className="text-[#7DC4A0] hover:text-[#B8D4E3] flex h-8 w-8 shrink-0 items-center justify-center transition-colors"
             title={t('ai.attachFile')}
           >
             <Paperclip className="h-4 w-4" />
@@ -689,7 +689,7 @@ export function AIChatPanel() {
             placeholder={t('ai.askQuestion')}
             rows={1}
             className={cn(
-              'text-metal-900 placeholder:text-metal-steel max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-[13px] leading-relaxed outline-none',
+              'text-[#F5F5F0] placeholder:text-[#7DC4A0] max-h-[100px] min-h-[24px] flex-1 resize-none border-none bg-transparent text-[13px] leading-relaxed outline-none',
             )}
             disabled={loading}
           />

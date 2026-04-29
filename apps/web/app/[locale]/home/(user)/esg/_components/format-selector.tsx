@@ -35,7 +35,7 @@ export function FormatSelector({
     <Card>
       <CardContent className="p-6">
         <h3 className="text-sm font-semibold">Generer un rapport</h3>
-        <p className="text-muted-foreground mb-4 text-xs">
+        <p className="text-[#B8D4E3] mb-4 text-xs">
           Choisissez le format et les options du rapport
         </p>
 
@@ -52,7 +52,7 @@ export function FormatSelector({
                 onClick={() => !isLocked && setSelectedFormat(fmt.id)}
                 className={`relative rounded-lg border p-3 text-left transition-all ${
                   isSelected
-                    ? 'border-[#E6F7EF]0 bg-[#E6F7EF]/50 ring-1 ring-[#E6F7EF]0 dark:bg-[#004428]/20'
+                    ? 'border-[#E6F7EF]0 bg-[#1A5C3E]/50 ring-1 ring-[#E6F7EF]0 dark:bg-[#004428]/20'
                     : isLocked
                       ? 'cursor-not-allowed opacity-50'
                       : 'hover:border-gray-300 dark:hover:border-gray-600'
@@ -65,11 +65,11 @@ export function FormatSelector({
                 )}
                 {isLocked && (
                   <div className="absolute top-2 right-2">
-                    <Lock className="h-3.5 w-3.5 text-gray-400" />
+                    <Lock className="h-3.5 w-3.5 text-[#7DC4A0]" />
                   </div>
                 )}
                 <p className="text-sm font-medium">{fmt.name}</p>
-                <p className="text-muted-foreground mt-0.5 text-[11px]">
+                <p className="text-[#B8D4E3] mt-0.5 text-[11px]">
                   {fmt.description}
                 </p>
                 {isLocked && (

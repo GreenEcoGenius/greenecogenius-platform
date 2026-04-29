@@ -42,7 +42,7 @@ function CircularScore({ score }: { score: number }) {
           fill="none"
           stroke="currentColor"
           strokeWidth="8"
-          className="text-gray-100 dark:text-gray-800"
+          className="text-gray-100 dark:text-[#F5F5F0]"
         />
         <circle
           cx="64"
@@ -60,7 +60,7 @@ function CircularScore({ score }: { score: number }) {
       </svg>
       <div className="absolute flex flex-col items-center">
         <span className={`text-3xl font-bold ${text}`}>{score}</span>
-        <span className="text-muted-foreground text-xs">/100</span>
+        <span className="text-[#B8D4E3] text-xs">/100</span>
       </div>
     </div>
   );
@@ -89,7 +89,7 @@ export function AITrustScore({ score, checks }: AITrustScoreProps) {
             variant="outline"
             className={`text-xs ${
               score > 80
-                ? 'border-verdure-200 text-verdure-700 dark:border-verdure-800 dark:text-verdure-400'
+                ? 'border-[#1A5C3E] text-verdure-700 dark:border-verdure-800 dark:text-verdure-400'
                 : score >= 50
                   ? 'border-[#8FDAB5] text-[#00A86B] dark:border-[#008F5A] dark:text-[#00A86B]'
                   : 'border-[#8FDAB5] text-[#008F5A] dark:border-[#008F5A] dark:text-[#00A86B]'
@@ -114,7 +114,7 @@ export function AITrustScore({ score, checks }: AITrustScoreProps) {
               <div className="min-w-0">
                 <span className="font-medium">{check.label}</span>
                 {check.detail && (
-                  <p className="text-muted-foreground mt-0.5 text-xs">
+                  <p className="text-[#B8D4E3] mt-0.5 text-xs">
                     {check.detail}
                   </p>
                 )}
@@ -127,14 +127,14 @@ export function AITrustScore({ score, checks }: AITrustScoreProps) {
         <div className="flex flex-wrap gap-2 border-t pt-4">
           <Badge
             variant="outline"
-            className="border-verdure-200 text-verdure-700 dark:border-verdure-800 dark:text-verdure-400"
+            className="border-[#1A5C3E] text-verdure-700 dark:border-verdure-800 dark:text-verdure-400"
           >
             <CheckCircle className="mr-1 h-3 w-3" />
             ISO 59014
           </Badge>
           <Badge
             variant="outline"
-            className="border-verdure-200 text-verdure-700 dark:border-verdure-800 dark:text-verdure-400"
+            className="border-[#1A5C3E] text-verdure-700 dark:border-verdure-800 dark:text-verdure-400"
           >
             <CheckCircle className="mr-1 h-3 w-3" />
             Decret tracabilite

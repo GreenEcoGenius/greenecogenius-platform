@@ -115,12 +115,12 @@ export function CarbonHeroMetrics({
               <div className={`text-3xl font-bold ${card.color}`}>
                 {card.value}
                 {card.unit ? (
-                  <span className="ml-1 text-base font-normal text-gray-500">
+                  <span className="ml-1 text-base font-normal text-[#7DC4A0]">
                     {card.unit}
                   </span>
                 ) : null}
               </div>
-              <p className="text-muted-foreground mt-1 text-sm">
+              <p className="text-[#B8D4E3] mt-1 text-sm">
                 <Trans i18nKey={card.labelKey} />
               </p>
             </div>

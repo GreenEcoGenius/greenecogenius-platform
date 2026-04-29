@@ -21,7 +21,7 @@ async function CookiePolicyPage() {
       />
 
       <div className="container mx-auto max-w-3xl px-4 py-12 sm:py-16">
-        <p className="text-muted-foreground mb-12 text-sm">
+        <p className="text-[#B8D4E3] mb-12 text-sm">
           Dernière mise à jour : 29 mars 2026
         </p>
 
@@ -35,7 +35,7 @@ async function CookiePolicyPage() {
         </Section>
 
         <Section title="2. Cookies utilisés sur la Plateforme">
-          <h3 className="text-foreground mb-3 text-sm font-semibold">
+          <h3 className="text-[#F5F5F0] mb-3 text-sm font-semibold">
             Cookies essentiels (obligatoires)
           </h3>
           <p className="mb-3">
@@ -53,7 +53,7 @@ async function CookiePolicyPage() {
             ]}
           />
 
-          <h3 className="text-foreground mt-8 mb-3 text-sm font-semibold">
+          <h3 className="text-[#F5F5F0] mt-8 mb-3 text-sm font-semibold">
             Cookies analytiques (optionnels)
           </h3>
           <p className="mb-3">
@@ -95,7 +95,7 @@ async function CookiePolicyPage() {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-card text-foreground hover:border-primary/50 hover:text-primary rounded-lg border px-4 py-3 text-center text-sm font-medium transition-colors"
+                className="bg-[#0D3A26] text-[#F5F5F0] hover:border-primary/50 hover:text-primary rounded-lg border px-4 py-3 text-center text-sm font-medium transition-colors"
               >
                 {name}
               </a>
@@ -126,17 +126,17 @@ async function CookiePolicyPage() {
             </a>
             .
           </p>
-          <div className="bg-card mt-4 rounded-lg border p-5 text-sm">
-            <p className="text-foreground font-semibold">
+          <div className="bg-[#0D3A26] mt-4 rounded-lg border p-5 text-sm">
+            <p className="text-[#F5F5F0] font-semibold">
               GreenEcoGenius OÜ (Estonie) · GreenEcoGenius, Inc. (Delaware, USA)
             </p>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-[#B8D4E3] mt-1">
               Europe : Tornimäe tn 5, 10145 Tallinn, Estonie — Registre 16917315
             </p>
-            <p className="text-muted-foreground">
+            <p className="text-[#B8D4E3]">
               USA : 131 Continental Dr, Suite 305, Newark, DE 19713
             </p>
-            <p className="text-muted-foreground">
+            <p className="text-[#B8D4E3]">
               Contact : contact@greenecogenius.tech
             </p>
           </div>
@@ -158,7 +158,7 @@ function Section({
   return (
     <section className="border-border/50 mb-10 border-b pb-10 last:mb-0 last:border-b-0 last:pb-0">
       <h2 className="mb-4 text-lg font-semibold tracking-tight">{title}</h2>
-      <div className="text-muted-foreground space-y-3 text-[15px] leading-relaxed">
+      <div className="text-[#B8D4E3] space-y-3 text-[15px] leading-relaxed">
         {children}
       </div>
     </section>
@@ -167,17 +167,17 @@ function Section({
 
 function CookieTable({ rows }: { rows: [string, string, string][] }) {
   return (
-    <div className="bg-card overflow-hidden rounded-lg border">
+    <div className="bg-[#0D3A26] overflow-hidden rounded-lg border">
       <table className="w-full text-sm">
         <thead>
           <tr className="bg-secondary/50 border-b">
-            <th className="text-muted-foreground px-4 py-2.5 text-left text-xs font-semibold tracking-wider uppercase">
+            <th className="text-[#B8D4E3] px-4 py-2.5 text-left text-xs font-semibold tracking-wider uppercase">
               Cookie
             </th>
-            <th className="text-muted-foreground px-4 py-2.5 text-left text-xs font-semibold tracking-wider uppercase">
+            <th className="text-[#B8D4E3] px-4 py-2.5 text-left text-xs font-semibold tracking-wider uppercase">
               Finalité
             </th>
-            <th className="text-muted-foreground px-4 py-2.5 text-left text-xs font-semibold tracking-wider uppercase">
+            <th className="text-[#B8D4E3] px-4 py-2.5 text-left text-xs font-semibold tracking-wider uppercase">
               Durée
             </th>
           </tr>
@@ -188,11 +188,11 @@ function CookieTable({ rows }: { rows: [string, string, string][] }) {
               key={cookie}
               className={i > 0 ? 'border-border/50 border-t' : ''}
             >
-              <td className="text-foreground px-4 py-3 font-mono text-xs">
+              <td className="text-[#F5F5F0] px-4 py-3 font-mono text-xs">
                 {cookie}
               </td>
-              <td className="text-muted-foreground px-4 py-3">{purpose}</td>
-              <td className="text-muted-foreground px-4 py-3 whitespace-nowrap">
+              <td className="text-[#B8D4E3] px-4 py-3">{purpose}</td>
+              <td className="text-[#B8D4E3] px-4 py-3 whitespace-nowrap">
                 {duration}
               </td>
             </tr>

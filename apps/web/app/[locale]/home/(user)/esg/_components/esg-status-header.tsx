@@ -36,7 +36,7 @@ export function EsgStatusHeader({
               </Badge>
             </div>
 
-            <p className="text-muted-foreground mt-1 text-sm">
+            <p className="text-[#B8D4E3] mt-1 text-sm">
               {t('carbonFootprintCompliance')}
             </p>
 
@@ -46,10 +46,10 @@ export function EsgStatusHeader({
                 <span className="font-medium">{completionPct}%</span>{' '}
                 {t('complete')}
               </span>
-              <span className="text-muted-foreground">
+              <span className="text-[#B8D4E3]">
                 {autoFilled} {t('autoFilledFieldsCount')}
               </span>
-              <span className="text-muted-foreground">
+              <span className="text-[#B8D4E3]">
                 {remaining} {t('remaining')}
               </span>
             </div>
@@ -57,11 +57,11 @@ export function EsgStatusHeader({
             <div className="mt-3 max-w-lg">
               <div className="bg-muted h-2 w-full overflow-hidden rounded-full">
                 <div
-                  className="h-full rounded-full bg-[#E6F7EF]0 transition-all duration-700"
+                  className="h-full rounded-full bg-[#1A5C3E]0 transition-all duration-700"
                   style={{ width: `${completionPct}%` }}
                 />
               </div>
-              <p className="text-muted-foreground mt-1 text-xs">
+              <p className="text-[#B8D4E3] mt-1 text-xs">
                 {autoFilled}/{totalFields} {t('fieldsAutoFilled')}
               </p>
             </div>

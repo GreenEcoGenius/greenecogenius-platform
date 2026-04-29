@@ -13,7 +13,7 @@ export function PostHeader({ post }: { post: Cms.ContentItem }) {
       <div className={cn('border-border/50 border-b py-8')}>
         <div className={'mx-auto flex max-w-3xl flex-col gap-y-2.5'}>
           <div>
-            <span className={'text-muted-foreground text-xs'}>
+            <span className={'text-[#B8D4E3] text-xs'}>
               <DateFormatter dateString={publishedAt} />
             </span>
           </div>
@@ -27,7 +27,7 @@ export function PostHeader({ post }: { post: Cms.ContentItem }) {
           </h1>
 
           <h2
-            className={'text-muted-foreground text-base'}
+            className={'text-[#B8D4E3] text-base'}
             dangerouslySetInnerHTML={{ __html: description ?? '' }}
           ></h2>
         </div>

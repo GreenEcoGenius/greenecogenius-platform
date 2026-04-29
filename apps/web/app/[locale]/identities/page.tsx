@@ -63,7 +63,7 @@ async function IdentitiesPage(props: IdentitiesPageProps) {
 
           <Heading
             level={6}
-            className={'text-muted-foreground text-center text-sm'}
+            className={'text-[#B8D4E3] text-center text-sm'}
             data-test="identities-page-description"
           >
             <Trans i18nKey={'auth.linkAccountToSignInDescription'} />

@@ -56,7 +56,7 @@ function formatDate(dateStr: string): string {
 
 const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
   pending_payment: {
-    color: 'bg-gray-100 text-gray-800',
+    color: 'bg-gray-100 text-[#F5F5F0]',
     icon: <Clock className="h-3 w-3" />,
   },
   paid: {
@@ -72,11 +72,11 @@ const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
     icon: <CheckCircle className="h-3 w-3" />,
   },
   refunded: {
-    color: 'bg-slate-100 text-slate-800',
+    color: 'bg-slate-100 text-[#F5F5F0]',
     icon: <XCircle className="h-3 w-3" />,
   },
   cancelled: {
-    color: 'bg-slate-100 text-slate-800',
+    color: 'bg-slate-100 text-[#F5F5F0]',
     icon: <XCircle className="h-3 w-3" />,
   },
 };
@@ -99,14 +99,14 @@ function TransactionRow({
           {role === 'seller' ? (
             <ArrowDownLeft className="h-4 w-4 text-verdure-600" />
           ) : (
-            <ArrowUpRight className="h-4 w-4 text-blue-600" />
+            <ArrowUpRight className="h-4 w-4 text-blue-400" />
           )}
         </div>
         <div>
           <p className="text-sm font-medium">
             {tx.listings?.title ?? 'Listing'}
           </p>
-          <p className="text-muted-foreground text-xs">
+          <p className="text-[#B8D4E3] text-xs">
             {formatDate(tx.created_at)}
           </p>
         </div>
@@ -125,7 +125,7 @@ function TransactionRow({
               : `-${formatCents(tx.total_amount)}`}
           </p>
           {role === 'seller' && tx.platform_fee > 0 && (
-            <p className="text-muted-foreground text-xs">
+            <p className="text-[#B8D4E3] text-xs">
               <Trans i18nKey="wallet.feeDeducted" />{' '}
               {formatCents(tx.platform_fee)}
             </p>
@@ -162,7 +162,7 @@ export function TransactionHistory({
               className={`rounded-md px-3 py-1 text-sm ${
                 tab === 'sales'
                   ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted text-muted-foreground'
+                  : 'bg-muted text-[#B8D4E3]'
               }`}
             >
               <Trans i18nKey="wallet.sales" /> ({sellerTransactions.length})
@@ -172,7 +172,7 @@ export function TransactionHistory({
               className={`rounded-md px-3 py-1 text-sm ${
                 tab === 'purchases'
                   ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted text-muted-foreground'
+                  : 'bg-muted text-[#B8D4E3]'
               }`}
             >
               <Trans i18nKey="wallet.purchases" /> ({buyerTransactions.length})
@@ -182,7 +182,7 @@ export function TransactionHistory({
       </CardHeader>
       <CardContent>
         {transactions.length === 0 ? (
-          <p className="text-muted-foreground py-8 text-center">
+          <p className="text-[#B8D4E3] py-8 text-center">
             <Trans
               i18nKey={
                 tab === 'sales' ? 'wallet.noSales' : 'wallet.noPurchases'

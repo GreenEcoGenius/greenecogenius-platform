@@ -23,13 +23,13 @@ export async function LabelEligibilitySection({
         <div className="mb-4 flex flex-col gap-2 sm:mb-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
             <Award className="h-5 w-5 shrink-0 text-[#00A86B]" strokeWidth={1.5} />
-            <h2 className="text-lg font-semibold text-gray-900 sm:text-xl">
+            <h2 className="text-lg font-semibold text-[#F5F5F0] sm:text-xl">
               {t('labelSectionTitle')}
             </h2>
           </div>
           <Badge
             variant="secondary"
-            className="w-fit border-[#8FDAB5] bg-[#E6F7EF] text-[#008F5A]"
+            className="w-fit border-[#8FDAB5] bg-[#1A5C3E] text-[#008F5A]"
           >
             {t('labelsAccessible', {
               eligible: eligibleCount,
@@ -42,23 +42,23 @@ export async function LabelEligibilitySection({
           {labels.map((l) => (
             <div
               key={l.id}
-              className="rounded-xl border border-[#D5E8DD] bg-card p-3 sm:p-4"
+              className="rounded-xl border border-[#1A5C3E] bg-[#0D3A26] p-3 sm:p-4"
             >
               <div className="mb-2 flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-sm font-semibold text-gray-900 sm:text-base">
+                  <h3 className="text-sm font-semibold text-[#F5F5F0] sm:text-base">
                     {l.label}
                   </h3>
-                  <p className="text-[11px] text-gray-500 sm:text-xs">{l.organism}</p>
+                  <p className="text-[11px] text-[#7DC4A0] sm:text-xs">{l.organism}</p>
                 </div>
                 {l.eligible ? (
-                  <Badge className="shrink-0 border-[#8FDAB5] bg-[#E6F7EF] text-[11px] text-[#008F5A] sm:text-xs">
+                  <Badge className="shrink-0 border-[#8FDAB5] bg-[#1A5C3E] text-[11px] text-[#008F5A] sm:text-xs">
                     {t('eligible')}
                   </Badge>
                 ) : (
                   <Badge
                     variant="outline"
-                    className="shrink-0 border-[#C5DDD0] text-[11px] text-gray-500 sm:text-xs"
+                    className="shrink-0 border-[#1A5C3E] text-[11px] text-[#7DC4A0] sm:text-xs"
                   >
                     {t('inProgress')}
                   </Badge>
@@ -66,7 +66,7 @@ export async function LabelEligibilitySection({
               </div>
 
               <div className="mb-2 sm:mb-3">
-                <div className="mb-1 flex items-center justify-between text-[11px] text-gray-500 sm:text-xs">
+                <div className="mb-1 flex items-center justify-between text-[11px] text-[#7DC4A0] sm:text-xs">
                   <span>{t('labelCoverage')}</span>
                   <span className="font-medium">{l.coverage}%</span>
                 </div>
@@ -74,9 +74,9 @@ export async function LabelEligibilitySection({
                   <div
                     className={`h-full transition-all ${
                       l.coverage >= 80
-                        ? 'bg-[#E6F7EF]0'
+                        ? 'bg-[#1A5C3E]0'
                         : l.coverage >= 50
-                          ? 'bg-amber-500'
+                          ? 'bg-amber-900/300'
                           : 'bg-gray-300'
                     }`}
                     style={{ width: `${l.coverage}%` }}
@@ -84,7 +84,7 @@ export async function LabelEligibilitySection({
                 </div>
               </div>
 
-              <p className="mb-2 text-xs text-gray-600 sm:mb-3 sm:text-sm">
+              <p className="mb-2 text-xs text-[#B8D4E3] sm:mb-3 sm:text-sm">
                 {l.message}
               </p>
 
@@ -106,7 +106,7 @@ export async function LabelEligibilitySection({
                   {l.criteria_missing.map((c) => (
                     <li
                       key={`miss-${c}`}
-                      className="flex items-start gap-1.5 text-gray-400"
+                      className="flex items-start gap-1.5 text-[#7DC4A0]"
                     >
                       <X className="mt-0.5 h-3 w-3 shrink-0" strokeWidth={2} />
                       <span>{c}</span>

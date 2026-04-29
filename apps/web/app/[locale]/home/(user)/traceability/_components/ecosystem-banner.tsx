@@ -47,7 +47,7 @@ export function EcosystemBanner({
       value: `${esgAutoPercent}%`,
       labelKey: 'blockchain:ecosystemESG' as const,
       href: '/home/esg',
-      color: 'text-blue-700 dark:text-blue-400',
+      color: 'text-blue-400 dark:text-blue-400',
     },
     {
       icon: Blocks,
@@ -78,7 +78,7 @@ export function EcosystemBanner({
               <span className={`text-sm font-bold ${item.color}`}>
                 {item.value}
               </span>
-              <span className="text-muted-foreground text-xs">
+              <span className="text-[#B8D4E3] text-xs">
                 <Trans i18nKey={item.labelKey} />
               </span>
             </div>

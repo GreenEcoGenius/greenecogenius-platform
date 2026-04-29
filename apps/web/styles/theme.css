@@ -118,9 +118,9 @@
   --color-circuit-cyan: #6B7380;
   --color-circuit-blue: #4B5260;
   --color-circuit-turquoise: #C5CCD4;
-  --color-circuit-ice: #EDF7F2;
-  --color-circuit-50: #F0F9F5;
-  --color-circuit-100: #EDF7F2;
+  --color-circuit-ice: #12472F;
+  --color-circuit-50: #0D3A26;
+  --color-circuit-100: #12472F;
   --color-circuit-300: #C5CCD4;
   --color-circuit-500: #4B5260;
   --color-circuit-700: #2E3340;
@@ -131,13 +131,13 @@
   --color-tech-mint: #C1EBD6;
 
   /* ── Metal — aligned to cloud neutrals ── */
-  --color-metal-frost: #EDF7F2;
-  --color-metal-chrome: #F0F9F5;
-  --color-metal-silver: #DDE2E7;
+  --color-metal-frost: #12472F;
+  --color-metal-chrome: #0D3A26;
+  --color-metal-silver: #1A5C3E;
   --color-metal-steel: #6B7380;
-  --color-metal-50: #F0F9F5;
-  --color-metal-100: #EDF7F2;
-  --color-metal-200: #E0F0E8;
+  --color-metal-50: #0D3A26;
+  --color-metal-100: #12472F;
+  --color-metal-200: #1A5C3E;
   --color-metal-300: #DDE2E7;
   --color-metal-400: #C5CCD4;
   --color-metal-500: #9BA3AD;

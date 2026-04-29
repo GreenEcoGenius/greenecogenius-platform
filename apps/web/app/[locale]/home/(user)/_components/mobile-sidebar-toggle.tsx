@@ -11,7 +11,7 @@ export function MobileSidebarToggle() {
     <button
       type="button"
       onClick={toggleSidebar}
-      className="text-foreground hover:text-primary flex h-10 w-10 cursor-pointer items-center justify-center"
+      className="text-[#F5F5F0] hover:text-primary flex h-10 w-10 cursor-pointer items-center justify-center"
       aria-label="Menu"
     >
       <Menu className="h-7 w-7" strokeWidth={1.5} />

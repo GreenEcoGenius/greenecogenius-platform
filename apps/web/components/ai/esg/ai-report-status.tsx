@@ -35,7 +35,7 @@ function ScopeItem({ label, complete }: { label: string; complete: boolean }) {
       ) : (
         <AlertTriangle className="h-4 w-4 text-[#E6F7EF]0" />
       )}
-      <span className={complete ? '' : 'text-muted-foreground'}>{label}</span>
+      <span className={complete ? '' : 'text-[#B8D4E3]'}>{label}</span>
       <span
         className={cn(
           'ml-auto text-xs font-medium',
@@ -72,7 +72,7 @@ export function AIReportStatus({
         {/* Auto-filled progress */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">
+            <span className="text-[#B8D4E3]">
               Donn\u00e9es auto-remplies
             </span>
             <span className="font-medium">{autoFilledPercent}%</span>
@@ -82,9 +82,9 @@ export function AIReportStatus({
               className={cn(
                 'h-full rounded-full transition-all',
                 autoFilledPercent >= 80
-                  ? 'bg-[#E6F7EF]0'
+                  ? 'bg-[#1A5C3E]0'
                   : autoFilledPercent >= 50
-                    ? 'bg-[#E6F7EF]0'
+                    ? 'bg-[#1A5C3E]0'
                     : 'bg-[#008F5A]',
               )}
               style={{ width: `${autoFilledPercent}%` }}
@@ -94,7 +94,7 @@ export function AIReportStatus({
 
         {/* Scope checklist */}
         <div className="space-y-2.5">
-          <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+          <p className="text-[#B8D4E3] text-xs font-medium tracking-wider uppercase">
             V\u00e9rification des scopes
           </p>
           <ScopeItem
@@ -116,7 +116,7 @@ export function AIReportStatus({
           <Link2 className="text-primary h-4 w-4" />
           <span className="text-sm">
             <span className="font-medium">{blockchainProofs}</span>{' '}
-            <span className="text-muted-foreground">
+            <span className="text-[#B8D4E3]">
               preuves blockchain enregistr\u00e9es
             </span>
           </span>

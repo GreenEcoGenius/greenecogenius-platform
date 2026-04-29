@@ -76,18 +76,18 @@ function CorrigerForm({
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="text-muted-foreground mb-1 block text-xs font-medium">
+          <label className="text-[#B8D4E3] mb-1 block text-xs font-medium">
             Poids actuel (kg)
           </label>
           <input
             type="text"
             value={currentWeight}
             readOnly
-            className="bg-muted text-muted-foreground w-full rounded-md border px-3 py-2 text-sm"
+            className="bg-muted text-[#B8D4E3] w-full rounded-md border px-3 py-2 text-sm"
           />
         </div>
         <div>
-          <label className="text-muted-foreground mb-1 block text-xs font-medium">
+          <label className="text-[#B8D4E3] mb-1 block text-xs font-medium">
             Nouveau poids (kg)
           </label>
           <input
@@ -100,7 +100,7 @@ function CorrigerForm({
         </div>
       </div>
       <div>
-        <label className="text-muted-foreground mb-1 block text-xs font-medium">
+        <label className="text-[#B8D4E3] mb-1 block text-xs font-medium">
           Raison de la correction
         </label>
         <select
@@ -117,7 +117,7 @@ function CorrigerForm({
         </select>
       </div>
       <div>
-        <label className="text-muted-foreground mb-1 block text-xs font-medium">
+        <label className="text-[#B8D4E3] mb-1 block text-xs font-medium">
           Commentaire (optionnel)
         </label>
         <textarea
@@ -175,29 +175,29 @@ function SignalerForm({
   return (
     <div className="space-y-4">
       <div>
-        <label className="text-muted-foreground mb-1 block text-xs font-medium">
+        <label className="text-[#B8D4E3] mb-1 block text-xs font-medium">
           Destinataire
         </label>
         <input
           type="text"
           value={recipient}
           readOnly
-          className="bg-muted text-muted-foreground w-full rounded-md border px-3 py-2 text-sm"
+          className="bg-muted text-[#B8D4E3] w-full rounded-md border px-3 py-2 text-sm"
         />
       </div>
       <div>
-        <label className="text-muted-foreground mb-1 block text-xs font-medium">
+        <label className="text-[#B8D4E3] mb-1 block text-xs font-medium">
           Objet
         </label>
         <input
           type="text"
           value={subject}
           readOnly
-          className="bg-muted text-muted-foreground w-full rounded-md border px-3 py-2 text-sm"
+          className="bg-muted text-[#B8D4E3] w-full rounded-md border px-3 py-2 text-sm"
         />
       </div>
       <div>
-        <label className="text-muted-foreground mb-1 block text-xs font-medium">
+        <label className="text-[#B8D4E3] mb-1 block text-xs font-medium">
           Message
         </label>
         <textarea
@@ -252,16 +252,16 @@ function ContacterTransporteurForm({
   return (
     <div className="space-y-4">
       <div className="bg-muted/50 flex items-center gap-3 rounded-lg border p-3">
-        <Truck className="text-muted-foreground h-8 w-8" />
+        <Truck className="text-[#B8D4E3] h-8 w-8" />
         <div>
           <p className="text-sm font-medium">{transporteur}</p>
-          <p className="text-muted-foreground flex items-center gap-1 text-xs">
+          <p className="text-[#B8D4E3] flex items-center gap-1 text-xs">
             <Phone className="h-3 w-3" /> {telephone}
           </p>
         </div>
       </div>
       <div>
-        <label className="text-muted-foreground mb-1 block text-xs font-medium">
+        <label className="text-[#B8D4E3] mb-1 block text-xs font-medium">
           Message
         </label>
         <textarea

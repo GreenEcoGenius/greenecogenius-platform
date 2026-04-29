@@ -120,11 +120,11 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
               <div className="text-primary text-2xl font-bold">
                 {listing.price_per_unit} {listing.currency}
               </div>
-              <div className="text-muted-foreground text-sm">
+              <div className="text-[#B8D4E3] text-sm">
                 / {listing.unit}
               </div>
               {totalPrice !== null && (
-                <div className="text-muted-foreground mt-1 text-xs">
+                <div className="text-[#B8D4E3] mt-1 text-xs">
                   <Trans i18nKey="marketplace.totalLabel" />
                   {' : '}
                   {totalPrice.toLocaleString('fr-FR', {
@@ -140,7 +140,7 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
 
         {listing.description && (
           <div className="mt-6">
-            <h2 className="text-muted-foreground text-sm font-semibold uppercase">
+            <h2 className="text-[#B8D4E3] text-sm font-semibold uppercase">
               <Trans i18nKey="marketplace.descriptionLabel" />
             </h2>
             <p className="mt-2 whitespace-pre-wrap">{listing.description}</p>
@@ -149,7 +149,7 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
 
         <div className="mt-6 grid grid-cols-2 gap-4 rounded-lg border p-4 md:grid-cols-4">
           <div>
-            <div className="text-muted-foreground flex items-center gap-1 text-xs">
+            <div className="text-[#B8D4E3] flex items-center gap-1 text-xs">
               <Tag className="h-3 w-3" />
               <Trans i18nKey="marketplace.category" />
             </div>
@@ -159,7 +159,7 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
           </div>
 
           <div>
-            <div className="text-muted-foreground flex items-center gap-1 text-xs">
+            <div className="text-[#B8D4E3] flex items-center gap-1 text-xs">
               <Package className="h-3 w-3" />
               <Trans i18nKey="marketplace.quantity" />
             </div>
@@ -170,7 +170,7 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
 
           {listing.location_city && (
             <div>
-              <div className="text-muted-foreground flex items-center gap-1 text-xs">
+              <div className="text-[#B8D4E3] flex items-center gap-1 text-xs">
                 <MapPin className="h-3 w-3" />
                 <Trans i18nKey="marketplace.location" />
               </div>
@@ -181,7 +181,7 @@ async function ListingDetailPage({ params }: ListingDetailPageProps) {
           )}
 
           <div>
-            <div className="text-muted-foreground text-xs">
+            <div className="text-[#B8D4E3] text-xs">
               <Trans i18nKey="marketplace.publishedOn" />
             </div>
             <div className="mt-1 text-sm font-medium">

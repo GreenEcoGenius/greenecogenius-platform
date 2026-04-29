@@ -40,13 +40,13 @@ function PageWithSidebar(props: PageProps) {
         data-scroll-root="true"
         className={
           props.contentContainerClassName ??
-          'mx-auto flex w-full min-w-0 flex-1 flex-col bg-[#F0F9F5] lg:overflow-y-auto lg:bg-inherit'
+          'mx-auto flex w-full min-w-0 flex-1 flex-col bg-[#0A2F1F] lg:overflow-y-auto lg:bg-inherit'
         }
       >
         {MobileNavigation}
 
         <div
-          className={'flex min-w-0 flex-1 flex-col px-4 lg:bg-[#F0F9F5] lg:px-0'}
+          className={'flex min-w-0 flex-1 flex-col px-4 lg:bg-[#0A2F1F] lg:px-0'}
         >
           {Children}
         </div>
@@ -126,7 +126,7 @@ export function PageNavigation(props: React.PropsWithChildren) {
 export function PageDescription(props: React.PropsWithChildren) {
   return (
     <div className={'flex h-6 items-center'}>
-      <div className={'text-muted-foreground text-xs leading-none font-normal'}>
+      <div className={'text-[#B8D4E3] text-xs leading-none font-normal'}>
         {props.children}
       </div>
     </div>
@@ -168,7 +168,7 @@ export function PageHeader({
     >
       <div className={'flex flex-col gap-y-2'}>
         <div className="flex items-center gap-x-2.5">
-          <SidebarTrigger className="text-muted-foreground hover:text-secondary-foreground h-4.5 w-4.5 cursor-pointer" />
+          <SidebarTrigger className="text-[#B8D4E3] hover:text-secondary-foreground h-4.5 w-4.5 cursor-pointer" />
 
           <If condition={description}>
             <Separator

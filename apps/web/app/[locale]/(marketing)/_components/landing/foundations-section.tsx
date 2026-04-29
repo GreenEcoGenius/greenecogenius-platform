@@ -60,7 +60,7 @@ function LogoCard({
       href={logo.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex h-36 flex-col items-center justify-center rounded-xl border border-[#D5E8DD] bg-card px-5 py-4 shadow-sm transition-all duration-200 hover:border-[#C5DDD0] hover:shadow-md"
+      className="group flex h-36 flex-col items-center justify-center rounded-xl border border-[#1A5C3E] bg-[#0D3A26] px-5 py-4 shadow-lg shadow-black/20 transition-all duration-200 hover:border-[#1A5C3E] hover:shadow-xl shadow-black/25"
     >
       {logo.src ? (
         <Image
@@ -72,9 +72,9 @@ function LogoCard({
           unoptimized
         />
       ) : (
-        <span className="text-metal-500 text-sm font-bold">{logo.name}</span>
+        <span className="text-[#7DC4A0] text-sm font-bold">{logo.name}</span>
       )}
-      <span className="text-metal-400 group-hover:text-metal-600 mt-2 text-[11px] font-medium transition-colors">
+      <span className="text-[#5A9E7D] group-hover:text-[#B8D4E3] mt-2 text-[11px] font-medium transition-colors">
         {logo.name}
       </span>
     </a>
@@ -125,7 +125,7 @@ export function TechCarousel() {
     <section className="py-10 sm:py-14">
       <div className="mb-8 flex items-center justify-center gap-2 px-4">
         <Code2 className="h-5 w-5 text-[#00A86B]" strokeWidth={1.5} />
-        <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
+        <p className="text-[#7DC4A0] text-sm font-medium uppercase tracking-wider">
           {t('landing.foundationsTech')}
         </p>
       </div>
@@ -143,7 +143,7 @@ export function SourcesCarousel() {
     <section className="py-10 sm:py-14">
       <div className="mb-8 flex items-center justify-center gap-2 px-4">
         <Database className="h-5 w-5 text-[#00A86B]" strokeWidth={1.5} />
-        <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
+        <p className="text-[#7DC4A0] text-sm font-medium uppercase tracking-wider">
           {t('landing.foundationsSources')}
         </p>
       </div>
@@ -161,11 +161,11 @@ export function FrameworksCarousel() {
     <section className="py-10 sm:py-14">
       <div className="mb-2 flex items-center justify-center gap-2 px-4">
         <ShieldCheck className="h-5 w-5 text-verdure-600" strokeWidth={1.5} />
-        <p className="text-metal-500 text-sm font-medium uppercase tracking-wider">
+        <p className="text-[#7DC4A0] text-sm font-medium uppercase tracking-wider">
           {t('landing.foundationsFrameworks')}
         </p>
       </div>
-      <p className="text-metal-400 mb-6 px-4 text-center text-xs">
+      <p className="text-[#5A9E7D] mb-6 px-4 text-center text-xs">
         {t('landing.foundationsFrameworksSub')}
       </p>
       <div className="mx-auto max-w-7xl">

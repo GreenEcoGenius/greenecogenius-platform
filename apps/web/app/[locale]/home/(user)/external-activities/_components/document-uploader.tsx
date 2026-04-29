@@ -128,12 +128,12 @@ export function DocumentUploader({
 
   return (
     <div className="space-y-2">
-      <label className="text-sm font-medium text-gray-900">
+      <label className="text-sm font-medium text-[#F5F5F0]">
         {t('uploader.label')}
       </label>
 
       {path && signedUrl ? (
-        <div className="flex items-center gap-3 rounded-lg border border-[#8FDAB5] bg-[#E6F7EF]/50 p-3">
+        <div className="flex items-center gap-3 rounded-lg border border-[#8FDAB5] bg-[#1A5C3E]/50 p-3">
           <FileText
             className="h-5 w-5 shrink-0 text-[#00A86B]"
             strokeWidth={1.5}
@@ -200,7 +200,7 @@ export function DocumentUploader({
               </>
             )}
           </Button>
-          <span className="text-xs text-gray-400">
+          <span className="text-xs text-[#7DC4A0]">
             {t('uploader.constraints')}
           </span>
           <Input

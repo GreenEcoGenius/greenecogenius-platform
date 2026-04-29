@@ -66,7 +66,7 @@ export function AIPriceSuggestion({
   const priceData = response ? parsePriceData(response.content) : null;
 
   return (
-    <Card className="border-verdure-200 bg-verdure-50/50 dark:border-verdure-900 dark:bg-verdure-950/20">
+    <Card className="border-[#1A5C3E] bg-[#1A5C3E]/50 dark:border-verdure-900 dark:bg-verdure-950/20">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm font-medium">
@@ -94,7 +94,7 @@ export function AIPriceSuggestion({
 
             {/* Metadata row */}
             <div className="flex items-center justify-between">
-              <p className="text-muted-foreground text-xs">
+              <p className="text-[#B8D4E3] text-xs">
                 Bas\u00e9 sur {priceData.transactions} transactions similaires
               </p>
 
@@ -112,7 +112,7 @@ export function AIPriceSuggestion({
                   </>
                 )}
                 {priceData.trend === 'stable' && (
-                  <span className="text-muted-foreground">Stable</span>
+                  <span className="text-[#B8D4E3]">Stable</span>
                 )}
               </div>
             </div>

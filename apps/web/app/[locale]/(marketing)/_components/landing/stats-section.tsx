@@ -39,13 +39,13 @@ export async function StatsSection() {
   const t = await getTranslations('marketing');
 
   return (
-    <section className="bg-cloud-100 py-20 sm:py-28">
+    <section className="bg-[#0D3A26] py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll animation="fade-up">
           <h2 className="gradient-text-verdure-leaf mb-4 text-center text-3xl font-bold sm:text-4xl">
             {t('landing.statsTitle')}
           </h2>
-          <p className="text-metal-600 mx-auto mb-14 max-w-xl text-center text-lg">
+          <p className="text-[#B8D4E3] mx-auto mb-14 max-w-xl text-center text-lg">
             {t('landing.statsSub')}
           </p>
         </AnimateOnScroll>
@@ -55,18 +55,18 @@ export async function StatsSection() {
             const Icon = stat.icon;
             return (
               <AnimateOnScroll key={i} animation="fade-up" delay={i * 100}>
-                <div className="border-metal-chrome rounded-2xl border bg-card p-6 text-center shadow-sm">
-                  <div className="bg-primary-light text-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl">
+                <div className="border-[#1A5C3E] rounded-2xl border bg-[#0D3A26] p-6 text-center shadow-lg shadow-black/20">
+                  <div className={`${stat.iconBg || "bg-[#1A5C3E]"} ${stat.iconColor || "text-primary"} mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl`}>
                     <Icon className="h-6 w-6" />
                   </div>
-                  <p className="text-4xl font-bold text-brand-900 sm:text-5xl">
+                  <p className={`text-4xl font-bold sm:text-5xl ${stat.numColor || "text-[#10B981]"}`}>
                     <AnimatedCounter target={stat.value} />
                     {stat.suffix}
                   </p>
-                  <p className="text-metal-700 mt-2 text-sm font-medium">
+                  <p className="text-[#E0E7E3] mt-2 text-sm font-medium">
                     {t(stat.labelKey)}
                   </p>
-                  <p className="text-metal-400 mt-1 text-xs">
+                  <p className="text-[#5A9E7D] mt-1 text-xs">
                     {t(stat.sourceKey)}
                   </p>
                 </div>

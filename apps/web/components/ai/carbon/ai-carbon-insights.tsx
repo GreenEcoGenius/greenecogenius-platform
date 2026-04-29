@@ -133,7 +133,7 @@ export function AICarbonInsights({ className }: { className?: string }) {
         {loading ? (
           <AILoadingState lines={4} />
         ) : error ? (
-          <div className="text-muted-foreground py-4 text-center text-sm">
+          <div className="text-[#B8D4E3] py-4 text-center text-sm">
             Impossible de charger les insights. Veuillez r\u00e9essayer.
           </div>
         ) : (
@@ -147,7 +147,7 @@ export function AICarbonInsights({ className }: { className?: string }) {
                 >
                   <div
                     className={cn(
-                      'mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-card dark:bg-gray-800',
+                      'mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0D3A26] dark:bg-gray-800',
                       insight.iconColor,
                     )}
                   >
@@ -155,7 +155,7 @@ export function AICarbonInsights({ className }: { className?: string }) {
                   </div>
                   <div className="flex-1 space-y-1">
                     <p className="text-sm font-medium">{insight.title}</p>
-                    <p className="text-muted-foreground text-xs leading-relaxed">
+                    <p className="text-[#B8D4E3] text-xs leading-relaxed">
                       {insight.description}
                     </p>
                     <Button

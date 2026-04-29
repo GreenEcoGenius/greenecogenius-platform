@@ -47,18 +47,18 @@ export function ImpactSimulator() {
         <h2 className="gradient-text-verdure-leaf mb-3 text-center text-3xl font-bold sm:text-4xl">
           {t('landing.impactTitle')}
         </h2>
-        <p className="text-metal-600 mx-auto mb-14 max-w-xl text-center text-lg">
+        <p className="text-[#B8D4E3] mx-auto mb-14 max-w-xl text-center text-lg">
           {t('landing.impactSub')}
         </p>
 
         <div className="grid gap-10 lg:grid-cols-2">
           {/* Simulator */}
-          <div className="rounded-2xl border bg-card p-6 shadow-sm sm:p-8">
-            <h3 className="text-metal-900 mb-6 text-lg font-bold">
+          <div className="rounded-2xl border bg-[#0D3A26] p-6 shadow-lg shadow-black/20 sm:p-8">
+            <h3 className="text-[#F5F5F0] mb-6 text-lg font-bold">
               {t('landing.simulatorTitle')}
             </h3>
 
-            <label className="text-metal-700 mb-2 block text-sm font-medium">
+            <label className="text-[#E0E7E3] mb-2 block text-sm font-medium">
               {t('landing.simulatorSliderLabel')}
             </label>
             <input
@@ -70,7 +70,7 @@ export function ImpactSimulator() {
               onChange={(e) => setTonnage(Number(e.target.value))}
               className="accent-primary mb-2 w-full"
             />
-            <div className="text-metal-500 mb-8 flex justify-between text-xs">
+            <div className="text-[#7DC4A0] mb-8 flex justify-between text-xs">
               <span>10 t</span>
               <span className="text-primary text-lg font-bold">
                 {tonnage.toLocaleString('fr-FR')} t/an
@@ -87,19 +87,19 @@ export function ImpactSimulator() {
                   tCO₂e {t('landing.avoided')}
                 </p>
               </div>
-              <div className="rounded-xl bg-blue-50 p-4 text-center">
-                <p className="text-2xl font-bold text-blue-700">
+              <div className="rounded-xl bg-blue-900/30 p-4 text-center">
+                <p className="text-2xl font-bold text-blue-400">
                   {computed.savings.toLocaleString('fr-FR')} €
                 </p>
-                <p className="text-xs text-blue-600">
+                <p className="text-xs text-blue-400">
                   {t('landing.potentialSavings')}
                 </p>
               </div>
-              <div className="rounded-xl bg-purple-50 p-4 text-center">
-                <p className="text-2xl font-bold text-purple-700">
+              <div className="rounded-xl bg-purple-900/30 p-4 text-center">
+                <p className="text-2xl font-bold text-purple-400">
                   {computed.score}/100
                 </p>
-                <p className="text-xs text-purple-600">
+                <p className="text-xs text-purple-400">
                   {t('landing.esgScore')}
                 </p>
               </div>
@@ -107,8 +107,8 @@ export function ImpactSimulator() {
           </div>
 
           {/* Chart */}
-          <div className="rounded-2xl border bg-card p-6 shadow-sm sm:p-8">
-            <h3 className="text-metal-900 mb-6 text-lg font-bold">
+          <div className="rounded-2xl border bg-[#0D3A26] p-6 shadow-lg shadow-black/20 sm:p-8">
+            <h3 className="text-[#F5F5F0] mb-6 text-lg font-bold">
               {t('landing.chartTitle')}
             </h3>
 
@@ -162,7 +162,7 @@ export function ImpactSimulator() {
               </LineChart>
             </ResponsiveContainer>
 
-            <p className="text-metal-400 mt-4 text-xs">
+            <p className="text-[#5A9E7D] mt-4 text-xs">
               {t('landing.chartSource')}
             </p>
           </div>

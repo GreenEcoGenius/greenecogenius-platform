@@ -80,7 +80,7 @@ export default async function VerifyLandingPage({
               Vérification Blockchain
             </h1>
 
-            <p className="text-muted-foreground mt-3 text-lg">
+            <p className="text-[#B8D4E3] mt-3 text-lg">
               Vérifiez l&apos;authenticité d&apos;un certificat de traçabilité
               GreenEcoGenius.
             </p>
@@ -94,13 +94,13 @@ export default async function VerifyLandingPage({
             >
               <div className="flex gap-2">
                 <div className="relative flex-1">
-                  <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2" />
+                  <Search className="text-[#B8D4E3] pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2" />
                   <input
                     type="text"
                     name="q"
                     required
                     placeholder="Entrez un hash ou numéro de certificat (ex: GEG-2026-...)"
-                    className="border-input bg-background placeholder:text-muted-foreground focus:ring-ring h-12 w-full rounded-lg border pr-4 pl-10 text-sm focus:ring-2 focus:outline-none"
+                    className="border-input bg-background placeholder:text-[#B8D4E3] focus:ring-ring h-12 w-full rounded-lg border pr-4 pl-10 text-sm focus:ring-2 focus:outline-none"
                     data-test="verify-search-input"
                   />
                 </div>
@@ -115,7 +115,7 @@ export default async function VerifyLandingPage({
               </div>
             </form>
 
-            <p className="text-muted-foreground mt-3 text-sm">
+            <p className="text-[#B8D4E3] mt-3 text-sm">
               Scannez le QR code de votre certificat ou collez le hash
               ci-dessus.
             </p>
@@ -150,7 +150,7 @@ export default async function VerifyLandingPage({
         </section>
 
         {/* Global Stats */}
-        <section className="border-t bg-verdure-50 px-4 py-16 dark:bg-verdure-950/30">
+        <section className="border-t bg-[#1A5C3E] px-4 py-16 dark:bg-verdure-950/30">
           <div className="mx-auto max-w-4xl">
             <h2 className="mb-10 text-center text-2xl font-bold">
               Transparence & Confiance
@@ -178,7 +178,7 @@ export default async function VerifyLandingPage({
       </main>
 
       {/* Footer */}
-      <footer className="text-muted-foreground border-t px-4 py-6 text-center text-xs">
+      <footer className="text-[#B8D4E3] border-t px-4 py-6 text-center text-xs">
         <p>
           GreenEcoGenius OÜ (Estonia) · GreenEcoGenius, Inc. (Delaware, USA)
         </p>
@@ -208,10 +208,10 @@ function HowItWorksStep({
         <div className="flex h-14 w-14 items-center justify-center rounded-full bg-verdure-100 text-verdure-700 dark:bg-verdure-950 dark:text-verdure-400">
           {icon}
         </div>
-        <div className="bg-muted text-muted-foreground flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold">
+        <div className="bg-muted text-[#B8D4E3] flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold">
           {step}
         </div>
-        <p className="text-muted-foreground text-sm">{description}</p>
+        <p className="text-[#B8D4E3] text-sm">{description}</p>
       </CardContent>
     </Card>
   );
@@ -227,13 +227,13 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <Card className="border-verdure-200 dark:border-verdure-800">
+    <Card className="border-[#1A5C3E] dark:border-verdure-800">
       <CardContent className="flex flex-col items-center gap-2 p-6 text-center">
         {icon}
         <p className="text-3xl font-bold text-verdure-700 dark:text-verdure-300">
           {value}
         </p>
-        <p className="text-muted-foreground text-sm">{label}</p>
+        <p className="text-[#B8D4E3] text-sm">{label}</p>
       </CardContent>
     </Card>
   );

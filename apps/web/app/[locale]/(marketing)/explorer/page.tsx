@@ -167,17 +167,17 @@ export default async function ExplorerPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-metal-50 relative overflow-hidden py-20 sm:py-28">
+      <section className="bg-[#0D3A26] relative overflow-hidden py-20 sm:py-28">
         <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
-            <div className="bg-primary-light text-primary mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold">
+            <div className="bg-[#1A5C3E] text-primary mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold">
               <Sparkles className="h-4 w-4" />
               {t('explorer.badge')}
             </div>
-            <h1 className="text-metal-900 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-[#F5F5F0] text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
               {t('explorer.heroTitle')}
             </h1>
-            <p className="text-metal-600 mx-auto mt-4 max-w-2xl text-lg">
+            <p className="text-[#B8D4E3] mx-auto mt-4 max-w-2xl text-lg">
               {t('explorer.heroSubtitle')}
             </p>
             <div className="mt-4">

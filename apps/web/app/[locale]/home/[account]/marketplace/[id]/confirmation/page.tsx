@@ -28,7 +28,7 @@ async function ConfirmationPage({ params }: ConfirmationPageProps) {
           <Trans i18nKey="marketplace.paymentSuccess" />
         </h1>
 
-        <p className="text-muted-foreground">
+        <p className="text-[#B8D4E3]">
           <Trans i18nKey="marketplace.paymentSuccessDesc" />
         </p>
 

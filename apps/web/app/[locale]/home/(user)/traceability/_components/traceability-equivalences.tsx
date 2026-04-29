@@ -67,7 +67,7 @@ export function TraceabilityEquivalences({
               <span className="text-2xl font-bold tracking-tight">
                 {item.value}
               </span>
-              <span className="text-muted-foreground mt-0.5 text-xs">
+              <span className="text-[#B8D4E3] mt-0.5 text-xs">
                 {item.label}
               </span>
             </CardContent>

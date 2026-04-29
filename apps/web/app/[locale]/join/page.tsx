@@ -186,7 +186,7 @@ function InviteNotFoundOrExpired() {
         <Trans i18nKey={'teams.inviteNotFoundOrExpired'} />
       </Heading>
 
-      <p className={'text-muted-foreground text-sm'}>
+      <p className={'text-[#B8D4E3] text-sm'}>
         <Trans i18nKey={'teams.inviteNotFoundOrExpiredDescription'} />
       </p>
 

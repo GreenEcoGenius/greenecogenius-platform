@@ -235,20 +235,20 @@ async function CarbonPage() {
           <Card>
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-[#E6F7EF] p-2 dark:bg-[#00A86B]/30">
+                <div className="rounded-lg bg-[#1A5C3E] p-2 dark:bg-[#00A86B]/30">
                   <Flame className="h-5 w-5 text-[#00A86B]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-muted-foreground text-xs">
+                  <p className="text-[#B8D4E3] text-xs">
                     <Trans i18nKey="carbon:scope1" />
                   </p>
                   <p className="text-2xl font-bold text-[#00A86B]">
                     {mockScope1}
-                    <span className="ml-1 text-sm font-normal text-gray-500">
+                    <span className="ml-1 text-sm font-normal text-[#7DC4A0]">
                       t
                     </span>
                   </p>
-                  <p className="text-muted-foreground text-xs">
+                  <p className="text-[#B8D4E3] text-xs">
                     <Trans i18nKey="carbon:scope1Desc" />
                   </p>
                 </div>
@@ -273,20 +273,20 @@ async function CarbonPage() {
           <Card>
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-[#E6F7EF] p-2 dark:bg-[#004428]/30">
+                <div className="rounded-lg bg-[#1A5C3E] p-2 dark:bg-[#004428]/30">
                   <Zap className="h-5 w-5 text-[#00A86B]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-muted-foreground text-xs">
+                  <p className="text-[#B8D4E3] text-xs">
                     <Trans i18nKey="carbon:scope2" />
                   </p>
                   <p className="text-2xl font-bold text-[#00A86B]">
                     {mockScope2}
-                    <span className="ml-1 text-sm font-normal text-gray-500">
+                    <span className="ml-1 text-sm font-normal text-[#7DC4A0]">
                       t
                     </span>
                   </p>
-                  <p className="text-muted-foreground text-xs">
+                  <p className="text-[#B8D4E3] text-xs">
                     <Trans i18nKey="carbon:scope2Desc" />
                   </p>
                 </div>
@@ -311,21 +311,21 @@ async function CarbonPage() {
           <Card className="border-[#8FDAB5] dark:border-[#008F5A]">
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-verdure-50 p-2 dark:bg-verdure-950/30">
+                <div className="rounded-lg bg-[#1A5C3E] p-2 dark:bg-verdure-950/30">
                   <Link2 className="h-5 w-5 text-verdure-600" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-muted-foreground text-xs">
+                  <p className="text-[#B8D4E3] text-xs">
                     <Trans i18nKey="carbon:scope3" />
                   </p>
                   <p className="text-2xl font-bold text-verdure-600">
                     {mockScope3}
-                    <span className="ml-1 text-sm font-normal text-gray-500">
+                    <span className="ml-1 text-sm font-normal text-[#7DC4A0]">
                       t
                     </span>
                   </p>
                   <div className="flex items-center gap-1">
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-[#B8D4E3] text-xs">
                       <Trans i18nKey="carbon:scope3Desc" />
                     </p>
                     <Badge
@@ -358,19 +358,19 @@ async function CarbonPage() {
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
                 <div className="rounded-lg bg-gray-100 p-2 dark:bg-gray-800">
-                  <Factory className="h-5 w-5 text-gray-600" />
+                  <Factory className="h-5 w-5 text-[#B8D4E3]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-muted-foreground text-xs">
+                  <p className="text-[#B8D4E3] text-xs">
                     <Trans i18nKey="carbon:totalEmissions" />
                   </p>
                   <p className="text-2xl font-bold">
                     {mockTotal.toFixed(1)}
-                    <span className="ml-1 text-sm font-normal text-gray-500">
+                    <span className="ml-1 text-sm font-normal text-[#7DC4A0]">
                       t
                     </span>
                   </p>
-                  <p className="text-muted-foreground text-xs">
+                  <p className="text-[#B8D4E3] text-xs">
                     <Trans i18nKey="carbon:scopesAll" />
                   </p>
                 </div>
@@ -378,23 +378,23 @@ async function CarbonPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-[#8FDAB5] bg-[#E6F7EF]/50 dark:border-[#008F5A] dark:bg-[#004428]/20">
+          <Card className="border-[#8FDAB5] bg-[#1A5C3E]/50 dark:border-[#008F5A] dark:bg-[#004428]/20">
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
                 <div className="rounded-lg bg-[#8FDAB5] p-2 dark:bg-[#004428]/40">
                   <Leaf className="h-5 w-5 text-[#00A86B]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-muted-foreground text-xs">
+                  <p className="text-[#B8D4E3] text-xs">
                     <Trans i18nKey="carbon:totalAvoided" />
                   </p>
                   <p className="text-2xl font-bold text-[#00A86B]">
                     {(totalAvoided / 1000).toFixed(1)}
-                    <span className="ml-1 text-sm font-normal text-gray-500">
+                    <span className="ml-1 text-sm font-normal text-[#7DC4A0]">
                       t
                     </span>
                   </p>
-                  <p className="text-muted-foreground text-xs">
+                  <p className="text-[#B8D4E3] text-xs">
                     <Trans i18nKey="carbon:totalAvoidedDesc" />
                   </p>
                 </div>
@@ -457,7 +457,7 @@ function ScopeProgressSection() {
       labelKey: 'carbon:scope1Desc',
       progress: 0,
       status: 'partial' as const,
-      color: 'bg-[#E6F7EF]0',
+      color: 'bg-[#1A5C3E]0',
       bgColor: 'bg-[#8FDAB5] dark:bg-[#00A86B]/30',
     },
     {
@@ -465,7 +465,7 @@ function ScopeProgressSection() {
       labelKey: 'carbon:scope2Desc',
       progress: 0,
       status: 'partial' as const,
-      color: 'bg-[#E6F7EF]0',
+      color: 'bg-[#1A5C3E]0',
       bgColor: 'bg-[#8FDAB5] dark:bg-[#004428]/30',
     },
     {
@@ -473,7 +473,7 @@ function ScopeProgressSection() {
       labelKey: 'carbon:scope3Desc',
       progress: 0,
       status: 'auto' as const,
-      color: 'bg-verdure-500',
+      color: 'bg-[#1A5C3E]0',
       bgColor: 'bg-verdure-100 dark:bg-verdure-950/30',
     },
   ];
@@ -503,7 +503,7 @@ function ScopeProgressSection() {
               <div className="mb-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">{scope.name}</span>
-                  <span className="text-muted-foreground text-xs">
+                  <span className="text-[#B8D4E3] text-xs">
                     <Trans i18nKey={scope.labelKey} />
                   </span>
                 </div>

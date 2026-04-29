@@ -338,7 +338,7 @@ export function DataTable<RecordData extends DataItem>({
                 return (
                   <TableHead
                     className={cn(
-                      'text-muted-foreground bg-background/80 border-transparent font-sans font-medium',
+                      'text-[#B8D4E3] bg-background/80 border-transparent font-sans font-medium',
                       {
                         ['border-r-background border-r']: isPinned === 'left',
                         ['border-l-background border-l']: isPinned === 'right',
@@ -384,8 +384,8 @@ export function DataTable<RecordData extends DataItem>({
                               className={cn(
                                 'h-3 w-3',
                                 header.column.getIsSorted() === 'asc'
-                                  ? 'text-foreground'
-                                  : 'text-muted-foreground/50',
+                                  ? 'text-[#F5F5F0]'
+                                  : 'text-[#B8D4E3]/50',
                               )}
                             />
 
@@ -393,8 +393,8 @@ export function DataTable<RecordData extends DataItem>({
                               className={cn(
                                 '-mt-1 h-3 w-3',
                                 header.column.getIsSorted() === 'desc'
-                                  ? 'text-foreground'
-                                  : 'text-muted-foreground/50',
+                                  ? 'text-[#F5F5F0]'
+                                  : 'text-[#B8D4E3]/50',
                               )}
                             />
                           </div>
@@ -492,7 +492,7 @@ export function DataTable<RecordData extends DataItem>({
 
       <If condition={rows.length === 0}>
         <div className={'flex flex-1 flex-col items-center p-8'}>
-          <span className="text-muted-foreground text-center text-sm">
+          <span className="text-[#B8D4E3] text-center text-sm">
             {noResultsMessage || <Trans i18nKey={'common.noData'} />}
           </span>
         </div>
@@ -542,7 +542,7 @@ function Pagination<T>({
 
   return (
     <div className="flex items-center space-x-4">
-      <span className="text-muted-foreground flex items-center text-xs">
+      <span className="text-[#B8D4E3] flex items-center text-xs">
         <Trans
           i18nKey={'common.pageOfPages'}
           values={{
@@ -599,7 +599,7 @@ function Pagination<T>({
       </div>
 
       <If condition={totalCount && rows.length > 0}>
-        <span className="text-muted-foreground flex items-center text-xs">
+        <span className="text-[#B8D4E3] flex items-center text-xs">
           Showing {startRecord} to {endRecord} of {totalCount} rows
         </span>
       </If>

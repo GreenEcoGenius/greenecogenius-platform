@@ -32,7 +32,7 @@ export function RSEPillarCards({ pillars }: RSEPillarCardsProps) {
               >
                 {pillar.score}
               </span>
-              <span className="text-muted-foreground text-sm">%</span>
+              <span className="text-[#B8D4E3] text-sm">%</span>
             </div>
             {/* Progress bar */}
             <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
@@ -44,7 +44,7 @@ export function RSEPillarCards({ pillars }: RSEPillarCardsProps) {
                 }}
               />
             </div>
-            <p className="text-muted-foreground text-xs">
+            <p className="text-[#B8D4E3] text-xs">
               <Trans i18nKey="rse:normRef" /> {pillar.norm}
             </p>
           </CardContent>

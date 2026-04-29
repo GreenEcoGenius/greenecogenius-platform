@@ -74,7 +74,7 @@ async function FAQPage() {
         <SitePageHeader title={t('faq')} subtitle={t('faqSubtitle')} />
 
         <div className={'container flex flex-col items-center space-y-8 pb-16'}>
-          <div className="divide-metal-chrome border-metal-chrome flex w-full max-w-xl flex-col divide-y divide-dashed rounded-xl border">
+          <div className="divide-metal-chrome border-[#1A5C3E] flex w-full max-w-xl flex-col divide-y divide-dashed rounded-xl border">
             {faqItems.map((item, index) => {
               return <FaqItem key={index} item={item} />;
             })}
@@ -121,7 +121,7 @@ function FaqItem({
       >
         <h2
           className={
-            'text-metal-900 cursor-pointer font-sans text-base font-medium'
+            'text-[#F5F5F0] cursor-pointer font-sans text-base font-medium'
           }
         >
           <Trans i18nKey={item.question} defaults={item.question} />
@@ -136,7 +136,7 @@ function FaqItem({
         </div>
       </summary>
 
-      <div className={'text-metal-600 flex flex-col gap-y-2 px-4 pb-2'}>
+      <div className={'text-[#B8D4E3] flex flex-col gap-y-2 px-4 pb-2'}>
         <Trans i18nKey={item.answer} defaults={item.answer} />
       </div>
     </details>
