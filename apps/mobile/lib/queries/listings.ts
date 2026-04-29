@@ -107,12 +107,19 @@ export async function fetchMaterialCategories(): Promise<MaterialCategory[]> {
 
 /**
  * Get the public URL for a listing image stored in Supabase Storage.
- * Assumes images are in the 'listing-images' bucket.
+ * Handles both:
+ * - Full URLs (from web app): returned as-is
+ * - Relative paths (from mobile upload): resolved via 'generated-images' bucket
  */
 export function getListingImageUrl(storagePath: string | null): string | null {
   if (!storagePath) return null;
+  // If it's already a full URL, return it directly
+  if (storagePath.startsWith('http://') || storagePath.startsWith('https://')) {
+    return storagePath;
+  }
+  // Otherwise, resolve via the generated-images bucket
   const {
     data: { publicUrl },
-  } = supabase.storage.from('listing-images').getPublicUrl(storagePath);
+  } = supabase.storage.from('generated-images').getPublicUrl(storagePath);
   return publicUrl;
 }

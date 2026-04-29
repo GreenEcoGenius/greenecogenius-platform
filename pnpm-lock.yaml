@@ -6,69 +6,12 @@ settings:
 
 catalogs:
   default:
-    '@capacitor-mlkit/barcode-scanning':
-      specifier: ^8.0.1
-      version: 8.0.1
     '@capacitor/device':
       specifier: ^7.0.5
       version: 7.0.5
-    '@faker-js/faker':
-      specifier: ^10.4.0
-      version: 10.4.0
     '@hookform/resolvers':
       specifier: ^5.2.2
       version: 5.2.2
-    '@keystatic/core':
-      specifier: 0.5.49
-      version: 0.5.49
-    '@keystatic/next':
-      specifier: ^5.0.4
-      version: 5.0.4
-    '@lemonsqueezy/lemonsqueezy.js':
-      specifier: 4.0.0
-      version: 4.0.0
-    '@makerkit/data-loader-supabase-core':
-      specifier: ^0.0.10
-      version: 0.0.10
-    '@makerkit/data-loader-supabase-nextjs':
-      specifier: ^1.2.5
-      version: 1.2.5
-    '@manypkg/cli':
-      specifier: ^0.25.1
-      version: 0.25.1
-    '@markdoc/markdoc':
-      specifier: ^0.5.7
-      version: 0.5.7
-    '@marsidev/react-turnstile':
-      specifier: ^1.5.0
-      version: 1.5.0
-    '@modelcontextprotocol/sdk':
-      specifier: 1.27.1
-      version: 1.27.1
-    '@next/bundle-analyzer':
-      specifier: 16.2.1
-      version: 16.2.1
-    '@nosecone/next':
-      specifier: 1.3.0
-      version: 1.3.0
-    '@playwright/test':
-      specifier: ^1.59.1
-      version: 1.59.1
-    '@react-email/components':
-      specifier: 1.0.10
-      version: 1.0.10
-    '@sentry/nextjs':
-      specifier: 10.45.0
-      version: 10.45.0
-    '@stripe/react-stripe-js':
-      specifier: 5.6.1
-      version: 5.6.1
-    '@stripe/stripe-js':
-      specifier: 8.11.0
-      version: 8.11.0
-    '@supabase/ssr':
-      specifier: ^0.9.0
-      version: 0.9.0
     '@supabase/supabase-js':
       specifier: 2.100.0
       version: 2.100.0
@@ -78,99 +21,33 @@ catalogs:
     '@tanstack/react-query':
       specifier: 5.95.2
       version: 5.95.2
-    '@tanstack/react-table':
-      specifier: ^8.21.3
-      version: 8.21.3
-    '@turbo/gen':
-      specifier: ^2.9.6
-      version: 2.9.6
     '@types/node':
       specifier: 25.5.0
       version: 25.5.0
-    '@types/nodemailer':
-      specifier: 7.0.11
-      version: 7.0.11
-    '@types/qrcode':
-      specifier: ^1.5.6
-      version: 1.5.6
     '@types/react':
       specifier: 19.2.14
       version: 19.2.14
     '@types/react-dom':
       specifier: 19.2.3
       version: 19.2.3
-    babel-plugin-react-compiler:
-      specifier: 1.0.0
-      version: 1.0.0
     class-variance-authority:
       specifier: ^0.7.1
       version: 0.7.1
-    cross-env:
-      specifier: ^10.1.0
-      version: 10.1.0
-    cssnano:
-      specifier: ^7.1.7
-      version: 7.1.7
-    date-fns:
-      specifier: ^4.1.0
-      version: 4.1.0
-    dotenv:
-      specifier: 17.3.1
-      version: 17.3.1
-    jspdf:
-      specifier: ^4.2.1
-      version: 4.2.1
-    jspdf-autotable:
-      specifier: ^5.0.7
-      version: 5.0.7
+    jsqr:
+      specifier: ^1.4.0
+      version: 1.4.0
     lucide-react:
       specifier: 1.0.1
       version: 1.0.1
-    nanoid:
-      specifier: ^5.1.9
-      version: 5.1.9
     next:
       specifier: 16.2.4
       version: 16.2.4
     next-intl:
       specifier: ^4.9.1
       version: 4.9.1
-    next-runtime-env:
-      specifier: 3.3.0
-      version: 3.3.0
-    next-safe-action:
-      specifier: ^8.5.2
-      version: 8.5.2
-    next-sitemap:
-      specifier: ^4.2.3
-      version: 4.2.3
     next-themes:
       specifier: 0.4.6
       version: 0.4.6
-    node-html-parser:
-      specifier: ^7.1.0
-      version: 7.1.0
-    nodemailer:
-      specifier: 8.0.3
-      version: 8.0.3
-    oxfmt:
-      specifier: ^0.41.0
-      version: 0.41.0
-    oxlint:
-      specifier: ^1.61.0
-      version: 1.61.0
-    pino:
-      specifier: 10.3.1
-      version: 10.3.1
-    pino-pretty:
-      specifier: 13.0.0
-      version: 13.0.0
-    postgres:
-      specifier: 3.4.8
-      version: 3.4.8
-    qrcode:
-      specifier: ^1.5.4
-      version: 1.5.4
     react:
       specifier: 19.2.4
       version: 19.2.4
@@ -180,60 +57,21 @@ catalogs:
     react-hook-form:
       specifier: 7.72.0
       version: 7.72.0
-    react-resizable-panels:
-      specifier: ^4.10.0
-      version: 4.10.0
-    recharts:
-      specifier: 3.7.0
-      version: 3.7.0
-    rxjs:
-      specifier: ^7.8.2
-      version: 7.8.2
-    server-only:
-      specifier: ^0.0.1
-      version: 0.0.1
-    shadcn:
-      specifier: 4.1.0
-      version: 4.1.0
     sonner:
       specifier: ^2.0.7
       version: 2.0.7
-    stripe:
-      specifier: 20.4.1
-      version: 20.4.1
-    supabase:
-      specifier: 2.83.0
-      version: 2.83.0
     tailwind-merge:
       specifier: ^3.5.0
       version: 3.5.0
     tailwindcss:
       specifier: 4.2.2
       version: 4.2.2
-    totp-generator:
-      specifier: ^2.0.1
-      version: 2.0.1
-    tsup:
-      specifier: 8.5.1
-      version: 8.5.1
-    turbo:
-      specifier: 2.8.20
-      version: 2.8.20
     tw-animate-css:
       specifier: 1.4.0
       version: 1.4.0
     typescript:
       specifier: ^6.0.3
       version: 6.0.3
-    urlpattern-polyfill:
-      specifier: ^10.1.0
-      version: 10.1.0
-    vitest:
-      specifier: ^4.1.4
-      version: 4.1.4
-    wp-types:
-      specifier: ^4.69.0
-      version: 4.69.0
     zod:
       specifier: 4.3.6
       version: 4.3.6
@@ -381,9 +219,6 @@ importers:
 
   apps/mobile:
     dependencies:
-      '@capacitor-mlkit/barcode-scanning':
-        specifier: 'catalog:'
-        version: 8.0.1(@capacitor/core@7.6.2)
       '@capacitor/app':
         specifier: ^7.0.0
         version: 7.1.2(@capacitor/core@7.6.2)
@@ -444,15 +279,18 @@ importers:
       class-variance-authority:
         specifier: 'catalog:'
         version: 0.7.1
+      jsqr:
+        specifier: 'catalog:'
+        version: 1.4.0
       lucide-react:
         specifier: 'catalog:'
         version: 1.0.1(react@19.2.4)
       next:
         specifier: 'catalog:'
-        version: 16.2.4(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 16.2.4(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next-intl:
         specifier: 'catalog:'
-        version: 4.9.1(@swc/helpers@0.5.21)(next@16.2.4(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@6.0.3)
+        version: 4.9.1(@swc/helpers@0.5.21)(next@16.2.4(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@6.0.3)
       next-themes:
         specifier: 'catalog:'
         version: 0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1904,11 +1742,6 @@ packages:
 
   '@braintree/sanitize-url@6.0.4':
     resolution: {integrity: sha512-s3jaWicZd0pkP0jf5ysyHUI/RE7MHos6qlToFcGWXVp+ykHOy77OUMrfbgJ9it2C5bow7OIQwYYaHjk9XlBQ2A==}
-
-  '@capacitor-mlkit/barcode-scanning@8.0.1':
-    resolution: {integrity: sha512-94SyxzbcQ2HBd7yxS34dqc0PzwdOw8/98xBrjw1ioznE/Ksky/iwsip5Bm8P8Qg+dgnJYWz7NcIPjd+6bLjVoQ==}
-    peerDependencies:
-      '@capacitor/core': '>=8.0.0'
 
   '@capacitor/app@7.1.2':
     resolution: {integrity: sha512-d4I/oF/PRu4megL7/IGKYfe5j7yzSON1FRFgq6kH+m5kH6g7V+wyjHRLauCzGNjdRx4S+nWOumINds0qcRBtKg==}
@@ -6895,6 +6728,9 @@ packages:
   jspdf@4.2.1:
     resolution: {integrity: sha512-YyAXyvnmjTbR4bHQRLzex3CuINCDlQnBqoSYyjJwTP2x9jDLuKDzy7aKUl0hgx3uhcl7xzg32agn5vlie6HIlQ==}
 
+  jsqr@1.4.0:
+    resolution: {integrity: sha512-dxLob7q65Xg2DvstYkRpkYtmKm2sPJ9oFhrhmudT1dZvNFFTlroai3AWSpLey/w5vMcLBXRgOJsbXpdN9HzU/A==}
+
   jssha@3.3.1:
     resolution: {integrity: sha512-VCMZj12FCFMQYcFLPRm/0lOBbLi8uM2BhXPTqw3U4YAfs4AZfiApOoBLoN8cQE60Z50m1MYMTQVCfgF/KaCVhQ==}
 
@@ -9431,10 +9267,6 @@ snapshots:
       '@types/react': 19.2.14
 
   '@braintree/sanitize-url@6.0.4': {}
-
-  '@capacitor-mlkit/barcode-scanning@8.0.1(@capacitor/core@7.6.2)':
-    dependencies:
-      '@capacitor/core': 7.6.2
 
   '@capacitor/app@7.1.2(@capacitor/core@7.6.2)':
     dependencies:
@@ -14360,6 +14192,8 @@ snapshots:
       dompurify: 3.4.0
       html2canvas: 1.4.1
 
+  jsqr@1.4.0: {}
+
   jssha@3.3.1: {}
 
   kleur@3.0.3: {}
@@ -14975,6 +14809,23 @@ snapshots:
     transitivePeerDependencies:
       - '@swc/helpers'
 
+  next-intl@4.9.1(@swc/helpers@0.5.21)(next@16.2.4(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@6.0.3):
+    dependencies:
+      '@formatjs/intl-localematcher': 0.8.3
+      '@parcel/watcher': 2.5.6
+      '@swc/core': 1.15.30(@swc/helpers@0.5.21)
+      icu-minify: 4.9.1
+      negotiator: 1.0.0
+      next: 16.2.4(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next-intl-swc-plugin-extractor: 4.9.1
+      po-parser: 2.1.1
+      react: 19.2.4
+      use-intl: 4.9.1(react@19.2.4)
+    optionalDependencies:
+      typescript: 6.0.3
+    transitivePeerDependencies:
+      - '@swc/helpers'
+
   next-runtime-env@3.3.0(next@16.2.4(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4):
     dependencies:
       next: 16.2.4(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -15010,6 +14861,33 @@ snapshots:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
       styled-jsx: 5.1.6(@babel/core@7.29.0)(babel-plugin-macros@3.1.0)(react@19.2.4)
+    optionalDependencies:
+      '@next/swc-darwin-arm64': 16.2.4
+      '@next/swc-darwin-x64': 16.2.4
+      '@next/swc-linux-arm64-gnu': 16.2.4
+      '@next/swc-linux-arm64-musl': 16.2.4
+      '@next/swc-linux-x64-gnu': 16.2.4
+      '@next/swc-linux-x64-musl': 16.2.4
+      '@next/swc-win32-arm64-msvc': 16.2.4
+      '@next/swc-win32-x64-msvc': 16.2.4
+      '@opentelemetry/api': 1.9.1
+      '@playwright/test': 1.59.1
+      babel-plugin-react-compiler: 1.0.0
+      sharp: 0.34.5
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
+
+  next@16.2.4(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+    dependencies:
+      '@next/env': 16.2.4
+      '@swc/helpers': 0.5.15
+      baseline-browser-mapping: 2.10.20
+      caniuse-lite: 1.0.30001788
+      postcss: 8.4.31
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+      styled-jsx: 5.1.6(react@19.2.4)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.2.4
       '@next/swc-darwin-x64': 16.2.4
@@ -16272,6 +16150,11 @@ snapshots:
     optionalDependencies:
       '@babel/core': 7.29.0
       babel-plugin-macros: 3.1.0
+
+  styled-jsx@5.1.6(react@19.2.4):
+    dependencies:
+      client-only: 0.0.1
+      react: 19.2.4
 
   stylehacks@7.0.10(postcss@8.5.10):
     dependencies:

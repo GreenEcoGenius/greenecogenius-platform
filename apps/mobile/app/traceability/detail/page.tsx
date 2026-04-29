@@ -1,218 +1,292 @@
 'use client';
 
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import {
-  ShieldCheck,
+  Shield,
+  ExternalLink,
+  Copy,
+  CheckCircle2,
+  Clock,
+  MapPin,
   Leaf,
-  Package,
+  Scale,
+  Hash,
   Calendar,
-  RotateCw,
-  AlertCircle,
+  Link2,
 } from 'lucide-react';
-
-import { AppShell } from '~/components/app-shell';
 import { AuthGuard } from '~/components/auth-guard';
-import { BlockchainInfo } from '~/components/traceability/blockchain-info';
-import { GeolocationTrail } from '~/components/traceability/geolocation-trail';
+import { AppShell } from '~/components/app-shell';
 import {
   fetchCertificateByIdOrNumber,
+  getPolygonScanUrl,
   parseGeolocationTrail,
   type CertificateWithBlockchain,
 } from '~/lib/queries/traceability';
+import { formatCO2, formatTonnes, formatRelativeDate } from '~/lib/format';
 
-export default function CertificateDetailPage() {
-  return (
-    <AuthGuard>
-      <Suspense fallback={null}>
-        <CertificateDetailContent />
-      </Suspense>
-    </AuthGuard>
-  );
-}
-
-function CertificateDetailContent() {
+function DetailContent() {
+  const t = useTranslations('traceability');
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
-  const t = useTranslations('traceability');
-  const locale = useLocale();
 
   const [cert, setCert] = useState<CertificateWithBlockchain | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (!id) {
-      setLoading(false);
-      return;
-    }
-    let cancelled = false;
-    async function load() {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await fetchCertificateByIdOrNumber(id!);
-        if (!cancelled) setCert(data);
-      } catch (err) {
-        if (!cancelled) {
-          const msg = err instanceof Error ? err.message : 'Erreur';
-          setError(msg);
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-    void load();
-    return () => {
-      cancelled = true;
-    };
+    if (!id) return;
+    fetchCertificateByIdOrNumber(id)
+      .then(setCert)
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, [id]);
+
+  function copyHash() {
+    const hash = cert?.blockchain_hash || cert?.blockchain_records?.tx_hash;
+    if (!hash) return;
+    navigator.clipboard.writeText(hash).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
 
   if (loading) {
     return (
-      <AppShell title={t('detailTitle')} showBack>
-        <div className="flex flex-col items-center gap-2 py-12">
-          <RotateCw className="h-5 w-5 animate-spin text-[#F5F5F0]/40" />
-          <p className="text-xs text-[#F5F5F0]/50">{t('loading')}</p>
+      <AppShell title={t('detailTitle')} showBack hideTabBar>
+        <div className="space-y-4 animate-pulse">
+          <div className="h-20 rounded-2xl bg-[#F5F5F0]/[0.04]" />
+          <div className="h-40 rounded-2xl bg-[#F5F5F0]/[0.04]" />
+          <div className="h-24 rounded-2xl bg-[#F5F5F0]/[0.04]" />
         </div>
       </AppShell>
     );
   }
 
-  if (error || !cert) {
+  if (!cert) {
     return (
-      <AppShell title={t('detailTitle')} showBack>
-        <div className="flex flex-col items-center gap-3 py-12">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-500/15">
-            <AlertCircle className="h-5 w-5 text-red-300" />
-          </div>
-          <p className="text-center text-sm text-red-200">
-            {error ?? t('certNotFound')}
-          </p>
-          <p className="max-w-xs text-center text-[11px] text-[#F5F5F0]/40">
-            {t('certNotFoundHint')}
-          </p>
+      <AppShell title={t('detailTitle')} showBack hideTabBar>
+        <div className="flex flex-col items-center justify-center py-20">
+          <Shield className="h-10 w-10 text-[#F5F5F0]/20 mb-3" />
+          <p className="text-[14px] text-[#F5F5F0]/50">Certificat introuvable</p>
         </div>
       </AppShell>
     );
   }
 
-  const issuedDate = cert.issued_at
-    ? new Date(cert.issued_at).toLocaleDateString(locale, {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-      })
-    : null;
-
-  const co2 = Number(cert.co2_avoided ?? 0);
-  const weight = Number(cert.weight_tonnes ?? 0);
-  const trail = parseGeolocationTrail(cert.blockchain_records?.geolocation_trail);
+  const bc = cert.blockchain_records;
+  const txHash = cert.blockchain_hash || bc?.tx_hash;
+  const polygonUrl = getPolygonScanUrl(txHash ?? null);
+  const trail = parseGeolocationTrail(bc?.geolocation_trail);
+  const isVerified = !!txHash;
 
   return (
-    <AppShell title={t('detailTitle')} showBack>
-      {/* Cert header */}
-      <div className="mb-3 rounded-2xl border border-[#B8D4E3]/20 bg-[#B8D4E3]/8 px-4 py-3">
-        <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#B8D4E3]/20">
-            <ShieldCheck className="h-6 w-6 text-[#B8D4E3]" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-[#B8D4E3]">
-              {t('certificate')}
-            </p>
-            <p className="truncate text-[15px] font-semibold text-[#F5F5F0]">
-              {cert.certificate_number ?? cert.id.slice(0, 12)}
-            </p>
+    <AppShell title={t('detailTitle')} showBack hideTabBar>
+      <div className="space-y-4 pb-6">
+        {/* Status banner */}
+        <div className={`rounded-2xl p-4 ${isVerified ? 'bg-emerald-500/10 border border-emerald-500/20' : 'bg-amber-500/10 border border-amber-500/20'}`}>
+          <div className="flex items-center gap-3">
+            {isVerified ? (
+              <CheckCircle2 className="h-6 w-6 text-emerald-400 shrink-0" />
+            ) : (
+              <Clock className="h-6 w-6 text-amber-400 shrink-0" />
+            )}
+            <div>
+              <p className={`text-[14px] font-semibold ${isVerified ? 'text-emerald-400' : 'text-amber-400'}`}>
+                {isVerified ? 'Vérifié sur la blockchain' : 'En attente de vérification'}
+              </p>
+              <p className="text-[11px] text-[#F5F5F0]/40 mt-0.5">
+                {isVerified ? 'Ce certificat est enregistré sur Polygon' : 'La transaction blockchain est en cours de traitement'}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Material summary */}
-      {cert.material_summary && (
-        <div className="mb-3">
-          <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-[#F5F5F0]/50">
-            {t('material')}
+        {/* Certificate number */}
+        <div className="rounded-2xl border border-[#F5F5F0]/[0.08] bg-[#F5F5F0]/[0.04] p-4">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-[#F5F5F0]/40 mb-2">
+            Certificat
           </p>
-          <p className="text-[14px] text-[#F5F5F0]">{cert.material_summary}</p>
-        </div>
-      )}
-
-      {/* Stats grid */}
-      <div className="mb-3 grid grid-cols-2 gap-2">
-        <StatTile
-          icon={Package}
-          value={weight.toFixed(2)}
-          unit="t"
-          label={t('weight')}
-        />
-        <StatTile
-          icon={Leaf}
-          value={co2.toFixed(0)}
-          unit="kgCO₂e"
-          label={t('co2Avoided')}
-        />
-      </div>
-
-      {issuedDate && (
-        <div className="mb-3 flex items-center gap-3 rounded-2xl border border-[#F5F5F0]/8 bg-[#F5F5F0]/5 px-4 py-2.5">
-          <Calendar className="h-4 w-4 text-[#B8D4E3]" />
-          <div>
-            <p className="text-[10px] uppercase tracking-wider text-[#F5F5F0]/50">
-              {t('issuedOn')}
-            </p>
-            <p className="text-[13px] text-[#F5F5F0]">{issuedDate}</p>
-          </div>
-        </div>
-      )}
-
-      {/* Blockchain info */}
-      <div className="mb-4">
-        <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[#F5F5F0]/50">
-          {t('blockchain')}
-        </p>
-        <BlockchainInfo cert={cert} />
-      </div>
-
-      {/* Geolocation trail */}
-      {trail.length > 0 && (
-        <div className="mb-4">
-          <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[#F5F5F0]/50">
-            {t('trail')}
+          <p className="text-[18px] font-bold text-[#F5F5F0] font-mono">
+            {cert.certificate_number || cert.id.slice(0, 12)}
           </p>
-          <GeolocationTrail steps={trail} />
+          {cert.material_summary && (
+            <p className="mt-1 text-[13px] text-[#F5F5F0]/60">{cert.material_summary}</p>
+          )}
         </div>
-      )}
 
-      <p className="pb-4 pt-2 text-center text-[10px] text-[#F5F5F0]/40">
-        {t('detailFootnote')}
-      </p>
+        {/* Key metrics */}
+        <div className="grid grid-cols-2 gap-3">
+          <MetricCard
+            icon={Scale}
+            label="Poids"
+            value={formatTonnes(cert.weight_tonnes)}
+          />
+          <MetricCard
+            icon={Leaf}
+            label="CO₂ évité"
+            value={formatCO2(cert.co2_avoided)}
+            accent
+          />
+        </div>
+
+        {/* Details */}
+        <div className="rounded-2xl border border-[#F5F5F0]/[0.08] bg-[#F5F5F0]/[0.04] divide-y divide-[#F5F5F0]/[0.06]">
+          <InfoRow icon={Calendar} label="Émis le" value={
+            cert.issued_at
+              ? new Date(cert.issued_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })
+              : '—'
+          } />
+          {cert.expires_at && (
+            <InfoRow icon={Calendar} label="Expire le" value={
+              new Date(cert.expires_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })
+            } />
+          )}
+          {bc?.network && (
+            <InfoRow icon={Link2} label="Réseau" value={bc.network} />
+          )}
+          {bc?.contract_address && (
+            <InfoRow icon={Hash} label="Contrat" value={`${bc.contract_address.slice(0, 8)}...${bc.contract_address.slice(-6)}`} />
+          )}
+        </div>
+
+        {/* Blockchain hash */}
+        {txHash && (
+          <div className="rounded-2xl border border-[#F5F5F0]/[0.08] bg-[#F5F5F0]/[0.04] p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-[#F5F5F0]/40 mb-2">
+              Transaction Hash
+            </p>
+            <div className="flex items-center gap-2">
+              <p className="flex-1 truncate text-[12px] font-mono text-[#B8D4E3]">
+                {txHash}
+              </p>
+              <button
+                onClick={copyHash}
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#F5F5F0]/[0.06] active:bg-[#F5F5F0]/10 transition-colors"
+              >
+                {copied ? (
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                ) : (
+                  <Copy className="h-3.5 w-3.5 text-[#F5F5F0]/50" />
+                )}
+              </button>
+            </div>
+            {polygonUrl && (
+              <a
+                href={polygonUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex items-center justify-center gap-1.5 rounded-xl border border-[#F5F5F0]/[0.08] py-2.5 text-[12px] text-[#B8D4E3] active:bg-[#F5F5F0]/[0.04] transition-colors"
+              >
+                Voir sur PolygonScan <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+            )}
+          </div>
+        )}
+
+        {/* Geolocation trail */}
+        {trail.length > 0 && (
+          <div className="rounded-2xl border border-[#F5F5F0]/[0.08] bg-[#F5F5F0]/[0.04] p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-[#F5F5F0]/40 mb-3">
+              Parcours de traçabilité
+            </p>
+            <div className="space-y-0">
+              {trail.map((step, idx) => (
+                <div key={idx} className="flex gap-3">
+                  {/* Timeline line */}
+                  <div className="flex flex-col items-center">
+                    <div className={`h-3 w-3 rounded-full shrink-0 ${idx === 0 ? 'bg-emerald-400' : 'bg-[#F5F5F0]/20'}`} />
+                    {idx < trail.length - 1 && (
+                      <div className="w-px flex-1 bg-[#F5F5F0]/10 my-1" />
+                    )}
+                  </div>
+                  <div className="pb-4 min-w-0 flex-1">
+                    <p className="text-[13px] font-medium text-[#F5F5F0]">
+                      {step.step || `Étape ${idx + 1}`}
+                    </p>
+                    {step.location && (
+                      <p className="flex items-center gap-1 text-[11px] text-[#F5F5F0]/40 mt-0.5">
+                        <MapPin className="h-3 w-3" />
+                        {step.location}
+                      </p>
+                    )}
+                    {step.actor && (
+                      <p className="text-[11px] text-[#F5F5F0]/30 mt-0.5">{step.actor}</p>
+                    )}
+                    {step.timestamp && (
+                      <p className="text-[10px] text-[#F5F5F0]/25 mt-0.5">
+                        {formatRelativeDate(step.timestamp)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Certificate URL */}
+        {cert.certificate_url && (
+          <a
+            href={cert.certificate_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 rounded-xl bg-[#B8D4E3] py-3.5 text-[14px] font-semibold text-[#0A2F1F] active:opacity-80 transition-opacity"
+          >
+            Télécharger le certificat PDF
+            <ExternalLink className="h-4 w-4" />
+          </a>
+        )}
+      </div>
     </AppShell>
   );
 }
 
-function StatTile({
+function MetricCard({
   icon: Icon,
-  value,
-  unit,
   label,
+  value,
+  accent = false,
 }: {
   icon: React.ComponentType<{ className?: string }>;
-  value: string;
-  unit: string;
   label: string;
+  value: string;
+  accent?: boolean;
 }) {
   return (
-    <div className="flex flex-col gap-0.5 rounded-2xl border border-[#F5F5F0]/8 bg-[#F5F5F0]/5 px-3 py-2.5">
-      <Icon className="h-4 w-4 text-[#B8D4E3]" />
-      <div className="flex items-baseline gap-1">
-        <span className="text-lg font-semibold text-[#F5F5F0]">{value}</span>
-        <span className="text-[10px] text-[#F5F5F0]/60">{unit}</span>
+    <div className="rounded-2xl border border-[#F5F5F0]/[0.08] bg-[#F5F5F0]/[0.04] p-3.5">
+      <div className={`mb-2 flex h-9 w-9 items-center justify-center rounded-xl ${accent ? 'bg-emerald-500/10' : 'bg-[#B8D4E3]/10'}`}>
+        <Icon className={`h-4 w-4 ${accent ? 'text-emerald-400' : 'text-[#B8D4E3]'}`} />
       </div>
-      <span className="text-[10px] uppercase tracking-wide text-[#F5F5F0]/50">
-        {label}
-      </span>
+      <p className={`text-[18px] font-bold leading-tight ${accent ? 'text-emerald-400' : 'text-[#F5F5F0]'}`}>{value}</p>
+      <p className="mt-0.5 text-[11px] text-[#F5F5F0]/40">{label}</p>
     </div>
+  );
+}
+
+function InfoRow({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 px-4 py-3">
+      <Icon className="h-4 w-4 shrink-0 text-[#F5F5F0]/30" />
+      <p className="text-[12px] text-[#F5F5F0]/50 w-24 shrink-0">{label}</p>
+      <p className="flex-1 text-right text-[13px] text-[#F5F5F0] truncate">{value}</p>
+    </div>
+  );
+}
+
+export default function TraceabilityDetailPage() {
+  return (
+    <AuthGuard>
+      <DetailContent />
+    </AuthGuard>
   );
 }

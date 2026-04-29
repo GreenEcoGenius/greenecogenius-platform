@@ -26,9 +26,17 @@ export function ListingCard({ listing }: ListingCardProps) {
       ? listing.material_categories?.name_fr ?? listing.material_categories?.name
       : listing.material_categories?.name;
 
-  const price = listing.price_per_unit
-    ? `${Number(listing.price_per_unit).toFixed(2)} ${listing.currency} / ${listing.unit}`
-    : t('priceOnRequest');
+  const totalPrice = (listing.price_per_unit && listing.quantity)
+    ? Number(listing.price_per_unit) * Number(listing.quantity)
+    : null;
+  const priceDisplay = totalPrice
+    ? `${totalPrice.toFixed(2)} ${listing.currency}`
+    : listing.price_per_unit
+      ? `${Number(listing.price_per_unit).toFixed(2)} ${listing.currency}`
+      : t('priceOnRequest');
+  const unitPriceDisplay = listing.price_per_unit
+    ? `${Number(listing.price_per_unit).toFixed(2)} ${listing.currency}/${listing.unit}`
+    : null;
 
   const location = [listing.location_city, listing.location_country]
     .filter(Boolean)
@@ -75,7 +83,10 @@ export function ListingCard({ listing }: ListingCardProps) {
             </p>
           </div>
           <div className="flex flex-col gap-0.5">
-            <p className="text-[13px] font-semibold text-[#F5F5F0]">{price}</p>
+            <p className="text-[13px] font-semibold text-[#F5F5F0]">{priceDisplay}</p>
+            {unitPriceDisplay && (
+              <p className="text-[10px] text-[#F5F5F0]/40">{unitPriceDisplay}</p>
+            )}
             <div className="flex items-center gap-2 text-[10px] text-[#F5F5F0]/50">
               <span className="flex items-center gap-0.5">
                 <Package className="h-3 w-3" />
