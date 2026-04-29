@@ -70,7 +70,7 @@ export async function LabelEligibilitySection({
                   <span>{t('labelCoverage')}</span>
                   <span className="font-medium">{l.coverage}%</span>
                 </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#12472F]">
                   <div
                     className={`h-full transition-all ${
                       l.coverage >= 80

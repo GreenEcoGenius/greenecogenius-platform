@@ -40,7 +40,7 @@ const STATUS_CONFIG: Record<
     variant: 'outline',
     i18nKey: 'rse:notStarted',
     className:
-      'bg-gray-100 text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0] border-[#1A5C3E]',
+      'bg-[#12472F] text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0] border-[#1A5C3E]',
   },
 };
 
@@ -77,7 +77,7 @@ export function LabelEligibilityCards({ labels }: LabelEligibilityCardsProps) {
                 </span>
               </div>
               {/* Progress bar */}
-              <div className="h-3 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+              <div className="h-3 w-full overflow-hidden rounded-full bg-[#12472F] dark:bg-gray-800">
                 <div
                   className="h-full rounded-full transition-all duration-700"
                   style={{

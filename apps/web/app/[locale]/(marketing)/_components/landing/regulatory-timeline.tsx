@@ -15,8 +15,8 @@ const MILESTONES = [
 
 const URGENCY_STYLES = {
   past: {
-    bg: 'bg-gray-100',
-    border: 'border-gray-300',
+    bg: 'bg-[#12472F]',
+    border: 'border-[#1A5C3E]',
     text: 'text-[#B8D4E3]',
     icon: CheckCircle,
   },

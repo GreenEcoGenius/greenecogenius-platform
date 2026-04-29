@@ -223,7 +223,7 @@ export function PricingContent({
       <section className="container mx-auto px-4 py-16">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 pt-4 md:grid-cols-3">
           {/* ESSENTIEL */}
-          <Card className="border-metal-silver flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+          <Card className="border-[#1A5C3E] flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
             <CardHeader className="text-center">
               <div className="mb-2 flex items-center justify-center gap-2">
                 <Zap className="text-primary h-5 w-5" />
@@ -264,7 +264,7 @@ export function PricingContent({
               </ul>
               <Button
                 variant="outline"
-                className="border-metal-silver text-[#E0E7E3] hover:bg-metal-chrome mt-6 w-full rounded-xl"
+                className="border-[#1A5C3E] text-[#E0E7E3] hover:bg-[#1A5C3E] mt-6 w-full rounded-xl"
                 render={
                   <Link href="/home/billing">
                     <Trans i18nKey="pricingPage.startTrial" />
@@ -332,7 +332,7 @@ export function PricingContent({
           </Card>
 
           {/* ENTERPRISE */}
-          <Card className="border-metal-silver bg-metal-frost flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+          <Card className="border-[#1A5C3E] bg-metal-frost flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
             <CardHeader className="text-center">
               <div className="mb-2 flex items-center justify-center gap-2">
                 <Building2 className="text-[#E0E7E3] h-5 w-5" />
@@ -363,7 +363,7 @@ export function PricingContent({
               </ul>
               <Button
                 variant="secondary"
-                className="border-metal-silver bg-metal-frost text-[#E0E7E3] hover:bg-metal-chrome mt-6 w-full rounded-xl border"
+                className="border-[#1A5C3E] bg-metal-frost text-[#E0E7E3] hover:bg-[#1A5C3E] mt-6 w-full rounded-xl border"
                 render={
                   <Link href="/contact?subject=Demande+Plan+Enterprise">
                     <Users className="mr-2 h-4 w-4" />
@@ -430,7 +430,7 @@ export function PricingContent({
                 icon: <Globe className="h-6 w-6" />,
               },
             ].map((tier, i) => (
-              <Card key={i} className="border-metal-silver text-center">
+              <Card key={i} className="border-[#1A5C3E] text-center">
                 <CardContent className="pt-6">
                   <div className="text-circuit-blue mx-auto mb-3">
                     {tier.icon}

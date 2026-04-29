@@ -382,7 +382,7 @@ export function DiagnosticWizard() {
                     <span className="font-medium">{locale === 'fr' ? p.name_fr : p.name_en}</span>
                     <span className="text-[#7DC4A0]">{p.percentage}%</span>
                   </div>
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-[#12472F]">
                     <div
                       className="h-full rounded-full bg-[#1A5C3E]0 transition-all"
                       style={{ width: `${p.percentage}%` }}

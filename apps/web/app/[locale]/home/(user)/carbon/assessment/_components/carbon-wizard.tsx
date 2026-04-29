@@ -414,7 +414,7 @@ export function CarbonWizard() {
                       <span className="font-medium">{s.label}</span>
                       <span className="text-[#7DC4A0]">{Math.round(s.total * 10) / 10} tCO2e ({pct}%)</span>
                     </div>
-                    <div className="h-3 w-full overflow-hidden rounded-full bg-gray-100">
+                    <div className="h-3 w-full overflow-hidden rounded-full bg-[#12472F]">
                       <div className={`h-full rounded-full ${s.color}`} style={{ width: `${pct}%` }} />
                     </div>
                   </div>

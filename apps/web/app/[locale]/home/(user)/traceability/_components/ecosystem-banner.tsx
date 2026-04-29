@@ -71,7 +71,7 @@ export function EcosystemBanner({
           <Link
             key={item.labelKey}
             href={item.href}
-            className="group flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-white/60 dark:hover:bg-white/5"
+            className="group flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-[#1A5C3E]/60 dark:hover:bg-white/5"
           >
             <item.icon className={`h-4 w-4 ${item.color}`} />
             <div className="flex items-baseline gap-1.5">

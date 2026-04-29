@@ -106,7 +106,7 @@ export function CarbonHeroMetrics({
         <Card key={card.labelKey} className="relative overflow-hidden">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div className="rounded-lg bg-gray-100 p-2 dark:bg-gray-800">
+              <div className="rounded-lg bg-[#12472F] p-2 dark:bg-gray-800">
                 {card.icon}
               </div>
               <VariationBadge current={card.current} previous={card.previous} />

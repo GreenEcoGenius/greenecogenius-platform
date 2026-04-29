@@ -134,7 +134,7 @@ function NormCard({
     <div
       ref={ref}
       className={cn(
-        'group border-metal-silver rounded-xl border bg-[#0D3A26] p-5 transition-all duration-700',
+        'group border-[#1A5C3E] rounded-xl border bg-[#0D3A26] p-5 transition-all duration-700',
         visible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0',
         'hover:-translate-y-1 hover:shadow-lg',
       )}
@@ -297,7 +297,7 @@ export function NormsTabbedContent() {
     <>
       <div
         ref={tabBarRef}
-        className="border-[#1A5C3E] sticky top-[64px] z-30 border-b bg-white/95 backdrop-blur-sm"
+        className="border-[#1A5C3E] sticky top-[64px] z-30 border-b bg-[#0A2F1F]/95 backdrop-blur-sm"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="scrollbar-none -mb-px flex gap-0 overflow-x-auto">

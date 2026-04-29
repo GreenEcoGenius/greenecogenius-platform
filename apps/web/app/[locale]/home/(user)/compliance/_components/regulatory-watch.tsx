@@ -15,7 +15,7 @@ const IMPACT_STYLES: Record<
   { className: string; i18nKey: string }
 > = {
   low: {
-    className: 'bg-gray-100 text-[#B8D4E3]',
+    className: 'bg-[#12472F] text-[#B8D4E3]',
     i18nKey: 'compliance:impactLow',
   },
   medium: {

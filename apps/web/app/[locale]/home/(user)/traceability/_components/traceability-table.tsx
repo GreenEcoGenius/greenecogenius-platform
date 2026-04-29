@@ -11,7 +11,7 @@ import type { MockLot } from '~/lib/mock/traceability-mock-data';
 const CONTRACT_ADDRESS = '0x9EB83c7Acd57E228Cc3f9316eC4f27ce1fE94cF6';
 
 const STATUS_BADGE_STYLES: Record<string, string> = {
-  created: 'bg-gray-100 text-[#B8D4E3] dark:bg-gray-800 dark:text-gray-300',
+  created: 'bg-[#12472F] text-[#B8D4E3] dark:bg-gray-800 dark:text-gray-300',
   qualified: 'bg-blue-100 text-blue-400 dark:bg-blue-900/40 dark:text-blue-300',
   listed: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   sold: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
@@ -37,7 +37,7 @@ const SOURCE_BADGE_STYLES: Record<string, string> = {
   marketplace:
     'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   collecte: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
-  import: 'bg-gray-100 text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0]',
+  import: 'bg-[#12472F] text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0]',
 };
 
 const SOURCE_I18N: Record<string, string> = {

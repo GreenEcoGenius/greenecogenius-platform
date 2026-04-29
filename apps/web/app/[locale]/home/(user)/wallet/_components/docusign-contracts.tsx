@@ -50,7 +50,7 @@ const contractStatusConfig: Record<
   { color: string; icon: React.ReactNode; labelKey: string }
 > = {
   not_sent: {
-    color: 'bg-gray-100 text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0]',
+    color: 'bg-[#12472F] text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0]',
     icon: <Clock className="h-3 w-3" />,
     labelKey: 'wallet.contractPending',
   },

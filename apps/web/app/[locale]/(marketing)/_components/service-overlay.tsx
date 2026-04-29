@@ -139,7 +139,7 @@ export function ServiceOverlay({
       >
         <button
           onClick={onClose}
-          className="border-metal-silver hover:bg-metal-chrome absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full border bg-white/80 backdrop-blur transition-colors"
+          className="border-[#1A5C3E] hover:bg-[#1A5C3E] absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full border bg-[#0D3A26]/80 backdrop-blur transition-colors"
           aria-label="Close"
         >
           <X className="text-[#B8D4E3] h-4 w-4" />

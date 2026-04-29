@@ -90,13 +90,13 @@ export function CompliancePillarCards({ pillars }: CompliancePillarCardsProps) {
                 {pillar.norms.slice(0, 4).map((norm) => (
                   <span
                     key={norm}
-                    className="text-[#B8D4E3] rounded bg-gray-100 px-1.5 py-0.5 text-[10px] dark:bg-gray-800"
+                    className="text-[#B8D4E3] rounded bg-[#12472F] px-1.5 py-0.5 text-[10px] dark:bg-gray-800"
                   >
                     {norm}
                   </span>
                 ))}
                 {pillar.norms.length > 4 && (
-                  <span className="text-[#B8D4E3] rounded bg-gray-100 px-1.5 py-0.5 text-[10px] dark:bg-gray-800">
+                  <span className="text-[#B8D4E3] rounded bg-[#12472F] px-1.5 py-0.5 text-[10px] dark:bg-gray-800">
                     +{pillar.norms.length - 4}
                   </span>
                 )}

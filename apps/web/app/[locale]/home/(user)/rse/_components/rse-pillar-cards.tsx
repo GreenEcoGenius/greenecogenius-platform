@@ -35,7 +35,7 @@ export function RSEPillarCards({ pillars }: RSEPillarCardsProps) {
               <span className="text-[#B8D4E3] text-sm">%</span>
             </div>
             {/* Progress bar */}
-            <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+            <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#12472F] dark:bg-gray-800">
               <div
                 className="h-full rounded-full transition-all duration-700"
                 style={{

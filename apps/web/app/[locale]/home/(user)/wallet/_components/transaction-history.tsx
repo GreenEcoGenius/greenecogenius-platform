@@ -56,7 +56,7 @@ function formatDate(dateStr: string): string {
 
 const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
   pending_payment: {
-    color: 'bg-gray-100 text-[#F5F5F0]',
+    color: 'bg-[#12472F] text-[#F5F5F0]',
     icon: <Clock className="h-3 w-3" />,
   },
   paid: {

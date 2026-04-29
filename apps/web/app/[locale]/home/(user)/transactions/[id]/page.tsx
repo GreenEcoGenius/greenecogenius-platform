@@ -63,7 +63,7 @@ function contractStatusBadge(status: string | null) {
   const map: Record<string, { label: string; className: string }> = {
     not_started: {
       label: 'Contrat non genere',
-      className: 'bg-gray-100 text-[#B8D4E3] border-[#1A5C3E]',
+      className: 'bg-[#12472F] text-[#B8D4E3] border-[#1A5C3E]',
     },
     contract_generated: {
       label: 'Contrat genere',

@@ -41,7 +41,7 @@ const STATUS_CONFIG: Record<
   },
   not_evaluated: {
     icon: MinusCircle,
-    className: 'bg-gray-100 text-[#7DC4A0]',
+    className: 'bg-[#12472F] text-[#7DC4A0]',
     i18nKey: 'compliance:statusNotEvaluated',
   },
 };

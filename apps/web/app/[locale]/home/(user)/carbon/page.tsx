@@ -357,7 +357,7 @@ async function CarbonPage() {
           <Card className="border-gray-300 dark:border-gray-600">
             <CardContent className="p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-gray-100 p-2 dark:bg-gray-800">
+                <div className="rounded-lg bg-[#12472F] p-2 dark:bg-gray-800">
                   <Factory className="h-5 w-5 text-[#B8D4E3]" />
                 </div>
                 <div className="flex-1">

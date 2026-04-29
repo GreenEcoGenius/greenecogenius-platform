@@ -72,7 +72,7 @@ export async function DualCTA() {
           <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
-      <div className="border-metal-silver/50 rounded-2xl border bg-[#0D3A26] p-6">
+      <div className="border-[#1A5C3E]/50 rounded-2xl border bg-[#0D3A26] p-6">
         <h3 className="text-[#F5F5F0] text-lg font-semibold">
           {t('explorer.ctaSellerTitle')}
         </h3>

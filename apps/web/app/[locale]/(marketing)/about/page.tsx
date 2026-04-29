@@ -69,7 +69,7 @@ export default async function AboutPage() {
           </AnimateOnScroll>
         </div>
 
-        <div className="from-metal-50 absolute right-0 bottom-0 left-0 h-24 bg-gradient-to-t to-transparent" />
+        <div className="from-[#0A2F1F] absolute right-0 bottom-0 left-0 h-24 bg-gradient-to-t to-transparent" />
       </section>
 
       {/* ───── MISSION ───── */}

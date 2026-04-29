@@ -38,7 +38,7 @@ const SECTION_COLORS: Record<string, string> = {
     'bg-verdure-100 text-verdure-700 dark:bg-verdure-900/40 dark:text-verdure-300',
   blockchain:
     'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
-  dashboard: 'bg-gray-100 text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0]',
+  dashboard: 'bg-[#12472F] text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0]',
 };
 
 function formatTimeAgo(isoDate: string): string {
