@@ -68,7 +68,7 @@ function LogoCard({
           alt={logo.name}
           width={300}
           height={120}
-          className={`w-auto max-w-[90%] object-contain transition-transform duration-200 group-hover:scale-105 ${logo.sizeClass ?? logoClass}`}
+          className={`w-auto max-w-[90%] object-contain brightness-0 invert opacity-70 transition-all duration-200 group-hover:scale-105 group-hover:opacity-100 ${logo.sizeClass ?? logoClass}`}
           unoptimized
         />
       ) : (
