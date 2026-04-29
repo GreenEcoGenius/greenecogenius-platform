@@ -125,7 +125,7 @@ async function ExternalActivitiesPage() {
             return (
               <TabsContent key={c.id} value={c.id} className="mt-6">
                 <div className="grid gap-6 lg:grid-cols-2">
-                  <div className="rounded-xl border bg-white p-6">
+                  <div className="rounded-xl border bg-card p-6">
                     <h3 className="mb-1 text-lg font-semibold">
                       {t('addData', { category: label })}
                     </h3>
@@ -133,7 +133,7 @@ async function ExternalActivitiesPage() {
                     <ExternalActivityForm category={c.id} />
                   </div>
 
-                  <div className="rounded-xl border bg-white p-6">
+                  <div className="rounded-xl border bg-card p-6">
                     <h3 className="mb-4 text-lg font-semibold">
                       {t('savedData')} ({rows.length})
                     </h3>
@@ -161,7 +161,7 @@ async function ExternalActivitiesPage() {
                           return (
                             <li
                               key={r.id}
-                              className="flex items-start justify-between gap-3 rounded-lg border border-gray-100 bg-gray-50 p-3"
+                              className="flex items-start justify-between gap-3 rounded-lg border border-[#D5E8DD] bg-[#E8F5EE] p-3"
                             >
                               <div className="min-w-0">
                                 <p className="truncate text-sm font-medium text-gray-900">

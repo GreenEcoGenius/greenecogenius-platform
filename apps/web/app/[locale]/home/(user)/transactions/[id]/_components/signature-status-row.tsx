@@ -14,7 +14,7 @@ export function SignatureStatusRow({
   signedAt,
 }: SignatureStatusRowProps) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-lg border border-gray-100 bg-white p-3">
+    <div className="flex items-center justify-between gap-3 rounded-lg border border-[#D5E8DD] bg-card p-3">
       <div className="flex min-w-0 items-center gap-3">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E6F7EF]">
           <User className="h-4 w-4 text-[#00A86B]" strokeWidth={1.5} />

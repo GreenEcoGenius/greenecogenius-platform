@@ -84,7 +84,7 @@ export function AIDescriptionGenerator({
 
         {!loading && response && (
           <>
-            <div className="rounded-md border border-violet-200 bg-white p-3 text-sm dark:border-violet-800 dark:bg-gray-950">
+            <div className="rounded-md border border-violet-200 bg-card p-3 text-sm dark:border-violet-800 dark:bg-gray-950">
               <p className="whitespace-pre-wrap">{response.content}</p>
             </div>
 

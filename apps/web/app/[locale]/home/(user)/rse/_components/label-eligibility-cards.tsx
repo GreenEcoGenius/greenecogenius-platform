@@ -40,7 +40,7 @@ const STATUS_CONFIG: Record<
     variant: 'outline',
     i18nKey: 'rse:notStarted',
     className:
-      'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 border-gray-200',
+      'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 border-[#C5DDD0]',
   },
 };
 

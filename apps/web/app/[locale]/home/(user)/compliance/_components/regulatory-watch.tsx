@@ -78,7 +78,7 @@ export function RegulatoryWatch() {
             return (
               <div
                 key={norm.id}
-                className="flex gap-4 rounded-lg border p-4 transition-colors hover:bg-gray-50"
+                className="flex gap-4 rounded-lg border p-4 transition-colors hover:bg-[#E8F5EE]"
               >
                 <div className="flex shrink-0 flex-col items-center">
                   <Calendar className="text-muted-foreground mb-1 h-4 w-4" />

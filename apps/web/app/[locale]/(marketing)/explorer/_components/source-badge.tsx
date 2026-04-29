@@ -43,7 +43,7 @@ export function SourceBadge({ source }: { source: string }) {
   const config = SOURCE_CONFIG[source] ?? {
     label: source,
     url: '#',
-    className: 'bg-gray-50 text-gray-600 border-gray-200',
+    className: 'bg-[#E8F5EE] text-gray-600 border-[#C5DDD0]',
   };
 
   return (

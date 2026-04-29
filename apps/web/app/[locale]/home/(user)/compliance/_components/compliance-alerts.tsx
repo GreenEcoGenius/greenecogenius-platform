@@ -33,7 +33,7 @@ export function ComplianceAlerts({ alerts }: { alerts: AlertItem[] }) {
               key={alert.id}
               className={`rounded-lg border-l-4 p-4 ${
                 alert.urgency === 'urgent'
-                  ? 'border-l-slate-500 bg-slate-50'
+                  ? 'border-l-slate-500 bg-[#E8F5EE]'
                   : 'border-l-[#E6F7EF]0 bg-[#E6F7EF]'
               }`}
             >

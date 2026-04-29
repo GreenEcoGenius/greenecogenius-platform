@@ -6,7 +6,7 @@ export async function SourcesDisclaimer() {
   return (
     <section className="border-metal-chrome border-t py-8">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="text-metal-600 rounded-xl border bg-gray-50 p-5 text-sm">
+        <div className="text-metal-600 rounded-xl border bg-[#E8F5EE] p-5 text-sm">
           <p className="text-metal-700 mb-2 font-medium">
             {t('explorer.sourcesTitle')}
           </p>

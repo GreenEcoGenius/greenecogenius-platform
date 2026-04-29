@@ -66,7 +66,7 @@ function ScaleQuestion({
   const [showHelp, setShowHelp] = useState(false);
 
   return (
-    <div className="rounded-xl border border-gray-100 bg-white p-4">
+    <div className="rounded-xl border border-[#D5E8DD] bg-card p-4">
       <div className="mb-3 flex items-start justify-between gap-2">
         <p className="text-sm font-medium text-gray-900">{getLabel(question, locale)}</p>
         {question.auto_from && (
@@ -86,7 +86,7 @@ function ScaleQuestion({
       </button>
 
       {showHelp && (
-        <p className="mb-3 rounded-lg bg-gray-50 p-2 text-xs text-gray-500">
+        <p className="mb-3 rounded-lg bg-[#E8F5EE] p-2 text-xs text-gray-500">
           {getHelp(question, locale)}
         </p>
       )}
@@ -99,7 +99,7 @@ function ScaleQuestion({
               className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 text-sm transition-colors ${
                 value === opt.value
                   ? 'border-[#8FDAB5] bg-[#E6F7EF] text-[#008F5A]'
-                  : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
+                  : 'border-[#D5E8DD] hover:border-[#C5DDD0] hover:bg-[#E8F5EE]'
               }`}
             >
               <input
@@ -128,7 +128,7 @@ function ScaleQuestion({
               className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border p-3 text-sm font-medium transition-colors ${
                 value === opt.val
                   ? 'border-[#8FDAB5] bg-[#E6F7EF] text-[#008F5A]'
-                  : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
+                  : 'border-[#D5E8DD] hover:border-[#C5DDD0] hover:bg-[#E8F5EE]'
               }`}
             >
               <input
@@ -148,7 +148,7 @@ function ScaleQuestion({
       {question.type === 'text' && (
         <input
           type="text"
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#8FDAB5] focus:ring-1 focus:ring-[#8FDAB5]"
+          className="w-full rounded-lg border border-[#C5DDD0] px-3 py-2 text-sm outline-none focus:border-[#8FDAB5] focus:ring-1 focus:ring-[#8FDAB5]"
           placeholder={locale === 'fr' ? 'Votre reponse...' : 'Your answer...'}
           onChange={(e) => onChange(Number(e.target.value) || 0)}
         />
@@ -157,7 +157,7 @@ function ScaleQuestion({
       {question.labels_impacted.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-1">
           {question.labels_impacted.map((l) => (
-            <span key={l} className="rounded bg-gray-50 px-1.5 py-0.5 text-[10px] text-gray-400">
+            <span key={l} className="rounded bg-[#E8F5EE] px-1.5 py-0.5 text-[10px] text-gray-400">
               {l.replace(/_/g, ' ')}
             </span>
           ))}
@@ -402,7 +402,7 @@ export function DiagnosticWizard() {
                 </h3>
                 <div className="space-y-2">
                   {result.actionPlan.slice(0, 5).map((a) => (
-                    <div key={a.question_id} className="flex items-start gap-3 rounded-lg border border-gray-100 p-3">
+                    <div key={a.question_id} className="flex items-start gap-3 rounded-lg border border-[#D5E8DD] p-3">
                       <Badge
                         variant="outline"
                         className={`shrink-0 text-[10px] ${
@@ -410,7 +410,7 @@ export function DiagnosticWizard() {
                             ? 'border-red-200 bg-red-50 text-red-700'
                             : a.priority === 'medium'
                               ? 'border-amber-200 bg-amber-50 text-amber-700'
-                              : 'border-gray-200 text-gray-500'
+                              : 'border-[#C5DDD0] text-gray-500'
                         }`}
                       >
                         {a.priority === 'high' ? (locale === 'fr' ? 'Haute' : 'High') : a.priority === 'medium' ? (locale === 'fr' ? 'Moyenne' : 'Medium') : (locale === 'fr' ? 'Basse' : 'Low')}

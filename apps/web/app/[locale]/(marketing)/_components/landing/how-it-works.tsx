@@ -46,7 +46,7 @@ export function HowItWorks() {
               className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all ${
                 i === active
                   ? 'bg-brand text-white shadow-md'
-                  : 'border border-gray-300 bg-white text-gray-500'
+                  : 'border border-gray-300 bg-card text-gray-500'
               }`}
             >
               {i + 1}
@@ -55,7 +55,7 @@ export function HowItWorks() {
         </div>
 
         {/* Active step content */}
-        <div className="mx-auto max-w-2xl rounded-2xl border bg-white p-8 shadow-sm transition-all sm:p-10">
+        <div className="mx-auto max-w-2xl rounded-2xl border bg-card p-8 shadow-sm transition-all sm:p-10">
           <div className="flex flex-col items-center text-center">
             <div
               className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${step.color}`}
@@ -80,7 +80,7 @@ export function HowItWorks() {
             type="button"
             onClick={() => setActive((p) => Math.max(0, p - 1))}
             disabled={active === 0}
-            className="flex h-10 w-10 items-center justify-center rounded-full border bg-white text-gray-500 transition-colors hover:bg-gray-50 disabled:opacity-30"
+            className="flex h-10 w-10 items-center justify-center rounded-full border bg-card text-gray-500 transition-colors hover:bg-[#E8F5EE] disabled:opacity-30"
           >
             <ArrowLeft className="h-4 w-4" />
           </button>
@@ -91,7 +91,7 @@ export function HowItWorks() {
             type="button"
             onClick={() => setActive((p) => Math.min(STEPS.length - 1, p + 1))}
             disabled={active === STEPS.length - 1}
-            className="flex h-10 w-10 items-center justify-center rounded-full border bg-white text-gray-500 transition-colors hover:bg-gray-50 disabled:opacity-30"
+            className="flex h-10 w-10 items-center justify-center rounded-full border bg-card text-gray-500 transition-colors hover:bg-[#E8F5EE] disabled:opacity-30"
           >
             <ArrowRight className="h-4 w-4" />
           </button>

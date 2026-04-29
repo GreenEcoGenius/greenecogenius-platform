@@ -161,7 +161,7 @@ export function GlobalSearch() {
 
       {/* Modal */}
       <div
-        className="border-metal-chrome relative w-full max-w-lg overflow-hidden rounded-2xl border bg-white shadow-2xl"
+        className="border-metal-chrome relative w-full max-w-lg overflow-hidden rounded-2xl border bg-card shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search input */}

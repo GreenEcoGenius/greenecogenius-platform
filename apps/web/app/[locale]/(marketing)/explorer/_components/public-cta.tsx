@@ -57,7 +57,7 @@ export async function DualCTA() {
 
   return (
     <div className="grid gap-6 sm:grid-cols-2">
-      <div className="border-primary/20 rounded-2xl border bg-white p-6">
+      <div className="border-primary/20 rounded-2xl border bg-card p-6">
         <h3 className="text-metal-900 text-lg font-semibold">
           {t('explorer.ctaBuyerTitle')}
         </h3>
@@ -72,7 +72,7 @@ export async function DualCTA() {
           <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
-      <div className="border-metal-silver/50 rounded-2xl border bg-white p-6">
+      <div className="border-metal-silver/50 rounded-2xl border bg-card p-6">
         <h3 className="text-metal-900 text-lg font-semibold">
           {t('explorer.ctaSellerTitle')}
         </h3>

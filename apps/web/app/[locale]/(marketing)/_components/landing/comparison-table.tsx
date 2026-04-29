@@ -107,10 +107,10 @@ export function ComparisonTable() {
         </p>
 
         {/* Desktop table */}
-        <div className="hidden overflow-hidden rounded-2xl border bg-white shadow-sm md:block">
+        <div className="hidden overflow-hidden rounded-2xl border bg-card shadow-sm md:block">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b bg-gray-50">
+              <tr className="border-b bg-[#E8F5EE]">
                 <th className="px-5 py-4 text-left text-xs font-semibold tracking-wider text-gray-500 uppercase">
                   {t('landing.compFeature')}
                 </th>
@@ -138,7 +138,7 @@ export function ComparisonTable() {
               {FEATURES.map((row) => (
                 <tr
                   key={row.key}
-                  className="transition-colors hover:bg-gray-50/50"
+                  className="transition-colors hover:bg-[#E8F5EE]/50"
                 >
                   <td className="text-metal-800 px-5 py-3.5 text-sm font-medium">
                     {t(`landing.comp_${row.key}`)}
@@ -160,7 +160,7 @@ export function ComparisonTable() {
         {/* Mobile cards */}
         <div className="space-y-3 md:hidden">
           {FEATURES.map((row) => (
-            <div key={row.key} className="rounded-xl border bg-white p-4">
+            <div key={row.key} className="rounded-xl border bg-card p-4">
               <p className="text-metal-900 mb-3 text-sm font-semibold">
                 {t(`landing.comp_${row.key}`)}
               </p>

@@ -29,7 +29,7 @@ export function MarketTrends({ stats }: { stats: NationalStat[] }) {
           return (
             <div
               key={stat.category}
-              className="border-metal-chrome flex items-start gap-3 rounded-xl border bg-white p-4"
+              className="border-metal-chrome flex items-start gap-3 rounded-xl border bg-card p-4"
             >
               <span className="text-metal-400 text-sm font-bold">
                 {i + 1}.

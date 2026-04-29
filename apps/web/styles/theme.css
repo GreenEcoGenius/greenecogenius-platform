@@ -118,9 +118,9 @@
   --color-circuit-cyan: #6B7380;
   --color-circuit-blue: #4B5260;
   --color-circuit-turquoise: #C5CCD4;
-  --color-circuit-ice: #F5F7F9;
-  --color-circuit-50: #FAFBFC;
-  --color-circuit-100: #F5F7F9;
+  --color-circuit-ice: #EDF7F2;
+  --color-circuit-50: #F0F9F5;
+  --color-circuit-100: #EDF7F2;
   --color-circuit-300: #C5CCD4;
   --color-circuit-500: #4B5260;
   --color-circuit-700: #2E3340;
@@ -131,13 +131,13 @@
   --color-tech-mint: #C1EBD6;
 
   /* ── Metal — aligned to cloud neutrals ── */
-  --color-metal-frost: #F5F7F9;
-  --color-metal-chrome: #FAFBFC;
+  --color-metal-frost: #EDF7F2;
+  --color-metal-chrome: #F0F9F5;
   --color-metal-silver: #DDE2E7;
   --color-metal-steel: #6B7380;
-  --color-metal-50: #FAFBFC;
-  --color-metal-100: #F5F7F9;
-  --color-metal-200: #ECEFF2;
+  --color-metal-50: #F0F9F5;
+  --color-metal-100: #EDF7F2;
+  --color-metal-200: #E0F0E8;
   --color-metal-300: #DDE2E7;
   --color-metal-400: #C5CCD4;
   --color-metal-500: #9BA3AD;
@@ -202,19 +202,19 @@
  * Light Mode
  */
 :root {
-  --background: #FAFBFC;
+  --background: #F0F9F5;
   --foreground: #111827;
-  --card: #ffffff;
+  --card: #F7FBF9;
   --card-foreground: #111827;
-  --popover: #ffffff;
+  --popover: #F7FBF9;
   --popover-foreground: #111827;
   --primary: #00A86B;
   --primary-foreground: #ffffff;
-  --secondary: #F5F7F9;
+  --secondary: #E8F5EE;
   --secondary-foreground: #111827;
-  --muted: #F5F7F9;
+  --muted: #E8F5EE;
   --muted-foreground: #4B5260;
-  --accent: #E6F7EF;
+  --accent: #DCF2E6;
   --accent-foreground: #00A86B;
   --destructive: #e24b4a;
   --border: #ECEFF2;
@@ -231,7 +231,7 @@
   --radius: 0.75rem;
 
   /* Sidebar — Light */
-  --sidebar: #ffffff;
+  --sidebar: #F0F9F5;
   --sidebar-foreground: #111827;
   --sidebar-primary: #00A86B;
   --sidebar-primary-foreground: #ffffff;

@@ -162,7 +162,7 @@ export function PricingContent({
             className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${annual ? 'bg-primary' : 'bg-metal-frost'}`}
           >
             <span
-              className={`inline-block h-5 w-5 rounded-full bg-white shadow-sm transition-transform ${annual ? 'translate-x-6' : 'translate-x-1'}`}
+              className={`inline-block h-5 w-5 rounded-full bg-card shadow-sm transition-transform ${annual ? 'translate-x-6' : 'translate-x-1'}`}
             />
           </button>
           <span
@@ -209,7 +209,7 @@ export function PricingContent({
             ].map((tag, i) => (
               <span
                 key={i}
-                className="border-circuit-turquoise/30 text-circuit-blue inline-flex items-center gap-1.5 rounded-full border bg-white px-3 py-1.5 text-sm"
+                className="border-circuit-turquoise/30 text-circuit-blue inline-flex items-center gap-1.5 rounded-full border bg-card px-3 py-1.5 text-sm"
               >
                 {tag.icon}
                 <Trans i18nKey={tag.key} />
@@ -468,7 +468,7 @@ export function PricingContent({
             {faqKeys.map((key, i) => (
               <div
                 key={i}
-                className="border-metal-chrome rounded-xl border bg-white"
+                className="border-metal-chrome rounded-xl border bg-card"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
@@ -606,7 +606,7 @@ const COMING_SOON: ComingSoonFeature[] = [
 
 function ComingSoonSection() {
   return (
-    <section className="bg-slate-50 py-20">
+    <section className="bg-[#E8F5EE] py-20">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="mb-12 text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-sm font-medium text-amber-700">
@@ -633,7 +633,7 @@ function ComingSoonSection() {
             return (
               <div
                 key={feature.titleEn}
-                className="rounded-xl border border-gray-200 bg-white p-6 transition-colors hover:border-[#8FDAB5]"
+                className="rounded-xl border border-[#C5DDD0] bg-card p-6 transition-colors hover:border-[#8FDAB5]"
               >
                 <div className="mb-3 flex items-start justify-between">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E6F7EF]">
@@ -646,7 +646,7 @@ function ComingSoonSection() {
                     className={`rounded-full border px-2 py-1 text-xs font-medium ${
                       feature.timeline.startsWith('Q')
                         ? 'border-amber-200 bg-amber-50 text-amber-700'
-                        : 'border-gray-200 bg-gray-50 text-gray-600'
+                        : 'border-[#C5DDD0] bg-[#E8F5EE] text-gray-600'
                     }`}
                   >
                     {feature.timeline}

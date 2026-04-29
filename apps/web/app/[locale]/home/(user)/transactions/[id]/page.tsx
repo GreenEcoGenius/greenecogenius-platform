@@ -63,7 +63,7 @@ function contractStatusBadge(status: string | null) {
   const map: Record<string, { label: string; className: string }> = {
     not_started: {
       label: 'Contrat non genere',
-      className: 'bg-gray-100 text-gray-700 border-gray-200',
+      className: 'bg-gray-100 text-gray-700 border-[#C5DDD0]',
     },
     contract_generated: {
       label: 'Contrat genere',
@@ -249,7 +249,7 @@ async function TransactionDetailPage({ params }: Params) {
                   />
                 </div>
               ) : (
-                <p className="mb-5 rounded-lg bg-gray-50 p-3 text-sm text-gray-500">
+                <p className="mb-5 rounded-lg bg-[#E8F5EE] p-3 text-sm text-gray-500">
                   Aucun contrat n&apos;a encore ete genere. Une fois le
                   paiement confirme, vous pouvez generer le contrat et
                   l&apos;envoyer aux deux parties pour signature electronique

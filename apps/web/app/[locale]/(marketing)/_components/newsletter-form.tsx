@@ -50,7 +50,7 @@ export function NewsletterForm() {
         type="submit"
         disabled={status === 'loading'}
         aria-label={t('newsletterButton')}
-        className="text-primary inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold transition-all hover:bg-white/90 hover:shadow-lg disabled:opacity-70"
+        className="text-primary inline-flex items-center gap-2 rounded-full bg-card px-6 py-3 text-sm font-semibold transition-all hover:bg-white/90 hover:shadow-lg disabled:opacity-70"
       >
         {status === 'loading' ? (
           <Loader2 className="h-4 w-4 animate-spin" />

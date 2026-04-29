@@ -477,7 +477,7 @@ export default async function VerifyHashPage({ params }: VerifyPageProps) {
                       }`}
                     >
                       {index === timeline.length - 1 && (
-                        <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                        <div className="h-1.5 w-1.5 rounded-full bg-card" />
                       )}
                     </div>
 

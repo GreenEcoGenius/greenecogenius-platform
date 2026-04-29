@@ -62,7 +62,7 @@ export function EsgKpiCards({ data }: { data: DemoData['esg']['kpi'] }) {
         value={`${data.totalEmissionsT} t`}
         sub={t('co2eScopesAll')}
         href="/home/carbon"
-        iconBgClass="bg-slate-50 dark:bg-slate-950/30"
+        iconBgClass="bg-[#E8F5EE] dark:bg-slate-950/30"
       />
       <KpiCard
         icon={<Leaf className="h-5 w-5 text-[#00A86B]" />}

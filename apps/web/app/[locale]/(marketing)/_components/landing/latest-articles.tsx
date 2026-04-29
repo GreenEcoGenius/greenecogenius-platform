@@ -107,7 +107,7 @@ function ArticleCard({ post }: { post: { slug: string; title: string; descriptio
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[#C5DDD0] bg-card transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
     >
       {post.image && (
         <div className="relative aspect-[16/9] overflow-hidden">

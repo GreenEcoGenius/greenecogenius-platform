@@ -325,7 +325,7 @@ async function PersonalAccountBillingPage() {
           ].map((tag) => (
             <span
               key={tag.label}
-              className="inline-flex items-center gap-1.5 rounded-full border border-verdure-200 bg-white px-3 py-1.5 text-sm dark:border-verdure-800 dark:bg-verdure-950"
+              className="inline-flex items-center gap-1.5 rounded-full border border-verdure-200 bg-card px-3 py-1.5 text-sm dark:border-verdure-800 dark:bg-verdure-950"
             >
               {tag.icon} {tag.label}
             </span>

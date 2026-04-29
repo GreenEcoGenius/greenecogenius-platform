@@ -42,7 +42,7 @@ export async function LabelEligibilitySection({
           {labels.map((l) => (
             <div
               key={l.id}
-              className="rounded-xl border border-gray-100 bg-white p-3 sm:p-4"
+              className="rounded-xl border border-[#D5E8DD] bg-card p-3 sm:p-4"
             >
               <div className="mb-2 flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
@@ -58,7 +58,7 @@ export async function LabelEligibilitySection({
                 ) : (
                   <Badge
                     variant="outline"
-                    className="shrink-0 border-gray-200 text-[11px] text-gray-500 sm:text-xs"
+                    className="shrink-0 border-[#C5DDD0] text-[11px] text-gray-500 sm:text-xs"
                   >
                     {t('inProgress')}
                   </Badge>

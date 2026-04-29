@@ -241,7 +241,7 @@ export function EuropeMap({ countryStats }: { countryStats: CountryStat[] }) {
 
         {hoveredInfo && (
           <div
-            className="pointer-events-none absolute z-10 -translate-x-1/2 rounded-lg border border-gray-200 bg-white px-3.5 py-2 whitespace-nowrap shadow-lg"
+            className="pointer-events-none absolute z-10 -translate-x-1/2 rounded-lg border border-[#C5DDD0] bg-card px-3.5 py-2 whitespace-nowrap shadow-lg"
             style={{ left: tooltipPos.x, top: tooltipPos.y }}
           >
             <p className="text-metal-900 text-[13px] font-semibold">

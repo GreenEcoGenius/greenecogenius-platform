@@ -73,15 +73,15 @@
   --text-tertiary: #6B7380;
   --text-on-forest: #F5F5F0;
 
-  --bg-page: #FAFBFC;
-  --bg-secondary: #F5F7F9;
-  --bg-card: #ffffff;
+  --bg-page: #F0F9F5;
+  --bg-secondary: #E8F5EE;
+  --bg-card: #F7FBF9;
   --bg-hover: #E6F7EF;
   --bg-forest: #0A2F1F;
   --bg-forest-light: #0D3A26;
 
-  --border-default: #ECEFF2;
-  --border-light: #F5F7F9;
+  --border-default: #D5E8DD;
+  --border-light: #E8F5EE;
   --border-forest: rgba(245, 245, 240, 0.06);
 
   --indicator-success: #10B981;

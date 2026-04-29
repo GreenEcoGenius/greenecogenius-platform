@@ -34,7 +34,7 @@ async function ContactPage({
         >
           <div
             className={
-              'border-metal-chrome flex w-full max-w-lg flex-col space-y-4 rounded-xl border bg-white p-8'
+              'border-metal-chrome flex w-full max-w-lg flex-col space-y-4 rounded-xl border bg-card p-8'
             }
           >
             <div>

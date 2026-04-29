@@ -69,7 +69,7 @@ export async function TransactionImpactPanel({
   ];
 
   return (
-    <div className="w-full max-w-2xl rounded-xl border border-[#8FDAB5] bg-white p-6 shadow-sm">
+    <div className="w-full max-w-2xl rounded-xl border border-[#8FDAB5] bg-card p-6 shadow-sm">
       <div className="mb-4 flex items-center gap-2">
         <Leaf className="h-5 w-5 text-[#00A86B]" strokeWidth={1.5} />
         <h3 className="text-lg font-semibold text-gray-900">
@@ -103,7 +103,7 @@ export async function TransactionImpactPanel({
         ))}
       </div>
 
-      <div className="mb-4 rounded-lg bg-gray-50 p-3">
+      <div className="mb-4 rounded-lg bg-[#E8F5EE] p-3">
         <p className="mb-2 text-xs font-medium text-gray-500">
           {t('impact.equivalentOf')}
         </p>

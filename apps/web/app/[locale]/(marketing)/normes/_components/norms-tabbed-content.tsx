@@ -134,7 +134,7 @@ function NormCard({
     <div
       ref={ref}
       className={cn(
-        'group border-metal-silver rounded-xl border bg-white p-5 transition-all duration-700',
+        'group border-metal-silver rounded-xl border bg-card p-5 transition-all duration-700',
         visible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0',
         'hover:-translate-y-1 hover:shadow-lg',
       )}

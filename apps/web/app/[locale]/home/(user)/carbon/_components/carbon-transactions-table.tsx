@@ -43,7 +43,7 @@ export function CarbonTransactionsTable({
       </h3>
       <div className="overflow-x-auto rounded-lg border">
         <table className="w-full text-left text-sm">
-          <thead className="border-b bg-gray-50 dark:bg-gray-800/50">
+          <thead className="border-b bg-[#E8F5EE] dark:bg-gray-800/50">
             <tr>
               <th className="px-4 py-3 font-medium">
                 <Trans i18nKey="carbon:txDate" />
@@ -75,7 +75,7 @@ export function CarbonTransactionsTable({
             {transactions.map((tx, idx) => (
               <tr
                 key={`${tx.created_at}-${idx}`}
-                className="hover:bg-gray-50 dark:hover:bg-gray-800/30"
+                className="hover:bg-[#E8F5EE] dark:hover:bg-gray-800/30"
               >
                 <td className="px-4 py-3 whitespace-nowrap text-gray-600 dark:text-gray-400">
                   {new Date(tx.created_at).toLocaleDateString('fr-FR')}

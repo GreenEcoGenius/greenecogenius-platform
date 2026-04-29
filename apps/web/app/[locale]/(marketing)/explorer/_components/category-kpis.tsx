@@ -40,7 +40,7 @@ export async function CategoryKpis({ stat }: { stat: NationalStat }) {
       {kpis.map((kpi) => (
         <div
           key={kpi.label}
-          className="border-metal-chrome rounded-xl border bg-white p-4 text-center"
+          className="border-metal-chrome rounded-xl border bg-card p-4 text-center"
         >
           <kpi.icon className="text-primary mx-auto mb-2 h-5 w-5" />
           <p className="text-metal-900 text-lg font-bold">{kpi.value}</p>

@@ -33,7 +33,7 @@ export function ZoneSelector({
             className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
               isActive
                 ? 'bg-[#00A86B] text-white shadow-md'
-                : 'border border-gray-300 bg-white text-gray-600 hover:border-gray-400 hover:bg-gray-50'
+                : 'border border-gray-300 bg-card text-gray-600 hover:border-gray-400 hover:bg-[#E8F5EE]'
             }`}
           >
             <Icon className="h-4 w-4" />

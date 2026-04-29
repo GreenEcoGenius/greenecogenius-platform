@@ -70,7 +70,7 @@ function NumField({
           min={0}
           value={value || ''}
           onChange={(e) => onChange(Number(e.target.value) || 0)}
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#8FDAB5] focus:ring-1 focus:ring-[#8FDAB5]"
+          className="w-full rounded-lg border border-[#C5DDD0] px-3 py-2 text-sm outline-none focus:border-[#8FDAB5] focus:ring-1 focus:ring-[#8FDAB5]"
         />
         {unit && <span className="shrink-0 text-xs text-gray-400">{unit}</span>}
       </div>
@@ -99,7 +99,7 @@ function SelectField({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#8FDAB5] focus:ring-1 focus:ring-[#8FDAB5]"
+        className="w-full rounded-lg border border-[#C5DDD0] px-3 py-2 text-sm outline-none focus:border-[#8FDAB5] focus:ring-1 focus:ring-[#8FDAB5]"
       >
         <option value="">--</option>
         {options.map((o) => (
@@ -293,7 +293,7 @@ export function CarbonWizard() {
               <div className="space-y-2">
                 <p className="text-sm font-medium text-gray-700">{fr ? 'Source' : 'Source'}</p>
                 {(['grid', 'renewable', 'self'] as const).map((src) => (
-                  <label key={src} className={`flex items-center gap-2 rounded-lg border p-2.5 text-sm ${scope2.electricity_source === src ? 'border-[#8FDAB5] bg-[#E6F7EF]' : 'border-gray-100'}`}>
+                  <label key={src} className={`flex items-center gap-2 rounded-lg border p-2.5 text-sm ${scope2.electricity_source === src ? 'border-[#8FDAB5] bg-[#E6F7EF]' : 'border-[#D5E8DD]'}`}>
                     <input type="radio" name="elec_source" value={src} checked={scope2.electricity_source === src} onChange={() => setScope2((p) => ({ ...p, electricity_source: src }))} className="accent-[#00A86B]" />
                     {src === 'grid' ? `${fr ? 'Mix reseau' : 'Grid mix'} (${profile.country}: ${ELECTRICITY_FACTORS[profile.country]?.factor ?? 0.052} kgCO2e/kWh)` : src === 'renewable' ? (fr ? 'Contrat 100% renouvelable (GO)' : '100% renewable contract (GO)') : (fr ? 'Autoproduction (solaire)' : 'Self-production (solar)')}
                   </label>
@@ -428,10 +428,10 @@ export function CarbonWizard() {
             <CardContent className="p-5">
               <h3 className="mb-3 text-sm font-semibold">{fr ? 'Equivalences' : 'Equivalences'}</h3>
               <div className="grid grid-cols-2 gap-3 text-center">
-                <div className="rounded-lg bg-gray-50 p-3"><p className="text-xl font-bold text-gray-800">{result.equivalences.flights_paris_ny}</p><p className="text-[11px] text-gray-500">{fr ? 'vols Paris-NYC AR' : 'Paris-NYC round trips'}</p></div>
-                <div className="rounded-lg bg-gray-50 p-3"><p className="text-xl font-bold text-gray-800">{result.equivalences.cars_per_year}</p><p className="text-[11px] text-gray-500">{fr ? 'voitures / an' : 'cars / year'}</p></div>
-                <div className="rounded-lg bg-gray-50 p-3"><p className="text-xl font-bold text-gray-800">{result.equivalences.trees_needed}</p><p className="text-[11px] text-gray-500">{fr ? 'arbres necessaires' : 'trees needed'}</p></div>
-                <div className="rounded-lg bg-gray-50 p-3"><p className="text-xl font-bold text-gray-800">{result.equivalences.households_electricity}</p><p className="text-[11px] text-gray-500">{fr ? 'foyers alimentes' : 'households powered'}</p></div>
+                <div className="rounded-lg bg-[#E8F5EE] p-3"><p className="text-xl font-bold text-gray-800">{result.equivalences.flights_paris_ny}</p><p className="text-[11px] text-gray-500">{fr ? 'vols Paris-NYC AR' : 'Paris-NYC round trips'}</p></div>
+                <div className="rounded-lg bg-[#E8F5EE] p-3"><p className="text-xl font-bold text-gray-800">{result.equivalences.cars_per_year}</p><p className="text-[11px] text-gray-500">{fr ? 'voitures / an' : 'cars / year'}</p></div>
+                <div className="rounded-lg bg-[#E8F5EE] p-3"><p className="text-xl font-bold text-gray-800">{result.equivalences.trees_needed}</p><p className="text-[11px] text-gray-500">{fr ? 'arbres necessaires' : 'trees needed'}</p></div>
+                <div className="rounded-lg bg-[#E8F5EE] p-3"><p className="text-xl font-bold text-gray-800">{result.equivalences.households_electricity}</p><p className="text-[11px] text-gray-500">{fr ? 'foyers alimentes' : 'households powered'}</p></div>
               </div>
             </CardContent>
           </Card>

@@ -65,7 +65,7 @@ export function CsrdComplianceChart({
                 )}
                 <Link
                   href={`/home/esg/csrd`}
-                  className="group flex items-center gap-2 rounded-md px-1 py-1 transition-colors hover:bg-gray-50 dark:hover:bg-gray-900/50"
+                  className="group flex items-center gap-2 rounded-md px-1 py-1 transition-colors hover:bg-[#E8F5EE] dark:hover:bg-gray-900/50"
                 >
                   <span className="w-8 text-xs font-semibold text-gray-500">
                     {ind.code}

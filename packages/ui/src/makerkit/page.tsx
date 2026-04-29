@@ -40,13 +40,13 @@ function PageWithSidebar(props: PageProps) {
         data-scroll-root="true"
         className={
           props.contentContainerClassName ??
-          'mx-auto flex w-full min-w-0 flex-1 flex-col bg-white lg:overflow-y-auto lg:bg-inherit'
+          'mx-auto flex w-full min-w-0 flex-1 flex-col bg-[#F0F9F5] lg:overflow-y-auto lg:bg-inherit'
         }
       >
         {MobileNavigation}
 
         <div
-          className={'flex min-w-0 flex-1 flex-col px-4 lg:bg-background lg:px-0'}
+          className={'flex min-w-0 flex-1 flex-col px-4 lg:bg-[#F0F9F5] lg:px-0'}
         >
           {Children}
         </div>

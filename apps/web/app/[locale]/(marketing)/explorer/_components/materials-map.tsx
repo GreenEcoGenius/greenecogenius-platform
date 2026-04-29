@@ -119,7 +119,7 @@ export function MaterialsMap({
             height="44"
             className="pointer-events-none"
           >
-            <div className="rounded-lg bg-white px-3 py-2 text-center shadow-lg">
+            <div className="rounded-lg bg-card px-3 py-2 text-center shadow-lg">
               <p className="text-metal-900 text-xs font-semibold">
                 {t.raw(`explorer.regionNames.${tooltip.name}`) as string}
               </p>

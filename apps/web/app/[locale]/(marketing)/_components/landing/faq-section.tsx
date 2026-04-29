@@ -27,7 +27,7 @@ export function FaqSection() {
             return (
               <div
                 key={key}
-                className="overflow-hidden rounded-xl border bg-white transition-all"
+                className="overflow-hidden rounded-xl border bg-card transition-all"
               >
                 <button
                   type="button"

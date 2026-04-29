@@ -143,7 +143,7 @@ export function NormStatusTable({ norms }: { norms: NormRow[] }) {
                   METHOD_LABELS[norm.autoVerified] ?? METHOD_LABELS.pending!;
 
                 return (
-                  <tr key={norm.name} className="hover:bg-gray-50/50">
+                  <tr key={norm.name} className="hover:bg-[#E8F5EE]/50">
                     <td className="px-3 py-3 font-medium">{norm.name}</td>
                     <td className="text-muted-foreground px-3 py-3 text-xs">
                       {PILLAR_NAMES[norm.pillar] ?? norm.pillar}

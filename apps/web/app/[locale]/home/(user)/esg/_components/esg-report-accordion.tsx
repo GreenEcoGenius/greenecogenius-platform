@@ -93,7 +93,7 @@ export function ESGReportAccordion({
                 <button
                   type="button"
                   onClick={() => setExpandedId(isExpanded ? null : section.id)}
-                  className="flex w-full items-center justify-between p-4 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-900/50"
+                  className="flex w-full items-center justify-between p-4 text-left transition-colors hover:bg-[#E8F5EE] dark:hover:bg-gray-900/50"
                 >
                   <div className="flex items-center gap-3">
                     {getStatusIcon(section.status, section.completionPct)}
@@ -148,7 +148,7 @@ export function ESGReportAccordion({
 
                 {/* Expanded content */}
                 {isExpanded && (
-                  <div className="border-t bg-gray-50/50 px-4 py-3 dark:bg-gray-900/20">
+                  <div className="border-t bg-[#E8F5EE]/50 px-4 py-3 dark:bg-gray-900/20">
                     {/* Description */}
                     {section.description && (
                       <p className="text-muted-foreground mb-3 text-xs italic">

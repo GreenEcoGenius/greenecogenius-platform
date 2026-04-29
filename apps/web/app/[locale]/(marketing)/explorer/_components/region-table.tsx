@@ -19,7 +19,7 @@ export async function RegionTable({ stats }: { stats: RegionStat[] }) {
   );
 
   return (
-    <div className="overflow-x-auto rounded-xl border bg-white">
+    <div className="overflow-x-auto rounded-xl border bg-card">
       <table className="w-full text-left text-sm">
         <thead>
           <tr className="bg-metal-50 text-metal-500 border-b text-xs font-medium tracking-wider uppercase">

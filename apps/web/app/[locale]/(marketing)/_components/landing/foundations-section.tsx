@@ -60,7 +60,7 @@ function LogoCard({
       href={logo.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex h-36 flex-col items-center justify-center rounded-xl border border-gray-100 bg-white px-5 py-4 shadow-sm transition-all duration-200 hover:border-gray-200 hover:shadow-md"
+      className="group flex h-36 flex-col items-center justify-center rounded-xl border border-[#D5E8DD] bg-card px-5 py-4 shadow-sm transition-all duration-200 hover:border-[#C5DDD0] hover:shadow-md"
     >
       {logo.src ? (
         <Image

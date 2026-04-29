@@ -176,7 +176,7 @@ export default async function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2">
             <AnimateOnScroll animation="fade-up">
-              <div className="border-metal-chrome rounded-2xl border bg-white p-8 sm:p-10">
+              <div className="border-metal-chrome rounded-2xl border bg-card p-8 sm:p-10">
                 <div className="bg-primary-light text-primary flex h-12 w-12 items-center justify-center rounded-xl">
                   <BarChart3 className="h-6 w-6" />
                 </div>
@@ -190,7 +190,7 @@ export default async function AboutPage() {
             </AnimateOnScroll>
 
             <AnimateOnScroll animation="fade-up" delay={150}>
-              <div className="border-metal-chrome rounded-2xl border bg-white p-8 sm:p-10">
+              <div className="border-metal-chrome rounded-2xl border bg-card p-8 sm:p-10">
                 <div className="bg-tech-mint text-tech-emerald flex h-12 w-12 items-center justify-center rounded-xl">
                   <Leaf className="h-6 w-6" />
                 </div>
@@ -223,7 +223,7 @@ export default async function AboutPage() {
 
           <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-2">
             <AnimateOnScroll animation="fade-right">
-              <div className="rounded-2xl border bg-white p-8">
+              <div className="rounded-2xl border bg-card p-8">
                 <h3 className="text-metal-900 text-xl font-bold">
                   GreenEcoGenius OÜ
                 </h3>
@@ -236,7 +236,7 @@ export default async function AboutPage() {
               </div>
             </AnimateOnScroll>
             <AnimateOnScroll animation="fade-left">
-              <div className="rounded-2xl border bg-white p-8">
+              <div className="rounded-2xl border bg-card p-8">
                 <h3 className="text-metal-900 text-xl font-bold">
                   GreenEcoGenius, Inc.
                 </h3>
@@ -259,7 +259,7 @@ export default async function AboutPage() {
       </section>
 
       {/* ───── SECURITY & DATA PROTECTION ───── */}
-      <section className="bg-slate-50 py-20 sm:py-28">
+      <section className="bg-[#E8F5EE] py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fade-up">
             <div className="mx-auto max-w-2xl text-center">
@@ -304,7 +304,7 @@ export default async function AboutPage() {
               },
             ].map(({ icon: Icon, title, text }) => (
               <AnimateOnScroll key={title} animation="fade-up">
-                <div className="h-full rounded-2xl border border-slate-200 bg-white p-6 transition-shadow duration-200 hover:shadow-md">
+                <div className="h-full rounded-2xl border border-[#C5DDD0] bg-card p-6 transition-shadow duration-200 hover:shadow-md">
                   <div className="bg-primary/10 text-primary mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl">
                     <Icon className="h-5 w-5" strokeWidth={1.5} />
                   </div>

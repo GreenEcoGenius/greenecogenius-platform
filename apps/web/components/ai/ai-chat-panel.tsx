@@ -355,7 +355,7 @@ export function AIChatPanel() {
     <>
       {/* Mobile: full-screen overlay */}
       <div
-        className="fixed inset-0 z-[60] flex flex-col bg-white md:hidden"
+        className="fixed inset-0 z-[60] flex flex-col bg-card md:hidden"
         role="dialog"
         aria-modal="true"
       >
@@ -529,7 +529,7 @@ export function AIChatPanel() {
       </div>
 
       {/* Desktop: sidebar panel */}
-      <div className="border-metal-chrome hidden h-full w-[380px] shrink-0 flex-col border-l bg-white pt-20 md:flex md:pt-24">
+      <div className="border-metal-chrome hidden h-full w-[380px] shrink-0 flex-col border-l bg-card pt-20 md:flex md:pt-24">
       {/* Header */}
       <div className="border-metal-chrome flex items-center justify-between border-b px-4 py-3">
         <div className="flex items-center gap-2">

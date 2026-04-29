@@ -43,10 +43,10 @@ export async function PricingPreview() {
           {PLANS.map((plan, i) => (
             <AnimateOnScroll key={i} animation="fade-up" delay={i * 100}>
               <div
-                className={`relative rounded-2xl border bg-white p-6 shadow-sm ${
+                className={`relative rounded-2xl border bg-card p-6 shadow-sm ${
                   plan.popular
                     ? 'border-primary ring-primary/20 ring-2'
-                    : 'border-gray-200'
+                    : 'border-[#C5DDD0]'
                 }`}
               >
                 {plan.popular && (

@@ -55,7 +55,7 @@ export async function StatsSection() {
             const Icon = stat.icon;
             return (
               <AnimateOnScroll key={i} animation="fade-up" delay={i * 100}>
-                <div className="border-metal-chrome rounded-2xl border bg-white p-6 text-center shadow-sm">
+                <div className="border-metal-chrome rounded-2xl border bg-card p-6 text-center shadow-sm">
                   <div className="bg-primary-light text-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl">
                     <Icon className="h-6 w-6" />
                   </div>

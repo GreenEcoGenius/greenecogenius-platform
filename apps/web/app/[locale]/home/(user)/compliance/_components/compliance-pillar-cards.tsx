@@ -41,7 +41,7 @@ function getScoreColor(pct: number) {
 function getBarColor(pct: number) {
   if (pct >= 80) return 'bg-[#E6F7EF]0';
   if (pct >= 60) return 'bg-[#E6F7EF]0';
-  return 'bg-slate-500';
+  return 'bg-[#E8F5EE]0';
 }
 
 function getBgColor(pct: number) {
@@ -49,7 +49,7 @@ function getBgColor(pct: number) {
     return 'bg-[#E6F7EF] dark:bg-[#004428]/30 text-[#00A86B] dark:text-[#00A86B]';
   if (pct >= 60)
     return 'bg-[#E6F7EF] dark:bg-[#00A86B]/30 text-[#00A86B] dark:text-[#00A86B]';
-  return 'bg-slate-50 dark:bg-slate-950/30 text-slate-600 dark:text-slate-400';
+  return 'bg-[#E8F5EE] dark:bg-slate-950/30 text-slate-600 dark:text-slate-400';
 }
 
 export function CompliancePillarCards({ pillars }: CompliancePillarCardsProps) {

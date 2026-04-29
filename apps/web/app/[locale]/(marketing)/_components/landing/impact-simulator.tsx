@@ -53,7 +53,7 @@ export function ImpactSimulator() {
 
         <div className="grid gap-10 lg:grid-cols-2">
           {/* Simulator */}
-          <div className="rounded-2xl border bg-white p-6 shadow-sm sm:p-8">
+          <div className="rounded-2xl border bg-card p-6 shadow-sm sm:p-8">
             <h3 className="text-metal-900 mb-6 text-lg font-bold">
               {t('landing.simulatorTitle')}
             </h3>
@@ -107,7 +107,7 @@ export function ImpactSimulator() {
           </div>
 
           {/* Chart */}
-          <div className="rounded-2xl border bg-white p-6 shadow-sm sm:p-8">
+          <div className="rounded-2xl border bg-card p-6 shadow-sm sm:p-8">
             <h3 className="text-metal-900 mb-6 text-lg font-bold">
               {t('landing.chartTitle')}
             </h3>

@@ -145,7 +145,7 @@ export function ServiceOverlay({
           <X className="text-metal-600 h-4 w-4" />
         </button>
 
-        <div className="mb-16 max-h-[80svh] overflow-y-auto rounded-t-2xl bg-white shadow-2xl sm:mb-0 sm:max-h-[90svh] sm:rounded-2xl">
+        <div className="mb-16 max-h-[80svh] overflow-y-auto rounded-t-2xl bg-card shadow-2xl sm:mb-0 sm:max-h-[90svh] sm:rounded-2xl">
           <div className="relative h-[160px] overflow-hidden sm:h-[240px]">
             <img
               src={service.heroImage}

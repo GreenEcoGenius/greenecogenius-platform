@@ -27,7 +27,7 @@ const PRIORITY_CONFIG: Record<
 > = {
   urgent: {
     className:
-      'bg-slate-100 text-slate-800 dark:bg-slate-800/40 dark:text-slate-300 border-slate-200',
+      'bg-slate-100 text-slate-800 dark:bg-slate-800/40 dark:text-slate-300 border-[#C5DDD0]',
     i18nKey: 'rse:urgent',
     icon: <Zap className="h-3 w-3" />,
   },
@@ -72,7 +72,7 @@ export function RSEActionsList({ actions }: RSEActionsListProps) {
             return (
               <div
                 key={idx}
-                className="flex flex-col gap-3 rounded-lg border p-4 transition-colors hover:bg-gray-50 sm:flex-row sm:items-center sm:justify-between dark:hover:bg-gray-900/50"
+                className="flex flex-col gap-3 rounded-lg border p-4 transition-colors hover:bg-[#E8F5EE] sm:flex-row sm:items-center sm:justify-between dark:hover:bg-gray-900/50"
               >
                 <div className="flex-1 space-y-2">
                   <div className="flex flex-wrap items-center gap-2">

@@ -71,7 +71,7 @@ export function MaterialCategoryCard({
   );
 
   const className =
-    'group border-metal-silver/50 hover:border-primary/40 hover:shadow-primary/10 flex flex-col rounded-2xl border bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg';
+    'group border-metal-silver/50 hover:border-primary/40 hover:shadow-primary/10 flex flex-col rounded-2xl border bg-card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg';
 
   if (zone === 'france') {
     return (

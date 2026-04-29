@@ -315,7 +315,7 @@ export function AIAssistant() {
 
       {/* ─── Chat panel ─── */}
       {open && (
-        <div className="border-metal-chrome shadow-metal-900/12 fixed right-6 bottom-6 z-50 flex w-[400px] flex-col overflow-hidden rounded-2xl border bg-white shadow-2xl">
+        <div className="border-metal-chrome shadow-metal-900/12 fixed right-6 bottom-6 z-50 flex w-[400px] flex-col overflow-hidden rounded-2xl border bg-card shadow-2xl">
           {/* Header */}
           <div className="from-primary to-primary-hover flex items-center justify-between bg-gradient-to-r px-5 py-4">
             <div>

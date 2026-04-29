@@ -101,7 +101,7 @@ export function ComplianceScoreCard({
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 rounded-lg bg-slate-50 p-3 dark:bg-slate-950/30">
+              <div className="flex items-center gap-3 rounded-lg bg-[#E8F5EE] p-3 dark:bg-slate-950/30">
                 <AlertTriangle className="h-5 w-5 text-slate-600" />
                 <div>
                   <p className="text-lg font-bold text-slate-700 dark:text-slate-400">
@@ -116,7 +116,7 @@ export function ComplianceScoreCard({
 
             <div className="flex gap-2">
               <PreAuditButton />
-              <button className="text-muted-foreground rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-900">
+              <button className="text-muted-foreground rounded-md border px-4 py-2 text-sm font-medium hover:bg-[#E8F5EE] dark:hover:bg-gray-900">
                 <Trans i18nKey="compliance:exportReport" />
               </button>
             </div>
