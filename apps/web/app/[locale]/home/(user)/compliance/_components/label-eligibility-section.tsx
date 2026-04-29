@@ -76,7 +76,7 @@ export async function LabelEligibilitySection({
                       l.coverage >= 80
                         ? 'bg-[#1A5C3E]0'
                         : l.coverage >= 50
-                          ? 'bg-amber-900/300'
+                          ? 'bg-amber-900/30'
                           : 'bg-gray-300'
                     }`}
                     style={{ width: `${l.coverage}%` }}

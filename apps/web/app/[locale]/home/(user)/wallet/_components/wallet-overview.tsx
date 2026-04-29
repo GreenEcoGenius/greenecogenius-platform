@@ -28,7 +28,7 @@ const cards = [
     descKey: 'wallet.availableDesc',
     icon: Euro,
     iconColor: 'text-emerald-400 dark:text-emerald-400',
-    iconBg: 'bg-emerald-100 dark:bg-emerald-900/20',
+    iconBg: 'bg-emerald-900/20',
     getValue: (w: any) => w?.availableBalance ?? 0,
   },
   {
@@ -37,7 +37,7 @@ const cards = [
     descKey: 'wallet.pendingDesc',
     icon: Clock,
     iconColor: 'text-amber-400 dark:text-amber-400',
-    iconBg: 'bg-amber-100 dark:bg-amber-900/20',
+    iconBg: 'bg-amber-900/20',
     getValue: (w: any) => w?.pendingBalance ?? 0,
   },
   {
@@ -46,7 +46,7 @@ const cards = [
     descKey: 'wallet.totalEarnedDesc',
     icon: TrendingUp,
     iconColor: 'text-blue-400 dark:text-blue-400',
-    iconBg: 'bg-blue-100 dark:bg-blue-900/20',
+    iconBg: 'bg-blue-900/20',
     getValue: (w: any) => w?.totalEarned ?? 0,
   },
   {
@@ -55,7 +55,7 @@ const cards = [
     descKey: 'wallet.feesDesc',
     icon: ArrowDownToLine,
     iconColor: 'text-purple-400 dark:text-purple-400',
-    iconBg: 'bg-purple-100 dark:bg-purple-900/20',
+    iconBg: 'bg-purple-900/20',
     getValue: (w: any) => w?.totalFeesPaid ?? 0,
   },
 ];

@@ -19,7 +19,7 @@ const IMPACT_STYLES: Record<
     i18nKey: 'compliance:impactLow',
   },
   medium: {
-    className: 'bg-blue-100 text-blue-400',
+    className: 'bg-blue-900/30 text-blue-400',
     i18nKey: 'compliance:impactMedium',
   },
   high: {

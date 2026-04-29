@@ -15,7 +15,7 @@ const VARIANT_CLASSES: Record<KpiVariant, string> = {
 
 const VARIANT_ACCENT: Record<KpiVariant, string> = {
   teal: 'bg-emerald-400/20',
-  emerald: 'bg-amber-400/20',
+  emerald: 'bg-emerald-400/20',
   green: 'bg-blue-400/20',
 };
 

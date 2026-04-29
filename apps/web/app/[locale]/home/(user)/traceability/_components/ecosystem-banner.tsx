@@ -40,7 +40,7 @@ export function EcosystemBanner({
       value: `${co2Tonnes}t`,
       labelKey: 'blockchain:ecosystemCarbon' as const,
       href: '/home/carbon',
-      color: 'text-verdure-700 dark:text-verdure-400',
+      color: 'text-verdure-400',
     },
     {
       icon: FileBarChart,

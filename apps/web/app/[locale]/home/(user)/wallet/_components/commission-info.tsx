@@ -63,10 +63,10 @@ export function CommissionInfo() {
             <div className="flex items-start gap-2 rounded-lg bg-[#1A5C3E] p-3 dark:bg-verdure-950">
               <Info className="mt-0.5 h-4 w-4 text-verdure-600" />
               <div>
-                <p className="text-sm font-medium text-verdure-800 dark:text-verdure-200">
+                <p className="text-sm font-medium text-verdure-300">
                   <Trans i18nKey="wallet.promoActive" />
                 </p>
-                <p className="text-sm text-verdure-700 dark:text-verdure-300">
+                <p className="text-sm text-verdure-400">
                   {(Number(activeConfig.flat_rate) * 100).toFixed(0)}%{' '}
                   <Trans i18nKey="wallet.promoFlat" />
                 </p>

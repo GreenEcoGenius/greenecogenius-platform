@@ -40,7 +40,7 @@ const PILLAR_COLORS: Record<string, string> = {
   governance: 'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#00A86B] dark:text-[#8FDAB5]',
   environment:
     'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#004428] dark:text-[#8FDAB5]',
-  social: 'bg-verdure-100 text-verdure-800 dark:bg-verdure-900 dark:text-verdure-300',
+  social: 'bg-verdure-900/30 text-verdure-400',
   ethics: 'bg-slate-100 text-[#F5F5F0] dark:bg-slate-800 dark:text-slate-300',
   stakeholders: 'bg-[#1A5C3E] text-[#00A86B] dark:bg-[#00A86B] dark:text-[#8FDAB5]',
 };

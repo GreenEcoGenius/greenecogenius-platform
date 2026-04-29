@@ -67,19 +67,19 @@ function contractStatusBadge(status: string | null) {
     },
     contract_generated: {
       label: 'Contrat genere',
-      className: 'bg-blue-900/30 text-blue-400 border-blue-200',
+      className: 'bg-blue-900/30 text-blue-400 border-blue-500/30',
     },
     pending_signatures: {
       label: 'En attente de signature',
-      className: 'bg-amber-900/30 text-amber-400 border-amber-200',
+      className: 'bg-amber-900/20 text-amber-400 border-amber-500/30',
     },
     seller_signed: {
       label: 'Vendeur a signe',
-      className: 'bg-amber-900/30 text-amber-400 border-amber-200',
+      className: 'bg-amber-900/20 text-amber-400 border-amber-500/30',
     },
     buyer_signed: {
       label: 'Acheteur a signe',
-      className: 'bg-amber-900/30 text-amber-400 border-amber-200',
+      className: 'bg-amber-900/20 text-amber-400 border-amber-500/30',
     },
     fully_signed: {
       label: 'Signe par les deux parties',

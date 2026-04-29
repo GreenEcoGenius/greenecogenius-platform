@@ -474,7 +474,7 @@ function ScopeProgressSection() {
       progress: 0,
       status: 'auto' as const,
       color: 'bg-[#1A5C3E]0',
-      bgColor: 'bg-verdure-100 dark:bg-verdure-950/30',
+      bgColor: 'bg-verdure-900/20',
     },
   ];
 

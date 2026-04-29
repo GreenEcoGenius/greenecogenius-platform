@@ -31,11 +31,11 @@ const SECTION_COLORS: Record<string, string> = {
   marketplace:
     'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   inventaire:
-    'bg-blue-100 text-blue-400 dark:bg-blue-900/40 dark:text-blue-300',
+    'bg-blue-900/30 text-blue-400',
   transport: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   suivi: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   certification:
-    'bg-verdure-100 text-verdure-700 dark:bg-verdure-900/40 dark:text-verdure-300',
+    'bg-verdure-900/30 text-verdure-400',
   blockchain:
     'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   dashboard: 'bg-[#12472F] text-[#B8D4E3] dark:bg-gray-800 dark:text-[#7DC4A0]',

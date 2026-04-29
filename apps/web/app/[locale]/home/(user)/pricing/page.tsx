@@ -132,7 +132,7 @@ async function BlockchainDashboardPage() {
                 {polygonConfigured ? (
                   <>
                     <CheckCircle className="h-5 w-5 text-verdure-500" />
-                    <span className="text-sm font-medium text-verdure-700 dark:text-verdure-400">
+                    <span className="text-sm font-medium text-verdure-400">
                       <Trans i18nKey="blockchain:polygonConfigured" />
                     </span>
                   </>

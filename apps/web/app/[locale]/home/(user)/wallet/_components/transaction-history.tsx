@@ -60,7 +60,7 @@ const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
     icon: <Clock className="h-3 w-3" />,
   },
   paid: {
-    color: 'bg-blue-100 text-blue-800',
+    color: 'bg-blue-900/30 text-blue-400',
     icon: <Package className="h-3 w-3" />,
   },
   in_transit: {
@@ -68,7 +68,7 @@ const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
     icon: <Package className="h-3 w-3" />,
   },
   completed: {
-    color: 'bg-verdure-100 text-verdure-800',
+    color: 'bg-verdure-900/30 text-verdure-400',
     icon: <CheckCircle className="h-3 w-3" />,
   },
   refunded: {
@@ -94,7 +94,7 @@ function TransactionRow({
     <div className="flex items-center justify-between border-b py-3 last:border-0">
       <div className="flex items-center gap-3">
         <div
-          className={`rounded-full p-2 ${role === 'seller' ? 'bg-verdure-100' : 'bg-blue-100'}`}
+          className={`rounded-full p-2 ${role === 'seller' ? 'bg-verdure-900/20' : 'bg-blue-900/20'}`}
         >
           {role === 'seller' ? (
             <ArrowDownLeft className="h-4 w-4 text-verdure-600" />

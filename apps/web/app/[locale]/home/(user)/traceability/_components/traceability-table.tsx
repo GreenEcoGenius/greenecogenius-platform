@@ -12,7 +12,7 @@ const CONTRACT_ADDRESS = '0x9EB83c7Acd57E228Cc3f9316eC4f27ce1fE94cF6';
 
 const STATUS_BADGE_STYLES: Record<string, string> = {
   created: 'bg-[#12472F] text-[#B8D4E3] dark:bg-gray-800 dark:text-gray-300',
-  qualified: 'bg-blue-100 text-blue-400 dark:bg-blue-900/40 dark:text-blue-300',
+  qualified: 'bg-blue-900/30 text-blue-400',
   listed: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   sold: 'bg-[#8FDAB5] text-[#00A86B] dark:bg-[#00A86B]/40 dark:text-[#8FDAB5]',
   in_transit:
@@ -20,7 +20,7 @@ const STATUS_BADGE_STYLES: Record<string, string> = {
   delivered:
     'bg-[#8FDAB5] text-[#008F5A] dark:bg-[#004428]/40 dark:text-[#8FDAB5]',
   certified:
-    'bg-verdure-100 text-verdure-800 dark:bg-verdure-900/40 dark:text-verdure-300',
+    'bg-verdure-900/30 text-verdure-400',
 };
 
 const STATUS_I18N: Record<string, string> = {

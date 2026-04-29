@@ -64,7 +64,7 @@ export async function TransactionImpactPanel({
       label: t('impact.rawMaterialSaved'),
       value: `${impact.raw_material_saved_tonnes.toFixed(2)} t`,
       hint: impact.raw_material_type,
-      accent: 'text-verdure-700 bg-[#1A5C3E]',
+      accent: 'text-verdure-400 bg-[#1A5C3E]',
     },
   ];
 

@@ -55,31 +55,31 @@ const contractStatusConfig: Record<
     labelKey: 'wallet.contractPending',
   },
   sent: {
-    color: 'bg-blue-100 text-blue-400 dark:bg-blue-900/30 dark:text-blue-400',
+    color: 'bg-blue-900/30 text-blue-400',
     icon: <Send className="h-3 w-3" />,
     labelKey: 'wallet.contractSent',
   },
   seller_signed: {
     color:
-      'bg-amber-100 text-amber-400 dark:bg-amber-900/30 dark:text-amber-400',
+      'bg-amber-900/30 text-amber-400',
     icon: <FileSignature className="h-3 w-3" />,
     labelKey: 'wallet.contractPartial',
   },
   buyer_signed: {
     color:
-      'bg-amber-100 text-amber-400 dark:bg-amber-900/30 dark:text-amber-400',
+      'bg-amber-900/30 text-amber-400',
     icon: <FileSignature className="h-3 w-3" />,
     labelKey: 'wallet.contractPartial',
   },
   fully_signed: {
     color:
-      'bg-emerald-100 text-emerald-400 dark:bg-emerald-900/30 dark:text-emerald-400',
+      'bg-emerald-900/30 text-emerald-400',
     icon: <CheckCircle className="h-3 w-3" />,
     labelKey: 'wallet.contractSigned',
   },
   blockchain_certified: {
     color:
-      'bg-purple-100 text-purple-400 dark:bg-purple-900/30 dark:text-purple-400',
+      'bg-purple-900/30 text-purple-400',
     icon: <ShieldCheck className="h-3 w-3" />,
     labelKey: 'wallet.contractCertified',
   },
@@ -136,8 +136,8 @@ export function DocuSignContracts({ transactions }: DocuSignContractsProps) {
                     <div
                       className={`flex h-10 w-10 items-center justify-center rounded-xl ${
                         isSigned
-                          ? 'bg-emerald-100 dark:bg-emerald-900/20'
-                          : 'bg-blue-100 dark:bg-blue-900/20'
+                          ? 'bg-emerald-900/20'
+                          : 'bg-blue-900/20'
                       }`}
                     >
                       <FileSignature
@@ -198,14 +198,14 @@ export function DocuSignContracts({ transactions }: DocuSignContractsProps) {
         )}
 
         {/* DocuSign info banner */}
-        <div className="mt-4 rounded-xl border border-blue-200 bg-blue-900/30 p-4 dark:border-blue-800 dark:bg-blue-950/30">
+        <div className="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-900/20 p-4">
           <div className="flex items-start gap-3">
-            <ShieldCheck className="mt-0.5 h-5 w-5 text-blue-400 dark:text-blue-400" />
+            <ShieldCheck className="mt-0.5 h-5 w-5 text-emerald-400" />
             <div>
-              <p className="text-sm font-medium text-blue-900 dark:text-blue-200">
+              <p className="text-sm font-medium text-emerald-300">
                 <Trans i18nKey="wallet.docusignInfoTitle" />
               </p>
-              <p className="mt-1 text-xs text-blue-400 dark:text-blue-300">
+              <p className="mt-1 text-xs text-emerald-400/70">
                 <Trans i18nKey="wallet.docusignInfoDesc" />
               </p>
             </div>

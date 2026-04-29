@@ -409,7 +409,7 @@ export function DiagnosticWizard() {
                           a.priority === 'high'
                             ? 'border-red-200 bg-red-900/30 text-red-400'
                             : a.priority === 'medium'
-                              ? 'border-amber-200 bg-amber-900/30 text-amber-400'
+                              ? 'border-amber-500/30 bg-amber-900/20 text-amber-400'
                               : 'border-[#1A5C3E] text-[#7DC4A0]'
                         }`}
                       >

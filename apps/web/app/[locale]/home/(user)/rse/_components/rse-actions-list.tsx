@@ -39,7 +39,7 @@ const PRIORITY_CONFIG: Record<
   },
   quick_win: {
     className:
-      'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border-blue-200',
+      'bg-blue-900/30 text-blue-400 border-blue-500/30',
     i18nKey: 'rse:quickWin',
     icon: <CheckCircle2 className="h-3 w-3" />,
   },

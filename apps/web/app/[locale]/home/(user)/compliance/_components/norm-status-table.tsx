@@ -31,7 +31,7 @@ const STATUS_CONFIG: Record<
   },
   partial: {
     icon: Clock,
-    className: 'bg-amber-100 text-amber-400',
+    className: 'bg-amber-900/30 text-amber-400',
     i18nKey: 'compliance:statusPartial',
   },
   non_compliant: {

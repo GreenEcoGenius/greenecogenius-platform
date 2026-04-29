@@ -28,7 +28,7 @@ const STATUS_CONFIG: Record<
     variant: 'default',
     i18nKey: 'rse:eligible',
     className:
-      'bg-verdure-100 text-verdure-800 dark:bg-verdure-900/40 dark:text-verdure-300 border-[#1A5C3E]',
+      'bg-verdure-900/30 text-verdure-400 border-[#1A5C3E]',
   },
   in_progress: {
     variant: 'secondary',
