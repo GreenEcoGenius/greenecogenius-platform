@@ -201,7 +201,7 @@ export function GlobalSearch() {
                     key={item.href}
                     type="button"
                     onClick={() => navigate(item.href)}
-                    className="text-[#E0E7E3] hover:bg-metal-frost hover:text-[#F5F5F0] flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors"
+                    className="text-[#E0E7E3] hover:bg-[#1A5C3E] hover:text-[#F5F5F0] flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors"
                   >
                     <span className="text-[#7DC4A0]">{item.icon}</span>
                     {item.label}

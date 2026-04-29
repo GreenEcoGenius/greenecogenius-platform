@@ -182,12 +182,12 @@ async function UserHomePage() {
 
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <ActionCard
-                    icon={<BarChart3 className="text-circuit-blue h-5 w-5" />}
+                    icon={<BarChart3 className="text-blue-400 h-5 w-5" />}
                     title={t('dashboard.completeScope3')}
                     description={t('dashboard.completeScope3Desc')}
                     href="/home/esg/wizard?step=3"
                     badge={t('dashboard.highImpact')}
-                    badgeColor="bg-metal-frost text-[#E0E7E3]"
+                    badgeColor="bg-amber-900/30 text-amber-400"
                   />
                   <ActionCard
                     icon={<Recycle className="text-primary h-5 w-5" />}
@@ -195,7 +195,7 @@ async function UserHomePage() {
                     description={t('dashboard.publishListingDesc')}
                     href="/home/marketplace/new"
                     badge={t('dashboard.recommended')}
-                    badgeColor="bg-tech-mint text-tech-emerald"
+                    badgeColor="bg-emerald-900/30 text-emerald-400"
                   />
                   <ActionCard
                     icon={<TrendingUp className="text-tech-neon h-5 w-5" />}
@@ -203,15 +203,15 @@ async function UserHomePage() {
                     description={t('dashboard.improveRseScoreDesc')}
                     href="/home/rse/roadmap"
                     badge={t('dashboard.highImpact')}
-                    badgeColor="bg-circuit-ice text-circuit-blue"
+                    badgeColor="bg-purple-900/30 text-purple-400"
                   />
                   <ActionCard
-                    icon={<Link2 className="text-circuit-blue h-5 w-5" />}
+                    icon={<Link2 className="text-blue-400 h-5 w-5" />}
                     title={t('dashboard.issueCertificates')}
                     description={t('dashboard.issueCertificatesDesc')}
                     href="/home/traceability"
                     badge={t('dashboard.fiveLots')}
-                    badgeColor="bg-circuit-ice text-circuit-blue"
+                    badgeColor="bg-purple-900/30 text-purple-400"
                   />
                 </div>
               </CardContent>
@@ -374,7 +374,7 @@ function ActionCard({
 function TypeBadge({ type, label }: { type: string; label: string }) {
   const styles: Record<string, string> = {
     sell: 'bg-tech-mint text-tech-emerald',
-    buy: 'bg-circuit-ice text-circuit-blue',
+    buy: 'bg-blue-900/30 text-blue-400',
     collect: 'bg-badge-amber-bg text-badge-amber-text',
   };
 
@@ -390,9 +390,9 @@ function TypeBadge({ type, label }: { type: string; label: string }) {
 function StatusBadge({ status, label }: { status: string; label: string }) {
   const styles: Record<string, string> = {
     active: 'bg-tech-mint text-tech-emerald',
-    draft: 'bg-metal-frost text-[#7DC4A0]',
-    sold: 'bg-circuit-ice text-circuit-blue',
-    expired: 'bg-metal-frost text-[#7DC4A0]',
+    draft: 'bg-emerald-900/30 text-emerald-400',
+    sold: 'bg-purple-900/30 text-purple-400',
+    expired: 'bg-amber-900/30 text-amber-400',
   };
 
   return (

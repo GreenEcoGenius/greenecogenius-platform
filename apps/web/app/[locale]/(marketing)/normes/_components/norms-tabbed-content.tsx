@@ -161,12 +161,12 @@ function NormCard({
       </p>
 
       <div className="mt-4 flex flex-wrap items-center gap-2 text-[10px]">
-        <span className="bg-metal-frost text-[#B8D4E3] rounded-full px-2 py-0.5 font-medium">
+        <span className="bg-[#1A5C3E] text-[#B8D4E3] rounded-full px-2 py-0.5 font-medium">
           {norm.typeLabel}
         </span>
         <span className="text-[#7DC4A0]">{norm.statusLabel}</span>
         {norm.blockchainVerified && (
-          <span className="border-circuit-cyan/30 bg-circuit-cyan/10 text-circuit-cyan rounded-full border px-2 py-0.5 font-medium">
+          <span className="border-emerald-500/30 bg-emerald-900/20 text-emerald-400 rounded-full border px-2 py-0.5 font-medium">
             On-chain
           </span>
         )}
@@ -184,7 +184,7 @@ function NormCard({
               '_blank',
             )
           }
-          className="text-[#7DC4A0] hover:bg-metal-frost hover:text-primary ml-2 shrink-0 rounded-xl p-1.5 transition-colors"
+          className="text-[#7DC4A0] hover:bg-[#1A5C3E] hover:text-primary ml-2 shrink-0 rounded-xl p-1.5 transition-colors"
           title="Telecharger le PDF"
         >
           <Download className="h-4 w-4" strokeWidth={1.5} />

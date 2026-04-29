@@ -510,12 +510,12 @@ export function getLocalizedPillarInfo(locale: string) {
 }
 
 export const PRIORITY_COLORS: Record<NormPriority, string> = {
-  fundamental: 'bg-circuit-ice text-circuit-blue',
+  fundamental: 'bg-[#1A5C3E] text-blue-400',
   strategic: 'bg-tech-mint text-tech-emerald',
   mandatory: 'bg-[#E6F7EF] text-[#008F5A]',
   essential: 'bg-badge-amber-bg text-badge-amber-text',
   upcoming: 'bg-badge-purple-bg text-badge-purple-text',
-  framework: 'bg-circuit-ice text-circuit-blue',
+  framework: 'bg-[#1A5C3E] text-blue-400',
 };
 
 export const NORMS_DATABASE: Norm[] = [

@@ -377,7 +377,7 @@ export function AIChatPanel() {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+              className="text-[#7DC4A0] hover:bg-[#1A5C3E] hover:text-[#E0E7E3] flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
               title={t('ai.importDocument')}
             >
               <Paperclip className="h-4 w-4" />
@@ -385,7 +385,7 @@ export function AIChatPanel() {
             <button
               type="button"
               onClick={() => setMessages([])}
-              className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+              className="text-[#7DC4A0] hover:bg-[#1A5C3E] hover:text-[#E0E7E3] flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
               title={t('ai.newConversation')}
             >
               <PenLine className="h-4 w-4" />
@@ -393,7 +393,7 @@ export function AIChatPanel() {
             <button
               type="button"
               onClick={closeChat}
-              className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+              className="text-[#7DC4A0] hover:bg-[#1A5C3E] hover:text-[#E0E7E3] flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
               title={t('ai.close')}
             >
               <X className="h-5 w-5" />
@@ -548,7 +548,7 @@ export function AIChatPanel() {
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
+            className="text-[#7DC4A0] hover:bg-[#1A5C3E] hover:text-[#E0E7E3] flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
             title={t('ai.importDocument')}
           >
             <Paperclip className="h-3.5 w-3.5" />
@@ -556,7 +556,7 @@ export function AIChatPanel() {
           <button
             type="button"
             onClick={() => setMessages([])}
-            className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
+            className="text-[#7DC4A0] hover:bg-[#1A5C3E] hover:text-[#E0E7E3] flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
             title={t('ai.newConversation')}
           >
             <PenLine className="h-3.5 w-3.5" />
@@ -564,7 +564,7 @@ export function AIChatPanel() {
           <button
             type="button"
             onClick={closeChat}
-            className="text-[#7DC4A0] hover:bg-metal-frost hover:text-[#E0E7E3] flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
+            className="text-[#7DC4A0] hover:bg-[#1A5C3E] hover:text-[#E0E7E3] flex h-7 w-7 items-center justify-center rounded-lg transition-colors"
             title={t('ai.close')}
           >
             <X className="h-4 w-4" />

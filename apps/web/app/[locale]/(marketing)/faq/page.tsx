@@ -113,7 +113,7 @@ function FaqItem({
   return (
     <details
       className={
-        'hover:bg-metal-frost/50 [&:open]:bg-metal-frost/50 transition-all'
+        'hover:bg-[#1A5C3E]/50 [&:open]:bg-[#1A5C3E]/50 transition-all'
       }
     >
       <summary
@@ -130,7 +130,7 @@ function FaqItem({
         <div>
           <ChevronDown
             className={
-              'text-circuit-blue h-5 transition duration-300 group-open:-rotate-180'
+              'text-blue-400 h-5 transition duration-300 group-open:-rotate-180'
             }
           />
         </div>

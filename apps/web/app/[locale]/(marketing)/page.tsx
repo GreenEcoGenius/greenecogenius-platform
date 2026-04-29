@@ -271,7 +271,7 @@ function PillarCard({
   stat: string;
 }) {
   return (
-    <div className="group border-[#1A5C3E]/50 hover:border-circuit-turquoise hover:shadow-circuit-ice/30 h-full overflow-hidden rounded-2xl border bg-[#0D3A26] transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
+    <div className="group border-[#1A5C3E]/50 hover:border-emerald-500 hover:shadow-emerald-500/20 h-full overflow-hidden rounded-2xl border bg-[#0D3A26] transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={image}
@@ -284,7 +284,7 @@ function PillarCard({
       </div>
       <div className="p-8">
         <div className="mb-3 flex items-center gap-2">
-          <div className="bg-circuit-ice/30 text-circuit-blue flex h-10 w-10 items-center justify-center rounded-xl">
+          <div className="bg-[#1A5C3E]/30 text-blue-400 flex h-10 w-10 items-center justify-center rounded-xl">
             {icon}
           </div>
           <span className="bg-primary/10 text-primary rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase">

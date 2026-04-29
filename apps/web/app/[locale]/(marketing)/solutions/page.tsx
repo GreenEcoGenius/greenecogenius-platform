@@ -47,7 +47,7 @@ export default async function SolutionsPage() {
       icon: <Link2 className="h-7 w-7" strokeWidth={1.5} />,
       title: t('solTraceTitle'),
       subtitle: t('solTraceSub'),
-      badgeClass: 'bg-circuit-ice text-circuit-blue',
+      badgeClass: 'bg-[#1A5C3E] text-blue-400',
       description: t('solTraceDesc'),
       features: [t('solTraceF1'), t('solTraceF2'), t('solTraceF3')],
       image: '/images/normes/traceability-blockchain-chain.webp',

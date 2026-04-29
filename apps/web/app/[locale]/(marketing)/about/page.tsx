@@ -89,7 +89,7 @@ export default async function AboutPage() {
             </AnimateOnScroll>
 
             <AnimateOnScroll animation="fade-left">
-              <div className="bg-circuit-ice text-circuit-blue flex h-16 w-16 items-center justify-center rounded-2xl">
+              <div className="bg-[#1A5C3E] text-blue-400 flex h-16 w-16 items-center justify-center rounded-2xl">
                 <Lightbulb className="h-8 w-8" />
               </div>
               <h2 className="text-[#F5F5F0] mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
@@ -104,7 +104,7 @@ export default async function AboutPage() {
       </section>
 
       {/* ───── CLIMATE ───── */}
-      <section className="bg-metal-frost py-20 sm:py-28">
+      <section className="bg-[#1A5C3E] py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <AnimateOnScroll animation="fade-right">
@@ -172,7 +172,7 @@ export default async function AboutPage() {
       </section>
 
       {/* ───── CSR & CARBON ───── */}
-      <section className="bg-metal-frost py-20 sm:py-28">
+      <section className="bg-[#1A5C3E] py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2">
             <AnimateOnScroll animation="fade-up">

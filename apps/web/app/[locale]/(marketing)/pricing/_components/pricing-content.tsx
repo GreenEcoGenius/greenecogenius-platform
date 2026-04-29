@@ -159,7 +159,7 @@ export function PricingContent({
             aria-checked={annual}
             aria-label="Facturation annuelle"
             onClick={() => setAnnual(!annual)}
-            className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${annual ? 'bg-primary' : 'bg-metal-frost'}`}
+            className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${annual ? 'bg-primary' : 'bg-[#1A5C3E]'}`}
           >
             <span
               className={`inline-block h-5 w-5 rounded-full bg-[#0D3A26] shadow-lg shadow-black/20 transition-transform ${annual ? 'translate-x-6' : 'translate-x-1'}`}
@@ -182,7 +182,7 @@ export function PricingContent({
       </section>
 
       {/* INCLUDED BANNER */}
-      <section className="border-[#1A5C3E] bg-circuit-ice/20 border-y py-8">
+      <section className="border-[#1A5C3E] bg-[#1A5C3E]/20 border-y py-8">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-[#F5F5F0] mb-4 text-lg font-semibold">
             <Trans i18nKey="pricingPage.includedTitle" />
@@ -209,7 +209,7 @@ export function PricingContent({
             ].map((tag, i) => (
               <span
                 key={i}
-                className="border-circuit-turquoise/30 text-circuit-blue inline-flex items-center gap-1.5 rounded-full border bg-[#0D3A26] px-3 py-1.5 text-sm"
+                className="border-[#1A5C3E] text-blue-400 inline-flex items-center gap-1.5 rounded-full border bg-[#0D3A26] px-3 py-1.5 text-sm"
               >
                 {tag.icon}
                 <Trans i18nKey={tag.key} />
@@ -276,7 +276,7 @@ export function PricingContent({
           </Card>
 
           {/* AVANCE */}
-          <Card className="border-circuit-cyan shadow-circuit-ice/30 flex scale-[1.02] flex-col border-2 shadow-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
+          <Card className="border-emerald-500 shadow-emerald-500/20 flex scale-[1.02] flex-col border-2 shadow-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
             <CardHeader className="text-center">
               <div className="mb-2 flex items-center justify-center gap-2">
                 <BarChart3 className="text-primary h-5 w-5" />
@@ -332,7 +332,7 @@ export function PricingContent({
           </Card>
 
           {/* ENTERPRISE */}
-          <Card className="border-[#1A5C3E] bg-metal-frost flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+          <Card className="border-[#1A5C3E] bg-[#1A5C3E] flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
             <CardHeader className="text-center">
               <div className="mb-2 flex items-center justify-center gap-2">
                 <Building2 className="text-[#E0E7E3] h-5 w-5" />
@@ -363,7 +363,7 @@ export function PricingContent({
               </ul>
               <Button
                 variant="secondary"
-                className="border-[#1A5C3E] bg-metal-frost text-[#E0E7E3] hover:bg-[#1A5C3E] mt-6 w-full rounded-xl border"
+                className="border-[#1A5C3E] bg-[#1A5C3E] text-[#E0E7E3] hover:bg-[#1A5C3E] mt-6 w-full rounded-xl border"
                 render={
                   <Link href="/contact?subject=Demande+Plan+Enterprise">
                     <Users className="mr-2 h-4 w-4" />
@@ -403,7 +403,7 @@ export function PricingContent({
       </section>
 
       {/* COMMISSION MARKETPLACE */}
-      <section className="bg-metal-frost py-16">
+      <section className="bg-[#1A5C3E] py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-[#F5F5F0] mb-2 text-center text-2xl font-bold">
             <Trans i18nKey="pricingPage.commissionTitle" />
@@ -432,7 +432,7 @@ export function PricingContent({
             ].map((tier, i) => (
               <Card key={i} className="border-[#1A5C3E] text-center">
                 <CardContent className="pt-6">
-                  <div className="text-circuit-blue mx-auto mb-3">
+                  <div className="text-blue-400 mx-auto mb-3">
                     {tier.icon}
                   </div>
                   <p className="text-circuit-cyan text-3xl font-bold">
@@ -478,7 +478,7 @@ export function PricingContent({
                     <Trans i18nKey={`${key}Q`} />
                   </span>
                   <ChevronDown
-                    className={`text-circuit-blue h-5 w-5 shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`}
+                    className={`text-blue-400 h-5 w-5 shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`}
                   />
                 </button>
                 {openFaq === i && (

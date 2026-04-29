@@ -40,7 +40,7 @@ export const SERVICES: ServiceData[] = [
     heroImage: '/images/normes/traceability-blockchain-chain.webp',
     ctaLabelKey: 'serviceTracerCta',
     ctaHref: '/auth/sign-up',
-    badgeColor: 'bg-circuit-ice text-circuit-blue',
+    badgeColor: 'bg-[#1A5C3E] text-blue-400',
   },
   {
     id: 'mesurer',
