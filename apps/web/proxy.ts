@@ -21,10 +21,42 @@ export const config = {
 // create i18n middleware once at module scope
 const handleI18nRouting = createNextIntlMiddleware(routing);
 
-const getUser = (request: NextRequest, response: NextResponse) => {
+const getUser = async (request: NextRequest, response: NextResponse) => {
   const supabase = createMiddlewareClient(request, response);
 
-  return supabase.auth.getClaims();
+  try {
+    const result = await supabase.auth.getClaims();
+    return result;
+  } catch {
+    // If getClaims fails (e.g. network error, invalid JWT), treat as logged out
+    return { data: null, error: new Error('Failed to get claims') };
+  }
+};
+
+/**
+ * Verify that the user's session can actually be refreshed.
+ * This catches the case where JWT is still valid but refresh token is revoked.
+ */
+const verifySessionIsValid = async (
+  request: NextRequest,
+  response: NextResponse,
+) => {
+  const supabase = createMiddlewareClient(request, response);
+
+  try {
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.getSession();
+
+    if (error || !session) {
+      return false;
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
 };
 
 /**
@@ -121,7 +153,6 @@ export default async function proxy(request: NextRequest) {
 
 function isServerAction(request: NextRequest) {
   const headers = new Headers(request.headers);
-
   return headers.has(NEXT_ACTION_HEADER);
 }
 
@@ -173,10 +204,46 @@ async function getPatterns() {
     {
       pattern: new URLPattern({ pathname: '/auth/*?' }),
       handler: async (req: NextRequest, res: NextResponse) => {
+        const strippedPath = req.nextUrl.pathname.replace(/^\/(fr|en)/, '');
+
+        // CRITICAL FIX: Never intercept /auth/callback or /auth/confirm routes.
+        // These are the OAuth return endpoints that must complete the PKCE flow.
+        // Intercepting them causes the code exchange to fail, sending users
+        // back to the homepage instead of completing sign-in.
+        if (
+          strippedPath.startsWith('/auth/callback') ||
+          strippedPath.startsWith('/auth/confirm')
+        ) {
+          return;
+        }
+
         const { data } = await getUser(req, res);
 
         // the user is logged out, so we don't need to do anything
         if (!data?.claims) {
+          return;
+        }
+
+        // FIX: Before redirecting an "authenticated" user away from /auth/sign-in,
+        // verify that their session is actually valid (refresh token works).
+        // This prevents the redirect loop when JWT is valid but refresh token is revoked.
+        const sessionValid = await verifySessionIsValid(req, res);
+
+        if (!sessionValid) {
+          // Session is stale — clear the auth cookies and let the user
+          // proceed to the sign-in page as if they were logged out.
+          const signInResponse = NextResponse.next();
+
+          // Delete all Supabase auth cookies to clear the stale session
+          for (const cookie of req.cookies.getAll()) {
+            if (
+              cookie.name.startsWith('sb-') ||
+              cookie.name.includes('supabase')
+            ) {
+              signInResponse.cookies.delete(cookie.name);
+            }
+          }
+
           return;
         }
 
@@ -211,6 +278,30 @@ async function getPatterns() {
           return NextResponse.redirect(new URL(redirectPath, origin).href);
         }
 
+        // FIX: Also verify the session is valid for /home routes.
+        // If the refresh token is dead, redirect to sign-in and clear cookies.
+        const sessionValid = await verifySessionIsValid(req, res);
+
+        if (!sessionValid) {
+          const signIn = pathsConfig.auth.signIn;
+          const redirectPath = `${signIn}?next=${next}`;
+          const redirectResponse = NextResponse.redirect(
+            new URL(redirectPath, origin).href,
+          );
+
+          // Clear stale auth cookies
+          for (const cookie of req.cookies.getAll()) {
+            if (
+              cookie.name.startsWith('sb-') ||
+              cookie.name.includes('supabase')
+            ) {
+              redirectResponse.cookies.delete(cookie.name);
+            }
+          }
+
+          return redirectResponse;
+        }
+
         const supabase = createMiddlewareClient(req, res);
 
         const requiresMultiFactorAuthentication =
@@ -233,6 +324,7 @@ async function getPatterns() {
  */
 async function matchUrlPattern(url: string) {
   const patterns = await getPatterns();
+
   const input = url.split('?')[0] ?? url;
 
   for (const pattern of patterns) {
@@ -257,7 +349,10 @@ async function matchUrlPattern(url: string) {
 }
 
 function stripLocalePrefix(url: string): string {
-  return url.replace(/^(https?:\/\/[^/]+)?\/(?:fr|en)(\/|$)/, '$1/$2') as string;
+  return url.replace(
+    /^(https?:\/\/[^/]+)?\/(?:fr|en)(\/|$)/,
+    '$1/$2',
+  ) as string;
 }
 
 /**

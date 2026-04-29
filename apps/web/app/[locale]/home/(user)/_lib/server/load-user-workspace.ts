@@ -1,5 +1,4 @@
 import { cache } from 'react';
-
 import { redirect } from 'next/navigation';
 
 import { createAccountsApi } from '@kit/accounts/api';
@@ -31,15 +30,29 @@ async function workspaceLoader() {
 
   const workspacePromise = api.getAccountWorkspace();
 
-  const [accounts, workspace, user] = await Promise.all([
-    accountsPromise(),
-    workspacePromise,
-    requireUserInServerComponent(),
-  ]);
+  let accounts;
+  let workspace;
+  let user;
 
-  // If the user is not found or the workspace is not found, redirect to the home page - this may happen if the JWT is invalid or expired (ex. user deleted?)
+  try {
+    [accounts, workspace, user] = await Promise.all([
+      accountsPromise(),
+      workspacePromise,
+      requireUserInServerComponent(),
+    ]);
+  } catch (error) {
+    // If any of the promises fail (e.g. stale session, network error),
+    // redirect to sign-in instead of the homepage to avoid a redirect loop.
+    // The middleware will clear stale cookies.
+    console.error('[loadUserWorkspace] Failed to load workspace:', error);
+    redirect('/auth/sign-in');
+  }
+
+  // If the user is not found or the workspace is not found,
+  // redirect to sign-in page instead of '/' to avoid redirect loops
+  // when the session is stale (JWT valid but refresh token revoked).
   if (!workspace || !user) {
-    redirect('/');
+    redirect('/auth/sign-in');
   }
 
   // Check if user can create team accounts (policy check)
