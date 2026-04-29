@@ -64,7 +64,7 @@
   --brand-primary: #00A86B;
   --brand-primary-hover: #008F5A;
   --brand-primary-light: #E6F7EF;
-  --brand-forest: #0A2F1F;
+  --brand-forest: #0D3A26;
   --brand-forest-light: #0D3A26;
   --brand-glacier: #B8D4E3;
 
@@ -73,11 +73,11 @@
   --text-tertiary: #7DC4A0;
   --text-on-forest: #F5F5F0;
 
-  --bg-page: #0A2F1F;
+  --bg-page: #0D3A26;
   --bg-secondary: #12472F;
   --bg-card: #0D3A26;
   --bg-hover: #1A5C3E;
-  --bg-forest: #0A2F1F;
+  --bg-forest: #0D3A26;
   --bg-forest-light: #0D3A26;
 
   --border-default: #1A5C3E;

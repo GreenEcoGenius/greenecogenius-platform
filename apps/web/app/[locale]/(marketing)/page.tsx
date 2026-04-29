@@ -34,7 +34,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col">
       {/* ───── SECTION 1 — HERO ───── */}
-      <section className="overflow-hidden bg-[#0A2F1F] pt-24 pb-16 sm:pt-32 sm:pb-24">
+      <section className="overflow-hidden bg-[#0D3A26] pt-24 pb-16 sm:pt-32 sm:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-[42%_1fr] lg:gap-8">
             {/* Colonne gauche — Texte */}
@@ -58,7 +58,7 @@ export default async function Home() {
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
                   <Link
                     href="/auth/sign-up"
-                    className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-400 px-6 py-3.5 font-semibold text-[#0A2F1F] transition-all hover:bg-emerald-300 hover:shadow-lg hover:shadow-emerald-400/20 sm:w-auto"
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-400 px-6 py-3.5 font-semibold text-[#0D3A26] transition-all hover:bg-emerald-300 hover:shadow-lg hover:shadow-emerald-400/20 sm:w-auto"
                   >
                     {t('heroCtaPrimary')}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" strokeWidth={1.5} />

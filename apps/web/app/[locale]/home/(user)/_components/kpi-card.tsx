@@ -8,9 +8,9 @@ import { cn } from '@kit/ui/utils';
 export type KpiVariant = 'teal' | 'emerald' | 'green';
 
 const VARIANT_CLASSES: Record<KpiVariant, string> = {
-  teal: 'from-[#0A2F1F] to-[#12472F]',
+  teal: 'from-[#0D3A26] to-[#12472F]',
   emerald: 'from-[#0D3A26] to-[#1A5C3E]',
-  green: 'from-[#12472F] to-[#0A2F1F]',
+  green: 'from-[#12472F] to-[#0D3A26]',
 };
 
 const VARIANT_ACCENT: Record<KpiVariant, string> = {

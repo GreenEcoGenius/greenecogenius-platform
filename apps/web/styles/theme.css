@@ -77,7 +77,7 @@
 
   
   /* ── Forest Green Identity (from mobile app) ── */
-  --color-forest-900: #0A2F1F;
+  --color-forest-900: #0D3A26;
   --color-forest-800: #0D3A26;
   --color-forest-700: #12472F;
   --color-forest-600: #1A5C3E;
@@ -202,7 +202,7 @@
  * Light Mode
  */
 :root {
-  --background: #0A2F1F;
+  --background: #0D3A26;
   --foreground: #F5F5F0;
   --card: #0D3A26;
   --card-foreground: #F5F5F0;
@@ -245,7 +245,7 @@
  * Dark Mode
  */
 .dark {
-  --background: #0A2F1F;
+  --background: #0D3A26;
   --foreground: #F5F5F0;
 
   --card: #0D3A26;
@@ -255,7 +255,7 @@
   --popover-foreground: #F5F5F0;
 
   --primary: #10B981;
-  --primary-foreground: #0A2F1F;
+  --primary-foreground: #0D3A26;
 
   --secondary: #12472F;
   --secondary-foreground: #F5F5F0;
@@ -281,7 +281,7 @@
   --sidebar: #0D3A26;
   --sidebar-foreground: #F5F5F0;
   --sidebar-primary: #10B981;
-  --sidebar-primary-foreground: #0A2F1F;
+  --sidebar-primary-foreground: #0D3A26;
   --sidebar-accent: #1A5C3E;
   --sidebar-accent-foreground: #F5F5F0;
   --sidebar-border: #1A5C3E;

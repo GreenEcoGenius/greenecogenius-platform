@@ -28,7 +28,7 @@ export const Footer: React.FC<FooterProps> = ({
   return (
     <footer
       className={cn(
-        'site-footer relative mt-auto w-full border-t border-[#1A5C3E]/30 bg-[#0A2F1F] py-8 xl:py-16 2xl:py-20',
+        'site-footer relative mt-auto w-full border-t border-[#1A5C3E]/30 bg-[#0D3A26] py-8 xl:py-16 2xl:py-20',
         className,
       )}
       {...props}

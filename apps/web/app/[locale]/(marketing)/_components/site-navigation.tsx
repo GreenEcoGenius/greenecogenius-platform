@@ -86,7 +86,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
         position: 'fixed',
         inset: 0,
         zIndex: 9999,
-        backgroundColor: '#0A2F1F',
+        backgroundColor: '#0D3A26',
       }}
     >
       <div
@@ -97,7 +97,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
           height: 64,
           borderBottom: '1px solid rgba(245, 245, 240, 0.08)',
           padding: '0 16px',
-          backgroundColor: '#0A2F1F',
+          backgroundColor: '#0D3A26',
         }}
       >
         <button
@@ -114,7 +114,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
           display: 'flex',
           flexDirection: 'column',
           padding: '8px 24px',
-          backgroundColor: '#0A2F1F',
+          backgroundColor: '#0D3A26',
         }}
       >
         {/* Dashboard link when logged in */}
@@ -204,7 +204,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
                 onClick={() => setOpen(false)}
                 style={{
                   backgroundColor: '#10B981',
-                  color: '#0A2F1F',
+                  color: '#0D3A26',
                   borderRadius: 12,
                   padding: '12px 16px',
                   textAlign: 'center',

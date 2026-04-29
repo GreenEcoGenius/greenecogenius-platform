@@ -72,7 +72,7 @@ export function AppHeader() {
   return (
     <header
       className={cn(
-        'fixed top-0 right-0 left-0 z-50 flex h-20 items-center justify-between overflow-visible border-b border-[#1A5C3E]/20 bg-[#0A2F1F]/95 px-2 backdrop-blur-md transition-transform duration-300 md:h-24 md:px-3 md:!translate-y-0 lg:px-5',
+        'fixed top-0 right-0 left-0 z-50 flex h-20 items-center justify-between overflow-visible border-b border-[#1A5C3E]/20 bg-[#0D3A26]/95 px-2 backdrop-blur-md transition-transform duration-300 md:h-24 md:px-3 md:!translate-y-0 lg:px-5',
         visible ? 'translate-y-0' : '-translate-y-full',
       )}
     >
@@ -101,7 +101,7 @@ export function AppHeader() {
         >
           <Search className="h-4 w-4" />
           <span>{t('search.placeholder')}</span>
-          <kbd className="border-[#1A5C3E]/40 text-[#F5F5F0]/40 ml-4 rounded border bg-[#0A2F1F] px-1.5 py-0.5 text-[11px]">
+          <kbd className="border-[#1A5C3E]/40 text-[#F5F5F0]/40 ml-4 rounded border bg-[#0D3A26] px-1.5 py-0.5 text-[11px]">
             ⌘K
           </kbd>
         </button>
@@ -113,7 +113,7 @@ export function AppHeader() {
           className={cn(
             'flex h-11 w-11 items-center justify-center rounded-xl transition-colors',
             chatOpen
-              ? 'bg-emerald-400 text-[#0A2F1F]'
+              ? 'bg-emerald-400 text-[#0D3A26]'
               : 'text-[#F5F5F0]/60 hover:bg-[#1A5C3E]/50 hover:text-emerald-400',
           )}
           aria-label="Genius"

@@ -24,7 +24,7 @@ export function SiteHeaderAccountSection({
           render={<Link href={pathsConfig.app.home}>Dashboard</Link>}
           variant="default"
           size="sm"
-          className="rounded-xl bg-emerald-400 text-[#0A2F1F] text-sm font-semibold hover:bg-emerald-300"
+          className="rounded-xl bg-emerald-400 text-[#0D3A26] text-sm font-semibold hover:bg-emerald-300"
         />
       </div>
     );
@@ -81,7 +81,7 @@ function AuthButtons() {
             <Trans i18nKey="auth.signUp" />
           </Link>
         }
-        className="rounded-xl bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-[#0A2F1F] hover:bg-emerald-300 hover:shadow-lg hover:shadow-emerald-400/20"
+        className="rounded-xl bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-[#0D3A26] hover:bg-emerald-300 hover:shadow-lg hover:shadow-emerald-400/20"
         variant="default"
       />
     </div>

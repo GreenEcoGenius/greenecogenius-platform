@@ -297,7 +297,7 @@ export function NormsTabbedContent() {
     <>
       <div
         ref={tabBarRef}
-        className="border-[#1A5C3E] sticky top-[64px] z-30 border-b bg-[#0A2F1F]/95 backdrop-blur-sm"
+        className="border-[#1A5C3E] sticky top-[64px] z-30 border-b bg-[#0D3A26]/95 backdrop-blur-sm"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="scrollbar-none -mb-px flex gap-0 overflow-x-auto">
