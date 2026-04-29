@@ -152,11 +152,7 @@ export function CarbonReductionPlan() {
                 />
               </h3>
               <p className="text-[#B8D4E3] text-xs">
-                <Trans
-                  i18nKey="carbon:reductionPlanSubtitle"
-                  defaults="Personnalisé par Genius IA · {count} actions recommandées"
-                  values={{ count: DEMO_ACTIONS.length }}
-                />
+                {`Personnalisé par Genius IA · ${DEMO_ACTIONS.length} actions recommandées`}
               </p>
             </div>
           </div>

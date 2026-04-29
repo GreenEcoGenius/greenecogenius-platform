@@ -123,11 +123,7 @@ export function SbtiTrajectory() {
           ) : (
             <Badge className="bg-amber-900/30 text-amber-400">
               <AlertTriangle className="mr-1 h-3 w-3" />
-              <Trans
-                i18nKey="carbon:sbtiDeviation"
-                defaults="Déviation +{pct}%"
-                values={{ pct: Math.round(deviation) }}
-              />
+              {`Déviation +${Math.round(deviation)}%`}
             </Badge>
           )}
         </div>
