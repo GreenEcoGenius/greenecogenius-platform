@@ -59,22 +59,33 @@
   }
 }
 
-/* === GreenEcoGenius — Emerald + Cloud Design System === */
+/* ── GreenEcoGenius Forest Green Design System ── */
 :root {
   --brand-primary: #00A86B;
   --brand-primary-hover: #008F5A;
   --brand-primary-light: #E6F7EF;
+  --brand-forest: #0A2F1F;
+  --brand-forest-light: #0D3A26;
+  --brand-glacier: #B8D4E3;
+
   --text-primary: #111827;
   --text-secondary: #4B5260;
   --text-tertiary: #6B7380;
+  --text-on-forest: #F5F5F0;
+
   --bg-page: #FAFBFC;
   --bg-secondary: #F5F7F9;
   --bg-card: #ffffff;
   --bg-hover: #E6F7EF;
+  --bg-forest: #0A2F1F;
+  --bg-forest-light: #0D3A26;
+
   --border-default: #ECEFF2;
   --border-light: #F5F7F9;
-  --indicator-success: #8BC53F;
-  --indicator-warning: #ef9f27;
+  --border-forest: rgba(245, 245, 240, 0.06);
+
+  --indicator-success: #10B981;
+  --indicator-warning: #F59E0B;
   --indicator-error: #e24b4a;
-  --indicator-info: #2eafcf;
+  --indicator-info: #3B82F6;
 }

@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-
 import { ChevronRight } from 'lucide-react';
 
 import { cn } from '@kit/ui/utils';
@@ -9,9 +8,15 @@ import { cn } from '@kit/ui/utils';
 export type KpiVariant = 'teal' | 'emerald' | 'green';
 
 const VARIANT_CLASSES: Record<KpiVariant, string> = {
-  teal: 'from-primary-500 to-primary-600',
-  emerald: 'from-primary-500 to-primary-600',
-  green: 'from-tech-emerald to-primary-700',
+  teal: 'from-[#0A2F1F] to-[#12472F]',
+  emerald: 'from-[#0D3A26] to-[#1A5C3E]',
+  green: 'from-[#12472F] to-[#0A2F1F]',
+};
+
+const VARIANT_ACCENT: Record<KpiVariant, string> = {
+  teal: 'bg-emerald-400/20',
+  emerald: 'bg-amber-400/20',
+  green: 'bg-blue-400/20',
 };
 
 interface KpiMetric {
@@ -43,19 +48,19 @@ export function KpiCard({
   return (
     <div
       className={cn(
-        'flex min-h-[200px] flex-col gap-4 rounded-2xl bg-gradient-to-br p-6 text-white',
+        'flex min-h-[200px] flex-col gap-4 rounded-2xl bg-gradient-to-br p-6 text-white shadow-lg',
         VARIANT_CLASSES[variant],
       )}
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-semibold tracking-wider uppercase opacity-90">
+          <p className="text-xs font-semibold tracking-wider uppercase text-[#F5F5F0]/70">
             {title}
           </p>
-          <p className="mt-2 text-3xl leading-none font-bold">{value}</p>
-          {subtitle && <p className="mt-1 text-xs opacity-70">{subtitle}</p>}
+          <p className="mt-2 text-3xl leading-none font-bold text-[#F5F5F0]">{value}</p>
+          {subtitle && <p className="mt-1 text-xs text-[#F5F5F0]/50">{subtitle}</p>}
         </div>
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/15">
+        <div className={cn('flex h-12 w-12 items-center justify-center rounded-xl', VARIANT_ACCENT[variant])}>
           {icon}
         </div>
       </div>
@@ -65,10 +70,10 @@ export function KpiCard({
           {metrics.map((m) => (
             <div
               key={m.label}
-              className="flex items-center justify-between text-[13px] opacity-85"
+              className="flex items-center justify-between text-[13px] text-[#F5F5F0]/70"
             >
               <span>{m.label}</span>
-              <span className="font-medium">{m.value}</span>
+              <span className="font-medium text-[#F5F5F0]">{m.value}</span>
             </div>
           ))}
         </div>
@@ -77,7 +82,7 @@ export function KpiCard({
       {actionLabel && actionHref && (
         <Link
           href={actionHref}
-          className="mt-auto inline-flex w-fit items-center gap-1.5 rounded-xl border border-white/20 bg-white/15 px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-white/25"
+          className="mt-auto inline-flex w-fit items-center gap-1.5 rounded-xl border border-[#F5F5F0]/15 bg-[#F5F5F0]/10 px-4 py-2 text-[13px] font-medium text-[#F5F5F0] transition-all hover:bg-[#F5F5F0]/20 hover:border-[#F5F5F0]/25"
         >
           {actionLabel}
           <ChevronRight className="h-3.5 w-3.5" />

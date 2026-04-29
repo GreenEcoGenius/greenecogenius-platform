@@ -52,8 +52,8 @@ export const Header: React.FC<HeaderProps> = function ({
         'site-header dark:border-border/30 dark:bg-background fixed top-0 z-50 w-full transition-all duration-300 md:!translate-y-0',
         visible ? 'translate-y-0' : '-translate-y-full',
         scrolled
-          ? 'bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200/50'
-          : 'bg-white border-b border-metal-chrome',
+          ? 'bg-[#0A2F1F]/95 backdrop-blur-md shadow-lg shadow-[#0A2F1F]/10 border-b border-[#1A5C3E]/30'
+          : 'bg-[#0A2F1F] border-b border-[#1A5C3E]/20',
         className,
       )}
       {...props}

@@ -15,7 +15,6 @@ import {
 import * as z from 'zod';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
-
 import pathsConfig from '~/config/paths.config';
 
 const iconClasses = 'w-4';
@@ -27,43 +26,43 @@ const routes = [
       {
         label: 'common.routes.home',
         path: pathsConfig.app.home,
-        Icon: <Home className={iconClasses} />,
+        Icon: <Home className={`${iconClasses} text-emerald-500`} />,
         highlightMatch: `${pathsConfig.app.home}$`,
       },
       {
         label: 'common.routes.marketplace',
         path: '/home/marketplace',
-        Icon: <Recycle className={iconClasses} />,
+        Icon: <Recycle className={`${iconClasses} text-emerald-500`} />,
       },
       {
         label: 'common.routes.carbon',
         path: '/home/carbon',
-        Icon: <Leaf className={iconClasses} />,
+        Icon: <Leaf className={`${iconClasses} text-green-500`} />,
       },
       {
         label: 'common.routes.esg',
         path: '/home/esg',
-        Icon: <FileBarChart className={iconClasses} />,
+        Icon: <FileBarChart className={`${iconClasses} text-amber-500`} />,
       },
       {
         label: 'common.routes.traceability',
         path: '/home/traceability',
-        Icon: <Link2 className={iconClasses} />,
+        Icon: <Link2 className={`${iconClasses} text-blue-500`} />,
       },
       {
         label: 'common.routes.rse',
         path: '/home/rse',
-        Icon: <Award className={iconClasses} />,
+        Icon: <Award className={`${iconClasses} text-purple-500`} />,
       },
       {
         label: 'common.routes.compliance',
         path: '/home/compliance',
-        Icon: <ShieldCheck className={iconClasses} />,
+        Icon: <ShieldCheck className={`${iconClasses} text-emerald-500`} />,
       },
       {
         label: 'common.routes.externalActivities',
         path: '/home/external-activities',
-        Icon: <ClipboardList className={iconClasses} />,
+        Icon: <ClipboardList className={`${iconClasses} text-amber-500`} />,
       },
     ],
   },
@@ -73,22 +72,22 @@ const routes = [
       {
         label: 'common.routes.profile',
         path: pathsConfig.app.personalAccountSettings,
-        Icon: <User className={iconClasses} />,
+        Icon: <User className={`${iconClasses} text-blue-500`} />,
       },
       {
         label: 'common.routes.myListings',
         path: '/home/my-listings',
-        Icon: <PackageSearch className={iconClasses} />,
+        Icon: <PackageSearch className={`${iconClasses} text-emerald-500`} />,
       },
       {
         label: 'common.routes.wallet',
         path: '/home/wallet',
-        Icon: <Wallet className={iconClasses} />,
+        Icon: <Wallet className={`${iconClasses} text-purple-500`} />,
       },
       {
         label: 'common.routes.billing',
         path: pathsConfig.app.personalAccountBilling,
-        Icon: <CreditCard className={iconClasses} />,
+        Icon: <CreditCard className={`${iconClasses} text-amber-500`} />,
       },
     ],
   },

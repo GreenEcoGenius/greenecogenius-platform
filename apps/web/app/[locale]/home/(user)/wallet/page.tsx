@@ -5,13 +5,13 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { PageBody } from '@kit/ui/page';
 
 import { CommissionInfo } from './_components/commission-info';
+import { DocuSignContracts } from './_components/docusign-contracts';
 import { StripeConnectSetup } from './_components/stripe-connect-setup';
 import { TransactionHistory } from './_components/transaction-history';
 import { WalletOverview } from './_components/wallet-overview';
 
 export const generateMetadata = async () => {
   const t = await getTranslations('wallet');
-
   return { title: t('title') };
 };
 
@@ -54,6 +54,15 @@ async function WalletPage() {
     .order('created_at', { ascending: false })
     .limit(20);
 
+  // Combine all transactions for DocuSign contracts section
+  const allTransactions = [
+    ...(sellerTransactions ?? []),
+    ...(buyerTransactions ?? []),
+  ].sort(
+    (a, b) =>
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+  );
+
   return (
     <PageBody>
       <div className="space-y-8">
@@ -85,6 +94,8 @@ async function WalletPage() {
         />
 
         <CommissionInfo />
+
+        <DocuSignContracts transactions={allTransactions} />
 
         <TransactionHistory
           sellerTransactions={sellerTransactions ?? []}

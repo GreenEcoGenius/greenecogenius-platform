@@ -44,5 +44,18 @@
   },
   "upgradeRequired": "Cette fonctionnalité nécessite un abonnement supérieur.",
   "upgradeTo": "Passer au plan",
-  "confirmDeliveryPrompt": "Confirmez-vous la réception de la marchandise ? Cette action libérera le paiement au vendeur."
+  "confirmDeliveryPrompt": "Confirmez-vous la réception de la marchandise ? Cette action libérera le paiement au vendeur.",
+  "contractsTitle": "Contrats DocuSign",
+  "contractsDesc": "Chaque transaction génère un contrat signé électroniquement par les deux parties. La signature est obligatoire avant la libération des fonds.",
+  "noContracts": "Aucun contrat pour le moment",
+  "contractPending": "En attente",
+  "contractSent": "Envoyé",
+  "contractPartial": "Signature partielle",
+  "contractSigned": "Signé",
+  "contractCertified": "Certifié blockchain",
+  "signContract": "Signer le contrat",
+  "showLess": "Voir moins",
+  "showAll": "Voir tous les contrats",
+  "docusignInfoTitle": "Signature électronique sécurisée",
+  "docusignInfoDesc": "Tous les contrats sont signés via DocuSign avec valeur juridique. La signature des deux parties est obligatoire avant la libération des fonds au vendeur."
 }

@@ -75,6 +75,31 @@
   --color-brand-accent-800: #40651A;
   --color-brand-accent-900: #2D4812;
 
+  
+  /* ── Forest Green Identity (from mobile app) ── */
+  --color-forest-900: #0A2F1F;
+  --color-forest-800: #0D3A26;
+  --color-forest-700: #12472F;
+  --color-forest-600: #1A5C3E;
+  --color-forest-500: #22714D;
+  --color-forest-400: #2D8A5E;
+  --color-forest-300: #4DA87A;
+  --color-forest-200: #7DC4A0;
+  --color-forest-100: #B8E0CC;
+  --color-forest-50: #E6F5EE;
+
+  /* ── Glacier Blue (accent from mobile) ── */
+  --color-glacier: #B8D4E3;
+  --color-glacier-light: #E8F1F7;
+  --color-glacier-dark: #7AADCA;
+
+  /* ── Multi-accent palette ── */
+  --color-accent-amber: #F59E0B;
+  --color-accent-purple: #8B5CF6;
+  --color-accent-blue: #3B82F6;
+  --color-accent-emerald: #10B981;
+  --color-accent-rose: #F43F5E;
+
   /* ── Primary (alias to verdure) ── */
   --color-primary-50: #E6F7EF;
   --color-primary-100: #C1EBD6;
@@ -220,37 +245,45 @@
  * Dark Mode
  */
 .dark {
-  --background: #0f172a;
-  --foreground: #f8fafc;
-  --card: #1e293b;
-  --card-foreground: #f8fafc;
-  --popover: #1e293b;
-  --popover-foreground: #f8fafc;
-  --primary: #00A86B;
-  --primary-foreground: #ffffff;
-  --secondary: #334155;
-  --secondary-foreground: #f8fafc;
-  --muted: #334155;
-  --muted-foreground: #94a3b8;
-  --accent: #334155;
-  --accent-foreground: #f8fafc;
+  --background: #0A2F1F;
+  --foreground: #F5F5F0;
+
+  --card: #0D3A26;
+  --card-foreground: #F5F5F0;
+
+  --popover: #0D3A26;
+  --popover-foreground: #F5F5F0;
+
+  --primary: #10B981;
+  --primary-foreground: #0A2F1F;
+
+  --secondary: #12472F;
+  --secondary-foreground: #F5F5F0;
+
+  --muted: #12472F;
+  --muted-foreground: #B8D4E3;
+
+  --accent: #1A5C3E;
+  --accent-foreground: #F5F5F0;
+
   --destructive: #e24b4a;
-  --border: #334155;
-  --input: #334155;
-  --ring: #00A86B;
 
-  --chart-1: #00A86B;
+  --border: #1A5C3E;
+  --input: #1A5C3E;
+  --ring: #10B981;
+
+  --chart-1: #10B981;
   --chart-2: #8BC53F;
-  --chart-3: #6B7380;
-  --chart-4: #C5CCD4;
-  --chart-5: #475569;
+  --chart-3: #B8D4E3;
+  --chart-4: #F59E0B;
+  --chart-5: #8B5CF6;
 
-  --sidebar: #1e293b;
-  --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #00A86B;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #334155;
-  --sidebar-accent-foreground: #f8fafc;
-  --sidebar-border: #334155;
-  --sidebar-ring: #00A86B;
+  --sidebar: #0D3A26;
+  --sidebar-foreground: #F5F5F0;
+  --sidebar-primary: #10B981;
+  --sidebar-primary-foreground: #0A2F1F;
+  --sidebar-accent: #1A5C3E;
+  --sidebar-accent-foreground: #F5F5F0;
+  --sidebar-border: #1A5C3E;
+  --sidebar-ring: #10B981;
 }

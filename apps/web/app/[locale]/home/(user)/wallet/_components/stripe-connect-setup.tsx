@@ -109,10 +109,10 @@ export function StripeConnectSetup({
   // Onboarding incomplete
   if (!connectedAccount.onboardingComplete) {
     return (
-      <Card className="border-[#8FDAB5] bg-[#E6F7EF] dark:border-[#00A86B] dark:bg-[#00A86B]">
+      <Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/30">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <ShieldAlert className="h-5 w-5 text-[#00A86B]" />
+            <ShieldAlert className="h-5 w-5 text-amber-600 dark:text-amber-400" />
             <Trans i18nKey="wallet.onboardingPending" />
           </CardTitle>
         </CardHeader>

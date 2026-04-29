@@ -25,12 +25,10 @@ export const Footer: React.FC<FooterProps> = ({
   securityBadge,
   ...props
 }) => {
-  const visible = true;
-
   return (
     <footer
       className={cn(
-        'site-footer border-metal-chrome bg-metal-50 relative mt-auto w-full border-t py-8 xl:py-16 2xl:py-20',
+        'site-footer relative mt-auto w-full border-t border-[#1A5C3E]/30 bg-[#0A2F1F] py-8 xl:py-16 2xl:py-20',
         className,
       )}
       {...props}
@@ -40,10 +38,9 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="flex w-full gap-x-3 lg:w-4/12 xl:w-4/12 xl:space-x-6 2xl:space-x-8">
             <div className="flex flex-col gap-y-4">
               <div>{logo}</div>
-
               <div className="flex flex-col gap-y-4">
                 <div>
-                  <p className="text-metal-600 text-sm">{description}</p>
+                  <p className="text-[#F5F5F0]/60 text-sm">{description}</p>
                 </div>
               </div>
             </div>
@@ -54,7 +51,6 @@ export const Footer: React.FC<FooterProps> = ({
               <div key={index}>
                 <div className="flex flex-col gap-y-1">
                   <FooterSectionHeading>{section.heading}</FooterSectionHeading>
-
                   <FooterSectionList>
                     {section.links.map((link, linkIndex) => (
                       <FooterLink key={linkIndex} href={link.href}>
@@ -68,11 +64,11 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
         </div>
 
-        {/* Copyright — always last on mobile */}
-        <div className="border-metal-chrome text-metal-steel mt-8 border-t pt-6 text-xs">
+        {/* Copyright */}
+        <div className="mt-8 border-t border-[#1A5C3E]/30 pt-6 text-xs text-[#F5F5F0]/40">
           <p>{copyright}</p>
           {securityBadge ? (
-            <p className="mt-2 text-xs text-gray-400">{securityBadge}</p>
+            <p className="mt-2 text-xs text-[#F5F5F0]/30">{securityBadge}</p>
           ) : null}
         </div>
       </div>
@@ -82,7 +78,7 @@ export const Footer: React.FC<FooterProps> = ({
 
 function FooterSectionHeading(props: React.PropsWithChildren) {
   return (
-    <span className="font-heading text-metal-900 text-sm font-medium">
+    <span className="font-heading text-[#F5F5F0] text-sm font-medium">
       {props.children}
     </span>
   );
@@ -97,7 +93,7 @@ function FooterLink({
   children,
 }: React.PropsWithChildren<{ href: string }>) {
   return (
-    <li className="text-metal-600 hover:text-primary text-sm font-medium transition-colors [&>a]:transition-colors">
+    <li className="text-[#F5F5F0]/50 hover:text-emerald-400 text-sm font-medium transition-colors [&>a]:transition-colors">
       <a href={href}>{children}</a>
     </li>
   );

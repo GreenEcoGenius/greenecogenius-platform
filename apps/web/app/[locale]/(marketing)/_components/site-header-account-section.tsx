@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-
 import { Globe } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
@@ -20,13 +19,12 @@ export function SiteHeaderAccountSection({
     return (
       <div className="hidden items-center gap-x-2 md:flex">
         <LocaleToggle />
-
         <Button
           nativeButton={false}
           render={<Link href={pathsConfig.app.home}>Dashboard</Link>}
           variant="default"
           size="sm"
-          className="rounded-full text-sm"
+          className="rounded-xl bg-emerald-400 text-[#0A2F1F] text-sm font-semibold hover:bg-emerald-300"
         />
       </div>
     );
@@ -51,7 +49,7 @@ function LocaleToggle() {
   return (
     <button
       onClick={toggle}
-      className="text-metal-600 hover:bg-metal-frost hover:text-primary flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-semibold transition-colors"
+      className="text-[#F5F5F0]/60 hover:bg-[#1A5C3E]/50 hover:text-emerald-400 flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-semibold transition-colors"
       aria-label={locale === 'fr' ? 'Switch to English' : 'Passer en français'}
     >
       <Globe className="h-4 w-4" />
@@ -67,7 +65,7 @@ function AuthButtons() {
 
       <Button
         nativeButton={false}
-        className="px-5 py-2.5 text-sm font-semibold"
+        className="rounded-xl border-[#B8D4E3]/40 px-5 py-2.5 text-sm font-semibold text-[#B8D4E3] hover:bg-[#B8D4E3]/10 hover:border-[#B8D4E3]/60"
         render={
           <Link href={pathsConfig.auth.signIn}>
             <Trans i18nKey="auth.signIn" />
@@ -83,7 +81,7 @@ function AuthButtons() {
             <Trans i18nKey="auth.signUp" />
           </Link>
         }
-        className="px-5 py-2.5 text-sm font-semibold"
+        className="rounded-xl bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-[#0A2F1F] hover:bg-emerald-300 hover:shadow-lg hover:shadow-emerald-400/20"
         variant="default"
       />
     </div>

@@ -7,7 +7,7 @@
 .site-footer > .container:before {
   background: radial-gradient(
     62.87% 100% at 50% 100%,
-    #00A86B 0%,
+    #10B981 0%,
     rgba(255, 255, 255, 0) 100%
   );
 
@@ -91,4 +91,44 @@
   &:hover {
     animation-play-state: paused;
   }
+}
+
+
+/* ── Forest Green Section Utilities ── */
+.forest-section {
+  background: linear-gradient(180deg, #0A2F1F 0%, #12472F 100%);
+  color: #F5F5F0;
+}
+
+.forest-section h1,
+.forest-section h2,
+.forest-section h3 {
+  color: #F5F5F0;
+}
+
+.forest-section p {
+  color: rgba(245, 245, 240, 0.7);
+}
+
+/* Forest card style */
+.forest-card {
+  background: rgba(245, 245, 240, 0.04);
+  border: 1px solid rgba(245, 245, 240, 0.08);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.forest-card:hover {
+  background: rgba(245, 245, 240, 0.08);
+  border-color: rgba(245, 245, 240, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Rounded button overrides */
+.btn-rounded {
+  border-radius: 0.75rem !important;
+}
+
+.btn-rounded-full {
+  border-radius: 9999px !important;
 }

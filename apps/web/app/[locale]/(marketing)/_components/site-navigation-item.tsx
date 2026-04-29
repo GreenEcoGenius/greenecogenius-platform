@@ -10,10 +10,10 @@ const getClassName = (path: string, currentPathName: string) => {
   const isActive = isRouteActive(path, currentPathName);
 
   return cn(
-    `text-metal-700 hover:text-primary inline-flex w-max text-sm font-medium transition-colors duration-300`,
+    `text-[#F5F5F0]/70 hover:text-emerald-400 inline-flex w-max text-sm font-medium transition-colors duration-300`,
     {
-      'dark:text-metal-400 dark:hover:text-white': !isActive,
-      'text-primary dark:text-white': isActive,
+      'dark:text-[#F5F5F0]/60 dark:hover:text-white': !isActive,
+      'text-emerald-400 dark:text-white': isActive,
     },
   );
 };

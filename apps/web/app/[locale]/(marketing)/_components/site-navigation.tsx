@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import Link from 'next/link';
-
 import { Globe, LogOut, Menu, X } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
@@ -14,7 +13,6 @@ import { NavigationMenu, NavigationMenuList } from '@kit/ui/navigation-menu';
 import { Trans } from '@kit/ui/trans';
 
 import pathsConfig from '~/config/paths.config';
-
 import { SiteNavigationItem } from './site-navigation-item';
 
 const links = {
@@ -88,7 +86,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
         position: 'fixed',
         inset: 0,
         zIndex: 9999,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#0A2F1F',
       }}
     >
       <div
@@ -97,9 +95,9 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
           alignItems: 'center',
           justifyContent: 'space-between',
           height: 64,
-          borderBottom: '1px solid #C8D0D8',
+          borderBottom: '1px solid rgba(245, 245, 240, 0.08)',
           padding: '0 16px',
-          backgroundColor: '#ffffff',
+          backgroundColor: '#0A2F1F',
         }}
       >
         <button
@@ -107,7 +105,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
           onClick={() => setOpen(false)}
           aria-label="Fermer"
         >
-          <X className="text-metal-900 h-7 w-7" />
+          <X className="h-7 w-7" style={{ color: '#F5F5F0' }} />
         </button>
       </div>
 
@@ -116,7 +114,7 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
           display: 'flex',
           flexDirection: 'column',
           padding: '8px 24px',
-          backgroundColor: '#ffffff',
+          backgroundColor: '#0A2F1F',
         }}
       >
         {/* Dashboard link when logged in */}
@@ -126,10 +124,10 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
             onClick={() => setOpen(false)}
             style={{
               padding: '16px 0',
-              borderBottom: '1px solid #E4E8EC',
+              borderBottom: '1px solid rgba(245, 245, 240, 0.08)',
               fontSize: 16,
               fontWeight: 600,
-              color: '#00A86B',
+              color: '#10B981',
               textDecoration: 'none',
             }}
           >
@@ -144,10 +142,10 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
             onClick={() => setOpen(false)}
             style={{
               padding: '16px 0',
-              borderBottom: '1px solid #E4E8EC',
+              borderBottom: '1px solid rgba(245, 245, 240, 0.08)',
               fontSize: 16,
               fontWeight: 500,
-              color: '#1A2332',
+              color: '#F5F5F0',
               textDecoration: 'none',
             }}
           >
@@ -172,9 +170,9 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
               gap: 8,
               fontSize: 14,
               fontWeight: 600,
-              color: '#00A86B',
+              color: '#B8D4E3',
               background: 'none',
-              border: '1.5px solid #00A86B',
+              border: '1.5px solid rgba(184, 212, 227, 0.4)',
               borderRadius: 12,
               padding: '10px 18px',
               cursor: 'pointer',
@@ -195,19 +193,18 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
                   textAlign: 'center',
                   fontSize: 14,
                   fontWeight: 500,
-                  color: '#1A2332',
+                  color: '#B8D4E3',
                   textDecoration: 'none',
                 }}
               >
                 <Trans i18nKey="auth.signIn" />
               </Link>
-
               <Link
                 href={pathsConfig.auth.signUp}
                 onClick={() => setOpen(false)}
                 style={{
-                  backgroundColor: '#00A86B',
-                  color: '#ffffff',
+                  backgroundColor: '#10B981',
+                  color: '#0A2F1F',
                   borderRadius: 12,
                   padding: '12px 16px',
                   textAlign: 'center',
@@ -233,9 +230,8 @@ function MobileMenu({ user }: { user: JWTUserData | null }) {
         className="p-1"
         aria-label="Ouvrir le menu"
       >
-        <Menu className="h-7 w-7" />
+        <Menu className="h-7 w-7 text-[#F5F5F0]" />
       </button>
-
       {mounted && menuContent && createPortal(menuContent, document.body)}
     </>
   );
@@ -259,9 +255,9 @@ function SignOutButton({ onDone }: { onDone: () => void }) {
         gap: 8,
         fontSize: 14,
         fontWeight: 600,
-        color: '#00A86B',
+        color: '#10B981',
         background: 'none',
-        border: '1.5px solid #00A86B',
+        border: '1.5px solid rgba(16, 185, 129, 0.4)',
         borderRadius: 12,
         padding: '12px 16px',
         cursor: 'pointer',
