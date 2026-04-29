@@ -61,6 +61,26 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // ── Contract signature required before fund release ──
+  // Both parties must have signed the contract via DocuSign before funds
+  // can be released to the seller. This is a mandatory security condition.
+  const contractStatus = tx.contract_status;
+  if (
+    contractStatus !== 'fully_signed' &&
+    contractStatus !== 'blockchain_certified'
+  ) {
+    return NextResponse.json(
+      {
+        error:
+          'Le contrat doit être signé par les deux parties avant la libération des fonds. ' +
+          'Veuillez vérifier votre email pour signer le contrat via DocuSign.',
+        contract_status: contractStatus || 'not_sent',
+        requires_signature: true,
+      },
+      { status: 403 },
+    );
+  }
+
   // Get seller's Stripe connected account
   const { data: sellerConnect } = await adminClient
     .from('stripe_connected_accounts')

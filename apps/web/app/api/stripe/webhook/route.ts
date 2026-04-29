@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
+import { ContractSignatureService } from '~/lib/signature/contract-signature-service';
 
 export async function POST(req: NextRequest) {
   const Stripe = (await import('stripe')).default;
@@ -111,6 +112,36 @@ export async function POST(req: NextRequest) {
           amount: paymentIntent.amount,
         },
       });
+
+
+      // ── Auto-send contract for signature via DocuSign ──
+      try {
+        if (ContractSignatureService.isConfigured()) {
+          await ContractSignatureService.sendForSignature({
+            adminClient,
+            transactionId,
+          });
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          await (adminClient as any).from('transaction_events').insert({
+            transaction_id: transactionId,
+            event_type: 'contract_sent',
+            actor_role: 'platform',
+            metadata: { trigger: 'auto_after_payment' },
+          });
+        }
+      } catch (contractErr) {
+        // Non-blocking: log but don't fail the webhook
+        console.error('[webhook] Auto-send contract failed:', contractErr);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (adminClient as any).from('transaction_events').insert({
+          transaction_id: transactionId,
+          event_type: 'contract_send_failed',
+          actor_role: 'platform',
+          metadata: {
+            error: contractErr instanceof Error ? contractErr.message : String(contractErr),
+          },
+        });
+      }
 
       break;
     }
