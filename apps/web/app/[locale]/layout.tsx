@@ -26,15 +26,6 @@ export const viewport: Viewport = {
   maximumScale: 1,
   interactiveWidget: 'resizes-content',
 };
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-  interactiveWidget: 'resizes-content',
-};
-
-
 interface LocaleLayoutProps {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
